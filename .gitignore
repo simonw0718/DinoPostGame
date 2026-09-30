@@ -1,0 +1,14 @@
+.DS_Store
+.obsidian/
+vault/
+__pycache__/
+*.pyc
+node_modules/
+dist/assets/kidsapp/dinosaurs/triceratops.png
+dist/assets/iggy-master.png
+dist/triceratops-original.svg
+build_words.py
+check.cjs
+generate_audio.py
+tools/generate_audio.py
+tools/import_kidsapp.py

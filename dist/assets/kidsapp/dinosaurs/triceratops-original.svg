@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="三角龍插畫">
+  <defs>
+    <linearGradient id="body" x1="0" x2="1" y2="1"><stop stop-color="#b9db83"/><stop offset="1" stop-color="#68a957"/></linearGradient>
+    <linearGradient id="frill" x1="0" x2="1" y2="1"><stop stop-color="#d6eaa4"/><stop offset="1" stop-color="#8cc475"/></linearGradient>
+  </defs>
+  <ellipse cx="264" cy="447" rx="194" ry="22" fill="#e5e6ce"/>
+  <path d="M360 280c57 8 94 36 115 76-39-10-70-8-95 6" fill="none" stroke="#699d51" stroke-width="33" stroke-linecap="round"/>
+  <path d="M98 313c0-82 72-135 174-135 101 0 154 55 154 132 0 62-52 111-155 111H196C134 421 98 377 98 313Z" fill="url(#body)" stroke="#4b8850" stroke-width="11"/>
+  <path d="M155 379v48c0 13-10 22-22 22h-32c-11 0-20-9-20-20v-47M338 385v42c0 13 10 22 22 22h28c11 0 20-9 20-20v-55" fill="#83b763" stroke="#4b8850" stroke-width="10" stroke-linecap="round"/>
+  <path d="M61 262c-6-85 23-162 106-201 42-20 100-21 142-5 52 20 82 72 95 138l-42 31-17 86-222 42Z" fill="url(#frill)" stroke="#4b8850" stroke-width="11" stroke-linejoin="round"/>
+  <path d="m95 103-19-47 52 22M176 63l3-48 41 36M271 63l38-39 15 53M358 123l45-18-19 53" fill="#f2db9e" stroke="#9b9d63" stroke-width="7" stroke-linejoin="round"/>
+  <path d="M54 271c0-78 48-129 132-139 62-8 122 25 139 84 17 60-18 131-94 155-72 22-159-15-177-100Z" fill="url(#body)" stroke="#4b8850" stroke-width="11"/>
+  <path d="M113 206 94 105l61 84M246 184l59-93-9 113" fill="#f7e6b7" stroke="#a89568" stroke-width="9" stroke-linejoin="round"/>
+  <path d="M54 285 20 310l51 15" fill="#f7e6b7" stroke="#a89568" stroke-width="8" stroke-linejoin="round"/>
+  <ellipse cx="175" cy="247" rx="16" ry="20" fill="#284e3b"/><circle cx="181" cy="240" r="5" fill="#fff"/>
+  <path d="M80 314c24 27 59 33 89 21" fill="none" stroke="#4b8850" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="114" cy="286" r="10" fill="#f1a994" opacity=".75"/>
+</svg>

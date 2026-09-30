@@ -1,0 +1,44 @@
+import fs from 'node:fs';
+import path from 'node:path';
+
+const root = path.resolve(import.meta.dirname, '..');
+const dist = path.join(root, 'dist');
+const words = JSON.parse(fs.readFileSync(path.join(dist, 'data.json'), 'utf8'));
+const ids = new Set();
+const english = new Set();
+const counts = { 1: 0, 2: 0, 3: 0, dinosaur: 0 };
+const visualGroup = word => word.sheet ? `sheet:${word.sheet}` : word.image
+  ? (word.category === 'dinosaur' ? 'dinosaur-image' : 'regular-image') : 'emoji';
+const canonical = value => value.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+for (const word of words) {
+  if (!word.id || !word.category || !word.en || !word.zh || !word.emoji || ids.has(word.id)) throw Error(`Invalid or duplicate ID: ${word.id}`);
+  const key = canonical(word.en);
+  if (english.has(key)) throw Error(`Duplicate English: ${word.en}`);
+  if (![1, 2, 3].includes(word.difficulty)) throw Error(`Invalid difficulty: ${word.id}`);
+  if (!Array.isArray(word.zhuyin) || word.zhuyin.length !== [...word.zh].length || word.zhuyin.some(x => !x || !/[ㄅ-ㄩ]/u.test(x) || /[^ㄅ-ㄩˊˇˋ˙]/u.test(x))) throw Error(`Invalid zhuyin: ${word.id}`);
+  if ((word.sheet || word.cell !== undefined) && (!['animals', 'food', 'objects'].includes(word.sheet) || !Number.isInteger(word.cell) || word.cell < 0 || word.cell > 9)) throw Error(`Invalid image cell: ${word.id}`);
+  if (word.image) {
+    if (!word.image.startsWith('assets/kidsapp/') || word.image.includes('..')) throw Error(`Invalid image path: ${word.id}`);
+    const image = path.join(dist, word.image);
+    if (!fs.existsSync(image) || fs.statSync(image).size < 1000) throw Error(`Missing image: ${word.id}`);
+  }
+  const audio = path.join(dist, 'assets/audio', `${word.id}.mp3`);
+  if (!fs.existsSync(audio) || fs.statSync(audio).size < 500) throw Error(`Missing audio: ${word.id}`);
+  ids.add(word.id); english.add(key);
+  counts[word.category === 'dinosaur' ? 'dinosaur' : word.difficulty]++;
+}
+
+for (const mode of ['all', 1, 2, 3, 'dinosaur']) {
+  const pool = words.filter(word => mode === 'dinosaur' ? word.category === 'dinosaur'
+    : word.category !== 'dinosaur' && (mode === 'all' || word.difficulty === mode));
+  if (pool.length < 10) throw Error(`Mode too small: ${mode}`);
+  for (const target of pool) {
+    const matches = pool.filter(word => word.id !== target.id && visualGroup(word) === visualGroup(target));
+    const fallback = words.filter(word => word.id !== target.id && visualGroup(word) === visualGroup(target)
+      && (word.category === 'dinosaur') === (target.category === 'dinosaur'));
+    if (matches.length < 3 && fallback.length < 3) throw Error(`Not enough same-style distractors: ${target.id}`);
+  }
+}
+
+console.log(`${words.length} words validated: ${JSON.stringify(counts)}`);

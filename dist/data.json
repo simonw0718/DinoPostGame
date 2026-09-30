@@ -1,0 +1,3736 @@
+[
+  {
+    "id": "animal-cat",
+    "category": "animals",
+    "en": "cat",
+    "zh": "貓",
+    "zhuyin": [
+      "ㄇㄠ"
+    ],
+    "emoji": "🐱",
+    "sheet": "animals",
+    "cell": 0,
+    "difficulty": 1,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-dog",
+    "category": "animals",
+    "en": "dog",
+    "zh": "狗",
+    "zhuyin": [
+      "ㄍㄡˇ"
+    ],
+    "emoji": "🐶",
+    "sheet": "animals",
+    "cell": 1,
+    "difficulty": 1,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-cow",
+    "category": "animals",
+    "en": "cow",
+    "zh": "牛",
+    "zhuyin": [
+      "ㄋㄧㄡˊ"
+    ],
+    "emoji": "🐮",
+    "sheet": "animals",
+    "cell": 2,
+    "difficulty": 1,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-pig",
+    "category": "animals",
+    "en": "pig",
+    "zh": "豬",
+    "zhuyin": [
+      "ㄓㄨ"
+    ],
+    "emoji": "🐷",
+    "sheet": "animals",
+    "cell": 3,
+    "difficulty": 1,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-horse",
+    "category": "animals",
+    "en": "horse",
+    "zh": "馬",
+    "zhuyin": [
+      "ㄇㄚˇ"
+    ],
+    "emoji": "🐴",
+    "sheet": "animals",
+    "cell": 4,
+    "difficulty": 1,
+    "levelSource": "local"
+  },
+  {
+    "id": "animal-rabbit",
+    "category": "animals",
+    "en": "rabbit",
+    "zh": "兔子",
+    "zhuyin": [
+      "ㄊㄨˋ",
+      "˙ㄗ"
+    ],
+    "emoji": "🐰",
+    "sheet": "animals",
+    "cell": 5,
+    "difficulty": 3,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-elephant",
+    "category": "animals",
+    "en": "elephant",
+    "zh": "大象",
+    "zhuyin": [
+      "ㄉㄚˋ",
+      "ㄒㄧㄤˋ"
+    ],
+    "emoji": "🐘",
+    "sheet": "animals",
+    "cell": 6,
+    "difficulty": 3,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-lion",
+    "category": "animals",
+    "en": "lion",
+    "zh": "獅子",
+    "zhuyin": [
+      "ㄕ",
+      "˙ㄗ"
+    ],
+    "emoji": "🦁",
+    "sheet": "animals",
+    "cell": 7,
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-bear",
+    "category": "animals",
+    "en": "bear",
+    "zh": "熊",
+    "zhuyin": [
+      "ㄒㄩㄥˊ"
+    ],
+    "emoji": "🐻",
+    "sheet": "animals",
+    "cell": 8,
+    "difficulty": 1,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-frog",
+    "category": "animals",
+    "en": "frog",
+    "zh": "青蛙",
+    "zhuyin": [
+      "ㄑㄧㄥ",
+      "ㄨㄚ"
+    ],
+    "emoji": "🐸",
+    "sheet": "animals",
+    "cell": 9,
+    "difficulty": 1,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-apple",
+    "category": "food",
+    "en": "apple",
+    "zh": "蘋果",
+    "zhuyin": [
+      "ㄆㄧㄥˊ",
+      "ㄍㄨㄛˇ"
+    ],
+    "emoji": "🍎",
+    "sheet": "food",
+    "cell": 0,
+    "difficulty": 1,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-banana",
+    "category": "food",
+    "en": "banana",
+    "zh": "香蕉",
+    "zhuyin": [
+      "ㄒㄧㄤ",
+      "ㄐㄧㄠ"
+    ],
+    "emoji": "🍌",
+    "sheet": "food",
+    "cell": 1,
+    "difficulty": 1,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-strawberry",
+    "category": "food",
+    "en": "strawberry",
+    "zh": "草莓",
+    "zhuyin": [
+      "ㄘㄠˇ",
+      "ㄇㄟˊ"
+    ],
+    "emoji": "🍓",
+    "sheet": "food",
+    "cell": 2,
+    "difficulty": 3,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-watermelon",
+    "category": "food",
+    "en": "watermelon",
+    "zh": "西瓜",
+    "zhuyin": [
+      "ㄒㄧ",
+      "ㄍㄨㄚ"
+    ],
+    "emoji": "🍉",
+    "sheet": "food",
+    "cell": 3,
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-carrot",
+    "category": "food",
+    "en": "carrot",
+    "zh": "紅蘿蔔",
+    "zhuyin": [
+      "ㄏㄨㄥˊ",
+      "ㄌㄨㄛˊ",
+      "˙ㄅㄛ"
+    ],
+    "emoji": "🥕",
+    "sheet": "food",
+    "cell": 4,
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-bread",
+    "category": "food",
+    "en": "bread",
+    "zh": "麵包",
+    "zhuyin": [
+      "ㄇㄧㄢˋ",
+      "ㄅㄠ"
+    ],
+    "emoji": "🍞",
+    "sheet": "food",
+    "cell": 5,
+    "difficulty": 1,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-egg",
+    "category": "food",
+    "en": "egg",
+    "zh": "蛋",
+    "zhuyin": [
+      "ㄉㄢˋ"
+    ],
+    "emoji": "🥚",
+    "sheet": "food",
+    "cell": 6,
+    "difficulty": 1,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-cheese",
+    "category": "food",
+    "en": "cheese",
+    "zh": "起司",
+    "zhuyin": [
+      "ㄑㄧˇ",
+      "ㄙ"
+    ],
+    "emoji": "🧀",
+    "sheet": "food",
+    "cell": 7,
+    "difficulty": 3,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-pizza",
+    "category": "food",
+    "en": "pizza",
+    "zh": "披薩",
+    "zhuyin": [
+      "ㄆㄧ",
+      "ㄙㄚˋ"
+    ],
+    "emoji": "🍕",
+    "sheet": "food",
+    "cell": 8,
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-cake",
+    "category": "food",
+    "en": "cake",
+    "zh": "蛋糕",
+    "zhuyin": [
+      "ㄉㄢˋ",
+      "ㄍㄠ"
+    ],
+    "emoji": "🍰",
+    "sheet": "food",
+    "cell": 9,
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "object-ball",
+    "category": "objects",
+    "en": "ball",
+    "zh": "球",
+    "zhuyin": [
+      "ㄑㄧㄡˊ"
+    ],
+    "emoji": "⚽",
+    "sheet": "objects",
+    "cell": 0,
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "object-book",
+    "category": "objects",
+    "en": "book",
+    "zh": "書",
+    "zhuyin": [
+      "ㄕㄨ"
+    ],
+    "emoji": "📖",
+    "sheet": "objects",
+    "cell": 1,
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "object-pencil",
+    "category": "objects",
+    "en": "pencil",
+    "zh": "鉛筆",
+    "zhuyin": [
+      "ㄑㄧㄢ",
+      "ㄅㄧˇ"
+    ],
+    "emoji": "✏️",
+    "sheet": "objects",
+    "cell": 2,
+    "difficulty": 3,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "object-chair",
+    "category": "objects",
+    "en": "chair",
+    "zh": "椅子",
+    "zhuyin": [
+      "ㄧˇ",
+      "˙ㄗ"
+    ],
+    "emoji": "🪑",
+    "sheet": "objects",
+    "cell": 3,
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "object-cup",
+    "category": "objects",
+    "en": "cup",
+    "zh": "杯子",
+    "zhuyin": [
+      "ㄅㄟ",
+      "˙ㄗ"
+    ],
+    "emoji": "🥤",
+    "sheet": "objects",
+    "cell": 4,
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "object-toothbrush",
+    "category": "objects",
+    "en": "toothbrush",
+    "zh": "牙刷",
+    "zhuyin": [
+      "ㄧㄚˊ",
+      "ㄕㄨㄚ"
+    ],
+    "emoji": "🪥",
+    "sheet": "objects",
+    "cell": 5,
+    "difficulty": 2,
+    "levelSource": "local"
+  },
+  {
+    "id": "object-shoe",
+    "category": "objects",
+    "en": "shoe",
+    "zh": "鞋子",
+    "zhuyin": [
+      "ㄒㄧㄝˊ",
+      "˙ㄗ"
+    ],
+    "emoji": "👟",
+    "sheet": "objects",
+    "cell": 6,
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "object-hat",
+    "category": "objects",
+    "en": "hat",
+    "zh": "帽子",
+    "zhuyin": [
+      "ㄇㄠˋ",
+      "˙ㄗ"
+    ],
+    "emoji": "🧢",
+    "sheet": "objects",
+    "cell": 7,
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "object-backpack",
+    "category": "objects",
+    "en": "backpack",
+    "zh": "背包",
+    "zhuyin": [
+      "ㄅㄟ",
+      "ㄅㄠ"
+    ],
+    "emoji": "🎒",
+    "sheet": "objects",
+    "cell": 8,
+    "difficulty": 2,
+    "levelSource": "local"
+  },
+  {
+    "id": "object-umbrella",
+    "category": "objects",
+    "en": "umbrella",
+    "zh": "雨傘",
+    "zhuyin": [
+      "ㄩˇ",
+      "ㄙㄢˇ"
+    ],
+    "emoji": "☂️",
+    "sheet": "objects",
+    "cell": 9,
+    "difficulty": 3,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-duck",
+    "category": "animals",
+    "en": "duck",
+    "zh": "鴨子",
+    "zhuyin": [
+      "ㄧㄚ",
+      "ㄗ˙"
+    ],
+    "emoji": "🦆",
+    "difficulty": 1,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-sheep",
+    "category": "animals",
+    "en": "sheep",
+    "zh": "綿羊",
+    "zhuyin": [
+      "ㄇㄧㄢˊ",
+      "ㄧㄤˊ"
+    ],
+    "emoji": "🐑",
+    "difficulty": 1,
+    "levelSource": "local"
+  },
+  {
+    "id": "animal-monkey",
+    "category": "animals",
+    "en": "monkey",
+    "zh": "猴子",
+    "zhuyin": [
+      "ㄏㄡˊ",
+      "ㄗ˙"
+    ],
+    "emoji": "🐒",
+    "difficulty": 3,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-giraffe",
+    "category": "animals",
+    "en": "giraffe",
+    "zh": "長頸鹿",
+    "zhuyin": [
+      "ㄔㄤˊ",
+      "ㄐㄧㄥˇ",
+      "ㄌㄨˋ"
+    ],
+    "emoji": "🦒",
+    "difficulty": 3,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-zebra",
+    "category": "animals",
+    "en": "zebra",
+    "zh": "斑馬",
+    "zhuyin": [
+      "ㄅㄢ",
+      "ㄇㄚˇ"
+    ],
+    "emoji": "🦓",
+    "difficulty": 3,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-panda",
+    "category": "animals",
+    "en": "panda",
+    "zh": "熊貓",
+    "zhuyin": [
+      "ㄒㄩㄥˊ",
+      "ㄇㄠ"
+    ],
+    "emoji": "🐼",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-turtle",
+    "category": "animals",
+    "en": "turtle",
+    "zh": "烏龜",
+    "zhuyin": [
+      "ㄨ",
+      "ㄍㄨㄟ"
+    ],
+    "emoji": "🐢",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-fish",
+    "category": "animals",
+    "en": "fish",
+    "zh": "魚",
+    "zhuyin": [
+      "ㄩˊ"
+    ],
+    "emoji": "🐟",
+    "difficulty": 1,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-crab",
+    "category": "animals",
+    "en": "crab",
+    "zh": "螃蟹",
+    "zhuyin": [
+      "ㄆㄤˊ",
+      "ㄒㄧㄝˋ"
+    ],
+    "emoji": "🦀",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-butterfly",
+    "category": "animals",
+    "en": "butterfly",
+    "zh": "蝴蝶",
+    "zhuyin": [
+      "ㄏㄨˊ",
+      "ㄉㄧㄝˊ"
+    ],
+    "emoji": "🦋",
+    "difficulty": 3,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-bee",
+    "category": "animals",
+    "en": "bee",
+    "zh": "蜜蜂",
+    "zhuyin": [
+      "ㄇㄧˋ",
+      "ㄈㄥ"
+    ],
+    "emoji": "🐝",
+    "difficulty": 1,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-snake",
+    "category": "animals",
+    "en": "snake",
+    "zh": "蛇",
+    "zhuyin": [
+      "ㄕㄜˊ"
+    ],
+    "emoji": "🐍",
+    "difficulty": 3,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-mouse",
+    "category": "animals",
+    "en": "mouse",
+    "zh": "老鼠",
+    "zhuyin": [
+      "ㄌㄠˇ",
+      "ㄕㄨˇ"
+    ],
+    "emoji": "🐭",
+    "difficulty": 1,
+    "levelSource": "local"
+  },
+  {
+    "id": "animal-fox",
+    "category": "animals",
+    "en": "fox",
+    "zh": "狐狸",
+    "zhuyin": [
+      "ㄏㄨˊ",
+      "ㄌㄧˊ"
+    ],
+    "emoji": "🦊",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-tiger",
+    "category": "animals",
+    "en": "tiger",
+    "zh": "老虎",
+    "zhuyin": [
+      "ㄌㄠˇ",
+      "ㄏㄨˇ"
+    ],
+    "emoji": "🐯",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-penguin",
+    "category": "animals",
+    "en": "penguin",
+    "zh": "企鵝",
+    "zhuyin": [
+      "ㄑㄧˋ",
+      "ㄜˊ"
+    ],
+    "emoji": "🐧",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-bird",
+    "category": "animals",
+    "en": "bird",
+    "zh": "鳥",
+    "zhuyin": [
+      "ㄋㄧㄠˇ"
+    ],
+    "emoji": "🐦",
+    "difficulty": 1,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "animal-octopus",
+    "category": "animals",
+    "en": "octopus",
+    "zh": "章魚",
+    "zhuyin": [
+      "ㄓㄤ",
+      "ㄩˊ"
+    ],
+    "emoji": "🐙",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-orange",
+    "category": "food",
+    "en": "orange",
+    "zh": "柳橙",
+    "zhuyin": [
+      "ㄌㄧㄡˇ",
+      "ㄔㄥˊ"
+    ],
+    "emoji": "🍊",
+    "difficulty": 3,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-grape",
+    "category": "food",
+    "en": "grape",
+    "zh": "葡萄",
+    "zhuyin": [
+      "ㄆㄨˊ",
+      "ㄊㄠˊ"
+    ],
+    "emoji": "🍇",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-lemon",
+    "category": "food",
+    "en": "lemon",
+    "zh": "檸檬",
+    "zhuyin": [
+      "ㄋㄧㄥˊ",
+      "ㄇㄥˊ"
+    ],
+    "emoji": "🍋",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-peach",
+    "category": "food",
+    "en": "peach",
+    "zh": "桃子",
+    "zhuyin": [
+      "ㄊㄠˊ",
+      "ㄗ˙"
+    ],
+    "emoji": "🍑",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-cherry",
+    "category": "food",
+    "en": "cherry",
+    "zh": "櫻桃",
+    "zhuyin": [
+      "ㄧㄥ",
+      "ㄊㄠˊ"
+    ],
+    "emoji": "🍒",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-pineapple",
+    "category": "food",
+    "en": "pineapple",
+    "zh": "鳳梨",
+    "zhuyin": [
+      "ㄈㄥˋ",
+      "ㄌㄧˊ"
+    ],
+    "emoji": "🍍",
+    "difficulty": 3,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-corn",
+    "category": "food",
+    "en": "corn",
+    "zh": "玉米",
+    "zhuyin": [
+      "ㄩˋ",
+      "ㄇㄧˇ"
+    ],
+    "emoji": "🌽",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-tomato",
+    "category": "food",
+    "en": "tomato",
+    "zh": "番茄",
+    "zhuyin": [
+      "ㄈㄢ",
+      "ㄑㄧㄝˊ"
+    ],
+    "emoji": "🍅",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-potato",
+    "category": "food",
+    "en": "potato",
+    "zh": "馬鈴薯",
+    "zhuyin": [
+      "ㄇㄚˇ",
+      "ㄌㄧㄥˊ",
+      "ㄕㄨˇ"
+    ],
+    "emoji": "🥔",
+    "difficulty": 3,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-broccoli",
+    "category": "food",
+    "en": "broccoli",
+    "zh": "花椰菜",
+    "zhuyin": [
+      "ㄏㄨㄚ",
+      "ㄧㄝˊ",
+      "ㄘㄞˋ"
+    ],
+    "emoji": "🥦",
+    "difficulty": 3,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-rice",
+    "category": "food",
+    "en": "rice",
+    "zh": "米飯",
+    "zhuyin": [
+      "ㄇㄧˇ",
+      "ㄈㄢˋ"
+    ],
+    "emoji": "🍚",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-milk",
+    "category": "food",
+    "en": "milk",
+    "zh": "牛奶",
+    "zhuyin": [
+      "ㄋㄧㄡˊ",
+      "ㄋㄞˇ"
+    ],
+    "emoji": "🥛",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-cookie",
+    "category": "food",
+    "en": "cookie",
+    "zh": "餅乾",
+    "zhuyin": [
+      "ㄅㄧㄥˇ",
+      "ㄍㄢ"
+    ],
+    "emoji": "🍪",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-ice-cream",
+    "category": "food",
+    "en": "ice cream",
+    "zh": "冰淇淋",
+    "zhuyin": [
+      "ㄅㄧㄥ",
+      "ㄑㄧˊ",
+      "ㄌㄧㄣˊ"
+    ],
+    "emoji": "🍦",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-donut",
+    "category": "food",
+    "en": "donut",
+    "zh": "甜甜圈",
+    "zhuyin": [
+      "ㄊㄧㄢˊ",
+      "ㄊㄧㄢˊ",
+      "ㄑㄩㄢ"
+    ],
+    "emoji": "🍩",
+    "difficulty": 3,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "food-hamburger",
+    "category": "food",
+    "en": "hamburger",
+    "zh": "漢堡",
+    "zhuyin": [
+      "ㄏㄢˋ",
+      "ㄅㄠˇ"
+    ],
+    "emoji": "🍔",
+    "difficulty": 3,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "object-clock",
+    "category": "objects",
+    "en": "clock",
+    "zh": "時鐘",
+    "zhuyin": [
+      "ㄕˊ",
+      "ㄓㄨㄥ"
+    ],
+    "emoji": "⏰",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "object-phone",
+    "category": "objects",
+    "en": "phone",
+    "zh": "電話",
+    "zhuyin": [
+      "ㄉㄧㄢˋ",
+      "ㄏㄨㄚˋ"
+    ],
+    "emoji": "📱",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "object-key",
+    "category": "objects",
+    "en": "key",
+    "zh": "鑰匙",
+    "zhuyin": [
+      "ㄧㄠˋ",
+      "ㄕ˙"
+    ],
+    "emoji": "🔑",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "object-car",
+    "category": "objects",
+    "en": "car",
+    "zh": "汽車",
+    "zhuyin": [
+      "ㄑㄧˋ",
+      "ㄔㄜ"
+    ],
+    "emoji": "🚗",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "object-bus",
+    "category": "objects",
+    "en": "bus",
+    "zh": "公車",
+    "zhuyin": [
+      "ㄍㄨㄥ",
+      "ㄔㄜ"
+    ],
+    "emoji": "🚌",
+    "difficulty": 1,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "object-train",
+    "category": "objects",
+    "en": "train",
+    "zh": "火車",
+    "zhuyin": [
+      "ㄏㄨㄛˇ",
+      "ㄔㄜ"
+    ],
+    "emoji": "🚆",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "object-bicycle",
+    "category": "objects",
+    "en": "bicycle",
+    "zh": "腳踏車",
+    "zhuyin": [
+      "ㄐㄧㄠˇ",
+      "ㄊㄚˋ",
+      "ㄔㄜ"
+    ],
+    "emoji": "🚲",
+    "difficulty": 3,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "object-boat",
+    "category": "objects",
+    "en": "boat",
+    "zh": "船",
+    "zhuyin": [
+      "ㄔㄨㄢˊ"
+    ],
+    "emoji": "⛵",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "object-airplane",
+    "category": "objects",
+    "en": "airplane",
+    "zh": "飛機",
+    "zhuyin": [
+      "ㄈㄟ",
+      "ㄐㄧ"
+    ],
+    "emoji": "✈️",
+    "difficulty": 3,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "object-camera",
+    "category": "objects",
+    "en": "camera",
+    "zh": "相機",
+    "zhuyin": [
+      "ㄒㄧㄤˋ",
+      "ㄐㄧ"
+    ],
+    "emoji": "📷",
+    "difficulty": 3,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "object-scissors",
+    "category": "objects",
+    "en": "scissors",
+    "zh": "剪刀",
+    "zhuyin": [
+      "ㄐㄧㄢˇ",
+      "ㄉㄠ"
+    ],
+    "emoji": "✂️",
+    "difficulty": 3,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "object-crayon",
+    "category": "objects",
+    "en": "crayon",
+    "zh": "蠟筆",
+    "zhuyin": [
+      "ㄌㄚˋ",
+      "ㄅㄧˇ"
+    ],
+    "emoji": "🖍️",
+    "difficulty": 2,
+    "levelSource": "local"
+  },
+  {
+    "id": "object-light",
+    "category": "objects",
+    "en": "light",
+    "zh": "電燈",
+    "zhuyin": [
+      "ㄉㄧㄢˋ",
+      "ㄉㄥ"
+    ],
+    "emoji": "💡",
+    "difficulty": 2,
+    "levelSource": "local"
+  },
+  {
+    "id": "object-spoon",
+    "category": "objects",
+    "en": "spoon",
+    "zh": "湯匙",
+    "zhuyin": [
+      "ㄊㄤ",
+      "ㄔˊ"
+    ],
+    "emoji": "🥄",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "object-fork",
+    "category": "objects",
+    "en": "fork",
+    "zh": "叉子",
+    "zhuyin": [
+      "ㄔㄚ",
+      "ㄗ˙"
+    ],
+    "emoji": "🍴",
+    "difficulty": 2,
+    "levelSource": "kidsapp"
+  },
+  {
+    "id": "object-balloon",
+    "category": "objects",
+    "en": "balloon",
+    "zh": "氣球",
+    "zhuyin": [
+      "ㄑㄧˋ",
+      "ㄑㄧㄡˊ"
+    ],
+    "emoji": "🎈",
+    "difficulty": 1,
+    "levelSource": "local"
+  },
+  {
+    "id": "kidapp-ant",
+    "category": "animals",
+    "en": "ant",
+    "zh": "螞蟻",
+    "zhuyin": [
+      "ㄇㄚˇ",
+      "ㄧˇ"
+    ],
+    "difficulty": 1,
+    "levelSource": "kidsapp",
+    "sourceId": "ant",
+    "emoji": "🐜"
+  },
+  {
+    "id": "kidapp-moon",
+    "category": "nature",
+    "en": "moon",
+    "zh": "月亮",
+    "zhuyin": [
+      "ㄩㄝˋ",
+      "ㄌㄧㄤˋ"
+    ],
+    "difficulty": 1,
+    "levelSource": "kidsapp",
+    "sourceId": "moon",
+    "emoji": "🌙"
+  },
+  {
+    "id": "kidapp-sun",
+    "category": "nature",
+    "en": "sun",
+    "zh": "太陽",
+    "zhuyin": [
+      "ㄊㄞˋ",
+      "ㄧㄤˊ"
+    ],
+    "difficulty": 1,
+    "levelSource": "kidsapp",
+    "sourceId": "sun",
+    "emoji": "☀️"
+  },
+  {
+    "id": "kidapp-tree",
+    "category": "nature",
+    "en": "tree",
+    "zh": "樹",
+    "zhuyin": [
+      "ㄕㄨˋ"
+    ],
+    "difficulty": 1,
+    "levelSource": "kidsapp",
+    "sourceId": "tree",
+    "emoji": "🌳"
+  },
+  {
+    "id": "kidapp-dolphin",
+    "category": "animals",
+    "en": "dolphin",
+    "zh": "海豚",
+    "zhuyin": [
+      "ㄏㄞˇ",
+      "ㄊㄨㄣˊ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "dolphin",
+    "emoji": "🐬"
+  },
+  {
+    "id": "kidapp-koala",
+    "category": "animals",
+    "en": "koala",
+    "zh": "無尾熊",
+    "zhuyin": [
+      "ㄨˊ",
+      "ㄨㄟˇ",
+      "ㄒㄩㄥˊ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "koala",
+    "emoji": "🐨"
+  },
+  {
+    "id": "kidapp-ladybug",
+    "category": "animals",
+    "en": "ladybug",
+    "zh": "瓢蟲",
+    "zhuyin": [
+      "ㄆㄧㄠˊ",
+      "ㄔㄨㄥˊ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "ladybug",
+    "emoji": "🐞"
+  },
+  {
+    "id": "kidapp-owl",
+    "category": "animals",
+    "en": "owl",
+    "zh": "貓頭鷹",
+    "zhuyin": [
+      "ㄇㄠ",
+      "ㄊㄡˊ",
+      "ㄧㄥ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "owl",
+    "emoji": "🦉"
+  },
+  {
+    "id": "kidapp-shark",
+    "category": "animals",
+    "en": "shark",
+    "zh": "鯊魚",
+    "zhuyin": [
+      "ㄕㄚ",
+      "ㄩˊ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "shark",
+    "emoji": "🦈"
+  },
+  {
+    "id": "kidapp-snail",
+    "category": "animals",
+    "en": "snail",
+    "zh": "蝸牛",
+    "zhuyin": [
+      "ㄍㄨㄚ",
+      "ㄋㄧㄡˊ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "snail",
+    "emoji": "🐌"
+  },
+  {
+    "id": "kidapp-spider",
+    "category": "animals",
+    "en": "spider",
+    "zh": "蜘蛛",
+    "zhuyin": [
+      "ㄓ",
+      "ㄓㄨ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "spider",
+    "emoji": "🕷️"
+  },
+  {
+    "id": "kidapp-whale",
+    "category": "animals",
+    "en": "whale",
+    "zh": "鯨魚",
+    "zhuyin": [
+      "ㄐㄧㄥ",
+      "ㄩˊ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "whale",
+    "emoji": "🐋"
+  },
+  {
+    "id": "kidapp-blue",
+    "category": "color",
+    "en": "blue",
+    "zh": "藍色",
+    "zhuyin": [
+      "ㄌㄢˊ",
+      "ㄙㄜˋ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "blue",
+    "emoji": "🟦"
+  },
+  {
+    "id": "kidapp-green",
+    "category": "color",
+    "en": "green",
+    "zh": "綠色",
+    "zhuyin": [
+      "ㄌㄩˋ",
+      "ㄙㄜˋ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "green",
+    "emoji": "🟩"
+  },
+  {
+    "id": "kidapp-red",
+    "category": "color",
+    "en": "red",
+    "zh": "紅色",
+    "zhuyin": [
+      "ㄏㄨㄥˊ",
+      "ㄙㄜˋ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "red",
+    "emoji": "🟥"
+  },
+  {
+    "id": "kidapp-candy",
+    "category": "food",
+    "en": "candy",
+    "zh": "糖果",
+    "zhuyin": [
+      "ㄊㄤˊ",
+      "ㄍㄨㄛˇ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "candy",
+    "emoji": "🍬"
+  },
+  {
+    "id": "kidapp-chicken",
+    "category": "food",
+    "en": "chicken",
+    "zh": "雞肉",
+    "zhuyin": [
+      "ㄐㄧ",
+      "ㄖㄡˋ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "chicken",
+    "emoji": "🍗"
+  },
+  {
+    "id": "kidapp-coconut",
+    "category": "food",
+    "en": "coconut",
+    "zh": "椰子",
+    "zhuyin": [
+      "ㄧㄝˊ",
+      "ㄗˇ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "coconut",
+    "emoji": "🥥"
+  },
+  {
+    "id": "kidapp-kiwi",
+    "category": "food",
+    "en": "kiwi",
+    "zh": "奇異果",
+    "zhuyin": [
+      "ㄑㄧˊ",
+      "ㄧˋ",
+      "ㄍㄨㄛˇ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "kiwi",
+    "emoji": "🥝"
+  },
+  {
+    "id": "kidapp-meat",
+    "category": "food",
+    "en": "meat",
+    "zh": "肉",
+    "zhuyin": [
+      "ㄖㄡˋ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "meat",
+    "emoji": "🥩"
+  },
+  {
+    "id": "kidapp-mushroom",
+    "category": "food",
+    "en": "mushroom",
+    "zh": "蘑菇",
+    "zhuyin": [
+      "ㄇㄛˊ",
+      "ㄍㄨ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "mushroom",
+    "emoji": "🍄"
+  },
+  {
+    "id": "kidapp-noodle",
+    "category": "food",
+    "en": "noodle",
+    "zh": "麵條",
+    "zhuyin": [
+      "ㄇㄧㄢˋ",
+      "ㄊㄧㄠˊ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "noodle",
+    "emoji": "🍜"
+  },
+  {
+    "id": "kidapp-pear",
+    "category": "food",
+    "en": "pear",
+    "zh": "梨子",
+    "zhuyin": [
+      "ㄌㄧˊ",
+      "ㄗˇ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "pear",
+    "emoji": "🍐"
+  },
+  {
+    "id": "kidapp-soup",
+    "category": "food",
+    "en": "soup",
+    "zh": "湯",
+    "zhuyin": [
+      "ㄊㄤ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "soup",
+    "emoji": "🍲"
+  },
+  {
+    "id": "kidapp-cloud",
+    "category": "nature",
+    "en": "cloud",
+    "zh": "雲",
+    "zhuyin": [
+      "ㄩㄣˊ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "cloud",
+    "emoji": "☁️"
+  },
+  {
+    "id": "kidapp-fire",
+    "category": "nature",
+    "en": "fire",
+    "zh": "火",
+    "zhuyin": [
+      "ㄏㄨㄛˇ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "fire",
+    "emoji": "🔥"
+  },
+  {
+    "id": "kidapp-rain",
+    "category": "nature",
+    "en": "rain",
+    "zh": "雨",
+    "zhuyin": [
+      "ㄩˇ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "rain",
+    "emoji": "🌧️"
+  },
+  {
+    "id": "kidapp-snow",
+    "category": "nature",
+    "en": "snow",
+    "zh": "雪",
+    "zhuyin": [
+      "ㄒㄩㄝˇ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "snow",
+    "emoji": "❄️"
+  },
+  {
+    "id": "kidapp-star",
+    "category": "nature",
+    "en": "star",
+    "zh": "星星",
+    "zhuyin": [
+      "ㄒㄧㄥ",
+      "ㄒㄧㄥ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "star",
+    "emoji": "⭐"
+  },
+  {
+    "id": "kidapp-water",
+    "category": "nature",
+    "en": "water",
+    "zh": "水",
+    "zhuyin": [
+      "ㄕㄨㄟˇ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "water",
+    "emoji": "💧"
+  },
+  {
+    "id": "kidapp-five",
+    "category": "number",
+    "en": "five",
+    "zh": "五",
+    "zhuyin": [
+      "ㄨˇ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "five",
+    "emoji": "5️⃣"
+  },
+  {
+    "id": "kidapp-four",
+    "category": "number",
+    "en": "four",
+    "zh": "四",
+    "zhuyin": [
+      "ㄙˋ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "four",
+    "emoji": "4️⃣"
+  },
+  {
+    "id": "kidapp-one",
+    "category": "number",
+    "en": "one",
+    "zh": "一",
+    "zhuyin": [
+      "ㄧ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "one",
+    "emoji": "1️⃣"
+  },
+  {
+    "id": "kidapp-three",
+    "category": "number",
+    "en": "three",
+    "zh": "三",
+    "zhuyin": [
+      "ㄙㄢ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "three",
+    "emoji": "3️⃣"
+  },
+  {
+    "id": "kidapp-two",
+    "category": "number",
+    "en": "two",
+    "zh": "二",
+    "zhuyin": [
+      "ㄦˋ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "two",
+    "emoji": "2️⃣"
+  },
+  {
+    "id": "kidapp-bed",
+    "category": "objects",
+    "en": "bed",
+    "zh": "床",
+    "zhuyin": [
+      "ㄔㄨㄤˊ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "bed",
+    "emoji": "🛏️"
+  },
+  {
+    "id": "kidapp-bowl",
+    "category": "objects",
+    "en": "bowl",
+    "zh": "碗",
+    "zhuyin": [
+      "ㄨㄢˇ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "bowl",
+    "emoji": "🥣"
+  },
+  {
+    "id": "kidapp-desk",
+    "category": "objects",
+    "en": "desk",
+    "zh": "書桌",
+    "zhuyin": [
+      "ㄕㄨ",
+      "ㄓㄨㄛ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "desk",
+    "emoji": "🖥️"
+  },
+  {
+    "id": "kidapp-door",
+    "category": "objects",
+    "en": "door",
+    "zh": "門",
+    "zhuyin": [
+      "ㄇㄣˊ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "door",
+    "emoji": "🚪"
+  },
+  {
+    "id": "kidapp-house",
+    "category": "objects",
+    "en": "house",
+    "zh": "房子",
+    "zhuyin": [
+      "ㄈㄤˊ",
+      "ㄗ˙"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "house",
+    "emoji": "🏠"
+  },
+  {
+    "id": "kidapp-knife",
+    "category": "objects",
+    "en": "knife",
+    "zh": "刀子",
+    "zhuyin": [
+      "ㄉㄠ",
+      "ㄗ˙"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "knife",
+    "emoji": "🔪"
+  },
+  {
+    "id": "kidapp-plate",
+    "category": "objects",
+    "en": "plate",
+    "zh": "盤子",
+    "zhuyin": [
+      "ㄆㄢˊ",
+      "ㄗ˙"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "plate",
+    "emoji": "🍽️"
+  },
+  {
+    "id": "kidapp-table",
+    "category": "objects",
+    "en": "table",
+    "zh": "桌子",
+    "zhuyin": [
+      "ㄓㄨㄛ",
+      "ㄗ˙"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "table",
+    "emoji": "🖼️",
+    "image": "assets/kidsapp/table.png"
+  },
+  {
+    "id": "kidapp-window",
+    "category": "objects",
+    "en": "window",
+    "zh": "窗戶",
+    "zhuyin": [
+      "ㄔㄨㄤ",
+      "ㄏㄨˋ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "window",
+    "emoji": "🪟"
+  },
+  {
+    "id": "kidapp-eye",
+    "category": "objects",
+    "en": "eye",
+    "zh": "眼睛",
+    "zhuyin": [
+      "ㄧㄢˇ",
+      "ㄐㄧㄥ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "eye",
+    "emoji": "👁️"
+  },
+  {
+    "id": "kidapp-ear",
+    "category": "objects",
+    "en": "ear",
+    "zh": "耳朵",
+    "zhuyin": [
+      "ㄦˇ",
+      "ㄉㄨㄛ˙"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "ear",
+    "emoji": "👂"
+  },
+  {
+    "id": "kidapp-nose",
+    "category": "objects",
+    "en": "nose",
+    "zh": "鼻子",
+    "zhuyin": [
+      "ㄅㄧˊ",
+      "ㄗ˙"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "nose",
+    "emoji": "👃"
+  },
+  {
+    "id": "kidapp-mouth",
+    "category": "objects",
+    "en": "mouth",
+    "zh": "嘴巴",
+    "zhuyin": [
+      "ㄗㄨㄟˇ",
+      "ㄅㄚ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "mouth",
+    "emoji": "👄"
+  },
+  {
+    "id": "kidapp-hand",
+    "category": "objects",
+    "en": "hand",
+    "zh": "手",
+    "zhuyin": [
+      "ㄕㄡˇ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "hand",
+    "emoji": "✋"
+  },
+  {
+    "id": "kidapp-foot",
+    "category": "objects",
+    "en": "foot",
+    "zh": "腳",
+    "zhuyin": [
+      "ㄐㄧㄠˇ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "foot",
+    "emoji": "🦶"
+  },
+  {
+    "id": "kidapp-sock",
+    "category": "objects",
+    "en": "sock",
+    "zh": "襪子",
+    "zhuyin": [
+      "ㄨㄚˋ",
+      "ㄗ˙"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "sock",
+    "emoji": "🧦"
+  },
+  {
+    "id": "kidapp-shirt",
+    "category": "objects",
+    "en": "shirt",
+    "zh": "襯衫",
+    "zhuyin": [
+      "ㄔㄣˋ",
+      "ㄕㄢ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "shirt",
+    "emoji": "👕"
+  },
+  {
+    "id": "kidapp-pants",
+    "category": "objects",
+    "en": "pants",
+    "zh": "褲子",
+    "zhuyin": [
+      "ㄎㄨˋ",
+      "ㄗ˙"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "pants",
+    "emoji": "👖"
+  },
+  {
+    "id": "kidapp-dress",
+    "category": "objects",
+    "en": "dress",
+    "zh": "洋裝",
+    "zhuyin": [
+      "ㄧㄤˊ",
+      "ㄓㄨㄤ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "dress",
+    "emoji": "👗"
+  },
+  {
+    "id": "kidapp-lamp",
+    "category": "objects",
+    "en": "lamp",
+    "zh": "檯燈",
+    "zhuyin": [
+      "ㄊㄞˊ",
+      "ㄉㄥ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "lamp",
+    "emoji": "💡"
+  },
+  {
+    "id": "kidapp-tv",
+    "category": "objects",
+    "en": "tv",
+    "zh": "電視",
+    "zhuyin": [
+      "ㄉㄧㄢˋ",
+      "ㄕˋ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "tv",
+    "emoji": "📺"
+  },
+  {
+    "id": "kidapp-sofa",
+    "category": "objects",
+    "en": "sofa",
+    "zh": "沙發",
+    "zhuyin": [
+      "ㄕㄚ",
+      "ㄈㄚ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "sofa",
+    "emoji": "🛋️"
+  },
+  {
+    "id": "kidapp-pen",
+    "category": "objects",
+    "en": "pen",
+    "zh": "原子筆",
+    "zhuyin": [
+      "ㄩㄢˊ",
+      "ㄗˇ",
+      "ㄅㄧˇ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "pen",
+    "emoji": "🖊️"
+  },
+  {
+    "id": "kidapp-paper",
+    "category": "objects",
+    "en": "paper",
+    "zh": "紙",
+    "zhuyin": [
+      "ㄓˇ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "paper",
+    "emoji": "📄"
+  },
+  {
+    "id": "kidapp-bag",
+    "category": "objects",
+    "en": "bag",
+    "zh": "包包",
+    "zhuyin": [
+      "ㄅㄠ",
+      "ㄅㄠ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "bag",
+    "emoji": "🎒"
+  },
+  {
+    "id": "kidapp-truck",
+    "category": "objects",
+    "en": "truck",
+    "zh": "卡車",
+    "zhuyin": [
+      "ㄎㄚˇ",
+      "ㄔㄜ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "truck",
+    "emoji": "🚚"
+  },
+  {
+    "id": "kidapp-taxi",
+    "category": "objects",
+    "en": "taxi",
+    "zh": "計程車",
+    "zhuyin": [
+      "ㄐㄧˋ",
+      "ㄔㄥˊ",
+      "ㄔㄜ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "taxi",
+    "emoji": "🚕"
+  },
+  {
+    "id": "kidapp-grass",
+    "category": "nature",
+    "en": "grass",
+    "zh": "草",
+    "zhuyin": [
+      "ㄘㄠˇ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "grass",
+    "emoji": "🌿"
+  },
+  {
+    "id": "kidapp-leaf",
+    "category": "nature",
+    "en": "leaf",
+    "zh": "葉子",
+    "zhuyin": [
+      "ㄧㄝˋ",
+      "ㄗ˙"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "leaf",
+    "emoji": "🍃"
+  },
+  {
+    "id": "kidapp-rock",
+    "category": "nature",
+    "en": "rock",
+    "zh": "石頭",
+    "zhuyin": [
+      "ㄕˊ",
+      "ㄊㄡ˙"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "rock",
+    "emoji": "🪨"
+  },
+  {
+    "id": "kidapp-doll",
+    "category": "objects",
+    "en": "doll",
+    "zh": "洋娃娃",
+    "zhuyin": [
+      "ㄧㄤˊ",
+      "ㄨㄚ",
+      "ㄨㄚ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "doll",
+    "emoji": "🎎"
+  },
+  {
+    "id": "kidapp-robot",
+    "category": "objects",
+    "en": "robot",
+    "zh": "機器人",
+    "zhuyin": [
+      "ㄐㄧ",
+      "ㄑㄧˋ",
+      "ㄖㄣˊ"
+    ],
+    "difficulty": 2,
+    "levelSource": "kidsapp",
+    "sourceId": "robot",
+    "emoji": "🤖"
+  },
+  {
+    "id": "kidapp-bat",
+    "category": "animals",
+    "en": "bat",
+    "zh": "蝙蝠",
+    "zhuyin": [
+      "ㄅㄧㄢ",
+      "ㄈㄨˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "bat",
+    "emoji": "🦇"
+  },
+  {
+    "id": "kidapp-crocodile",
+    "category": "animals",
+    "en": "crocodile",
+    "zh": "鱷魚",
+    "zhuyin": [
+      "ㄜˋ",
+      "ㄩˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "crocodile",
+    "emoji": "🖼️",
+    "image": "assets/kidsapp/crocodile.png"
+  },
+  {
+    "id": "kidapp-flamingo",
+    "category": "animals",
+    "en": "flamingo",
+    "zh": "紅鶴",
+    "zhuyin": [
+      "ㄏㄨㄥˊ",
+      "ㄏㄜˋ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "flamingo",
+    "emoji": "🦩"
+  },
+  {
+    "id": "kidapp-hedgehog",
+    "category": "animals",
+    "en": "hedgehog",
+    "zh": "刺蝟",
+    "zhuyin": [
+      "ㄘˋ",
+      "ㄨㄟˋ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "hedgehog",
+    "emoji": "🦔"
+  },
+  {
+    "id": "kidapp-kangaroo",
+    "category": "animals",
+    "en": "kangaroo",
+    "zh": "袋鼠",
+    "zhuyin": [
+      "ㄉㄞˋ",
+      "ㄕㄨˇ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "kangaroo",
+    "emoji": "🦘"
+  },
+  {
+    "id": "kidapp-lizard",
+    "category": "animals",
+    "en": "lizard",
+    "zh": "蜥蜴",
+    "zhuyin": [
+      "ㄒㄧ",
+      "ㄧˋ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "lizard",
+    "emoji": "🦎"
+  },
+  {
+    "id": "kidapp-peacock",
+    "category": "animals",
+    "en": "peacock",
+    "zh": "孔雀",
+    "zhuyin": [
+      "ㄎㄨㄥˇ",
+      "ㄑㄩㄝˋ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "peacock",
+    "emoji": "🖼️",
+    "image": "assets/kidsapp/peacock.png"
+  },
+  {
+    "id": "kidapp-squirrel",
+    "category": "animals",
+    "en": "squirrel",
+    "zh": "松鼠",
+    "zhuyin": [
+      "ㄙㄨㄥ",
+      "ㄕㄨˇ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "squirrel",
+    "emoji": "🐿️"
+  },
+  {
+    "id": "kidapp-black",
+    "category": "color",
+    "en": "black",
+    "zh": "黑色",
+    "zhuyin": [
+      "ㄏㄟ",
+      "ㄙㄜˋ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "black",
+    "emoji": "⚫"
+  },
+  {
+    "id": "kidapp-brown",
+    "category": "color",
+    "en": "brown",
+    "zh": "棕色",
+    "zhuyin": [
+      "ㄗㄨㄥ",
+      "ㄙㄜˋ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "brown",
+    "emoji": "🟤"
+  },
+  {
+    "id": "kidapp-gray",
+    "category": "color",
+    "en": "gray",
+    "zh": "灰色",
+    "zhuyin": [
+      "ㄏㄨㄟ",
+      "ㄙㄜˋ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "gray",
+    "emoji": "⚪"
+  },
+  {
+    "id": "kidapp-pink",
+    "category": "color",
+    "en": "pink",
+    "zh": "粉紅色",
+    "zhuyin": [
+      "ㄈㄣˇ",
+      "ㄏㄨㄥˊ",
+      "ㄙㄜˋ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "pink",
+    "emoji": "🩷"
+  },
+  {
+    "id": "kidapp-purple",
+    "category": "color",
+    "en": "purple",
+    "zh": "紫色",
+    "zhuyin": [
+      "ㄗˇ",
+      "ㄙㄜˋ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "purple",
+    "emoji": "🟣"
+  },
+  {
+    "id": "kidapp-white",
+    "category": "color",
+    "en": "white",
+    "zh": "白色",
+    "zhuyin": [
+      "ㄅㄞˊ",
+      "ㄙㄜˋ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "white",
+    "emoji": "⚪"
+  },
+  {
+    "id": "kidapp-yellow",
+    "category": "color",
+    "en": "yellow",
+    "zh": "黃色",
+    "zhuyin": [
+      "ㄏㄨㄤˊ",
+      "ㄙㄜˋ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "yellow",
+    "emoji": "🟨"
+  },
+  {
+    "id": "kidapp-avocado",
+    "category": "food",
+    "en": "avocado",
+    "zh": "酪梨",
+    "zhuyin": [
+      "ㄌㄨㄛˋ",
+      "ㄌㄧˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "avocado",
+    "emoji": "🥑"
+  },
+  {
+    "id": "kidapp-blueberry",
+    "category": "food",
+    "en": "blueberry",
+    "zh": "藍莓",
+    "zhuyin": [
+      "ㄌㄢˊ",
+      "ㄇㄟˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "blueberry",
+    "emoji": "🫐"
+  },
+  {
+    "id": "kidapp-chocolate",
+    "category": "food",
+    "en": "chocolate",
+    "zh": "巧克力",
+    "zhuyin": [
+      "ㄑㄧㄠˇ",
+      "ㄎㄜˋ",
+      "ㄌㄧˋ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "chocolate",
+    "emoji": "🍫"
+  },
+  {
+    "id": "kidapp-cucumber",
+    "category": "food",
+    "en": "cucumber",
+    "zh": "小黃瓜",
+    "zhuyin": [
+      "ㄒㄧㄠˇ",
+      "ㄏㄨㄤˊ",
+      "ㄍㄨㄚ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "cucumber",
+    "emoji": "🥒"
+  },
+  {
+    "id": "kidapp-eggplant",
+    "category": "food",
+    "en": "eggplant",
+    "zh": "茄子",
+    "zhuyin": [
+      "ㄑㄧㄝˊ",
+      "ㄗˇ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "eggplant",
+    "emoji": "🍆"
+  },
+  {
+    "id": "kidapp-honey",
+    "category": "food",
+    "en": "honey",
+    "zh": "蜂蜜",
+    "zhuyin": [
+      "ㄈㄥ",
+      "ㄇㄧˋ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "honey",
+    "emoji": "🍯"
+  },
+  {
+    "id": "kidapp-hotdog",
+    "category": "food",
+    "en": "hotdog",
+    "zh": "熱狗",
+    "zhuyin": [
+      "ㄖㄜˋ",
+      "ㄍㄡˇ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "hotdog",
+    "emoji": "🌭"
+  },
+  {
+    "id": "kidapp-mango",
+    "category": "food",
+    "en": "mango",
+    "zh": "芒果",
+    "zhuyin": [
+      "ㄇㄤˊ",
+      "ㄍㄨㄛˇ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "mango",
+    "emoji": "🥭"
+  },
+  {
+    "id": "kidapp-onion",
+    "category": "food",
+    "en": "onion",
+    "zh": "洋蔥",
+    "zhuyin": [
+      "ㄧㄤˊ",
+      "ㄘㄨㄥ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "onion",
+    "emoji": "🧅"
+  },
+  {
+    "id": "kidapp-popcorn",
+    "category": "food",
+    "en": "popcorn",
+    "zh": "爆米花",
+    "zhuyin": [
+      "ㄅㄠˋ",
+      "ㄇㄧˇ",
+      "ㄏㄨㄚ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "popcorn",
+    "emoji": "🍿"
+  },
+  {
+    "id": "kidapp-pumpkin",
+    "category": "food",
+    "en": "pumpkin",
+    "zh": "南瓜",
+    "zhuyin": [
+      "ㄋㄢˊ",
+      "ㄍㄨㄚ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "pumpkin",
+    "emoji": "🎃"
+  },
+  {
+    "id": "kidapp-sandwich",
+    "category": "food",
+    "en": "sandwich",
+    "zh": "三明治",
+    "zhuyin": [
+      "ㄙㄢ",
+      "ㄇㄧㄥˊ",
+      "ㄓˋ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "sandwich",
+    "emoji": "🥪"
+  },
+  {
+    "id": "kidapp-cactus",
+    "category": "nature",
+    "en": "cactus",
+    "zh": "仙人掌",
+    "zhuyin": [
+      "ㄒㄧㄢ",
+      "ㄖㄣˊ",
+      "ㄓㄤˇ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "cactus",
+    "emoji": "🌵"
+  },
+  {
+    "id": "kidapp-flower",
+    "category": "nature",
+    "en": "flower",
+    "zh": "花",
+    "zhuyin": [
+      "ㄏㄨㄚ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "flower",
+    "emoji": "🌸"
+  },
+  {
+    "id": "kidapp-lightning",
+    "category": "nature",
+    "en": "lightning",
+    "zh": "閃電",
+    "zhuyin": [
+      "ㄕㄢˇ",
+      "ㄉㄧㄢˋ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "lightning",
+    "emoji": "🖼️",
+    "image": "assets/kidsapp/lightning.png"
+  },
+  {
+    "id": "kidapp-mountain",
+    "category": "nature",
+    "en": "mountain",
+    "zh": "山",
+    "zhuyin": [
+      "ㄕㄢ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "mountain",
+    "emoji": "⛰️"
+  },
+  {
+    "id": "kidapp-ocean",
+    "category": "nature",
+    "en": "ocean",
+    "zh": "海洋",
+    "zhuyin": [
+      "ㄏㄞˇ",
+      "ㄧㄤˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "ocean",
+    "emoji": "🖼️",
+    "image": "assets/kidsapp/ocean.png"
+  },
+  {
+    "id": "kidapp-rainbow",
+    "category": "nature",
+    "en": "rainbow",
+    "zh": "彩虹",
+    "zhuyin": [
+      "ㄘㄞˇ",
+      "ㄏㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "rainbow",
+    "emoji": "🌈"
+  },
+  {
+    "id": "kidapp-rose",
+    "category": "nature",
+    "en": "rose",
+    "zh": "玫瑰",
+    "zhuyin": [
+      "ㄇㄟˊ",
+      "ㄍㄨㄟ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "rose",
+    "emoji": "🌹"
+  },
+  {
+    "id": "kidapp-sunflower",
+    "category": "nature",
+    "en": "sunflower",
+    "zh": "向日葵",
+    "zhuyin": [
+      "ㄒㄧㄤˋ",
+      "ㄖˋ",
+      "ㄎㄨㄟˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "sunflower",
+    "emoji": "🌻"
+  },
+  {
+    "id": "kidapp-tornado",
+    "category": "nature",
+    "en": "tornado",
+    "zh": "龍捲風",
+    "zhuyin": [
+      "ㄌㄨㄥˊ",
+      "ㄐㄩㄢˇ",
+      "ㄈㄥ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "tornado",
+    "emoji": "🌪️"
+  },
+  {
+    "id": "kidapp-tulip",
+    "category": "nature",
+    "en": "tulip",
+    "zh": "鬱金香",
+    "zhuyin": [
+      "ㄩˋ",
+      "ㄐㄧㄣ",
+      "ㄒㄧㄤ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "tulip",
+    "emoji": "🌷"
+  },
+  {
+    "id": "kidapp-volcano",
+    "category": "nature",
+    "en": "volcano",
+    "zh": "火山",
+    "zhuyin": [
+      "ㄏㄨㄛˇ",
+      "ㄕㄢ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "volcano",
+    "emoji": "🌋"
+  },
+  {
+    "id": "kidapp-telescope",
+    "category": "objects",
+    "en": "telescope",
+    "zh": "望遠鏡",
+    "zhuyin": [
+      "ㄨㄤˋ",
+      "ㄩㄢˇ",
+      "ㄐㄧㄥˋ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "telescope",
+    "emoji": "🔭"
+  },
+  {
+    "id": "kidapp-microscope",
+    "category": "objects",
+    "en": "microscope",
+    "zh": "顯微鏡",
+    "zhuyin": [
+      "ㄒㄧㄢˇ",
+      "ㄨㄟˊ",
+      "ㄐㄧㄥˋ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "microscope",
+    "emoji": "🔬"
+  },
+  {
+    "id": "kidapp-satellite",
+    "category": "objects",
+    "en": "satellite",
+    "zh": "衛星",
+    "zhuyin": [
+      "ㄨㄟˋ",
+      "ㄒㄧㄥ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "satellite",
+    "emoji": "🛰️"
+  },
+  {
+    "id": "kidapp-parachute",
+    "category": "objects",
+    "en": "parachute",
+    "zh": "降落傘",
+    "zhuyin": [
+      "ㄐㄧㄤˋ",
+      "ㄌㄨㄛˋ",
+      "ㄙㄢˇ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "parachute",
+    "emoji": "🪂"
+  },
+  {
+    "id": "kidapp-boomerang",
+    "category": "objects",
+    "en": "boomerang",
+    "zh": "迴旋鏢",
+    "zhuyin": [
+      "ㄏㄨㄟˊ",
+      "ㄒㄩㄢˊ",
+      "ㄅㄧㄠ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "boomerang",
+    "emoji": "🪃"
+  },
+  {
+    "id": "kidapp-harmonica",
+    "category": "music",
+    "en": "harmonica",
+    "zh": "口琴",
+    "zhuyin": [
+      "ㄎㄡˇ",
+      "ㄑㄧㄣˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "harmonica",
+    "emoji": "🖼️",
+    "image": "assets/kidsapp/harmonica.png"
+  },
+  {
+    "id": "kidapp-xylophone",
+    "category": "music",
+    "en": "xylophone",
+    "zh": "木琴",
+    "zhuyin": [
+      "ㄇㄨˋ",
+      "ㄑㄧㄣˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "xylophone",
+    "emoji": "🖼️",
+    "image": "assets/kidsapp/xylophone.png"
+  },
+  {
+    "id": "kidapp-lighthouse",
+    "category": "building",
+    "en": "lighthouse",
+    "zh": "燈塔",
+    "zhuyin": [
+      "ㄉㄥ",
+      "ㄊㄚˇ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "lighthouse",
+    "emoji": "🖼️",
+    "image": "assets/kidsapp/lighthouse.png"
+  },
+  {
+    "id": "kidapp-windmill",
+    "category": "building",
+    "en": "windmill",
+    "zh": "風車",
+    "zhuyin": [
+      "ㄈㄥ",
+      "ㄔㄜ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "windmill",
+    "emoji": "🖼️",
+    "image": "assets/kidsapp/windmill.png"
+  },
+  {
+    "id": "kidapp-pyramid",
+    "category": "building",
+    "en": "pyramid",
+    "zh": "金字塔",
+    "zhuyin": [
+      "ㄐㄧㄣ",
+      "ㄗˋ",
+      "ㄊㄚˇ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "pyramid",
+    "emoji": "🖼️",
+    "image": "assets/kidsapp/pyramid.png"
+  },
+  {
+    "id": "kidapp-compass",
+    "category": "objects",
+    "en": "compass",
+    "zh": "指南針",
+    "zhuyin": [
+      "ㄓˇ",
+      "ㄋㄢˊ",
+      "ㄓㄣ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "compass",
+    "emoji": "🧭"
+  },
+  {
+    "id": "kidapp-magnet",
+    "category": "objects",
+    "en": "magnet",
+    "zh": "磁鐵",
+    "zhuyin": [
+      "ㄘˊ",
+      "ㄊㄧㄝˇ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "magnet",
+    "emoji": "🧲"
+  },
+  {
+    "id": "kidapp-hourglass",
+    "category": "objects",
+    "en": "hourglass",
+    "zh": "沙漏",
+    "zhuyin": [
+      "ㄕㄚ",
+      "ㄌㄡˋ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "hourglass",
+    "emoji": "⏳"
+  },
+  {
+    "id": "kidapp-abacus",
+    "category": "objects",
+    "en": "abacus",
+    "zh": "算盤",
+    "zhuyin": [
+      "ㄙㄨㄢˋ",
+      "ㄆㄢˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "abacus",
+    "emoji": "🧮"
+  },
+  {
+    "id": "kidapp-doctor",
+    "category": "objects",
+    "en": "doctor",
+    "zh": "醫生",
+    "zhuyin": [
+      "ㄧ",
+      "ㄕㄥ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "doctor",
+    "emoji": "🖼️",
+    "image": "assets/kidsapp/doctor.png"
+  },
+  {
+    "id": "kidapp-nurse",
+    "category": "objects",
+    "en": "nurse",
+    "zh": "護士",
+    "zhuyin": [
+      "ㄏㄨˋ",
+      "ㄕˋ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "nurse",
+    "emoji": "🖼️",
+    "image": "assets/kidsapp/nurse.png"
+  },
+  {
+    "id": "kidapp-police",
+    "category": "objects",
+    "en": "police",
+    "zh": "警察",
+    "zhuyin": [
+      "ㄐㄧㄥˇ",
+      "ㄔㄚˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "police",
+    "emoji": "👮"
+  },
+  {
+    "id": "kidapp-teacher",
+    "category": "objects",
+    "en": "teacher",
+    "zh": "老師",
+    "zhuyin": [
+      "ㄌㄠˇ",
+      "ㄕ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "teacher",
+    "emoji": "🖼️",
+    "image": "assets/kidsapp/teacher.png"
+  },
+  {
+    "id": "kidapp-chef",
+    "category": "objects",
+    "en": "chef",
+    "zh": "廚師",
+    "zhuyin": [
+      "ㄔㄨˊ",
+      "ㄕ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "chef",
+    "emoji": "🖼️",
+    "image": "assets/kidsapp/chef.png"
+  },
+  {
+    "id": "kidapp-farmer",
+    "category": "objects",
+    "en": "farmer",
+    "zh": "農夫",
+    "zhuyin": [
+      "ㄋㄨㄥˊ",
+      "ㄈㄨ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "farmer",
+    "emoji": "🖼️",
+    "image": "assets/kidsapp/farmer.png"
+  },
+  {
+    "id": "kidapp-school",
+    "category": "objects",
+    "en": "school",
+    "zh": "學校",
+    "zhuyin": [
+      "ㄒㄩㄝˊ",
+      "ㄒㄧㄠˋ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "school",
+    "emoji": "🏫"
+  },
+  {
+    "id": "kidapp-park",
+    "category": "nature",
+    "en": "park",
+    "zh": "公園",
+    "zhuyin": [
+      "ㄍㄨㄥ",
+      "ㄩㄢˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "park",
+    "emoji": "🖼️",
+    "image": "assets/kidsapp/park.png"
+  },
+  {
+    "id": "kidapp-zoo",
+    "category": "nature",
+    "en": "zoo",
+    "zh": "動物園",
+    "zhuyin": [
+      "ㄉㄨㄥˋ",
+      "ㄨˋ",
+      "ㄩㄢˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "zoo",
+    "emoji": "🖼️",
+    "image": "assets/kidsapp/zoo.png"
+  },
+  {
+    "id": "kidapp-beach",
+    "category": "nature",
+    "en": "beach",
+    "zh": "海灘",
+    "zhuyin": [
+      "ㄏㄞˇ",
+      "ㄊㄢ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "beach",
+    "emoji": "🖼️",
+    "image": "assets/kidsapp/beach.png"
+  },
+  {
+    "id": "kidapp-hospital",
+    "category": "objects",
+    "en": "hospital",
+    "zh": "醫院",
+    "zhuyin": [
+      "ㄧ",
+      "ㄩㄢˋ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "hospital",
+    "emoji": "🏥"
+  },
+  {
+    "id": "kidapp-piano",
+    "category": "music",
+    "en": "piano",
+    "zh": "鋼琴",
+    "zhuyin": [
+      "ㄍㄤ",
+      "ㄑㄧㄣˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "piano",
+    "emoji": "🎹"
+  },
+  {
+    "id": "kidapp-drum",
+    "category": "music",
+    "en": "drum",
+    "zh": "鼓",
+    "zhuyin": [
+      "ㄍㄨˇ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "drum",
+    "emoji": "🥁"
+  },
+  {
+    "id": "kidapp-violin",
+    "category": "music",
+    "en": "violin",
+    "zh": "小提琴",
+    "zhuyin": [
+      "ㄒㄧㄠˇ",
+      "ㄊㄧˊ",
+      "ㄑㄧㄣˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "violin",
+    "emoji": "🎻"
+  },
+  {
+    "id": "kidapp-bell",
+    "category": "objects",
+    "en": "bell",
+    "zh": "鈴鐺",
+    "zhuyin": [
+      "ㄌㄧㄥˊ",
+      "ㄉㄤ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "bell",
+    "emoji": "🔔"
+  },
+  {
+    "id": "kidapp-hammer",
+    "category": "objects",
+    "en": "hammer",
+    "zh": "鐵鎚",
+    "zhuyin": [
+      "ㄊㄧㄝˇ",
+      "ㄔㄨㄟˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "hammer",
+    "emoji": "🔨"
+  },
+  {
+    "id": "kidapp-helicopter",
+    "category": "objects",
+    "en": "helicopter",
+    "zh": "直升機",
+    "zhuyin": [
+      "ㄓˊ",
+      "ㄕㄥ",
+      "ㄐㄧ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "helicopter",
+    "emoji": "🚁"
+  },
+  {
+    "id": "kidapp-ambulance",
+    "category": "objects",
+    "en": "ambulance",
+    "zh": "救護車",
+    "zhuyin": [
+      "ㄐㄧㄡˋ",
+      "ㄏㄨˋ",
+      "ㄔㄜ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "ambulance",
+    "emoji": "🚑"
+  },
+  {
+    "id": "kidapp-firetruck",
+    "category": "objects",
+    "en": "firetruck",
+    "zh": "消防車",
+    "zhuyin": [
+      "ㄒㄧㄠ",
+      "ㄈㄤˊ",
+      "ㄔㄜ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "firetruck",
+    "emoji": "🚒"
+  },
+  {
+    "id": "kidapp-motorcycle",
+    "category": "objects",
+    "en": "motorcycle",
+    "zh": "摩托車",
+    "zhuyin": [
+      "ㄇㄛˊ",
+      "ㄊㄨㄛ",
+      "ㄔㄜ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "motorcycle",
+    "emoji": "🏍️"
+  },
+  {
+    "id": "kidapp-rocket",
+    "category": "objects",
+    "en": "rocket",
+    "zh": "火箭",
+    "zhuyin": [
+      "ㄏㄨㄛˇ",
+      "ㄐㄧㄢˋ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "rocket",
+    "emoji": "🚀"
+  },
+  {
+    "id": "kidapp-planet",
+    "category": "nature",
+    "en": "planet",
+    "zh": "行星",
+    "zhuyin": [
+      "ㄒㄧㄥˊ",
+      "ㄒㄧㄥ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "planet",
+    "emoji": "🪐"
+  },
+  {
+    "id": "kidapp-earth",
+    "category": "nature",
+    "en": "earth",
+    "zh": "地球",
+    "zhuyin": [
+      "ㄉㄧˋ",
+      "ㄑㄧㄡˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "earth",
+    "emoji": "🌍"
+  },
+  {
+    "id": "kidapp-king",
+    "category": "job",
+    "en": "king",
+    "zh": "國王",
+    "zhuyin": [
+      "ㄍㄨㄛˊ",
+      "ㄨㄤˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "king",
+    "emoji": "🤴"
+  },
+  {
+    "id": "kidapp-wind",
+    "category": "nature",
+    "en": "wind",
+    "zh": "風",
+    "zhuyin": [
+      "ㄈㄥ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "wind",
+    "emoji": "🌬️"
+  },
+  {
+    "id": "kidapp-river",
+    "category": "nature",
+    "en": "river",
+    "zh": "河流",
+    "zhuyin": [
+      "ㄏㄜˊ",
+      "ㄌㄧㄡˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "river",
+    "emoji": "🖼️",
+    "image": "assets/kidsapp/river.png"
+  },
+  {
+    "id": "kidapp-forest",
+    "category": "nature",
+    "en": "forest",
+    "zh": "森林",
+    "zhuyin": [
+      "ㄙㄣ",
+      "ㄌㄧㄣˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "forest",
+    "emoji": "🖼️",
+    "image": "assets/kidsapp/forest.png"
+  },
+  {
+    "id": "kidapp-bridge",
+    "category": "objects",
+    "en": "bridge",
+    "zh": "橋",
+    "zhuyin": [
+      "ㄑㄧㄠˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "bridge",
+    "emoji": "🖼️",
+    "image": "assets/kidsapp/bridge.png"
+  },
+  {
+    "id": "kidapp-allosaurus",
+    "category": "dinosaur",
+    "en": "allosaurus",
+    "zh": "異特龍",
+    "zhuyin": [
+      "ㄧˋ",
+      "ㄊㄜˋ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "allosaurus",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/allosaurus.png"
+  },
+  {
+    "id": "kidapp-ankylosaurus",
+    "category": "dinosaur",
+    "en": "ankylosaurus",
+    "zh": "甲龍",
+    "zhuyin": [
+      "ㄐㄧㄚˇ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "ankylosaurus",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/ankylosaurus.png"
+  },
+  {
+    "id": "kidapp-archaeopteryx",
+    "category": "dinosaur",
+    "en": "archaeopteryx",
+    "zh": "始祖鳥",
+    "zhuyin": [
+      "ㄕˇ",
+      "ㄗㄨˇ",
+      "ㄋㄧㄠˇ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "archaeopteryx",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/archaeopteryx.png"
+  },
+  {
+    "id": "kidapp-brachiosaurus",
+    "category": "dinosaur",
+    "en": "brachiosaurus",
+    "zh": "腕龍",
+    "zhuyin": [
+      "ㄨㄢˇ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "brachiosaurus",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/brachiosaurus.png"
+  },
+  {
+    "id": "kidapp-carnotaurus",
+    "category": "dinosaur",
+    "en": "carnotaurus",
+    "zh": "食肉牛龍",
+    "zhuyin": [
+      "ㄕˊ",
+      "ㄖㄡˋ",
+      "ㄋㄧㄡˊ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "carnotaurus",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/carnotaurus.png"
+  },
+  {
+    "id": "kidapp-compsognathus",
+    "category": "dinosaur",
+    "en": "compsognathus",
+    "zh": "美頜龍",
+    "zhuyin": [
+      "ㄇㄟˇ",
+      "ㄏㄜˊ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "compsognathus",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/compsognathus.png"
+  },
+  {
+    "id": "kidapp-corythosaurus",
+    "category": "dinosaur",
+    "en": "corythosaurus",
+    "zh": "冠龍",
+    "zhuyin": [
+      "ㄍㄨㄢˋ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "corythosaurus",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/corythosaurus.png"
+  },
+  {
+    "id": "kidapp-dilophosaurus",
+    "category": "dinosaur",
+    "en": "dilophosaurus",
+    "zh": "雙冠龍",
+    "zhuyin": [
+      "ㄕㄨㄤ",
+      "ㄍㄨㄢˋ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "dilophosaurus",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/dilophosaurus.png"
+  },
+  {
+    "id": "kidapp-diplodocus",
+    "category": "dinosaur",
+    "en": "diplodocus",
+    "zh": "梁龍",
+    "zhuyin": [
+      "ㄌㄧㄤˊ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "diplodocus",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/diplodocus.png"
+  },
+  {
+    "id": "kidapp-giganotosaurus",
+    "category": "dinosaur",
+    "en": "giganotosaurus",
+    "zh": "南方巨獸龍",
+    "zhuyin": [
+      "ㄋㄢˊ",
+      "ㄈㄤ",
+      "ㄐㄩˋ",
+      "ㄕㄡˋ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "giganotosaurus",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/giganotosaurus.png"
+  },
+  {
+    "id": "kidapp-ichthyosaurus",
+    "category": "dinosaur",
+    "en": "ichthyosaurus",
+    "zh": "魚龍",
+    "zhuyin": [
+      "ㄩˊ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "ichthyosaurus",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/ichthyosaurus.png"
+  },
+  {
+    "id": "kidapp-iguanodon",
+    "category": "dinosaur",
+    "en": "iguanodon",
+    "zh": "禽龍",
+    "zhuyin": [
+      "ㄑㄧㄣˊ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "iguanodon",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/iguanodon.png"
+  },
+  {
+    "id": "kidapp-mamenchisaurus",
+    "category": "dinosaur",
+    "en": "mamenchisaurus",
+    "zh": "馬門溪龍",
+    "zhuyin": [
+      "ㄇㄚˇ",
+      "ㄇㄣˊ",
+      "ㄒㄧ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "mamenchisaurus",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/mamenchisaurus.png"
+  },
+  {
+    "id": "kidapp-microraptor",
+    "category": "dinosaur",
+    "en": "microraptor",
+    "zh": "小盜龍",
+    "zhuyin": [
+      "ㄒㄧㄠˇ",
+      "ㄉㄠˋ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "microraptor",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/microraptor.png"
+  },
+  {
+    "id": "kidapp-mosasaurus",
+    "category": "dinosaur",
+    "en": "mosasaurus",
+    "zh": "滄龍",
+    "zhuyin": [
+      "ㄘㄤ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "mosasaurus",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/mosasaurus.png"
+  },
+  {
+    "id": "kidapp-oviraptor",
+    "category": "dinosaur",
+    "en": "oviraptor",
+    "zh": "偷蛋龍",
+    "zhuyin": [
+      "ㄊㄡ",
+      "ㄉㄢˋ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "oviraptor",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/oviraptor.png"
+  },
+  {
+    "id": "kidapp-pachycephalosaurus",
+    "category": "dinosaur",
+    "en": "pachycephalosaurus",
+    "zh": "厚頭龍",
+    "zhuyin": [
+      "ㄏㄡˋ",
+      "ㄊㄡˊ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "pachycephalosaurus",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/pachycephalosaurus.png"
+  },
+  {
+    "id": "kidapp-parasaurolophus",
+    "category": "dinosaur",
+    "en": "parasaurolophus",
+    "zh": "副櫛龍",
+    "zhuyin": [
+      "ㄈㄨˋ",
+      "ㄐㄧㄝˊ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "parasaurolophus",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/parasaurolophus.png"
+  },
+  {
+    "id": "kidapp-plesiosaurus",
+    "category": "dinosaur",
+    "en": "plesiosaurus",
+    "zh": "蛇頸龍",
+    "zhuyin": [
+      "ㄕㄜˊ",
+      "ㄐㄧㄥˇ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "plesiosaurus",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/plesiosaurus.png"
+  },
+  {
+    "id": "kidapp-protoceratops",
+    "category": "dinosaur",
+    "en": "protoceratops",
+    "zh": "原角龍",
+    "zhuyin": [
+      "ㄩㄢˊ",
+      "ㄐㄧㄠˇ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "protoceratops",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/protoceratops.png"
+  },
+  {
+    "id": "kidapp-pteranodon",
+    "category": "dinosaur",
+    "en": "pteranodon",
+    "zh": "翼手龍",
+    "zhuyin": [
+      "ㄧˋ",
+      "ㄕㄡˇ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "pteranodon",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/pteranodon.png"
+  },
+  {
+    "id": "kidapp-spinosaurus",
+    "category": "dinosaur",
+    "en": "spinosaurus",
+    "zh": "棘龍",
+    "zhuyin": [
+      "ㄐㄧˊ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "spinosaurus",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/spinosaurus.png"
+  },
+  {
+    "id": "kidapp-stegosaurus",
+    "category": "dinosaur",
+    "en": "stegosaurus",
+    "zh": "劍龍",
+    "zhuyin": [
+      "ㄐㄧㄢˋ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "stegosaurus",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/stegosaurus.png"
+  },
+  {
+    "id": "kidapp-therizinosaurus",
+    "category": "dinosaur",
+    "en": "therizinosaurus",
+    "zh": "鐮刀龍",
+    "zhuyin": [
+      "ㄌㄧㄢˊ",
+      "ㄉㄠ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "therizinosaurus",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/therizinosaurus.png"
+  },
+  {
+    "id": "kidapp-triceratops",
+    "category": "dinosaur",
+    "en": "triceratops",
+    "zh": "三角龍",
+    "zhuyin": [
+      "ㄙㄢ",
+      "ㄐㄧㄠˇ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "triceratops",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/triceratops-original.svg"
+  },
+  {
+    "id": "kidapp-tyrannosaurus",
+    "category": "dinosaur",
+    "en": "tyrannosaurus",
+    "zh": "暴龍",
+    "zhuyin": [
+      "ㄅㄠˋ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "tyrannosaurus",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/tyrannosaurus.png"
+  },
+  {
+    "id": "kidapp-velociraptor",
+    "category": "dinosaur",
+    "en": "velociraptor",
+    "zh": "迅猛龍",
+    "zhuyin": [
+      "ㄒㄩㄣˋ",
+      "ㄇㄥˇ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "velociraptor",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/velociraptor.png"
+  },
+  {
+    "id": "kidapp-quetzalcoatlus",
+    "category": "dinosaur",
+    "en": "quetzalcoatlus",
+    "zh": "風神翼龍",
+    "zhuyin": [
+      "ㄈㄥ",
+      "ㄕㄣˊ",
+      "ㄧˋ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "quetzalcoatlus",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/quetzalcoatlus.png"
+  },
+  {
+    "id": "kidapp-hatzegopteryx",
+    "category": "dinosaur",
+    "en": "hatzegopteryx",
+    "zh": "雷神翼龍",
+    "zhuyin": [
+      "ㄌㄟˊ",
+      "ㄕㄣˊ",
+      "ㄧˋ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "hatzegopteryx",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/hatzegopteryx.png"
+  },
+  {
+    "id": "kidapp-mammoth",
+    "category": "dinosaur",
+    "en": "mammoth",
+    "zh": "猛獁象",
+    "zhuyin": [
+      "ㄇㄥˇ",
+      "ㄇㄚˇ",
+      "ㄒㄧㄤˋ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "mammoth",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/mammoth.png"
+  },
+  {
+    "id": "kidapp-smilodon",
+    "category": "dinosaur",
+    "en": "smilodon",
+    "zh": "劍齒虎",
+    "zhuyin": [
+      "ㄐㄧㄢˋ",
+      "ㄔˇ",
+      "ㄏㄨˇ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "smilodon",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/smilodon.png"
+  },
+  {
+    "id": "kidapp-deinonychus",
+    "category": "dinosaur",
+    "en": "deinonychus",
+    "zh": "恐爪龍",
+    "zhuyin": [
+      "ㄎㄨㄥˇ",
+      "ㄓㄨㄚˇ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "deinonychus",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/deinonychus.png"
+  },
+  {
+    "id": "kidapp-troodon",
+    "category": "dinosaur",
+    "en": "troodon",
+    "zh": "傷齒龍",
+    "zhuyin": [
+      "ㄕㄤ",
+      "ㄔˇ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "troodon",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/troodon.png"
+  },
+  {
+    "id": "kidapp-edmontosaurus",
+    "category": "dinosaur",
+    "en": "edmontosaurus",
+    "zh": "埃德蒙頓龍",
+    "zhuyin": [
+      "ㄞ",
+      "ㄉㄜˊ",
+      "ㄇㄥˊ",
+      "ㄉㄨㄣˋ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "edmontosaurus",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/edmontosaurus.png"
+  },
+  {
+    "id": "kidapp-maiasaura",
+    "category": "dinosaur",
+    "en": "maiasaura",
+    "zh": "慈母龍",
+    "zhuyin": [
+      "ㄘˊ",
+      "ㄇㄨˇ",
+      "ㄌㄨㄥˊ"
+    ],
+    "difficulty": 3,
+    "levelSource": "kidsapp",
+    "sourceId": "maiasaura",
+    "emoji": "🦕",
+    "image": "assets/kidsapp/dinosaurs/maiasaura.png"
+  }
+]
