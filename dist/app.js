@@ -125,6 +125,7 @@ function showEnglishWord(word) {
   element.setAttribute('aria-label', word.en);
   element.classList.toggle('long-word', word.en.length > 7);
   element.classList.toggle('very-long-word', word.en.length > 15);
+  element.classList.toggle('dinosaur-word', word.category === 'dinosaur');
 }
 const effects = { context: null, playing: new Set() };
 const effectNotes = {
@@ -322,6 +323,7 @@ function drawChoices(word) {
 function renderQuestion() {
   state.phase = 'question'; state.attempts = 0;
   stopEffect();
+  $('mailFlight').classList.remove('flying');
   const word = currentWord();
   showEnglishWord(word);
   $('feedback').textContent = '';
@@ -562,7 +564,7 @@ async function init() {
   annotateStaticUI();
   $('startButton').disabled = true; document.querySelector('.start-label').textContent = '準備題目中…';
   try {
-    const response = await fetch('data.json?v=20260930m');
+    const response = await fetch('data.json?v=20260930r');
     if (!response.ok) throw Error(`HTTP ${response.status}`);
     const words = await response.json(); validateWords(words); state.words = words;
     try {

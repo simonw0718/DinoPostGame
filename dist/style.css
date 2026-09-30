@@ -141,6 +141,16 @@
   .result-medal,.result-screen:has(.result-iggy) .result-medal{width:70px;height:70px;margin-bottom:7px;font-size:40px}.result-crew{height:85px}.result-feifei{height:72px}.result-iggy{height:82px}.result-abao{height:68px}.result-score{padding:6px 12px}.result-score strong{font-size:27px}.result-actions .primary-button{min-height:49px}.result-home{min-height:49px}
   .result-screen>.eyebrow{margin-bottom:4px}.result-screen h1{margin-bottom:7px}.result-copy{margin-top:8px;margin-bottom:8px}
 }
+
+/* 恐龍長名稱可在文字區內換行；重聽鍵固定留在同一排並保持好按。 */
+@media(max-width:680px){
+  .word-line:has(.dinosaur-word.long-word){flex-wrap:nowrap;align-items:center}
+  .word-line #englishWord.dinosaur-word.long-word{flex:1;min-width:0;max-width:none;font-size:clamp(22px,6vw,30px);line-height:1.02;overflow-wrap:anywhere;word-break:normal}
+  .word-line #englishWord.dinosaur-word.very-long-word{font-size:clamp(20px,5.4vw,25px)}
+  .word-line:has(.dinosaur-word.long-word) .audio-button{flex:none;justify-content:center;width:44px;min-width:44px;height:44px;min-height:44px;padding:0}
+  .word-line:has(.dinosaur-word.long-word) .audio-button .replay-label{display:none!important}
+  .question-card:has(.dinosaur-word.long-word){height:auto}
+}
 @media(max-width:680px) and (max-height:610px){
   .topbar{height:49px;min-height:49px}.brand-copy small{display:none}.task-label{display:none}.game-topline{grid-template-columns:auto 1fr auto}.route-row{margin-bottom:2px}.question-wrap{margin-top:4px}.sort-tray{margin-top:4px}.tray-heading{margin-bottom:2px}.tray-bottom.has-next{min-height:62px}.next-button{min-height:40px}
   .start-sticker,.start-feifei,.start-abao{display:none}.start-letter{top:50%;bottom:auto;transform:translateY(-50%);animation:none}.start-letter .eyebrow{display:none}

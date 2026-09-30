@@ -19,7 +19,7 @@ for (const word of words) {
   if (!Array.isArray(word.zhuyin) || word.zhuyin.length !== [...word.zh].length || word.zhuyin.some(x => !x || !/[ㄅ-ㄩ]/u.test(x) || /[^ㄅ-ㄩˊˇˋ˙]/u.test(x))) throw Error(`Invalid zhuyin: ${word.id}`);
   if ((word.sheet || word.cell !== undefined) && (!['animals', 'food', 'objects'].includes(word.sheet) || !Number.isInteger(word.cell) || word.cell < 0 || word.cell > 9)) throw Error(`Invalid image cell: ${word.id}`);
   if (word.image) {
-    if (!word.image.startsWith('assets/kidsapp/') || word.image.includes('..')) throw Error(`Invalid image path: ${word.id}`);
+    if (!/^(assets\/kidsapp\/|assets\/rebuilt\/)[^/]+(?:\/[^/]+)*\.(png|svg)$/.test(word.image) || word.image.includes('..')) throw Error(`Invalid image path: ${word.id}`);
     const image = path.join(dist, word.image);
     if (!fs.existsSync(image) || fs.statSync(image).size < 1000) throw Error(`Missing image: ${word.id}`);
   }

@@ -1681,7 +1681,7 @@
     "levelSource": "kidsapp",
     "sourceId": "table",
     "emoji": "🖼️",
-    "image": "assets/kidsapp/table.png"
+    "image": "assets/rebuilt/kidapp-table.png"
   },
   {
     "id": "kidapp-window",
@@ -2046,7 +2046,7 @@
     "levelSource": "kidsapp",
     "sourceId": "crocodile",
     "emoji": "🖼️",
-    "image": "assets/kidsapp/crocodile.png"
+    "image": "assets/rebuilt/kidapp-crocodile.png"
   },
   {
     "id": "kidapp-flamingo",
@@ -2117,7 +2117,7 @@
     "levelSource": "kidsapp",
     "sourceId": "peacock",
     "emoji": "🖼️",
-    "image": "assets/kidsapp/peacock.png"
+    "image": "assets/rebuilt/kidapp-peacock.png"
   },
   {
     "id": "kidapp-squirrel",
@@ -2445,7 +2445,7 @@
     "levelSource": "kidsapp",
     "sourceId": "lightning",
     "emoji": "🖼️",
-    "image": "assets/kidsapp/lightning.png"
+    "image": "assets/rebuilt/kidapp-lightning.png"
   },
   {
     "id": "kidapp-mountain",
@@ -2473,7 +2473,7 @@
     "levelSource": "kidsapp",
     "sourceId": "ocean",
     "emoji": "🖼️",
-    "image": "assets/kidsapp/ocean.png"
+    "image": "assets/rebuilt/kidapp-ocean.png"
   },
   {
     "id": "kidapp-rainbow",
@@ -2649,7 +2649,7 @@
     "levelSource": "kidsapp",
     "sourceId": "harmonica",
     "emoji": "🖼️",
-    "image": "assets/kidsapp/harmonica.png"
+    "image": "assets/rebuilt/kidapp-harmonica.png"
   },
   {
     "id": "kidapp-xylophone",
@@ -2664,7 +2664,7 @@
     "levelSource": "kidsapp",
     "sourceId": "xylophone",
     "emoji": "🖼️",
-    "image": "assets/kidsapp/xylophone.png"
+    "image": "assets/rebuilt/kidapp-xylophone.png"
   },
   {
     "id": "kidapp-lighthouse",
@@ -2679,7 +2679,7 @@
     "levelSource": "kidsapp",
     "sourceId": "lighthouse",
     "emoji": "🖼️",
-    "image": "assets/kidsapp/lighthouse.png"
+    "image": "assets/rebuilt/kidapp-lighthouse.png"
   },
   {
     "id": "kidapp-windmill",
@@ -2694,7 +2694,7 @@
     "levelSource": "kidsapp",
     "sourceId": "windmill",
     "emoji": "🖼️",
-    "image": "assets/kidsapp/windmill.png"
+    "image": "assets/rebuilt/kidapp-windmill.png"
   },
   {
     "id": "kidapp-pyramid",
@@ -2710,7 +2710,7 @@
     "levelSource": "kidsapp",
     "sourceId": "pyramid",
     "emoji": "🖼️",
-    "image": "assets/kidsapp/pyramid.png"
+    "image": "assets/rebuilt/kidapp-pyramid.png"
   },
   {
     "id": "kidapp-compass",
@@ -2782,7 +2782,7 @@
     "levelSource": "kidsapp",
     "sourceId": "doctor",
     "emoji": "🖼️",
-    "image": "assets/kidsapp/doctor.png"
+    "image": "assets/rebuilt/kidapp-doctor.png"
   },
   {
     "id": "kidapp-nurse",
@@ -2797,7 +2797,7 @@
     "levelSource": "kidsapp",
     "sourceId": "nurse",
     "emoji": "🖼️",
-    "image": "assets/kidsapp/nurse.png"
+    "image": "assets/rebuilt/kidapp-nurse.png"
   },
   {
     "id": "kidapp-police",
@@ -2826,7 +2826,7 @@
     "levelSource": "kidsapp",
     "sourceId": "teacher",
     "emoji": "🖼️",
-    "image": "assets/kidsapp/teacher.png"
+    "image": "assets/rebuilt/kidapp-teacher.png"
   },
   {
     "id": "kidapp-chef",
@@ -2841,7 +2841,7 @@
     "levelSource": "kidsapp",
     "sourceId": "chef",
     "emoji": "🖼️",
-    "image": "assets/kidsapp/chef.png"
+    "image": "assets/rebuilt/kidapp-chef.png"
   },
   {
     "id": "kidapp-farmer",
@@ -2856,7 +2856,7 @@
     "levelSource": "kidsapp",
     "sourceId": "farmer",
     "emoji": "🖼️",
-    "image": "assets/kidsapp/farmer.png"
+    "image": "assets/rebuilt/kidapp-farmer.png"
   },
   {
     "id": "kidapp-school",
@@ -2885,7 +2885,7 @@
     "levelSource": "kidsapp",
     "sourceId": "park",
     "emoji": "🖼️",
-    "image": "assets/kidsapp/park.png"
+    "image": "assets/rebuilt/kidapp-park.png"
   },
   {
     "id": "kidapp-zoo",
@@ -2901,7 +2901,7 @@
     "levelSource": "kidsapp",
     "sourceId": "zoo",
     "emoji": "🖼️",
-    "image": "assets/kidsapp/zoo.png"
+    "image": "assets/rebuilt/kidapp-zoo.png"
   },
   {
     "id": "kidapp-beach",
@@ -2916,7 +2916,7 @@
     "levelSource": "kidsapp",
     "sourceId": "beach",
     "emoji": "🖼️",
-    "image": "assets/kidsapp/beach.png"
+    "image": "assets/rebuilt/kidapp-beach.png"
   },
   {
     "id": "kidapp-hospital",
@@ -3144,7 +3144,7 @@
     "levelSource": "kidsapp",
     "sourceId": "river",
     "emoji": "🖼️",
-    "image": "assets/kidsapp/river.png"
+    "image": "assets/rebuilt/kidapp-river.png"
   },
   {
     "id": "kidapp-forest",
@@ -3159,7 +3159,7 @@
     "levelSource": "kidsapp",
     "sourceId": "forest",
     "emoji": "🖼️",
-    "image": "assets/kidsapp/forest.png"
+    "image": "assets/rebuilt/kidapp-forest.png"
   },
   {
     "id": "kidapp-bridge",
@@ -3173,7 +3173,7 @@
     "levelSource": "kidsapp",
     "sourceId": "bridge",
     "emoji": "🖼️",
-    "image": "assets/kidsapp/bridge.png"
+    "image": "assets/rebuilt/kidapp-bridge.png"
   },
   {
     "id": "kidapp-allosaurus",
@@ -3189,7 +3189,7 @@
     "levelSource": "kidsapp",
     "sourceId": "allosaurus",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/allosaurus.png"
+    "image": "assets/rebuilt/kidapp-allosaurus.png"
   },
   {
     "id": "kidapp-ankylosaurus",
@@ -3204,7 +3204,7 @@
     "levelSource": "kidsapp",
     "sourceId": "ankylosaurus",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/ankylosaurus.png"
+    "image": "assets/rebuilt/kidapp-ankylosaurus.png"
   },
   {
     "id": "kidapp-archaeopteryx",
@@ -3220,7 +3220,7 @@
     "levelSource": "kidsapp",
     "sourceId": "archaeopteryx",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/archaeopteryx.png"
+    "image": "assets/rebuilt/kidapp-archaeopteryx.png"
   },
   {
     "id": "kidapp-brachiosaurus",
@@ -3235,7 +3235,7 @@
     "levelSource": "kidsapp",
     "sourceId": "brachiosaurus",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/brachiosaurus.png"
+    "image": "assets/rebuilt/kidapp-brachiosaurus.png"
   },
   {
     "id": "kidapp-carnotaurus",
@@ -3252,7 +3252,7 @@
     "levelSource": "kidsapp",
     "sourceId": "carnotaurus",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/carnotaurus.png"
+    "image": "assets/rebuilt/kidapp-carnotaurus.png"
   },
   {
     "id": "kidapp-compsognathus",
@@ -3268,7 +3268,7 @@
     "levelSource": "kidsapp",
     "sourceId": "compsognathus",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/compsognathus.png"
+    "image": "assets/rebuilt/kidapp-compsognathus.png"
   },
   {
     "id": "kidapp-corythosaurus",
@@ -3283,7 +3283,7 @@
     "levelSource": "kidsapp",
     "sourceId": "corythosaurus",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/corythosaurus.png"
+    "image": "assets/rebuilt/kidapp-corythosaurus.png"
   },
   {
     "id": "kidapp-dilophosaurus",
@@ -3299,7 +3299,7 @@
     "levelSource": "kidsapp",
     "sourceId": "dilophosaurus",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/dilophosaurus.png"
+    "image": "assets/rebuilt/kidapp-dilophosaurus.png"
   },
   {
     "id": "kidapp-diplodocus",
@@ -3314,7 +3314,7 @@
     "levelSource": "kidsapp",
     "sourceId": "diplodocus",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/diplodocus.png"
+    "image": "assets/rebuilt/kidapp-diplodocus.png"
   },
   {
     "id": "kidapp-giganotosaurus",
@@ -3332,7 +3332,7 @@
     "levelSource": "kidsapp",
     "sourceId": "giganotosaurus",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/giganotosaurus.png"
+    "image": "assets/rebuilt/kidapp-giganotosaurus.png"
   },
   {
     "id": "kidapp-ichthyosaurus",
@@ -3347,7 +3347,7 @@
     "levelSource": "kidsapp",
     "sourceId": "ichthyosaurus",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/ichthyosaurus.png"
+    "image": "assets/rebuilt/kidapp-ichthyosaurus.png"
   },
   {
     "id": "kidapp-iguanodon",
@@ -3362,7 +3362,7 @@
     "levelSource": "kidsapp",
     "sourceId": "iguanodon",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/iguanodon.png"
+    "image": "assets/rebuilt/kidapp-iguanodon.png"
   },
   {
     "id": "kidapp-mamenchisaurus",
@@ -3379,7 +3379,7 @@
     "levelSource": "kidsapp",
     "sourceId": "mamenchisaurus",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/mamenchisaurus.png"
+    "image": "assets/rebuilt/kidapp-mamenchisaurus.png"
   },
   {
     "id": "kidapp-microraptor",
@@ -3395,7 +3395,7 @@
     "levelSource": "kidsapp",
     "sourceId": "microraptor",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/microraptor.png"
+    "image": "assets/rebuilt/kidapp-microraptor.png"
   },
   {
     "id": "kidapp-mosasaurus",
@@ -3410,7 +3410,7 @@
     "levelSource": "kidsapp",
     "sourceId": "mosasaurus",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/mosasaurus.png"
+    "image": "assets/rebuilt/kidapp-mosasaurus.png"
   },
   {
     "id": "kidapp-oviraptor",
@@ -3426,7 +3426,7 @@
     "levelSource": "kidsapp",
     "sourceId": "oviraptor",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/oviraptor.png"
+    "image": "assets/rebuilt/kidapp-oviraptor.png"
   },
   {
     "id": "kidapp-pachycephalosaurus",
@@ -3442,7 +3442,7 @@
     "levelSource": "kidsapp",
     "sourceId": "pachycephalosaurus",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/pachycephalosaurus.png"
+    "image": "assets/rebuilt/kidapp-pachycephalosaurus.png"
   },
   {
     "id": "kidapp-parasaurolophus",
@@ -3458,7 +3458,7 @@
     "levelSource": "kidsapp",
     "sourceId": "parasaurolophus",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/parasaurolophus.png"
+    "image": "assets/rebuilt/kidapp-parasaurolophus.png"
   },
   {
     "id": "kidapp-plesiosaurus",
@@ -3474,7 +3474,7 @@
     "levelSource": "kidsapp",
     "sourceId": "plesiosaurus",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/plesiosaurus.png"
+    "image": "assets/rebuilt/kidapp-plesiosaurus.png"
   },
   {
     "id": "kidapp-protoceratops",
@@ -3490,7 +3490,7 @@
     "levelSource": "kidsapp",
     "sourceId": "protoceratops",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/protoceratops.png"
+    "image": "assets/rebuilt/kidapp-protoceratops.png"
   },
   {
     "id": "kidapp-pteranodon",
@@ -3506,7 +3506,7 @@
     "levelSource": "kidsapp",
     "sourceId": "pteranodon",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/pteranodon.png"
+    "image": "assets/rebuilt/kidapp-pteranodon.png"
   },
   {
     "id": "kidapp-spinosaurus",
@@ -3521,7 +3521,7 @@
     "levelSource": "kidsapp",
     "sourceId": "spinosaurus",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/spinosaurus.png"
+    "image": "assets/rebuilt/kidapp-spinosaurus.png"
   },
   {
     "id": "kidapp-stegosaurus",
@@ -3536,7 +3536,7 @@
     "levelSource": "kidsapp",
     "sourceId": "stegosaurus",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/stegosaurus.png"
+    "image": "assets/rebuilt/kidapp-stegosaurus.png"
   },
   {
     "id": "kidapp-therizinosaurus",
@@ -3552,7 +3552,7 @@
     "levelSource": "kidsapp",
     "sourceId": "therizinosaurus",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/therizinosaurus.png"
+    "image": "assets/rebuilt/kidapp-therizinosaurus.png"
   },
   {
     "id": "kidapp-triceratops",
@@ -3568,7 +3568,7 @@
     "levelSource": "kidsapp",
     "sourceId": "triceratops",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/triceratops-original.svg"
+    "image": "assets/rebuilt/kidapp-triceratops.png"
   },
   {
     "id": "kidapp-tyrannosaurus",
@@ -3583,7 +3583,7 @@
     "levelSource": "kidsapp",
     "sourceId": "tyrannosaurus",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/tyrannosaurus.png"
+    "image": "assets/rebuilt/kidapp-tyrannosaurus.png"
   },
   {
     "id": "kidapp-velociraptor",
@@ -3599,7 +3599,7 @@
     "levelSource": "kidsapp",
     "sourceId": "velociraptor",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/velociraptor.png"
+    "image": "assets/rebuilt/kidapp-velociraptor.png"
   },
   {
     "id": "kidapp-quetzalcoatlus",
@@ -3616,7 +3616,7 @@
     "levelSource": "kidsapp",
     "sourceId": "quetzalcoatlus",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/quetzalcoatlus.png"
+    "image": "assets/rebuilt/kidapp-quetzalcoatlus.png"
   },
   {
     "id": "kidapp-hatzegopteryx",
@@ -3633,7 +3633,7 @@
     "levelSource": "kidsapp",
     "sourceId": "hatzegopteryx",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/hatzegopteryx.png"
+    "image": "assets/rebuilt/kidapp-hatzegopteryx.png"
   },
   {
     "id": "kidapp-mammoth",
@@ -3649,7 +3649,7 @@
     "levelSource": "kidsapp",
     "sourceId": "mammoth",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/mammoth.png"
+    "image": "assets/rebuilt/kidapp-mammoth.png"
   },
   {
     "id": "kidapp-smilodon",
@@ -3665,7 +3665,7 @@
     "levelSource": "kidsapp",
     "sourceId": "smilodon",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/smilodon.png"
+    "image": "assets/rebuilt/kidapp-smilodon.png"
   },
   {
     "id": "kidapp-deinonychus",
@@ -3681,7 +3681,7 @@
     "levelSource": "kidsapp",
     "sourceId": "deinonychus",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/deinonychus.png"
+    "image": "assets/rebuilt/kidapp-deinonychus.png"
   },
   {
     "id": "kidapp-troodon",
@@ -3697,7 +3697,7 @@
     "levelSource": "kidsapp",
     "sourceId": "troodon",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/troodon.png"
+    "image": "assets/rebuilt/kidapp-troodon.png"
   },
   {
     "id": "kidapp-edmontosaurus",
@@ -3715,7 +3715,7 @@
     "levelSource": "kidsapp",
     "sourceId": "edmontosaurus",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/edmontosaurus.png"
+    "image": "assets/rebuilt/kidapp-edmontosaurus.png"
   },
   {
     "id": "kidapp-maiasaura",
@@ -3731,6 +3731,6 @@
     "levelSource": "kidsapp",
     "sourceId": "maiasaura",
     "emoji": "🦕",
-    "image": "assets/kidsapp/dinosaurs/maiasaura.png"
+    "image": "assets/rebuilt/kidapp-maiasaura.png"
   }
 ]
