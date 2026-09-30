@@ -12,3 +12,5 @@ check.cjs
 generate_audio.py
 tools/generate_audio.py
 tools/import_kidsapp.py
+
+audio-pilot/

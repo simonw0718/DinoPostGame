@@ -7,15 +7,17 @@ const words = JSON.parse(fs.readFileSync(path.join(dist, 'data.json'), 'utf8'));
 const ids = new Set();
 const english = new Set();
 const counts = { 1: 0, 2: 0, 3: 0, dinosaur: 0 };
-const visualGroup = word => word.sheet ? `sheet:${word.sheet}` : word.image
+const visualGroup = word => word.category === 'number' ? 'number-emoji' : word.sheet ? `sheet:${word.sheet}` : word.image
   ? (word.category === 'dinosaur' ? 'dinosaur-image' : 'regular-image') : 'emoji';
 const canonical = value => value.toLowerCase().replace(/[^a-z0-9]/g, '');
+const numberEmoji = new Map([['one', '1️⃣'], ['two', '2️⃣'], ['three', '3️⃣'], ['four', '4️⃣'], ['five', '5️⃣'], ['six', '6️⃣'], ['seven', '7️⃣'], ['eight', '8️⃣'], ['nine', '9️⃣'], ['ten', '🔟']]);
 
 for (const word of words) {
   if (!word.id || !word.category || !word.en || !word.zh || !word.emoji || ids.has(word.id)) throw Error(`Invalid or duplicate ID: ${word.id}`);
   const key = canonical(word.en);
   if (english.has(key)) throw Error(`Duplicate English: ${word.en}`);
   if (![1, 2, 3].includes(word.difficulty)) throw Error(`Invalid difficulty: ${word.id}`);
+  if (word.category === 'number' && word.emoji !== numberEmoji.get(word.en)) throw Error(`Invalid number emoji: ${word.id}`);
   if (!Array.isArray(word.zhuyin) || word.zhuyin.length !== [...word.zh].length || word.zhuyin.some(x => !x || !/[ㄅ-ㄩ]/u.test(x) || /[^ㄅ-ㄩˊˇˋ˙]/u.test(x))) throw Error(`Invalid zhuyin: ${word.id}`);
   if ((word.sheet || word.cell !== undefined) && (!['animals', 'food', 'objects'].includes(word.sheet) || !Number.isInteger(word.cell) || word.cell < 0 || word.cell > 9)) throw Error(`Invalid image cell: ${word.id}`);
   if (word.image) {

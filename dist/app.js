@@ -109,6 +109,7 @@ function eligibleWords() {
     : word.category !== 'dinosaur' && (state.mode !== 'level' || word.difficulty === state.level)));
 }
 function visualGroup(word) {
+  if (word.category === 'number') return 'number-emoji';
   if (word.sheet) return `sheet:${word.sheet}`;
   if (word.image) return word.category === 'dinosaur' ? 'dinosaur-image' : 'regular-image';
   return 'emoji';
@@ -218,6 +219,7 @@ const uiReadings = {
   '再聽一次': ['ㄗㄞˋ', 'ㄊㄧㄥ', 'ㄧˊ', 'ㄘˋ'],
   '再聽': ['ㄗㄞˋ', 'ㄊㄧㄥ'],
   '選圖片': ['ㄒㄩㄢˇ', 'ㄊㄨˊ', 'ㄆㄧㄢˋ'],
+  '選數字': ['ㄒㄩㄢˇ', 'ㄕㄨˋ', 'ㄗˋ'],
   '再試一次！': ['ㄗㄞˋ', 'ㄕˋ', 'ㄧˊ', 'ㄘˋ', ''],
   '答對了！': ['ㄉㄚˊ', 'ㄉㄨㄟˋ', 'ㄌㄜ˙', ''],
   '下一題': ['ㄒㄧㄚˋ', 'ㄧˋ', 'ㄊㄧˊ'],
@@ -346,18 +348,22 @@ function updateProgress() {
   }));
 }
 function drawChoices(word) {
+  const displayImage = item => item.category === 'number' ? null : item.image;
   const uniqueOptions = items => {
     const meanings = new Set([word.zh]);
-    const images = new Set(word.image ? [word.image] : []);
+    const images = new Set(displayImage(word) ? [displayImage(word)] : []);
     return shuffle(items).filter(item => {
-      if (meanings.has(item.zh) || (item.image && images.has(item.image))) return false;
+      const image = displayImage(item);
+      if (meanings.has(item.zh) || (image && images.has(image))) return false;
       meanings.add(item.zh);
-      if (item.image) images.add(item.image);
+      if (image) images.add(image);
       return true;
     });
   };
   let pool = uniqueOptions(state.roundChoices.filter(item => item.category === word.category
     && (state.mode !== 'level' || item.difficulty === state.level)
+    && visualGroup(item) === visualGroup(word) && item.id !== word.id));
+  if (pool.length < 3) pool = uniqueOptions(state.roundChoices.filter(item => item.category === word.category
     && visualGroup(item) === visualGroup(word) && item.id !== word.id));
   if (pool.length < 3) pool = uniqueOptions(state.roundChoices.filter(item => (state.mode !== 'level' || item.difficulty === state.level) && visualGroup(item) === visualGroup(word) && item.id !== word.id));
   if (pool.length < 3) pool = uniqueOptions(state.roundChoices.filter(item => visualGroup(item) === visualGroup(word)
@@ -367,13 +373,15 @@ function drawChoices(word) {
   $('choices').replaceChildren(...options.map(option => {
     const button = document.createElement('button');
     button.type = 'button'; button.className = 'choice is-entering';
-    button.setAttribute('aria-label', `${option.zh}的圖片`);
+    button.setAttribute('aria-label', option.category === 'number' ? `${option.zh}的數字` : `${option.zh}的圖片`);
     button.dataset.wordId = option.id;
     const inner = document.createElement('span'); inner.className = 'choice-inner';
     const front = document.createElement('span'); front.className = 'choice-face choice-front';
-    const art = document.createElement(option.image ? 'img' : 'span');
+    const art = document.createElement(displayImage(option) ? 'img' : 'span');
     art.className = 'choice-art'; art.setAttribute('aria-hidden', 'true');
-    if (option.image) {
+    if (option.category === 'number') {
+      art.classList.add('number-art'); art.textContent = option.emoji;
+    } else if (option.image) {
       art.classList.add('choice-image'); art.src = option.image; art.alt = '';
     } else if (option.sheet && Number.isInteger(option.cell)) {
       art.classList.add('choice-illustrated', `sheet-${option.sheet}`);
@@ -402,7 +410,7 @@ function renderQuestion(autoPlay = true) {
   showEnglishWord(word);
   $('feedback').textContent = '';
   $('feedback').removeAttribute('aria-label');
-  setKidText($('instruction'), '選圖片');
+  setKidText($('instruction'), word.category === 'number' ? '選數字' : '選圖片');
   $('nextButton').classList.add('hidden');
   $('trayBottom').classList.remove('has-next');
   setKidText($('nextButton').querySelector('.next-label'), state.index === state.round.length - 1 ? '看成績' : '下一題');
@@ -554,9 +562,10 @@ function bankFilterWords() {
   });
 }
 function makeBankArt(word) {
-  const art = document.createElement(word.image ? 'img' : 'span');
+  const art = document.createElement(word.image && word.category !== 'number' ? 'img' : 'span');
   art.className = 'bank-art'; art.setAttribute('aria-hidden', 'true');
-  if (word.image) { art.src = word.image; art.alt = ''; }
+  if (word.category === 'number') art.textContent = word.emoji;
+  else if (word.image) { art.src = word.image; art.alt = ''; }
   else if (word.sheet && Number.isInteger(word.cell)) {
     art.classList.add('bank-sheet', `sheet-${word.sheet}`);
     art.style.backgroundPosition = `${(word.cell % 5) * 25}% ${word.cell < 5 ? 0 : 100}%`;

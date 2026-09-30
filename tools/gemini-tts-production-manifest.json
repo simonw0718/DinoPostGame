@@ -1,0 +1,1294 @@
+{
+  "date": "2026-10-01",
+  "scope": "non-kidapp words plus dinosaur words",
+  "count": 143,
+  "entries": [
+    {
+      "id": "new-goat",
+      "en": "goat",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-20",
+      "sha256": "a5ff68007ebbee95dfae0736c846174ecb1e448a470d32e02d5fe99fefde2e10"
+    },
+    {
+      "id": "new-goose",
+      "en": "goose",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-20",
+      "sha256": "329612ffa17ccd7a4de56497420d952886ca2d9ce7029c0e4773c7c4459d0874"
+    },
+    {
+      "id": "new-seahorse",
+      "en": "seahorse",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-20",
+      "sha256": "62a1ff971cc5fc7b33eaed575cf03c6beb3279b208b1221f30b9fb713b53d0a9"
+    },
+    {
+      "id": "new-raccoon",
+      "en": "raccoon",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-20",
+      "sha256": "75fbd61fb537e979e6d939d9042018aafa4e1f293c7d690839513b571a090aea"
+    },
+    {
+      "id": "new-butter",
+      "en": "butter",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-20",
+      "sha256": "fcc682199ee6c5482f00a8a3b9e28498eb00d3c25e1d66d1648ab2d830374048"
+    },
+    {
+      "id": "new-biscuit",
+      "en": "biscuit",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-20",
+      "sha256": "b2adccd297024713c8077a90360ed6e51f76a5f8ddae44ff0a4c82a37042fb10"
+    },
+    {
+      "id": "new-pomegranate",
+      "en": "pomegranate",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-20",
+      "sha256": "966b3dc9c2b530b2d09c4a7c8aa64c65123730e233c6fb21cf318c3c591b2407"
+    },
+    {
+      "id": "new-cauliflower",
+      "en": "cauliflower",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-20",
+      "sha256": "f41489c5193d84448ad7d6f4f16619f51321c6ab9f7f1f626de03c7e40f300c8"
+    },
+    {
+      "id": "object-toothbrush",
+      "en": "toothbrush",
+      "source": "local",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-20",
+      "sha256": "ca36b67eef80a0004d0a23912e51f704e88d0448acc230b961d9ae60140dfde6"
+    },
+    {
+      "id": "new-flashlight",
+      "en": "flashlight",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-20",
+      "sha256": "39bb4ea71faa2920825dd22a4f8428047d2d3ffd61745ebceac952c5252e74dc"
+    },
+    {
+      "id": "new-thermometer",
+      "en": "thermometer",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-20",
+      "sha256": "acf37aa2c50c3458ee90200064e7ef3ac681838fbf70dc96a2ec0009e5fca811"
+    },
+    {
+      "id": "new-wheelbarrow",
+      "en": "wheelbarrow",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-20",
+      "sha256": "5cc27af42fc4b9124a6133a5abd5d55fd141300c89eccfe31eb69bddceaf0b5e"
+    },
+    {
+      "id": "new-waterfall",
+      "en": "waterfall",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-20",
+      "sha256": "2ea56254bbb26ba88e0023d0e5d48b36d61354ea0bb82337bd12815a7750bcf3"
+    },
+    {
+      "id": "new-library",
+      "en": "library",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-20",
+      "sha256": "cb91ccbfbb96d4733dd78225cd0e49b54e6ffd4295f8d1348462a93a4399fcba"
+    },
+    {
+      "id": "new-guitar",
+      "en": "guitar",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-20",
+      "sha256": "8bbe659247526d5f79af90cc2db7a5e263ba1d30a83a2d03504e4c26ebd2137e"
+    },
+    {
+      "id": "new-six",
+      "en": "six",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-20",
+      "sha256": "c8c28fe0e7aef92598eea524e5e9f2d2d4e21fb9087669a042f1c382ecbb1bea"
+    },
+    {
+      "id": "kidapp-triceratops",
+      "en": "triceratops",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-20",
+      "sha256": "45aac143b6bd6da27583ec1e5529fd90ed402b50e2562c35960d2e36bf1cb801"
+    },
+    {
+      "id": "kidapp-stegosaurus",
+      "en": "stegosaurus",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-20",
+      "sha256": "36047a7e57b7dcc82b96c15fc34fcbedda25ec6dd1c2d17cc7e2c258f12077a3"
+    },
+    {
+      "id": "kidapp-iguanodon",
+      "en": "iguanodon",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-20",
+      "sha256": "c2567baa8ec8c2564d56f3c33ddc1c45ccefa6c782c06365dc37509e7d1b26ff"
+    },
+    {
+      "id": "kidapp-deinonychus",
+      "en": "deinonychus",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-20",
+      "sha256": "bbef45a4cd187c9604b7880d2b157ab7c883cf8792ff7b91e7bea89c2c9c41e3"
+    },
+    {
+      "id": "animal-horse",
+      "en": "horse",
+      "source": "local",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "a4053f3a4a03f72ef11b4be3d002f55dc82e1b88de1cfd5ae380837a551f77c7"
+    },
+    {
+      "id": "object-backpack",
+      "en": "backpack",
+      "source": "local",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "eb69a88673cc0a743a1acfe24b834deb4876d1008f7f57e96f498acedccc3958"
+    },
+    {
+      "id": "animal-sheep",
+      "en": "sheep",
+      "source": "local",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "f2a1f8492464f1d8184b8d00815b87bd0e2911cce046c07cd21b8cf58a402701"
+    },
+    {
+      "id": "animal-mouse",
+      "en": "mouse",
+      "source": "local",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "f0bb360667b2d7389ad5151e869aaba5357d56ee225212130e2c9300f66d0e69"
+    },
+    {
+      "id": "object-crayon",
+      "en": "crayon",
+      "source": "local",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "967704dd4dfe40e6ab90f6bade3eb61ee190a60e4ed00bd50e0822f90b6edd7f"
+    },
+    {
+      "id": "object-light",
+      "en": "light",
+      "source": "local",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "5275e819bb3ed86d373a856a9e39cda0c31978110b847f9c4fbe8a3da3042f19"
+    },
+    {
+      "id": "object-balloon",
+      "en": "balloon",
+      "source": "local",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "423960881adf3b27f298da93be1d253657b966bbff215fb3749a42ef3f7c1d21"
+    },
+    {
+      "id": "kidapp-allosaurus",
+      "en": "allosaurus",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "012af4ad117d241e5919523e04946719a49a5d9ea8aa5ce48f47e73353a8ddb2"
+    },
+    {
+      "id": "kidapp-ankylosaurus",
+      "en": "ankylosaurus",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "bc44ad9837b05cd0b43fd88981e78daccd9c887851d021fac9eee374117495f9"
+    },
+    {
+      "id": "kidapp-archaeopteryx",
+      "en": "archaeopteryx",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "4c3376af0530c07cd275f3674685e25ac9c0206315b794435a1a4a32a44ace80"
+    },
+    {
+      "id": "kidapp-brachiosaurus",
+      "en": "brachiosaurus",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "0ce7362f82049446ac00544db3b6879e2f21e5c206bdf10befc895f6db2132ad"
+    },
+    {
+      "id": "kidapp-carnotaurus",
+      "en": "carnotaurus",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "857fd51fe32f5ed38b75eb62a560a791c4ca2af9e4caef05a8db1aafcdc3ee62"
+    },
+    {
+      "id": "kidapp-compsognathus",
+      "en": "compsognathus",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "b3dd0361df38da588fae54002304823590b6516f45e7a0843700d423a3f43a36"
+    },
+    {
+      "id": "kidapp-corythosaurus",
+      "en": "corythosaurus",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "5c642befacb84bed10f48a7243bf8e105c40d718b4f8ba34a3487799cf5794e9"
+    },
+    {
+      "id": "kidapp-dilophosaurus",
+      "en": "dilophosaurus",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "1de2ba8649eaebf33caa14b65deaac118080583ac7aeea63ef1e0888df998ff9"
+    },
+    {
+      "id": "kidapp-diplodocus",
+      "en": "diplodocus",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "3015ba027258b68ea9b70acf42fa83e4ce7b9a7505624c0c97691c011e8bacaf"
+    },
+    {
+      "id": "kidapp-giganotosaurus",
+      "en": "giganotosaurus",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "d0fe8a768e121a41bd01c60421c058161359faf0a2d68219af1f236b2b05075f"
+    },
+    {
+      "id": "kidapp-ichthyosaurus",
+      "en": "ichthyosaurus",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "32478a3f65158c9d7a3ebe164fb5aec8d0eb60a978099570609150ff3be88c86"
+    },
+    {
+      "id": "kidapp-mamenchisaurus",
+      "en": "mamenchisaurus",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "b57af93abac3a31dc498e1ed210dad317d6b24139f44454ac6a09c957640be74"
+    },
+    {
+      "id": "kidapp-microraptor",
+      "en": "microraptor",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "462e9503d11648f72258621c489ce4ef05ede8704ad8cca1891acc9490eef9ec"
+    },
+    {
+      "id": "kidapp-mosasaurus",
+      "en": "mosasaurus",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "0ad0483aa772a728b447d39b5192e43030b78e68ee0dabd16ace1d53cf7368d3"
+    },
+    {
+      "id": "kidapp-oviraptor",
+      "en": "oviraptor",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "4b3007e783aa400aa48e49d27a1e5b9a2124f23daeb10f362455e4b5c4826090"
+    },
+    {
+      "id": "kidapp-pachycephalosaurus",
+      "en": "pachycephalosaurus",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "cea162ccaff9451b3ed0ce929cc75d1bad1f03dbb8eced1b94960a591a79cd0d"
+    },
+    {
+      "id": "kidapp-parasaurolophus",
+      "en": "parasaurolophus",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "b67dbfaeb8a5eff22c3b358f85eda059be62915b3ba2bd1b012e85851e02eab2"
+    },
+    {
+      "id": "kidapp-plesiosaurus",
+      "en": "plesiosaurus",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "2fdb1653c8750faf26274e4aa1331f5ec6141c372ccbf1b39356df7b18c0b70e"
+    },
+    {
+      "id": "kidapp-protoceratops",
+      "en": "protoceratops",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "436948b5912367f6d754c1813c16e1b2712e885bd86a5843f2a10b9dc8f077c8"
+    },
+    {
+      "id": "kidapp-pteranodon",
+      "en": "pteranodon",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "5feca25bf7af425d6e7bc803f4f611034b2f247bb11fbb353cf54008d597751f"
+    },
+    {
+      "id": "kidapp-spinosaurus",
+      "en": "spinosaurus",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "ef449e3ce8c4872f03535e7c97bcdd96266ff438378de204a65e758ab11f23f5"
+    },
+    {
+      "id": "kidapp-therizinosaurus",
+      "en": "therizinosaurus",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "6add0bb2531620091a65944e09a67852185ce8b5658a8045cf642af5c601eaa2"
+    },
+    {
+      "id": "kidapp-tyrannosaurus",
+      "en": "tyrannosaurus",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "4f7d22b944fc31407d8398f0ba3eaf914e3a2a20615fca3e35f70c545a70c80f"
+    },
+    {
+      "id": "kidapp-velociraptor",
+      "en": "velociraptor",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "9924ba31a0a1220ae8d90fe80ebf3dabbf707a052859e78e76ec06e423cb432b"
+    },
+    {
+      "id": "kidapp-quetzalcoatlus",
+      "en": "quetzalcoatlus",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "d2520b3405af0fc1cf744b1cc645fa7d12def1dc963ed70ebf276d3be5c3a38f"
+    },
+    {
+      "id": "kidapp-hatzegopteryx",
+      "en": "hatzegopteryx",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "175969faeaa8945d9bd0452da470dee6bb3545e9c7e899e4f41ec88412ddc801"
+    },
+    {
+      "id": "kidapp-mammoth",
+      "en": "mammoth",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "99fb253af4b0d45373b82dad7d3f8237134c488015268c0b1fe46880c805e905"
+    },
+    {
+      "id": "kidapp-smilodon",
+      "en": "smilodon",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "eac8581f8d939d6096dbc631b11cd66a2a623c79958466e859f5451a2ee4a0ed"
+    },
+    {
+      "id": "kidapp-troodon",
+      "en": "troodon",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "c142dd0166d365642878990c581cc381e0acaa4967777e09d9d99d8bc0c3e614"
+    },
+    {
+      "id": "kidapp-edmontosaurus",
+      "en": "edmontosaurus",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "36012bff4bf59e1c67af6d5251d8baeb9cb8f11b1e08593aa896e4f99d025718"
+    },
+    {
+      "id": "kidapp-maiasaura",
+      "en": "maiasaura",
+      "source": "kidsapp",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "2b3f747f29258c74ac399a49d4b913dd7bbd7a75398d69c061a2525ced76be3e"
+    },
+    {
+      "id": "new-deer",
+      "en": "deer",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "e9d5a7a5221d1cf956c3403d26070ba95db9ec5134d611cc464038dfee3093a3"
+    },
+    {
+      "id": "new-hen",
+      "en": "hen",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "751fb98ab1fb473af44868778340ef8ba2c922146b16b7557c4aa465e50f243a"
+    },
+    {
+      "id": "new-donkey",
+      "en": "donkey",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "724c65ef9bd115ceec8c1307b10daae6d1fa0ab15f121a8d086baa1442ec2799"
+    },
+    {
+      "id": "new-camel",
+      "en": "camel",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "fb06374aeceb4d01110c65e57bcf912f31d259ce167c99ee48544943ddb2dcaf"
+    },
+    {
+      "id": "new-seal",
+      "en": "seal",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "27dc348c1b8b39e1200fe9b321de3e5d4ff9f15a4ca8192dd0fff09e76219663"
+    },
+    {
+      "id": "new-worm",
+      "en": "worm",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "97bb1b63024a6126456604dd7e200057153024a6e811928119a290796cfbb497"
+    },
+    {
+      "id": "new-bean",
+      "en": "bean",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "40df9ad211c255ea899752bae28e59386e162d70381ac1bb685b77e24f7157b8"
+    },
+    {
+      "id": "new-jam",
+      "en": "jam",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "2663e6eace6105ebc46b2af41090ef55a6d656a519d5bd1575f8983ba3de84cd"
+    },
+    {
+      "id": "new-juice",
+      "en": "juice",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "544ef65d0e1adaaf48aa4862e6f3912d687e8ddd69057f49213673f681637a9a"
+    },
+    {
+      "id": "new-lettuce",
+      "en": "lettuce",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "3bd923ae32dff5d23a539bd3df079dd1cb96db3735069749a2af728adec977c2"
+    },
+    {
+      "id": "new-plum",
+      "en": "plum",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "3d73db7d8be47c9034e63ab05b8c79e9319e2a00e6f67c66e6bb843c39dd4c0f"
+    },
+    {
+      "id": "new-melon",
+      "en": "melon",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-01-50",
+      "sha256": "ba112689a187f33396b9c366f27896823621b97bca0ac63e73dce9688cf650b5"
+    },
+    {
+      "id": "new-brush",
+      "en": "brush",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "430c80cd8b9dbb529d89f9a2bec7c098e04fb3ecf9cf2106efb9404a257b08db"
+    },
+    {
+      "id": "new-comb",
+      "en": "comb",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "e9541eaace6d3c6a8c500e6d85c795100db17b9dd2501838563eb5bd4b68364d"
+    },
+    {
+      "id": "new-mirror",
+      "en": "mirror",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "fb2cdfa52fab8139d46693470314fed4e61d33be772b897b15e9630cc20a0ec9"
+    },
+    {
+      "id": "new-pillow",
+      "en": "pillow",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "e439dfbfb98b7da2f10d137c9c34b3729ea52df47b66d0db982ab4d32d8dd9e9"
+    },
+    {
+      "id": "new-blanket",
+      "en": "blanket",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "f54c0285a1789613e57a8ed731d6292c11295beef6d75af1e5ea846921ac0c67"
+    },
+    {
+      "id": "new-box",
+      "en": "box",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "add9810fc5fe95076dd4f369b3eabb359d763c0fb19742c40e3cdb2fa7e45f47"
+    },
+    {
+      "id": "new-bottle",
+      "en": "bottle",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "c1614e5f22f8dd83ff13e3baab8528c1495eaaabce49bed1465eaf2dab415393"
+    },
+    {
+      "id": "new-basket",
+      "en": "basket",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "191ca646a5f0c942018ab693d364d3b0822caf92403afe5a51b8376829586df1"
+    },
+    {
+      "id": "new-sky",
+      "en": "sky",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "73279987f191c5e7449a38773e1e013c686b0e08ec0f996990343a1ea8efd274"
+    },
+    {
+      "id": "new-sand",
+      "en": "sand",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "8b561f7e7e783dbb5be3ab261a63d6e83baa69fc6e2d9bd96b734eee63c84d4f"
+    },
+    {
+      "id": "new-pond",
+      "en": "pond",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "1f0c5d29b19fa8e5163de1aa4024dbec482ae09a053fbe72469b59ae6dc7ef9c"
+    },
+    {
+      "id": "new-seven",
+      "en": "seven",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "999ca3a7176c32ea6b85e3306861a87eee9d45a71c3dea464edf17d07f1c9b9a"
+    },
+    {
+      "id": "new-eight",
+      "en": "eight",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "c3bbd58d9414ba9ba8ba0298a9ea212d4ee45a2ac035c772ad6b493be22fdb8e"
+    },
+    {
+      "id": "new-otter",
+      "en": "otter",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "4b0045aa125af28ae8e13975acb683ad34c1d94cab61a05a6bdf5b135df64cf3"
+    },
+    {
+      "id": "new-beaver",
+      "en": "beaver",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "5c1bfc08c4b6da081dd6e05618cdf45d70977afb3ffc28ad21805ecc8577c006"
+    },
+    {
+      "id": "new-moose",
+      "en": "moose",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "9796f98604cd3b9f99d3f4e35d5c060b7511ff525e05b247bf439b94fdb855b7"
+    },
+    {
+      "id": "new-parrot",
+      "en": "parrot",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "ae8c87b90cef1aae68389d4e223eeaac2776b2e3f4ee1f63ea3e5a09a6f40fd5"
+    },
+    {
+      "id": "new-jellyfish",
+      "en": "jellyfish",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "382606ba87852147c215b837aebce738d0d720adb75b0c8681af1f0a01b383a6"
+    },
+    {
+      "id": "new-yogurt",
+      "en": "yogurt",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "8f0e96ffc6ef39a63fa4bdf10573fce900da0122fd6fdb92915ce8da21e70d7a"
+    },
+    {
+      "id": "new-cereal",
+      "en": "cereal",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "580e649e0d4272be36d1c6f35e850ab2bf3b34c0d02252a60558b17f9b241485"
+    },
+    {
+      "id": "new-pancake",
+      "en": "pancake",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "b3b54ef093ce2676d239643359020322e6a08f1d60b387971387826da49199b9"
+    },
+    {
+      "id": "new-waffle",
+      "en": "waffle",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "f5268d6a5639f8666ac82b602bb6a6a10e25f36157c6416b23c728a3680df2c5"
+    },
+    {
+      "id": "new-sausage",
+      "en": "sausage",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "230d00402139768eee3ae0777f3ec066244ffd40bfa4d6622a4c9f4a6bda7a4f"
+    },
+    {
+      "id": "new-shrimp",
+      "en": "shrimp",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "0451ff1b6b697e3ce48294456d00105c7bf9faf946f705bda9030a47132bbc0b"
+    },
+    {
+      "id": "new-spinach",
+      "en": "spinach",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "cf3214eda2a3bbd73afc2b750af4d17295ab01b53d2f03d2b81d6db7a1a8e644"
+    },
+    {
+      "id": "new-cabbage",
+      "en": "cabbage",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "df266a6c5a2572e37ee39050d172f05ce64014c3eb680b57629ba03312964754"
+    },
+    {
+      "id": "new-suitcase",
+      "en": "suitcase",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "b72361ea78905823b23a0a71eee8b50e5206362a315dadf59bdb9680eb108339"
+    },
+    {
+      "id": "new-wallet",
+      "en": "wallet",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "38e0d4d1f2950911efd9e11252a29aa0b9f941262dad54cbda39fb5cdfaa6f9d"
+    },
+    {
+      "id": "new-zipper",
+      "en": "zipper",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "42253cb7b700505f129d2cf8674bdab226d546cca2210af61d1c4a3b590e4ea3"
+    },
+    {
+      "id": "new-ladder",
+      "en": "ladder",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "70d238ebb76662749052178bb876648b3069e39ea9a28df9c4a3068c61f01cbe"
+    },
+    {
+      "id": "new-bucket",
+      "en": "bucket",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "07cf5092606360fcbd07e2bc24023942e9581a8ede6bf9dc85321fa78a081fdb"
+    },
+    {
+      "id": "new-shovel",
+      "en": "shovel",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "872f3032066b59e67025381f884ae3303369dd454b7888e21e654f14b41c3e1e"
+    },
+    {
+      "id": "new-broom",
+      "en": "broom",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "6a9d80e311c42edeaa40a55ce48cc4961d5acf24325f853bef3fe4229a57eac4"
+    },
+    {
+      "id": "new-mop",
+      "en": "mop",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "77607cb74a274327c6c1f34e6953377d5b3d05b99128c039d074e85f22f349ed"
+    },
+    {
+      "id": "new-towel",
+      "en": "towel",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "2afe211c1b2e879f61564d80cfd4155d76c6a9dbc3c4e637eaab6f95e2c06af9"
+    },
+    {
+      "id": "new-bathtub",
+      "en": "bathtub",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "0ae96479460a6f59a9a80b3691510ddf65b1491ec9b35ee162ec384181e997f7"
+    },
+    {
+      "id": "new-kettle",
+      "en": "kettle",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "aef0ab5d65d710f81cee74e88a3524848fb476c1e24e7f28a2ddaa73e7b331b2"
+    },
+    {
+      "id": "new-oven",
+      "en": "oven",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "5d46cab3e413c5ca2c9372c0bf139b53b84ed23ef1a022d3bcc98f88a138d248"
+    },
+    {
+      "id": "new-fridge",
+      "en": "fridge",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "2ce041df028631201acc225395c6d82bffb5aae560092cacf93b3a63b7d4f694"
+    },
+    {
+      "id": "new-toaster",
+      "en": "toaster",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "b8d0e85528f11f938e1f527af6baba61d36c45cd975b6b49090543d7b64de802"
+    },
+    {
+      "id": "new-island",
+      "en": "island",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "3595cc1c6914bee21cbd30cea7ab9a948765eabcec33b21c789f666672233260"
+    },
+    {
+      "id": "new-desert",
+      "en": "desert",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "edce45b17b7c2947ad5f3906fc20216aa84157cd8edacab2dbf26bfedeb0f39c"
+    },
+    {
+      "id": "new-cave",
+      "en": "cave",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "3b8d3fe301ec3402d6bf772fb79ed083ddd0c145db97c37dc3bff1aebf76c1f9"
+    },
+    {
+      "id": "new-hill",
+      "en": "hill",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "30109886077ff33faec86e82bae3e3d9051b6d7c863bdb1f18288731389c738a"
+    },
+    {
+      "id": "new-lake",
+      "en": "lake",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "73c7f982e7b05b711c3e33822915a42f6861d3df6e6e1a6399322884f2ac7818"
+    },
+    {
+      "id": "new-nine",
+      "en": "nine",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "45d11a5b7bf1bbfae1118144408c39ddff7e7b234700b265c39ac1c9cb38d9ad"
+    },
+    {
+      "id": "new-ten",
+      "en": "ten",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "4941df9eebb92771f20d51874dd530d4d89edb3f64008e42b4da72ce98c0f50e"
+    },
+    {
+      "id": "new-trumpet",
+      "en": "trumpet",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "74e54603ff1a4e364d56da68d47034204c164a746ac79e1a5e8ceea709b31f3a"
+    },
+    {
+      "id": "new-flute",
+      "en": "flute",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "8f19da78188fa04bb2f2d534a7917a148f19d757b1f4177cf4bd9b89db582bc2"
+    },
+    {
+      "id": "new-chameleon",
+      "en": "chameleon",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-02-50",
+      "sha256": "af3529b78012fdccb80c5d68b3c28ef594cd878859c3717d2ed79ca2ae8fc598"
+    },
+    {
+      "id": "new-armadillo",
+      "en": "armadillo",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
+      "sha256": "dfe8247adfacda5a7e5759c9b8ef244bc9a1d0ce8cfe1c43a2743b4ee60c1c28"
+    },
+    {
+      "id": "new-porcupine",
+      "en": "porcupine",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
+      "sha256": "0e8e7e62193171c91916135c6dadf63777544abb62dd5a9fc355abfcfcc273de"
+    },
+    {
+      "id": "new-lemur",
+      "en": "lemur",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
+      "sha256": "18e12956c602e77436530aad264cfb1f274b307532ce6f46adb7fde620ef763c"
+    },
+    {
+      "id": "new-narwhal",
+      "en": "narwhal",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
+      "sha256": "75f8b4845ebda346cd78e7cf115c7dd024432f20acb1135923a073d6b3795772"
+    },
+    {
+      "id": "new-asparagus",
+      "en": "asparagus",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
+      "sha256": "d358621ae3b382ee923db22fd26e244333aaccb77c6b379700d06353fd1914f7"
+    },
+    {
+      "id": "new-papaya",
+      "en": "papaya",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
+      "sha256": "80bdcb1b9ca19c76acec00ac52aacb129fa179661f6dbe5d93cb6a58c49ada9d"
+    },
+    {
+      "id": "new-dumpling",
+      "en": "dumpling",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
+      "sha256": "b672774b304783c30589a5909ca84fafd9fd703ff5f53411672bef82568441e1"
+    },
+    {
+      "id": "new-binoculars",
+      "en": "binoculars",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
+      "sha256": "9fdd2d07afebfa91d5a0816959ceacb8c757a495cdd6ed83606cd818ee4e8f9f"
+    },
+    {
+      "id": "new-stapler",
+      "en": "stapler",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
+      "sha256": "43c40f5756376e1aaf00df31333abf7b33818298a1614d5a8607b11ed9576b78"
+    },
+    {
+      "id": "new-calculator",
+      "en": "calculator",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
+      "sha256": "fb8c152d31bce9d03885766b41dc51ac6d75e87ae999afc5b79067fb799cc23d"
+    },
+    {
+      "id": "new-skateboard",
+      "en": "skateboard",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
+      "sha256": "58dccd66743adf47634d1cf209b07a27233b12c6f8212f6706b7c8b295a38bc7"
+    },
+    {
+      "id": "new-vacuum",
+      "en": "vacuum",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
+      "sha256": "4c6d75f83544c7554231d102f4e2207750371b18b838bd133b92a94e87ba5a06"
+    },
+    {
+      "id": "new-mailbox",
+      "en": "mailbox",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
+      "sha256": "e017af25483679217137d9990572918f8e23acaab8b63f5b51ab9d881ac1c188"
+    },
+    {
+      "id": "new-projector",
+      "en": "projector",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
+      "sha256": "267966c2a04014ecdf1d601773c7167022936803adf5dbfd9d613875b18cf569"
+    },
+    {
+      "id": "new-glacier",
+      "en": "glacier",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
+      "sha256": "c5312d051fbc4cd138e6f63ec379270e1969de8ac46bc00b519da4e5d15278e1"
+    },
+    {
+      "id": "new-geyser",
+      "en": "geyser",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
+      "sha256": "5b8b847ce68d9b6dbb5382d6d54f2349b438c8d3e22418d691f18418b4e36f85"
+    },
+    {
+      "id": "new-canyon",
+      "en": "canyon",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
+      "sha256": "5381103e4b6698dfbbd54ac4d99580259fc5f3bc552e42f25c7d4c84ee2d2ff0"
+    },
+    {
+      "id": "new-cliff",
+      "en": "cliff",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
+      "sha256": "155b9ab965d943035fe365252bd6330c6e462b9ddc73bf51146d3f635b330a29"
+    },
+    {
+      "id": "new-swamp",
+      "en": "swamp",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
+      "sha256": "99965f2ebc7212f57586b4c6ffe330911fc419369cb74165cded4b3189afb088"
+    },
+    {
+      "id": "new-castle",
+      "en": "castle",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
+      "sha256": "5a621dfcae8ae9a5d2ab995ac86c5c8f77388f04c7d96d40f63cbdb4fe37d648"
+    },
+    {
+      "id": "new-museum",
+      "en": "museum",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
+      "sha256": "47a4a66456eae40c87b76b5980daa5d1a8f0ca64d673d8e6cfdd82b305a7722c"
+    },
+    {
+      "id": "new-bakery",
+      "en": "bakery",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
+      "sha256": "53115139c6041e736b4bf9c2f54d1390ca901be70bd45ded82827b63a3a14590"
+    },
+    {
+      "id": "new-airport",
+      "en": "airport",
+      "source": "curated-2026-09-30",
+      "model": "gemini-3.8-flash-lite-tts",
+      "voice": "erinome",
+      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
+      "sha256": "7e46eed3968a583d61c898810149a6ff0de834530d27281c8bf7786018c66b74"
+    }
+  ]
+}
