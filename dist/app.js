@@ -1,6 +1,7 @@
 const $ = (id) => document.getElementById(id);
 const screens = ['startScreen', 'playScreen', 'resultScreen'];
-const state = { words: [], count: 5, mode: 'all', level: 1, round: [], index: 0, firstTryScore: 0, attempts: 0, results: [], phase: 'start', audio: null, completedRounds: 0 };
+const state = { words: [], disabledIds: new Set(), roundChoices: [], count: 5, mode: 'all', level: 1, round: [], index: 0, firstTryScore: 0, attempts: 0, results: [], phase: 'start', audio: null, completedRounds: 0 };
+const bankStorageKey = 'dinopost-disabled-words-v1';
 
 function showScreen(id) {
   screens.forEach(name => $(name).classList.toggle('hidden', name !== id));
@@ -16,9 +17,9 @@ function shuffle(items) {
 function currentWord() { return state.round[state.index]; }
 function audioPath(word) { return `assets/audio/${word.id}.mp3`; }
 function eligibleWords() {
-  return state.words.filter(word => state.mode === 'dinosaur'
+  return state.words.filter(word => !state.disabledIds.has(word.id) && (state.mode === 'dinosaur'
     ? word.category === 'dinosaur'
-    : word.category !== 'dinosaur' && (state.mode !== 'level' || word.difficulty === state.level));
+    : word.category !== 'dinosaur' && (state.mode !== 'level' || word.difficulty === state.level)));
 }
 function visualGroup(word) {
   if (word.sheet) return `sheet:${word.sheet}`;
@@ -218,8 +219,8 @@ function updateProgress() {
   }));
 }
 function drawChoices(word) {
-  let pool = eligibleWords().filter(item => visualGroup(item) === visualGroup(word) && item.id !== word.id);
-  if (pool.length < 3) pool = state.words.filter(item => visualGroup(item) === visualGroup(word)
+  let pool = state.roundChoices.filter(item => (state.mode !== 'level' || item.difficulty === state.level) && visualGroup(item) === visualGroup(word) && item.id !== word.id);
+  if (pool.length < 3) pool = state.roundChoices.filter(item => visualGroup(item) === visualGroup(word)
     && (item.category === 'dinosaur') === (word.category === 'dinosaur') && item.id !== word.id);
   const distractors = shuffle(pool).slice(0, 3);
   const options = shuffle([word, ...distractors]);
@@ -327,6 +328,7 @@ function choose(button, id) {
 }
 function startRound() {
   const pool = eligibleWords();
+  state.roundChoices = state.words.filter(word => !state.disabledIds.has(word.id));
   state.round = shuffle(pool).slice(0, state.count);
   state.index = 0; state.firstTryScore = 0; state.results = [];
   const title = state.mode === 'dinosaur' ? '恐龍挑戰' : state.mode === 'level'
@@ -363,6 +365,101 @@ function setCount(value) {
   $('questionCount').value = String(state.count);
   $('countOutput').value = String(state.count);
   $('startCount').textContent = String(state.count);
+}
+function bankIssue(disabledIds) {
+  const active = state.words.filter(word => !disabledIds.has(word.id));
+  for (const [name, pool] of [
+    ['第一級', active.filter(word => word.category !== 'dinosaur' && word.difficulty === 1)],
+    ['第二級', active.filter(word => word.category !== 'dinosaur' && word.difficulty === 2)],
+    ['第三級', active.filter(word => word.category !== 'dinosaur' && word.difficulty === 3)],
+    ['恐龍挑戰', active.filter(word => word.category === 'dinosaur')]
+  ]) {
+    if (pool.length < 10) return `${name}至少需要保留 10 個單字，才能支援每回合最多 10 題。`;
+  }
+  const groups = new Map();
+  active.forEach(word => {
+    const key = `${word.category === 'dinosaur' ? 'dino' : 'regular'}:${visualGroup(word)}`;
+    groups.set(key, (groups.get(key) || 0) + 1);
+  });
+  if ([...groups.values()].some(count => count < 4)) return '同一種圖片樣式至少要保留 4 個單字，才能組成四張選項。';
+  return '';
+}
+function saveBankSelection() {
+  try { localStorage.setItem(bankStorageKey, JSON.stringify([...state.disabledIds])); return true; }
+  catch { $('bankMessage').textContent = '這個瀏覽器無法儲存設定；重新開啟網頁後可能恢復原狀。'; return false; }
+}
+function bankFilterWords() {
+  const query = $('bankSearch').value.trim().toLocaleLowerCase();
+  const filter = $('bankFilter').value;
+  return state.words.filter(word => {
+    const inPool = filter === 'all' || (filter === 'dinosaur' ? word.category === 'dinosaur' : word.category !== 'dinosaur' && word.difficulty === Number(filter));
+    return inPool && (!query || word.en.toLocaleLowerCase().includes(query) || word.zh.includes(query));
+  });
+}
+function makeBankArt(word) {
+  const art = document.createElement(word.image ? 'img' : 'span');
+  art.className = 'bank-art'; art.setAttribute('aria-hidden', 'true');
+  if (word.image) { art.src = word.image; art.alt = ''; }
+  else if (word.sheet && Number.isInteger(word.cell)) {
+    art.classList.add('bank-sheet', `sheet-${word.sheet}`);
+    art.style.backgroundPosition = `${(word.cell % 5) * 25}% ${word.cell < 5 ? 0 : 100}%`;
+  } else art.textContent = word.emoji;
+  return art;
+}
+function previewBankAudio(word) {
+  if (state.audio) { state.audio.pause(); state.audio.currentTime = 0; }
+  state.audio = new Audio(audioPath(word));
+  state.audio.play().catch(() => { $('bankMessage').textContent = `${word.en} 的發音暫時無法播放。`; });
+}
+function renderBank() {
+  if (!state.words.length) return;
+  const active = state.words.filter(word => !state.disabledIds.has(word.id));
+  const count = predicate => active.filter(predicate).length;
+  $('settingsBankSummary').textContent = `已啟用 ${active.length}／${state.words.length} 個單字`;
+  $('bankStats').replaceChildren(...[
+    ['題庫總數', active.length, state.words.length],
+    ...[1, 2, 3].map(level => [`第${['一', '二', '三'][level - 1]}級`, count(word => word.category !== 'dinosaur' && word.difficulty === level), state.words.filter(word => word.category !== 'dinosaur' && word.difficulty === level).length]),
+    ['恐龍', count(word => word.category === 'dinosaur'), state.words.filter(word => word.category === 'dinosaur').length]
+  ].map(([label, enabled, total]) => {
+    const item = document.createElement('div'); item.className = 'bank-stat';
+    const title = document.createElement('small'); title.textContent = label;
+    const value = document.createElement('strong'); value.textContent = `${enabled}／${total}`;
+    item.append(title, value); return item;
+  }));
+  const words = bankFilterWords();
+  $('bankListCount').textContent = `顯示 ${words.length} 個單字`;
+  const fragment = document.createDocumentFragment();
+  words.forEach(word => {
+    const row = document.createElement('div'); row.className = 'bank-row';
+    row.append(makeBankArt(word));
+    const copy = document.createElement('div'); copy.className = 'bank-word';
+    const english = document.createElement('strong'); english.textContent = word.en;
+    const chinese = document.createElement('small'); chinese.textContent = `${word.zh} · ${word.zhuyin.join(' ')}`;
+    copy.append(english, chinese); row.append(copy);
+    const sound = document.createElement('button'); sound.type = 'button'; sound.className = 'bank-sound'; sound.textContent = '♫'; sound.setAttribute('aria-label', `播放 ${word.en} 發音`); sound.addEventListener('click', () => previewBankAudio(word)); row.append(sound);
+    const toggle = document.createElement('input'); toggle.type = 'checkbox'; toggle.className = 'bank-toggle'; toggle.checked = !state.disabledIds.has(word.id); toggle.setAttribute('aria-label', `${word.en} ${word.zh} 出題`);
+    toggle.addEventListener('change', () => {
+      const next = new Set(state.disabledIds);
+      if (toggle.checked) next.delete(word.id); else next.add(word.id);
+      const issue = bankIssue(next);
+      if (issue) { toggle.checked = !toggle.checked; $('bankMessage').textContent = issue; return; }
+      state.disabledIds = next; $('bankMessage').textContent = `${word.en} 已${toggle.checked ? '啟用' : '停用'}，下回合生效。`;
+      saveBankSelection(); renderBank();
+      $('bankList').querySelector(`.bank-toggle[data-id="${word.id}"]`)?.focus({ preventScroll: true });
+    });
+    toggle.dataset.id = word.id;
+    row.append(toggle); fragment.append(row);
+  });
+  const scrollTop = $('bankList').scrollTop;
+  $('bankList').replaceChildren(fragment);
+  $('bankList').scrollTop = scrollTop;
+}
+function showSettingsPage(name) {
+  $('settingsMain').classList.toggle('hidden', name !== 'main');
+  $('wordBankPage').classList.toggle('hidden', name !== 'bank');
+  $('settingsDialog').classList.toggle('bank-open', name === 'bank');
+  if (name === 'bank') { renderBank(); $('backToSettings').focus(); }
+  else $('openWordBank').focus();
 }
 function setMode(mode) {
   if (!['all', 'level', 'dinosaur'].includes(mode)) return;
@@ -403,6 +500,15 @@ async function init() {
     const response = await fetch('data.json?v=20260930m');
     if (!response.ok) throw Error(`HTTP ${response.status}`);
     const words = await response.json(); validateWords(words); state.words = words;
+    try {
+      const saved = JSON.parse(localStorage.getItem(bankStorageKey) || '[]');
+      if (Array.isArray(saved)) {
+        const ids = new Set(words.map(word => word.id));
+        const disabled = new Set(saved.filter(id => ids.has(id)));
+        if (!bankIssue(disabled)) state.disabledIds = disabled;
+      }
+    } catch { /* Browser storage can be unavailable; the default bank remains usable. */ }
+    renderBank();
     $('startButton').disabled = false; setKidText(document.querySelector('.start-label'), '開始任務');
   } catch (error) {
     document.querySelector('.start-label').textContent = '題目載入失敗';
@@ -415,7 +521,16 @@ $('audioButton').addEventListener('click', playWord);
 $('nextButton').addEventListener('click', nextQuestion);
 $('homeButton').addEventListener('click', goHome);
 $('resultHomeButton').addEventListener('click', goHome);
-$('settingsButton').addEventListener('click', () => $('settingsDialog').showModal());
+$('settingsButton').addEventListener('click', () => { showSettingsPage('main'); $('settingsDialog').showModal(); });
+$('openWordBank').addEventListener('click', () => showSettingsPage('bank'));
+$('backToSettings').addEventListener('click', () => showSettingsPage('main'));
+document.querySelectorAll('[data-close-settings]').forEach(button => button.addEventListener('click', () => $('settingsDialog').close()));
+$('settingsDialog').addEventListener('close', () => { $('settingsDialog').classList.remove('bank-open'); });
+$('bankSearch').addEventListener('input', renderBank);
+$('bankFilter').addEventListener('change', renderBank);
+$('resetWordBank').addEventListener('click', () => {
+  state.disabledIds.clear(); saveBankSelection(); renderBank(); $('bankMessage').textContent = '所有單字已恢復啟用。';
+});
 $('minusButton').addEventListener('click', () => setCount(state.count - 1));
 $('plusButton').addEventListener('click', () => setCount(state.count + 1));
 $('questionCount').addEventListener('input', event => setCount(event.target.value));

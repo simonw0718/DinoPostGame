@@ -7,8 +7,8 @@
   <meta name="description" content="跟著伊奇、飛飛與小雞阿暴在恐龍郵局聽單字、選圖片。">
   <title>恐龍郵局・單字任務</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="style.css?v=20260930m">
-  <script src="app.js?v=20260930m" defer></script>
+  <link rel="stylesheet" href="style.css?v=20260930n">
+  <script src="app.js?v=20260930n" defer></script>
 </head>
 <body>
   <div class="ambient ambient-a" aria-hidden="true"></div>
@@ -16,7 +16,7 @@
   <main class="shell">
     <header class="topbar">
       <div class="brand" aria-label="恐龍郵局單字任務"><span class="brand-seal" aria-hidden="true"><img src="assets/dinopost-workmark-master.png" alt=""></span><span class="brand-copy"><strong>恐龍郵局</strong><small>WORD MISSION</small></span></div>
-      <button id="settingsButton" class="settings-button" type="button" aria-label="設定題數"><span aria-hidden="true">⚙</span><span>設定</span></button>
+      <button id="settingsButton" class="settings-button" type="button" aria-label="開啟設定"><span aria-hidden="true">⚙</span><span>設定</span></button>
     </header>
 
     <section id="startScreen" class="screen start-screen" aria-labelledby="startTitle">
@@ -72,6 +72,26 @@
     </section>
   </main>
 
-  <dialog id="settingsDialog" class="settings-dialog"><form method="dialog"><div class="dialog-head"><span class="dialog-icon" aria-hidden="true">✉</span><h2>遊戲設定</h2><button class="close-button" aria-label="關閉設定">✕</button></div><label for="questionCount">每回合題數</label><div class="stepper"><button id="minusButton" type="button" aria-label="減少一題">−</button><output id="countOutput" for="questionCount">5</output><button id="plusButton" type="button" aria-label="增加一題">＋</button></div><input id="questionCount" type="range" min="3" max="10" value="5" aria-label="每回合題數"><p class="setting-note">可以選 3 到 10 題。新設定會在下一回合使用。</p><button class="primary-button dialog-done" value="done"><span>完成設定</span><span class="button-arrow" aria-hidden="true">✓</span></button></form></dialog>
+  <dialog id="settingsDialog" class="settings-dialog">
+    <div id="settingsMain" class="settings-page">
+      <div class="dialog-head"><span class="dialog-icon" aria-hidden="true">✉</span><h2>遊戲設定</h2><button class="close-button" type="button" aria-label="關閉設定" data-close-settings>✕</button></div>
+      <label for="questionCount">每回合題數</label>
+      <div class="stepper"><button id="minusButton" type="button" aria-label="減少一題">−</button><output id="countOutput" for="questionCount">5</output><button id="plusButton" type="button" aria-label="增加一題">＋</button></div>
+      <input id="questionCount" type="range" min="3" max="10" value="5" aria-label="每回合題數">
+      <p class="setting-note">可以選 3 到 10 題。新設定會在下一回合使用。</p>
+      <button id="openWordBank" class="settings-link" type="button"><span><strong>題庫管理</strong><small id="settingsBankSummary">載入題庫中…</small></span><span aria-hidden="true">›</span></button>
+      <button class="primary-button dialog-done" type="button" data-close-settings><span>完成設定</span><span class="button-arrow" aria-hidden="true">✓</span></button>
+    </div>
+    <div id="wordBankPage" class="settings-page hidden">
+      <div class="dialog-head"><button id="backToSettings" class="back-button" type="button" aria-label="返回遊戲設定">‹</button><h2>題庫管理</h2><button class="close-button" type="button" aria-label="關閉設定" data-close-settings>✕</button></div>
+      <p class="setting-note">選擇可出現的單字。關閉的單字也不會出現在四張圖片選項中。設定保存在這台裝置，下一回合生效。</p>
+      <div id="bankStats" class="bank-stats" aria-live="polite"></div>
+      <div class="bank-controls"><label for="bankSearch">搜尋單字</label><input id="bankSearch" type="search" placeholder="英文或中文"><label for="bankFilter">篩選題庫</label><select id="bankFilter"><option value="all">全部題庫</option><option value="1">第一級</option><option value="2">第二級</option><option value="3">第三級</option><option value="dinosaur">恐龍挑戰</option></select></div>
+      <p id="bankListCount" class="bank-list-count"></p>
+      <div id="bankList" class="bank-list"></div>
+      <p id="bankMessage" class="bank-message" role="status" aria-live="polite"></p>
+      <button id="resetWordBank" class="reset-bank" type="button">全部恢復啟用</button>
+    </div>
+  </dialog>
 </body>
 </html>
