@@ -1,0 +1,934 @@
+{
+  "layout": {
+    "columns": 6,
+    "rows": 5,
+    "usedCells": [
+      30,
+      30,
+      30,
+      10
+    ]
+  },
+  "sourceStyle": "Design Masters/Visual Style Master.png",
+  "tool": "built-in imagegen; deterministic local Pillow crop",
+  "sheets": [
+    {
+      "file": "words-01-grid-6x5-v1.png",
+      "sha256": "0c95f55d6461d9b5c12839bdaf19a15714a32de009729c15c907a323e6aa25e0"
+    },
+    {
+      "file": "words-02-grid-6x5-v1.png",
+      "sha256": "a86e6b35876ec4ea8e73dd0eca46b4550f0ce6cc968a03f0ce25a8df88edd036"
+    },
+    {
+      "file": "words-03-grid-6x5-v1.png",
+      "sha256": "7b20b00c39a4594c99ce977fc5b8e94e26994b39f098b83c1bc58a0a60b81730"
+    },
+    {
+      "file": "words-04-grid-6x5-v1.png",
+      "sha256": "cdb4917bf96efebd2182e074e5808b6bf1c12beb4325cd5c595638e363e1baa3"
+    }
+  ],
+  "items": [
+    {
+      "id": "new-goat",
+      "en": "goat",
+      "sheet": 1,
+      "cell": 0,
+      "image": "assets/rebuilt/new100/new-goat.png",
+      "sha256": "c10c5e9bef9ad7aec454e323c0117d347b990f48e13c4b07b522918d396f8a15",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-deer",
+      "en": "deer",
+      "sheet": 1,
+      "cell": 1,
+      "image": "assets/rebuilt/new100/new-deer.png",
+      "sha256": "0587d10c66c618b2ec607f24331f299c45b730d458444f2f165b4775b6ef6a16",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-goose",
+      "en": "goose",
+      "sheet": 1,
+      "cell": 2,
+      "image": "assets/rebuilt/new100/new-goose.png",
+      "sha256": "138ade3b2fd8ea82c8d59563825cab1da99ac974019e0c2239f5facc8b656442",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-hen",
+      "en": "hen",
+      "sheet": 1,
+      "cell": 3,
+      "image": "assets/rebuilt/new100/new-hen.png",
+      "sha256": "f320559274bf88c2e361cda94c7350f1d64ad57e0287962cee7db80b76492948",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-donkey",
+      "en": "donkey",
+      "sheet": 1,
+      "cell": 4,
+      "image": "assets/rebuilt/new100/new-donkey.png",
+      "sha256": "dc70681c99efdf061e2c6d9a71f378eae186ffc09e49f90e73186e1c18ed70fb",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-camel",
+      "en": "camel",
+      "sheet": 1,
+      "cell": 5,
+      "image": "assets/rebuilt/new100/new-camel.png",
+      "sha256": "13dd7931f29362c03aa4216d52350e9e4d8681fffb287e0a933f9cad4aa1b99e",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-seal",
+      "en": "seal",
+      "sheet": 1,
+      "cell": 6,
+      "image": "assets/rebuilt/new100/new-seal.png",
+      "sha256": "1155d883bd03dd7b3057d337544930b7f1b72c8add7d151b1269f86ffc0c2411",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-worm",
+      "en": "worm",
+      "sheet": 1,
+      "cell": 7,
+      "image": "assets/rebuilt/new100/new-worm.png",
+      "sha256": "20e7984584a3e2bba844500e6630be64fb665ea84affdebc1f623b6defd80ea6",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-bean",
+      "en": "bean",
+      "sheet": 1,
+      "cell": 8,
+      "image": "assets/rebuilt/new100/new-bean.png",
+      "sha256": "77a164b122e89e10b880d024e066bc5194a1ea346e755dc658004b6b60f499db",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-butter",
+      "en": "butter",
+      "sheet": 1,
+      "cell": 9,
+      "image": "assets/rebuilt/new100/new-butter.png",
+      "sha256": "cc81d6e958fc8db9a4e5727de84e96e706eb2023750e4397fa4fb1f6f748fb26",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-jam",
+      "en": "jam",
+      "sheet": 1,
+      "cell": 10,
+      "image": "assets/rebuilt/new100/new-jam.png",
+      "sha256": "c6349fab1878e814c7e5bbe8c11138fd2e774645129c406c97c021ded650945f",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-juice",
+      "en": "juice",
+      "sheet": 1,
+      "cell": 11,
+      "image": "assets/rebuilt/new100/new-juice.png",
+      "sha256": "bd0ecc6e87f0830328dbdbd1de13b765ba54e7bb1d621f64c9427cf1ff956c40",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-biscuit",
+      "en": "biscuit",
+      "sheet": 1,
+      "cell": 12,
+      "image": "assets/rebuilt/new100/new-biscuit.png",
+      "sha256": "f85aa55659ead981fb3635dcefd11df9101ae85f928ad6fbf5a6b0d8eebcaede",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-lettuce",
+      "en": "lettuce",
+      "sheet": 1,
+      "cell": 13,
+      "image": "assets/rebuilt/new100/new-lettuce.png",
+      "sha256": "40214bb014c3e837b0797aca4c184a4d3df090be60532a6c150b966905d02748",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-plum",
+      "en": "plum",
+      "sheet": 1,
+      "cell": 14,
+      "image": "assets/rebuilt/new100/new-plum.png",
+      "sha256": "a231b209e3d8f8290635698fde866397e07db09853533fe4fcc6771371f0d594",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-melon",
+      "en": "melon",
+      "sheet": 1,
+      "cell": 15,
+      "image": "assets/rebuilt/new100/new-melon.png",
+      "sha256": "ac0a489ebfdeb2596c5916146f01c3948fec431bd84830dd14a72eea0d57f55f",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-brush",
+      "en": "brush",
+      "sheet": 1,
+      "cell": 16,
+      "image": "assets/rebuilt/new100/new-brush.png",
+      "sha256": "3d6f74ac3ebc0c14e21823865b65084a875bb157a2ce387320762d7ddde325bb",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-comb",
+      "en": "comb",
+      "sheet": 1,
+      "cell": 17,
+      "image": "assets/rebuilt/new100/new-comb.png",
+      "sha256": "c3fe4524457a0182842e1d7d4b5f2c822317b34c8c1ef8d901f67ab07b07e9cd",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-mirror",
+      "en": "mirror",
+      "sheet": 1,
+      "cell": 18,
+      "image": "assets/rebuilt/new100/new-mirror.png",
+      "sha256": "42591d3649fb137d8fbaf19068ab8d3a671e4d1a6a063470a95ac7b6e7778acf",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-pillow",
+      "en": "pillow",
+      "sheet": 1,
+      "cell": 19,
+      "image": "assets/rebuilt/new100/new-pillow.png",
+      "sha256": "2eb9824ca29793f5bf5cb9073fd9e10ab0f5b35f18f495d0ca5f42996d5c8d6b",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-blanket",
+      "en": "blanket",
+      "sheet": 1,
+      "cell": 20,
+      "image": "assets/rebuilt/new100/new-blanket.png",
+      "sha256": "a003cb357598607b6a545c0c22863ce5bf872e818dd5ae3cdc55da4f4605d622",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-box",
+      "en": "box",
+      "sheet": 1,
+      "cell": 21,
+      "image": "assets/rebuilt/new100/new-box.png",
+      "sha256": "a03701b2e3b5e84c16c7397fe70e1e0a95ab1d201d44c353cc003f9acb9df2f9",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-bottle",
+      "en": "bottle",
+      "sheet": 1,
+      "cell": 22,
+      "image": "assets/rebuilt/new100/new-bottle.png",
+      "sha256": "b93209860ba932c19d2cbb8c2c2271598f15ec30fa0880e47cb0fce62fafd6ba",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-basket",
+      "en": "basket",
+      "sheet": 1,
+      "cell": 23,
+      "image": "assets/rebuilt/new100/new-basket.png",
+      "sha256": "f41830dcba6cb9e2e1f5b20eb11e563b78aab6f1b59fcc4ab422559efc5475a9",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-sky",
+      "en": "sky",
+      "sheet": 1,
+      "cell": 24,
+      "image": "assets/rebuilt/new100/new-sky.png",
+      "sha256": "389e6c176d459ea1602c5ad152b861bf69931f3ec7b4f6ee42d4f268ab116f25",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-sand",
+      "en": "sand",
+      "sheet": 1,
+      "cell": 25,
+      "image": "assets/rebuilt/new100/new-sand.png",
+      "sha256": "9faf2f790a395878235b79a2c784b0645b392498080905d344a2e2f9d216f2ff",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-pond",
+      "en": "pond",
+      "sheet": 1,
+      "cell": 26,
+      "image": "assets/rebuilt/new100/new-pond.png",
+      "sha256": "bacae10d9ac5de9774fa76eb48fb80a4dd1af86dfa46fbb253d6c8070e985156",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-six",
+      "en": "six",
+      "sheet": 1,
+      "cell": 27,
+      "image": "assets/rebuilt/new100/new-six.png",
+      "sha256": "0480be861bfd8405cc2d4027f922d62ccc964e61dbf3da1a50daf88bb43fbca9",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-seven",
+      "en": "seven",
+      "sheet": 1,
+      "cell": 28,
+      "image": "assets/rebuilt/new100/new-seven.png",
+      "sha256": "0667137ad87822bf14e23dbeaaf41896cbabbbe60064bfb33d1278ee913dc998",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-eight",
+      "en": "eight",
+      "sheet": 1,
+      "cell": 29,
+      "image": "assets/rebuilt/new100/new-eight.png",
+      "sha256": "174ba8f1af1f880e8aef20bfa47bd4b0d9d86493e35153e9163791e6927f68c5",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-raccoon",
+      "en": "raccoon",
+      "sheet": 2,
+      "cell": 0,
+      "image": "assets/rebuilt/new100/new-raccoon.png",
+      "sha256": "42f9e1aa879e46afc292e82dcf8219bf5e854d664be6c5616687da159dcccf4b",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-otter",
+      "en": "otter",
+      "sheet": 2,
+      "cell": 1,
+      "image": "assets/rebuilt/new100/new-otter.png",
+      "sha256": "262acf58da51d8fbf316218b02d4eb93fecaba2fe1c8354e2060dfa77114a6a9",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-beaver",
+      "en": "beaver",
+      "sheet": 2,
+      "cell": 2,
+      "image": "assets/rebuilt/new100/new-beaver.png",
+      "sha256": "4c529ae8191f9c51fa84579a90793eeaa3d354e97aec1fb55d75ac6eb96bb760",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-moose",
+      "en": "moose",
+      "sheet": 2,
+      "cell": 3,
+      "image": "assets/rebuilt/new100/new-moose.png",
+      "sha256": "0346073ba7e1b3a7faf02bb9e193e8997dfbea3e04dc79e3eb46115a988b0770",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-parrot",
+      "en": "parrot",
+      "sheet": 2,
+      "cell": 4,
+      "image": "assets/rebuilt/new100/new-parrot.png",
+      "sha256": "19406666ddda33b047765779d36ec94083bc5cbe1e728c3f3b820f00e293507d",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-seahorse",
+      "en": "seahorse",
+      "sheet": 2,
+      "cell": 5,
+      "image": "assets/rebuilt/new100/new-seahorse.png",
+      "sha256": "5b19be9ac0240cc2904f3ef58d31fa6c9167cacecb71105d9ec6751e76d2547a",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-jellyfish",
+      "en": "jellyfish",
+      "sheet": 2,
+      "cell": 6,
+      "image": "assets/rebuilt/new100/new-jellyfish.png",
+      "sha256": "111aa574dbf87ff820cf3330747960849509e47d3e5959758d9a9ddbd25c2c59",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-yogurt",
+      "en": "yogurt",
+      "sheet": 2,
+      "cell": 7,
+      "image": "assets/rebuilt/new100/new-yogurt.png",
+      "sha256": "5307c9009dc0646d46cfd448116a4c018e16b7ee8d6d028d7d98c471bfec9432",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-cereal",
+      "en": "cereal",
+      "sheet": 2,
+      "cell": 8,
+      "image": "assets/rebuilt/new100/new-cereal.png",
+      "sha256": "8b077e0591dd0ac84839060cc25a3049b266682b5f317d8dc26b89cbd877393a",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-pancake",
+      "en": "pancake",
+      "sheet": 2,
+      "cell": 9,
+      "image": "assets/rebuilt/new100/new-pancake.png",
+      "sha256": "9811ce5193ee7e1f2674aa6bd7a7bf2d7d0d529e80a77fbc4790a54d2930f411",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-waffle",
+      "en": "waffle",
+      "sheet": 2,
+      "cell": 10,
+      "image": "assets/rebuilt/new100/new-waffle.png",
+      "sha256": "d558965fda18fd8f1088f8ead924426057909928e157057c80980a292b1382b4",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-sausage",
+      "en": "sausage",
+      "sheet": 2,
+      "cell": 11,
+      "image": "assets/rebuilt/new100/new-sausage.png",
+      "sha256": "b1aa1966e96e5ebbab9dcbf0eadc546a287a8bc2f5f29fb0d99e14393a6eb302",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-shrimp",
+      "en": "shrimp",
+      "sheet": 2,
+      "cell": 12,
+      "image": "assets/rebuilt/new100/new-shrimp.png",
+      "sha256": "4241bca6c878c453ff2659bf95485ba63f9357be7d3e6343ae956662c26c774e",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-spinach",
+      "en": "spinach",
+      "sheet": 2,
+      "cell": 13,
+      "image": "assets/rebuilt/new100/new-spinach.png",
+      "sha256": "60ba577ff33c24f0aaf4c7d88b497c9aea368ad98a79f87f0c15c875744c4560",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-cabbage",
+      "en": "cabbage",
+      "sheet": 2,
+      "cell": 14,
+      "image": "assets/rebuilt/new100/new-cabbage.png",
+      "sha256": "4d603f4eb731999159077aaeb6441500596c70cb239a6178a805e428814bf4d4",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-suitcase",
+      "en": "suitcase",
+      "sheet": 2,
+      "cell": 15,
+      "image": "assets/rebuilt/new100/new-suitcase.png",
+      "sha256": "925cfdd6c28289827d970d6b7f7a040bf324bfa1d92a241bd46b6fbed35807b1",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-wallet",
+      "en": "wallet",
+      "sheet": 2,
+      "cell": 16,
+      "image": "assets/rebuilt/new100/new-wallet.png",
+      "sha256": "e6dd36e9f2dec1d7f7d0af0a56a9406707158e05e923115e3fae97446be4510c",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-zipper",
+      "en": "zipper",
+      "sheet": 2,
+      "cell": 17,
+      "image": "assets/rebuilt/new100/new-zipper.png",
+      "sha256": "28d6238a984ff39ec0db1e65c9508f174d5c8e99739f4e63aa2f94dae4b6dcde",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-ladder",
+      "en": "ladder",
+      "sheet": 2,
+      "cell": 18,
+      "image": "assets/rebuilt/new100/new-ladder.png",
+      "sha256": "3aea5907b6afaf3f613f5563da2184dce1c5b3122ec43cc982b216816cd72a16",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-bucket",
+      "en": "bucket",
+      "sheet": 2,
+      "cell": 19,
+      "image": "assets/rebuilt/new100/new-bucket.png",
+      "sha256": "f8075eec99f904449e8d8f220d19bc00509ec18f1a4cdf84e9b054fd0916cd9c",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-shovel",
+      "en": "shovel",
+      "sheet": 2,
+      "cell": 20,
+      "image": "assets/rebuilt/new100/new-shovel.png",
+      "sha256": "a0cd44205a347fcca86456eb02762be8b08712a3aa535201e8cef26b9abc41bb",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-broom",
+      "en": "broom",
+      "sheet": 2,
+      "cell": 21,
+      "image": "assets/rebuilt/new100/new-broom.png",
+      "sha256": "a5ecac52d13c8b44c98d249b689bba09bbfd2e6c30599226b8f435424c8f66f7",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-mop",
+      "en": "mop",
+      "sheet": 2,
+      "cell": 22,
+      "image": "assets/rebuilt/new100/new-mop.png",
+      "sha256": "21aaa5bcfa3fb75536c93c21842db8818c4253367ac6ac9647c7606d0c0a95be",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-towel",
+      "en": "towel",
+      "sheet": 2,
+      "cell": 23,
+      "image": "assets/rebuilt/new100/new-towel.png",
+      "sha256": "4a5595100821d3c0274549d0dd676ac01a5b6f0bd8493584f41dd0c1624b7a08",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-bathtub",
+      "en": "bathtub",
+      "sheet": 2,
+      "cell": 24,
+      "image": "assets/rebuilt/new100/new-bathtub.png",
+      "sha256": "f5d23bd50923a418ef24e1afdc6396cfae7e267fb446b9e1f30f781d2e376f07",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-kettle",
+      "en": "kettle",
+      "sheet": 2,
+      "cell": 25,
+      "image": "assets/rebuilt/new100/new-kettle.png",
+      "sha256": "09217440b1990e044a756cccddebd7020515b66965b42a047acd9335da464ae9",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-oven",
+      "en": "oven",
+      "sheet": 2,
+      "cell": 26,
+      "image": "assets/rebuilt/new100/new-oven.png",
+      "sha256": "b9558f9c5cb1747f6457cd0f0dd029620c72bd10c38a1f57911a4fdc09ca5d6c",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-fridge",
+      "en": "fridge",
+      "sheet": 2,
+      "cell": 27,
+      "image": "assets/rebuilt/new100/new-fridge.png",
+      "sha256": "2e3196027f1bc24fe8028d7960f7e9fb94c5964eac4b34bb41eef519bb00ff26",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-toaster",
+      "en": "toaster",
+      "sheet": 2,
+      "cell": 28,
+      "image": "assets/rebuilt/new100/new-toaster.png",
+      "sha256": "0702ae80aaf74d512e9d3e3d66ad8673fa66da878174cc8a13848f021e2ef1f3",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-island",
+      "en": "island",
+      "sheet": 2,
+      "cell": 29,
+      "image": "assets/rebuilt/new100/new-island.png",
+      "sha256": "5211d75aa0f7dca1e4d686be2a3096c02719efdcec5c5e02249af23e45e0df78",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-desert",
+      "en": "desert",
+      "sheet": 3,
+      "cell": 0,
+      "image": "assets/rebuilt/new100/new-desert.png",
+      "sha256": "41d32f1c746b9f46bc6f708494754b29f176274f02eb930c9db81341489c4893",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-cave",
+      "en": "cave",
+      "sheet": 3,
+      "cell": 1,
+      "image": "assets/rebuilt/new100/new-cave.png",
+      "sha256": "030887c95dc4bc6be1391c35c29c06461f2a83c49789b5a4e6a8a7749eca618e",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-waterfall",
+      "en": "waterfall",
+      "sheet": 3,
+      "cell": 2,
+      "image": "assets/rebuilt/new100/new-waterfall.png",
+      "sha256": "40a7780920cf608c6806878071d571ca5079bba2d656246a5a336cdd8509207b",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-hill",
+      "en": "hill",
+      "sheet": 3,
+      "cell": 3,
+      "image": "assets/rebuilt/new100/new-hill.png",
+      "sha256": "23f5aa56706402d3ed2f543fbe1600ed64046b347c76f42845f294973421668b",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-lake",
+      "en": "lake",
+      "sheet": 3,
+      "cell": 4,
+      "image": "assets/rebuilt/new100/new-lake.png",
+      "sha256": "54e6411477a1ec9df7490248b82dec15ecbc08f04d48a0a490cdda28345b3165",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-nine",
+      "en": "nine",
+      "sheet": 3,
+      "cell": 5,
+      "image": "assets/rebuilt/new100/new-nine.png",
+      "sha256": "1de3b836923999016149aac38d5520621777ff489a8adc44fda850ee4be26104",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-ten",
+      "en": "ten",
+      "sheet": 3,
+      "cell": 6,
+      "image": "assets/rebuilt/new100/new-ten.png",
+      "sha256": "9ca1a33401e1060d27feab711adfac23c35a746a7d0c2418215e50786906763f",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-guitar",
+      "en": "guitar",
+      "sheet": 3,
+      "cell": 7,
+      "image": "assets/rebuilt/new100/new-guitar.png",
+      "sha256": "305184141590ec0aa0546c0ca90b0ad8c00de7aa0b2f72756855cb4ba810fab9",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-trumpet",
+      "en": "trumpet",
+      "sheet": 3,
+      "cell": 8,
+      "image": "assets/rebuilt/new100/new-trumpet.png",
+      "sha256": "944c925c48b6105e9eb5b043beccdd5907410132413881145459ea6dbb1195af",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-flute",
+      "en": "flute",
+      "sheet": 3,
+      "cell": 9,
+      "image": "assets/rebuilt/new100/new-flute.png",
+      "sha256": "5a51be515304c65d0700cb73c45953fd6fc4860985e0614914a7ec87fb5312d9",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-chameleon",
+      "en": "chameleon",
+      "sheet": 3,
+      "cell": 10,
+      "image": "assets/rebuilt/new100/new-chameleon.png",
+      "sha256": "69c9d432e38c74e680210f0eb85bdc6dc33f13e0f3ecce32d5112f972f16eb3a",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-armadillo",
+      "en": "armadillo",
+      "sheet": 3,
+      "cell": 11,
+      "image": "assets/rebuilt/new100/new-armadillo.png",
+      "sha256": "38403a7a80f4fba39136088af9bce88a3c4ca8f2981b051c4992a0b26fa8d360",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-porcupine",
+      "en": "porcupine",
+      "sheet": 3,
+      "cell": 12,
+      "image": "assets/rebuilt/new100/new-porcupine.png",
+      "sha256": "4cc66dc2caf112633e935cf039ecff62a8a47bf755d829d772d597664048572d",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-lemur",
+      "en": "lemur",
+      "sheet": 3,
+      "cell": 13,
+      "image": "assets/rebuilt/new100/new-lemur.png",
+      "sha256": "3c801251a455ca1d80b049bea50cdbbf50b1e2adf64b052d716289a13ada72b8",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-narwhal",
+      "en": "narwhal",
+      "sheet": 3,
+      "cell": 14,
+      "image": "assets/rebuilt/new100/new-narwhal.png",
+      "sha256": "756eb8e4e79dff7adfa923d7ec4537ec7674d9b6c2989d36378362a69b1bf375",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-asparagus",
+      "en": "asparagus",
+      "sheet": 3,
+      "cell": 15,
+      "image": "assets/rebuilt/new100/new-asparagus.png",
+      "sha256": "e606689045fd93090a2ee64f1fbc9eb11f02fab7c12de54730b7c469a7ae4d7a",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-cauliflower",
+      "en": "cauliflower",
+      "sheet": 3,
+      "cell": 16,
+      "image": "assets/rebuilt/new100/new-cauliflower.png",
+      "sha256": "9485c7b2d86b9c245234c581a423f8706a323abf78ce310a70d336fe09f1cc5e",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-pomegranate",
+      "en": "pomegranate",
+      "sheet": 3,
+      "cell": 17,
+      "image": "assets/rebuilt/new100/new-pomegranate.png",
+      "sha256": "b9ae8bddac088b0ab3b16d2213e175fa0446693efcb73d987abab0b323a05b61",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-papaya",
+      "en": "papaya",
+      "sheet": 3,
+      "cell": 18,
+      "image": "assets/rebuilt/new100/new-papaya.png",
+      "sha256": "1e348b22c0f3b748b6a96a56ac88657c3fa66321ddcb0b37b3235f6771893327",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-dumpling",
+      "en": "dumpling",
+      "sheet": 3,
+      "cell": 19,
+      "image": "assets/rebuilt/new100/new-dumpling.png",
+      "sha256": "8374f80d500281b16f08c83b389f92f313aea1b081dfb9b2e64ea2aac27341a2",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-binoculars",
+      "en": "binoculars",
+      "sheet": 3,
+      "cell": 20,
+      "image": "assets/rebuilt/new100/new-binoculars.png",
+      "sha256": "29fc70858af37566fae1991c22b325eb3c36340a91abe055bb227d32dfb42adf",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-flashlight",
+      "en": "flashlight",
+      "sheet": 3,
+      "cell": 21,
+      "image": "assets/rebuilt/new100/new-flashlight.png",
+      "sha256": "b88079fed7923473ceb95b3f2bd898e411b389156850e4dbe4f044e3fe52128d",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-thermometer",
+      "en": "thermometer",
+      "sheet": 3,
+      "cell": 22,
+      "image": "assets/rebuilt/new100/new-thermometer.png",
+      "sha256": "6fc76164098b3e72dde4acba6a085f75816088c28c90ced6d5f419767a6a52c4",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-stapler",
+      "en": "stapler",
+      "sheet": 3,
+      "cell": 23,
+      "image": "assets/rebuilt/new100/new-stapler.png",
+      "sha256": "5a77a228ada326bc9353739e0e1639f3de18721181efcece69d796ea845044f6",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-calculator",
+      "en": "calculator",
+      "sheet": 3,
+      "cell": 24,
+      "image": "assets/rebuilt/new100/new-calculator.png",
+      "sha256": "d156defc049e5ea4ccf668bda7da0d9bf556b2327ca60297cf41d5eda96dbd34",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-skateboard",
+      "en": "skateboard",
+      "sheet": 3,
+      "cell": 25,
+      "image": "assets/rebuilt/new100/new-skateboard.png",
+      "sha256": "df7da0a850fe0798573e68edc615ffe488187fe0a5587e78ca6fbbec2dad0f32",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-vacuum",
+      "en": "vacuum",
+      "sheet": 3,
+      "cell": 26,
+      "image": "assets/rebuilt/new100/new-vacuum.png",
+      "sha256": "688b294d4e85dbc3a82ebbdcc08033d527ed960393ceebb0fac8d619ce3d7256",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-mailbox",
+      "en": "mailbox",
+      "sheet": 3,
+      "cell": 27,
+      "image": "assets/rebuilt/new100/new-mailbox.png",
+      "sha256": "7840fe8c02ab8a0016571f355dd6e64b2e8c65e314ee4cd86563fe74ee142fcc",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-wheelbarrow",
+      "en": "wheelbarrow",
+      "sheet": 3,
+      "cell": 28,
+      "image": "assets/rebuilt/new100/new-wheelbarrow.png",
+      "sha256": "0c4003d14da6b3d312866fae4c70e7bbc6491ca1c7d975150dfac85383213647",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-projector",
+      "en": "projector",
+      "sheet": 3,
+      "cell": 29,
+      "image": "assets/rebuilt/new100/new-projector.png",
+      "sha256": "18e9a84b3b1ef89ad85cc159978bf9e7ab1e40e70cd5ef7cb9774b921ceef9bb",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-glacier",
+      "en": "glacier",
+      "sheet": 4,
+      "cell": 0,
+      "image": "assets/rebuilt/new100/new-glacier.png",
+      "sha256": "38609bde1cefb36332a3fccd2f2e4efe7a98b117f9089d757ce1c5d4e3777048",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-geyser",
+      "en": "geyser",
+      "sheet": 4,
+      "cell": 1,
+      "image": "assets/rebuilt/new100/new-geyser.png",
+      "sha256": "26e7588f0f8270472c2b1ab13bade3252ff77239d555609511523c095c8e92d4",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-canyon",
+      "en": "canyon",
+      "sheet": 4,
+      "cell": 2,
+      "image": "assets/rebuilt/new100/new-canyon.png",
+      "sha256": "041fac5d08991709ff7e4ae7bbc9d328521e9277912d0c8d9d199c57855ce7b9",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-cliff",
+      "en": "cliff",
+      "sheet": 4,
+      "cell": 3,
+      "image": "assets/rebuilt/new100/new-cliff.png",
+      "sha256": "f684e8e05cff02038f30a7cfc2473134168d9bac29ffc7862c8935e66b864578",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-swamp",
+      "en": "swamp",
+      "sheet": 4,
+      "cell": 4,
+      "image": "assets/rebuilt/new100/new-swamp.png",
+      "sha256": "06f042ca05c2265bf6babbbe505970103882e0120f0b6d448a4984c47525af7b",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-castle",
+      "en": "castle",
+      "sheet": 4,
+      "cell": 5,
+      "image": "assets/rebuilt/new100/new-castle.png",
+      "sha256": "9a5307a9c2020d28964a9830fdb02955182b234832c272bf0bb045ba28036683",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-museum",
+      "en": "museum",
+      "sheet": 4,
+      "cell": 6,
+      "image": "assets/rebuilt/new100/new-museum.png",
+      "sha256": "7158895ed63604f52dfafd21ece8905c1b32a378422736d51a6042275f420fbe",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-library",
+      "en": "library",
+      "sheet": 4,
+      "cell": 7,
+      "image": "assets/rebuilt/new100/new-library.png",
+      "sha256": "992a700e6e119dc7ca56dc36f1cbb2c911a2f7584943b28754c6f315c83d8cba",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-bakery",
+      "en": "bakery",
+      "sheet": 4,
+      "cell": 8,
+      "image": "assets/rebuilt/new100/new-bakery.png",
+      "sha256": "30c92f6ceb2297e469404364bcfdb564bc4e1fa37dcb41dd27f4d04ad5749fbb",
+      "status": "generated-candidate"
+    },
+    {
+      "id": "new-airport",
+      "en": "airport",
+      "sheet": 4,
+      "cell": 9,
+      "image": "assets/rebuilt/new100/new-airport.png",
+      "sha256": "ff48b1b40e1da2f5727dc69f12e9d53e17630b7f2f21a4e49ae011fb3a14d135",
+      "status": "generated-candidate"
+    }
+  ]
+}

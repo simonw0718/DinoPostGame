@@ -3732,5 +3732,1418 @@
     "sourceId": "maiasaura",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-maiasaura.png"
+  },
+  {
+    "id": "new-goat",
+    "category": "animals",
+    "en": "goat",
+    "zh": "山羊",
+    "zhuyin": [
+      "ㄕㄢ",
+      "ㄧㄤˊ"
+    ],
+    "emoji": "🐐",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-goat.png"
+  },
+  {
+    "id": "new-deer",
+    "category": "animals",
+    "en": "deer",
+    "zh": "鹿",
+    "zhuyin": [
+      "ㄌㄨˋ"
+    ],
+    "emoji": "🦌",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-deer.png"
+  },
+  {
+    "id": "new-goose",
+    "category": "animals",
+    "en": "goose",
+    "zh": "鵝",
+    "zhuyin": [
+      "ㄜˊ"
+    ],
+    "emoji": "🪿",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-goose.png"
+  },
+  {
+    "id": "new-hen",
+    "category": "animals",
+    "en": "hen",
+    "zh": "母雞",
+    "zhuyin": [
+      "ㄇㄨˇ",
+      "ㄐㄧ"
+    ],
+    "emoji": "🐔",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-hen.png"
+  },
+  {
+    "id": "new-donkey",
+    "category": "animals",
+    "en": "donkey",
+    "zh": "驢",
+    "zhuyin": [
+      "ㄌㄩˊ"
+    ],
+    "emoji": "🫏",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-donkey.png"
+  },
+  {
+    "id": "new-camel",
+    "category": "animals",
+    "en": "camel",
+    "zh": "駱駝",
+    "zhuyin": [
+      "ㄌㄨㄛˋ",
+      "ㄊㄨㄛˊ"
+    ],
+    "emoji": "🐪",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-camel.png"
+  },
+  {
+    "id": "new-seal",
+    "category": "animals",
+    "en": "seal",
+    "zh": "海豹",
+    "zhuyin": [
+      "ㄏㄞˇ",
+      "ㄅㄠˋ"
+    ],
+    "emoji": "🦭",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-seal.png"
+  },
+  {
+    "id": "new-worm",
+    "category": "animals",
+    "en": "worm",
+    "zh": "蚯蚓",
+    "zhuyin": [
+      "ㄑㄧㄡ",
+      "ㄧㄣˇ"
+    ],
+    "emoji": "🪱",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-worm.png"
+  },
+  {
+    "id": "new-bean",
+    "category": "food",
+    "en": "bean",
+    "zh": "豆子",
+    "zhuyin": [
+      "ㄉㄡˋ",
+      "ㄗ˙"
+    ],
+    "emoji": "🫘",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-bean.png"
+  },
+  {
+    "id": "new-butter",
+    "category": "food",
+    "en": "butter",
+    "zh": "奶油",
+    "zhuyin": [
+      "ㄋㄞˇ",
+      "ㄧㄡˊ"
+    ],
+    "emoji": "🧈",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-butter.png"
+  },
+  {
+    "id": "new-jam",
+    "category": "food",
+    "en": "jam",
+    "zh": "果醬",
+    "zhuyin": [
+      "ㄍㄨㄛˇ",
+      "ㄐㄧㄤˋ"
+    ],
+    "emoji": "🍓",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-jam.png"
+  },
+  {
+    "id": "new-juice",
+    "category": "food",
+    "en": "juice",
+    "zh": "果汁",
+    "zhuyin": [
+      "ㄍㄨㄛˇ",
+      "ㄓ"
+    ],
+    "emoji": "🧃",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-juice.png"
+  },
+  {
+    "id": "new-biscuit",
+    "category": "food",
+    "en": "biscuit",
+    "zh": "餅乾",
+    "zhuyin": [
+      "ㄅㄧㄥˇ",
+      "ㄍㄢ"
+    ],
+    "emoji": "🍪",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-biscuit.png"
+  },
+  {
+    "id": "new-lettuce",
+    "category": "food",
+    "en": "lettuce",
+    "zh": "萵苣",
+    "zhuyin": [
+      "ㄨㄛ",
+      "ㄐㄩˋ"
+    ],
+    "emoji": "🥬",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-lettuce.png"
+  },
+  {
+    "id": "new-plum",
+    "category": "food",
+    "en": "plum",
+    "zh": "李子",
+    "zhuyin": [
+      "ㄌㄧˇ",
+      "ㄗ˙"
+    ],
+    "emoji": "🍑",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-plum.png"
+  },
+  {
+    "id": "new-melon",
+    "category": "food",
+    "en": "melon",
+    "zh": "甜瓜",
+    "zhuyin": [
+      "ㄊㄧㄢˊ",
+      "ㄍㄨㄚ"
+    ],
+    "emoji": "🍈",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-melon.png"
+  },
+  {
+    "id": "new-brush",
+    "category": "objects",
+    "en": "brush",
+    "zh": "刷子",
+    "zhuyin": [
+      "ㄕㄨㄚ",
+      "ㄗ˙"
+    ],
+    "emoji": "🪥",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-brush.png"
+  },
+  {
+    "id": "new-comb",
+    "category": "objects",
+    "en": "comb",
+    "zh": "梳子",
+    "zhuyin": [
+      "ㄕㄨ",
+      "ㄗ˙"
+    ],
+    "emoji": "🪮",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-comb.png"
+  },
+  {
+    "id": "new-mirror",
+    "category": "objects",
+    "en": "mirror",
+    "zh": "鏡子",
+    "zhuyin": [
+      "ㄐㄧㄥˋ",
+      "ㄗ˙"
+    ],
+    "emoji": "🪞",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-mirror.png"
+  },
+  {
+    "id": "new-pillow",
+    "category": "objects",
+    "en": "pillow",
+    "zh": "枕頭",
+    "zhuyin": [
+      "ㄓㄣˇ",
+      "ㄊㄡ˙"
+    ],
+    "emoji": "🛏️",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-pillow.png"
+  },
+  {
+    "id": "new-blanket",
+    "category": "objects",
+    "en": "blanket",
+    "zh": "毯子",
+    "zhuyin": [
+      "ㄊㄢˇ",
+      "ㄗ˙"
+    ],
+    "emoji": "🛏️",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-blanket.png"
+  },
+  {
+    "id": "new-box",
+    "category": "objects",
+    "en": "box",
+    "zh": "盒子",
+    "zhuyin": [
+      "ㄏㄜˊ",
+      "ㄗ˙"
+    ],
+    "emoji": "📦",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-box.png"
+  },
+  {
+    "id": "new-bottle",
+    "category": "objects",
+    "en": "bottle",
+    "zh": "瓶子",
+    "zhuyin": [
+      "ㄆㄧㄥˊ",
+      "ㄗ˙"
+    ],
+    "emoji": "🍼",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-bottle.png"
+  },
+  {
+    "id": "new-basket",
+    "category": "objects",
+    "en": "basket",
+    "zh": "籃子",
+    "zhuyin": [
+      "ㄌㄢˊ",
+      "ㄗ˙"
+    ],
+    "emoji": "🧺",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-basket.png"
+  },
+  {
+    "id": "new-sky",
+    "category": "nature",
+    "en": "sky",
+    "zh": "天空",
+    "zhuyin": [
+      "ㄊㄧㄢ",
+      "ㄎㄨㄥ"
+    ],
+    "emoji": "☁️",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-sky.png"
+  },
+  {
+    "id": "new-sand",
+    "category": "nature",
+    "en": "sand",
+    "zh": "沙子",
+    "zhuyin": [
+      "ㄕㄚ",
+      "ㄗ˙"
+    ],
+    "emoji": "🏖️",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-sand.png"
+  },
+  {
+    "id": "new-pond",
+    "category": "nature",
+    "en": "pond",
+    "zh": "池塘",
+    "zhuyin": [
+      "ㄔˊ",
+      "ㄊㄤˊ"
+    ],
+    "emoji": "🪷",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-pond.png"
+  },
+  {
+    "id": "new-six",
+    "category": "number",
+    "en": "six",
+    "zh": "六",
+    "zhuyin": [
+      "ㄌㄧㄡˋ"
+    ],
+    "emoji": "6️⃣",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-six.png"
+  },
+  {
+    "id": "new-seven",
+    "category": "number",
+    "en": "seven",
+    "zh": "七",
+    "zhuyin": [
+      "ㄑㄧ"
+    ],
+    "emoji": "7️⃣",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-seven.png"
+  },
+  {
+    "id": "new-eight",
+    "category": "number",
+    "en": "eight",
+    "zh": "八",
+    "zhuyin": [
+      "ㄅㄚ"
+    ],
+    "emoji": "8️⃣",
+    "difficulty": 1,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-eight.png"
+  },
+  {
+    "id": "new-raccoon",
+    "category": "animals",
+    "en": "raccoon",
+    "zh": "浣熊",
+    "zhuyin": [
+      "ㄏㄨㄢˇ",
+      "ㄒㄩㄥˊ"
+    ],
+    "emoji": "🦝",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-raccoon.png"
+  },
+  {
+    "id": "new-otter",
+    "category": "animals",
+    "en": "otter",
+    "zh": "水獺",
+    "zhuyin": [
+      "ㄕㄨㄟˇ",
+      "ㄊㄚˇ"
+    ],
+    "emoji": "🦦",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-otter.png"
+  },
+  {
+    "id": "new-beaver",
+    "category": "animals",
+    "en": "beaver",
+    "zh": "河狸",
+    "zhuyin": [
+      "ㄏㄜˊ",
+      "ㄌㄧˊ"
+    ],
+    "emoji": "🦫",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-beaver.png"
+  },
+  {
+    "id": "new-moose",
+    "category": "animals",
+    "en": "moose",
+    "zh": "駝鹿",
+    "zhuyin": [
+      "ㄊㄨㄛˊ",
+      "ㄌㄨˋ"
+    ],
+    "emoji": "🫎",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-moose.png"
+  },
+  {
+    "id": "new-parrot",
+    "category": "animals",
+    "en": "parrot",
+    "zh": "鸚鵡",
+    "zhuyin": [
+      "ㄧㄥ",
+      "ㄨˇ"
+    ],
+    "emoji": "🦜",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-parrot.png"
+  },
+  {
+    "id": "new-seahorse",
+    "category": "animals",
+    "en": "seahorse",
+    "zh": "海馬",
+    "zhuyin": [
+      "ㄏㄞˇ",
+      "ㄇㄚˇ"
+    ],
+    "emoji": "🐠",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-seahorse.png"
+  },
+  {
+    "id": "new-jellyfish",
+    "category": "animals",
+    "en": "jellyfish",
+    "zh": "水母",
+    "zhuyin": [
+      "ㄕㄨㄟˇ",
+      "ㄇㄨˇ"
+    ],
+    "emoji": "🪼",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-jellyfish.png"
+  },
+  {
+    "id": "new-yogurt",
+    "category": "food",
+    "en": "yogurt",
+    "zh": "優格",
+    "zhuyin": [
+      "ㄧㄡ",
+      "ㄍㄜˊ"
+    ],
+    "emoji": "🥛",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-yogurt.png"
+  },
+  {
+    "id": "new-cereal",
+    "category": "food",
+    "en": "cereal",
+    "zh": "麥片",
+    "zhuyin": [
+      "ㄇㄞˋ",
+      "ㄆㄧㄢˋ"
+    ],
+    "emoji": "🥣",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-cereal.png"
+  },
+  {
+    "id": "new-pancake",
+    "category": "food",
+    "en": "pancake",
+    "zh": "鬆餅",
+    "zhuyin": [
+      "ㄙㄨㄥ",
+      "ㄅㄧㄥˇ"
+    ],
+    "emoji": "🥞",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-pancake.png"
+  },
+  {
+    "id": "new-waffle",
+    "category": "food",
+    "en": "waffle",
+    "zh": "格子鬆餅",
+    "zhuyin": [
+      "ㄍㄜˊ",
+      "ㄗ˙",
+      "ㄙㄨㄥ",
+      "ㄅㄧㄥˇ"
+    ],
+    "emoji": "🧇",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-waffle.png"
+  },
+  {
+    "id": "new-sausage",
+    "category": "food",
+    "en": "sausage",
+    "zh": "香腸",
+    "zhuyin": [
+      "ㄒㄧㄤ",
+      "ㄔㄤˊ"
+    ],
+    "emoji": "🌭",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-sausage.png"
+  },
+  {
+    "id": "new-shrimp",
+    "category": "food",
+    "en": "shrimp",
+    "zh": "蝦子",
+    "zhuyin": [
+      "ㄒㄧㄚ",
+      "ㄗ˙"
+    ],
+    "emoji": "🦐",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-shrimp.png"
+  },
+  {
+    "id": "new-spinach",
+    "category": "food",
+    "en": "spinach",
+    "zh": "菠菜",
+    "zhuyin": [
+      "ㄅㄛ",
+      "ㄘㄞˋ"
+    ],
+    "emoji": "🥬",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-spinach.png"
+  },
+  {
+    "id": "new-cabbage",
+    "category": "food",
+    "en": "cabbage",
+    "zh": "高麗菜",
+    "zhuyin": [
+      "ㄍㄠ",
+      "ㄌㄧˋ",
+      "ㄘㄞˋ"
+    ],
+    "emoji": "🥬",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-cabbage.png"
+  },
+  {
+    "id": "new-suitcase",
+    "category": "objects",
+    "en": "suitcase",
+    "zh": "行李箱",
+    "zhuyin": [
+      "ㄒㄧㄥˊ",
+      "ㄌㄧˇ",
+      "ㄒㄧㄤ"
+    ],
+    "emoji": "🧳",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-suitcase.png"
+  },
+  {
+    "id": "new-wallet",
+    "category": "objects",
+    "en": "wallet",
+    "zh": "錢包",
+    "zhuyin": [
+      "ㄑㄧㄢˊ",
+      "ㄅㄠ"
+    ],
+    "emoji": "👛",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-wallet.png"
+  },
+  {
+    "id": "new-zipper",
+    "category": "objects",
+    "en": "zipper",
+    "zh": "拉鍊",
+    "zhuyin": [
+      "ㄌㄚ",
+      "ㄌㄧㄢˋ"
+    ],
+    "emoji": "🧥",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-zipper.png"
+  },
+  {
+    "id": "new-ladder",
+    "category": "objects",
+    "en": "ladder",
+    "zh": "梯子",
+    "zhuyin": [
+      "ㄊㄧ",
+      "ㄗ˙"
+    ],
+    "emoji": "🪜",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-ladder.png"
+  },
+  {
+    "id": "new-bucket",
+    "category": "objects",
+    "en": "bucket",
+    "zh": "水桶",
+    "zhuyin": [
+      "ㄕㄨㄟˇ",
+      "ㄊㄨㄥˇ"
+    ],
+    "emoji": "🪣",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-bucket.png"
+  },
+  {
+    "id": "new-shovel",
+    "category": "objects",
+    "en": "shovel",
+    "zh": "鏟子",
+    "zhuyin": [
+      "ㄔㄢˇ",
+      "ㄗ˙"
+    ],
+    "emoji": "🛠️",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-shovel.png"
+  },
+  {
+    "id": "new-broom",
+    "category": "objects",
+    "en": "broom",
+    "zh": "掃把",
+    "zhuyin": [
+      "ㄙㄠˋ",
+      "ㄅㄚ˙"
+    ],
+    "emoji": "🧹",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-broom.png"
+  },
+  {
+    "id": "new-mop",
+    "category": "objects",
+    "en": "mop",
+    "zh": "拖把",
+    "zhuyin": [
+      "ㄊㄨㄛ",
+      "ㄅㄚ˙"
+    ],
+    "emoji": "🧽",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-mop.png"
+  },
+  {
+    "id": "new-towel",
+    "category": "objects",
+    "en": "towel",
+    "zh": "毛巾",
+    "zhuyin": [
+      "ㄇㄠˊ",
+      "ㄐㄧㄣ"
+    ],
+    "emoji": "🧻",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-towel.png"
+  },
+  {
+    "id": "new-bathtub",
+    "category": "objects",
+    "en": "bathtub",
+    "zh": "浴缸",
+    "zhuyin": [
+      "ㄩˋ",
+      "ㄍㄤ"
+    ],
+    "emoji": "🛁",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-bathtub.png"
+  },
+  {
+    "id": "new-kettle",
+    "category": "objects",
+    "en": "kettle",
+    "zh": "水壺",
+    "zhuyin": [
+      "ㄕㄨㄟˇ",
+      "ㄏㄨˊ"
+    ],
+    "emoji": "🫖",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-kettle.png"
+  },
+  {
+    "id": "new-oven",
+    "category": "objects",
+    "en": "oven",
+    "zh": "烤箱",
+    "zhuyin": [
+      "ㄎㄠˇ",
+      "ㄒㄧㄤ"
+    ],
+    "emoji": "♨️",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-oven.png"
+  },
+  {
+    "id": "new-fridge",
+    "category": "objects",
+    "en": "fridge",
+    "zh": "冰箱",
+    "zhuyin": [
+      "ㄅㄧㄥ",
+      "ㄒㄧㄤ"
+    ],
+    "emoji": "🧊",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-fridge.png"
+  },
+  {
+    "id": "new-toaster",
+    "category": "objects",
+    "en": "toaster",
+    "zh": "烤麵包機",
+    "zhuyin": [
+      "ㄎㄠˇ",
+      "ㄇㄧㄢˋ",
+      "ㄅㄠ",
+      "ㄐㄧ"
+    ],
+    "emoji": "🍞",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-toaster.png"
+  },
+  {
+    "id": "new-island",
+    "category": "nature",
+    "en": "island",
+    "zh": "小島",
+    "zhuyin": [
+      "ㄒㄧㄠˇ",
+      "ㄉㄠˇ"
+    ],
+    "emoji": "🏝️",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-island.png"
+  },
+  {
+    "id": "new-desert",
+    "category": "nature",
+    "en": "desert",
+    "zh": "沙漠",
+    "zhuyin": [
+      "ㄕㄚ",
+      "ㄇㄛˋ"
+    ],
+    "emoji": "🏜️",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-desert.png"
+  },
+  {
+    "id": "new-cave",
+    "category": "nature",
+    "en": "cave",
+    "zh": "洞穴",
+    "zhuyin": [
+      "ㄉㄨㄥˋ",
+      "ㄒㄩㄝˋ"
+    ],
+    "emoji": "🕳️",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-cave.png"
+  },
+  {
+    "id": "new-waterfall",
+    "category": "nature",
+    "en": "waterfall",
+    "zh": "瀑布",
+    "zhuyin": [
+      "ㄆㄨˋ",
+      "ㄅㄨˋ"
+    ],
+    "emoji": "💦",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-waterfall.png"
+  },
+  {
+    "id": "new-hill",
+    "category": "nature",
+    "en": "hill",
+    "zh": "小山",
+    "zhuyin": [
+      "ㄒㄧㄠˇ",
+      "ㄕㄢ"
+    ],
+    "emoji": "⛰️",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-hill.png"
+  },
+  {
+    "id": "new-lake",
+    "category": "nature",
+    "en": "lake",
+    "zh": "湖泊",
+    "zhuyin": [
+      "ㄏㄨˊ",
+      "ㄆㄛˊ"
+    ],
+    "emoji": "🏞️",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-lake.png"
+  },
+  {
+    "id": "new-nine",
+    "category": "number",
+    "en": "nine",
+    "zh": "九",
+    "zhuyin": [
+      "ㄐㄧㄡˇ"
+    ],
+    "emoji": "9️⃣",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-nine.png"
+  },
+  {
+    "id": "new-ten",
+    "category": "number",
+    "en": "ten",
+    "zh": "十",
+    "zhuyin": [
+      "ㄕˊ"
+    ],
+    "emoji": "🔟",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-ten.png"
+  },
+  {
+    "id": "new-guitar",
+    "category": "music",
+    "en": "guitar",
+    "zh": "吉他",
+    "zhuyin": [
+      "ㄐㄧˊ",
+      "ㄊㄚ"
+    ],
+    "emoji": "🎸",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-guitar.png"
+  },
+  {
+    "id": "new-trumpet",
+    "category": "music",
+    "en": "trumpet",
+    "zh": "小號",
+    "zhuyin": [
+      "ㄒㄧㄠˇ",
+      "ㄏㄠˋ"
+    ],
+    "emoji": "🎺",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-trumpet.png"
+  },
+  {
+    "id": "new-flute",
+    "category": "music",
+    "en": "flute",
+    "zh": "長笛",
+    "zhuyin": [
+      "ㄔㄤˊ",
+      "ㄉㄧˊ"
+    ],
+    "emoji": "🪈",
+    "difficulty": 2,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-flute.png"
+  },
+  {
+    "id": "new-chameleon",
+    "category": "animals",
+    "en": "chameleon",
+    "zh": "變色龍",
+    "zhuyin": [
+      "ㄅㄧㄢˋ",
+      "ㄙㄜˋ",
+      "ㄌㄨㄥˊ"
+    ],
+    "emoji": "🦎",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-chameleon.png"
+  },
+  {
+    "id": "new-armadillo",
+    "category": "animals",
+    "en": "armadillo",
+    "zh": "犰狳",
+    "zhuyin": [
+      "ㄑㄧㄡˊ",
+      "ㄩˊ"
+    ],
+    "emoji": "🐾",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-armadillo.png"
+  },
+  {
+    "id": "new-porcupine",
+    "category": "animals",
+    "en": "porcupine",
+    "zh": "豪豬",
+    "zhuyin": [
+      "ㄏㄠˊ",
+      "ㄓㄨ"
+    ],
+    "emoji": "🦔",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-porcupine.png"
+  },
+  {
+    "id": "new-lemur",
+    "category": "animals",
+    "en": "lemur",
+    "zh": "狐猴",
+    "zhuyin": [
+      "ㄏㄨˊ",
+      "ㄏㄡˊ"
+    ],
+    "emoji": "🐒",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-lemur.png"
+  },
+  {
+    "id": "new-narwhal",
+    "category": "animals",
+    "en": "narwhal",
+    "zh": "獨角鯨",
+    "zhuyin": [
+      "ㄉㄨˊ",
+      "ㄐㄧㄠˇ",
+      "ㄐㄧㄥ"
+    ],
+    "emoji": "🐋",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-narwhal.png"
+  },
+  {
+    "id": "new-asparagus",
+    "category": "food",
+    "en": "asparagus",
+    "zh": "蘆筍",
+    "zhuyin": [
+      "ㄌㄨˊ",
+      "ㄙㄨㄣˇ"
+    ],
+    "emoji": "🥬",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-asparagus.png"
+  },
+  {
+    "id": "new-cauliflower",
+    "category": "food",
+    "en": "cauliflower",
+    "zh": "花椰菜",
+    "zhuyin": [
+      "ㄏㄨㄚ",
+      "ㄧㄝˊ",
+      "ㄘㄞˋ"
+    ],
+    "emoji": "🥦",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-cauliflower.png"
+  },
+  {
+    "id": "new-pomegranate",
+    "category": "food",
+    "en": "pomegranate",
+    "zh": "石榴",
+    "zhuyin": [
+      "ㄕˊ",
+      "ㄌㄧㄡˊ"
+    ],
+    "emoji": "🍎",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-pomegranate.png"
+  },
+  {
+    "id": "new-papaya",
+    "category": "food",
+    "en": "papaya",
+    "zh": "木瓜",
+    "zhuyin": [
+      "ㄇㄨˋ",
+      "ㄍㄨㄚ"
+    ],
+    "emoji": "🍈",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-papaya.png"
+  },
+  {
+    "id": "new-dumpling",
+    "category": "food",
+    "en": "dumpling",
+    "zh": "水餃",
+    "zhuyin": [
+      "ㄕㄨㄟˇ",
+      "ㄐㄧㄠˇ"
+    ],
+    "emoji": "🥟",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-dumpling.png"
+  },
+  {
+    "id": "new-binoculars",
+    "category": "objects",
+    "en": "binoculars",
+    "zh": "望遠鏡",
+    "zhuyin": [
+      "ㄨㄤˋ",
+      "ㄩㄢˇ",
+      "ㄐㄧㄥˋ"
+    ],
+    "emoji": "🔭",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-binoculars.png"
+  },
+  {
+    "id": "new-flashlight",
+    "category": "objects",
+    "en": "flashlight",
+    "zh": "手電筒",
+    "zhuyin": [
+      "ㄕㄡˇ",
+      "ㄉㄧㄢˋ",
+      "ㄊㄨㄥˇ"
+    ],
+    "emoji": "🔦",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-flashlight.png"
+  },
+  {
+    "id": "new-thermometer",
+    "category": "objects",
+    "en": "thermometer",
+    "zh": "溫度計",
+    "zhuyin": [
+      "ㄨㄣ",
+      "ㄉㄨˋ",
+      "ㄐㄧˋ"
+    ],
+    "emoji": "🌡️",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-thermometer.png"
+  },
+  {
+    "id": "new-stapler",
+    "category": "objects",
+    "en": "stapler",
+    "zh": "訂書機",
+    "zhuyin": [
+      "ㄉㄧㄥˋ",
+      "ㄕㄨ",
+      "ㄐㄧ"
+    ],
+    "emoji": "📎",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-stapler.png"
+  },
+  {
+    "id": "new-calculator",
+    "category": "objects",
+    "en": "calculator",
+    "zh": "計算機",
+    "zhuyin": [
+      "ㄐㄧˋ",
+      "ㄙㄨㄢˋ",
+      "ㄐㄧ"
+    ],
+    "emoji": "🧮",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-calculator.png"
+  },
+  {
+    "id": "new-skateboard",
+    "category": "objects",
+    "en": "skateboard",
+    "zh": "滑板",
+    "zhuyin": [
+      "ㄏㄨㄚˊ",
+      "ㄅㄢˇ"
+    ],
+    "emoji": "🛹",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-skateboard.png"
+  },
+  {
+    "id": "new-vacuum",
+    "category": "objects",
+    "en": "vacuum",
+    "zh": "吸塵器",
+    "zhuyin": [
+      "ㄒㄧ",
+      "ㄔㄣˊ",
+      "ㄑㄧˋ"
+    ],
+    "emoji": "🧹",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-vacuum.png"
+  },
+  {
+    "id": "new-mailbox",
+    "category": "objects",
+    "en": "mailbox",
+    "zh": "信箱",
+    "zhuyin": [
+      "ㄒㄧㄣˋ",
+      "ㄒㄧㄤ"
+    ],
+    "emoji": "📮",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-mailbox.png"
+  },
+  {
+    "id": "new-wheelbarrow",
+    "category": "objects",
+    "en": "wheelbarrow",
+    "zh": "獨輪車",
+    "zhuyin": [
+      "ㄉㄨˊ",
+      "ㄌㄨㄣˊ",
+      "ㄔㄜ"
+    ],
+    "emoji": "🛒",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-wheelbarrow.png"
+  },
+  {
+    "id": "new-projector",
+    "category": "objects",
+    "en": "projector",
+    "zh": "投影機",
+    "zhuyin": [
+      "ㄊㄡˊ",
+      "ㄧㄥˇ",
+      "ㄐㄧ"
+    ],
+    "emoji": "📽️",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-projector.png"
+  },
+  {
+    "id": "new-glacier",
+    "category": "nature",
+    "en": "glacier",
+    "zh": "冰河",
+    "zhuyin": [
+      "ㄅㄧㄥ",
+      "ㄏㄜˊ"
+    ],
+    "emoji": "🧊",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-glacier.png"
+  },
+  {
+    "id": "new-geyser",
+    "category": "nature",
+    "en": "geyser",
+    "zh": "間歇泉",
+    "zhuyin": [
+      "ㄐㄧㄢ",
+      "ㄒㄧㄝ",
+      "ㄑㄩㄢˊ"
+    ],
+    "emoji": "♨️",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-geyser.png"
+  },
+  {
+    "id": "new-canyon",
+    "category": "nature",
+    "en": "canyon",
+    "zh": "峽谷",
+    "zhuyin": [
+      "ㄒㄧㄚˊ",
+      "ㄍㄨˇ"
+    ],
+    "emoji": "🏞️",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-canyon.png"
+  },
+  {
+    "id": "new-cliff",
+    "category": "nature",
+    "en": "cliff",
+    "zh": "懸崖",
+    "zhuyin": [
+      "ㄒㄩㄢˊ",
+      "ㄧㄞˊ"
+    ],
+    "emoji": "⛰️",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-cliff.png"
+  },
+  {
+    "id": "new-swamp",
+    "category": "nature",
+    "en": "swamp",
+    "zh": "沼澤",
+    "zhuyin": [
+      "ㄓㄠˇ",
+      "ㄗㄜˊ"
+    ],
+    "emoji": "🌿",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-swamp.png"
+  },
+  {
+    "id": "new-castle",
+    "category": "building",
+    "en": "castle",
+    "zh": "城堡",
+    "zhuyin": [
+      "ㄔㄥˊ",
+      "ㄅㄠˇ"
+    ],
+    "emoji": "🏰",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-castle.png"
+  },
+  {
+    "id": "new-museum",
+    "category": "building",
+    "en": "museum",
+    "zh": "博物館",
+    "zhuyin": [
+      "ㄅㄛˊ",
+      "ㄨˋ",
+      "ㄍㄨㄢˇ"
+    ],
+    "emoji": "🏛️",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-museum.png"
+  },
+  {
+    "id": "new-library",
+    "category": "building",
+    "en": "library",
+    "zh": "圖書館",
+    "zhuyin": [
+      "ㄊㄨˊ",
+      "ㄕㄨ",
+      "ㄍㄨㄢˇ"
+    ],
+    "emoji": "📚",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-library.png"
+  },
+  {
+    "id": "new-bakery",
+    "category": "building",
+    "en": "bakery",
+    "zh": "麵包店",
+    "zhuyin": [
+      "ㄇㄧㄢˋ",
+      "ㄅㄠ",
+      "ㄉㄧㄢˋ"
+    ],
+    "emoji": "🥖",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-bakery.png"
+  },
+  {
+    "id": "new-airport",
+    "category": "building",
+    "en": "airport",
+    "zh": "機場",
+    "zhuyin": [
+      "ㄐㄧ",
+      "ㄔㄤˇ"
+    ],
+    "emoji": "✈️",
+    "difficulty": 3,
+    "levelSource": "curated-2026-09-30",
+    "image": "assets/rebuilt/new100/new-airport.png"
   }
 ]

@@ -2,15 +2,15 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#164d39">
   <meta name="description" content="跟著恐龍郵局的夥伴聽單字、選圖片。">
   <meta name="apple-mobile-web-app-title" content="DINO單字任務">
   <title>恐龍郵局・單字任務</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="stylesheet" href="style.css?v=20260930r">
-  <script src="app.js?v=20260930r" defer></script>
+  <link rel="stylesheet" href="style.css?v=20260930s">
+  <script src="app.js?v=20260930s" defer></script>
 </head>
 <body>
   <div class="ambient ambient-a" aria-hidden="true"></div>
@@ -83,6 +83,7 @@
       <input id="questionCount" type="range" min="3" max="10" value="5" aria-label="每回合題數">
       <p class="setting-note">可以選 3 到 10 題。新設定會在下一回合使用。</p>
       <button id="openWordBank" class="settings-link" type="button"><span><strong>題庫管理</strong><small id="settingsBankSummary">載入題庫中…</small></span><span aria-hidden="true">›</span></button>
+      <button id="openHistory" class="settings-link" type="button"><span><strong>作答紀錄</strong><small>查看最近 10 回合的題數與成績</small></span><span aria-hidden="true">›</span></button>
       <button class="primary-button dialog-done" type="button" data-close-settings><span>完成設定</span><span class="button-arrow" aria-hidden="true">✓</span></button>
     </div>
     <div id="wordBankPage" class="settings-page hidden">
@@ -94,6 +95,12 @@
       <div id="bankList" class="bank-list"></div>
       <p id="bankMessage" class="bank-message" role="status" aria-live="polite"></p>
       <button id="resetWordBank" class="reset-bank" type="button">全部恢復啟用</button>
+    </div>
+    <div id="historyPage" class="settings-page hidden">
+      <div class="dialog-head"><button id="backFromHistory" class="back-button" type="button" aria-label="返回遊戲設定">‹</button><h2>作答紀錄</h2><button class="close-button" type="button" aria-label="關閉設定" data-close-settings>✕</button></div>
+      <p class="setting-note">只記錄這台裝置最近 10 個已完成的回合；「答對」是第一次就選對的題目。</p>
+      <div id="historyList" class="history-list"></div>
+      <button id="clearHistory" class="reset-bank" type="button">清除作答紀錄</button>
     </div>
   </dialog>
 </body>

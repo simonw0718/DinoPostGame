@@ -1,8 +1,9 @@
 const $ = (id) => document.getElementById(id);
 const screens = ['startScreen', 'playScreen', 'resultScreen'];
-const state = { words: [], disabledIds: new Set(), roundChoices: [], count: 5, mode: 'all', level: 1, round: [], index: 0, firstTryScore: 0, attempts: 0, results: [], phase: 'start', audio: null, completedRounds: 0, screenCasts: { start: [], play: [], result: [] }, characterQueue: [] };
+const state = { words: [], disabledIds: new Set(), roundChoices: [], count: 5, mode: 'all', level: 1, round: [], pendingRound: [], index: 0, firstTryScore: 0, attempts: 0, results: [], phase: 'start', audio: null, previewAudio: null, loadedWordId: null, completedRounds: 0, screenCasts: { start: [], play: [], result: [] }, characterQueue: [], history: [] };
 const bankStorageKey = 'dinopost-disabled-words-v1';
 const characterStorageKey = 'dinopost-character-queue-v2';
+const historyStorageKey = 'dinopost-round-history-v1';
 const characters = [
   { id: 'xiaokong', name: '小空', asset: 'xiaokong-poses-v1.png', frames: 2, ratio: 1 },
   { id: 'yuanyuan', name: '圓圓', asset: 'yuanyuan-poses-v1.png', frames: 2, ratio: .75 },
@@ -10,7 +11,8 @@ const characters = [
   { id: 'shuoshuo', name: '碩碩', asset: 'shuoshuo-poses-v1.png', frames: 2, ratio: .75 },
   { id: 'iggy', name: '伊奇', asset: 'iggy-poses-v1.png', frames: 3, ratio: .5 },
   { id: 'feifei', name: '飛飛', asset: 'feifei-poses-v1.png', frames: 2, ratio: 1 },
-  { id: 'abao', name: '小雞阿暴', asset: 'chick-abao-poses-v1.png', frames: 2, ratio: 1 }
+  { id: 'abao', name: '小雞阿暴', asset: 'chick-abao-poses-v1.png', frames: 2, ratio: 1 },
+  { id: 'shanshan', name: '閃閃', asset: 'shanshan-poses-v1.png', frames: 2, ratio: 1 }
 ];
 function saveCharacterQueue() {
   try { localStorage.setItem(characterStorageKey, JSON.stringify(state.characterQueue)); } catch {}
@@ -71,6 +73,26 @@ function showScreen(id) {
   screens.forEach(name => $(name).classList.toggle('hidden', name !== id));
   requestAnimationFrame(fitVisibleActors);
 }
+const actorObserver = new ResizeObserver(() => requestAnimationFrame(fitVisibleActors));
+document.querySelectorAll('.spotlight-actor').forEach(actor => actorObserver.observe(actor.parentElement));
+const actorImages = characters.map(character => {
+  const image = new Image();
+  let retried = false;
+  image.addEventListener('load', () => {
+    document.querySelectorAll(`[data-character="${character.id}"]`).forEach(actor => {
+      actor.style.backgroundImage = `url('${image.src}')`;
+    });
+    fitVisibleActors();
+  });
+  image.addEventListener('error', () => {
+    if (!retried) {
+      retried = true;
+      setTimeout(() => { image.src = `assets/${character.asset}?retry=1`; }, 400);
+    } else console.warn('角色圖片載入失敗', character.asset);
+  });
+  image.src = `assets/${character.asset}`;
+  return image;
+});
 function shuffle(items) {
   const a = [...items];
   for (let i = a.length - 1; i > 0; i--) {
@@ -250,14 +272,53 @@ function annotateStaticUI() {
   setKidText($('resultCopy'), '你完成任務了！');
   setKidText($('levelText'), '第一級');
 }
-function playWord() {
-  const word = currentWord();
+function primeWordAudio(word) {
   if (!word) return;
-  if (state.audio) { state.audio.pause(); state.audio.currentTime = 0; }
-  state.audio = new Audio(audioPath(word));
+  if (!state.audio) {
+    state.audio = new Audio();
+    state.audio.preload = 'auto';
+  }
+  if (state.loadedWordId !== word.id) {
+    state.audio.pause();
+    state.audio.src = audioPath(word);
+    state.loadedWordId = word.id;
+    state.audio.load();
+  }
+}
+function playWord(word = currentWord()) {
+  if (!word) return;
+  primeWordAudio(word);
+  state.audio.currentTime = 0;
   state.audio.play().then(() => { $('audioStatus').textContent = ''; }).catch(() => {
     $('audioStatus').textContent = '點「再聽一次」播放發音';
   });
+}
+function loadHistory() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(historyStorageKey) || '[]');
+    return Array.isArray(saved) ? saved.filter(item => item && Array.isArray(item.ids) && Array.isArray(item.results)
+      && Number.isFinite(item.score) && Number.isFinite(item.total) && !Number.isNaN(Date.parse(item.date))).slice(0, 10) : [];
+  } catch { return []; }
+}
+function saveHistory() {
+  try { localStorage.setItem(historyStorageKey, JSON.stringify(state.history.slice(0, 10))); }
+  catch { /* The game remains playable when browser storage is unavailable. */ }
+}
+function selectRound(pool) {
+  const missed = new Map();
+  state.history.forEach(record => record.ids.forEach((id, index) => {
+    if (record.results[index] === false) missed.set(id, (missed.get(id) || 0) + 1);
+  }));
+  const recent = new Set(state.history.slice(0, 2).flatMap(record => record.ids));
+  return pool.map(word => {
+    const weight = 1 + Math.min(3, missed.get(word.id) || 0);
+    return { word, priority: Math.pow(Math.random(), 1 / weight) - (recent.has(word.id) ? .3 : 0) };
+  }).sort((a, b) => b.priority - a.priority).slice(0, state.count).map(item => item.word);
+}
+function prepareRound() {
+  if (!state.words.length) return;
+  state.pendingRound = selectRound(eligibleWords());
+  if (state.pendingRound.length) primeWordAudio(state.pendingRound[0]);
 }
 function updateScoreText() {
   const label = document.createElement('span');
@@ -285,10 +346,23 @@ function updateProgress() {
   }));
 }
 function drawChoices(word) {
-  let pool = state.roundChoices.filter(item => (state.mode !== 'level' || item.difficulty === state.level) && visualGroup(item) === visualGroup(word) && item.id !== word.id);
-  if (pool.length < 3) pool = state.roundChoices.filter(item => visualGroup(item) === visualGroup(word)
-    && (item.category === 'dinosaur') === (word.category === 'dinosaur') && item.id !== word.id);
-  const distractors = shuffle(pool).slice(0, 3);
+  const uniqueOptions = items => {
+    const meanings = new Set([word.zh]);
+    const images = new Set(word.image ? [word.image] : []);
+    return shuffle(items).filter(item => {
+      if (meanings.has(item.zh) || (item.image && images.has(item.image))) return false;
+      meanings.add(item.zh);
+      if (item.image) images.add(item.image);
+      return true;
+    });
+  };
+  let pool = uniqueOptions(state.roundChoices.filter(item => item.category === word.category
+    && (state.mode !== 'level' || item.difficulty === state.level)
+    && visualGroup(item) === visualGroup(word) && item.id !== word.id));
+  if (pool.length < 3) pool = uniqueOptions(state.roundChoices.filter(item => (state.mode !== 'level' || item.difficulty === state.level) && visualGroup(item) === visualGroup(word) && item.id !== word.id));
+  if (pool.length < 3) pool = uniqueOptions(state.roundChoices.filter(item => visualGroup(item) === visualGroup(word)
+    && (item.category === 'dinosaur') === (word.category === 'dinosaur') && item.id !== word.id));
+  const distractors = pool.slice(0, 3);
   const options = shuffle([word, ...distractors]);
   $('choices').replaceChildren(...options.map(option => {
     const button = document.createElement('button');
@@ -320,13 +394,14 @@ function drawChoices(word) {
     return button;
   }));
 }
-function renderQuestion() {
+function renderQuestion(autoPlay = true) {
   state.phase = 'question'; state.attempts = 0;
   stopEffect();
   $('mailFlight').classList.remove('flying');
   const word = currentWord();
   showEnglishWord(word);
   $('feedback').textContent = '';
+  $('feedback').removeAttribute('aria-label');
   setKidText($('instruction'), '選圖片');
   $('nextButton').classList.add('hidden');
   $('trayBottom').classList.remove('has-next');
@@ -339,7 +414,8 @@ function renderQuestion() {
   $('questionCard').classList.remove('is-arriving');
   void $('questionCard').offsetWidth;
   $('questionCard').classList.add('is-arriving');
-  updateProgress(); drawChoices(word); playWord();
+  updateProgress(); drawChoices(word);
+  if (autoPlay) playWord();
 }
 function choose(button, id) {
   if (state.phase !== 'question') return;
@@ -389,20 +465,33 @@ function choose(button, id) {
   $('trayBottom').classList.add('has-next');
 }
 function startRound() {
-  advanceCast('play');
   const pool = eligibleWords();
-  state.roundChoices = state.words.filter(word => !state.disabledIds.has(word.id));
-  state.round = shuffle(pool).slice(0, state.count);
+  const eligibleIds = new Set(pool.map(word => word.id));
+  state.round = state.pendingRound.length === state.count && state.pendingRound.every(word => eligibleIds.has(word.id))
+    ? state.pendingRound : selectRound(pool);
+  state.pendingRound = [];
   state.index = 0; state.firstTryScore = 0; state.results = [];
+  // The first play call stays inside the Start button's user gesture on iOS.
+  playWord(state.round[0]);
+  advanceCast('play');
+  state.roundChoices = state.words.filter(word => !state.disabledIds.has(word.id));
   const title = state.mode === 'dinosaur' ? '恐龍挑戰' : state.mode === 'level'
     ? ['第一級', '第二級', '第三級'][state.level - 1] : '今日任務';
   setKidText($('taskTitle'), title);
-  showScreen('playScreen'); renderQuestion();
+  showScreen('playScreen'); renderQuestion(false);
 }
 function nextQuestion() {
+  if (state.phase !== 'reveal') return;
   state.index++;
   if (state.index >= state.round.length) {
     state.phase = 'result';
+    state.history.unshift({
+      date: new Date().toISOString(), mode: state.mode, level: state.level,
+      score: state.firstTryScore, total: state.round.length,
+      ids: state.round.map(word => word.id), results: [...state.results]
+    });
+    state.history = state.history.slice(0, 10);
+    saveHistory();
     $('finalScore').textContent = `${state.firstTryScore}／${state.round.length}`;
     state.completedRounds++;
     const alternate = state.completedRounds % 2 === 0;
@@ -414,6 +503,7 @@ function nextQuestion() {
     advanceCast('result');
     showScreen('resultScreen');
     playEffect('finish');
+    prepareRound();
     return;
   }
   renderQuestion();
@@ -424,12 +514,14 @@ function goHome() {
   stopEffect();
   state.phase = 'start';
   showScreen('startScreen');
+  prepareRound();
 }
 function setCount(value) {
   state.count = Math.max(3, Math.min(10, Number(value)));
   $('questionCount').value = String(state.count);
   $('countOutput').value = String(state.count);
   $('startCount').textContent = String(state.count);
+  prepareRound();
 }
 function bankIssue(disabledIds) {
   const active = state.words.filter(word => !disabledIds.has(word.id));
@@ -472,9 +564,28 @@ function makeBankArt(word) {
   return art;
 }
 function previewBankAudio(word) {
-  if (state.audio) { state.audio.pause(); state.audio.currentTime = 0; }
-  state.audio = new Audio(audioPath(word));
-  state.audio.play().catch(() => { $('bankMessage').textContent = `${word.en} 的發音暫時無法播放。`; });
+  if (state.previewAudio) { state.previewAudio.pause(); state.previewAudio.currentTime = 0; }
+  state.previewAudio = new Audio(audioPath(word));
+  state.previewAudio.play().catch(() => { $('bankMessage').textContent = `${word.en} 的發音暫時無法播放。`; });
+}
+function renderHistory() {
+  const list = $('historyList');
+  if (!state.history.length) {
+    list.textContent = '還沒有完成的回合。';
+    return;
+  }
+  list.replaceChildren(...state.history.map(record => {
+    const row = document.createElement('div'); row.className = 'history-row';
+    const label = document.createElement('strong');
+    label.textContent = record.mode === 'dinosaur' ? '恐龍挑戰' : record.mode === 'level'
+      ? `第${['一', '二', '三'][record.level - 1]}級` : '全部單字';
+    const date = document.createElement('small');
+    date.textContent = new Date(record.date).toLocaleString('zh-TW', { dateStyle: 'short', timeStyle: 'short' });
+    const score = document.createElement('span');
+    score.textContent = `${record.score}／${record.total} 題一次答對`;
+    row.append(label, date, score);
+    return row;
+  }));
 }
 function renderBank() {
   if (!state.words.length) return;
@@ -509,7 +620,7 @@ function renderBank() {
       const issue = bankIssue(next);
       if (issue) { toggle.checked = !toggle.checked; $('bankMessage').textContent = issue; return; }
       state.disabledIds = next; $('bankMessage').textContent = `${word.en} 已${toggle.checked ? '啟用' : '停用'}，下回合生效。`;
-      saveBankSelection(); renderBank();
+      saveBankSelection(); renderBank(); prepareRound();
       $('bankList').querySelector(`.bank-toggle[data-id="${word.id}"]`)?.focus({ preventScroll: true });
     });
     toggle.dataset.id = word.id;
@@ -522,8 +633,10 @@ function renderBank() {
 function showSettingsPage(name) {
   $('settingsMain').classList.toggle('hidden', name !== 'main');
   $('wordBankPage').classList.toggle('hidden', name !== 'bank');
-  $('settingsDialog').classList.toggle('bank-open', name === 'bank');
+  $('historyPage').classList.toggle('hidden', name !== 'history');
+  $('settingsDialog').classList.toggle('bank-open', name !== 'main');
   if (name === 'bank') { renderBank(); $('backToSettings').focus(); }
+  else if (name === 'history') { renderHistory(); $('backFromHistory').focus(); }
   else $('openWordBank').focus();
 }
 function setMode(mode) {
@@ -533,11 +646,13 @@ function setMode(mode) {
     button.setAttribute('aria-pressed', String(button.dataset.mode === mode));
   });
   $('levelControl').classList.toggle('hidden', mode !== 'level');
+  prepareRound();
 }
 function setLevel(value) {
   state.level = Math.max(1, Math.min(3, Number(value)));
   $('levelSlider').value = String(state.level);
   setKidText($('levelText'), ['第一級', '第二級', '第三級'][state.level - 1]);
+  prepareRound();
 }
 function validateWords(words) {
   if (!Array.isArray(words) || words.length < 80) throw Error('題庫不足');
@@ -564,7 +679,7 @@ async function init() {
   annotateStaticUI();
   $('startButton').disabled = true; document.querySelector('.start-label').textContent = '準備題目中…';
   try {
-    const response = await fetch('data.json?v=20260930r');
+    const response = await fetch('data.json?v=20260930s');
     if (!response.ok) throw Error(`HTTP ${response.status}`);
     const words = await response.json(); validateWords(words); state.words = words;
     try {
@@ -575,7 +690,9 @@ async function init() {
         if (!bankIssue(disabled)) state.disabledIds = disabled;
       }
     } catch { /* Browser storage can be unavailable; the default bank remains usable. */ }
+    state.history = loadHistory();
     renderBank();
+    prepareRound();
     $('startButton').disabled = false; setKidText(document.querySelector('.start-label'), '開始任務');
   } catch (error) {
     document.querySelector('.start-label').textContent = '題目載入失敗';
@@ -584,19 +701,22 @@ async function init() {
 }
 $('startButton').addEventListener('click', startRound);
 $('againButton').addEventListener('click', startRound);
-$('audioButton').addEventListener('click', playWord);
+$('audioButton').addEventListener('click', () => playWord());
 $('nextButton').addEventListener('click', nextQuestion);
 $('homeButton').addEventListener('click', goHome);
 $('resultHomeButton').addEventListener('click', goHome);
 $('settingsButton').addEventListener('click', () => { showSettingsPage('main'); $('settingsDialog').showModal(); });
 $('openWordBank').addEventListener('click', () => showSettingsPage('bank'));
 $('backToSettings').addEventListener('click', () => showSettingsPage('main'));
+$('openHistory').addEventListener('click', () => showSettingsPage('history'));
+$('backFromHistory').addEventListener('click', () => showSettingsPage('main'));
+$('clearHistory').addEventListener('click', () => { state.history = []; saveHistory(); renderHistory(); prepareRound(); });
 document.querySelectorAll('[data-close-settings]').forEach(button => button.addEventListener('click', () => $('settingsDialog').close()));
-$('settingsDialog').addEventListener('close', () => { $('settingsDialog').classList.remove('bank-open'); });
+$('settingsDialog').addEventListener('close', () => { $('settingsDialog').classList.remove('bank-open'); if (state.phase === 'start') prepareRound(); });
 $('bankSearch').addEventListener('input', renderBank);
 $('bankFilter').addEventListener('change', renderBank);
 $('resetWordBank').addEventListener('click', () => {
-  state.disabledIds.clear(); saveBankSelection(); renderBank(); $('bankMessage').textContent = '所有單字已恢復啟用。';
+  state.disabledIds.clear(); saveBankSelection(); renderBank(); prepareRound(); $('bankMessage').textContent = '所有單字已恢復啟用。';
 });
 $('minusButton').addEventListener('click', () => setCount(state.count - 1));
 $('plusButton').addEventListener('click', () => setCount(state.count + 1));
