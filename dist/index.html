@@ -7,8 +7,8 @@
   <meta name="description" content="跟著伊奇、飛飛與小雞阿暴在恐龍郵局聽單字、選圖片。">
   <title>恐龍郵局・單字任務</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="style.css?v=20260930n">
-  <script src="app.js?v=20260930n" defer></script>
+  <link rel="stylesheet" href="style.css?v=20260930q">
+  <script src="app.js?v=20260930q" defer></script>
 </head>
 <body>
   <div class="ambient ambient-a" aria-hidden="true"></div>
@@ -22,9 +22,9 @@
     <section id="startScreen" class="screen start-screen" aria-labelledby="startTitle">
       <div class="start-world" aria-hidden="true"></div>
       <div class="start-sun" aria-hidden="true"></div>
-      <div class="start-sticker" aria-hidden="true"><div class="iggy-actor pose-wave"></div></div>
-      <div class="start-feifei character-flight" aria-hidden="true"><div class="feifei-actor feifei-fly"></div></div>
-      <div class="start-abao" aria-hidden="true"><div class="abao-actor abao-sort"></div></div>
+      <div class="start-sticker" aria-hidden="true"><div id="startActorA" class="spotlight-actor"></div></div>
+      <div class="start-feifei cast-stamp" aria-hidden="true"><div id="startActorB" class="spotlight-actor"></div></div>
+      <div class="start-abao cast-stamp" aria-hidden="true"><div id="startActorC" class="spotlight-actor"></div></div>
       <div class="start-letter">
         <div class="letter-edge" aria-hidden="true"></div>
         <div class="letter-postmark" aria-hidden="true"><img src="assets/dinopost-workmark-master.png" alt=""></div>
@@ -44,9 +44,10 @@
       <div class="route-row"><span id="progressText">第 1 題／共 5 題</span><div id="progressDots" class="progress-dots" aria-hidden="true"></div></div>
       <div class="game-board">
         <div id="mailFlight" class="mail-flight" aria-hidden="true">✉</div>
-        <div class="board-scene" aria-hidden="true"><span class="scene-sun"></span><span class="scene-cloud scene-cloud-a"></span><span class="scene-cloud scene-cloud-b"></span><span class="scene-hill scene-hill-a"></span><span class="scene-hill scene-hill-b"></span><div id="feifeiPlay" class="play-feifei"><div class="feifei-actor feifei-fly"></div></div></div>
+        <div class="board-scene" aria-hidden="true"><span class="scene-sun"></span><span class="scene-cloud scene-cloud-a"></span><span class="scene-cloud scene-cloud-b"></span><span class="scene-hill scene-hill-a"></span><span class="scene-hill scene-hill-b"></span></div>
+        <div id="playActorFrameB" class="play-feifei cast-stamp" aria-hidden="true"><div id="playActorB" class="spotlight-actor"></div></div>
         <div class="question-wrap">
-          <div id="iggyActor" class="iggy-mini" aria-hidden="true"><div class="iggy-actor pose-listen"></div></div>
+          <div id="playActorFrameA" class="iggy-mini" aria-hidden="true"><div id="playActorA" class="spotlight-actor"></div></div>
           <div id="questionCard" class="question-card">
             <div class="question-top"><span id="questionTag" class="question-tag">聽單字</span><span class="stamp-icon" aria-hidden="true">✦</span></div>
             <div class="word-line"><strong id="englishWord">cat</strong><button id="audioButton" class="audio-button" type="button" aria-label="再聽一次英文發音"><span class="speaker-icon" aria-hidden="true">♫</span><span class="replay-label">再聽</span></button></div>
@@ -54,7 +55,7 @@
           </div>
         </div>
         <div class="sort-tray">
-          <div class="tray-heading"><span aria-hidden="true">✦</span><p id="instruction">選圖片</p><span aria-hidden="true">✦</span><div id="abaoPlay" class="play-abao" aria-hidden="true"><div class="abao-actor abao-sort"></div></div></div>
+          <div class="tray-heading"><span aria-hidden="true">✦</span><p id="instruction">選圖片</p><span aria-hidden="true">✦</span><div id="playActorFrameC" class="play-abao cast-stamp" aria-hidden="true"><div id="playActorC" class="spotlight-actor"></div></div></div>
           <div id="choices" class="choices" role="group" aria-label="四張圖片選項"></div>
           <div id="trayBottom" class="tray-bottom"><p id="feedback" class="feedback" role="status" aria-live="polite"></p><button id="nextButton" class="primary-button next-button hidden" type="button"><span class="next-label">下一題</span><span class="button-arrow" aria-hidden="true">➜</span></button></div>
         </div>
@@ -63,7 +64,7 @@
 
     <section id="resultScreen" class="screen result-screen hidden" aria-labelledby="resultTitle">
       <div class="result-rays" aria-hidden="true"></div>
-      <div class="result-medal" aria-hidden="true"><span id="resultSymbol">★</span></div><div class="result-crew" aria-hidden="true"><div class="result-feifei"><div class="feifei-actor feifei-deliver"></div></div><div class="result-iggy"><div class="iggy-actor pose-celebrate"></div></div><div class="result-abao"><div class="abao-actor abao-cheer"></div></div></div>
+      <div class="result-medal" aria-hidden="true"><span id="resultSymbol">★</span></div><div class="result-crew" aria-hidden="true"><div class="result-feifei"><div id="resultActorB" class="spotlight-actor"></div></div><div class="result-iggy"><div id="resultActorA" class="spotlight-actor"></div></div><div class="result-abao"><div id="resultActorC" class="spotlight-actor"></div></div></div>
       <p class="eyebrow">任務完成 · SPECIAL DELIVERY</p>
       <h1 id="resultTitle"><span id="resultTitleLine1">今天的郵件</span><br><span id="resultTitleLine2">送達啦！</span></h1>
       <p class="result-score"><span id="resultScoreLabel">第一次就答對</span> <strong id="finalScore">0／5</strong> <span id="resultCountUnit">題</span></p>

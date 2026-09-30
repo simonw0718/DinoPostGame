@@ -1,10 +1,75 @@
 const $ = (id) => document.getElementById(id);
 const screens = ['startScreen', 'playScreen', 'resultScreen'];
-const state = { words: [], disabledIds: new Set(), roundChoices: [], count: 5, mode: 'all', level: 1, round: [], index: 0, firstTryScore: 0, attempts: 0, results: [], phase: 'start', audio: null, completedRounds: 0 };
+const state = { words: [], disabledIds: new Set(), roundChoices: [], count: 5, mode: 'all', level: 1, round: [], index: 0, firstTryScore: 0, attempts: 0, results: [], phase: 'start', audio: null, completedRounds: 0, screenCasts: { start: [], play: [], result: [] }, characterQueue: [] };
 const bankStorageKey = 'dinopost-disabled-words-v1';
+const characterStorageKey = 'dinopost-character-queue-v2';
+const characters = [
+  { id: 'xiaokong', name: '小空', asset: 'xiaokong-poses-v1.png', frames: 2, ratio: 1 },
+  { id: 'yuanyuan', name: '圓圓', asset: 'yuanyuan-poses-v1.png', frames: 2, ratio: .75 },
+  { id: 'paino', name: '派諾', asset: 'paino-poses-v1.png', frames: 2, ratio: 1 },
+  { id: 'shuoshuo', name: '碩碩', asset: 'shuoshuo-poses-v1.png', frames: 2, ratio: .75 },
+  { id: 'iggy', name: '伊奇', asset: 'iggy-poses-v1.png', frames: 3, ratio: .5 },
+  { id: 'feifei', name: '飛飛', asset: 'feifei-poses-v1.png', frames: 2, ratio: 1 },
+  { id: 'abao', name: '小雞阿暴', asset: 'chick-abao-poses-v1.png', frames: 2, ratio: 1 }
+];
+function saveCharacterQueue() {
+  try { localStorage.setItem(characterStorageKey, JSON.stringify(state.characterQueue)); } catch {}
+}
+function loadCharacterQueue() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(characterStorageKey) || 'null');
+    const valid = new Set(characters.map(character => character.id));
+    if (Array.isArray(saved) && saved.length && new Set(saved).size === saved.length && saved.every(id => valid.has(id))) return saved;
+  } catch {}
+  return shuffle(characters.map(character => character.id));
+}
+function setActorPose(actor, pose) {
+  const character = characters.find(item => item.id === actor.dataset.character);
+  if (!character) return;
+  actor.style.backgroundPosition = pose === 'celebrate' ? '100% 0' : pose === 'listen' && character.frames === 3 ? '50% 0' : '0 0';
+}
+function fitActor(actor) {
+  const character = characters.find(item => item.id === actor.dataset.character);
+  const frame = actor.parentElement;
+  if (!character || !frame.clientWidth || !frame.clientHeight) return;
+  const style = getComputedStyle(frame);
+  const width = frame.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+  const height = frame.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
+  const fittedHeight = Math.max(1, Math.min(height, width / character.ratio));
+  actor.style.width = `${fittedHeight * character.ratio}px`;
+  actor.style.height = `${fittedHeight}px`;
+}
+function fitVisibleActors() {
+  document.querySelectorAll('.spotlight-actor').forEach(fitActor);
+}
+function renderScreenCast(screen) {
+  state.screenCasts[screen].forEach((characterId, index) => {
+    const character = characters.find(item => item.id === characterId);
+    const slot = ['A', 'B', 'C'][index];
+    const actor = $(`${screen}Actor${slot}`);
+    actor.style.backgroundImage = `url('assets/${character.asset}')`;
+    actor.style.backgroundSize = `${character.frames * 100}% 100%`;
+    actor.dataset.character = character.id;
+    actor.title = character.name;
+    setActorPose(actor, screen === 'result' ? 'celebrate' : screen === 'play' && slot === 'A' ? 'listen' : 'idle');
+    fitActor(actor);
+  });
+}
+function advanceCast(screen) {
+  const next = [];
+  while (next.length < 3) {
+    if (!state.characterQueue.length) state.characterQueue = shuffle(characters.map(character => character.id).filter(id => !next.includes(id)));
+    const id = state.characterQueue.shift();
+    if (!next.includes(id)) next.push(id);
+  }
+  state.screenCasts[screen] = next;
+  saveCharacterQueue();
+  renderScreenCast(screen);
+}
 
 function showScreen(id) {
   screens.forEach(name => $(name).classList.toggle('hidden', name !== id));
+  requestAnimationFrame(fitVisibleActors);
 }
 function shuffle(items) {
   const a = [...items];
@@ -265,11 +330,10 @@ function renderQuestion() {
   $('trayBottom').classList.remove('has-next');
   setKidText($('nextButton').querySelector('.next-label'), state.index === state.round.length - 1 ? '看成績' : '下一題');
   $('choices').classList.remove('hidden');
-  $('iggyActor').querySelector('.iggy-actor').className = 'iggy-actor pose-listen';
-  $('iggyActor').classList.remove('is-reacting', 'is-celebrating');
-  $('feifeiPlay').classList.remove('is-delivering');
-  $('abaoPlay').classList.remove('is-celebrating', 'is-reacting');
-  $('abaoPlay').querySelector('.abao-actor').className = 'abao-actor abao-sort';
+  for (const slot of ['A', 'B', 'C']) {
+    setActorPose($(`playActor${slot}`), slot === 'A' ? 'listen' : 'idle');
+    $(`playActorFrame${slot}`).classList.remove('is-reacting', 'is-celebrating', 'is-delivering');
+  }
   $('questionCard').classList.remove('is-arriving');
   void $('questionCard').offsetWidth;
   $('questionCard').classList.add('is-arriving');
@@ -284,12 +348,9 @@ function choose(button, id) {
     playEffect('wrong');
     button.classList.add('wrong'); button.disabled = true;
     setKidText($('feedback'), '再試一次！');
-    $('iggyActor').classList.remove('is-reacting');
-    void $('iggyActor').offsetWidth;
-    $('iggyActor').classList.add('is-reacting');
-    $('abaoPlay').classList.remove('is-reacting');
-    void $('abaoPlay').offsetWidth;
-    $('abaoPlay').classList.add('is-reacting');
+    $('playActorFrameA').classList.remove('is-reacting');
+    void $('playActorFrameA').offsetWidth;
+    $('playActorFrameA').classList.add('is-reacting');
     return;
   }
   playEffect('correct');
@@ -306,12 +367,11 @@ function choose(button, id) {
   }
   setKidText($('feedback'), '答對了！');
   $('instruction').textContent = '';
-  $('iggyActor').querySelector('.iggy-actor').className = 'iggy-actor pose-celebrate';
-  $('iggyActor').classList.remove('is-reacting');
-  $('iggyActor').classList.add('is-celebrating');
-  $('feifeiPlay').classList.add('is-delivering');
-  $('abaoPlay').querySelector('.abao-actor').className = 'abao-actor abao-cheer';
-  $('abaoPlay').classList.add('is-celebrating');
+  for (const slot of ['A', 'B', 'C']) {
+    setActorPose($(`playActor${slot}`), 'celebrate');
+    $(`playActorFrame${slot}`).classList.remove('is-reacting');
+    $(`playActorFrame${slot}`).classList.add('is-celebrating');
+  }
   $('mailFlight').classList.remove('flying');
   void $('mailFlight').offsetWidth;
   $('mailFlight').classList.add('flying');
@@ -327,6 +387,7 @@ function choose(button, id) {
   $('trayBottom').classList.add('has-next');
 }
 function startRound() {
+  advanceCast('play');
   const pool = eligibleWords();
   state.roundChoices = state.words.filter(word => !state.disabledIds.has(word.id));
   state.round = shuffle(pool).slice(0, state.count);
@@ -348,6 +409,7 @@ function nextQuestion() {
     setKidText($('resultTitleLine1'), alternate ? '星星郵件' : '今天的郵件');
     setKidText($('resultTitleLine2'), alternate ? '也送達啦！' : '送達啦！');
     setKidText($('resultCopy'), alternate ? '星星郵票送給你！' : '你完成任務了！');
+    advanceCast('result');
     showScreen('resultScreen');
     playEffect('finish');
     return;
@@ -355,6 +417,7 @@ function nextQuestion() {
   renderQuestion();
 }
 function goHome() {
+  if (state.phase !== 'start') advanceCast('start');
   if (state.audio) { state.audio.pause(); state.audio.currentTime = 0; }
   stopEffect();
   state.phase = 'start';
@@ -494,6 +557,8 @@ function validateWords(words) {
   }
 }
 async function init() {
+  state.characterQueue = loadCharacterQueue();
+  advanceCast('start');
   annotateStaticUI();
   $('startButton').disabled = true; document.querySelector('.start-label').textContent = '準備題目中…';
   try {
@@ -536,4 +601,5 @@ $('plusButton').addEventListener('click', () => setCount(state.count + 1));
 $('questionCount').addEventListener('input', event => setCount(event.target.value));
 document.querySelectorAll('.mode-option').forEach(button => button.addEventListener('click', () => setMode(button.dataset.mode)));
 $('levelSlider').addEventListener('input', event => setLevel(event.target.value));
+window.addEventListener('resize', fitVisibleActors);
 init();

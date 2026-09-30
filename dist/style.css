@@ -139,8 +139,71 @@
   .tray-bottom.has-next{min-height:69px}.next-button{min-height:45px;font-size:17px}.next-button .button-arrow{width:29px;height:29px}
   .start-letter{padding:12px 15px 11px}.start-letter h1{font-size:clamp(29px,7vw,36px)}.start-description{margin:4px 0;font-size:14px}.mode-picker{margin:5px 0 4px}.mode-option,.mode-option[data-mode=dinosaur]{min-height:49px;font-size:16px}.level-control{margin:4px 0;padding:4px 9px 0}.round-summary{padding:5px 9px}.start-letter .primary-button{min-height:48px;margin-top:8px}.start-letter .eyebrow{margin-bottom:4px;font-size:12px}.letter-postmark{width:48px;height:48px}
   .result-medal,.result-screen:has(.result-iggy) .result-medal{width:70px;height:70px;margin-bottom:7px;font-size:40px}.result-crew{height:85px}.result-feifei{height:72px}.result-iggy{height:82px}.result-abao{height:68px}.result-score{padding:6px 12px}.result-score strong{font-size:27px}.result-actions .primary-button{min-height:49px}.result-home{min-height:49px}
+  .result-screen>.eyebrow{margin-bottom:4px}.result-screen h1{margin-bottom:7px}.result-copy{margin-top:8px;margin-bottom:8px}
 }
 @media(max-width:680px) and (max-height:610px){
   .topbar{height:49px;min-height:49px}.brand-copy small{display:none}.task-label{display:none}.game-topline{grid-template-columns:auto 1fr auto}.route-row{margin-bottom:2px}.question-wrap{margin-top:4px}.sort-tray{margin-top:4px}.tray-heading{margin-bottom:2px}.tray-bottom.has-next{min-height:62px}.next-button{min-height:40px}
   .start-sticker,.start-feifei,.start-abao{display:none}.start-letter{top:50%;bottom:auto;transform:translateY(-50%);animation:none}.start-letter .eyebrow{display:none}
+}
+
+/* 每個畫面各自抽三位郵局夥伴；每張姿勢圖都依原始影格比例顯示 */
+.start-sticker{display:flex;align-items:flex-end;justify-content:center}
+.start-sticker:after{content:"POST CREW"}
+.spotlight-actor{display:block;flex:none;width:100%;height:auto;max-height:none;max-width:none;aspect-ratio:auto;background-repeat:no-repeat;background-position:0 0;filter:drop-shadow(0 5px 4px #285b3640)}
+.start-sticker .spotlight-actor{align-self:flex-end}
+.iggy-mini .spotlight-actor{max-width:100%;max-height:100%}
+.result-crew{display:flex;align-items:flex-end;justify-content:center}
+.result-crew .spotlight-actor{width:auto;height:100%;max-width:100%;animation:celebrateHop 1.7s ease-in-out infinite alternate}
+.start-sticker .spotlight-actor{animation:actorBreath 3s ease-in-out infinite alternate}
+.iggy-mini .spotlight-actor{animation:actorBreath 2.8s ease-in-out infinite alternate}
+@media(max-width:680px) and (max-height:610px){.start-sticker{display:flex;top:4px;right:9px;width:63px;height:73px;border-width:3px;border-bottom-width:8px}.start-sticker:after{bottom:-7px;font-size:4px}}
+@media(prefers-reduced-motion:reduce){.spotlight-actor,.start-sticker .spotlight-actor,.iggy-mini .spotlight-actor,.result-crew .spotlight-actor{animation:none!important}}
+
+/* 三位角色獨立抽選；側邊角色改成郵票肖像，任何角色都能自然站位 */
+.cast-stamp{display:flex;align-items:flex-end;justify-content:center;overflow:hidden;width:110px;height:118px;padding:5px;border:5px solid #fffdf1;border-radius:18px;background:#fff9e9;box-shadow:0 6px 0 #174b38,0 12px 22px #164b3640;transform:rotate(-5deg);z-index:1}
+.cast-stamp .spotlight-actor{max-width:100%;max-height:100%;animation:actorBreath 3s ease-in-out infinite alternate}
+.start-feifei.cast-stamp{left:13%;top:8%;width:135px;height:145px;animation:stickerFloat 4s ease-in-out infinite alternate}
+.start-abao.cast-stamp{left:35%;bottom:7%;top:auto;width:104px;height:112px;animation:abaoBob 3s ease-in-out infinite alternate}
+.play-feifei.cast-stamp{left:auto;right:10px;top:4px;width:70px;height:75px;z-index:3;animation:actorBreath 3.2s ease-in-out infinite alternate}
+.tray-heading .play-abao.cast-stamp{right:8px;top:-21px;width:63px;height:66px;padding:3px;border-width:3px;border-radius:12px;animation:actorBreath 3s ease-in-out infinite alternate}
+.cast-stamp.is-celebrating{animation:celebrateHop .65s ease-out!important}
+.cast-stamp.is-reacting{animation:reactTilt .3s ease-in-out!important}
+.result-crew>div{display:flex;align-items:flex-end;justify-content:center;flex:none;aspect-ratio:1;animation:abaoBob 2.5s ease-in-out infinite alternate}
+.result-crew .spotlight-actor{animation:none}
+.result-crew .result-iggy{margin:0}
+@media(max-width:680px){
+  .start-feifei.cast-stamp{left:10px;top:16px;width:85px;height:92px;border-width:4px;border-radius:13px}
+  .start-abao.cast-stamp{left:17px;top:155px;bottom:auto;width:68px;height:74px;border-width:3px;border-radius:12px}
+  .play-feifei.cast-stamp{left:auto;right:7px;top:3px;width:59px;height:63px;border-width:3px;border-radius:11px}
+  .tray-heading .play-abao.cast-stamp{right:3px;top:-13px;width:43px;height:47px;border-width:2px}
+  .result-crew{gap:1px}
+}
+@media(max-width:375px){.result-crew .result-feifei{height:68px}.result-crew .result-iggy{height:86px}.result-crew .result-abao{height:68px}}
+@media(max-width:680px) and (max-height:610px){
+  .start-feifei.cast-stamp,.start-abao.cast-stamp{display:flex;top:5px;bottom:auto;width:59px;height:66px;padding:2px;border-width:2px;border-radius:8px}
+  .start-feifei.cast-stamp{left:8px}.start-abao.cast-stamp{left:80px}
+  .play-feifei.cast-stamp{width:46px;height:49px}.tray-heading .play-abao.cast-stamp{width:37px;height:40px}
+}
+@media(prefers-reduced-motion:reduce){.cast-stamp,.cast-stamp .spotlight-actor,.result-crew>div{animation:none!important}}
+
+/* 遊戲場景使用真正透明的角色立繪，保留原圖比例並擴大辨識面積 */
+#playActorFrameA.iggy-mini{width:88px;height:118px;overflow:visible;border:0;border-radius:0;background:transparent;box-shadow:none;transform:none;pointer-events:none}
+#playActorFrameB.cast-stamp,#playActorFrameC.cast-stamp{overflow:visible;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;transform:none;pointer-events:none}
+#playActorFrameB.cast-stamp{right:9px;top:2px;width:86px;height:94px}
+.tray-heading #playActorFrameC.cast-stamp{right:8px;top:-35px;width:76px;height:82px}
+#playActorFrameA .spotlight-actor,#playActorFrameB .spotlight-actor,#playActorFrameC .spotlight-actor{filter:drop-shadow(0 6px 4px #0b3e2b80)}
+@media(max-width:680px){
+  #playActorFrameA.iggy-mini{width:65px;height:88px}
+  #playActorFrameB.cast-stamp{right:7px;top:2px;width:65px;height:70px}
+  .tray-heading #playActorFrameC.cast-stamp{right:3px;top:-24px;width:59px;height:64px}
+}
+@media(max-width:375px){
+  #playActorFrameA.iggy-mini{width:55px;height:76px}
+  #playActorFrameB.cast-stamp{width:55px;height:59px}
+  .tray-heading #playActorFrameC.cast-stamp{width:50px;height:55px}
+}
+@media(max-width:680px) and (max-height:740px){
+  #playActorFrameA.iggy-mini{height:75px}
+  #playActorFrameB.cast-stamp{height:57px}
+  .tray-heading #playActorFrameC.cast-stamp{height:51px;top:-18px}
 }
