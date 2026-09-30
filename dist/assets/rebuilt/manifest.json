@@ -29,8 +29,11 @@
       "sheet": 0,
       "cell": 0,
       "newImage": "assets/rebuilt/kidapp-allosaurus.png",
-      "status": "generated-candidate",
-      "sha256": "6e36b7af50bd44e0a98f19ab48bda5d0045f95a6b785c6cc169d381338f542bf"
+      "status": "design-master-style-candidate-v2",
+      "sha256": "69ee1176d9f930e7207203a458ef0f3dd8bce23927b18b9e148bc99ee22fa9e1",
+      "replacementSheet": "dinosaurs-8-design-master-grid-v2.png",
+      "replacementCell": 6,
+      "mirroredHorizontally": true
     },
     {
       "id": "kidapp-ankylosaurus",
@@ -101,8 +104,11 @@
       "sheet": 0,
       "cell": 6,
       "newImage": "assets/rebuilt/kidapp-corythosaurus.png",
-      "status": "generated-candidate",
-      "sha256": "dabe2d300055c66a59124c6b5a3c4709c6643f856a205a28637f9ce221f75500"
+      "status": "design-master-style-candidate-v2",
+      "sha256": "ed16955f298e35a4c83273cf2b69558466205e8ef38c14277e4aa1e095a27fa6",
+      "replacementSheet": "dinosaurs-8-design-master-grid-v2.png",
+      "replacementCell": 7,
+      "mirroredHorizontally": true
     },
     {
       "id": "kidapp-deinonychus",
@@ -113,8 +119,11 @@
       "sheet": 0,
       "cell": 7,
       "newImage": "assets/rebuilt/kidapp-deinonychus.png",
-      "status": "generated-candidate",
-      "sha256": "600c8a98d6e66f6fb30f791cb548c8e1122df3e1da77d17c001ff3551d79ea41"
+      "status": "design-master-style-candidate-v2",
+      "sha256": "6d01d60ef7f52bc457f8b4fe8ad6d29ce35aa0669a615b3272a146603ce12a70",
+      "replacementSheet": "dinosaurs-8-design-master-grid-v2.png",
+      "replacementCell": 0,
+      "mirroredHorizontally": false
     },
     {
       "id": "kidapp-dilophosaurus",
@@ -149,8 +158,11 @@
       "sheet": 0,
       "cell": 10,
       "newImage": "assets/rebuilt/kidapp-edmontosaurus.png",
-      "status": "generated-candidate",
-      "sha256": "9f2040bc5aed5d584c94ddb29b94f69cc3d2704a723ce567b73adb511c1dfc91"
+      "status": "design-master-style-candidate-v2",
+      "sha256": "3a291b61b3e3768cc76db9273e16f8abcf9b98744fd94d1c63fb94dd7e398695",
+      "replacementSheet": "dinosaurs-8-design-master-grid-v2.png",
+      "replacementCell": 4,
+      "mirroredHorizontally": true
     },
     {
       "id": "kidapp-giganotosaurus",
@@ -197,8 +209,11 @@
       "sheet": 0,
       "cell": 14,
       "newImage": "assets/rebuilt/kidapp-iguanodon.png",
-      "status": "generated-candidate",
-      "sha256": "26a325081c3d81da55fab51266f3b170ce9d9bc95d5350fe12d9a0c5e6cb3426"
+      "status": "design-master-style-candidate-v2",
+      "sha256": "7d92be12e5d616619a9e1c8eddcd5f9b3bff94851a6edab867341a05e36d44ac",
+      "replacementSheet": "dinosaurs-8-design-master-grid-v2.png",
+      "replacementCell": 1,
+      "mirroredHorizontally": false
     },
     {
       "id": "kidapp-maiasaura",
@@ -221,8 +236,11 @@
       "sheet": 0,
       "cell": 16,
       "newImage": "assets/rebuilt/kidapp-mamenchisaurus.png",
-      "status": "generated-candidate",
-      "sha256": "dc29156a8decfeea9189f062cace5aa415cf0eeb0afe37fb9034e2ab8f6d97c7"
+      "status": "design-master-style-candidate-v2",
+      "sha256": "8fa69b444826017ee4855ca65aa6286e71aaa4f75c5275b70c051660baa1da2e",
+      "replacementSheet": "dinosaurs-8-design-master-grid-v2.png",
+      "replacementCell": 5,
+      "mirroredHorizontally": true
     },
     {
       "id": "kidapp-mammoth",
@@ -389,8 +407,11 @@
       "sheet": 1,
       "cell": 0,
       "newImage": "assets/rebuilt/kidapp-therizinosaurus.png",
-      "status": "generated-candidate",
-      "sha256": "bae38894ef898c0a02d6c33cb2457ffbc1488ab78676feb7056eb89307fd8ef8"
+      "status": "design-master-style-candidate-v2",
+      "sha256": "db4672c329ca54158850c23da4c371953b527923c3c5fa942c23959301f9d4b5",
+      "replacementSheet": "dinosaurs-8-design-master-grid-v2.png",
+      "replacementCell": 2,
+      "mirroredHorizontally": false
     },
     {
       "id": "kidapp-triceratops",
@@ -413,8 +434,11 @@
       "sheet": 1,
       "cell": 2,
       "newImage": "assets/rebuilt/kidapp-troodon.png",
-      "status": "generated-candidate",
-      "sha256": "f46e120aec20095cb7650fba95354fbc47b1cd197361dc7b848021eb4d17da57"
+      "status": "design-master-style-candidate-v2",
+      "sha256": "408bfa1e1ed8f9a5b06d668e537ac4880b37ccf78b30069003e2d70066a002e3",
+      "replacementSheet": "dinosaurs-8-design-master-grid-v2.png",
+      "replacementCell": 3,
+      "mirroredHorizontally": false
     },
     {
       "id": "kidapp-tyrannosaurus",
@@ -691,6 +715,16 @@
       "newImage": "assets/rebuilt/kidapp-teacher.png",
       "status": "generated-candidate",
       "sha256": "7259c9b365d4f9e831b980145dc964f7af1b9921dc86cd8b4093b84b54268d6c"
+    }
+  ],
+  "replacementSheets": [
+    {
+      "file": "dinosaurs-8-design-master-grid-v2.png",
+      "sha256": "70356778a82427b83c63bbfafd69e6435642771296eeb520355774c0a5fd6fe6",
+      "layout": "4 columns x 2 rows",
+      "sourceStyle": "Visual Style Master and Character Master 禽龍云云老師",
+      "cropTool": "tools/crop_dinosaur_grid.py",
+      "usedCells": 8
     }
   ]
 }

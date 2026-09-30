@@ -17,6 +17,7 @@
 - 開始按鈕會在同一次點擊事件播放預先選好的第一題錄音，以改善 iOS 首題靜音；重播鍵仍可手動播放。遊戲按鈕阻止雙點縮放。
 - 恐龍長名稱在手機題目框內換行並縮小到可讀尺寸；「重聽」保留 44px 圖示按鈕，避免被擠出邊框。
 - 原本從 kidsapp 匯入並在題目中使用的 56 張圖片，已由兩張 6×5 候選圖組重新製作，再以本機程式切圖接入。圖組與逐格來源對照在 `dist/assets/rebuilt/`。
+- 其中八種恐龍已依 Design Master 風格重新繪製成 4×2 圖組，裁為透明選項圖；底排的愛德蒙頓龍、馬門溪龍、異特龍、冠龍各自鏡像朝右。來源及雜湊記於 `dist/assets/rebuilt/manifest.json`，可用 `tools/crop_dinosaur_grid.py` 重現裁切。
 - 新增 100 詞有四張 6×5 圖組切出的候選圖片與 Samantha 美式英語 MP3；逐格對照與雜湊在 `dist/assets/rebuilt/new100/manifest.json`，產生流程見 `tools/add_100_words.py`。
 
 ## 本機預覽
