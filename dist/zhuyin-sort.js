@@ -30,9 +30,26 @@
   routeDone.style.strokeDasharray = String(routeLength);
   routeDone.style.strokeDashoffset = String(routeLength);
   const animate = Motion.animate;
+  const sounds = {
+    stamp: new Audio('assets/audio/effects/mail-stamp.mp3'),
+    finish: new Audio('assets/audio/effects/mail-finish.mp3')
+  };
+  Object.values(sounds).forEach(sound => { sound.preload = 'auto'; sound.volume = .9; });
+  function playSound(kind, startAt = 0) {
+    const sound = sounds[kind];
+    if (!sound) return;
+    if (kind === 'finish') sounds.stamp.pause();
+    sound.pause();
+    try { sound.currentTime = startAt; } catch { /* Playback still starts from the beginning. */ }
+    sound.play().catch(error => console.warn(`${kind} 音效無法播放`, error));
+  }
   const bopomofoOnsets = new Set([...'ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ']);
   const uiReadings = {
     '首頁': ['ㄕㄡˇ', 'ㄧㄝˋ'],
+    '第一封信準備好了！': ['ㄉㄧˋ', 'ㄧ', 'ㄈㄥ', 'ㄒㄧㄣˋ', 'ㄓㄨㄣˇ', 'ㄅㄟˋ', 'ㄏㄠˇ', 'ㄌㄜ˙', ''],
+    '按開始，聽題目發音。': ['ㄢˋ', 'ㄎㄞ', 'ㄕˇ', '', 'ㄊㄧㄥ', 'ㄊㄧˊ', 'ㄇㄨˋ', 'ㄈㄚ', 'ㄧㄣ', ''],
+    '開始送信': ['ㄎㄞ', 'ㄕˇ', 'ㄙㄨㄥˋ', 'ㄒㄧㄣˋ'],
+    '再聽音效': ['ㄗㄞˋ', 'ㄊㄧㄥ', 'ㄧㄣ', 'ㄒㄧㄠˋ'],
     '注音送信': ['ㄓㄨˋ', 'ㄧㄣ', 'ㄙㄨㄥˋ', 'ㄒㄧㄣˋ'],
     '英文送信': ['ㄧㄥ', 'ㄨㄣˊ', 'ㄙㄨㄥˋ', 'ㄒㄧㄣˋ'],
     '看單字，送到郵箱': ['ㄎㄢˋ', 'ㄉㄢ', 'ㄗˋ', '', 'ㄙㄨㄥˋ', 'ㄉㄠˋ', 'ㄧㄡˊ', 'ㄒㄧㄤ'],
@@ -104,7 +121,10 @@
       ['letterTo', '找圖片郵箱'], ['letterHint', '拖曳或點選'],
       ['backBrand', '恐龍郵局'], ['backConfirm', '收件確認'], ['replayLabel', '重聽'],
       ['nextLabel', '下一封'], ['finishCopy', '信都送到了！'],
-      ['finishTitle', '送信任務完成'], ['playAgainButton', '再送一次'], ['finishHome', '回首頁']
+      ['finishTitle', '送信任務完成'], ['playAgainButton', '再送一次'], ['finishHome', '回首頁'],
+      ['finishSoundLabel', '再聽音效'],
+      ['readyTitle', '第一封信準備好了！'], ['readyHint', '按開始，聽題目發音。'],
+      ['readyButtonLabel', '開始送信'], ['readyHome', '回首頁']
     ];
     pairs.forEach(([id, value]) => setKidText($(id), value));
     setStatus('信件準備中');
@@ -395,6 +415,8 @@
       return;
     }
     state.phase = 'flipping';
+    if (state.audio) { state.audio.pause(); state.audio.currentTime = 0; }
+    playSound('stamp');
     state.firstTry += Number(state.attempts === 1);
     updateScore();
     state.armed = false;
@@ -474,6 +496,7 @@
   }
   async function nextQuestion() {
     if (state.phase !== 'reveal') return;
+    if (state.index === state.count - 1) playSound('finish');
     state.phase = 'mailing';
     $('nextButton').hidden = true;
     $('replayButton').hidden = true;
@@ -491,7 +514,7 @@
     else renderQuestion();
   }
   function startRound() {
-    if (!state.words.length) return;
+    if (!state.words.length) return false;
     try {
       const saved = JSON.parse(localStorage.getItem(disabledStorageKey) || '[]');
       if (Array.isArray(saved)) state.disabledIds = new Set(saved);
@@ -502,7 +525,7 @@
       meanings.delete(word.zh);
       return meanings.size >= 2;
     });
-    if (usable.length < state.nextCount) { setStatus('可用單字不足'); return; }
+    if (usable.length < state.nextCount) { setStatus('可用單字不足'); return false; }
     state.mode = state.nextMode; state.level = state.nextLevel; state.count = state.nextCount; state.format = state.nextFormat; state.autoAudio = state.nextAutoAudio;
     buildRouteStops();
     state.activePool = pool;
@@ -515,6 +538,7 @@
     pickCourier();
     setRoute(0);
     renderQuestion();
+    return true;
   }
   function initDrag() {
     interact('#letterDrag').draggable({
@@ -580,6 +604,10 @@
     $('mailCount').addEventListener('input', event => setCount(event.target.value));
     $('mailLevelSlider').addEventListener('input', event => setLevel(event.target.value));
     $('playAgainButton').addEventListener('click', startRound);
+    $('finishSoundButton').addEventListener('click', () => playSound('finish', .68));
+    $('readyButton').addEventListener('click', () => {
+      if (startRound()) $('readyOverlay').hidden = true;
+    });
     $('nextButton').addEventListener('click', nextQuestion);
     $('replayButton').addEventListener('click', () => { const word = state.round[state.index]; if (word) playPrompt(word); });
     try {
@@ -601,7 +629,10 @@
         const disabled = JSON.parse(localStorage.getItem(disabledStorageKey) || '[]');
         if (Array.isArray(disabled)) state.disabledIds = new Set(disabled.filter(id => allIds.has(id)));
       } catch { /* Ignore invalid saved settings. */ }
-      startRound();
+      if (state.nextAutoAudio) {
+        $('readyOverlay').hidden = false;
+        $('readyButton').focus();
+      } else startRound();
     } catch (error) {
       console.error(error);
       setStatus('題庫載入失敗');

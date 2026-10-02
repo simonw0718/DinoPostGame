@@ -6,10 +6,10 @@
   <meta name="theme-color" content="#164d39">
   <title>注音送信・恐龍郵局</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="zhuyin-sort.css?v=14">
+  <link rel="stylesheet" href="zhuyin-sort.css?v=16">
   <script src="vendor/interact.min.js"></script>
   <script src="vendor/motion.js"></script>
-  <script src="zhuyin-sort.js?v=14" defer></script>
+  <script src="zhuyin-sort.js?v=16" defer></script>
 </head>
 <body>
   <div class="game-shell">
@@ -73,6 +73,15 @@
     </footer>
   </div>
 
+  <div id="readyOverlay" class="ready-overlay" hidden>
+    <div class="ready-card">
+      <img src="assets/dinopost-workmark-stamp-transparent-v1.png" alt="" class="ready-mark">
+      <h1 id="readyTitle">第一封信準備好了！</h1>
+      <p id="readyHint">按開始，聽題目發音。</p>
+      <button id="readyButton" type="button"><span id="readyButtonLabel">開始送信</span><span aria-hidden="true">➜</span></button>
+      <a id="readyHome" href="mail.html">回首頁</a>
+    </div>
+  </div>
 
   <dialog id="settingsDialog" class="settings-dialog">
     <div class="dialog-head"><span aria-hidden="true">✉</span><h2>遊戲設定</h2><button id="closeSettings" class="close-button" type="button" aria-label="關閉設定">✕</button></div>
@@ -98,7 +107,7 @@
       <p id="finishCopy">信都送到了！</p>
       <h1 id="finishTitle">送信任務完成</h1>
       <strong id="finishScore"></strong>
-      <div class="finish-actions"><button id="playAgainButton" type="button">再送一次</button><a id="finishHome" href="mail.html">回首頁</a></div>
+      <div class="finish-actions"><button id="finishSoundButton" type="button">♫ <span id="finishSoundLabel">再聽音效</span></button><button id="playAgainButton" type="button">再送一次</button><a id="finishHome" href="mail.html">回首頁</a></div>
     </div>
   </div>
 </body>
