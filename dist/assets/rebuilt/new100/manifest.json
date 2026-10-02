@@ -139,15 +139,6 @@
       "status": "generated-candidate"
     },
     {
-      "id": "new-biscuit",
-      "en": "biscuit",
-      "sheet": 1,
-      "cell": 12,
-      "image": "assets/rebuilt/new100/new-biscuit.png",
-      "sha256": "f85aa55659ead981fb3635dcefd11df9101ae85f928ad6fbf5a6b0d8eebcaede",
-      "status": "generated-candidate"
-    },
-    {
       "id": "new-lettuce",
       "en": "lettuce",
       "sheet": 1,
@@ -715,15 +706,6 @@
       "status": "generated-candidate"
     },
     {
-      "id": "new-cauliflower",
-      "en": "cauliflower",
-      "sheet": 3,
-      "cell": 16,
-      "image": "assets/rebuilt/new100/new-cauliflower.png",
-      "sha256": "9485c7b2d86b9c245234c581a423f8706a323abf78ce310a70d336fe09f1cc5e",
-      "status": "generated-candidate"
-    },
-    {
       "id": "new-pomegranate",
       "en": "pomegranate",
       "sheet": 3,
@@ -748,15 +730,6 @@
       "cell": 19,
       "image": "assets/rebuilt/new100/new-dumpling.png",
       "sha256": "8374f80d500281b16f08c83b389f92f313aea1b081dfb9b2e64ea2aac27341a2",
-      "status": "generated-candidate"
-    },
-    {
-      "id": "new-binoculars",
-      "en": "binoculars",
-      "sheet": 3,
-      "cell": 20,
-      "image": "assets/rebuilt/new100/new-binoculars.png",
-      "sha256": "29fc70858af37566fae1991c22b325eb3c36340a91abe055bb227d32dfb42adf",
       "status": "generated-candidate"
     },
     {

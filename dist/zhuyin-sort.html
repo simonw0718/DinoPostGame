@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#164d39">
+  <title>注音送信・恐龍郵局</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="zhuyin-sort.css?v=13">
+  <script src="vendor/interact.min.js"></script>
+  <script src="vendor/motion.js"></script>
+  <script src="zhuyin-sort.js?v=13" defer></script>
+</head>
+<body>
+  <div class="game-shell">
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="返回選遊戲首頁"><span class="brand-seal" aria-hidden="true"><img src="assets/dinopost-workmark-master.png" alt=""></span><span class="brand-copy"><strong id="brandTitle">恐龍郵局</strong><small>WORD MISSION</small></span></a>
+      <button id="settingsButton" class="settings-button" type="button" aria-label="開啟設定"><span aria-hidden="true">⚙</span><span id="settingsLabel">設定</span></button>
+    </header>
+    <div class="game-topline">
+      <a class="home-button" href="mail.html" aria-label="回送信首頁"><span aria-hidden="true">⌂</span><span id="homeLabel">回首頁</span></a>
+      <span class="task-label"><span aria-hidden="true">✉</span><span id="modeTitle">注音送信</span><span id="mailModeBadge" class="mail-mode-badge">全部</span></span>
+      <span id="scoreText" class="score-pill">第一次答對 0 封</span>
+    </div>
+
+    <section class="route-panel" aria-label="送信路線">
+      <div class="route-caption"><span id="routeStart">郵局</span><strong id="progressLabel">第 1／5 封</strong><span id="routeEnd">收件地</span></div>
+      <div class="route-track" id="routeTrack">
+        <svg viewBox="0 0 1000 140" preserveAspectRatio="none" aria-hidden="true">
+          <path id="routePath" class="route-path" d="M 55 85 C 200 13, 330 118, 485 70 S 760 13, 945 68"/>
+          <path id="routeDone" class="route-done" d="M 55 85 C 200 13, 330 118, 485 70 S 760 13, 945 68"/>
+          <g id="routeStops"></g>
+        </svg>
+        <div id="routeCourier" class="route-courier" aria-hidden="true"><span class="courier-art"></span></div>
+      </div>
+    </section>
+
+    <main id="gameArea" class="game-area">
+      <p class="instruction"><span class="instruction-icon" aria-hidden="true">✉</span> <span id="instructionText">讀注音，送到郵箱</span></p>
+      <div id="mailboxes" class="mailboxes" role="group" aria-label="三個圖片郵箱"></div>
+      <div class="letter-area" id="letterArea">
+        <div class="mail-conveyor" aria-hidden="true">
+          <div class="mail-sack"><span class="sack-neck"></span><span class="sack-body"><span class="sack-mark">P</span></span></div>
+          <div class="belt"><span class="belt-slats"></span><span class="belt-roller belt-roller-a"></span><span class="belt-roller belt-roller-b"></span></div>
+        </div>
+        <div id="letterDrag" class="letter-drag" tabindex="0" role="button" aria-label="拿起注音信件">
+          <div id="letterVisual" class="letter-visual">
+            <div class="letter-flip-inner">
+              <div class="letter-front">
+                <span class="letter-edge" aria-hidden="true"></span>
+                <span class="letter-stamp" aria-hidden="true"><img src="assets/dinopost-workmark-master.png" alt=""></span>
+                <span class="letter-to">TO: <span id="letterTo">找圖片郵箱</span></span>
+                <strong id="letterReading" class="letter-reading"></strong>
+                <span class="letter-hint" id="letterHint">拖曳或點選</span>
+              </div>
+              <div class="letter-back" aria-hidden="true">
+                <span class="back-fold" aria-hidden="true"></span>
+                <span class="back-label"><span id="backBrand">恐龍郵局</span> · <span id="backConfirm">收件確認</span></span>
+                <strong id="revealChinese" class="back-chinese"></strong>
+                <span id="revealEnglish" class="back-english"></span>
+                <span id="backPostmark" class="back-postmark" aria-hidden="true"><img src="assets/dinopost-workmark-stamp-transparent-v1.png" alt=""></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button id="replayButton" class="replay-button" type="button" aria-label="重聽英文發音" hidden>♫ <span id="replayLabel">重聽</span></button>
+      </div>
+    </main>
+
+    <footer class="game-footer">
+      <p id="status" role="status" aria-live="polite">信件準備中…</p>
+      <button id="nextButton" class="next-button" type="button" hidden><span id="nextLabel">下一封</span><span aria-hidden="true">➜</span></button>
+    </footer>
+  </div>
+
+
+  <dialog id="settingsDialog" class="settings-dialog">
+    <div class="dialog-head"><span aria-hidden="true">✉</span><h2>遊戲設定</h2><button id="closeSettings" class="close-button" type="button" aria-label="關閉設定">✕</button></div>
+    <p class="setting-note">每回合送 5 封，題庫開關和作答紀錄與配對遊戲共用。選擇會在下一回合生效。</p>
+    <fieldset class="mail-mode-picker"><legend>選任務</legend><div class="mail-mode-options">
+      <button class="mail-mode-option" type="button" data-mail-mode="all" aria-pressed="true">✦ 全部</button>
+      <button class="mail-mode-option" type="button" data-mail-mode="level" aria-pressed="false">1–3 分難度</button>
+      <button class="mail-mode-option" type="button" data-mail-mode="dinosaur" aria-pressed="false">🦕 恐龍挑戰</button>
+    </div></fieldset>
+    <div id="mailLevelControl" class="mail-level-control" hidden><label id="mailLevelText" for="mailLevelSlider">第一級</label><input id="mailLevelSlider" type="range" min="1" max="3" step="1" value="1" aria-label="選擇難度等級"><div class="mail-level-marks" aria-hidden="true"><span>1</span><span>2</span><span>3</span></div></div>
+    <p id="mailSelectionSummary" class="mail-selection-summary">下一回合：全部單字</p>
+    <button id="restartFromSettings" class="settings-restart" type="button">重新開始這回合</button>
+    <a class="settings-link" href="match.html?settings=bank"><span><strong>題庫管理</strong><small>選擇可出現的單字</small></span><span aria-hidden="true">›</span></a>
+    <a class="settings-link" href="match.html?settings=history"><span><strong>作答紀錄</strong><small>查看最近 10 回合</small></span><span aria-hidden="true">›</span></a>
+  </dialog>
+
+  <div id="finishOverlay" class="finish-overlay" hidden>
+    <div class="finish-card">
+      <img src="assets/dinopost-workmark-stamp-transparent-v1.png" alt="" class="finish-mark">
+      <p id="finishCopy">五封信都送到了！</p>
+      <h1 id="finishTitle">送信任務完成</h1>
+      <strong id="finishScore"></strong>
+      <div class="finish-actions"><button id="playAgainButton" type="button">再送一次</button><a id="finishHome" href="mail.html">回首頁</a></div>
+    </div>
+  </div>
+</body>
+</html>

@@ -25,6 +25,11 @@ for (const word of words) {
     const image = path.join(dist, word.image);
     if (!fs.existsSync(image) || fs.statSync(image).size < 1000) throw Error(`Missing image: ${word.id}`);
   }
+  if (word.zhAudio) {
+    if (word.zhAudio !== `assets/audio/zh/${word.id}.mp3`) throw Error(`Invalid Chinese audio path: ${word.id}`);
+    const chineseAudio = path.join(dist, word.zhAudio);
+    if (!fs.existsSync(chineseAudio) || fs.statSync(chineseAudio).size < 1500) throw Error(`Missing Chinese audio: ${word.id}`);
+  }
   const audio = path.join(dist, 'assets/audio', `${word.id}.mp3`);
   if (!fs.existsSync(audio) || fs.statSync(audio).size < 500) throw Error(`Missing audio: ${word.id}`);
   ids.add(word.id); english.add(key);

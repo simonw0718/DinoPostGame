@@ -1,0 +1,176 @@
+:root{font-family:"Noto Sans TC","PingFang TC",system-ui,sans-serif;color:#174c37;background:#e3eddb;font-synthesis:none}
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0}body{overflow:hidden;background:radial-gradient(circle at 10% 9%,#fff8dd 0 13%,transparent 32%),linear-gradient(160deg,#d8ead9,#ecf0dc 55%,#d2e2cf);-webkit-tap-highlight-color:transparent}button,a{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,.letter-drag:focus-visible{outline:4px solid #e8a92b;outline-offset:3px}[hidden]{display:none!important}
+.game-shell{width:min(100%,900px);height:100dvh;min-height:0;margin:auto;padding:env(safe-area-inset-top) 12px max(8px,env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:7px;overflow:hidden;background:linear-gradient(175deg,#fbf7e8,#e6f2dd 58%,#d8e9cf);box-shadow:0 0 45px #164d3920}
+.page-top{height:54px;flex:none;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px}.home-link,.restart-button{display:inline-flex;align-items:center;justify-content:center;min-width:48px;height:46px;padding:0 11px;border:2px solid #bfd8b7;border-radius:14px;background:#fffcf0;color:#1e6546;font-weight:900;text-decoration:none;box-shadow:0 3px 0 #b3d0aa}.home-link{gap:5px;font-size:22px}.home-link span{font-size:15px}.restart-button{font-size:29px}.mode-brand{min-width:0;display:flex;align-items:center;justify-content:center;gap:8px}.mode-brand img{width:42px;height:42px;border-radius:50%;object-fit:cover}.mode-brand strong,.mode-brand small{display:block;line-height:1.08}.mode-brand strong{font-size:22px;white-space:nowrap}.mode-brand small{margin-top:3px;font-size:9px;letter-spacing:.08em;color:#6e8c6d}
+.route-panel{height:112px;flex:none;padding:7px 13px 3px;border:2px solid #c8d8b8;border-radius:23px;background:#f8f8e9;box-shadow:0 5px 0 #b9cfb0}.route-caption{display:flex;align-items:center;justify-content:space-between;color:#497c5e;font-size:14px;font-weight:900}.route-caption strong{font-size:16px;color:#1c6848}.route-track{height:74px;position:relative}.route-track svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}.route-path,.route-done{fill:none;stroke-width:10;stroke-linecap:round;stroke-linejoin:round}.route-path{stroke:#cfddc5;stroke-dasharray:16 15}.route-done{stroke:#edae2c;filter:drop-shadow(0 2px 1px #a8731e55)}.route-stop{fill:#fff8e8;stroke:#8cae86;stroke-width:7}.route-stop.done{fill:#f4bb42;stroke:#bd7d24}.route-courier{position:absolute;left:5%;top:60%;width:64px;height:64px;transform:translate(-50%,-50%);pointer-events:none;filter:drop-shadow(0 4px 2px #20523b55);z-index:2}.courier-art{display:block;width:100%;height:100%;background:url('assets/feifei-poses-v1.png') left center/200% 100% no-repeat}
+.game-area{min-height:0;flex:1;display:flex;flex-direction:column;align-items:stretch;gap:9px;padding:5px 4px 0}.instruction{flex:none;margin:0;text-align:center;font-size:clamp(17px,3vw,23px);font-weight:1000;letter-spacing:.02em}.instruction-icon{color:#e0a329}
+.mailboxes{flex:1;min-height:130px;max-height:288px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(5px,1.8vw,14px);align-items:stretch}.mailbox{position:relative;display:flex;flex-direction:column;align-items:stretch;min-width:0;min-height:0;padding:0;border:0;background:none;color:#174e38;touch-action:manipulation;transform-origin:50% 85%}.mailbox-roof{position:relative;flex:none;height:25px;margin:0 8px -3px;border:3px solid #1a6147;border-radius:18px 18px 5px 5px;background:linear-gradient(#3b9670,#246448);box-shadow:0 3px 0 #174c38;z-index:2;transition:transform .25s}.mailbox-body{position:relative;flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;gap:4px;padding:9px 8px 7px;border:4px solid #1d6b4b;border-radius:16px 16px 18px 18px;background:linear-gradient(155deg,#65ad80,#2e7e5c 72%);box-shadow:0 7px 0 #17533e,0 12px 13px #20493430}.mailbox-window{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;border:3px solid #d9ab55;border-radius:13px;background:#fff9e9;box-shadow:inset 0 3px 8px #765d3022}.mailbox-art{display:block;max-width:90%;max-height:90%;object-fit:contain;font-size:clamp(42px,8vw,83px);line-height:1}.mailbox-art.sheet{height:86%;width:auto;background-repeat:no-repeat;background-size:500% 200%;flex:none}.mailbox-art.sheet.animals{aspect-ratio:4/5}.mailbox-art.sheet.food,.mailbox-art.sheet.objects{aspect-ratio:1}.mailbox-slot{flex:none;display:block;width:60%;height:9px;margin-top:1px;border:2px solid #113e2b;border-radius:8px;background:#103c2c;box-shadow:inset 0 2px 2px #09271c}.mailbox-base{flex:none;width:82%;height:8px;margin:auto;border-radius:3px 3px 8px 8px;background:#8e6741}.mailbox.is-target .mailbox-roof,.mailbox:hover .mailbox-roof{transform:translateY(-4px) rotate(-2deg)}.mailbox.is-target .mailbox-body{border-color:#e7ae38;box-shadow:0 7px 0 #ad782d,0 0 0 5px #f8ca5b66}.mailbox.is-wrong{animation:mailboxShake .35s ease-out}.mailbox.accepted .mailbox-roof{transform:translateY(-8px) rotate(-5deg)}.mailbox.accepted .mailbox-body{border-color:#eab944;background:#69af7e}
+.letter-area{position:relative;flex:none;height:clamp(142px,26dvh,202px);display:grid;place-items:center;margin-top:3px}.letter-track{position:absolute;left:6%;right:6%;bottom:11%;height:32px;display:flex;justify-content:space-around;border-top:8px solid #b88448;border-bottom:8px solid #9b6b3a;background:#d7b47d;border-radius:8px;opacity:.7}.letter-track span{width:20px;height:100%;border-left:4px solid #a47842;border-right:4px solid #a47842}.letter-drag{position:relative;z-index:5;width:min(75vw,304px);height:clamp(128px,23dvh,172px);touch-action:none;user-select:none;cursor:grab;will-change:transform}.letter-drag:active{cursor:grabbing}.letter-drag.is-armed .letter-visual{outline:4px solid #f4c34a}.letter-drag.is-dragging{z-index:20}.letter-visual{position:relative;width:100%;height:100%;overflow:hidden;border:3px solid #debf81;border-radius:12px;background:linear-gradient(125deg,#fffcf1 0 69%,#faf0d9);box-shadow:0 7px 0 #c8a56d,0 14px 21px #614c2b3d;transform-origin:center;will-change:transform}.letter-edge{position:absolute;inset:8px;border:2px dashed #e6d3a9;border-radius:8px;pointer-events:none}.letter-stamp{position:absolute;right:17px;top:13px;display:grid;place-items:center;width:37px;height:37px;border:3px dotted #d9a83f;border-radius:50%;color:#ba8b2c;font-size:22px}.letter-to{position:absolute;left:18px;top:15px;font-size:11px;font-weight:900;color:#7e926e}.letter-reading{position:absolute;inset:34px 12px 24px;display:flex;align-items:center;justify-content:center;gap:clamp(7px,2vw,20px)}.zy-syllable{position:relative;display:block;min-width:32px;height:100%;padding:0 8px 0 0;color:#19553c;text-align:center}.zy-main{display:inline-block;writing-mode:vertical-rl;text-orientation:upright;font-size:clamp(25px,5.7vw,36px);font-weight:1000;line-height:1.06;letter-spacing:.02em}.zy-tone{position:absolute;right:-4px;top:40%;color:#d64935;font-size:22px;font-weight:1000}.zy-tone.neutral{top:-4px;right:9px;font-size:19px}.letter-reading.is-long{gap:4px}.letter-reading.is-long .zy-main{font-size:clamp(20px,4.4vw,29px)}.letter-reading.is-long .zy-syllable{min-width:26px;padding-right:5px}.letter-hint{position:absolute;left:10px;right:10px;bottom:8px;color:#8a916f;text-align:center;font-size:11px;font-weight:900}
+.reveal{display:flex;align-items:center;justify-content:center;gap:11px;width:min(92%,410px);min-height:116px;padding:10px 14px;border:3px solid #e5bd64;border-radius:19px;background:#fff9e7;box-shadow:0 7px 0 #cfb379}.reveal-seal{display:grid;place-items:center;width:45px;height:45px;flex:none;border-radius:50%;background:#50a977;color:white;font-size:29px;font-weight:1000}.reveal>div{flex:1;min-width:0}.reveal strong,.reveal span:not(.reveal-seal){display:block}.reveal strong{font-size:clamp(22px,5vw,30px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.reveal>div span{color:#2f7654;font-size:17px;font-weight:900}.reveal button{flex:none;min-width:60px;min-height:54px;padding:5px;border:2px solid #99c5a3;border-radius:14px;background:#e4f4e0;color:#1c6747;font-size:20px;font-weight:1000}.reveal button span{font-size:11px}
+.game-footer{flex:none;min-height:64px;display:flex;align-items:center;justify-content:center;gap:10px;padding:0 8px}.game-footer p{flex:1;min-width:0;margin:0;color:#2a6b4d;font-size:16px;font-weight:900;text-align:center}.next-button{flex:none;min-width:158px;min-height:55px;padding:5px 16px;border:2px solid #a46a24;border-radius:16px;background:#f6bf42;color:#29533e;font-size:20px;font-weight:1000;box-shadow:0 5px 0 #a46a24}.next-button span{margin-left:10px}
+.finish-overlay{position:fixed;z-index:50;inset:0;display:grid;place-items:center;padding:20px;background:#0d3d2bb3}.finish-card{width:min(95vw,460px);padding:25px 22px;text-align:center;border:5px solid #e3ba64;border-radius:26px;background:#fff9e9;box-shadow:0 20px 40px #0d301b66}.finish-mark{width:90px;height:90px;border-radius:50%;object-fit:cover}.finish-card p{margin:10px 0;color:#42835a;font-weight:900}.finish-card h1{margin:8px 0;font-size:34px}.finish-card>strong{display:block;margin:13px 0;font-size:23px}.finish-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.finish-actions button,.finish-actions a{min-height:52px;padding:11px 19px;border:2px solid #2b7954;border-radius:14px;background:#2b7954;color:#fff;font-size:18px;font-weight:900;text-decoration:none}.finish-actions a{background:#fff;color:#2b7954}
+@keyframes mailboxShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px) rotate(-2deg)}75%{transform:translateX(5px) rotate(2deg)}}
+@media(max-width:560px){.game-shell{padding-inline:8px;gap:5px}.page-top{height:50px;gap:5px}.home-link,.restart-button{height:42px;min-width:43px;padding:0 7px}.home-link span{font-size:13px}.mode-brand img{width:37px;height:37px}.mode-brand strong{font-size:18px}.route-panel{height:99px;padding:5px 8px 0}.route-track{height:66px}.route-courier{width:52px;height:52px}.route-caption{font-size:12px}.route-caption strong{font-size:14px}.game-area{gap:4px;padding-top:3px}.instruction{font-size:17px}.mailboxes{min-height:128px;gap:5px}.mailbox-roof{height:19px;margin:0 4px -3px;border-width:2px}.mailbox-body{padding:5px 4px 4px;border-width:3px;border-radius:12px}.mailbox-window{border-width:2px;border-radius:8px}.mailbox-art{font-size:clamp(37px,11vw,66px)}.mailbox-slot{height:7px}.mailbox-base{height:6px}.letter-area{height:clamp(128px,24dvh,172px)}.letter-drag{width:min(71vw,270px);height:clamp(119px,22dvh,148px)}.letter-reading{inset:31px 8px 19px}.zy-main{font-size:clamp(23px,6vw,32px)}.game-footer{min-height:55px}.game-footer p{font-size:14px}.next-button{min-height:50px;min-width:130px;font-size:17px}}
+@media(max-width:380px){.instruction{font-size:15px}.mailbox-art{font-size:36px}.route-panel{height:86px}.route-track{height:56px}.route-courier{width:45px;height:45px}.game-footer p{font-size:12px}.letter-hint{font-size:10px}}
+@media(max-height:670px){.game-shell{gap:3px}.page-top{height:43px}.route-panel{height:76px}.route-track{height:48px}.route-courier{width:42px;height:42px}.instruction{font-size:15px}.mailboxes{min-height:100px}.mailbox-roof{height:16px}.mailbox-body{padding:3px}.letter-area{height:120px}.letter-drag{height:109px}.letter-reading{inset:27px 7px 14px}.zy-main{font-size:23px}.letter-to,.letter-hint{font-size:9px}.game-footer{min-height:45px}.next-button{min-height:42px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+/* Keep each syllable centered inside the envelope at every word length. */
+.zy-syllable{display:flex;align-items:center;justify-content:center}
+.mailbox-art:is(img){width:96%;height:96%;max-width:none;max-height:none;object-fit:contain}
+/* A friendly green postbox: gabled top, Dino Post P and the mail slot above the picture. */
+.mailbox-roof{height:61px;margin:12px 8px -5px;border:3px solid #155841;border-radius:14px 14px 7px 7px;background:linear-gradient(145deg,#51a67e,#1f7154);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;box-shadow:inset 0 3px 0 #8cc5a3,0 4px 0 #154b39}
+.mailbox-roof:before{content:"";position:absolute;left:11px;right:11px;top:-17px;height:18px;clip-path:polygon(50% 0,100% 100%,0 100%);background:#207356;filter:drop-shadow(0 -2px 0 #155841)}
+.mailbox-emblem{display:grid;place-items:center;width:25px;height:25px;border:2px solid #f6df9a;border-radius:50%;color:#fff5cf;font-size:18px;font-weight:1000;line-height:1}
+.mailbox-roof .mailbox-slot{width:62%;height:10px;margin:0;border:2px solid #0d4634;border-radius:8px;background:#0b3629;box-shadow:inset 0 1px 2px #041e17}
+.mailbox-body{border-radius:7px 7px 18px 18px;background:linear-gradient(155deg,#5eaa7c,#2b7c59 72%)}
+.mailbox-window{margin:5px 2px 3px}
+.mailbox.is-target .mailbox-roof,.mailbox:hover .mailbox-roof{transform:translateY(-4px) rotate(-1deg)}
+.mailbox.accepted .mailbox-roof{transform:translateY(-5px)}
+/* Both sides are the same envelope, so the answer stays on the letter. */
+.letter-visual{perspective:800px;overflow:visible;background:transparent;border:0;box-shadow:none}
+.letter-flip-inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .58s cubic-bezier(.2,.72,.2,1)}
+.letter-drag.is-flipped .letter-flip-inner{transform:rotateY(180deg)}
+.letter-front,.letter-back{position:absolute;inset:0;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:3px solid #debf81;border-radius:12px;background:linear-gradient(125deg,#fffcf1 0 69%,#faf0d9);box-shadow:0 7px 0 #c8a56d,0 14px 21px #614c2b3d}
+.letter-back{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;transform:rotateY(180deg);background:linear-gradient(145deg,#fffaf0,#f6e7c4);border-color:#d8aa65}
+.back-fold{position:absolute;inset:0 0 auto;height:48%;clip-path:polygon(0 0,100% 0,50% 100%);background:#f0dfbb;box-shadow:0 3px 0 #dcbf8e}
+.back-label,.back-chinese,.back-english,.back-postmark{position:relative;z-index:1}
+.back-label{align-self:flex-start;margin:4px 0 4px 13px;color:#5e7d5d;font-size:10px;font-weight:900}
+.back-chinese{max-width:76%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#155c42;font-size:clamp(27px,7vw,42px);line-height:1.15;font-weight:1000;text-shadow:0 2px #fff9e8}
+.back-english{max-width:82%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#4d805d;font-size:clamp(15px,4vw,21px);font-weight:900}
+.back-postmark{position:absolute;right:9px;bottom:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;width:64px;height:64px;border:4px double #c73f32;border-radius:50%;color:#c73f32;opacity:0;transform:translateY(-45px) rotate(-22deg) scale(2.2);filter:drop-shadow(0 2px 1px #85372e55)}
+.back-postmark b{font-size:30px;line-height:1}.back-postmark small{font-size:7px;font-weight:1000;letter-spacing:.03em}
+.back-postmark.is-stamping{animation:stampDown .52s cubic-bezier(.18,1.4,.5,1) forwards}
+.replay-button{position:absolute;right:0;bottom:4px;z-index:8;min-width:55px;min-height:48px;padding:3px;border:2px solid #88bb98;border-radius:14px;background:#e5f4df;color:#186248;font-size:14px;font-weight:1000;box-shadow:0 3px 0 #9ecaaa}
+.zy-syllable{min-width:37px;padding:0 11px 0 0}
+.zy-main{display:flex;flex-direction:column;align-items:center;justify-content:center;writing-mode:horizontal-tb;font-size:clamp(25px,5.8vw,36px);line-height:1}
+.zy-symbol{display:block;line-height:1.03}
+.zy-tone{top:50%;right:-5px;transform:translateY(-50%) scale(1.15,1.35);color:#d32f2f;font-size:24px;line-height:1}
+.zy-tone.neutral{top:1px;right:10px;transform:none;color:#d32f2f;font-size:23px}
+.letter-reading.is-long .zy-main{font-size:clamp(20px,4.4vw,29px)}
+@keyframes stampDown{0%{opacity:0;transform:translateY(-45px) rotate(-22deg) scale(2.2)}64%{opacity:1;transform:translateY(0) rotate(-11deg) scale(.86)}80%{transform:translateY(-3px) rotate(-11deg) scale(1.07)}100%{opacity:.84;transform:translateY(0) rotate(-11deg) scale(1)}}
+@media(max-width:560px){.mailbox-roof{height:48px;margin:10px 5px -5px;border-width:2px;gap:2px}.mailbox-roof:before{top:-13px;height:14px;left:8px;right:8px}.mailbox-emblem{width:20px;height:20px;font-size:15px}.mailbox-roof .mailbox-slot{height:8px}.back-postmark{width:52px;height:52px}.back-postmark b{font-size:24px}.back-postmark small{font-size:6px}.zy-syllable{min-width:31px;padding-right:9px}}
+@media(max-height:670px){.mailbox-roof{height:38px;margin-top:8px;gap:1px}.mailbox-roof:before{top:-10px;height:11px}.mailbox-emblem{width:17px;height:17px;font-size:12px}.mailbox-roof .mailbox-slot{height:7px}.back-label{margin-top:0;margin-bottom:0}.back-chinese{font-size:28px}.back-postmark{width:45px;height:45px}}
+@media(prefers-reduced-motion:reduce){.letter-flip-inner{transition-duration:.01ms}.back-postmark.is-stamping{animation-duration:.01ms}}
+.zy-syllable{height:auto;min-height:1em;align-self:center}
+.zy-tone.neutral{top:-.65em;right:10px}
+.zy-main{font-family:"Bopomofo Ruby","Noto Sans TC","PingFang TC",system-ui,sans-serif}
+/* Route couriers use each transparent sprite frame's true aspect ratio. */
+.route-courier{width:auto;aspect-ratio:1}
+.courier-art{background-position:0 0}
+.route-courier[data-character="iggy"]{height:76px}
+@media(max-width:560px){.route-courier[data-character="iggy"]{height:64px}}
+@media(max-height:670px){.route-courier[data-character="iggy"]{height:53px}}
+/* Match the card game's Hanzi + vertical Bopomofo pairing on child-facing text. */
+.kid-text{display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;column-gap:.02em;row-gap:.02em;max-width:100%;vertical-align:middle;line-height:1.16}
+.bpm-word{display:inline-flex;align-items:center;justify-content:center;flex:none;padding-right:.18em;white-space:nowrap}
+.bpm-main-char{display:inline-block;flex:none;font-size:1em;font-weight:inherit;line-height:1.04}
+.bpm-column{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;margin-left:.03em;font-family:"Bopomofo Ruby","Noto Sans TC","PingFang TC",system-ui,sans-serif;font-size:.39em;font-weight:850;line-height:1;color:currentColor}
+.bpm-onset,.bpm-rime{display:block;line-height:1.03}
+.bpm-tone{position:absolute;right:-.55em;top:85%;transform:translateY(-50%) scale(1.5,1.8);font-size:1.2em;font-weight:900;color:#d32f2f;line-height:1}
+.bpm-tone-dot{position:absolute;right:0;top:-.6em;font-size:1.4em;font-weight:900;color:#d32f2f;line-height:1}
+.mode-brand strong.kid-text,.route-caption .kid-text,.back-label .kid-text,.letter-to .kid-text,.letter-hint.kid-text,.game-footer .kid-text{white-space:nowrap;flex-wrap:nowrap}
+.mode-brand strong.kid-text{font-size:clamp(17px,4.7vw,22px)}
+.route-caption .kid-text{font-size:clamp(14px,3.4vw,17px)}
+#progressLabel{display:flex;align-items:center;justify-content:center;white-space:nowrap;gap:2px}
+#progressLabel .kid-text{font-size:inherit}
+.instruction #instructionText{max-width:calc(100% - 30px)}
+.letter-stamp{overflow:hidden;background:#fff9e9;border:2px solid #d9a83f}
+.letter-stamp img{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%}
+.letter-to{font-size:12px}.letter-hint{font-size:12px}
+.back-label{display:flex;align-items:center;gap:3px;font-size:11px}
+.back-chinese.kid-text{display:flex;flex-wrap:nowrap;max-width:76%;font-size:clamp(25px,6.8vw,38px);overflow:visible;text-overflow:clip}
+.back-chinese.kid-text.is-long{font-size:clamp(19px,5vw,29px)}
+.back-postmark{overflow:hidden;border:0;background:#fffaf0;border-radius:50%;box-shadow:0 2px 3px #684f2c66}
+.back-postmark img{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%}
+.replay-button .kid-text{font-size:14px}
+.game-footer p.kid-text{font-size:clamp(13px,3.3vw,17px)}
+.next-button{display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.next-button .kid-text{font-size:inherit;white-space:nowrap;flex-wrap:nowrap}
+.finish-card p.kid-text{font-size:20px}
+.finish-card h1.kid-text{font-size:clamp(25px,6.5vw,34px)}
+#finishScore{display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:wrap}
+#finishScore .kid-text{font-size:clamp(18px,4.5vw,23px)}
+.finish-actions .kid-text{font-size:clamp(17px,4.5vw,20px);white-space:nowrap;flex-wrap:nowrap}
+@media(max-width:380px){.mode-brand strong.kid-text{font-size:16px}.instruction{font-size:15px}.letter-to{font-size:10px}.letter-hint{font-size:10px}.back-label{font-size:9px}.route-caption .kid-text{font-size:12px}.game-footer p.kid-text{font-size:12px}}
+/* Nested labels in the shell also use span selectors; keep ruby at card-game scale. */
+.kid-text .bpm-main-char{font-size:1em}
+.kid-text .bpm-column{font-size:.38em}
+.kid-text .bpm-tone{font-size:1.2em}
+.kid-text .bpm-tone-dot{font-size:1.4em}
+.home-link{min-width:79px;gap:2px}
+.home-link .kid-text{font-size:14px;white-space:nowrap;flex-wrap:nowrap}
+@media(max-width:380px){.home-link{min-width:72px}.home-link .kid-text{font-size:13px}}
+/* Give primary prompts and navigation enough room for young readers. */
+.home-link{min-width:88px}.home-link .kid-text{font-size:17px}
+.instruction{font-size:20px;line-height:1.25}
+.game-footer{min-height:65px}.game-footer p.kid-text{font-size:16px;line-height:1.2}
+@media(max-width:380px){.home-link{min-width:79px}.home-link .kid-text{font-size:15px}.mode-brand strong.kid-text{font-size:17px}.instruction{font-size:17px}.game-footer{min-height:55px}.game-footer p.kid-text{font-size:14px}.route-caption .kid-text{font-size:13px}}
+/* The original next-button rule targeted every descendant span, including ruby. */
+.next-button span{margin-left:0}
+.next-button > span:last-child{margin-left:8px}
+.replay-button{top:2px;bottom:auto}
+.game-footer p.kid-text{white-space:normal;flex-wrap:wrap;overflow:hidden}
+/* The same two-level header used by the picture matching game. */
+.topbar{height:64px;flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 5px}
+.brand{display:flex;align-items:center;gap:9px;color:#1c6543;min-width:0}
+.brand-seal{display:grid;place-items:center;flex:none;width:43px;height:43px;padding:2px;overflow:hidden;border:3px solid #e6ba62;border-radius:50%;background:#fff9e8;box-shadow:0 3px 0 #0b4230}
+.brand-seal img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.brand-copy{display:flex;flex-direction:column;min-width:0}
+.brand-copy strong{color:#1c6543;font-size:19px;line-height:1.05;white-space:nowrap}
+.brand-copy small{margin-top:5px;color:#6d8d68;font-size:10px;letter-spacing:.2em;font-weight:900}
+.settings-button{display:flex;align-items:center;gap:7px;min-height:42px;padding:6px 14px;border:2px solid #b9d1b4;border-radius:99px;background:#fffdf3;color:#24634a;font-size:15px;font-weight:900;box-shadow:0 3px 0 #c5d9be}
+.settings-button>span:first-child{font-size:21px;line-height:1}
+.game-topline{height:52px;flex:none;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:10px;padding:0 5px;font-weight:900}
+.home-button{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:46px;padding:5px 11px;border:2px solid #b5d1b7;border-radius:14px;background:#fffdf1;color:#236246;font-size:17px;font-weight:1000;text-decoration:none;box-shadow:0 3px 0 #bed5b8;white-space:nowrap}
+.home-button>span:first-child{font-size:25px;line-height:1}
+.task-label{display:inline-flex;align-items:center;justify-self:center;gap:7px;color:#1e6445;font-size:17px;white-space:nowrap}
+.task-label>span:first-child{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;background:#d6e9d0;color:#1f7550}
+.score-pill{display:inline-flex;align-items:center;justify-content:center;gap:3px;padding:7px 10px;border:1px solid #eadbb5;border-radius:99px;background:#fff9e9;color:#816742;font-size:14px;white-space:nowrap}
+.score-pill .kid-text{flex-wrap:nowrap;white-space:nowrap}
+.game-topline .kid-text{font-size:inherit}
+.settings-dialog{width:min(90vw,405px);max-height:90dvh;overflow:auto;padding:24px;border:5px solid #fff4d9;border-radius:25px;background:#fffdf4;color:#315b42;box-shadow:0 20px 60px #16452f77}
+.settings-dialog::backdrop{background:#103c2dbb;backdrop-filter:blur(5px)}
+.dialog-head{display:flex;align-items:center;gap:10px;margin-bottom:18px}.dialog-head h2{flex:1;margin:0;color:#1f6245;font-size:26px}.dialog-head>span{font-size:25px;color:#d89d31}
+.close-button{width:35px;height:35px;border:0;border-radius:11px;background:#e9f0e2;color:#40654b;font-size:17px}
+.setting-note{color:#697c6c;font-size:15px;line-height:1.5}
+.settings-link{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:69px;margin:11px 0;padding:10px 15px;border:2px solid #b9d9b8;border-radius:17px;background:#eff8e9;color:#276748;text-align:left;text-decoration:none;box-shadow:0 3px 0 #c6dcc1}
+.settings-link strong,.settings-link small{display:block}.settings-link strong{font-size:18px}.settings-link small{margin-top:4px;font-size:13px;color:#64816b}.settings-link>span:last-child{font-size:30px}
+.settings-restart{width:100%;min-height:51px;margin-top:8px;border:2px solid #ae7937;border-radius:14px;background:#f6bf42;color:#29533e;font-size:18px;font-weight:1000;box-shadow:0 4px 0 #ae7937}
+/* A post sack releases each new letter onto a moving sorting belt. */
+.mail-conveyor{position:absolute;inset:auto 0 0;height:92px;pointer-events:none}
+.mail-sack{position:absolute;z-index:6;left:0;bottom:3px;width:92px;height:88px;filter:drop-shadow(0 5px 3px #483e2755)}
+.sack-neck{position:absolute;z-index:2;left:20px;top:0;width:57px;height:23px;border:4px solid #846234;border-radius:50%;background:#574a2e;transform:rotate(-7deg)}
+.sack-body{position:absolute;inset:11px 3px 0;display:grid;place-items:center;clip-path:polygon(20% 0,78% 0,94% 18%,100% 72%,85% 100%,10% 100%,0 70%,5% 20%);border-radius:24px 24px 31px 31px;background:linear-gradient(130deg,#eccb88,#bd8c50 68%,#9c6c3d);box-shadow:inset 7px 4px 0 #f8dfa5;transform:rotate(-7deg)}
+.sack-body:before{content:"";position:absolute;top:10px;left:13px;right:13px;border-top:3px dashed #906239}
+.sack-mark{display:grid;place-items:center;width:39px;height:39px;margin-top:16px;border:3px solid #3b704a;border-radius:50%;background:#f6db9b;color:#2d6a48;font-size:28px;font-weight:1000}
+.belt{position:absolute;left:55px;right:3px;bottom:9px;height:37px;overflow:hidden;border:4px solid #286447;border-radius:16px;background:linear-gradient(#4d9c70,#2d754f);box-shadow:0 6px 0 #134631,0 10px 11px #2d4e3033}
+.belt-slats{position:absolute;inset:4px 0;background:repeating-linear-gradient(90deg,#a8c58b 0 5px,#479568 5px 22px,#236844 22px 26px);border-radius:8px;opacity:.87}
+.mail-conveyor.is-running .belt-slats{animation:beltMove .5s linear infinite}
+.belt-roller{position:absolute;top:3px;width:27px;height:25px;border:4px solid #235c43;border-radius:50%;background:#ebc47a;box-shadow:inset 0 0 0 5px #71a97c}.belt-roller-a{left:2px}.belt-roller-b{right:2px}
+@keyframes beltMove{to{background-position:26px 0}}
+.back-postmark{width:90px;height:80px;background:none;box-shadow:none;border-radius:0;overflow:visible}
+.back-postmark img{width:100%;height:100%;object-fit:contain;border-radius:0;filter:drop-shadow(0 2px 1px #744c3044)}
+.finish-mark{object-fit:contain;border-radius:0}
+@media(max-width:680px){.topbar{height:55px}.brand-seal{width:37px;height:37px}.brand-copy strong{font-size:16px}.brand-copy small{font-size:8px}.settings-button{min-height:38px;padding:4px 10px;font-size:13px}.game-topline{height:69px;grid-template-columns:auto 1fr auto;grid-template-rows:36px 27px;gap:2px 5px}.home-button{grid-column:1;grid-row:1;min-height:35px;padding:3px 8px;font-size:15px}.home-button>span:first-child{font-size:20px}.score-pill{grid-column:3;grid-row:1;font-size:12px;padding:5px 7px}.task-label{grid-column:1/-1;grid-row:2;font-size:17px}.task-label>span:first-child{width:24px;height:24px}.mail-conveyor{height:78px}.mail-sack{width:77px;height:77px}.sack-neck{left:15px;width:49px;height:19px}.belt{left:48px;height:32px}.back-postmark{width:72px;height:65px}}
+@media(max-width:380px){.topbar{height:48px}.game-topline{height:64px;grid-template-rows:33px 26px}.score-pill{font-size:11px}.mail-conveyor{height:67px}.mail-sack{width:65px;height:65px}.sack-neck{left:12px;width:42px;height:17px}.sack-mark{width:30px;height:30px;font-size:20px}.belt{left:40px;height:27px;bottom:6px}.back-postmark{width:64px;height:58px}}
+@media(max-height:670px){.topbar{height:43px}.game-topline{height:57px;grid-template-rows:31px 22px}.route-panel{height:70px}.route-track{height:43px}.mail-conveyor{height:64px}.mail-sack{height:62px}.belt{height:25px}.letter-area{height:113px}}
+@media(prefers-reduced-motion:reduce){.mail-conveyor.is-running .belt-slats{animation:none}}
+.belt{bottom:-9px}
+@media(max-width:380px){.belt{bottom:-2px}}
+.mail-mode-badge{display:inline-flex;align-items:center;justify-content:center;min-height:28px;padding:3px 8px;border:1px solid #d5bf83;border-radius:99px;background:#fff3ce;color:#806022;font-size:14px;line-height:1;white-space:nowrap}
+.mail-mode-badge.kid-text{font-size:14px;flex-wrap:nowrap}
+.mail-mode-picker{border:0;padding:0;margin:14px 0 9px;min-width:0}
+.mail-mode-picker legend{padding:0;margin-bottom:8px;color:#42694d;font-size:17px;font-weight:1000}
+.mail-mode-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.mail-mode-option{min-height:54px;padding:7px 8px;border:2px solid #b9d3ae;border-radius:14px;background:#f0f6e7;color:#226046;font-size:17px;font-weight:1000;box-shadow:0 4px 0 #b7cdaa;touch-action:manipulation}
+.mail-mode-option[data-mail-mode=dinosaur]{grid-column:1/-1}
+.mail-mode-option[aria-pressed=true]{border-color:#e7bc5a;background:#246c4c;color:#fffbed;box-shadow:0 4px 0 #135039,0 0 0 2px #fff6d7 inset}
+.mail-level-control{padding:9px 13px 4px;margin:10px 0;border:2px dashed #cfbd8f;border-radius:15px;background:#fff8e6;text-align:center}
+.mail-level-control[hidden]{display:none}
+.mail-level-control label{display:block;color:#276648;font-size:19px;font-weight:1000}
+.mail-level-control input{display:block;width:100%;height:30px;margin:5px 0 0;accent-color:#2c9c63;touch-action:pan-y}
+.mail-level-marks{display:flex;justify-content:space-between;padding:0 3px;color:#64836a;font-size:14px;font-weight:1000}
+.mail-selection-summary{margin:10px 0;color:#386f50;font-size:15px;font-weight:900;text-align:center}
+@media(max-width:380px){.mail-mode-badge.kid-text{font-size:11px;min-height:23px;padding:2px 5px}.task-label{gap:4px}.mail-mode-option{min-height:48px;font-size:15px}}
+.letter-reading.is-long{right:50px}
+.settings-restart{margin:5px 0 12px}

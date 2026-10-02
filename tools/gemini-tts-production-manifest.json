@@ -1,7 +1,7 @@
 {
   "date": "2026-10-01",
   "scope": "non-kidapp words plus dinosaur words",
-  "count": 143,
+  "count": 140,
   "entries": [
     {
       "id": "new-goat",
@@ -49,15 +49,6 @@
       "sha256": "fcc682199ee6c5482f00a8a3b9e28498eb00d3c25e1d66d1648ab2d830374048"
     },
     {
-      "id": "new-biscuit",
-      "en": "biscuit",
-      "source": "curated-2026-09-30",
-      "model": "gemini-3.8-flash-lite-tts",
-      "voice": "erinome",
-      "batch": "gemini-3.8-flash-lite-DINOZ-20",
-      "sha256": "b2adccd297024713c8077a90360ed6e51f76a5f8ddae44ff0a4c82a37042fb10"
-    },
-    {
       "id": "new-pomegranate",
       "en": "pomegranate",
       "source": "curated-2026-09-30",
@@ -65,15 +56,6 @@
       "voice": "erinome",
       "batch": "gemini-3.8-flash-lite-DINOZ-20",
       "sha256": "966b3dc9c2b530b2d09c4a7c8aa64c65123730e233c6fb21cf318c3c591b2407"
-    },
-    {
-      "id": "new-cauliflower",
-      "en": "cauliflower",
-      "source": "curated-2026-09-30",
-      "model": "gemini-3.8-flash-lite-tts",
-      "voice": "erinome",
-      "batch": "gemini-3.8-flash-lite-DINOZ-20",
-      "sha256": "f41489c5193d84448ad7d6f4f16619f51321c6ab9f7f1f626de03c7e40f300c8"
     },
     {
       "id": "object-toothbrush",
@@ -1145,15 +1127,6 @@
       "voice": "erinome",
       "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
       "sha256": "b672774b304783c30589a5909ca84fafd9fd703ff5f53411672bef82568441e1"
-    },
-    {
-      "id": "new-binoculars",
-      "en": "binoculars",
-      "source": "curated-2026-09-30",
-      "model": "gemini-3.8-flash-lite-tts",
-      "voice": "erinome",
-      "batch": "gemini-3.8-flash-lite-DINOZ-batch-03-23",
-      "sha256": "9fdd2d07afebfa91d5a0816959ceacb8c757a495cdd6ed83606cd818ee4e8f9f"
     },
     {
       "id": "new-stapler",

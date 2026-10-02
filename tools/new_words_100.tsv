@@ -10,7 +10,6 @@ bean|豆子|food|1|🫘
 butter|奶油|food|1|🧈
 jam|果醬|food|1|🍓
 juice|果汁|food|1|🧃
-biscuit|餅乾|food|1|🍪
 lettuce|萵苣|food|1|🥬
 plum|李子|food|1|🍑
 melon|甜瓜|food|1|🍈
@@ -74,11 +73,9 @@ porcupine|豪豬|animals|3|🦔
 lemur|狐猴|animals|3|🐒
 narwhal|獨角鯨|animals|3|🐋
 asparagus|蘆筍|food|3|🥬
-cauliflower|花椰菜|food|3|🥦
 pomegranate|石榴|food|3|🍎
 papaya|木瓜|food|3|🍈
 dumpling|水餃|food|3|🥟
-binoculars|望遠鏡|objects|3|🔭
 flashlight|手電筒|objects|3|🔦
 thermometer|溫度計|objects|3|🌡️
 stapler|訂書機|objects|3|📎
