@@ -39,7 +39,7 @@ python3 -m http.server 4173 -d dist
 
 ## 題庫維護
 
-`dist/data.json` 是唯一正式題庫。每筆使用穩定 `id`、英文 `en`、中文 `zh`、對應每個國字的 `zhuyin`、`difficulty`、`category` 及圖像欄位。音檔放在 `dist/assets/audio/<id>.mp3`。新增或修改後執行：
+`dist/data.json` 是唯一正式題庫。每筆使用穩定 `id`、英文 `en`、中文 `zh`、對應每個國字的 `zhuyin`、`difficulty`、`category` 及圖像欄位。英文音檔放在 `dist/assets/audio/<id>.mp3`；359 詞的中文發音由 `zhAudio` 指向 `dist/assets/audio/zh/<id>.mp3`。新增或修改後執行：
 
 ```sh
 node tools/validate-data.mjs
@@ -70,3 +70,7 @@ node tools/validate-data.mjs
 ## 注音找英文答題方式（本機開發中）
 
 在「找圖片」任務準備頁可切換「找圖片／找英文」。找英文時，題目顯示直立注音，四個選項顯示英文；答對後翻面顯示中文與注音。自動發音開關只控制進題播放，手動重聽按鈕保留。題目抽選、難度、恐龍挑戰和本機紀錄沿用同一題庫。`cauliflower` 已從題庫、來源表、音訊與圖片索引及獨立素材移除，目前 359 詞。
+
+## 中文單字發音
+
+359 詞皆有繁體中文發音。F11／F04／R13／R14／R01 五組長音檔與飛飛 R22 試作的 48 個已審聽詞，由本機 ffmpeg 裁切；本機 Whisper 用來核對詞序與漏詞，不用辨識文字命名。英文發音保持原檔。找圖片答對翻面後可點正確卡片聽中文；注音送信答對後可按「聽中文」。語音長檔與金鑰保留在本機，公開倉庫只放遊戲使用的逐詞 MP3。
