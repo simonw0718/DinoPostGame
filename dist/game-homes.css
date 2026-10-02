@@ -17,3 +17,8 @@ body[data-page="mail"] .settings-dialog .settings-link{display:flex;text-decorat
 /* Keep annotated labels inside the envelope on narrow phones. */
 body[data-page="select"] .game-choice-copy strong.kid-text{white-space:normal;flex-wrap:wrap;justify-content:flex-start}
 body[data-page="select"] .selector-title{white-space:normal}
+
+/* Let the two mail reading choices and sound switch fit inside the envelope. */
+.mail-format-picker{margin:9px 0 6px}
+.mail-auto-control{min-height:34px;margin:4px 0 8px}
+@media(max-width:680px){.mail-format-picker{margin:5px 0 3px}.mail-auto-control{margin:2px 0 4px}.mail-format-picker .answer-option{min-height:38px}}

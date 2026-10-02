@@ -2,12 +2,11 @@
   'use strict';
   const $ = id => document.getElementById(id);
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const TOTAL = 5;
   const state = {
     words: [], round: [], choices: [], index: 0, firstTry: 0, attempts: 0,
     phase: 'loading', armed: false, audio: null, dragX: 0, dragY: 0,
-    dragging: false, routeProgress: 0, mode: 'all', level: 1,
-    nextMode: 'all', nextLevel: 1, activePool: []
+    dragging: false, routeProgress: 0, mode: 'all', level: 1, count: 5, format: 'zhuyin', autoAudio: true,
+    nextMode: 'all', nextLevel: 1, nextCount: 5, nextFormat: 'zhuyin', nextAutoAudio: true, activePool: []
   };
   const disabledStorageKey = 'dinopost-disabled-words-v1';
   const historyStorageKey = 'dinopost-round-history-v1';
@@ -35,6 +34,8 @@
   const uiReadings = {
     '首頁': ['ㄕㄡˇ', 'ㄧㄝˋ'],
     '注音送信': ['ㄓㄨˋ', 'ㄧㄣ', 'ㄙㄨㄥˋ', 'ㄒㄧㄣˋ'],
+    '英文送信': ['ㄧㄥ', 'ㄨㄣˊ', 'ㄙㄨㄥˋ', 'ㄒㄧㄣˋ'],
+    '看單字，送到郵箱': ['ㄎㄢˋ', 'ㄉㄢ', 'ㄗˋ', '', 'ㄙㄨㄥˋ', 'ㄉㄠˋ', 'ㄧㄡˊ', 'ㄒㄧㄤ'],
     '設定': ['ㄕㄜˋ', 'ㄉㄧㄥˋ'],
     '第一次答對': ['ㄉㄧˋ', 'ㄧ', 'ㄘˋ', 'ㄉㄚˊ', 'ㄉㄨㄟˋ'],
     '答對': ['ㄉㄚˊ', 'ㄉㄨㄟˋ'],
@@ -61,7 +62,7 @@
     '選一個郵箱': ['ㄒㄩㄢˇ', 'ㄧ', 'ㄍㄜ˙', 'ㄧㄡˊ', 'ㄒㄧㄤ'],
     '按重聽播放英文': ['ㄢˋ', 'ㄔㄨㄥˊ', 'ㄊㄧㄥ', 'ㄅㄛˋ', 'ㄈㄤˋ', 'ㄧㄥ', 'ㄨㄣˊ'],
     '信件投入郵箱！': ['ㄒㄧㄣˋ', 'ㄐㄧㄢˋ', 'ㄊㄡˊ', 'ㄖㄨˋ', 'ㄧㄡˊ', 'ㄒㄧㄤ', ''],
-    '五封信都送到了！': ['ㄨˇ', 'ㄈㄥ', 'ㄒㄧㄣˋ', 'ㄉㄡ', 'ㄙㄨㄥˋ', 'ㄉㄠˋ', 'ㄌㄜ˙', ''],
+    '信都送到了！': ['ㄒㄧㄣˋ', 'ㄉㄡ', 'ㄙㄨㄥˋ', 'ㄉㄠˋ', 'ㄌㄜ˙', ''],
     '送信任務完成': ['ㄙㄨㄥˋ', 'ㄒㄧㄣˋ', 'ㄖㄣˋ', 'ㄨˋ', 'ㄨㄢˊ', 'ㄔㄥˊ'],
     '第一次就送對': ['ㄉㄧˋ', 'ㄧ', 'ㄘˋ', 'ㄐㄧㄡˋ', 'ㄙㄨㄥˋ', 'ㄉㄨㄟˋ'],
     '再送一次': ['ㄗㄞˋ', 'ㄙㄨㄥˋ', 'ㄧ', 'ㄘˋ'],
@@ -102,7 +103,7 @@
       ['routeStart', '郵局'], ['routeEnd', '收件地'], ['instructionText', '讀注音，送到郵箱'],
       ['letterTo', '找圖片郵箱'], ['letterHint', '拖曳或點選'],
       ['backBrand', '恐龍郵局'], ['backConfirm', '收件確認'], ['replayLabel', '重聽'],
-      ['nextLabel', '下一封'], ['finishCopy', '五封信都送到了！'],
+      ['nextLabel', '下一封'], ['finishCopy', '信都送到了！'],
       ['finishTitle', '送信任務完成'], ['playAgainButton', '再送一次'], ['finishHome', '回首頁']
     ];
     pairs.forEach(([id, value]) => setKidText($(id), value));
@@ -111,7 +112,7 @@
   }
   function updateScore() {
     $('scoreText').setAttribute('aria-label', `第一次答對 ${state.firstTry} 封`);
-    $('scoreText').replaceChildren(makeKidSpan('答對'), document.createTextNode(` ${state.firstTry}／${TOTAL} `), makeKidSpan('封'));
+    $('scoreText').replaceChildren(makeKidSpan('答對'), document.createTextNode(` ${state.firstTry}／${state.count} `), makeKidSpan('封'));
   }
 
   function shuffle(source) {
@@ -172,14 +173,16 @@
     return mode === 'dinosaur' ? '恐龍挑戰' : mode === 'level' ? ['第一級', '第二級', '第三級'][level - 1] : '全部';
   }
   function saveSelection() {
-    try { localStorage.setItem(selectionStorageKey, JSON.stringify({ mode: state.nextMode, level: state.nextLevel })); } catch { /* Selection still works for this visit. */ }
+    try { localStorage.setItem(selectionStorageKey, JSON.stringify({ mode: state.nextMode, level: state.nextLevel, count: state.nextCount, format: state.nextFormat, autoAudio: state.nextAutoAudio })); } catch { /* Selection still works for this visit. */ }
   }
   function renderSelectionControls() {
     document.querySelectorAll('.mail-mode-option').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.mailMode === state.nextMode)));
     $('mailLevelControl').hidden = state.nextMode !== 'level';
     $('mailLevelSlider').value = String(state.nextLevel);
     $('mailLevelText').textContent = ['第一級', '第二級', '第三級'][state.nextLevel - 1];
-    $('mailSelectionSummary').textContent = `下一回合：${modeLabel()}${state.nextMode === 'all' ? '單字' : ''}`;
+    document.querySelectorAll('.mail-format-option').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.mailFormat === state.nextFormat)));
+    $('mailAutoAudio').checked = state.nextAutoAudio; $('mailCount').value = String(state.nextCount); $('mailCountValue').value = String(state.nextCount);
+    $('mailSelectionSummary').textContent = `下一回合：${modeLabel()} · ${state.nextFormat === 'english' ? '看英文單字' : '看注音'} · ${state.nextCount} 封`;
   }
   function setMode(mode) {
     if (!['all', 'level', 'dinosaur'].includes(mode)) return;
@@ -192,6 +195,17 @@
     saveSelection();
     renderSelectionControls();
   }
+  function setFormat(format) {
+    if (!['zhuyin', 'english'].includes(format)) return;
+    state.nextFormat = format; saveSelection(); renderSelectionControls();
+  }
+  function setCount(value) {
+    state.nextCount = Math.max(3, Math.min(10, Number(value) || 5));
+    saveSelection(); renderSelectionControls();
+  }
+  function setAutoAudio(value) {
+    state.nextAutoAudio = Boolean(value); saveSelection(); renderSelectionControls();
+  }
   function selectRound(pool) {
     let history = [];
     try { history = JSON.parse(localStorage.getItem(historyStorageKey) || '[]'); } catch { /* Use unweighted order. */ }
@@ -203,7 +217,7 @@
     });
     const recent = new Set(history.slice(0, 2).flatMap(record => Array.isArray(record?.ids) ? record.ids : []));
     return pool.map(word => ({ word, priority: Math.pow(Math.random(), 1 / (1 + Math.min(3, missed.get(word.id) || 0))) - (recent.has(word.id) ? .3 : 0) }))
-      .sort((a, b) => b.priority - a.priority).slice(0, TOTAL).map(item => item.word);
+      .sort((a, b) => b.priority - a.priority).slice(0, state.count).map(item => item.word);
   }
   function setStatus(message) { setKidText($('status'), message); }
   function duration(seconds) { return reducedMotion.matches ? .01 : seconds; }
@@ -213,18 +227,18 @@
     $('routeCourier').style.left = `${point.x / 10}%`;
     $('routeCourier').style.top = `${point.y / 140 * 100}%`;
     routeDone.style.strokeDashoffset = String(routeLength * (1 - progress));
-    [...$('routeStops').children].forEach((stop, index) => stop.classList.toggle('done', index / TOTAL <= progress + .001));
+    [...$('routeStops').children].forEach((stop, index) => stop.classList.toggle('done', index / state.count <= progress + .001));
   }
   function buildRouteStops() {
     const ns = 'http://www.w3.org/2000/svg';
     $('routeStops').replaceChildren();
-    for (let i = 0; i <= TOTAL; i++) {
-      const point = routePath.getPointAtLength(routeLength * i / TOTAL);
+    for (let i = 0; i <= state.count; i++) {
+      const point = routePath.getPointAtLength(routeLength * i / state.count);
       const circle = document.createElementNS(ns, 'circle');
       circle.classList.add('route-stop');
       circle.setAttribute('cx', point.x);
       circle.setAttribute('cy', point.y);
-      circle.setAttribute('r', i === TOTAL ? '15' : '12');
+      circle.setAttribute('r', i === state.count ? '15' : '12');
       $('routeStops').append(circle);
     }
     setRoute(0);
@@ -232,7 +246,9 @@
   function renderReading(word) {
     const container = $('letterReading');
     container.replaceChildren();
+    container.classList.toggle('is-english', state.format === 'english');
     container.classList.toggle('is-long', word.zhuyin.length > 3);
+    if (state.format === 'english') { container.textContent = word.en; $('letterDrag').setAttribute('aria-label', `拿起英文信件：${word.en}`); return; }
     for (const raw of word.zhuyin) {
       const chars = [...raw];
       const neutral = chars[0] === '˙' || chars.at(-1) === '˙';
@@ -343,6 +359,10 @@
     state.audio = new Audio(word.zhAudio);
     state.audio.play().catch(() => setStatus('按重聽播放中文'));
   }
+  function playPrompt(word) {
+    if (state.format === 'zhuyin') playChinese(word);
+    else playEnglish(word);
+  }
   function flyLetterTo(mailbox) {
     const letter = $('letterDrag');
     const start = letter.getBoundingClientRect();
@@ -388,20 +408,18 @@
     $('revealChinese').classList.toggle('is-long', state.round[state.index].zh.length > 3);
     $('revealEnglish').textContent = state.round[state.index].en;
     setStatus('配對成功！');
-    // Play inside the child's click or drop event so mobile browsers can allow audio.
-    playEnglish(state.round[state.index]);
+    // Prompt audio belongs to the question and follows the auto-play switch.
     $('letterDrag').classList.add('is-flipped');
     $('letterDrag').setAttribute('aria-label', `答案：${state.round[state.index].zh}，${state.round[state.index].en}`);
     window.setTimeout(() => {
       if (state.phase !== 'flipping') return;
       $('backPostmark').classList.add('is-stamping');
-      const hasChineseAudio = Boolean(state.round[state.index].zhAudio);
       $('replayButton').hidden = false;
-      $('replayButton').setAttribute('aria-label', hasChineseAudio ? '重聽中文發音' : '重聽英文發音');
-      setKidText($('replayLabel'), hasChineseAudio ? '聽中文' : '重聽');
+      $('replayButton').setAttribute('aria-label', state.format === 'zhuyin' ? '重聽中文發音' : '重聽英文發音');
+      setKidText($('replayLabel'), '重聽');
       state.phase = 'reveal';
       $('nextButton').hidden = false;
-      setKidText($('nextLabel'), state.index === TOTAL - 1 ? '看成果' : '下一封');
+      setKidText($('nextLabel'), state.index === state.count - 1 ? '看成果' : '下一封');
       setStatus('送達啦！');
     }, reducedMotion.matches ? 20 : 620);
   }
@@ -409,20 +427,23 @@
     const word = state.round[state.index];
     state.phase = 'question'; state.attempts = 0; state.armed = false;
     state.dragX = 0; state.dragY = 0; state.dragging = false;
-    $('progressLabel').setAttribute('aria-label', `第 ${state.index + 1}／${TOTAL} 封`);
-    $('progressLabel').replaceChildren(makeKidSpan('第'), document.createTextNode(` ${state.index + 1}／${TOTAL} `), makeKidSpan('封'));
+    $('progressLabel').setAttribute('aria-label', `第 ${state.index + 1}／${state.count} 封`);
+    $('progressLabel').replaceChildren(makeKidSpan('第'), document.createTextNode(` ${state.index + 1}／${state.count} `), makeKidSpan('封'));
     $('nextButton').hidden = true;
-    $('replayButton').hidden = true;
+    $('replayButton').hidden = false;
+    $('replayButton').setAttribute('aria-label', state.format === 'zhuyin' ? '播放中文發音' : '播放英文發音');
     $('backPostmark').classList.remove('is-stamping');
     const letter = $('letterDrag');
     letter.hidden = false; letter.style.visibility = '';
     letter.style.transform = 'translate3d(0px,0px,0)';
     letter.classList.remove('is-armed', 'is-dragging', 'is-flipped');
     renderReading(word);
+    setKidText($('instructionText'), state.format === 'english' ? '看單字，送到郵箱' : '讀注音，送到郵箱');
     state.choices = choicesFor(word, state.activePool);
     renderMailboxes(state.choices);
     setStatus('點信，再選郵箱');
     if (state.audio) { state.audio.pause(); state.audio.currentTime = 0; }
+    if (state.autoAudio) playPrompt(word);
     const bag = document.querySelector('.mail-sack').getBoundingClientRect();
     const destination = letter.getBoundingClientRect();
     const dx = bag.left + bag.width * .55 - (destination.left + destination.width / 2);
@@ -438,15 +459,15 @@
     try {
       const history = JSON.parse(localStorage.getItem(historyStorageKey) || '[]');
       const record = { date: new Date().toISOString(), game: 'zhuyin-sort', mode: state.mode, level: state.level,
-        score: state.firstTry, total: TOTAL, ids: state.round.map(word => word.id),
+        score: state.firstTry, total: state.count, ids: state.round.map(word => word.id),
         results: [...state.answerResults] };
       localStorage.setItem(historyStorageKey, JSON.stringify([record, ...(Array.isArray(history) ? history : [])].slice(0, 10)));
     } catch { /* The prototype works even when local storage is unavailable. */ }
   }
   function finishRound() {
     state.phase = 'finish';
-    $('finishScore').setAttribute('aria-label', `第一次就送對 ${state.firstTry}／${TOTAL} 封`);
-    $('finishScore').replaceChildren(makeKidSpan('第一次就送對'), document.createTextNode(` ${state.firstTry}／${TOTAL} `), makeKidSpan('封'));
+    $('finishScore').setAttribute('aria-label', `第一次就送對 ${state.firstTry}／${state.count} 封`);
+    $('finishScore').replaceChildren(makeKidSpan('第一次就送對'), document.createTextNode(` ${state.firstTry}／${state.count} `), makeKidSpan('封'));
     $('finishOverlay').hidden = false;
     animate(document.querySelector('.finish-card'), { opacity: [0, 1], scale: [.8, 1] }, { type: 'spring', stiffness: 190, damping: 16, duration: duration(.6) });
     saveRound();
@@ -460,13 +481,13 @@
     document.querySelector('.mail-conveyor').classList.add('is-running');
     await flyLetterTo(state.selectedMailbox);
     document.querySelector('.mail-conveyor').classList.remove('is-running');
-    const start = state.index / TOTAL;
-    const end = (state.index + 1) / TOTAL;
+    const start = state.index / state.count;
+    const end = (state.index + 1) / state.count;
     await animate(start, end, { duration: duration(.64), ease: 'easeInOut', onUpdate: setRoute }).finished;
     setRoute(end);
     state.answerResults[state.index] = state.attempts === 1;
     state.index++;
-    if (state.index >= TOTAL) finishRound();
+    if (state.index >= state.count) finishRound();
     else renderQuestion();
   }
   function startRound() {
@@ -481,14 +502,16 @@
       meanings.delete(word.zh);
       return meanings.size >= 2;
     });
-    if (usable.length < TOTAL) { setStatus('可用單字不足'); return; }
-    state.mode = state.nextMode; state.level = state.nextLevel;
+    if (usable.length < state.nextCount) { setStatus('可用單字不足'); return; }
+    state.mode = state.nextMode; state.level = state.nextLevel; state.count = state.nextCount; state.format = state.nextFormat; state.autoAudio = state.nextAutoAudio;
+    buildRouteStops();
     state.activePool = pool;
     setKidText($('mailModeBadge'), modeLabel(state.mode, state.level));
     state.round = selectRound(usable);
     state.index = 0; state.firstTry = 0; state.answerResults = [];
     updateScore();
     $('finishOverlay').hidden = true;
+    setKidText($('modeTitle'), state.format === 'english' ? '英文送信' : '注音送信');
     pickCourier();
     setRoute(0);
     renderQuestion();
@@ -552,10 +575,13 @@
     $('closeSettings').addEventListener('click', () => $('settingsDialog').close());
     $('restartFromSettings').addEventListener('click', () => { $('settingsDialog').close(); startRound(); });
     document.querySelectorAll('.mail-mode-option').forEach(button => button.addEventListener('click', () => setMode(button.dataset.mailMode)));
+    document.querySelectorAll('.mail-format-option').forEach(button => button.addEventListener('click', () => setFormat(button.dataset.mailFormat)));
+    $('mailAutoAudio').addEventListener('change', event => setAutoAudio(event.target.checked));
+    $('mailCount').addEventListener('input', event => setCount(event.target.value));
     $('mailLevelSlider').addEventListener('input', event => setLevel(event.target.value));
     $('playAgainButton').addEventListener('click', startRound);
     $('nextButton').addEventListener('click', nextQuestion);
-    $('replayButton').addEventListener('click', () => { const word = state.round[state.index]; if (word?.zhAudio) playChinese(word); else if (word) playEnglish(word); });
+    $('replayButton').addEventListener('click', () => { const word = state.round[state.index]; if (word) playPrompt(word); });
     try {
       const response = await fetch('data.json?v=20261001');
       if (!response.ok) throw Error(`HTTP ${response.status}`);
@@ -564,6 +590,9 @@
         const savedSelection = JSON.parse(localStorage.getItem(selectionStorageKey) || 'null');
         if (['all', 'level', 'dinosaur'].includes(savedSelection?.mode)) state.nextMode = savedSelection.mode;
         if (Number.isInteger(savedSelection?.level) && savedSelection.level >= 1 && savedSelection.level <= 3) state.nextLevel = savedSelection.level;
+        if (['zhuyin', 'english'].includes(savedSelection?.format)) state.nextFormat = savedSelection.format;
+        if (typeof savedSelection?.autoAudio === 'boolean') state.nextAutoAudio = savedSelection.autoAudio;
+        if (Number.isInteger(savedSelection?.count) && savedSelection.count >= 3 && savedSelection.count <= 10) state.nextCount = savedSelection.count;
       } catch { /* Keep default selection. */ }
       renderSelectionControls();
       const allIds = new Set(state.words.map(word => word.id));

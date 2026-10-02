@@ -6,10 +6,10 @@
   <meta name="theme-color" content="#164d39">
   <title>注音送信・恐龍郵局</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="zhuyin-sort.css?v=13">
+  <link rel="stylesheet" href="zhuyin-sort.css?v=14">
   <script src="vendor/interact.min.js"></script>
   <script src="vendor/motion.js"></script>
-  <script src="zhuyin-sort.js?v=13" defer></script>
+  <script src="zhuyin-sort.js?v=14" defer></script>
 </head>
 <body>
   <div class="game-shell">
@@ -63,7 +63,7 @@
             </div>
           </div>
         </div>
-        <button id="replayButton" class="replay-button" type="button" aria-label="重聽英文發音" hidden>♫ <span id="replayLabel">重聽</span></button>
+        <button id="replayButton" class="replay-button" type="button" aria-label="播放題目發音">♫ <span id="replayLabel">重聽</span></button>
       </div>
     </main>
 
@@ -76,7 +76,10 @@
 
   <dialog id="settingsDialog" class="settings-dialog">
     <div class="dialog-head"><span aria-hidden="true">✉</span><h2>遊戲設定</h2><button id="closeSettings" class="close-button" type="button" aria-label="關閉設定">✕</button></div>
-    <p class="setting-note">每回合送 5 封，題庫開關和作答紀錄與配對遊戲共用。選擇會在下一回合生效。</p>
+    <p class="setting-note">信件內容、發音與封數會在下一回合生效；題庫及作答紀錄與配對遊戲共用。</p>
+    <fieldset class="mail-format-picker"><legend>信件內容</legend><div class="mail-format-options"><button class="mail-format-option" type="button" data-mail-format="zhuyin" aria-pressed="true">看注音</button><button class="mail-format-option" type="button" data-mail-format="english" aria-pressed="false">看英文單字</button></div></fieldset>
+    <label class="auto-audio-control mail-auto-control"><input id="mailAutoAudio" type="checkbox" checked><span class="switch-track" aria-hidden="true"></span><span class="switch-label">自動發音</span></label>
+    <label class="mail-count-label" for="mailCount">每回合封數：<output id="mailCountValue">5</output></label><input id="mailCount" type="range" min="3" max="10" value="5" aria-label="每回合封數">
     <fieldset class="mail-mode-picker"><legend>選任務</legend><div class="mail-mode-options">
       <button class="mail-mode-option" type="button" data-mail-mode="all" aria-pressed="true">✦ 全部</button>
       <button class="mail-mode-option" type="button" data-mail-mode="level" aria-pressed="false">1–3 分難度</button>
@@ -92,7 +95,7 @@
   <div id="finishOverlay" class="finish-overlay" hidden>
     <div class="finish-card">
       <img src="assets/dinopost-workmark-stamp-transparent-v1.png" alt="" class="finish-mark">
-      <p id="finishCopy">五封信都送到了！</p>
+      <p id="finishCopy">信都送到了！</p>
       <h1 id="finishTitle">送信任務完成</h1>
       <strong id="finishScore"></strong>
       <div class="finish-actions"><button id="playAgainButton" type="button">再送一次</button><a id="finishHome" href="mail.html">回首頁</a></div>

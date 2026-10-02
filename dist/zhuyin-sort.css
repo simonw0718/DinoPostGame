@@ -174,3 +174,19 @@
 @media(max-width:380px){.mail-mode-badge.kid-text{font-size:11px;min-height:23px;padding:2px 5px}.task-label{gap:4px}.mail-mode-option{min-height:48px;font-size:15px}}
 .letter-reading.is-long{right:50px}
 .settings-restart{margin:5px 0 12px}
+
+/* Both letter faces use the same envelope; English is a single centered word. */
+.letter-reading.is-english{inset:37px 14px 22px;display:flex;align-items:center;justify-content:center;padding:0 5px;color:#185b41;font-size:clamp(23px,5vw,39px);line-height:1.07;text-align:center;overflow-wrap:anywhere;word-break:normal}
+.letter-reading.is-english.is-long{font-size:clamp(18px,4vw,30px)}
+.mail-format-picker{border:0;padding:0;margin:8px 0 10px}.mail-format-picker legend{margin-bottom:7px;color:#315d43;font-weight:900}
+.mail-format-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.mail-format-option{min-height:46px;padding:6px;border:2px solid #b9d3ae;border-radius:12px;background:#f0f6e7;color:#226046;font-weight:900}
+.mail-format-option[aria-pressed=true]{border-color:#e7bc5a;background:#246c4c;color:#fffbed;box-shadow:0 3px 0 #135039}
+.mail-auto-control{display:flex;align-items:center;gap:10px;margin:8px 0;color:#315d43;font-weight:900;cursor:pointer}
+.mail-auto-control input{position:absolute;width:1px;height:1px;opacity:0}
+.mail-auto-control .switch-track{position:relative;display:inline-block;flex:none;width:52px;height:30px;border:2px solid #a9c6ad;border-radius:99px;background:#d9e5d7}
+.mail-auto-control .switch-track:after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fffdf2;box-shadow:0 2px 4px #315b4240;transition:transform .2s}
+.mail-auto-control input:checked+.switch-track{background:#277b54;border-color:#1f6948}
+.mail-auto-control input:checked+.switch-track:after{transform:translateX(22px)}
+.mail-auto-control input:focus-visible+.switch-track{outline:4px solid #eaa52a;outline-offset:3px}
+.mail-count-label{display:block;margin:10px 0 3px;color:#315d43;font-weight:900}.mail-count-label+input{width:100%;accent-color:#277b54}

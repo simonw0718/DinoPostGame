@@ -152,6 +152,59 @@ function showEnglishWord(word) {
   element.classList.toggle('dinosaur-word', word.category === 'dinosaur');
   element.classList.remove('zhuyin-question', 'long-reading');
 }
+function showPicturePrompt(word) {
+  const element = $('englishWord');
+  element.className = 'parcel-prompt';
+  element.setAttribute('aria-label', `包裹封面圖片：${word.zh}`);
+  const cover = document.createElement('span'); cover.className = 'parcel-cover';
+  const art = document.createElement(word.image && word.category !== 'number' ? 'img' : 'span');
+  art.className = 'parcel-art';
+  if (word.image && word.category !== 'number') { art.src = word.image; art.alt = ''; }
+  else if (word.sheet && Number.isInteger(word.cell)) {
+    art.classList.add('parcel-sheet');
+    art.style.backgroundImage = `url('assets/${word.sheet}-grid-v1.png')`;
+    art.style.backgroundPosition = `${(word.cell % 5) * 25}% ${word.cell < 5 ? 0 : 100}%`;
+  } else art.textContent = word.emoji;
+  cover.append(art); element.replaceChildren(cover);
+}
+function clearParcelDelivery() {
+  document.querySelector('.parcel-delivery')?.remove();
+  $('englishWord').classList.remove('parcel-sent');
+}
+function sendParcel() {
+  const source = $('englishWord').querySelector('.parcel-cover');
+  const board = document.querySelector('.game-board');
+  if (!source || !board) return;
+  clearParcelDelivery();
+  const from = source.getBoundingClientRect();
+  const frame = board.getBoundingClientRect();
+  const parcel = document.createElement('div');
+  parcel.className = 'parcel-delivery';
+  parcel.style.left = `${from.left - frame.left}px`;
+  parcel.style.top = `${from.top - frame.top}px`;
+  parcel.style.width = `${from.width}px`;
+  parcel.style.height = `${from.height}px`;
+  parcel.append(source.cloneNode(true));
+  const stamp = document.createElement('span');
+  stamp.className = 'parcel-delivery-stamp';
+  stamp.setAttribute('aria-hidden', 'true');
+  stamp.textContent = '✓';
+  parcel.append(stamp);
+  board.append(parcel);
+  $('englishWord').classList.add('parcel-sent');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const dx = frame.right - from.right + from.width * .3;
+  const dy = frame.top - from.top - from.height * .5;
+  const flight = parcel.animate(reduced ? [
+    { opacity: 1 }, { opacity: 0 }
+  ] : [
+    { offset: 0, transform: 'translate(0,0) rotate(0deg) scale(1)', opacity: 1 },
+    { offset: .2, transform: 'translate(0,5px) rotate(-6deg) scale(1.08)', opacity: 1 },
+    { offset: .38, transform: 'translate(0,-16px) rotate(5deg) scale(1)', opacity: 1 },
+    { offset: 1, transform: `translate(${dx}px,${dy}px) rotate(18deg) scale(.38)`, opacity: 0 }
+  ], { duration: reduced ? 120 : 1100, easing: 'cubic-bezier(.2,.8,.25,1)', fill: 'forwards' });
+  flight.finished.then(() => parcel.remove()).catch(() => parcel.remove());
+}
 function showZhuyinPrompt(word) {
   const element = $('englishWord');
   element.className = 'zhuyin-question';
@@ -216,6 +269,12 @@ function parseZhuyin(reading) {
 }
 const uiReadings = {
   '聽單字，': ['ㄊㄧㄥ', 'ㄉㄢ', 'ㄗˋ', ''],
+  '聽英文，': ['ㄊㄧㄥ', 'ㄧㄥ', 'ㄨㄣˊ', ''],
+  '找單字！': ['ㄓㄠˇ', 'ㄉㄢ', 'ㄗˋ', ''],
+  '找單字': ['ㄓㄠˇ', 'ㄉㄢ', 'ㄗˋ'],
+  '看包裹圖片，選英文單字。': ['ㄎㄢˋ','ㄅㄠ','ㄍㄨㄛˇ','ㄊㄨˊ','ㄆㄧㄢˋ','','ㄒㄩㄢˇ','ㄧㄥ','ㄨㄣˊ','ㄉㄢ','ㄗˋ',''],
+  '選單字': ['ㄒㄩㄢˇ','ㄉㄢ','ㄗˋ'],
+  '聽英文': ['ㄊㄧㄥ','ㄧㄥ','ㄨㄣˊ'],
   '讀注音，': ['ㄉㄨˊ', 'ㄓㄨˋ', 'ㄧㄣ', ''],
   '找英文！': ['ㄓㄠˇ', 'ㄧㄥ', 'ㄨㄣˊ', ''],
   '讀注音，選英文。': ['ㄉㄨˊ', 'ㄓㄨˋ', 'ㄧㄣ', '', 'ㄒㄩㄢˇ', 'ㄧㄥ', 'ㄨㄣˊ', ''],
@@ -296,7 +355,7 @@ function annotateStaticUI() {
     setKidText(label, label.textContent.trim());
   });
   document.querySelectorAll('.answer-option').forEach(button => setKidText(button, button.textContent.trim()));
-  setKidText(document.querySelector('#autoAudioControl span'), '自動發音');
+  setKidText(document.querySelector('#autoAudioControl .switch-label'), '自動發音');
   document.querySelectorAll('.home-label').forEach(label => setKidText(label, '回首頁'));
   setKidText(document.querySelector('.start-label'), '開始任務');
   setKidText(document.querySelector('.replay-label'), '再聽');
@@ -470,13 +529,14 @@ function renderQuestion(autoPlay = true) {
   if (state.chineseAudio) { state.chineseAudio.pause(); state.chineseAudio.currentTime = 0; }
   state.phase = 'question'; state.attempts = 0;
   stopEffect();
+  clearParcelDelivery();
   $('mailFlight').classList.remove('flying');
   const word = currentWord();
-  if (state.answerFormat === 'english') showZhuyinPrompt(word); else showEnglishWord(word);
+  if (state.answerFormat === 'english') showPicturePrompt(word); else showEnglishWord(word);
   $('feedback').textContent = '';
   $('feedback').removeAttribute('aria-label');
-  setKidText($('instruction'), state.answerFormat === 'english' ? '選英文' : word.category === 'number' ? '選數字' : '選圖片');
-  setKidText($('questionTag'), state.answerFormat === 'english' ? '讀注音' : '聽單字');
+  setKidText($('instruction'), state.answerFormat === 'english' ? '選單字' : word.category === 'number' ? '選數字' : '選圖片');
+  setKidText($('questionTag'), state.answerFormat === 'english' ? '聽英文' : '聽單字');
   $('audioButton').setAttribute('aria-label', '播放英文發音');
   $('audioStatus').textContent = '';
   $('nextButton').classList.add('hidden');
@@ -491,7 +551,7 @@ function renderQuestion(autoPlay = true) {
   void $('questionCard').offsetWidth;
   $('questionCard').classList.add('is-arriving');
   updateProgress(); drawChoices(word);
-  if (autoPlay && (state.answerFormat === 'image' || state.autoAudio)) playWord();
+  if (autoPlay && state.autoAudio) playWord();
 }
 function choose(button, id) {
   if (state.phase !== 'question') return;
@@ -527,8 +587,11 @@ function choose(button, id) {
     $(`playActorFrame${slot}`).classList.add('is-celebrating');
   }
   $('mailFlight').classList.remove('flying');
-  void $('mailFlight').offsetWidth;
-  $('mailFlight').classList.add('flying');
+  if (state.answerFormat === 'english') sendParcel();
+  else {
+    void $('mailFlight').offsetWidth;
+    $('mailFlight').classList.add('flying');
+  }
   $('choices').querySelectorAll('button').forEach(choice => {
     const option = state.words.find(item => item.id === choice.dataset.wordId);
     choice.disabled = !(option?.id === currentWord().id && option.zhAudio);
@@ -548,7 +611,7 @@ function startRound() {
   state.pendingRound = [];
   state.index = 0; state.firstTryScore = 0; state.results = [];
   // The first play call stays inside the Start button's user gesture on iOS.
-  if (state.answerFormat === 'image' || state.autoAudio) playWord(state.round[0]);
+  if (state.autoAudio) playWord(state.round[0]);
   advanceCast('play');
   state.roundChoices = state.words.filter(word => !state.disabledIds.has(word.id));
   const title = state.mode === 'dinosaur' ? '恐龍挑戰' : state.mode === 'level'
@@ -563,7 +626,7 @@ function nextQuestion() {
     state.phase = 'result';
     state.history.unshift({
       date: new Date().toISOString(), mode: state.mode, level: state.level,
-      answerFormat: state.answerFormat, autoAudio: state.answerFormat === 'image' || state.autoAudio,
+      answerFormat: state.answerFormat, autoAudio: state.autoAudio,
       score: state.firstTryScore, total: state.round.length,
       ids: state.round.map(word => word.id), results: [...state.results]
     });
@@ -589,6 +652,7 @@ function goHome() {
   if (state.phase !== 'start') advanceCast('start');
   if (state.audio) { state.audio.pause(); state.audio.currentTime = 0; }
   stopEffect();
+  clearParcelDelivery();
   state.phase = 'start';
   showScreen('startScreen');
   prepareRound();
@@ -657,7 +721,7 @@ function renderHistory() {
     const label = document.createElement('strong');
     const modeName = record.mode === 'dinosaur' ? '恐龍挑戰' : record.mode === 'level'
       ? `第${['一', '二', '三'][record.level - 1]}級` : record.mode === 'zhuyin-sort' ? '第一級' : '全部單字';
-    label.textContent = record.game === 'zhuyin-sort' || record.mode === 'zhuyin-sort' ? `注音送信 · ${modeName}` : `${record.answerFormat === 'english' ? '注音找英文' : '找圖片'} · ${modeName}`;
+    label.textContent = record.game === 'zhuyin-sort' || record.mode === 'zhuyin-sort' ? `注音送信 · ${modeName}` : `${record.answerFormat === 'english' ? '聽英文找單字' : '找圖片'} · ${modeName}`;
     const date = document.createElement('small');
     date.textContent = new Date(record.date).toLocaleString('zh-TW', { dateStyle: 'short', timeStyle: 'short' });
     const score = document.createElement('span');
@@ -725,10 +789,10 @@ function setAnswerFormat(format) {
   if (!['image', 'english'].includes(format)) return;
   state.answerFormat = format;
   document.querySelectorAll('.answer-option').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.answer === format)));
-  $('autoAudioControl').classList.toggle('hidden', format !== 'english');
-  setKidText($('startTitleLine1'), format === 'english' ? '讀注音，' : '聽單字，');
-  setKidText($('startTitleLine2'), format === 'english' ? '找英文！' : '找圖片！');
-  setKidText($('startDescription'), format === 'english' ? '讀注音，選英文。' : '聽英文，選圖片。');
+  $('autoAudioControl').classList.remove('hidden');
+  setKidText($('startTitleLine1'), format === 'english' ? '聽英文，' : '聽單字，');
+  setKidText($('startTitleLine2'), format === 'english' ? '找單字！' : '找圖片！');
+  setKidText($('startDescription'), format === 'english' ? '看包裹圖片，選英文單字。' : '聽英文，選圖片。');
   saveAnswerSettings();
   prepareRound();
 }
