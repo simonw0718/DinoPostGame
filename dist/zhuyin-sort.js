@@ -31,8 +31,8 @@
   routeDone.style.strokeDashoffset = String(routeLength);
   const animate = Motion.animate;
   const sounds = {
-    stamp: new Audio('assets/audio/effects/mail-stamp.mp3'),
-    finish: new Audio('assets/audio/effects/mail-finish.mp3')
+    stamp: new Audio('assets/audio/effects/mail-stamp.mp3?v=2'),
+    finish: new Audio('assets/audio/effects/mail-finish.mp3?v=2')
   };
   Object.values(sounds).forEach(sound => { sound.preload = 'auto'; sound.volume = .9; });
   function playSound(kind, startAt = 0) {
@@ -604,7 +604,7 @@
     $('mailCount').addEventListener('input', event => setCount(event.target.value));
     $('mailLevelSlider').addEventListener('input', event => setLevel(event.target.value));
     $('playAgainButton').addEventListener('click', startRound);
-    $('finishSoundButton').addEventListener('click', () => playSound('finish', .68));
+    $('finishSoundButton').addEventListener('click', () => playSound('finish'));
     $('readyButton').addEventListener('click', () => {
       if (startRound()) $('readyOverlay').hidden = true;
     });
