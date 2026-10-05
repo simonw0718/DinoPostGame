@@ -12,6 +12,7 @@ DIST = Path(__file__).resolve().parent.parent / 'dist'
 NUMBER_EMOJI = {'one': '1️⃣', 'two': '2️⃣', 'three': '3️⃣', 'four': '4️⃣', 'five': '5️⃣',
                 'six': '6️⃣', 'seven': '7️⃣', 'eight': '8️⃣', 'nine': '9️⃣', 'ten': '🔟'}
 ZHUYIN_OK = re.compile(r'^[ㄅ-ㄩˊˇˋ˙]+$')
+ART_STATUS = ('emoji', 'candidate', 'approved')
 IMAGE_PATH = re.compile(r'^assets/(kidsapp|rebuilt)/[^/]+(/[^/]+)*\.(png|svg)$')
 
 
@@ -67,6 +68,8 @@ def main():
                 errors.append(f'缺中文音檔: {wid}')
         else:
             warnings.append(f'沒有中文音檔: {wid}')
+        if w.get('artStatus') not in ART_STATUS:
+            errors.append(f'artStatus 錯誤（須為 {"/".join(ART_STATUS)}）: {wid}')
         if not file_ok(f'assets/audio/{wid}.mp3', 500):
             errors.append(f'缺英文音檔: {wid}')
         ids.add(wid)
@@ -108,6 +111,8 @@ def main():
         print('WARN', line)
     for line in errors:
         print('ERROR', line)
+    art = {k: sum(1 for w in words if w.get('artStatus') == k) for k in ART_STATUS}
+    print(f'美術狀態：已審核 {art["approved"]}／候選 {art["candidate"]}／emoji {art["emoji"]}')
     print(f'{len(words)} 詞；{counts}；錯誤 {len(errors)}，警告 {len(warnings)}')
     return 1 if errors else 0
 

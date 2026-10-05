@@ -39,7 +39,7 @@ python3 -m http.server 4173 -d dist
 
 ## 題庫維護
 
-`dist/data.json` 是唯一正式題庫。每筆使用穩定 `id`、英文 `en`、中文 `zh`、對應每個國字的 `zhuyin`、`difficulty`、`category` 及圖像欄位。英文音檔放在 `dist/assets/audio/<id>.mp3`；359 詞的中文發音由 `zhAudio` 指向 `dist/assets/audio/zh/<id>.mp3`。新增或修改後執行：
+`dist/data.json` 是唯一正式題庫。每筆使用穩定 `id`、英文 `en`、中文 `zh`、對應每個國字的 `zhuyin`、`difficulty`、`category`、圖像欄位，以及美術狀態 `artStatus`（`emoji`／`candidate` 候選／`approved` 已審核）。英文音檔放在 `dist/assets/audio/<id>.mp3`；359 詞的中文發音由 `zhAudio` 指向 `dist/assets/audio/zh/<id>.mp3`。新增或修改後執行：
 
 ```sh
 python3 tools/check_data.py

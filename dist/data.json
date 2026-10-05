@@ -12,7 +12,8 @@
     "cell": 0,
     "difficulty": 1,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/animal-cat.mp3"
+    "zhAudio": "assets/audio/zh/animal-cat.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "animal-dog",
@@ -27,7 +28,8 @@
     "cell": 1,
     "difficulty": 1,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/animal-dog.mp3"
+    "zhAudio": "assets/audio/zh/animal-dog.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "animal-cow",
@@ -42,7 +44,8 @@
     "cell": 2,
     "difficulty": 1,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/animal-cow.mp3"
+    "zhAudio": "assets/audio/zh/animal-cow.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "animal-pig",
@@ -57,7 +60,8 @@
     "cell": 3,
     "difficulty": 1,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/animal-pig.mp3"
+    "zhAudio": "assets/audio/zh/animal-pig.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "animal-horse",
@@ -72,7 +76,8 @@
     "cell": 4,
     "difficulty": 1,
     "levelSource": "local",
-    "zhAudio": "assets/audio/zh/animal-horse.mp3"
+    "zhAudio": "assets/audio/zh/animal-horse.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "animal-rabbit",
@@ -88,7 +93,8 @@
     "cell": 5,
     "difficulty": 3,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/animal-rabbit.mp3"
+    "zhAudio": "assets/audio/zh/animal-rabbit.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "animal-elephant",
@@ -104,7 +110,8 @@
     "cell": 6,
     "difficulty": 3,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/animal-elephant.mp3"
+    "zhAudio": "assets/audio/zh/animal-elephant.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "animal-lion",
@@ -120,7 +127,8 @@
     "cell": 7,
     "difficulty": 2,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/animal-lion.mp3"
+    "zhAudio": "assets/audio/zh/animal-lion.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "animal-bear",
@@ -135,7 +143,8 @@
     "cell": 8,
     "difficulty": 1,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/animal-bear.mp3"
+    "zhAudio": "assets/audio/zh/animal-bear.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "animal-frog",
@@ -151,7 +160,8 @@
     "cell": 9,
     "difficulty": 1,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/animal-frog.mp3"
+    "zhAudio": "assets/audio/zh/animal-frog.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "food-apple",
@@ -167,7 +177,8 @@
     "cell": 0,
     "difficulty": 1,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/food-apple.mp3"
+    "zhAudio": "assets/audio/zh/food-apple.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "food-banana",
@@ -183,7 +194,8 @@
     "cell": 1,
     "difficulty": 1,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/food-banana.mp3"
+    "zhAudio": "assets/audio/zh/food-banana.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "food-strawberry",
@@ -199,7 +211,8 @@
     "cell": 2,
     "difficulty": 3,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/food-strawberry.mp3"
+    "zhAudio": "assets/audio/zh/food-strawberry.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "food-watermelon",
@@ -215,7 +228,8 @@
     "cell": 3,
     "difficulty": 2,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/food-watermelon.mp3"
+    "zhAudio": "assets/audio/zh/food-watermelon.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "food-carrot",
@@ -232,7 +246,8 @@
     "cell": 4,
     "difficulty": 2,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/food-carrot.mp3"
+    "zhAudio": "assets/audio/zh/food-carrot.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "food-bread",
@@ -248,7 +263,8 @@
     "cell": 5,
     "difficulty": 1,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/food-bread.mp3"
+    "zhAudio": "assets/audio/zh/food-bread.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "food-egg",
@@ -263,7 +279,8 @@
     "cell": 6,
     "difficulty": 1,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/food-egg.mp3"
+    "zhAudio": "assets/audio/zh/food-egg.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "food-cheese",
@@ -279,7 +296,8 @@
     "cell": 7,
     "difficulty": 3,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/food-cheese.mp3"
+    "zhAudio": "assets/audio/zh/food-cheese.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "food-pizza",
@@ -295,7 +313,8 @@
     "cell": 8,
     "difficulty": 2,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/food-pizza.mp3"
+    "zhAudio": "assets/audio/zh/food-pizza.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "food-cake",
@@ -311,7 +330,8 @@
     "cell": 9,
     "difficulty": 2,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/food-cake.mp3"
+    "zhAudio": "assets/audio/zh/food-cake.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "object-ball",
@@ -326,7 +346,8 @@
     "cell": 0,
     "difficulty": 2,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/object-ball.mp3"
+    "zhAudio": "assets/audio/zh/object-ball.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "object-book",
@@ -341,7 +362,8 @@
     "cell": 1,
     "difficulty": 2,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/object-book.mp3"
+    "zhAudio": "assets/audio/zh/object-book.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "object-pencil",
@@ -357,7 +379,8 @@
     "cell": 2,
     "difficulty": 3,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/object-pencil.mp3"
+    "zhAudio": "assets/audio/zh/object-pencil.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "object-chair",
@@ -373,7 +396,8 @@
     "cell": 3,
     "difficulty": 2,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/object-chair.mp3"
+    "zhAudio": "assets/audio/zh/object-chair.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "object-cup",
@@ -389,7 +413,8 @@
     "cell": 4,
     "difficulty": 2,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/object-cup.mp3"
+    "zhAudio": "assets/audio/zh/object-cup.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "object-toothbrush",
@@ -405,7 +430,8 @@
     "cell": 5,
     "difficulty": 2,
     "levelSource": "local",
-    "zhAudio": "assets/audio/zh/object-toothbrush.mp3"
+    "zhAudio": "assets/audio/zh/object-toothbrush.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "object-shoe",
@@ -421,7 +447,8 @@
     "cell": 6,
     "difficulty": 2,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/object-shoe.mp3"
+    "zhAudio": "assets/audio/zh/object-shoe.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "object-hat",
@@ -437,7 +464,8 @@
     "cell": 7,
     "difficulty": 2,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/object-hat.mp3"
+    "zhAudio": "assets/audio/zh/object-hat.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "object-backpack",
@@ -453,7 +481,8 @@
     "cell": 8,
     "difficulty": 2,
     "levelSource": "local",
-    "zhAudio": "assets/audio/zh/object-backpack.mp3"
+    "zhAudio": "assets/audio/zh/object-backpack.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "object-umbrella",
@@ -469,7 +498,8 @@
     "cell": 9,
     "difficulty": 3,
     "levelSource": "kidsapp",
-    "zhAudio": "assets/audio/zh/object-umbrella.mp3"
+    "zhAudio": "assets/audio/zh/object-umbrella.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "animal-duck",
@@ -484,7 +514,8 @@
     "difficulty": 1,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/animal-duck.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/animal-duck.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/animal-duck.png",
+    "artStatus": "approved"
   },
   {
     "id": "animal-sheep",
@@ -499,7 +530,8 @@
     "difficulty": 1,
     "levelSource": "local",
     "zhAudio": "assets/audio/zh/animal-sheep.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/animal-sheep.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/animal-sheep.png",
+    "artStatus": "approved"
   },
   {
     "id": "animal-monkey",
@@ -514,7 +546,8 @@
     "difficulty": 3,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/animal-monkey.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/animal-monkey.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/animal-monkey.png",
+    "artStatus": "approved"
   },
   {
     "id": "animal-giraffe",
@@ -530,7 +563,8 @@
     "difficulty": 3,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/animal-giraffe.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/animal-giraffe.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/animal-giraffe.png",
+    "artStatus": "approved"
   },
   {
     "id": "animal-zebra",
@@ -545,7 +579,8 @@
     "difficulty": 3,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/animal-zebra.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/animal-zebra.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/animal-zebra.png",
+    "artStatus": "approved"
   },
   {
     "id": "animal-panda",
@@ -560,7 +595,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/animal-panda.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/animal-panda.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/animal-panda.png",
+    "artStatus": "approved"
   },
   {
     "id": "animal-turtle",
@@ -575,7 +611,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/animal-turtle.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/animal-turtle.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/animal-turtle.png",
+    "artStatus": "approved"
   },
   {
     "id": "animal-fish",
@@ -589,7 +626,8 @@
     "difficulty": 1,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/animal-fish.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/animal-fish.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/animal-fish.png",
+    "artStatus": "approved"
   },
   {
     "id": "animal-crab",
@@ -604,7 +642,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/animal-crab.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/animal-crab.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/animal-crab.png",
+    "artStatus": "approved"
   },
   {
     "id": "animal-butterfly",
@@ -619,7 +658,8 @@
     "difficulty": 3,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/animal-butterfly.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/animal-butterfly.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/animal-butterfly.png",
+    "artStatus": "approved"
   },
   {
     "id": "animal-bee",
@@ -634,7 +674,8 @@
     "difficulty": 1,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/animal-bee.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/animal-bee.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/animal-bee.png",
+    "artStatus": "approved"
   },
   {
     "id": "animal-snake",
@@ -648,7 +689,8 @@
     "difficulty": 3,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/animal-snake.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/animal-snake.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/animal-snake.png",
+    "artStatus": "approved"
   },
   {
     "id": "animal-mouse",
@@ -663,7 +705,8 @@
     "difficulty": 1,
     "levelSource": "local",
     "zhAudio": "assets/audio/zh/animal-mouse.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/animal-mouse.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/animal-mouse.png",
+    "artStatus": "approved"
   },
   {
     "id": "animal-fox",
@@ -678,7 +721,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/animal-fox.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/animal-fox.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/animal-fox.png",
+    "artStatus": "approved"
   },
   {
     "id": "animal-tiger",
@@ -693,7 +737,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/animal-tiger.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/animal-tiger.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/animal-tiger.png",
+    "artStatus": "approved"
   },
   {
     "id": "animal-penguin",
@@ -708,7 +753,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/animal-penguin.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/animal-penguin.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/animal-penguin.png",
+    "artStatus": "approved"
   },
   {
     "id": "animal-bird",
@@ -722,7 +768,8 @@
     "difficulty": 1,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/animal-bird.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/animal-bird.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/animal-bird.png",
+    "artStatus": "approved"
   },
   {
     "id": "animal-octopus",
@@ -737,7 +784,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/animal-octopus.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/animal-octopus.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/animal-octopus.png",
+    "artStatus": "approved"
   },
   {
     "id": "food-orange",
@@ -752,7 +800,8 @@
     "difficulty": 3,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/food-orange.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/food-orange.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/food-orange.png",
+    "artStatus": "approved"
   },
   {
     "id": "food-grape",
@@ -767,7 +816,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/food-grape.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/food-grape.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/food-grape.png",
+    "artStatus": "approved"
   },
   {
     "id": "food-lemon",
@@ -782,7 +832,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/food-lemon.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/food-lemon.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/food-lemon.png",
+    "artStatus": "approved"
   },
   {
     "id": "food-peach",
@@ -797,7 +848,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/food-peach.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/food-peach.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/food-peach.png",
+    "artStatus": "approved"
   },
   {
     "id": "food-cherry",
@@ -812,7 +864,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/food-cherry.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/food-cherry.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/food-cherry.png",
+    "artStatus": "approved"
   },
   {
     "id": "food-pineapple",
@@ -827,7 +880,8 @@
     "difficulty": 3,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/food-pineapple.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/food-pineapple.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/food-pineapple.png",
+    "artStatus": "approved"
   },
   {
     "id": "food-corn",
@@ -842,7 +896,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/food-corn.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/food-corn.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/food-corn.png",
+    "artStatus": "approved"
   },
   {
     "id": "food-tomato",
@@ -857,7 +912,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/food-tomato.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/food-tomato.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/food-tomato.png",
+    "artStatus": "approved"
   },
   {
     "id": "food-potato",
@@ -873,7 +929,8 @@
     "difficulty": 3,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/food-potato.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/food-potato.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/food-potato.png",
+    "artStatus": "approved"
   },
   {
     "id": "food-broccoli",
@@ -889,7 +946,8 @@
     "difficulty": 3,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/food-broccoli.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/food-broccoli.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/food-broccoli.png",
+    "artStatus": "approved"
   },
   {
     "id": "food-rice",
@@ -904,7 +962,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/food-rice.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/food-rice.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/food-rice.png",
+    "artStatus": "approved"
   },
   {
     "id": "food-milk",
@@ -919,7 +978,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/food-milk.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/food-milk.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/food-milk.png",
+    "artStatus": "approved"
   },
   {
     "id": "food-cookie",
@@ -934,7 +994,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/food-cookie.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/food-cookie.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/food-cookie.png",
+    "artStatus": "approved"
   },
   {
     "id": "food-ice-cream",
@@ -950,7 +1011,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/food-ice-cream.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/food-ice-cream.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/food-ice-cream.png",
+    "artStatus": "approved"
   },
   {
     "id": "food-donut",
@@ -966,7 +1028,8 @@
     "difficulty": 3,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/food-donut.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/food-donut.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/food-donut.png",
+    "artStatus": "approved"
   },
   {
     "id": "food-hamburger",
@@ -981,7 +1044,8 @@
     "difficulty": 3,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/food-hamburger.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/food-hamburger.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/food-hamburger.png",
+    "artStatus": "approved"
   },
   {
     "id": "object-clock",
@@ -996,7 +1060,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/object-clock.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/object-clock.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/object-clock.png",
+    "artStatus": "approved"
   },
   {
     "id": "object-phone",
@@ -1011,7 +1076,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/object-phone.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/object-phone.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/object-phone.png",
+    "artStatus": "approved"
   },
   {
     "id": "object-key",
@@ -1026,7 +1092,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/object-key.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/object-key.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/object-key.png",
+    "artStatus": "approved"
   },
   {
     "id": "object-car",
@@ -1041,7 +1108,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/object-car.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/object-car.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/object-car.png",
+    "artStatus": "approved"
   },
   {
     "id": "object-bus",
@@ -1056,7 +1124,8 @@
     "difficulty": 1,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/object-bus.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/object-bus.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/object-bus.png",
+    "artStatus": "approved"
   },
   {
     "id": "object-train",
@@ -1071,7 +1140,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/object-train.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/object-train.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/object-train.png",
+    "artStatus": "approved"
   },
   {
     "id": "object-bicycle",
@@ -1087,7 +1157,8 @@
     "difficulty": 3,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/object-bicycle.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/object-bicycle.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/object-bicycle.png",
+    "artStatus": "approved"
   },
   {
     "id": "object-boat",
@@ -1101,7 +1172,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/object-boat.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/object-boat.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/object-boat.png",
+    "artStatus": "approved"
   },
   {
     "id": "object-airplane",
@@ -1116,7 +1188,8 @@
     "difficulty": 3,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/object-airplane.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/object-airplane.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/object-airplane.png",
+    "artStatus": "approved"
   },
   {
     "id": "object-camera",
@@ -1131,7 +1204,8 @@
     "difficulty": 3,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/object-camera.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/object-camera.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/object-camera.png",
+    "artStatus": "approved"
   },
   {
     "id": "object-scissors",
@@ -1146,7 +1220,8 @@
     "difficulty": 3,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/object-scissors.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/object-scissors.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/object-scissors.png",
+    "artStatus": "approved"
   },
   {
     "id": "object-crayon",
@@ -1161,7 +1236,8 @@
     "difficulty": 2,
     "levelSource": "local",
     "zhAudio": "assets/audio/zh/object-crayon.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/object-crayon.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/object-crayon.png",
+    "artStatus": "approved"
   },
   {
     "id": "object-light",
@@ -1176,7 +1252,8 @@
     "difficulty": 2,
     "levelSource": "local",
     "zhAudio": "assets/audio/zh/object-light.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/object-light.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/object-light.png",
+    "artStatus": "approved"
   },
   {
     "id": "object-spoon",
@@ -1191,7 +1268,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/object-spoon.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/object-spoon.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/object-spoon.png",
+    "artStatus": "approved"
   },
   {
     "id": "object-fork",
@@ -1206,7 +1284,8 @@
     "difficulty": 2,
     "levelSource": "kidsapp",
     "zhAudio": "assets/audio/zh/object-fork.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/object-fork.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/object-fork.png",
+    "artStatus": "approved"
   },
   {
     "id": "object-balloon",
@@ -1221,7 +1300,8 @@
     "difficulty": 1,
     "levelSource": "local",
     "zhAudio": "assets/audio/zh/object-balloon.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/object-balloon.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/object-balloon.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-ant",
@@ -1237,7 +1317,8 @@
     "sourceId": "ant",
     "emoji": "🐜",
     "zhAudio": "assets/audio/zh/kidapp-ant.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-ant.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-ant.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-moon",
@@ -1253,7 +1334,8 @@
     "sourceId": "moon",
     "emoji": "🌙",
     "zhAudio": "assets/audio/zh/kidapp-moon.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-moon.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-moon.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-sun",
@@ -1269,7 +1351,8 @@
     "sourceId": "sun",
     "emoji": "☀️",
     "zhAudio": "assets/audio/zh/kidapp-sun.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-sun.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-sun.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-tree",
@@ -1284,7 +1367,8 @@
     "sourceId": "tree",
     "emoji": "🌳",
     "zhAudio": "assets/audio/zh/kidapp-tree.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-tree.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-tree.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-dolphin",
@@ -1300,7 +1384,8 @@
     "sourceId": "dolphin",
     "emoji": "🐬",
     "zhAudio": "assets/audio/zh/kidapp-dolphin.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-dolphin.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-dolphin.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-koala",
@@ -1317,7 +1402,8 @@
     "sourceId": "koala",
     "emoji": "🐨",
     "zhAudio": "assets/audio/zh/kidapp-koala.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-koala.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-koala.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-ladybug",
@@ -1333,7 +1419,8 @@
     "sourceId": "ladybug",
     "emoji": "🐞",
     "zhAudio": "assets/audio/zh/kidapp-ladybug.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-ladybug.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-ladybug.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-owl",
@@ -1350,7 +1437,8 @@
     "sourceId": "owl",
     "emoji": "🦉",
     "zhAudio": "assets/audio/zh/kidapp-owl.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-owl.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-owl.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-shark",
@@ -1366,7 +1454,8 @@
     "sourceId": "shark",
     "emoji": "🦈",
     "zhAudio": "assets/audio/zh/kidapp-shark.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-shark.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-shark.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-snail",
@@ -1382,7 +1471,8 @@
     "sourceId": "snail",
     "emoji": "🐌",
     "zhAudio": "assets/audio/zh/kidapp-snail.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-snail.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-snail.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-spider",
@@ -1398,7 +1488,8 @@
     "sourceId": "spider",
     "emoji": "🕷️",
     "zhAudio": "assets/audio/zh/kidapp-spider.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-spider.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-spider.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-whale",
@@ -1414,7 +1505,8 @@
     "sourceId": "whale",
     "emoji": "🐋",
     "zhAudio": "assets/audio/zh/kidapp-whale.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-whale.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-whale.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-blue",
@@ -1430,7 +1522,8 @@
     "sourceId": "blue",
     "emoji": "🟦",
     "zhAudio": "assets/audio/zh/kidapp-blue.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-blue.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-blue.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-green",
@@ -1446,7 +1539,8 @@
     "sourceId": "green",
     "emoji": "🟩",
     "zhAudio": "assets/audio/zh/kidapp-green.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-green.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-green.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-red",
@@ -1462,7 +1556,8 @@
     "sourceId": "red",
     "emoji": "🟥",
     "zhAudio": "assets/audio/zh/kidapp-red.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-red.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-red.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-candy",
@@ -1478,7 +1573,8 @@
     "sourceId": "candy",
     "emoji": "🍬",
     "zhAudio": "assets/audio/zh/kidapp-candy.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-candy.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-candy.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-chicken",
@@ -1494,7 +1590,8 @@
     "sourceId": "chicken",
     "emoji": "🍗",
     "zhAudio": "assets/audio/zh/kidapp-chicken.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-chicken.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-chicken.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-coconut",
@@ -1510,7 +1607,8 @@
     "sourceId": "coconut",
     "emoji": "🥥",
     "zhAudio": "assets/audio/zh/kidapp-coconut.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-coconut.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-coconut.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-kiwi",
@@ -1527,7 +1625,8 @@
     "sourceId": "kiwi",
     "emoji": "🥝",
     "zhAudio": "assets/audio/zh/kidapp-kiwi.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-kiwi.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-kiwi.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-meat",
@@ -1542,7 +1641,8 @@
     "sourceId": "meat",
     "emoji": "🥩",
     "zhAudio": "assets/audio/zh/kidapp-meat.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-meat.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-meat.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-mushroom",
@@ -1558,7 +1658,8 @@
     "sourceId": "mushroom",
     "emoji": "🍄",
     "zhAudio": "assets/audio/zh/kidapp-mushroom.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-mushroom.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-mushroom.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-noodle",
@@ -1574,7 +1675,8 @@
     "sourceId": "noodle",
     "emoji": "🍜",
     "zhAudio": "assets/audio/zh/kidapp-noodle.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-noodle.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-noodle.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-pear",
@@ -1590,7 +1692,8 @@
     "sourceId": "pear",
     "emoji": "🍐",
     "zhAudio": "assets/audio/zh/kidapp-pear.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-pear.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-pear.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-soup",
@@ -1605,7 +1708,8 @@
     "sourceId": "soup",
     "emoji": "🍲",
     "zhAudio": "assets/audio/zh/kidapp-soup.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-soup.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-soup.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-cloud",
@@ -1620,7 +1724,8 @@
     "sourceId": "cloud",
     "emoji": "☁️",
     "zhAudio": "assets/audio/zh/kidapp-cloud.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-cloud.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-cloud.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-fire",
@@ -1635,7 +1740,8 @@
     "sourceId": "fire",
     "emoji": "🔥",
     "zhAudio": "assets/audio/zh/kidapp-fire.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-fire.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-fire.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-rain",
@@ -1650,7 +1756,8 @@
     "sourceId": "rain",
     "emoji": "🌧️",
     "zhAudio": "assets/audio/zh/kidapp-rain.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-rain.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-rain.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-snow",
@@ -1665,7 +1772,8 @@
     "sourceId": "snow",
     "emoji": "❄️",
     "zhAudio": "assets/audio/zh/kidapp-snow.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-snow.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-snow.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-star",
@@ -1681,7 +1789,8 @@
     "sourceId": "star",
     "emoji": "⭐",
     "zhAudio": "assets/audio/zh/kidapp-star.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-star.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-star.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-water",
@@ -1696,7 +1805,8 @@
     "sourceId": "water",
     "emoji": "💧",
     "zhAudio": "assets/audio/zh/kidapp-water.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-water.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-water.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-five",
@@ -1710,7 +1820,8 @@
     "levelSource": "kidsapp",
     "sourceId": "five",
     "emoji": "5️⃣",
-    "zhAudio": "assets/audio/zh/kidapp-five.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-five.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-four",
@@ -1724,7 +1835,8 @@
     "levelSource": "kidsapp",
     "sourceId": "four",
     "emoji": "4️⃣",
-    "zhAudio": "assets/audio/zh/kidapp-four.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-four.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-one",
@@ -1738,7 +1850,8 @@
     "levelSource": "kidsapp",
     "sourceId": "one",
     "emoji": "1️⃣",
-    "zhAudio": "assets/audio/zh/kidapp-one.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-one.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-three",
@@ -1752,7 +1865,8 @@
     "levelSource": "kidsapp",
     "sourceId": "three",
     "emoji": "3️⃣",
-    "zhAudio": "assets/audio/zh/kidapp-three.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-three.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-two",
@@ -1766,7 +1880,8 @@
     "levelSource": "kidsapp",
     "sourceId": "two",
     "emoji": "2️⃣",
-    "zhAudio": "assets/audio/zh/kidapp-two.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-two.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-bed",
@@ -1781,7 +1896,8 @@
     "sourceId": "bed",
     "emoji": "🛏️",
     "zhAudio": "assets/audio/zh/kidapp-bed.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-bed.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-bed.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-bowl",
@@ -1796,7 +1912,8 @@
     "sourceId": "bowl",
     "emoji": "🥣",
     "zhAudio": "assets/audio/zh/kidapp-bowl.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-bowl.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-bowl.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-desk",
@@ -1812,7 +1929,8 @@
     "sourceId": "desk",
     "emoji": "🖥️",
     "zhAudio": "assets/audio/zh/kidapp-desk.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-desk.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-desk.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-door",
@@ -1827,7 +1945,8 @@
     "sourceId": "door",
     "emoji": "🚪",
     "zhAudio": "assets/audio/zh/kidapp-door.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-door.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-door.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-house",
@@ -1843,7 +1962,8 @@
     "sourceId": "house",
     "emoji": "🏠",
     "zhAudio": "assets/audio/zh/kidapp-house.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-house.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-house.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-knife",
@@ -1859,7 +1979,8 @@
     "sourceId": "knife",
     "emoji": "🔪",
     "zhAudio": "assets/audio/zh/kidapp-knife.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-knife.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-knife.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-plate",
@@ -1875,7 +1996,8 @@
     "sourceId": "plate",
     "emoji": "🍽️",
     "zhAudio": "assets/audio/zh/kidapp-plate.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-plate.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-plate.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-table",
@@ -1891,7 +2013,8 @@
     "sourceId": "table",
     "emoji": "🖼️",
     "image": "assets/rebuilt/kidapp-table.png",
-    "zhAudio": "assets/audio/zh/kidapp-table.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-table.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-window",
@@ -1907,7 +2030,8 @@
     "sourceId": "window",
     "emoji": "🪟",
     "zhAudio": "assets/audio/zh/kidapp-window.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-window.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-window.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-eye",
@@ -1923,7 +2047,8 @@
     "sourceId": "eye",
     "emoji": "👁️",
     "zhAudio": "assets/audio/zh/kidapp-eye.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-eye.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-eye.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-ear",
@@ -1939,7 +2064,8 @@
     "sourceId": "ear",
     "emoji": "👂",
     "zhAudio": "assets/audio/zh/kidapp-ear.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-ear.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-ear.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-nose",
@@ -1955,7 +2081,8 @@
     "sourceId": "nose",
     "emoji": "👃",
     "zhAudio": "assets/audio/zh/kidapp-nose.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-nose.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-nose.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-mouth",
@@ -1971,7 +2098,8 @@
     "sourceId": "mouth",
     "emoji": "👄",
     "zhAudio": "assets/audio/zh/kidapp-mouth.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-mouth.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-mouth.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-hand",
@@ -1986,7 +2114,8 @@
     "sourceId": "hand",
     "emoji": "✋",
     "zhAudio": "assets/audio/zh/kidapp-hand.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hand.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hand.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-foot",
@@ -2001,7 +2130,8 @@
     "sourceId": "foot",
     "emoji": "🦶",
     "zhAudio": "assets/audio/zh/kidapp-foot.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-foot.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-foot.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-sock",
@@ -2017,7 +2147,8 @@
     "sourceId": "sock",
     "emoji": "🧦",
     "zhAudio": "assets/audio/zh/kidapp-sock.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-sock.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-sock.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-shirt",
@@ -2033,7 +2164,8 @@
     "sourceId": "shirt",
     "emoji": "👕",
     "zhAudio": "assets/audio/zh/kidapp-shirt.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-shirt.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-shirt.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-pants",
@@ -2049,7 +2181,8 @@
     "sourceId": "pants",
     "emoji": "👖",
     "zhAudio": "assets/audio/zh/kidapp-pants.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-pants.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-pants.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-dress",
@@ -2065,7 +2198,8 @@
     "sourceId": "dress",
     "emoji": "👗",
     "zhAudio": "assets/audio/zh/kidapp-dress.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-dress.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-dress.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-lamp",
@@ -2081,7 +2215,8 @@
     "sourceId": "lamp",
     "emoji": "💡",
     "zhAudio": "assets/audio/zh/kidapp-lamp.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-lamp.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-lamp.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-tv",
@@ -2097,7 +2232,8 @@
     "sourceId": "tv",
     "emoji": "📺",
     "zhAudio": "assets/audio/zh/kidapp-tv.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-tv.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-tv.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-sofa",
@@ -2113,7 +2249,8 @@
     "sourceId": "sofa",
     "emoji": "🛋️",
     "zhAudio": "assets/audio/zh/kidapp-sofa.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-sofa.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-sofa.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-pen",
@@ -2130,7 +2267,8 @@
     "sourceId": "pen",
     "emoji": "🖊️",
     "zhAudio": "assets/audio/zh/kidapp-pen.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-pen.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-pen.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-paper",
@@ -2145,7 +2283,8 @@
     "sourceId": "paper",
     "emoji": "📄",
     "zhAudio": "assets/audio/zh/kidapp-paper.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-paper.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-paper.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-bag",
@@ -2161,7 +2300,8 @@
     "sourceId": "bag",
     "emoji": "🎒",
     "zhAudio": "assets/audio/zh/kidapp-bag.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-bag.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-bag.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-truck",
@@ -2177,7 +2317,8 @@
     "sourceId": "truck",
     "emoji": "🚚",
     "zhAudio": "assets/audio/zh/kidapp-truck.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-truck.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-truck.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-taxi",
@@ -2194,7 +2335,8 @@
     "sourceId": "taxi",
     "emoji": "🚕",
     "zhAudio": "assets/audio/zh/kidapp-taxi.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-taxi.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-taxi.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-grass",
@@ -2209,7 +2351,8 @@
     "sourceId": "grass",
     "emoji": "🌿",
     "zhAudio": "assets/audio/zh/kidapp-grass.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-grass.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-grass.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-leaf",
@@ -2225,7 +2368,8 @@
     "sourceId": "leaf",
     "emoji": "🍃",
     "zhAudio": "assets/audio/zh/kidapp-leaf.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-leaf.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-leaf.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-rock",
@@ -2241,7 +2385,8 @@
     "sourceId": "rock",
     "emoji": "🪨",
     "zhAudio": "assets/audio/zh/kidapp-rock.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-rock.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-rock.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-doll",
@@ -2258,7 +2403,8 @@
     "sourceId": "doll",
     "emoji": "🎎",
     "zhAudio": "assets/audio/zh/kidapp-doll.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-doll.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-doll.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-robot",
@@ -2275,7 +2421,8 @@
     "sourceId": "robot",
     "emoji": "🤖",
     "zhAudio": "assets/audio/zh/kidapp-robot.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-robot.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-robot.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-bat",
@@ -2291,7 +2438,8 @@
     "sourceId": "bat",
     "emoji": "🦇",
     "zhAudio": "assets/audio/zh/kidapp-bat.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-bat.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-bat.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-crocodile",
@@ -2307,7 +2455,8 @@
     "sourceId": "crocodile",
     "emoji": "🖼️",
     "image": "assets/rebuilt/kidapp-crocodile.png",
-    "zhAudio": "assets/audio/zh/kidapp-crocodile.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-crocodile.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-flamingo",
@@ -2323,7 +2472,8 @@
     "sourceId": "flamingo",
     "emoji": "🦩",
     "zhAudio": "assets/audio/zh/kidapp-flamingo.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-flamingo.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-flamingo.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-hedgehog",
@@ -2339,7 +2489,8 @@
     "sourceId": "hedgehog",
     "emoji": "🦔",
     "zhAudio": "assets/audio/zh/kidapp-hedgehog.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hedgehog.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hedgehog.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-kangaroo",
@@ -2355,7 +2506,8 @@
     "sourceId": "kangaroo",
     "emoji": "🦘",
     "zhAudio": "assets/audio/zh/kidapp-kangaroo.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-kangaroo.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-kangaroo.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-lizard",
@@ -2371,7 +2523,8 @@
     "sourceId": "lizard",
     "emoji": "🦎",
     "zhAudio": "assets/audio/zh/kidapp-lizard.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-lizard.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-lizard.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-peacock",
@@ -2387,7 +2540,8 @@
     "sourceId": "peacock",
     "emoji": "🖼️",
     "image": "assets/rebuilt/kidapp-peacock.png",
-    "zhAudio": "assets/audio/zh/kidapp-peacock.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-peacock.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-squirrel",
@@ -2403,7 +2557,8 @@
     "sourceId": "squirrel",
     "emoji": "🐿️",
     "zhAudio": "assets/audio/zh/kidapp-squirrel.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-squirrel.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-squirrel.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-black",
@@ -2419,7 +2574,8 @@
     "sourceId": "black",
     "emoji": "⚫",
     "zhAudio": "assets/audio/zh/kidapp-black.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-black.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-black.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-brown",
@@ -2435,7 +2591,8 @@
     "sourceId": "brown",
     "emoji": "🟤",
     "zhAudio": "assets/audio/zh/kidapp-brown.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-brown.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-brown.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-gray",
@@ -2451,7 +2608,8 @@
     "sourceId": "gray",
     "emoji": "⚪",
     "zhAudio": "assets/audio/zh/kidapp-gray.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-gray.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-gray.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-pink",
@@ -2468,7 +2626,8 @@
     "sourceId": "pink",
     "emoji": "🩷",
     "zhAudio": "assets/audio/zh/kidapp-pink.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-pink.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-pink.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-purple",
@@ -2484,7 +2643,8 @@
     "sourceId": "purple",
     "emoji": "🟣",
     "zhAudio": "assets/audio/zh/kidapp-purple.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-purple.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-purple.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-white",
@@ -2500,7 +2660,8 @@
     "sourceId": "white",
     "emoji": "⚪",
     "zhAudio": "assets/audio/zh/kidapp-white.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-white.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-white.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-yellow",
@@ -2516,7 +2677,8 @@
     "sourceId": "yellow",
     "emoji": "🟨",
     "zhAudio": "assets/audio/zh/kidapp-yellow.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-yellow.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-yellow.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-avocado",
@@ -2532,7 +2694,8 @@
     "sourceId": "avocado",
     "emoji": "🥑",
     "zhAudio": "assets/audio/zh/kidapp-avocado.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-avocado.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-avocado.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-blueberry",
@@ -2548,7 +2711,8 @@
     "sourceId": "blueberry",
     "emoji": "🫐",
     "zhAudio": "assets/audio/zh/kidapp-blueberry.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-blueberry.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-blueberry.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-chocolate",
@@ -2565,7 +2729,8 @@
     "sourceId": "chocolate",
     "emoji": "🍫",
     "zhAudio": "assets/audio/zh/kidapp-chocolate.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-chocolate.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-chocolate.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-cucumber",
@@ -2582,7 +2747,8 @@
     "sourceId": "cucumber",
     "emoji": "🥒",
     "zhAudio": "assets/audio/zh/kidapp-cucumber.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-cucumber.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-cucumber.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-eggplant",
@@ -2598,7 +2764,8 @@
     "sourceId": "eggplant",
     "emoji": "🍆",
     "zhAudio": "assets/audio/zh/kidapp-eggplant.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-eggplant.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-eggplant.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-honey",
@@ -2614,7 +2781,8 @@
     "sourceId": "honey",
     "emoji": "🍯",
     "zhAudio": "assets/audio/zh/kidapp-honey.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-honey.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-honey.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-hotdog",
@@ -2630,7 +2798,8 @@
     "sourceId": "hotdog",
     "emoji": "🌭",
     "zhAudio": "assets/audio/zh/kidapp-hotdog.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hotdog.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hotdog.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-mango",
@@ -2646,7 +2815,8 @@
     "sourceId": "mango",
     "emoji": "🥭",
     "zhAudio": "assets/audio/zh/kidapp-mango.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-mango.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-mango.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-onion",
@@ -2662,7 +2832,8 @@
     "sourceId": "onion",
     "emoji": "🧅",
     "zhAudio": "assets/audio/zh/kidapp-onion.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-onion.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-onion.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-popcorn",
@@ -2679,7 +2850,8 @@
     "sourceId": "popcorn",
     "emoji": "🍿",
     "zhAudio": "assets/audio/zh/kidapp-popcorn.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-popcorn.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-popcorn.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-pumpkin",
@@ -2695,7 +2867,8 @@
     "sourceId": "pumpkin",
     "emoji": "🎃",
     "zhAudio": "assets/audio/zh/kidapp-pumpkin.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-pumpkin.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-pumpkin.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-sandwich",
@@ -2712,7 +2885,8 @@
     "sourceId": "sandwich",
     "emoji": "🥪",
     "zhAudio": "assets/audio/zh/kidapp-sandwich.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-sandwich.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-sandwich.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-cactus",
@@ -2729,7 +2903,8 @@
     "sourceId": "cactus",
     "emoji": "🌵",
     "zhAudio": "assets/audio/zh/kidapp-cactus.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-cactus.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-cactus.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-flower",
@@ -2744,7 +2919,8 @@
     "sourceId": "flower",
     "emoji": "🌸",
     "zhAudio": "assets/audio/zh/kidapp-flower.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-flower.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-flower.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-lightning",
@@ -2760,7 +2936,8 @@
     "sourceId": "lightning",
     "emoji": "🖼️",
     "image": "assets/rebuilt/kidapp-lightning.png",
-    "zhAudio": "assets/audio/zh/kidapp-lightning.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-lightning.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-mountain",
@@ -2775,7 +2952,8 @@
     "sourceId": "mountain",
     "emoji": "⛰️",
     "zhAudio": "assets/audio/zh/kidapp-mountain.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-mountain.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-mountain.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-ocean",
@@ -2791,7 +2969,8 @@
     "sourceId": "ocean",
     "emoji": "🖼️",
     "image": "assets/rebuilt/kidapp-ocean.png",
-    "zhAudio": "assets/audio/zh/kidapp-ocean.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-ocean.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-rainbow",
@@ -2807,7 +2986,8 @@
     "sourceId": "rainbow",
     "emoji": "🌈",
     "zhAudio": "assets/audio/zh/kidapp-rainbow.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-rainbow.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-rainbow.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-rose",
@@ -2823,7 +3003,8 @@
     "sourceId": "rose",
     "emoji": "🌹",
     "zhAudio": "assets/audio/zh/kidapp-rose.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-rose.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-rose.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-sunflower",
@@ -2840,7 +3021,8 @@
     "sourceId": "sunflower",
     "emoji": "🌻",
     "zhAudio": "assets/audio/zh/kidapp-sunflower.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-sunflower.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-sunflower.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-tornado",
@@ -2857,7 +3039,8 @@
     "sourceId": "tornado",
     "emoji": "🌪️",
     "zhAudio": "assets/audio/zh/kidapp-tornado.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-tornado.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-tornado.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-tulip",
@@ -2874,7 +3057,8 @@
     "sourceId": "tulip",
     "emoji": "🌷",
     "zhAudio": "assets/audio/zh/kidapp-tulip.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-tulip.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-tulip.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-volcano",
@@ -2890,7 +3074,8 @@
     "sourceId": "volcano",
     "emoji": "🌋",
     "zhAudio": "assets/audio/zh/kidapp-volcano.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-volcano.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-volcano.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-telescope",
@@ -2907,7 +3092,8 @@
     "sourceId": "telescope",
     "emoji": "🔭",
     "zhAudio": "assets/audio/zh/kidapp-telescope.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-telescope.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-telescope.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-microscope",
@@ -2924,7 +3110,8 @@
     "sourceId": "microscope",
     "emoji": "🔬",
     "zhAudio": "assets/audio/zh/kidapp-microscope.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-microscope.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-microscope.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-satellite",
@@ -2940,7 +3127,8 @@
     "sourceId": "satellite",
     "emoji": "🛰️",
     "zhAudio": "assets/audio/zh/kidapp-satellite.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-satellite.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-satellite.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-parachute",
@@ -2957,7 +3145,8 @@
     "sourceId": "parachute",
     "emoji": "🪂",
     "zhAudio": "assets/audio/zh/kidapp-parachute.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-parachute.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-parachute.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-boomerang",
@@ -2974,7 +3163,8 @@
     "sourceId": "boomerang",
     "emoji": "🪃",
     "zhAudio": "assets/audio/zh/kidapp-boomerang.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-boomerang.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-boomerang.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-harmonica",
@@ -2990,7 +3180,8 @@
     "sourceId": "harmonica",
     "emoji": "🖼️",
     "image": "assets/rebuilt/kidapp-harmonica.png",
-    "zhAudio": "assets/audio/zh/kidapp-harmonica.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-harmonica.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-xylophone",
@@ -3006,7 +3197,8 @@
     "sourceId": "xylophone",
     "emoji": "🖼️",
     "image": "assets/rebuilt/kidapp-xylophone.png",
-    "zhAudio": "assets/audio/zh/kidapp-xylophone.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-xylophone.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-lighthouse",
@@ -3022,7 +3214,8 @@
     "sourceId": "lighthouse",
     "emoji": "🖼️",
     "image": "assets/rebuilt/kidapp-lighthouse.png",
-    "zhAudio": "assets/audio/zh/kidapp-lighthouse.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-lighthouse.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-windmill",
@@ -3038,7 +3231,8 @@
     "sourceId": "windmill",
     "emoji": "🖼️",
     "image": "assets/rebuilt/kidapp-windmill.png",
-    "zhAudio": "assets/audio/zh/kidapp-windmill.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-windmill.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-pyramid",
@@ -3055,7 +3249,8 @@
     "sourceId": "pyramid",
     "emoji": "🖼️",
     "image": "assets/rebuilt/kidapp-pyramid.png",
-    "zhAudio": "assets/audio/zh/kidapp-pyramid.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-pyramid.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-compass",
@@ -3072,7 +3267,8 @@
     "sourceId": "compass",
     "emoji": "🧭",
     "zhAudio": "assets/audio/zh/kidapp-compass.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-compass.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-compass.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-magnet",
@@ -3088,7 +3284,8 @@
     "sourceId": "magnet",
     "emoji": "🧲",
     "zhAudio": "assets/audio/zh/kidapp-magnet.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-magnet.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-magnet.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-hourglass",
@@ -3104,7 +3301,8 @@
     "sourceId": "hourglass",
     "emoji": "⏳",
     "zhAudio": "assets/audio/zh/kidapp-hourglass.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hourglass.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hourglass.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-abacus",
@@ -3120,7 +3318,8 @@
     "sourceId": "abacus",
     "emoji": "🧮",
     "zhAudio": "assets/audio/zh/kidapp-abacus.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-abacus.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-abacus.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-doctor",
@@ -3136,7 +3335,8 @@
     "sourceId": "doctor",
     "emoji": "🖼️",
     "image": "assets/rebuilt/kidapp-doctor.png",
-    "zhAudio": "assets/audio/zh/kidapp-doctor.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-doctor.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-nurse",
@@ -3152,7 +3352,8 @@
     "sourceId": "nurse",
     "emoji": "🖼️",
     "image": "assets/rebuilt/kidapp-nurse.png",
-    "zhAudio": "assets/audio/zh/kidapp-nurse.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-nurse.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-police",
@@ -3168,7 +3369,8 @@
     "sourceId": "police",
     "emoji": "👮",
     "zhAudio": "assets/audio/zh/kidapp-police.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-police.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-police.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-teacher",
@@ -3184,7 +3386,8 @@
     "sourceId": "teacher",
     "emoji": "🖼️",
     "image": "assets/rebuilt/kidapp-teacher.png",
-    "zhAudio": "assets/audio/zh/kidapp-teacher.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-teacher.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-chef",
@@ -3200,7 +3403,8 @@
     "sourceId": "chef",
     "emoji": "🖼️",
     "image": "assets/rebuilt/kidapp-chef.png",
-    "zhAudio": "assets/audio/zh/kidapp-chef.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-chef.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-farmer",
@@ -3216,7 +3420,8 @@
     "sourceId": "farmer",
     "emoji": "🖼️",
     "image": "assets/rebuilt/kidapp-farmer.png",
-    "zhAudio": "assets/audio/zh/kidapp-farmer.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-farmer.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-school",
@@ -3232,7 +3437,8 @@
     "sourceId": "school",
     "emoji": "🏫",
     "zhAudio": "assets/audio/zh/kidapp-school.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-school.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-school.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-park",
@@ -3248,7 +3454,8 @@
     "sourceId": "park",
     "emoji": "🖼️",
     "image": "assets/rebuilt/kidapp-park.png",
-    "zhAudio": "assets/audio/zh/kidapp-park.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-park.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-zoo",
@@ -3265,7 +3472,8 @@
     "sourceId": "zoo",
     "emoji": "🖼️",
     "image": "assets/rebuilt/kidapp-zoo.png",
-    "zhAudio": "assets/audio/zh/kidapp-zoo.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-zoo.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-beach",
@@ -3281,7 +3489,8 @@
     "sourceId": "beach",
     "emoji": "🖼️",
     "image": "assets/rebuilt/kidapp-beach.png",
-    "zhAudio": "assets/audio/zh/kidapp-beach.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-beach.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-hospital",
@@ -3297,7 +3506,8 @@
     "sourceId": "hospital",
     "emoji": "🏥",
     "zhAudio": "assets/audio/zh/kidapp-hospital.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hospital.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hospital.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-piano",
@@ -3313,7 +3523,8 @@
     "sourceId": "piano",
     "emoji": "🎹",
     "zhAudio": "assets/audio/zh/kidapp-piano.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-piano.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-piano.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-drum",
@@ -3328,7 +3539,8 @@
     "sourceId": "drum",
     "emoji": "🥁",
     "zhAudio": "assets/audio/zh/kidapp-drum.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-drum.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-drum.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-violin",
@@ -3345,7 +3557,8 @@
     "sourceId": "violin",
     "emoji": "🎻",
     "zhAudio": "assets/audio/zh/kidapp-violin.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-violin.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-violin.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-bell",
@@ -3361,7 +3574,8 @@
     "sourceId": "bell",
     "emoji": "🔔",
     "zhAudio": "assets/audio/zh/kidapp-bell.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-bell.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-bell.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-hammer",
@@ -3377,7 +3591,8 @@
     "sourceId": "hammer",
     "emoji": "🔨",
     "zhAudio": "assets/audio/zh/kidapp-hammer.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hammer.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hammer.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-helicopter",
@@ -3394,7 +3609,8 @@
     "sourceId": "helicopter",
     "emoji": "🚁",
     "zhAudio": "assets/audio/zh/kidapp-helicopter.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-helicopter.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-helicopter.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-ambulance",
@@ -3411,7 +3627,8 @@
     "sourceId": "ambulance",
     "emoji": "🚑",
     "zhAudio": "assets/audio/zh/kidapp-ambulance.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-ambulance.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-ambulance.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-firetruck",
@@ -3428,7 +3645,8 @@
     "sourceId": "firetruck",
     "emoji": "🚒",
     "zhAudio": "assets/audio/zh/kidapp-firetruck.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-firetruck.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-firetruck.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-motorcycle",
@@ -3445,7 +3663,8 @@
     "sourceId": "motorcycle",
     "emoji": "🏍️",
     "zhAudio": "assets/audio/zh/kidapp-motorcycle.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-motorcycle.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-motorcycle.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-rocket",
@@ -3461,7 +3680,8 @@
     "sourceId": "rocket",
     "emoji": "🚀",
     "zhAudio": "assets/audio/zh/kidapp-rocket.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-rocket.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-rocket.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-planet",
@@ -3477,7 +3697,8 @@
     "sourceId": "planet",
     "emoji": "🪐",
     "zhAudio": "assets/audio/zh/kidapp-planet.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-planet.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-planet.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-earth",
@@ -3493,7 +3714,8 @@
     "sourceId": "earth",
     "emoji": "🌍",
     "zhAudio": "assets/audio/zh/kidapp-earth.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-earth.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-earth.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-king",
@@ -3509,7 +3731,8 @@
     "sourceId": "king",
     "emoji": "🤴",
     "zhAudio": "assets/audio/zh/kidapp-king.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-king.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-king.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-wind",
@@ -3524,7 +3747,8 @@
     "sourceId": "wind",
     "emoji": "🌬️",
     "zhAudio": "assets/audio/zh/kidapp-wind.mp3",
-    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-wind.png"
+    "image": "assets/rebuilt/emoji-6x8-v1/kidapp-wind.png",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-river",
@@ -3540,7 +3764,8 @@
     "sourceId": "river",
     "emoji": "🖼️",
     "image": "assets/rebuilt/kidapp-river.png",
-    "zhAudio": "assets/audio/zh/kidapp-river.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-river.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-forest",
@@ -3556,7 +3781,8 @@
     "sourceId": "forest",
     "emoji": "🖼️",
     "image": "assets/rebuilt/kidapp-forest.png",
-    "zhAudio": "assets/audio/zh/kidapp-forest.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-forest.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-bridge",
@@ -3571,7 +3797,8 @@
     "sourceId": "bridge",
     "emoji": "🖼️",
     "image": "assets/rebuilt/kidapp-bridge.png",
-    "zhAudio": "assets/audio/zh/kidapp-bridge.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-bridge.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-allosaurus",
@@ -3588,7 +3815,8 @@
     "sourceId": "allosaurus",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-allosaurus.png",
-    "zhAudio": "assets/audio/zh/kidapp-allosaurus.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-allosaurus.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-ankylosaurus",
@@ -3604,7 +3832,8 @@
     "sourceId": "ankylosaurus",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-ankylosaurus.png",
-    "zhAudio": "assets/audio/zh/kidapp-ankylosaurus.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-ankylosaurus.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-archaeopteryx",
@@ -3621,7 +3850,8 @@
     "sourceId": "archaeopteryx",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-archaeopteryx.png",
-    "zhAudio": "assets/audio/zh/kidapp-archaeopteryx.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-archaeopteryx.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-brachiosaurus",
@@ -3637,7 +3867,8 @@
     "sourceId": "brachiosaurus",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-brachiosaurus.png",
-    "zhAudio": "assets/audio/zh/kidapp-brachiosaurus.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-brachiosaurus.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-carnotaurus",
@@ -3655,7 +3886,8 @@
     "sourceId": "carnotaurus",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-carnotaurus.png",
-    "zhAudio": "assets/audio/zh/kidapp-carnotaurus.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-carnotaurus.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-compsognathus",
@@ -3672,7 +3904,8 @@
     "sourceId": "compsognathus",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-compsognathus.png",
-    "zhAudio": "assets/audio/zh/kidapp-compsognathus.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-compsognathus.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-corythosaurus",
@@ -3688,7 +3921,8 @@
     "sourceId": "corythosaurus",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-corythosaurus.png",
-    "zhAudio": "assets/audio/zh/kidapp-corythosaurus.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-corythosaurus.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-dilophosaurus",
@@ -3705,7 +3939,8 @@
     "sourceId": "dilophosaurus",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-dilophosaurus.png",
-    "zhAudio": "assets/audio/zh/kidapp-dilophosaurus.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-dilophosaurus.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-diplodocus",
@@ -3721,7 +3956,8 @@
     "sourceId": "diplodocus",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-diplodocus.png",
-    "zhAudio": "assets/audio/zh/kidapp-diplodocus.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-diplodocus.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-giganotosaurus",
@@ -3740,7 +3976,8 @@
     "sourceId": "giganotosaurus",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-giganotosaurus.png",
-    "zhAudio": "assets/audio/zh/kidapp-giganotosaurus.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-giganotosaurus.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-ichthyosaurus",
@@ -3756,7 +3993,8 @@
     "sourceId": "ichthyosaurus",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-ichthyosaurus.png",
-    "zhAudio": "assets/audio/zh/kidapp-ichthyosaurus.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-ichthyosaurus.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-iguanodon",
@@ -3772,7 +4010,8 @@
     "sourceId": "iguanodon",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-iguanodon.png",
-    "zhAudio": "assets/audio/zh/kidapp-iguanodon.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-iguanodon.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-mamenchisaurus",
@@ -3790,7 +4029,8 @@
     "sourceId": "mamenchisaurus",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-mamenchisaurus.png",
-    "zhAudio": "assets/audio/zh/kidapp-mamenchisaurus.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-mamenchisaurus.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-microraptor",
@@ -3807,7 +4047,8 @@
     "sourceId": "microraptor",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-microraptor.png",
-    "zhAudio": "assets/audio/zh/kidapp-microraptor.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-microraptor.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-mosasaurus",
@@ -3823,7 +4064,8 @@
     "sourceId": "mosasaurus",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-mosasaurus.png",
-    "zhAudio": "assets/audio/zh/kidapp-mosasaurus.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-mosasaurus.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-oviraptor",
@@ -3840,7 +4082,8 @@
     "sourceId": "oviraptor",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-oviraptor.png",
-    "zhAudio": "assets/audio/zh/kidapp-oviraptor.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-oviraptor.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-pachycephalosaurus",
@@ -3857,7 +4100,8 @@
     "sourceId": "pachycephalosaurus",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-pachycephalosaurus.png",
-    "zhAudio": "assets/audio/zh/kidapp-pachycephalosaurus.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-pachycephalosaurus.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-parasaurolophus",
@@ -3874,7 +4118,8 @@
     "sourceId": "parasaurolophus",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-parasaurolophus.png",
-    "zhAudio": "assets/audio/zh/kidapp-parasaurolophus.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-parasaurolophus.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-plesiosaurus",
@@ -3891,7 +4136,8 @@
     "sourceId": "plesiosaurus",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-plesiosaurus.png",
-    "zhAudio": "assets/audio/zh/kidapp-plesiosaurus.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-plesiosaurus.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-protoceratops",
@@ -3908,7 +4154,8 @@
     "sourceId": "protoceratops",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-protoceratops.png",
-    "zhAudio": "assets/audio/zh/kidapp-protoceratops.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-protoceratops.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-pteranodon",
@@ -3925,7 +4172,8 @@
     "sourceId": "pteranodon",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-pteranodon.png",
-    "zhAudio": "assets/audio/zh/kidapp-pteranodon.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-pteranodon.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-spinosaurus",
@@ -3941,7 +4189,8 @@
     "sourceId": "spinosaurus",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-spinosaurus.png",
-    "zhAudio": "assets/audio/zh/kidapp-spinosaurus.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-spinosaurus.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-stegosaurus",
@@ -3957,7 +4206,8 @@
     "sourceId": "stegosaurus",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-stegosaurus.png",
-    "zhAudio": "assets/audio/zh/kidapp-stegosaurus.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-stegosaurus.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-therizinosaurus",
@@ -3974,7 +4224,8 @@
     "sourceId": "therizinosaurus",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-therizinosaurus.png",
-    "zhAudio": "assets/audio/zh/kidapp-therizinosaurus.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-therizinosaurus.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-triceratops",
@@ -3991,7 +4242,8 @@
     "sourceId": "triceratops",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-triceratops.png",
-    "zhAudio": "assets/audio/zh/kidapp-triceratops.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-triceratops.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-tyrannosaurus",
@@ -4007,7 +4259,8 @@
     "sourceId": "tyrannosaurus",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-tyrannosaurus.png",
-    "zhAudio": "assets/audio/zh/kidapp-tyrannosaurus.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-tyrannosaurus.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-velociraptor",
@@ -4024,7 +4277,8 @@
     "sourceId": "velociraptor",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-velociraptor.png",
-    "zhAudio": "assets/audio/zh/kidapp-velociraptor.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-velociraptor.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-quetzalcoatlus",
@@ -4042,7 +4296,8 @@
     "sourceId": "quetzalcoatlus",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-quetzalcoatlus.png",
-    "zhAudio": "assets/audio/zh/kidapp-quetzalcoatlus.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-quetzalcoatlus.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-hatzegopteryx",
@@ -4060,7 +4315,8 @@
     "sourceId": "hatzegopteryx",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-hatzegopteryx.png",
-    "zhAudio": "assets/audio/zh/kidapp-hatzegopteryx.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-hatzegopteryx.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-mammoth",
@@ -4077,7 +4333,8 @@
     "sourceId": "mammoth",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-mammoth.png",
-    "zhAudio": "assets/audio/zh/kidapp-mammoth.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-mammoth.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-smilodon",
@@ -4094,7 +4351,8 @@
     "sourceId": "smilodon",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-smilodon.png",
-    "zhAudio": "assets/audio/zh/kidapp-smilodon.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-smilodon.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-deinonychus",
@@ -4111,7 +4369,8 @@
     "sourceId": "deinonychus",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-deinonychus.png",
-    "zhAudio": "assets/audio/zh/kidapp-deinonychus.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-deinonychus.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-troodon",
@@ -4128,7 +4387,8 @@
     "sourceId": "troodon",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-troodon.png",
-    "zhAudio": "assets/audio/zh/kidapp-troodon.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-troodon.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-edmontosaurus",
@@ -4147,7 +4407,8 @@
     "sourceId": "edmontosaurus",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-edmontosaurus.png",
-    "zhAudio": "assets/audio/zh/kidapp-edmontosaurus.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-edmontosaurus.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "kidapp-maiasaura",
@@ -4164,7 +4425,8 @@
     "sourceId": "maiasaura",
     "emoji": "🦕",
     "image": "assets/rebuilt/kidapp-maiasaura.png",
-    "zhAudio": "assets/audio/zh/kidapp-maiasaura.mp3"
+    "zhAudio": "assets/audio/zh/kidapp-maiasaura.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-goat",
@@ -4179,7 +4441,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-goat.png",
-    "zhAudio": "assets/audio/zh/new-goat.mp3"
+    "zhAudio": "assets/audio/zh/new-goat.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-deer",
@@ -4193,7 +4456,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-deer.png",
-    "zhAudio": "assets/audio/zh/new-deer.mp3"
+    "zhAudio": "assets/audio/zh/new-deer.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-goose",
@@ -4207,7 +4471,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-goose.png",
-    "zhAudio": "assets/audio/zh/new-goose.mp3"
+    "zhAudio": "assets/audio/zh/new-goose.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-hen",
@@ -4222,7 +4487,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-hen.png",
-    "zhAudio": "assets/audio/zh/new-hen.mp3"
+    "zhAudio": "assets/audio/zh/new-hen.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-donkey",
@@ -4236,7 +4502,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-donkey.png",
-    "zhAudio": "assets/audio/zh/new-donkey.mp3"
+    "zhAudio": "assets/audio/zh/new-donkey.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-camel",
@@ -4251,7 +4518,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-camel.png",
-    "zhAudio": "assets/audio/zh/new-camel.mp3"
+    "zhAudio": "assets/audio/zh/new-camel.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-seal",
@@ -4266,7 +4534,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-seal.png",
-    "zhAudio": "assets/audio/zh/new-seal.mp3"
+    "zhAudio": "assets/audio/zh/new-seal.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-worm",
@@ -4281,7 +4550,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-worm.png",
-    "zhAudio": "assets/audio/zh/new-worm.mp3"
+    "zhAudio": "assets/audio/zh/new-worm.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-bean",
@@ -4296,7 +4566,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-bean.png",
-    "zhAudio": "assets/audio/zh/new-bean.mp3"
+    "zhAudio": "assets/audio/zh/new-bean.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-butter",
@@ -4311,7 +4582,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-butter.png",
-    "zhAudio": "assets/audio/zh/new-butter.mp3"
+    "zhAudio": "assets/audio/zh/new-butter.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-jam",
@@ -4326,7 +4598,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-jam.png",
-    "zhAudio": "assets/audio/zh/new-jam.mp3"
+    "zhAudio": "assets/audio/zh/new-jam.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-juice",
@@ -4341,7 +4614,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-juice.png",
-    "zhAudio": "assets/audio/zh/new-juice.mp3"
+    "zhAudio": "assets/audio/zh/new-juice.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-lettuce",
@@ -4356,7 +4630,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-lettuce.png",
-    "zhAudio": "assets/audio/zh/new-lettuce.mp3"
+    "zhAudio": "assets/audio/zh/new-lettuce.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-plum",
@@ -4371,7 +4646,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-plum.png",
-    "zhAudio": "assets/audio/zh/new-plum.mp3"
+    "zhAudio": "assets/audio/zh/new-plum.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-melon",
@@ -4386,7 +4662,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-melon.png",
-    "zhAudio": "assets/audio/zh/new-melon.mp3"
+    "zhAudio": "assets/audio/zh/new-melon.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-brush",
@@ -4401,7 +4678,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-brush.png",
-    "zhAudio": "assets/audio/zh/new-brush.mp3"
+    "zhAudio": "assets/audio/zh/new-brush.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-comb",
@@ -4416,7 +4694,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-comb.png",
-    "zhAudio": "assets/audio/zh/new-comb.mp3"
+    "zhAudio": "assets/audio/zh/new-comb.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-mirror",
@@ -4431,7 +4710,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-mirror.png",
-    "zhAudio": "assets/audio/zh/new-mirror.mp3"
+    "zhAudio": "assets/audio/zh/new-mirror.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-pillow",
@@ -4446,7 +4726,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-pillow.png",
-    "zhAudio": "assets/audio/zh/new-pillow.mp3"
+    "zhAudio": "assets/audio/zh/new-pillow.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-blanket",
@@ -4461,7 +4742,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-blanket.png",
-    "zhAudio": "assets/audio/zh/new-blanket.mp3"
+    "zhAudio": "assets/audio/zh/new-blanket.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-box",
@@ -4476,7 +4758,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-box.png",
-    "zhAudio": "assets/audio/zh/new-box.mp3"
+    "zhAudio": "assets/audio/zh/new-box.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-bottle",
@@ -4491,7 +4774,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-bottle.png",
-    "zhAudio": "assets/audio/zh/new-bottle.mp3"
+    "zhAudio": "assets/audio/zh/new-bottle.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-basket",
@@ -4506,7 +4790,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-basket.png",
-    "zhAudio": "assets/audio/zh/new-basket.mp3"
+    "zhAudio": "assets/audio/zh/new-basket.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-sky",
@@ -4521,7 +4806,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-sky.png",
-    "zhAudio": "assets/audio/zh/new-sky.mp3"
+    "zhAudio": "assets/audio/zh/new-sky.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-sand",
@@ -4536,7 +4822,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-sand.png",
-    "zhAudio": "assets/audio/zh/new-sand.mp3"
+    "zhAudio": "assets/audio/zh/new-sand.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-pond",
@@ -4551,7 +4838,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-pond.png",
-    "zhAudio": "assets/audio/zh/new-pond.mp3"
+    "zhAudio": "assets/audio/zh/new-pond.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-six",
@@ -4565,7 +4853,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-six.png",
-    "zhAudio": "assets/audio/zh/new-six.mp3"
+    "zhAudio": "assets/audio/zh/new-six.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-seven",
@@ -4579,7 +4868,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-seven.png",
-    "zhAudio": "assets/audio/zh/new-seven.mp3"
+    "zhAudio": "assets/audio/zh/new-seven.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-eight",
@@ -4593,7 +4883,8 @@
     "difficulty": 1,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-eight.png",
-    "zhAudio": "assets/audio/zh/new-eight.mp3"
+    "zhAudio": "assets/audio/zh/new-eight.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-raccoon",
@@ -4608,7 +4899,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-raccoon.png",
-    "zhAudio": "assets/audio/zh/new-raccoon.mp3"
+    "zhAudio": "assets/audio/zh/new-raccoon.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-otter",
@@ -4623,7 +4915,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-otter.png",
-    "zhAudio": "assets/audio/zh/new-otter.mp3"
+    "zhAudio": "assets/audio/zh/new-otter.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-beaver",
@@ -4638,7 +4931,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-beaver.png",
-    "zhAudio": "assets/audio/zh/new-beaver.mp3"
+    "zhAudio": "assets/audio/zh/new-beaver.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-moose",
@@ -4653,7 +4947,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-moose.png",
-    "zhAudio": "assets/audio/zh/new-moose.mp3"
+    "zhAudio": "assets/audio/zh/new-moose.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-parrot",
@@ -4668,7 +4963,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-parrot.png",
-    "zhAudio": "assets/audio/zh/new-parrot.mp3"
+    "zhAudio": "assets/audio/zh/new-parrot.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-seahorse",
@@ -4683,7 +4979,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-seahorse.png",
-    "zhAudio": "assets/audio/zh/new-seahorse.mp3"
+    "zhAudio": "assets/audio/zh/new-seahorse.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-jellyfish",
@@ -4698,7 +4995,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-jellyfish.png",
-    "zhAudio": "assets/audio/zh/new-jellyfish.mp3"
+    "zhAudio": "assets/audio/zh/new-jellyfish.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-yogurt",
@@ -4713,7 +5011,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-yogurt.png",
-    "zhAudio": "assets/audio/zh/new-yogurt.mp3"
+    "zhAudio": "assets/audio/zh/new-yogurt.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-cereal",
@@ -4728,7 +5027,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-cereal.png",
-    "zhAudio": "assets/audio/zh/new-cereal.mp3"
+    "zhAudio": "assets/audio/zh/new-cereal.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-pancake",
@@ -4743,7 +5043,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-pancake.png",
-    "zhAudio": "assets/audio/zh/new-pancake.mp3"
+    "zhAudio": "assets/audio/zh/new-pancake.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-waffle",
@@ -4760,7 +5061,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-waffle.png",
-    "zhAudio": "assets/audio/zh/new-waffle.mp3"
+    "zhAudio": "assets/audio/zh/new-waffle.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-sausage",
@@ -4775,7 +5077,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-sausage.png",
-    "zhAudio": "assets/audio/zh/new-sausage.mp3"
+    "zhAudio": "assets/audio/zh/new-sausage.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-shrimp",
@@ -4790,7 +5093,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-shrimp.png",
-    "zhAudio": "assets/audio/zh/new-shrimp.mp3"
+    "zhAudio": "assets/audio/zh/new-shrimp.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-spinach",
@@ -4805,7 +5109,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-spinach.png",
-    "zhAudio": "assets/audio/zh/new-spinach.mp3"
+    "zhAudio": "assets/audio/zh/new-spinach.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-cabbage",
@@ -4821,7 +5126,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-cabbage.png",
-    "zhAudio": "assets/audio/zh/new-cabbage.mp3"
+    "zhAudio": "assets/audio/zh/new-cabbage.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-suitcase",
@@ -4837,7 +5143,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-suitcase.png",
-    "zhAudio": "assets/audio/zh/new-suitcase.mp3"
+    "zhAudio": "assets/audio/zh/new-suitcase.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-wallet",
@@ -4852,7 +5159,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-wallet.png",
-    "zhAudio": "assets/audio/zh/new-wallet.mp3"
+    "zhAudio": "assets/audio/zh/new-wallet.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-zipper",
@@ -4867,7 +5175,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-zipper.png",
-    "zhAudio": "assets/audio/zh/new-zipper.mp3"
+    "zhAudio": "assets/audio/zh/new-zipper.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-ladder",
@@ -4882,7 +5191,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-ladder.png",
-    "zhAudio": "assets/audio/zh/new-ladder.mp3"
+    "zhAudio": "assets/audio/zh/new-ladder.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-bucket",
@@ -4897,7 +5207,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-bucket.png",
-    "zhAudio": "assets/audio/zh/new-bucket.mp3"
+    "zhAudio": "assets/audio/zh/new-bucket.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-shovel",
@@ -4912,7 +5223,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-shovel.png",
-    "zhAudio": "assets/audio/zh/new-shovel.mp3"
+    "zhAudio": "assets/audio/zh/new-shovel.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-broom",
@@ -4927,7 +5239,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-broom.png",
-    "zhAudio": "assets/audio/zh/new-broom.mp3"
+    "zhAudio": "assets/audio/zh/new-broom.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-mop",
@@ -4942,7 +5255,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-mop.png",
-    "zhAudio": "assets/audio/zh/new-mop.mp3"
+    "zhAudio": "assets/audio/zh/new-mop.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-towel",
@@ -4957,7 +5271,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-towel.png",
-    "zhAudio": "assets/audio/zh/new-towel.mp3"
+    "zhAudio": "assets/audio/zh/new-towel.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-bathtub",
@@ -4972,7 +5287,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-bathtub.png",
-    "zhAudio": "assets/audio/zh/new-bathtub.mp3"
+    "zhAudio": "assets/audio/zh/new-bathtub.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-kettle",
@@ -4987,7 +5303,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-kettle.png",
-    "zhAudio": "assets/audio/zh/new-kettle.mp3"
+    "zhAudio": "assets/audio/zh/new-kettle.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-oven",
@@ -5002,7 +5319,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-oven.png",
-    "zhAudio": "assets/audio/zh/new-oven.mp3"
+    "zhAudio": "assets/audio/zh/new-oven.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-fridge",
@@ -5017,7 +5335,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-fridge.png",
-    "zhAudio": "assets/audio/zh/new-fridge.mp3"
+    "zhAudio": "assets/audio/zh/new-fridge.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-toaster",
@@ -5034,7 +5353,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-toaster.png",
-    "zhAudio": "assets/audio/zh/new-toaster.mp3"
+    "zhAudio": "assets/audio/zh/new-toaster.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-island",
@@ -5049,7 +5369,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-island.png",
-    "zhAudio": "assets/audio/zh/new-island.mp3"
+    "zhAudio": "assets/audio/zh/new-island.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-desert",
@@ -5064,7 +5385,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-desert.png",
-    "zhAudio": "assets/audio/zh/new-desert.mp3"
+    "zhAudio": "assets/audio/zh/new-desert.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-cave",
@@ -5079,7 +5401,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-cave.png",
-    "zhAudio": "assets/audio/zh/new-cave.mp3"
+    "zhAudio": "assets/audio/zh/new-cave.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-waterfall",
@@ -5094,7 +5417,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-waterfall.png",
-    "zhAudio": "assets/audio/zh/new-waterfall.mp3"
+    "zhAudio": "assets/audio/zh/new-waterfall.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-hill",
@@ -5109,7 +5433,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-hill.png",
-    "zhAudio": "assets/audio/zh/new-hill.mp3"
+    "zhAudio": "assets/audio/zh/new-hill.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-lake",
@@ -5124,7 +5449,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-lake.png",
-    "zhAudio": "assets/audio/zh/new-lake.mp3"
+    "zhAudio": "assets/audio/zh/new-lake.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-nine",
@@ -5138,7 +5464,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-nine.png",
-    "zhAudio": "assets/audio/zh/new-nine.mp3"
+    "zhAudio": "assets/audio/zh/new-nine.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-ten",
@@ -5152,7 +5479,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-ten.png",
-    "zhAudio": "assets/audio/zh/new-ten.mp3"
+    "zhAudio": "assets/audio/zh/new-ten.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-guitar",
@@ -5167,7 +5495,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-guitar.png",
-    "zhAudio": "assets/audio/zh/new-guitar.mp3"
+    "zhAudio": "assets/audio/zh/new-guitar.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-trumpet",
@@ -5182,7 +5511,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-trumpet.png",
-    "zhAudio": "assets/audio/zh/new-trumpet.mp3"
+    "zhAudio": "assets/audio/zh/new-trumpet.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-flute",
@@ -5197,7 +5527,8 @@
     "difficulty": 2,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-flute.png",
-    "zhAudio": "assets/audio/zh/new-flute.mp3"
+    "zhAudio": "assets/audio/zh/new-flute.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-chameleon",
@@ -5213,7 +5544,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-chameleon.png",
-    "zhAudio": "assets/audio/zh/new-chameleon.mp3"
+    "zhAudio": "assets/audio/zh/new-chameleon.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-armadillo",
@@ -5228,7 +5560,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-armadillo.png",
-    "zhAudio": "assets/audio/zh/new-armadillo.mp3"
+    "zhAudio": "assets/audio/zh/new-armadillo.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-porcupine",
@@ -5243,7 +5576,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-porcupine.png",
-    "zhAudio": "assets/audio/zh/new-porcupine.mp3"
+    "zhAudio": "assets/audio/zh/new-porcupine.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-lemur",
@@ -5258,7 +5592,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-lemur.png",
-    "zhAudio": "assets/audio/zh/new-lemur.mp3"
+    "zhAudio": "assets/audio/zh/new-lemur.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-narwhal",
@@ -5274,7 +5609,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-narwhal.png",
-    "zhAudio": "assets/audio/zh/new-narwhal.mp3"
+    "zhAudio": "assets/audio/zh/new-narwhal.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-asparagus",
@@ -5289,7 +5625,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-asparagus.png",
-    "zhAudio": "assets/audio/zh/new-asparagus.mp3"
+    "zhAudio": "assets/audio/zh/new-asparagus.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-pomegranate",
@@ -5304,7 +5641,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-pomegranate.png",
-    "zhAudio": "assets/audio/zh/new-pomegranate.mp3"
+    "zhAudio": "assets/audio/zh/new-pomegranate.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-papaya",
@@ -5319,7 +5657,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-papaya.png",
-    "zhAudio": "assets/audio/zh/new-papaya.mp3"
+    "zhAudio": "assets/audio/zh/new-papaya.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-dumpling",
@@ -5334,7 +5673,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-dumpling.png",
-    "zhAudio": "assets/audio/zh/new-dumpling.mp3"
+    "zhAudio": "assets/audio/zh/new-dumpling.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-flashlight",
@@ -5350,7 +5690,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-flashlight.png",
-    "zhAudio": "assets/audio/zh/new-flashlight.mp3"
+    "zhAudio": "assets/audio/zh/new-flashlight.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-thermometer",
@@ -5366,7 +5707,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-thermometer.png",
-    "zhAudio": "assets/audio/zh/new-thermometer.mp3"
+    "zhAudio": "assets/audio/zh/new-thermometer.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-stapler",
@@ -5382,7 +5724,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-stapler.png",
-    "zhAudio": "assets/audio/zh/new-stapler.mp3"
+    "zhAudio": "assets/audio/zh/new-stapler.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-calculator",
@@ -5398,7 +5741,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-calculator.png",
-    "zhAudio": "assets/audio/zh/new-calculator.mp3"
+    "zhAudio": "assets/audio/zh/new-calculator.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-skateboard",
@@ -5413,7 +5757,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-skateboard.png",
-    "zhAudio": "assets/audio/zh/new-skateboard.mp3"
+    "zhAudio": "assets/audio/zh/new-skateboard.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-vacuum",
@@ -5429,7 +5774,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-vacuum.png",
-    "zhAudio": "assets/audio/zh/new-vacuum.mp3"
+    "zhAudio": "assets/audio/zh/new-vacuum.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-mailbox",
@@ -5444,7 +5790,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-mailbox.png",
-    "zhAudio": "assets/audio/zh/new-mailbox.mp3"
+    "zhAudio": "assets/audio/zh/new-mailbox.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-wheelbarrow",
@@ -5460,7 +5807,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-wheelbarrow.png",
-    "zhAudio": "assets/audio/zh/new-wheelbarrow.mp3"
+    "zhAudio": "assets/audio/zh/new-wheelbarrow.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-projector",
@@ -5476,7 +5824,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-projector.png",
-    "zhAudio": "assets/audio/zh/new-projector.mp3"
+    "zhAudio": "assets/audio/zh/new-projector.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-glacier",
@@ -5491,7 +5840,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-glacier.png",
-    "zhAudio": "assets/audio/zh/new-glacier.mp3"
+    "zhAudio": "assets/audio/zh/new-glacier.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-geyser",
@@ -5507,7 +5857,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-geyser.png",
-    "zhAudio": "assets/audio/zh/new-geyser.mp3"
+    "zhAudio": "assets/audio/zh/new-geyser.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-canyon",
@@ -5522,7 +5873,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-canyon.png",
-    "zhAudio": "assets/audio/zh/new-canyon.mp3"
+    "zhAudio": "assets/audio/zh/new-canyon.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-cliff",
@@ -5537,7 +5889,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-cliff.png",
-    "zhAudio": "assets/audio/zh/new-cliff.mp3"
+    "zhAudio": "assets/audio/zh/new-cliff.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-swamp",
@@ -5552,7 +5905,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-swamp.png",
-    "zhAudio": "assets/audio/zh/new-swamp.mp3"
+    "zhAudio": "assets/audio/zh/new-swamp.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-castle",
@@ -5567,7 +5921,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-castle.png",
-    "zhAudio": "assets/audio/zh/new-castle.mp3"
+    "zhAudio": "assets/audio/zh/new-castle.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-museum",
@@ -5583,7 +5938,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-museum.png",
-    "zhAudio": "assets/audio/zh/new-museum.mp3"
+    "zhAudio": "assets/audio/zh/new-museum.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-library",
@@ -5599,7 +5955,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-library.png",
-    "zhAudio": "assets/audio/zh/new-library.mp3"
+    "zhAudio": "assets/audio/zh/new-library.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-bakery",
@@ -5615,7 +5972,8 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-bakery.png",
-    "zhAudio": "assets/audio/zh/new-bakery.mp3"
+    "zhAudio": "assets/audio/zh/new-bakery.mp3",
+    "artStatus": "approved"
   },
   {
     "id": "new-airport",
@@ -5630,6 +5988,7 @@
     "difficulty": 3,
     "levelSource": "curated-2026-09-30",
     "image": "assets/rebuilt/new100/new-airport.png",
-    "zhAudio": "assets/audio/zh/new-airport.mp3"
+    "zhAudio": "assets/audio/zh/new-airport.mp3",
+    "artStatus": "approved"
   }
 ]
