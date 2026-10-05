@@ -17,7 +17,7 @@
 - 遊戲畫面的去背角色放大，可跨題目信封邊緣；四張圖片與下一題維持可見、可操作。
 - 開始按鈕會在同一次點擊事件播放預先選好的第一題錄音，以改善 iOS 首題靜音；重播鍵仍可手動播放。遊戲按鈕阻止雙點縮放。
 - 恐龍長名稱在手機題目框內換行並縮小到可讀尺寸；「重聽」保留 44px 圖示按鈕，避免被擠出邊框。
-- 原本從 kidsapp 匯入並在題目中使用的 56 張圖片，已由兩張 6×5 候選圖組重新製作，再以本機程式切圖接入。圖組與逐格來源對照在 `dist/assets/rebuilt/`。
+- 原本從 kidsapp 匯入並在題目中使用的 56 張圖片，已由兩張 6×5 候選圖組重新製作，再以本機程式切圖接入。切好的圖片和逐格來源對照（`manifest.json`）在 `dist/assets/rebuilt/`；原始圖組在 `art-source/rebuilt/`（不部署）。
 - 其中八種恐龍已依 Design Master 風格重新繪製成 4×2 圖組，裁為透明選項圖；底排的愛德蒙頓龍、馬門溪龍、異特龍、冠龍各自鏡像朝右。來源及雜湊記於 `dist/assets/rebuilt/manifest.json`，可用 `tools/crop_dinosaur_grid.py` 重現裁切。
 - 新增詞（目前保留 97 詞）有四張 6×5 圖組切出的候選圖片與 Samantha 美式英語 MP3；逐格對照與雜湊在 `dist/assets/rebuilt/new100/manifest.json`，產生流程見 `tools/add_100_words.py`。
 
@@ -45,13 +45,13 @@ python3 -m http.server 4173 -d dist
 python3 tools/check_data.py
 ```
 
-`check_data.py` 涵蓋 `tools/validate-data.mjs` 的全部檢查（沒有 Node 也能跑），另外列出多餘的音檔、送信遊戲不會出到的詞，以及缺少的角色圖。`tools/check_flow.cjs` 是手機版操作的冒煙測試（需要 Node 和 playwright），目前裡面的按鈕文字還沒跟上現在的介面。
+`check_data.py` 是唯一的題庫檢查程式（沒有 Node 也能跑；舊的 `validate-data.mjs` 已移除），除了基本檢查，還會列出多餘的音檔、送信遊戲不會出到的詞，以及缺少的角色圖。`tools/check_flow.cjs` 是手機版操作的冒煙測試（需要 Node 和 playwright），目前裡面的按鈕文字還沒跟上現在的介面。
 
 ## 共用程式與快取
 
 `dist/shared.js` 存放三個頁面共用的程式：角色名單（目前是 AI 候選姿勢圖，尚未登錄為視覺 Master）、注音排版、選題、作答紀錄。每個 HTML 都要先載入它，再載入頁面自己的程式。檔名後面不加 `?v=`；`dist/_headers` 讓網頁、程式和題庫每次開啟都向伺服器確認是否為最新版本。新增 HTML、JS 或 CSS 檔案時，要把路徑補進 `_headers`。
 
-介面與各批插畫為本專案衍生素材；部分早期詞彙與錄音整理自專案作者的 [kidsapp](https://github.com/simonw0718/kidsapp)。現行題庫不再引用匯入的 kidsapp 圖片；舊檔暫存於專案供來源追溯與回退。新插畫仍屬候選，需要日後逐張美術與科學辨識審核。此倉庫未宣告開源授權；使用素材前請另行確認權利。
+介面與各批插畫為本專案衍生素材；部分早期詞彙與錄音整理自專案作者的 [kidsapp](https://github.com/simonw0718/kidsapp)。現行題庫不再引用匯入的 kidsapp 圖片；舊檔移到 `art-source/kidsapp/`（不部署），供來源追溯與回退。新插畫仍屬候選，需要日後逐張美術與科學辨識審核。此倉庫未宣告開源授權；使用素材前請另行確認權利。
 
 本機 Obsidian vault 留在工作專案內，不包含在公開倉庫中。
 

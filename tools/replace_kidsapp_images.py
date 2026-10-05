@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "dist/data.json"
 OUTPUT = ROOT / "dist/assets/rebuilt"
 MANIFEST = OUTPUT / "manifest.json"
+SHEET_DIR = ROOT / "art-source/rebuilt"  # source grids are kept out of the deployed site
 SHEETS = ("dinosaurs-grid-6x5-v1.png", "mixed-grid-6x5-v1.png")
 COLS, ROWS = 6, 5
 
@@ -43,7 +44,7 @@ else:
         "items": [],
     }
     for sheet_index, group in enumerate(groups):
-        path = OUTPUT / SHEETS[sheet_index]
+        path = SHEET_DIR / SHEETS[sheet_index]
         manifest["sheets"].append({"file": SHEETS[sheet_index], "sha256": sha256(path)})
         for cell, word in enumerate(group):
             manifest["items"].append({
@@ -57,7 +58,7 @@ else:
 assert len(manifest["items"]) == 56
 assert len({item["id"] for item in manifest["items"]}) == 56
 for sheet_index, name in enumerate(SHEETS):
-    image = Image.open(OUTPUT / name).convert("RGB")
+    image = Image.open(SHEET_DIR / name).convert("RGB")
     width, height = image.size
     assert width >= 1200 and height >= 800, f"Sheet too small: {name}"
     items = [item for item in manifest["items"] if item["sheet"] == sheet_index]

@@ -13,7 +13,7 @@ from PIL import Image
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / "dist/assets/rebuilt/dinosaurs-8-design-master-grid-v2.png"
+SOURCE = ROOT / "art-source/rebuilt/dinosaurs-8-design-master-grid-v2.png"
 TARGET = ROOT / "dist/assets/rebuilt"
 SIZE = 512
 BACKGROUND = np.array([254.0, 251.0, 241.0], dtype=np.float32)

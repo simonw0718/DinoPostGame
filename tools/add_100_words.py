@@ -18,7 +18,7 @@ DIST = ROOT / "dist"
 DATA = DIST / "data.json"
 CATALOG = ROOT / "tools/new_words_100.tsv"
 ART = DIST / "assets/rebuilt/new100"
-SHEETS = [ART / f"words-{i:02d}-grid-6x5-v1.png" for i in range(1, 5)]
+SHEETS = [ROOT / "art-source/rebuilt/new100" / f"words-{i:02d}-grid-6x5-v1.png" for i in range(1, 5)]
 READINGS = {
     "驢":"ㄌㄩˊ","駱":"ㄌㄨㄛˋ","駝":"ㄊㄨㄛˊ","豹":"ㄅㄠˋ",
     "蚯":"ㄑㄧㄡ","蚓":"ㄧㄣˇ","豆":"ㄉㄡˋ","油":"ㄧㄡˊ",
