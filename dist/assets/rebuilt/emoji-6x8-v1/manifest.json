@@ -10,6 +10,7 @@
     ]
   },
   "sourceStyle": "existing Dino Post rebuilt picture sheets",
+  "sheetDir": "art-source/emoji-6x8-v1",
   "sheets": [
     {
       "file": "emoji-sheet-01-6x8.png",
