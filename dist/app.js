@@ -1,31 +1,14 @@
 const $ = (id) => document.getElementById(id);
 const screens = ['startScreen', 'playScreen', 'resultScreen'];
-const state = { words: [], disabledIds: new Set(), roundChoices: [], count: 5, mode: 'all', level: 1, answerFormat: 'image', autoAudio: true, round: [], pendingRound: [], index: 0, firstTryScore: 0, attempts: 0, results: [], phase: 'start', audio: null, chineseAudio: null, previewAudio: null, loadedWordId: null, completedRounds: 0, screenCasts: { start: [], play: [], result: [] }, characterQueue: [], history: [] };
-const bankStorageKey = 'dinopost-disabled-words-v1';
+const state = { words: [], disabledIds: new Set(), roundChoices: [], count: 5, mode: 'all', level: 1, answerFormat: 'image', autoAudio: true, round: [], pendingRound: [], index: 0, firstTryScore: 0, streak: 0, attempts: 0, results: [], phase: 'start', audio: null, chineseAudio: null, previewAudio: null, loadedWordId: null, completedRounds: 0, screenCasts: { start: [], play: [], result: [] }, characterQueue: [], history: [] };
+const bankStorageKey = Dino.storageKeys.disabled;
 const characterStorageKey = 'dinopost-character-queue-v2';
-const historyStorageKey = 'dinopost-round-history-v1';
 const answerStorageKey = 'dinopost-match-answer-v1';
-const characters = [
-  { id: 'xiaokong', name: '小空', asset: 'xiaokong-poses-v1.png', frames: 2, ratio: 1 },
-  { id: 'yuanyuan', name: '圓圓', asset: 'yuanyuan-poses-v1.png', frames: 2, ratio: .75 },
-  { id: 'paino', name: '派諾', asset: 'paino-poses-v1.png', frames: 2, ratio: 1 },
-  { id: 'shuoshuo', name: '碩碩', asset: 'shuoshuo-poses-v1.png', frames: 2, ratio: .75 },
-  { id: 'iggy', name: '伊奇', asset: 'iggy-poses-v1.png', frames: 3, ratio: .5 },
-  { id: 'feifei', name: '飛飛', asset: 'feifei-poses-v1.png', frames: 2, ratio: 1 },
-  { id: 'abao', name: '小雞阿暴', asset: 'chick-abao-poses-v1.png', frames: 2, ratio: 1 },
-  { id: 'shanshan', name: '閃閃', asset: 'shanshan-poses-v1.png', frames: 2, ratio: 1 }
-];
+const { characters, shuffle, visualGroup, audioPath, parseZhuyin, makeBpmUnit } = Dino;
 function saveCharacterQueue() {
   try { localStorage.setItem(characterStorageKey, JSON.stringify(state.characterQueue)); } catch {}
 }
-function loadCharacterQueue() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(characterStorageKey) || 'null');
-    const valid = new Set(characters.map(character => character.id));
-    if (Array.isArray(saved) && saved.length && new Set(saved).size === saved.length && saved.every(id => valid.has(id))) return saved;
-  } catch {}
-  return shuffle(characters.map(character => character.id));
-}
+const loadCharacterQueue = () => Dino.loadQueue(characterStorageKey);
 function setActorPose(actor, pose) {
   const character = characters.find(item => item.id === actor.dataset.character);
   if (!character) return;
@@ -33,14 +16,7 @@ function setActorPose(actor, pose) {
 }
 function fitActor(actor) {
   const character = characters.find(item => item.id === actor.dataset.character);
-  const frame = actor.parentElement;
-  if (!character || !frame.clientWidth || !frame.clientHeight) return;
-  const style = getComputedStyle(frame);
-  const width = frame.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
-  const height = frame.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
-  const fittedHeight = Math.max(1, Math.min(height, width / character.ratio));
-  actor.style.width = `${fittedHeight * character.ratio}px`;
-  actor.style.height = `${fittedHeight}px`;
+  if (character) Dino.fitActor(actor, character.ratio);
 }
 function fitVisibleActors() {
   document.querySelectorAll('.spotlight-actor').forEach(fitActor);
@@ -94,26 +70,9 @@ const actorImages = characters.map(character => {
   image.src = `assets/${character.asset}`;
   return image;
 });
-function shuffle(items) {
-  const a = [...items];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
 function currentWord() { return state.round[state.index]; }
-function audioPath(word) { return `assets/audio/${word.id}.mp3`; }
 function eligibleWords() {
-  return state.words.filter(word => !state.disabledIds.has(word.id) && (state.mode === 'dinosaur'
-    ? word.category === 'dinosaur'
-    : word.category !== 'dinosaur' && (state.mode !== 'level' || word.difficulty === state.level)));
-}
-function visualGroup(word) {
-  if (word.category === 'number') return 'number-emoji';
-  if (word.sheet) return `sheet:${word.sheet}`;
-  if (word.image) return word.category === 'dinosaur' ? 'dinosaur-image' : 'regular-image';
-  return 'emoji';
+  return Dino.eligibleWords(state.words, state.disabledIds, state.mode, state.level);
 }
 const wordBreaks = {
   watermelon: ['water', 'melon'], toothbrush: ['tooth', 'brush'], pineapple: ['pine', 'apple'],
@@ -162,7 +121,7 @@ function showPicturePrompt(word) {
   if (word.image && word.category !== 'number') { art.src = word.image; art.alt = ''; }
   else if (word.sheet && Number.isInteger(word.cell)) {
     art.classList.add('parcel-sheet');
-    art.style.backgroundImage = `url('assets/${word.sheet}-grid-v1.png')`;
+    art.style.backgroundImage = `url('assets/${word.sheet}-grid-v1.jpg')`;
     art.style.backgroundPosition = `${(word.cell % 5) * 25}% ${word.cell < 5 ? 0 : 100}%`;
   } else art.textContent = word.emoji;
   cover.append(art); element.replaceChildren(cover);
@@ -222,50 +181,22 @@ function showZhuyinPrompt(word) {
   }));
 }
 
-const effects = { context: null, playing: new Set() };
-const effectNotes = {
-  wrong: [[392, 0, .11, .035], [330, .12, .16, .03]],
-  correct: [[523.25, 0, .16, .035], [659.25, .1, .18, .04], [783.99, .2, .26, .045]],
-  finish: [[392, 0, .2, .035], [523.25, .13, .2, .04], [659.25, .26, .21, .04], [783.99, .39, .23, .045], [1046.5, .54, .44, .05]]
+// Recorded effects shared with the mail game (assets/audio/effects/).
+const effectFiles = {
+  correct: new Audio('assets/audio/effects/correct.mp3'),
+  wrong: new Audio('assets/audio/effects/wrong.mp3'),
+  finish: new Audio('assets/audio/effects/finish.mp3')
 };
+Object.values(effectFiles).forEach(sound => { sound.preload = 'auto'; sound.volume = .9; });
 function stopEffect() {
-  effects.playing.forEach(oscillator => { try { oscillator.stop(); } catch {} });
-  effects.playing.clear();
+  Object.values(effectFiles).forEach(sound => sound.pause());
 }
 function playEffect(kind) {
-  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-  if (!AudioContextClass) return;
-  try {
-    if (!effects.context) effects.context = new AudioContextClass();
-    const context = effects.context;
-    if (context.state === 'suspended') context.resume().catch(() => {});
-    stopEffect();
-    const start = context.currentTime + .01;
-    for (const [frequency, delay, duration, volume] of effectNotes[kind]) {
-      const oscillator = context.createOscillator();
-      const gain = context.createGain();
-      oscillator.type = kind === 'wrong' ? 'sine' : 'triangle';
-      oscillator.frequency.setValueAtTime(frequency, start + delay);
-      gain.gain.setValueAtTime(.0001, start + delay);
-      gain.gain.exponentialRampToValueAtTime(volume, start + delay + .018);
-      gain.gain.exponentialRampToValueAtTime(.0001, start + delay + duration);
-      oscillator.connect(gain).connect(context.destination);
-      oscillator.onended = () => { effects.playing.delete(oscillator); oscillator.disconnect(); gain.disconnect(); };
-      effects.playing.add(oscillator);
-      oscillator.start(start + delay);
-      oscillator.stop(start + delay + duration + .01);
-    }
-  } catch (error) { console.warn('音效無法播放', error); }
-}
-const bopomofoOnsets = new Set([...'ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ']);
-const bopomofoTones = new Set([...'ˊˇˋ˙']);
-function parseZhuyin(reading) {
-  let symbols = [...reading];
-  let tone = '';
-  if (symbols[0] === '˙') tone = symbols.shift();
-  else if (bopomofoTones.has(symbols.at(-1))) tone = symbols.pop();
-  const onset = bopomofoOnsets.has(symbols[0]) ? symbols.shift() : '';
-  return { onset, rime: symbols, tone };
+  stopEffect();
+  const sound = effectFiles[kind];
+  if (!sound) return;
+  try { sound.currentTime = 0; } catch {}
+  sound.play().catch(error => console.warn('音效無法播放', error));
 }
 const uiReadings = {
   '聽單字，': ['ㄊㄧㄥ', 'ㄉㄢ', 'ㄗˋ', ''],
@@ -311,6 +242,7 @@ const uiReadings = {
   '選數字': ['ㄒㄩㄢˇ', 'ㄕㄨˋ', 'ㄗˋ'],
   '再試一次！': ['ㄗㄞˋ', 'ㄕˋ', 'ㄧˊ', 'ㄘˋ', ''],
   '答對了！': ['ㄉㄚˊ', 'ㄉㄨㄟˋ', 'ㄌㄜ˙', ''],
+  '連續答對！': ['ㄌㄧㄢˊ', 'ㄒㄩˋ', 'ㄉㄚˊ', 'ㄉㄨㄟˋ', ''],
   '下一題': ['ㄒㄧㄚˋ', 'ㄧˋ', 'ㄊㄧˊ'],
   '看成績': ['ㄎㄢˋ', 'ㄔㄥˊ', 'ㄐㄧˋ'],
   '今天的郵件': ['ㄐㄧㄣ', 'ㄊㄧㄢ', 'ㄉㄜ˙', 'ㄧㄡˊ', 'ㄐㄧㄢˋ'],
@@ -324,24 +256,7 @@ const uiReadings = {
   '再玩一次': ['ㄗㄞˋ', 'ㄨㄢˊ', 'ㄧˊ', 'ㄘˋ'],
   '聽中文': ['ㄊㄧㄥ', 'ㄓㄨㄥ', 'ㄨㄣˊ']
 };
-function makeBpmUnit(char, reading) {
-  const { onset, rime, tone } = parseZhuyin(reading);
-  const unit = document.createElement('span'); unit.className = 'bpm-word';
-  const character = document.createElement('span'); character.className = 'bpm-main-char'; character.textContent = char;
-  const column = document.createElement('span'); column.className = 'bpm-column'; column.lang = 'zh-Bopo';
-  if (onset) { const symbol = document.createElement('span'); symbol.className = 'bpm-onset'; symbol.textContent = onset; column.append(symbol); }
-  rime.forEach(value => { const symbol = document.createElement('span'); symbol.className = 'bpm-rime'; symbol.textContent = value; column.append(symbol); });
-  if (tone) { const mark = document.createElement('span'); mark.className = tone === '˙' ? 'bpm-tone-dot' : 'bpm-tone'; mark.textContent = tone; column.append(mark); }
-  unit.append(character, column);
-  return unit;
-}
-function setKidText(element, text) {
-  const readings = uiReadings[text];
-  element.setAttribute('aria-label', text);
-  if (!readings || readings.length !== [...text].length) { element.textContent = text; return; }
-  element.classList.add('kid-text');
-  element.replaceChildren(...[...text].map((char, i) => readings[i] ? makeBpmUnit(char, readings[i]) : document.createTextNode(char)));
-}
+const setKidText = Dino.kidText(uiReadings);
 function annotateStaticUI() {
   const pairs = [
     ['startTitleLine1', '聽單字，'], ['startTitleLine2', '找圖片！'],
@@ -394,28 +309,12 @@ function playChinese(word = currentWord()) {
   state.chineseAudio = new Audio(word.zhAudio);
   state.chineseAudio.play().catch(() => { $('audioStatus').textContent = '點正確卡片重聽中文'; });
 }
-function loadHistory() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(historyStorageKey) || '[]');
-    return Array.isArray(saved) ? saved.filter(item => item && Array.isArray(item.ids) && Array.isArray(item.results)
-      && Number.isFinite(item.score) && Number.isFinite(item.total) && !Number.isNaN(Date.parse(item.date))).slice(0, 10) : [];
-  } catch { return []; }
-}
+const loadHistory = Dino.loadHistory;
 function saveHistory() {
-  try { localStorage.setItem(historyStorageKey, JSON.stringify(state.history.slice(0, 10))); }
+  try { localStorage.setItem(Dino.storageKeys.history, JSON.stringify(state.history.slice(0, 10))); }
   catch { /* The game remains playable when browser storage is unavailable. */ }
 }
-function selectRound(pool) {
-  const missed = new Map();
-  state.history.forEach(record => record.ids.forEach((id, index) => {
-    if (record.results[index] === false) missed.set(id, (missed.get(id) || 0) + 1);
-  }));
-  const recent = new Set(state.history.slice(0, 2).flatMap(record => record.ids));
-  return pool.map(word => {
-    const weight = 1 + Math.min(3, missed.get(word.id) || 0);
-    return { word, priority: Math.pow(Math.random(), 1 / weight) - (recent.has(word.id) ? .3 : 0) };
-  }).sort((a, b) => b.priority - a.priority).slice(0, state.count).map(item => item.word);
-}
+function selectRound(pool) { return Dino.selectRound(pool, state.history, state.count); }
 function prepareRound() {
   if (!state.words.length) return;
   state.pendingRound = selectRound(eligibleWords());
@@ -573,13 +472,15 @@ function choose(button, id) {
   const firstTry = state.attempts === 1;
   state.results[state.index] = firstTry;
   if (firstTry) state.firstTryScore++;
+  state.streak = firstTry ? state.streak + 1 : 0;
+  Dino.burst(button);
   updateScoreText();
   if (firstTry) {
     $('scoreText').classList.remove('is-stamped');
     void $('scoreText').offsetWidth;
     $('scoreText').classList.add('is-stamped');
   }
-  setKidText($('feedback'), '答對了！');
+  setKidText($('feedback'), state.streak >= Dino.streakThreshold ? '連續答對！' : '答對了！');
   $('instruction').textContent = '';
   for (const slot of ['A', 'B', 'C']) {
     setActorPose($(`playActor${slot}`), 'celebrate');
@@ -609,7 +510,7 @@ function startRound() {
   state.round = state.pendingRound.length === state.count && state.pendingRound.every(word => eligibleIds.has(word.id))
     ? state.pendingRound : selectRound(pool);
   state.pendingRound = [];
-  state.index = 0; state.firstTryScore = 0; state.results = [];
+  state.index = 0; state.firstTryScore = 0; state.streak = 0; state.results = [];
   // The first play call stays inside the Start button's user gesture on iOS.
   if (state.autoAudio) playWord(state.round[0]);
   advanceCast('play');
@@ -698,7 +599,8 @@ function makeBankArt(word) {
   const art = document.createElement(word.image && word.category !== 'number' ? 'img' : 'span');
   art.className = 'bank-art'; art.setAttribute('aria-hidden', 'true');
   if (word.category === 'number') art.textContent = word.emoji;
-  else if (word.image) { art.src = word.image; art.alt = ''; }
+  // Lazy: the bank list sits in a closed dialog, so images load only when a parent opens it.
+  else if (word.image) { art.loading = 'lazy'; art.src = word.image; art.alt = ''; }
   else if (word.sheet && Number.isInteger(word.cell)) {
     art.classList.add('bank-sheet', `sheet-${word.sheet}`);
     art.style.backgroundPosition = `${(word.cell % 5) * 25}% ${word.cell < 5 ? 0 : 100}%`;
@@ -842,7 +744,7 @@ async function init() {
   setAnswerFormat(state.answerFormat);
   $('startButton').disabled = true; document.querySelector('.start-label').textContent = '準備題目中…';
   try {
-    const response = await fetch('data.json?v=20260930s');
+    const response = await fetch('data.json');
     if (!response.ok) throw Error(`HTTP ${response.status}`);
     const words = await response.json(); validateWords(words); state.words = words;
     try {

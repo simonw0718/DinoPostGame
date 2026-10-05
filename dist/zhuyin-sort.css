@@ -199,3 +199,11 @@
 .mail-auto-control input:checked+.switch-track:after{transform:translateX(22px)}
 .mail-auto-control input:focus-visible+.switch-track{outline:4px solid #eaa52a;outline-offset:3px}
 .mail-count-label{display:block;margin:10px 0 3px;color:#315d43;font-weight:900}.mail-count-label+input{width:100%;accent-color:#277b54}
+
+/* U1 page transitions: same-origin page changes cross-fade and slide; browsers without support switch instantly. */
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:dinoPageOut .28s ease-in both}
+::view-transition-new(root){animation:dinoPageIn .38s cubic-bezier(.2,.8,.25,1) both}
+@keyframes dinoPageOut{to{opacity:0;transform:translateY(-14px) scale(.985)}}
+@keyframes dinoPageIn{from{opacity:0;transform:translateY(22px) scale(.985)}}
+@media(prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}}

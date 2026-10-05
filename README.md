@@ -42,8 +42,14 @@ python3 -m http.server 4173 -d dist
 `dist/data.json` 是唯一正式題庫。每筆使用穩定 `id`、英文 `en`、中文 `zh`、對應每個國字的 `zhuyin`、`difficulty`、`category` 及圖像欄位。英文音檔放在 `dist/assets/audio/<id>.mp3`；359 詞的中文發音由 `zhAudio` 指向 `dist/assets/audio/zh/<id>.mp3`。新增或修改後執行：
 
 ```sh
-node tools/validate-data.mjs
+python3 tools/check_data.py
 ```
+
+`check_data.py` 涵蓋 `tools/validate-data.mjs` 的全部檢查（沒有 Node 也能跑），另外列出多餘的音檔、送信遊戲不會出到的詞，以及缺少的角色圖。`tools/check_flow.cjs` 是手機版操作的冒煙測試（需要 Node 和 playwright），目前裡面的按鈕文字還沒跟上現在的介面。
+
+## 共用程式與快取
+
+`dist/shared.js` 存放三個頁面共用的程式：角色名單（目前是 AI 候選姿勢圖，尚未登錄為視覺 Master）、注音排版、選題、作答紀錄。每個 HTML 都要先載入它，再載入頁面自己的程式。檔名後面不加 `?v=`；`dist/_headers` 讓網頁、程式和題庫每次開啟都向伺服器確認是否為最新版本。新增 HTML、JS 或 CSS 檔案時，要把路徑補進 `_headers`。
 
 介面與各批插畫為本專案衍生素材；部分早期詞彙與錄音整理自專案作者的 [kidsapp](https://github.com/simonw0718/kidsapp)。現行題庫不再引用匯入的 kidsapp 圖片；舊檔暫存於專案供來源追溯與回退。新插畫仍屬候選，需要日後逐張美術與科學辨識審核。此倉庫未宣告開源授權；使用素材前請另行確認權利。
 

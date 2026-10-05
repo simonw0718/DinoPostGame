@@ -1,37 +1,20 @@
 (() => {
   const page = document.body.dataset.page;
   const $ = id => document.getElementById(id);
-  const chars = [
-    ['xiaokong','xiaokong-poses-v1.png',2,1],['yuanyuan','yuanyuan-poses-v1.png',2,.75],
-    ['paino','paino-poses-v1.png',2,1],['shuoshuo','shuoshuo-poses-v1.png',2,.75],
-    ['iggy','iggy-poses-v1.png',3,.5],['feifei','feifei-poses-v1.png',2,1],
-    ['abao','chick-abao-poses-v1.png',2,1],['shanshan','shanshan-poses-v1.png',2,1]
-  ];
-  const shuffle = list => [...list].sort(() => Math.random() - .5);
-  const chosen = shuffle(chars).slice(0,3);
-  function fitActor(actor, ratio) {
-    const frame = actor.parentElement;
-    const style = getComputedStyle(frame);
-    const w = frame.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
-    const h = frame.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
-    if (w <= 0 || h <= 0) return;
-    const height = Math.min(h,w/ratio);
-    actor.style.width = `${height*ratio}px`;
-    actor.style.height = `${height}px`;
-  }
-  chosen.forEach(([id,file,frames,ratio],i) => {
+  const chosen = Dino.shuffle(Dino.characters).slice(0,3);
+  chosen.forEach(({id,asset,frames,ratio},i) => {
     const actor = $(`startActor${'ABC'[i]}`);
     if (!actor) return;
     actor.dataset.character = id;
-    actor.style.backgroundImage = `url('assets/${file}')`;
+    actor.style.backgroundImage = `url('assets/${asset}')`;
     actor.style.backgroundSize = `${frames*100}% 100%`;
     let retried = false;
     const image = new Image();
-    image.onload = () => { actor.style.backgroundImage = `url('${image.src}')`; fitActor(actor,ratio); };
-    image.onerror = () => { if (!retried) { retried = true; image.src = `assets/${file}?retry=1`; } };
-    image.src = `assets/${file}`;
-    new ResizeObserver(() => fitActor(actor,ratio)).observe(actor.parentElement);
-    requestAnimationFrame(() => fitActor(actor,ratio));
+    image.onload = () => { actor.style.backgroundImage = `url('${image.src}')`; Dino.fitActor(actor,ratio); };
+    image.onerror = () => { if (!retried) { retried = true; image.src = `assets/${asset}?retry=1`; } };
+    image.src = `assets/${asset}`;
+    new ResizeObserver(() => Dino.fitActor(actor,ratio)).observe(actor.parentElement);
+    requestAnimationFrame(() => Dino.fitActor(actor,ratio));
   });
   const readings = {
     '選遊戲！':['ㄒㄩㄢˇ','ㄧㄡˊ','ㄒㄧˋ',''],
@@ -54,27 +37,9 @@
     '看英文單字，選圖片郵箱。':['ㄎㄢˋ','ㄧㄥ','ㄨㄣˊ','ㄉㄢ','ㄗˋ','','ㄒㄩㄢˇ','ㄊㄨˊ','ㄆㄧㄢˋ','ㄧㄡˊ','ㄒㄧㄤ',''],
     '讀注音，選圖片郵箱。':['ㄉㄨˊ','ㄓㄨˋ','ㄧㄣ','','ㄒㄩㄢˇ','ㄊㄨˊ','ㄆㄧㄢˋ','ㄧㄡˊ','ㄒㄧㄤ','']
   };
-  const onsets = new Set([...'ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ']);
-  const tones = new Set([...'ˊˇˋ˙']);
-  function annotate(el,text) {
-    if (!el || !readings[text] || readings[text].length !== [...text].length) return;
-    el.setAttribute('aria-label',text);
-    el.classList.add('kid-text');
-    el.replaceChildren(...[...text].map((char,i) => {
-      const reading = readings[text][i];
-      if (!reading) return document.createTextNode(char);
-      const symbols = [...reading];
-      const tone = symbols[0] === '˙' ? symbols.shift() : tones.has(symbols.at(-1)) ? symbols.pop() : '';
-      const onset = onsets.has(symbols[0]) ? symbols.shift() : '';
-      const unit = document.createElement('span'); unit.className = 'bpm-word';
-      const main = document.createElement('span'); main.className = 'bpm-main-char'; main.textContent = char;
-      const column = document.createElement('span'); column.className = 'bpm-column'; column.lang = 'zh-Bopo';
-      if (onset) { const part = document.createElement('span'); part.className = 'bpm-onset'; part.textContent = onset; column.append(part); }
-      symbols.forEach(symbol => { const part = document.createElement('span'); part.className = 'bpm-rime'; part.textContent = symbol; column.append(part); });
-      if (tone) { const part = document.createElement('span'); part.className = tone === '˙' ? 'bpm-tone-dot' : 'bpm-tone'; part.textContent = tone; column.append(part); }
-      unit.append(main,column); return unit;
-    }));
-  }
+  const setKidText = Dino.kidText(readings);
+  // Only annotate text that has a reading; leave other labels untouched.
+  const annotate = (el,text) => { if (readings[text]) setKidText(el,text); };
   if (page === 'select') {
     if (new URLSearchParams(location.search).has('settings')) location.replace(`match.html${location.search}`);
     annotate($('selectTitle'),'選遊戲！');

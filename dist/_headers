@@ -1,0 +1,33 @@
+# Pages, code and word bank revalidate on every load (ETag), so files need no ?v= query strings.
+/
+  Cache-Control: no-cache
+/index.html
+  Cache-Control: no-cache
+/mail
+  Cache-Control: no-cache
+/mail.html
+  Cache-Control: no-cache
+/match
+  Cache-Control: no-cache
+/match.html
+  Cache-Control: no-cache
+/zhuyin-sort
+  Cache-Control: no-cache
+/zhuyin-sort.html
+  Cache-Control: no-cache
+/shared.js
+  Cache-Control: no-cache
+/app.js
+  Cache-Control: no-cache
+/game-homes.js
+  Cache-Control: no-cache
+/zhuyin-sort.js
+  Cache-Control: no-cache
+/style.css
+  Cache-Control: no-cache
+/game-homes.css
+  Cache-Control: no-cache
+/zhuyin-sort.css
+  Cache-Control: no-cache
+/data.json
+  Cache-Control: no-cache

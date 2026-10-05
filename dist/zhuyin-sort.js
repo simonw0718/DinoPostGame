@@ -3,25 +3,15 @@
   const $ = id => document.getElementById(id);
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const state = {
-    words: [], round: [], choices: [], index: 0, firstTry: 0, attempts: 0,
+    words: [], round: [], choices: [], index: 0, firstTry: 0, streak: 0, attempts: 0,
     phase: 'loading', armed: false, audio: null, dragX: 0, dragY: 0,
     dragging: false, routeProgress: 0, mode: 'all', level: 1, count: 5, format: 'zhuyin', autoAudio: true,
     nextMode: 'all', nextLevel: 1, nextCount: 5, nextFormat: 'zhuyin', nextAutoAudio: true, activePool: []
   };
-  const disabledStorageKey = 'dinopost-disabled-words-v1';
-  const historyStorageKey = 'dinopost-round-history-v1';
+  const disabledStorageKey = Dino.storageKeys.disabled;
   const courierStorageKey = 'dinopost-mail-courier-queue-v1';
   const selectionStorageKey = 'dinopost-mail-selection-v1';
-  const couriers = [
-    { id: 'xiaokong', name: '小空', asset: 'xiaokong-poses-v1.png', frames: 2, ratio: 1 },
-    { id: 'yuanyuan', name: '圓圓', asset: 'yuanyuan-poses-v1.png', frames: 2, ratio: .75 },
-    { id: 'paino', name: '派諾', asset: 'paino-poses-v1.png', frames: 2, ratio: 1 },
-    { id: 'shuoshuo', name: '碩碩', asset: 'shuoshuo-poses-v1.png', frames: 2, ratio: .75 },
-    { id: 'iggy', name: '伊奇', asset: 'iggy-poses-v1.png', frames: 3, ratio: .5 },
-    { id: 'feifei', name: '飛飛', asset: 'feifei-poses-v1.png', frames: 2, ratio: 1 },
-    { id: 'abao', name: '小雞阿暴', asset: 'chick-abao-poses-v1.png', frames: 2, ratio: 1 },
-    { id: 'shanshan', name: '閃閃', asset: 'shanshan-poses-v1.png', frames: 2, ratio: 1 }
-  ];
+  const { characters: couriers, shuffle, visualGroup, audioPath } = Dino;
   let courierQueue;
   let courierRequest = 0;
   const routePath = $('routePath');
@@ -31,8 +21,10 @@
   routeDone.style.strokeDashoffset = String(routeLength);
   const animate = Motion.animate;
   const sounds = {
-    stamp: new Audio('assets/audio/effects/mail-stamp.mp3?v=2'),
-    finish: new Audio('assets/audio/effects/mail-finish.mp3?v=2')
+    correct: new Audio('assets/audio/effects/correct.mp3'),
+    stamp: new Audio('assets/audio/effects/stamp.mp3'),
+    wrong: new Audio('assets/audio/effects/wrong.mp3'),
+    finish: new Audio('assets/audio/effects/finish.mp3')
   };
   Object.values(sounds).forEach(sound => { sound.preload = 'auto'; sound.volume = .9; });
   function playSound(kind, startAt = 0) {
@@ -43,13 +35,11 @@
     try { sound.currentTime = startAt; } catch { /* Playback still starts from the beginning. */ }
     sound.play().catch(error => console.warn(`${kind} 音效無法播放`, error));
   }
-  const bopomofoOnsets = new Set([...'ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ']);
   const uiReadings = {
     '首頁': ['ㄕㄡˇ', 'ㄧㄝˋ'],
     '第一封信準備好了！': ['ㄉㄧˋ', 'ㄧ', 'ㄈㄥ', 'ㄒㄧㄣˋ', 'ㄓㄨㄣˇ', 'ㄅㄟˋ', 'ㄏㄠˇ', 'ㄌㄜ˙', ''],
     '按開始，聽題目發音。': ['ㄢˋ', 'ㄎㄞ', 'ㄕˇ', '', 'ㄊㄧㄥ', 'ㄊㄧˊ', 'ㄇㄨˋ', 'ㄈㄚ', 'ㄧㄣ', ''],
     '開始送信': ['ㄎㄞ', 'ㄕˇ', 'ㄙㄨㄥˋ', 'ㄒㄧㄣˋ'],
-    '再聽音效': ['ㄗㄞˋ', 'ㄊㄧㄥ', 'ㄧㄣ', 'ㄒㄧㄠˋ'],
     '注音送信': ['ㄓㄨˋ', 'ㄧㄣ', 'ㄙㄨㄥˋ', 'ㄒㄧㄣˋ'],
     '英文送信': ['ㄧㄥ', 'ㄨㄣˊ', 'ㄙㄨㄥˋ', 'ㄒㄧㄣˋ'],
     '看單字，送到郵箱': ['ㄎㄢˋ', 'ㄉㄢ', 'ㄗˋ', '', 'ㄙㄨㄥˋ', 'ㄉㄠˋ', 'ㄧㄡˊ', 'ㄒㄧㄤ'],
@@ -73,6 +63,7 @@
     '先點信，再選郵箱': ['ㄒㄧㄢ', 'ㄉㄧㄢˇ', 'ㄒㄧㄣˋ', '', 'ㄗㄞˋ', 'ㄒㄩㄢˇ', 'ㄧㄡˊ', 'ㄒㄧㄤ'],
     '再試一次': ['ㄗㄞˋ', 'ㄕˋ', 'ㄧ', 'ㄘˋ'],
     '配對成功！': ['ㄆㄟˋ', 'ㄉㄨㄟˋ', 'ㄔㄥˊ', 'ㄍㄨㄥ', ''],
+    '連續送對！': ['ㄌㄧㄢˊ', 'ㄒㄩˋ', 'ㄙㄨㄥˋ', 'ㄉㄨㄟˋ', ''],
     '送達啦！': ['ㄙㄨㄥˋ', 'ㄉㄚˊ', 'ㄌㄚ˙', ''],
     '按下一封，投入郵箱': ['ㄢˋ', 'ㄒㄧㄚˋ', 'ㄧ', 'ㄈㄥ', '', 'ㄊㄡˊ', 'ㄖㄨˋ', 'ㄧㄡˊ', 'ㄒㄧㄤ'],
     '點信，再選郵箱': ['ㄉㄧㄢˇ', 'ㄒㄧㄣˋ', '', 'ㄗㄞˋ', 'ㄒㄩㄢˇ', 'ㄧㄡˊ', 'ㄒㄧㄤ'],
@@ -93,26 +84,7 @@
     '恐龍挑戰': ['ㄎㄨㄥˇ', 'ㄌㄨㄥˊ', 'ㄊㄧㄠˇ', 'ㄓㄢˋ'],
     '可用單字不足': ['ㄎㄜˇ', 'ㄩㄥˋ', 'ㄉㄢ', 'ㄗˋ', 'ㄅㄨˋ', 'ㄗㄨˊ']
   };
-  function makeBpmUnit(char, reading) {
-    const symbols = [...reading];
-    const tone = symbols[0] === '˙' ? symbols.shift() : /[ˊˇˋ˙]$/.test(reading) ? symbols.pop() : '';
-    const onset = bopomofoOnsets.has(symbols[0]) ? symbols.shift() : '';
-    const unit = document.createElement('span'); unit.className = 'bpm-word';
-    const character = document.createElement('span'); character.className = 'bpm-main-char'; character.textContent = char;
-    const column = document.createElement('span'); column.className = 'bpm-column'; column.lang = 'zh-Bopo'; column.setAttribute('aria-hidden', 'true');
-    if (onset) { const symbol = document.createElement('span'); symbol.className = 'bpm-onset'; symbol.textContent = onset; column.append(symbol); }
-    symbols.forEach(value => { const symbol = document.createElement('span'); symbol.className = 'bpm-rime'; symbol.textContent = value; column.append(symbol); });
-    if (tone) { const mark = document.createElement('span'); mark.className = tone === '˙' ? 'bpm-tone-dot' : 'bpm-tone'; mark.textContent = tone; column.append(mark); }
-    unit.append(character, column);
-    return unit;
-  }
-  function setKidText(element, value, readings = uiReadings[value]) {
-    if (!element) return;
-    element.setAttribute('aria-label', value);
-    if (!readings || readings.length !== [...value].length) { element.textContent = value; return; }
-    element.classList.add('kid-text');
-    element.replaceChildren(...[...value].map((char, index) => readings[index] ? makeBpmUnit(char, readings[index]) : document.createTextNode(char)));
-  }
+  const setKidText = Dino.kidText(uiReadings);
   function makeKidSpan(value) { const span = document.createElement('span'); setKidText(span, value); return span; }
   function annotateStaticUI() {
     const pairs = [
@@ -122,7 +94,6 @@
       ['backBrand', '恐龍郵局'], ['backConfirm', '收件確認'], ['replayLabel', '重聽'],
       ['nextLabel', '下一封'], ['finishCopy', '信都送到了！'],
       ['finishTitle', '送信任務完成'], ['playAgainButton', '再送一次'], ['finishHome', '回首頁'],
-      ['finishSoundLabel', '再聽音效'],
       ['readyTitle', '第一封信準備好了！'], ['readyHint', '按開始，聽題目發音。'],
       ['readyButtonLabel', '開始送信'], ['readyHome', '回首頁']
     ];
@@ -135,24 +106,8 @@
     $('scoreText').replaceChildren(makeKidSpan('答對'), document.createTextNode(` ${state.firstTry}／${state.count} `), makeKidSpan('封'));
   }
 
-  function shuffle(source) {
-    const items = [...source];
-    for (let i = items.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [items[i], items[j]] = [items[j], items[i]];
-    }
-    return items;
-  }
-  function loadCourierQueue() {
-    try {
-      const saved = JSON.parse(localStorage.getItem(courierStorageKey) || 'null');
-      const valid = new Set(couriers.map(courier => courier.id));
-      if (Array.isArray(saved) && saved.length && new Set(saved).size === saved.length && saved.every(id => valid.has(id))) return saved;
-    } catch { /* Use a fresh queue when storage is unavailable. */ }
-    return shuffle(couriers.map(courier => courier.id));
-  }
   function pickCourier() {
-    if (!courierQueue?.length) courierQueue = loadCourierQueue();
+    if (!courierQueue?.length) courierQueue = Dino.loadQueue(courierStorageKey);
     const id = courierQueue.shift();
     try { localStorage.setItem(courierStorageKey, JSON.stringify(courierQueue)); } catch { /* Rotation still works for this visit. */ }
     const courier = couriers.find(item => item.id === id);
@@ -178,16 +133,8 @@
     };
     image.src = `assets/${courier.asset}`;
   }
-  function visualGroup(word) {
-    if (word.category === 'number') return 'number-emoji';
-    if (word.sheet) return `sheet:${word.sheet}`;
-    if (word.image) return word.category === 'dinosaur' ? 'dinosaur-image' : 'regular-image';
-    return 'emoji';
-  }
   function eligibleWords(mode = state.mode, level = state.level) {
-    return state.words.filter(word => !state.disabledIds.has(word.id) && (mode === 'dinosaur'
-      ? word.category === 'dinosaur'
-      : word.category !== 'dinosaur' && (mode !== 'level' || word.difficulty === level)));
+    return Dino.eligibleWords(state.words, state.disabledIds, mode, level);
   }
   function modeLabel(mode = state.nextMode, level = state.nextLevel) {
     return mode === 'dinosaur' ? '恐龍挑戰' : mode === 'level' ? ['第一級', '第二級', '第三級'][level - 1] : '全部';
@@ -226,19 +173,7 @@
   function setAutoAudio(value) {
     state.nextAutoAudio = Boolean(value); saveSelection(); renderSelectionControls();
   }
-  function selectRound(pool) {
-    let history = [];
-    try { history = JSON.parse(localStorage.getItem(historyStorageKey) || '[]'); } catch { /* Use unweighted order. */ }
-    if (!Array.isArray(history)) history = [];
-    const missed = new Map();
-    history.forEach(record => {
-      if (!Array.isArray(record?.ids)) return;
-      record.ids.forEach((id, index) => { if (record.results?.[index] === false) missed.set(id, (missed.get(id) || 0) + 1); });
-    });
-    const recent = new Set(history.slice(0, 2).flatMap(record => Array.isArray(record?.ids) ? record.ids : []));
-    return pool.map(word => ({ word, priority: Math.pow(Math.random(), 1 / (1 + Math.min(3, missed.get(word.id) || 0))) - (recent.has(word.id) ? .3 : 0) }))
-      .sort((a, b) => b.priority - a.priority).slice(0, state.count).map(item => item.word);
-  }
+  function selectRound(pool) { return Dino.selectRound(pool, Dino.loadHistory(), state.count); }
   function setStatus(message) { setKidText($('status'), message); }
   function duration(seconds) { return reducedMotion.matches ? .01 : seconds; }
   function setRoute(progress) {
@@ -306,7 +241,7 @@
       art = document.createElement('span');
       if (word.sheet && Number.isInteger(word.cell)) {
         art.className = `mailbox-art sheet ${word.sheet}`;
-        art.style.backgroundImage = `url('assets/${word.sheet}-grid-v1.png')`;
+        art.style.backgroundImage = `url('assets/${word.sheet}-grid-v1.jpg')`;
         art.style.backgroundPosition = `${(word.cell % 5) * 25}% ${word.cell < 5 ? 0 : 100}%`;
       } else art.textContent = word.emoji;
     }
@@ -314,10 +249,15 @@
     art.setAttribute('aria-hidden', 'true');
     return art;
   }
+  // Distractors come from the round's pool first, then from other levels with the same picture style.
+  function distractorPools(word, pool) {
+    const isDino = word.category === 'dinosaur';
+    const wider = state.words.filter(item => !state.disabledIds.has(item.id) && (item.category === 'dinosaur') === isDino);
+    return [pool, wider].map(list => list.filter(item => item.id !== word.id && visualGroup(item) === visualGroup(word) && item.zh !== word.zh));
+  }
   function choicesFor(word, pool) {
-    const sameVisual = pool.filter(item => item.id !== word.id && visualGroup(item) === visualGroup(word) && item.zh !== word.zh);
-    const candidates = shuffle(sameVisual.filter(item => item.category === word.category))
-      .concat(shuffle(sameVisual.filter(item => item.category !== word.category)));
+    const candidates = distractorPools(word, pool).flatMap(sameVisual => shuffle(sameVisual.filter(item => item.category === word.category))
+      .concat(shuffle(sameVisual.filter(item => item.category !== word.category))));
     const seen = new Set([word.zh]);
     const other = [];
     for (const item of candidates) {
@@ -370,7 +310,7 @@
   }
   function playEnglish(word) {
     if (state.audio) { state.audio.pause(); state.audio.currentTime = 0; }
-    state.audio = new Audio(`assets/audio/${word.id}.mp3`);
+    state.audio = new Audio(audioPath(word));
     state.audio.play().catch(() => setStatus('按重聽播放英文'));
   }
   function playChinese(word) {
@@ -410,14 +350,17 @@
       mailbox.classList.remove('is-target');
       mailbox.classList.add('is-wrong');
       setTimeout(() => mailbox.classList.remove('is-wrong'), 380);
+      playSound('wrong');
       setStatus('再試一次');
       if (!state.dragging) resetLetter();
       return;
     }
     state.phase = 'flipping';
     if (state.audio) { state.audio.pause(); state.audio.currentTime = 0; }
-    playSound('stamp');
+    playSound('correct');
     state.firstTry += Number(state.attempts === 1);
+    state.streak = state.attempts === 1 ? state.streak + 1 : 0;
+    Dino.burst(mailbox);
     updateScore();
     state.armed = false;
     $('letterDrag').classList.remove('is-armed', 'is-dragging');
@@ -429,21 +372,29 @@
     setKidText($('revealChinese'), state.round[state.index].zh, state.round[state.index].zhuyin);
     $('revealChinese').classList.toggle('is-long', state.round[state.index].zh.length > 3);
     $('revealEnglish').textContent = state.round[state.index].en;
-    setStatus('配對成功！');
+    setStatus(state.streak >= Dino.streakThreshold ? '連續送對！' : '配對成功！');
     // Prompt audio belongs to the question and follows the auto-play switch.
     $('letterDrag').classList.add('is-flipped');
     $('letterDrag').setAttribute('aria-label', `答案：${state.round[state.index].zh}，${state.round[state.index].en}`);
     window.setTimeout(() => {
       if (state.phase !== 'flipping') return;
-      $('backPostmark').classList.add('is-stamping');
       $('replayButton').hidden = false;
       $('replayButton').setAttribute('aria-label', state.format === 'zhuyin' ? '重聽中文發音' : '重聽英文發音');
       setKidText($('replayLabel'), '重聽');
       state.phase = 'reveal';
       $('nextButton').hidden = false;
       setKidText($('nextLabel'), state.index === state.count - 1 ? '看成果' : '下一封');
-      setStatus('送達啦！');
+      setStatus(state.streak >= Dino.streakThreshold ? '連續送對！' : '送達啦！');
     }, reducedMotion.matches ? 20 : 620);
+    // The postmark lands after the correct chime; the stamp sound follows the impact (64% of the 0.52s stampDown).
+    const stampIndex = state.index;
+    window.setTimeout(() => {
+      if (state.index !== stampIndex || !['flipping', 'reveal'].includes(state.phase)) return;
+      $('backPostmark').classList.add('is-stamping');
+      window.setTimeout(() => {
+        if (state.index === stampIndex && ['flipping', 'reveal'].includes(state.phase)) playSound('stamp');
+      }, reducedMotion.matches ? 0 : 330);
+    }, reducedMotion.matches ? 20 : 1120);
   }
   function renderQuestion() {
     const word = state.round[state.index];
@@ -479,11 +430,11 @@
   }
   function saveRound() {
     try {
-      const history = JSON.parse(localStorage.getItem(historyStorageKey) || '[]');
+      const history = Dino.loadHistory();
       const record = { date: new Date().toISOString(), game: 'zhuyin-sort', mode: state.mode, level: state.level,
         score: state.firstTry, total: state.count, ids: state.round.map(word => word.id),
         results: [...state.answerResults] };
-      localStorage.setItem(historyStorageKey, JSON.stringify([record, ...(Array.isArray(history) ? history : [])].slice(0, 10)));
+      localStorage.setItem(Dino.storageKeys.history, JSON.stringify([record, ...history].slice(0, 10)));
     } catch { /* The prototype works even when local storage is unavailable. */ }
   }
   function finishRound() {
@@ -520,18 +471,14 @@
       if (Array.isArray(saved)) state.disabledIds = new Set(saved);
     } catch { /* Keep current word bank. */ }
     const pool = eligibleWords(state.nextMode, state.nextLevel);
-    const usable = pool.filter(word => {
-      const meanings = new Set(pool.filter(other => visualGroup(other) === visualGroup(word) && other.id !== word.id).map(other => other.zh));
-      meanings.delete(word.zh);
-      return meanings.size >= 2;
-    });
+    const usable = pool.filter(word => new Set(distractorPools(word, pool).flat().map(other => other.zh)).size >= 2);
     if (usable.length < state.nextCount) { setStatus('可用單字不足'); return false; }
     state.mode = state.nextMode; state.level = state.nextLevel; state.count = state.nextCount; state.format = state.nextFormat; state.autoAudio = state.nextAutoAudio;
     buildRouteStops();
     state.activePool = pool;
     setKidText($('mailModeBadge'), modeLabel(state.mode, state.level));
     state.round = selectRound(usable);
-    state.index = 0; state.firstTry = 0; state.answerResults = [];
+    state.index = 0; state.firstTry = 0; state.streak = 0; state.answerResults = [];
     updateScore();
     $('finishOverlay').hidden = true;
     setKidText($('modeTitle'), state.format === 'english' ? '英文送信' : '注音送信');
@@ -604,14 +551,13 @@
     $('mailCount').addEventListener('input', event => setCount(event.target.value));
     $('mailLevelSlider').addEventListener('input', event => setLevel(event.target.value));
     $('playAgainButton').addEventListener('click', startRound);
-    $('finishSoundButton').addEventListener('click', () => playSound('finish'));
     $('readyButton').addEventListener('click', () => {
       if (startRound()) $('readyOverlay').hidden = true;
     });
     $('nextButton').addEventListener('click', nextQuestion);
     $('replayButton').addEventListener('click', () => { const word = state.round[state.index]; if (word) playPrompt(word); });
     try {
-      const response = await fetch('data.json?v=20261001');
+      const response = await fetch('data.json');
       if (!response.ok) throw Error(`HTTP ${response.status}`);
       state.words = await response.json();
       try {
