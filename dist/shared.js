@@ -12,6 +12,22 @@ window.Dino = (() => {
     { id: 'chick-abao', name: '小雞阿暴', asset: 'chick-abao-poses-v1.png', frames: 2, ratio: 1 },
     { id: 'shanshan', name: '閃閃', asset: 'shanshan-poses-v1.png', frames: 2, ratio: 1 }
   ];
+  // Kid lock for phones: no pinch/double-tap zoom, text selection, long-press menus, image dragging or page bounce.
+  // Vertical scrolling stays available as the small-screen fallback; text inputs (word-bank search) stay selectable.
+  (function lockTouch() {
+    const style = document.createElement('style');
+    style.textContent = `html,body{overscroll-behavior:none;overflow-x:hidden;-webkit-text-size-adjust:100%}
+body{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+*{touch-action:manipulation}
+img{-webkit-user-drag:none;user-drag:none}
+input,textarea{-webkit-user-select:text;user-select:text}`;
+    document.head.append(style);
+    const block = event => event.preventDefault();
+    ['gesturestart', 'gesturechange', 'gestureend'].forEach(type => document.addEventListener(type, block, { passive: false }));
+    document.addEventListener('touchmove', event => { if (event.touches.length > 1) event.preventDefault(); }, { passive: false });
+    document.addEventListener('contextmenu', event => { if (!event.target.closest('input,textarea')) event.preventDefault(); });
+    document.addEventListener('dragstart', event => { if (event.target.tagName === 'IMG') event.preventDefault(); });
+  })();
   const storageKeys = { disabled: 'dinopost-disabled-words-v1', history: 'dinopost-round-history-v1' };
 
   function shuffle(source) {
