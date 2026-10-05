@@ -48,7 +48,7 @@
       "row": 1,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/animal-duck.png",
-      "sha256": "7313e3f9133cea2ba7506673ba8cf340efa19ebaddebf930de2087f8cb5641ec"
+      "sha256": "91ff7ddcd382aeada85c7ed6b624f68a234b7280a8b2952ae39807e57e313d92"
     },
     {
       "id": "animal-sheep",
@@ -60,7 +60,7 @@
       "row": 1,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/animal-sheep.png",
-      "sha256": "e0ca41739bf56688ba914f297fcca8ec5ec86cb876253b4e1ae2db1fa5f94600"
+      "sha256": "bafeb9b5811b005449c33b0c34500ec6515d1c76fba0cd020f1c332953808faa"
     },
     {
       "id": "animal-monkey",
@@ -72,7 +72,7 @@
       "row": 1,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/animal-monkey.png",
-      "sha256": "6db03ea4fab3054027d244abf96ed7d8e148ae246d45dbf30d9f3718685b22df"
+      "sha256": "d7e1c3828a0e38ff8bbed41bc551dcd03b0852ae764182091ba479302cd2a39b"
     },
     {
       "id": "animal-giraffe",
@@ -84,7 +84,7 @@
       "row": 1,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/animal-giraffe.png",
-      "sha256": "a2b13e47e1e2a239deaf696d420b02addbc238ec53bd4adfa3b96333db4f532e"
+      "sha256": "5eef3c025fcc4878058c58315b4f9c51fc886461d0479cf98d972bb2a16fc10a"
     },
     {
       "id": "animal-zebra",
@@ -96,7 +96,7 @@
       "row": 1,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/animal-zebra.png",
-      "sha256": "90d929180eb14be64fce383c1e8f420551d8c951a0dcb881a8f044486daa40b5"
+      "sha256": "fba50f401358033cf6e4f63ad83e11bd3c5979e81a3435e7a663282cd4772182"
     },
     {
       "id": "animal-panda",
@@ -108,7 +108,7 @@
       "row": 1,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/animal-panda.png",
-      "sha256": "dd73f5fc15e633dd307169dfefc67fa1e52a33e087d94ad21b1c7a956810636b"
+      "sha256": "81276f3f479e7dc41e1d0190b225d1e8fcef26fa96dc79b550da31ecf4ddbd11"
     },
     {
       "id": "animal-turtle",
@@ -120,7 +120,7 @@
       "row": 2,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/animal-turtle.png",
-      "sha256": "1b8ad84ee02bf09c9e0710aee1b92e89be2524799372a4ae791dc88aa8c4f450"
+      "sha256": "901969c7e2dda4c00647f025e78db5ab8341f9c450f24a4dc90c168b5cad79d5"
     },
     {
       "id": "animal-fish",
@@ -132,7 +132,7 @@
       "row": 2,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/animal-fish.png",
-      "sha256": "2cd75820dcab003bbd3767ea5734985b3309eb36b335720321240585a8aa3de5"
+      "sha256": "99e20439985a8099f5edd522ce8fb9d784da1b8c252eee9e77016a7b626758f0"
     },
     {
       "id": "animal-crab",
@@ -144,7 +144,7 @@
       "row": 2,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/animal-crab.png",
-      "sha256": "79ed01a6105980e8087e6d8a402043d5ff059112c55b04ba1500503c47cfc091"
+      "sha256": "cf3897da083959fd334166390bb99c8a52e3e15533a17b5c38bcabf687ca6045"
     },
     {
       "id": "animal-butterfly",
@@ -156,7 +156,7 @@
       "row": 2,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/animal-butterfly.png",
-      "sha256": "2ea7435bb6f2f14341330405181a5262140c2c429c8bf0c77df56bc103a3ee00"
+      "sha256": "5891caccab760b31b6f85e4a7a6336cef750bfebb21856f933d5bb67f54c59a4"
     },
     {
       "id": "animal-bee",
@@ -168,7 +168,7 @@
       "row": 2,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/animal-bee.png",
-      "sha256": "2ea69a5e98de234c62fe5cb411f63e0301a582395b2e7b4b02c0d5be70beb966"
+      "sha256": "5205c471772bc9b0aa7ffeedce3297c757e4825c626fe95138136255d06f6e59"
     },
     {
       "id": "animal-snake",
@@ -180,7 +180,7 @@
       "row": 2,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/animal-snake.png",
-      "sha256": "be784aa83d5ecdc2ae19b1d1a7d7e5206ec9499b61fb55437f6ae9ad37f77b3d"
+      "sha256": "249622aa649939fdd174363f783a6273e6473c1c70a16eb0fb2d13e57ff7b7b2"
     },
     {
       "id": "animal-mouse",
@@ -192,7 +192,7 @@
       "row": 3,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/animal-mouse.png",
-      "sha256": "27c2e35240d04af4587efdbedeb2a87dc33efa2b8dad0f4e3fb46b270baa61a6"
+      "sha256": "f26e8509926f73c9e0002a304d8445be53ac01c5dae048aa7f5f706b051bdc4e"
     },
     {
       "id": "animal-fox",
@@ -204,7 +204,7 @@
       "row": 3,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/animal-fox.png",
-      "sha256": "045e1cc01cd538f8ca0e41fc4002b2f907d45a98ca61df7942edab857a81a1b7"
+      "sha256": "cfe5b4b2da27dd385be9c0dc3199ae0b91a93703a55afd2ac9d52f02556dc5ed"
     },
     {
       "id": "animal-tiger",
@@ -216,7 +216,7 @@
       "row": 3,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/animal-tiger.png",
-      "sha256": "11fb4e4ad8399d628fccf9d64df9f1edaa957e79f939d53dc4c02ec212a2f386"
+      "sha256": "acf93f5e655f57a8d82755074e605e820b6dc0ecebc2a7bcd6af2889c3bf89fc"
     },
     {
       "id": "animal-penguin",
@@ -228,7 +228,7 @@
       "row": 3,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/animal-penguin.png",
-      "sha256": "ce203471329282abe1a9baa8dac9e0d2bcd5d3110a662703f55075566a6e7eaf"
+      "sha256": "127696ba34754a6ed229b07d215827df81fb4d4cd29280da6a4cdc84e5ab7598"
     },
     {
       "id": "animal-bird",
@@ -240,7 +240,7 @@
       "row": 3,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/animal-bird.png",
-      "sha256": "db0d1536dff20e109d366200daa4960a3f50153957c112de08a5de08bdb27612"
+      "sha256": "5709f7727da05c99a4b358fb9adef45cbe6994d4120f063ac96e933dd67b12d3"
     },
     {
       "id": "animal-octopus",
@@ -252,7 +252,7 @@
       "row": 3,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/animal-octopus.png",
-      "sha256": "29c7acf69e30970afe90cdc05227bbf997bb57c65d765a4e4baa91f59573708d"
+      "sha256": "fd09fc79c38789d6827b2a4a07f1f652aa7f791694a1ddbc4bc313e126610522"
     },
     {
       "id": "kidapp-ant",
@@ -264,7 +264,7 @@
       "row": 4,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-ant.png",
-      "sha256": "d09990614f179e20302810d507f91f272d6b3cba68777ae98079031a42830176"
+      "sha256": "4d7785e6cef5f9ada6a0149e34e6d8799436cf9e9e41589bcd290a10fe2f0c48"
     },
     {
       "id": "kidapp-dolphin",
@@ -276,7 +276,7 @@
       "row": 4,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-dolphin.png",
-      "sha256": "b4b2d87b3f8175dfde5833f1507b0069601fc0daa179a94db4dbc6082e70c8a6"
+      "sha256": "b02616632d58edbb6f8c79fcb95f7e1b5308380aa16a779c51aa75cec2df51dd"
     },
     {
       "id": "kidapp-koala",
@@ -288,7 +288,7 @@
       "row": 4,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-koala.png",
-      "sha256": "0760a76aea8d18c5867077fcfddc1b5fecda083d8a76b2e02b41e3e1f8685e56"
+      "sha256": "e99013de1205e8d972997502d9deb0f5679b878b3802f57c2d6ec8bf7c062a2c"
     },
     {
       "id": "kidapp-ladybug",
@@ -300,7 +300,7 @@
       "row": 4,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-ladybug.png",
-      "sha256": "000f8772e6ef412ed46513a43c2e3c260dca7d2d36c8f712411eef235dc2bfac"
+      "sha256": "895e171e55754793bc02bc35ef924cd52ce02e1bcb132465e0e0a2ba2b8df8a4"
     },
     {
       "id": "kidapp-owl",
@@ -312,7 +312,7 @@
       "row": 4,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-owl.png",
-      "sha256": "8fe81a84607dc7d302ec1568ccafc337e60d2695cf2aa122126c0474ad8fbee8"
+      "sha256": "fabba43cdec135e126a78186cba1469c18c48480352a016105378bb64f05739f"
     },
     {
       "id": "kidapp-shark",
@@ -324,7 +324,7 @@
       "row": 4,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-shark.png",
-      "sha256": "3704fdb424a2f2e3041328a5e3cc35ea4728752653002df96249735b82acb2ed"
+      "sha256": "3bf395d2c95a9ec8306ba4f34ee00d4fc70e8b8499c5b1fa81ad5ca1e6e047da"
     },
     {
       "id": "kidapp-snail",
@@ -336,7 +336,7 @@
       "row": 5,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-snail.png",
-      "sha256": "edc34f75abf5899a5647d4a7f6ee54abd04adfe1b3e87a27123e0f2e3f577b44"
+      "sha256": "02b54211ed17cb0c3e57686e01ed670144811b82cc826a19d7c71cde3b0e2de6"
     },
     {
       "id": "kidapp-spider",
@@ -348,7 +348,7 @@
       "row": 5,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-spider.png",
-      "sha256": "bc91461d83042766fcb9af3506587e878c45cca9ceb3153b5183e4c6ea859046"
+      "sha256": "57b75b14037812de874a6fbdb2b68cbd774b95ec179f87feab38635a2213865d"
     },
     {
       "id": "kidapp-whale",
@@ -360,7 +360,7 @@
       "row": 5,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-whale.png",
-      "sha256": "fc8ff5ea688df4ee9a80bb522f222dd4e5f7393ac4b83a2b267b685622d0a823"
+      "sha256": "8e85a63465102eaa005e1092b420deeca587cc1bf603ff8173eec6eec315338e"
     },
     {
       "id": "kidapp-bat",
@@ -372,7 +372,7 @@
       "row": 5,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-bat.png",
-      "sha256": "f241eb39d0556b9307bcc003de7cce6c673360db5b124347359c5a2832b5e005"
+      "sha256": "322359238837182126f1b8d0469c9725034a6b06faa6db46a10e5aafd5a0c220"
     },
     {
       "id": "kidapp-flamingo",
@@ -384,7 +384,7 @@
       "row": 5,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-flamingo.png",
-      "sha256": "a441e6a31fdc73de23cacf7b8c3e4fa7613fb63ea370f24ba4356818f3be9317"
+      "sha256": "904eaa5c212f3d23bb238d017cd35c33335521136de9a77bb84b37ad183269ca"
     },
     {
       "id": "kidapp-hedgehog",
@@ -396,7 +396,7 @@
       "row": 5,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hedgehog.png",
-      "sha256": "ef899b496883fa66f867501cb87dac8dc093eb7576c5ebe9b8c0f743b3d60cbf"
+      "sha256": "3772e81fe65d88d4474291ae44e08a31c207fc8300548c9159d84a6f1774ea47"
     },
     {
       "id": "kidapp-kangaroo",
@@ -408,7 +408,7 @@
       "row": 6,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-kangaroo.png",
-      "sha256": "7eea2e0560c28bac56f4779568d00f4efbbc5d59e8ab255a94f326fff5765083"
+      "sha256": "99f629291a4abcbece09d3daa82cc8b2dd5ea4e8d0225b37f0e5d8dcfecf4214"
     },
     {
       "id": "kidapp-lizard",
@@ -420,7 +420,7 @@
       "row": 6,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-lizard.png",
-      "sha256": "64fe2268453d9b0aa92971be14f2be9ad70a6d34459cd8b3dd52fdb072976b0f"
+      "sha256": "ba3a11c916fbbfee09e39c2a1938f9b352c9ae85c1d950a4ac4707de453fef7b"
     },
     {
       "id": "kidapp-squirrel",
@@ -432,7 +432,7 @@
       "row": 6,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-squirrel.png",
-      "sha256": "b2cb8b35dffbf03cb7982ae8ed67c5a67ddd476f3e2a3fc90904b4346c945d3d"
+      "sha256": "db8b7cb433f584f3d9a67b2516f16f04c2f3173c0ad6d635b2f9871dc3009f6d"
     },
     {
       "id": "kidapp-moon",
@@ -444,7 +444,7 @@
       "row": 6,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-moon.png",
-      "sha256": "fd48490d6f761d21a249456a55968835fb3de0b69fc8ff058df03bdfa1bc2581"
+      "sha256": "c6524e6c5c9f27f2b35fbbae7e46212bd59d807e15b29260330ff4729a8d6945"
     },
     {
       "id": "kidapp-sun",
@@ -456,7 +456,7 @@
       "row": 6,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-sun.png",
-      "sha256": "0c1a65a25bb2b62236d943b668902b335697eee44e6c890d1e3e324c4bc71dbc"
+      "sha256": "dafc67d69ea88621a2acc7a7c97877448668c7fc9d1e1ba27ca2a1810806c0ad"
     },
     {
       "id": "kidapp-tree",
@@ -468,7 +468,7 @@
       "row": 6,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-tree.png",
-      "sha256": "9746ae230e6a09e5bb7da11c1b5dbe4913266dd80d7ff09b98c1e3d6b3181ddd"
+      "sha256": "13a7bf344cb46751d6a78f2f2b6fe04bb76e77e63731bce0a4ecc3dcb1d5cf04"
     },
     {
       "id": "kidapp-cloud",
@@ -480,7 +480,7 @@
       "row": 7,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-cloud.png",
-      "sha256": "f791cd02e9046492ac3d59db4785874884dcbb2c3366f0553de02a16612eddae"
+      "sha256": "fdf15ebc9f90af763a2aa66a00219bdd6aafa0801e1aa2b39c660e0baff3f81d"
     },
     {
       "id": "kidapp-fire",
@@ -492,7 +492,7 @@
       "row": 7,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-fire.png",
-      "sha256": "6b6207616c1d1a6d5230b9671f754f804a9230cc1b75013ee3e4c40add9214e7"
+      "sha256": "20cbbc26b2607b66ac1e05f42dfa8e5204027bd4183378a625b44c0023cdd6ea"
     },
     {
       "id": "kidapp-rain",
@@ -504,7 +504,7 @@
       "row": 7,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-rain.png",
-      "sha256": "028c7ebd49136831a64ae74ab25bf834385caae2a70f563d4fca79a21a40a937"
+      "sha256": "928cf1496d87d574c3a52eff797c6b3af9206216ee4c2d6ef3dbcd580d5ebcb8"
     },
     {
       "id": "kidapp-snow",
@@ -516,7 +516,7 @@
       "row": 7,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-snow.png",
-      "sha256": "805e3401b37694d799c633c0b1ab58c3936910a2e729e8f478d21c3f78e05bcb"
+      "sha256": "b6278be9f0a5e2667fdab3250298cdad0d8d5cc311dba7fb786a1d51635ea924"
     },
     {
       "id": "kidapp-star",
@@ -528,7 +528,7 @@
       "row": 7,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-star.png",
-      "sha256": "aeedd7fe2c02caa151dc04932564d50cf54a51fc07e7e1f7e3fca560886378e0"
+      "sha256": "6a837cd2dfdc30320be45efaa7a83cc9f4bcbb699ee97c8b5657ac4c0b3c4bcb"
     },
     {
       "id": "kidapp-water",
@@ -540,7 +540,7 @@
       "row": 7,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-water.png",
-      "sha256": "e0347e87415d86ce06e9222c731af7e511eca4462418521e03f20aabefed3c0a"
+      "sha256": "dbd3b16f03ef86c6a236f2489e50e77b9f9e61b198a535e8546d986f041e1303"
     },
     {
       "id": "kidapp-grass",
@@ -552,7 +552,7 @@
       "row": 8,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-grass.png",
-      "sha256": "9b25ebbf9b0d57567e81feda7cf1a552ca8cba53992264ad42f095af1c19b3fe"
+      "sha256": "342584176c8f1c858502d7cea7eceeced8ffe2c1b47e2d2506229ee6b12c5252"
     },
     {
       "id": "kidapp-leaf",
@@ -564,7 +564,7 @@
       "row": 8,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-leaf.png",
-      "sha256": "5bdf074d989858ae4072ceb200682bc8dbb8d0ecd96cdde27cb20d35552645d0"
+      "sha256": "9164b8a4cc3714f940a1d2785460a081bb53780d2d9b3953538e7ec850124d16"
     },
     {
       "id": "kidapp-rock",
@@ -576,7 +576,7 @@
       "row": 8,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-rock.png",
-      "sha256": "6ae27c5dd1cf33b16f7c7ac0ef25027a72c632130be0af4abf0adf022604ab90"
+      "sha256": "6d181c5908851b03320c70c781be3c57f398e66bdedb397ab680cbaddf0c3856"
     },
     {
       "id": "kidapp-cactus",
@@ -588,7 +588,7 @@
       "row": 8,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-cactus.png",
-      "sha256": "1741791fd8bf3bda6e7fb94f8c5c6137f1c5385081bbd50fcc03b84880a086d4"
+      "sha256": "fca462cb1914f182ba6a89647f078e6fea8accb5052adaa51eca035edeabc595"
     },
     {
       "id": "kidapp-flower",
@@ -600,7 +600,7 @@
       "row": 8,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-flower.png",
-      "sha256": "d8a8b6fa1cc3bca9a4668a93fa30429d53f1c350afc022e6ba81cde3f0a50e83"
+      "sha256": "9a015c48cd5a25de8cfd0a2dfc79571ac2ae95a736d5b80ebfcf567dfdd15498"
     },
     {
       "id": "kidapp-mountain",
@@ -612,7 +612,7 @@
       "row": 8,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-mountain.png",
-      "sha256": "5f702a2025496593f0fb71b2f3f0baf69e235a3bc11a4e5afc388ad046e33af0"
+      "sha256": "e191c371f525f3f36957fe350aeee79e1e88250fc587863976467a93578a96af"
     },
     {
       "id": "food-orange",
@@ -624,7 +624,7 @@
       "row": 1,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/food-orange.png",
-      "sha256": "cdae4bc8595aa03e098dcb607c20dc9296723978f11b070d55565e3a46b8b924"
+      "sha256": "eaebc3dbe2a448ba326b86e542792c57f10eaba60bd82d8589fa993658ca0ca0"
     },
     {
       "id": "food-grape",
@@ -636,7 +636,7 @@
       "row": 1,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/food-grape.png",
-      "sha256": "1008d928aa7c3ef31e8567dc19588a7ae51f19c4e4a23191339e02cdd2a71ef3"
+      "sha256": "f8b4fe79900c1ca2768b168f0f5f3b358843f0bb0dfec6f219f736a7c965a493"
     },
     {
       "id": "food-lemon",
@@ -648,7 +648,7 @@
       "row": 1,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/food-lemon.png",
-      "sha256": "d2decc7c670ca63a1fb9cb28f4b469fecac467ee6ab38034223407f892e90cad"
+      "sha256": "61e3e114f57977342d6ac5ab59e1ce0ee459262a9e039cd0e15109e03380097f"
     },
     {
       "id": "food-peach",
@@ -660,7 +660,7 @@
       "row": 1,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/food-peach.png",
-      "sha256": "89f0f7a4d23b5e72fa32113fcd603e43b76de9cd0ab769f9c9bb468bf6f48c4e"
+      "sha256": "2d984460e69621577eac261162d06a3f682090bbcb7c4e150589cdfd3c192c4f"
     },
     {
       "id": "food-cherry",
@@ -672,7 +672,7 @@
       "row": 1,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/food-cherry.png",
-      "sha256": "f3538da2c6017acc2bd1d34ede413099ba24765c265c205451561567c8f040d3"
+      "sha256": "014080bac6aa1067ec2d449332f6490523fefcde5fd370b5fbfad7ee86c3309a"
     },
     {
       "id": "food-pineapple",
@@ -684,7 +684,7 @@
       "row": 1,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/food-pineapple.png",
-      "sha256": "ebd85102f51be2f64ea8df242f1f5f7c8e0ab3ccef080b69d0b4d1b3d93581f3"
+      "sha256": "bef2e6f69ca034663c1aaee6ac50bf6868cd3a33897b1ff861670d4e1ffc9f2d"
     },
     {
       "id": "food-corn",
@@ -696,7 +696,7 @@
       "row": 2,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/food-corn.png",
-      "sha256": "9963772ddf381614cc4f6398cdc6149a19fffe765fb03b796fc6fb6555fdb48c"
+      "sha256": "75d4ff7776a23ba870aa55f3233746d2d85cd7aabbbcd7fe35db34ba0f85c5f3"
     },
     {
       "id": "food-tomato",
@@ -708,7 +708,7 @@
       "row": 2,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/food-tomato.png",
-      "sha256": "0528fc5e15d91408d14cf730eaa6d4bae2557e57a0a716e28fdf7e75b1a25ccc"
+      "sha256": "d67142da27c1ce13cddca65f9d530e6ce5a9637528c85172d501217f0802bc19"
     },
     {
       "id": "food-potato",
@@ -720,7 +720,7 @@
       "row": 2,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/food-potato.png",
-      "sha256": "2c40cfb50df75d97d29b0f8ce9f05dcf92f667da040c85a6c9dc3f86f7238c0b"
+      "sha256": "8b25735b31ddce6b3c4968a752ae375879891ccb29f81897f1c3639799436850"
     },
     {
       "id": "food-broccoli",
@@ -732,7 +732,7 @@
       "row": 2,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/food-broccoli.png",
-      "sha256": "ecef719224bdcd12255b25fd2fec77cb056a2c373717fae3be1c369cda567762"
+      "sha256": "78caaf7a6cd028b1d2a2f7740d09389d85cf2aec2e1c33f48fa04a2c824b16c9"
     },
     {
       "id": "food-rice",
@@ -744,7 +744,7 @@
       "row": 2,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/food-rice.png",
-      "sha256": "27ef3fd57095bcedb99c19187b202bccdc95f6dbb7e62a2384e4ff257e7d992d"
+      "sha256": "5cf1bc04591be11e3b97f578cbe414bfa2ddea29b2a93ae803739b81cfb04e7c"
     },
     {
       "id": "food-milk",
@@ -756,7 +756,7 @@
       "row": 2,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/food-milk.png",
-      "sha256": "5c6f09903372ba4026e3df4c3db0babaae90709e6fc9dd22915d87d4e0c7ac6e"
+      "sha256": "24ae4efe73253af2ca02eb6485e1dba23174c6da37031f062ba63a98132ed4ee"
     },
     {
       "id": "food-cookie",
@@ -768,7 +768,7 @@
       "row": 3,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/food-cookie.png",
-      "sha256": "a439cd338ef7707a4e9cad68821ab80fb4d39ba8f0e5d8dff10940a378a30bee"
+      "sha256": "ba34ad277f3df472ea4afe3feeb9a6ed18db3aa6ec53c6c5ec88fad66ef593b6"
     },
     {
       "id": "food-ice-cream",
@@ -780,7 +780,7 @@
       "row": 3,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/food-ice-cream.png",
-      "sha256": "521d48ac932d1580b672ec15f30b52ab0947156752767685a698ca61ac640bcf"
+      "sha256": "513be11d9837d2142f4c5f7eaa155137d79832ee33a60f7ed9cc5f12374ea666"
     },
     {
       "id": "food-donut",
@@ -792,7 +792,7 @@
       "row": 3,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/food-donut.png",
-      "sha256": "30c90be986dc56025400cc9787939f8f4682009cfb09146e8e2643ffa2d49e6c"
+      "sha256": "03ea2a76497eb0b18904b8fa70389080b593fdb995d5b07120055670676e88de"
     },
     {
       "id": "food-hamburger",
@@ -804,7 +804,7 @@
       "row": 3,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/food-hamburger.png",
-      "sha256": "b22c7049a69cefae8360ba9ba0b7623e19816bd28b9c839d8e4656282fff4cea"
+      "sha256": "af8d87717762e564817eeb118923777ebb7f57f4fd185dd3235e355686f9a990"
     },
     {
       "id": "kidapp-candy",
@@ -816,7 +816,7 @@
       "row": 3,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-candy.png",
-      "sha256": "84a0986e86b4af7090fce460127fab9afa1ed88501446f1ec4db1bccd2f3c287"
+      "sha256": "d3b08f74b5e2e6b8664502cef458d8c32361eccc6d0d2c93dcc75111e4a727ff"
     },
     {
       "id": "kidapp-chicken",
@@ -828,7 +828,7 @@
       "row": 3,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-chicken.png",
-      "sha256": "3a2444be0e92b3777f7ecc76def6c8ed7b2e91d8b7dd21a53902343190eb82ee"
+      "sha256": "a9cedb7cf1de6fbcc23c0f0ae053571458fd5bb53d7712142af8cf29b9fe22dc"
     },
     {
       "id": "kidapp-coconut",
@@ -840,7 +840,7 @@
       "row": 4,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-coconut.png",
-      "sha256": "aff3dc76ff0703be0d2bcf217d3831d7637ba8d252383b2bac16e357104e7320"
+      "sha256": "f59a28630e6dabd28915ef8c209687ed779e33c218efb1535e8a65475399bef3"
     },
     {
       "id": "kidapp-kiwi",
@@ -852,7 +852,7 @@
       "row": 4,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-kiwi.png",
-      "sha256": "beca2efdac882349d36ad62a6aadcae07b0a698eb07186641887db3c3dc56134"
+      "sha256": "d22a7121491081481ce8f2eb8535d74b5f70ad31aec4d81ca906fac5c43ed878"
     },
     {
       "id": "kidapp-meat",
@@ -864,7 +864,7 @@
       "row": 4,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-meat.png",
-      "sha256": "e1722b357a1fd362e14e2b94a95e209281ba7ce5c1b0ea9042bafefe7cd567cb"
+      "sha256": "24b58c2e5420edecab176a6a40d219304a95147328c95692e16df7af9c996b33"
     },
     {
       "id": "kidapp-mushroom",
@@ -876,7 +876,7 @@
       "row": 4,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-mushroom.png",
-      "sha256": "3b5f7917df45b7dc4791460be7e101cfbe23ca364bebb7d5ade01da7bd87543e"
+      "sha256": "02f7680947f085a15b69dc36f8022b0917c7c4e08a396e8e0c78a7f793d0efa1"
     },
     {
       "id": "kidapp-noodle",
@@ -888,7 +888,7 @@
       "row": 4,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-noodle.png",
-      "sha256": "4a8985c6848084afa3f18635b55de7ed486fc94698acbe1b520058e50510bb17"
+      "sha256": "f87d178bbf1a0669ece0e31d259174f1920ec9d98886585c8937c606ae0b6c20"
     },
     {
       "id": "kidapp-pear",
@@ -900,7 +900,7 @@
       "row": 4,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-pear.png",
-      "sha256": "d13693ff25497ff5db0f0c728acafdefac56d9276147cd50ee76e1b418feb4eb"
+      "sha256": "96412e679154e2de0e6cd26b688e15417f13790744a0b288865e98d8e70cfa43"
     },
     {
       "id": "kidapp-soup",
@@ -912,7 +912,7 @@
       "row": 5,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-soup.png",
-      "sha256": "86bde79fa603d3f6dd6b0ef4aa1e0e7d23698ff647b56a3656dc42a141431485"
+      "sha256": "c5436d80b0fd86176d9701ba191c55bc96d1da09fa13f7a1ff1b60c7fd77a830"
     },
     {
       "id": "kidapp-avocado",
@@ -924,7 +924,7 @@
       "row": 5,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-avocado.png",
-      "sha256": "8cced5e20b3308e72c65775ee5f3aa0c4b700349e11dfa69731bd7ff455c81f7"
+      "sha256": "4db50cf60524e7a6dda70a91dccd088d95fab9a7af7e8014412f8480d7d6d856"
     },
     {
       "id": "kidapp-blueberry",
@@ -936,7 +936,7 @@
       "row": 5,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-blueberry.png",
-      "sha256": "79392bb39e55240ee1037b51c10f3de31389ed9cce99a004915341aa45b497cf"
+      "sha256": "96f0f34ab53071883edcc201c7d0b4067eb31b5e1a3186ac53966d1a86af57d2"
     },
     {
       "id": "kidapp-chocolate",
@@ -948,7 +948,7 @@
       "row": 5,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-chocolate.png",
-      "sha256": "76762476db0266c732cd3281d28b9a4601adf1395921384705103b35fafd5957"
+      "sha256": "6fbac4ea036524b31f7af22e90e13e1f6f5267b6a129944570e4d2b97d161ed9"
     },
     {
       "id": "kidapp-cucumber",
@@ -960,7 +960,7 @@
       "row": 5,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-cucumber.png",
-      "sha256": "1c2344f98ba0962818de1a73674cd0eb3b253220f5f4cbe3c399235d81e0bd8a"
+      "sha256": "ea9a7bbe99c82448d37fc78e902c91a03aa47c566f9388fb3d9691b372459895"
     },
     {
       "id": "kidapp-eggplant",
@@ -972,7 +972,7 @@
       "row": 5,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-eggplant.png",
-      "sha256": "a82531a294dd542753a5fa7afdbdacb1cd6e445e66fa89ac91c533cddea7108a"
+      "sha256": "18e06601f8d33eb5be4f6b58747b6e6b38a4e11c7eee961ead37d4928d58521e"
     },
     {
       "id": "kidapp-honey",
@@ -984,7 +984,7 @@
       "row": 6,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-honey.png",
-      "sha256": "aa7c8218dba8e0aa88f3791b9d43ecb92069183e3b1b0e5ba39b73c0e6ed807a"
+      "sha256": "468bf1225b56e07e5fc4889083fb2898b9fe4701abe3fc870e867eb3f16bef52"
     },
     {
       "id": "kidapp-hotdog",
@@ -996,7 +996,7 @@
       "row": 6,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hotdog.png",
-      "sha256": "ce5a0de9132c04b8b08af971ee5b4edc5aaa1d0446885bd81d9a0297312620c5"
+      "sha256": "1eb346b78b1cd69bc634274c04a31adc13197993fa25cbff7ddb34fdfbe39c9a"
     },
     {
       "id": "kidapp-mango",
@@ -1008,7 +1008,7 @@
       "row": 6,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-mango.png",
-      "sha256": "d38eb39720b9d1436434170379d3548089a6c8bade9b672c10351aa51e80ee85"
+      "sha256": "39d38eaa72e3659fc1f5663fc158262e11c2eb00b3c72428f27a26b950608584"
     },
     {
       "id": "kidapp-onion",
@@ -1020,7 +1020,7 @@
       "row": 6,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-onion.png",
-      "sha256": "e0bc490686b19df7d59da9593c8b4e56ae82f65c82a7c728563e0a2be0f5188d"
+      "sha256": "b31055bfbb639eeb1a53018d7347030f9259be5b342ab9d4323b31043f41f5e2"
     },
     {
       "id": "kidapp-popcorn",
@@ -1032,7 +1032,7 @@
       "row": 6,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-popcorn.png",
-      "sha256": "04f8328965cec88ba36d929b208c94bec7023e159b4fb7b573f1310c0e4c8793"
+      "sha256": "a94250c2be77dde5967361f5c4c7971bf264f61e6e8fd335ed75cb46d1b18c5c"
     },
     {
       "id": "kidapp-pumpkin",
@@ -1044,7 +1044,7 @@
       "row": 6,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-pumpkin.png",
-      "sha256": "9029868107cab1d9c30af00d7950a6cb5469192b498d79ae8b2922cad077cf43"
+      "sha256": "5b0591fb7f01254ac29bb50aab622387c45ee2949a2937f83a98c937370b6d12"
     },
     {
       "id": "kidapp-sandwich",
@@ -1056,7 +1056,7 @@
       "row": 7,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-sandwich.png",
-      "sha256": "b36eaaf52b0cf659cfc9a24e96104bdd4faee15119a4f77972f24d17fe7df1f8"
+      "sha256": "008923886d3ef0e38af2185936305d734c10ea9543563ccd22ab80850773725b"
     },
     {
       "id": "kidapp-rainbow",
@@ -1068,7 +1068,7 @@
       "row": 7,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-rainbow.png",
-      "sha256": "57574ca22f1b3c8195d4b97da07178b945a6452f3377628a702983b9ddbdcebd"
+      "sha256": "5ac32de7e61e2ac747bbdf1c9ce76606d9b3fb045bad0681b6fc5afd788bf89e"
     },
     {
       "id": "kidapp-rose",
@@ -1080,7 +1080,7 @@
       "row": 7,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-rose.png",
-      "sha256": "8d3a2751c9af0f776ab66ca5afa2ce94303ed7b1fafc1d53328b2703c80d232b"
+      "sha256": "fa1589b8a6a40b55b76adf405bdac26d6ae6d0500f2dafe40481dd2e9c2b6bfc"
     },
     {
       "id": "kidapp-sunflower",
@@ -1092,7 +1092,7 @@
       "row": 7,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-sunflower.png",
-      "sha256": "526b40fee6af33cd1e077d7e0bac28be4ea0e1ac3b00e5cb4460bbb9eb4d9385"
+      "sha256": "613fea71815c039dba9096d5cf6497d07459bb3ad7444b0c0a93d73bd1d1065f"
     },
     {
       "id": "kidapp-tornado",
@@ -1104,7 +1104,7 @@
       "row": 7,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-tornado.png",
-      "sha256": "98ccb429f59ed85fcc4de8139918546c1105029c035e21606855673a0ab01122"
+      "sha256": "69f68e2038b00dac41f80e0b92a6ef486c09e36d24b16ac2cf9349c5b0b558ac"
     },
     {
       "id": "kidapp-tulip",
@@ -1116,7 +1116,7 @@
       "row": 7,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-tulip.png",
-      "sha256": "c485d712c93414b02ece305376cfe6b51a29be0205070f906d2b482ddb7f0023"
+      "sha256": "2e4c4a5fd96623bee485ed6232aa6d8fed6eb83846ff68e7ac019ac9965537dc"
     },
     {
       "id": "kidapp-volcano",
@@ -1128,7 +1128,7 @@
       "row": 8,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-volcano.png",
-      "sha256": "e493aae36d148c1b862fc6e294a9fa015040ce11f32505c4368509e4b3bdd8ff"
+      "sha256": "955609ad29aea0ca64042817c308bca3194850e85b98faee1125b947aa2fed35"
     },
     {
       "id": "kidapp-planet",
@@ -1140,7 +1140,7 @@
       "row": 8,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-planet.png",
-      "sha256": "f3e050be90f8e02c4bcac7b4390ae8cbefc9848d67d7dbc6028e5a2c4c433e36"
+      "sha256": "230940adb9597e476bb19b64547bf303c5eeb21bc7712fd7559e6fe02ec9f2b2"
     },
     {
       "id": "kidapp-earth",
@@ -1152,7 +1152,7 @@
       "row": 8,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-earth.png",
-      "sha256": "6f68cfdd14ec3ee4035c1bfa3a49ea59d16e57f1cfd1e0cff0f1dd613581b6fa"
+      "sha256": "2adc6aadeac64adf6ecddc3a7ee2dedd0656e6808029f2e72a743db625319e4a"
     },
     {
       "id": "kidapp-wind",
@@ -1164,7 +1164,7 @@
       "row": 8,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-wind.png",
-      "sha256": "08d1783855bc249177501068635388ccc8e057244637a5977d7c99c7fb8b4427"
+      "sha256": "e3b6bbdb9a4658011c72d8e8ce7737fd166cb52ae271f828503b2f48efddeb35"
     },
     {
       "id": "kidapp-piano",
@@ -1176,7 +1176,7 @@
       "row": 8,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-piano.png",
-      "sha256": "a9bcc0d84ab1bda1f9666b74f9690012a57d374b368efb562cc7ca7cc869b726"
+      "sha256": "3c9916797df797671e8306a59fdca6ae19b3af7bb2c6ded9e552305fa78bd96e"
     },
     {
       "id": "kidapp-drum",
@@ -1188,7 +1188,7 @@
       "row": 8,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-drum.png",
-      "sha256": "d3c3e0c6d8c736a668a129a85a0aa181d13a5cd928073d9d424d5b1f3fd77467"
+      "sha256": "9c5146b1d31812e777ea4ac638529853d276fd3621cbc5dcd41e191a55fff75f"
     },
     {
       "id": "object-clock",
@@ -1200,7 +1200,7 @@
       "row": 1,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/object-clock.png",
-      "sha256": "7baf2085edb06fd7613fed15557bc824b1cad7235703798250c9c2091a682210"
+      "sha256": "d441b834c3b19ff0e11b4632af1c1540868e9c85cc990b7db594c7db19d29312"
     },
     {
       "id": "object-phone",
@@ -1212,7 +1212,7 @@
       "row": 1,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/object-phone.png",
-      "sha256": "cc30d72d26daeab924679600a4be8d39874e226e4260349d37bee1fc8ef9b6a3"
+      "sha256": "2a075a4cfa4757b0de04e3b056006b0a81319290031cbefc7a7266a8865d4308"
     },
     {
       "id": "object-key",
@@ -1224,7 +1224,7 @@
       "row": 1,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/object-key.png",
-      "sha256": "c39c2e6e17b99a2075033520043206cbce643278ec540d8908616fbdadaf641e"
+      "sha256": "0a4695fdec573046afe341dda06ceac3176cf78cd81e47928145d513c644dc62"
     },
     {
       "id": "object-car",
@@ -1236,7 +1236,7 @@
       "row": 1,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/object-car.png",
-      "sha256": "c6a97a323e7426505976a665b1f77197c1e2f9a92a96dabdfc763097d0b04e55"
+      "sha256": "86e74aaa3df87f61b8c63e89c6042c61fcaa6882f32d73f541b675c11470810c"
     },
     {
       "id": "object-bus",
@@ -1248,7 +1248,7 @@
       "row": 1,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/object-bus.png",
-      "sha256": "8e4f6917f1e81b6292de0b6e024ebe43fd655b6be7562c854b32cab721256637"
+      "sha256": "84ecd4456da2de7f264c3db2545546157cd460efe8506da2b1cfc5dd9498173b"
     },
     {
       "id": "object-train",
@@ -1260,7 +1260,7 @@
       "row": 1,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/object-train.png",
-      "sha256": "c01294670b13a12c9db4427d6346fdf79ff5826018f4c16959e0752bc7d061a1"
+      "sha256": "4f55b11f9f0e429614778b3060f934cb827e351a4d597f34f117762ed449c217"
     },
     {
       "id": "object-bicycle",
@@ -1272,7 +1272,7 @@
       "row": 2,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/object-bicycle.png",
-      "sha256": "e9ff94904671b8f5d1bd3d897ef8b34575de48489eca6941e16e4997efbaf2c1"
+      "sha256": "211eeee557bf89d34fb38968bf1c32802501663e145fe9cd38298e8627a3f13a"
     },
     {
       "id": "object-boat",
@@ -1284,7 +1284,7 @@
       "row": 2,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/object-boat.png",
-      "sha256": "2daa85cd20bb1890f879b4f4fd47db7abeac8938477515f823befee3f6e4eb4a"
+      "sha256": "10fddd19332a2f49781e8d9c81994c748be2b255d345f91bde8fbe5241ae3647"
     },
     {
       "id": "object-airplane",
@@ -1296,7 +1296,7 @@
       "row": 2,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/object-airplane.png",
-      "sha256": "abc4fc71331618cbdac23490e59d51bbdc8e8e1c697c879e98697ce66ac73370"
+      "sha256": "e1c367ad4b4ac4094f6073cf9af2c6ee80fe5834f27146ea1ce935f75dec9d94"
     },
     {
       "id": "object-camera",
@@ -1308,7 +1308,7 @@
       "row": 2,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/object-camera.png",
-      "sha256": "ba4cdb26e1551e3b50c4abdaceb3f1ba1df24e357f34385c42142a214755f051"
+      "sha256": "46895146ab03c855d8d4f3ecbffa8cf18308d667e929eaefce628ff85fa96573"
     },
     {
       "id": "object-scissors",
@@ -1320,7 +1320,7 @@
       "row": 2,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/object-scissors.png",
-      "sha256": "93de567dda9243c6a224d97bc347cf6519a2ee13adb1f0e57ab75efae12ee3f0"
+      "sha256": "40f10e99654a65e6709de4099160d11a5686083e26be521962859c2d0fe3188c"
     },
     {
       "id": "object-crayon",
@@ -1332,7 +1332,7 @@
       "row": 2,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/object-crayon.png",
-      "sha256": "1570807c7cce2eb32919c5d27c08f6dd361ea99e7c58f6ecd1fc178563e4bc56"
+      "sha256": "973160b7f4a6e11d003ea04999aa35350301b30d3c62a832331f217bb8ae6713"
     },
     {
       "id": "object-light",
@@ -1344,7 +1344,7 @@
       "row": 3,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/object-light.png",
-      "sha256": "73f0c04d6a1d1df054901f444055d7b234a2a6b735ceae4b75d79cd38dd1ad61"
+      "sha256": "cf09087094bbe70740dc2b43a0e78ea8d3d085c49eff1d4b9ecd3dad95d10f94"
     },
     {
       "id": "object-spoon",
@@ -1356,7 +1356,7 @@
       "row": 3,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/object-spoon.png",
-      "sha256": "fce45b12f8af135aeadd9102302b39c47beb0ebd39e1b0973f01b5ddd132ec8b"
+      "sha256": "8a956b05c930c12a9d24c3a1860a7799a6c2ba0bc6153e8cb9f59b2f55eaab45"
     },
     {
       "id": "object-fork",
@@ -1368,7 +1368,7 @@
       "row": 3,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/object-fork.png",
-      "sha256": "b11ddd78862382a73dd27950e6b79d61d7b2c54613e6538d663cf66b1082a2a5"
+      "sha256": "4a4811147f6564b98d89106d8012ebf0e607d1bef168cb119c798246bec96b30"
     },
     {
       "id": "object-balloon",
@@ -1380,7 +1380,7 @@
       "row": 3,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/object-balloon.png",
-      "sha256": "a457b0688c91e0880bd6bc8a642ddf5fb545820b7ea9d7afeda4ea9e4f0ca76b"
+      "sha256": "620cc113effb28ad14d649e43954d928b72f67e46c0df2fefb3360d5da2ba9af"
     },
     {
       "id": "kidapp-bed",
@@ -1392,7 +1392,7 @@
       "row": 3,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-bed.png",
-      "sha256": "9dfd798e0b5ebeb5c0ca352a62971e1798e3ca34d227bc760515c1a526d11189"
+      "sha256": "3efcf057679ff45b437d7f77d9998b6345c0810af7d089625e3b7f6919d15486"
     },
     {
       "id": "kidapp-bowl",
@@ -1404,7 +1404,7 @@
       "row": 3,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-bowl.png",
-      "sha256": "33060390646d2751effbb253df538b82c306aff675b6ced62eab121b55f138f2"
+      "sha256": "770b079b44136ab3cae84c93c65af6215bd8efe393c6700bdccacc6aa1328e76"
     },
     {
       "id": "kidapp-desk",
@@ -1416,7 +1416,7 @@
       "row": 4,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-desk.png",
-      "sha256": "381e3f9fa185cdf58f19aa89a3a385a6583cc643796e087eba2892f5c89d4275"
+      "sha256": "bd2aa09e660e2181cc5afb62b5329309430de192084d9c264ef624e0ed1d717e"
     },
     {
       "id": "kidapp-door",
@@ -1428,7 +1428,7 @@
       "row": 4,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-door.png",
-      "sha256": "70cf07e644a3722023a6b3213595dc97669944755dc64c84ecc1b97b45ec3841"
+      "sha256": "3a5929608bfec084a3b011dc8f73c475391cfe5427a8861d49a79103dc6d1e97"
     },
     {
       "id": "kidapp-house",
@@ -1440,7 +1440,7 @@
       "row": 4,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-house.png",
-      "sha256": "517c1232f7ad9cf7a589d814c06e8f79fe1dec62a39ae56b061adf16381db852"
+      "sha256": "798b51060c873cc0caf514de10716aaa6f0031cef5e057b3b3a5b00d446cfa33"
     },
     {
       "id": "kidapp-knife",
@@ -1452,7 +1452,7 @@
       "row": 4,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-knife.png",
-      "sha256": "86ff66e69dfe6b4ede33f4d1291fa34392e3c5503f9488b3f53da1fd43ab208a"
+      "sha256": "855587c9b89fbd416e7a5d561ff27e4415102b58a5136dfe8ee402634130d15c"
     },
     {
       "id": "kidapp-plate",
@@ -1464,7 +1464,7 @@
       "row": 4,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-plate.png",
-      "sha256": "0cec3e5380c75fb8d788ce7bdf021e91be382279bdef4a580896dcd0258b9141"
+      "sha256": "aeffb31ab0ff668cd8c7a918669782b77f492882651b90d50a781f1f728827d9"
     },
     {
       "id": "kidapp-window",
@@ -1476,7 +1476,7 @@
       "row": 4,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-window.png",
-      "sha256": "18e8b9df63211478807f080102c8b4d97b169de716e65bc91fd3438d9c02479d"
+      "sha256": "0c0694dc052e619df5b771860102acdba4a4a08f515f733c3da1b53f900e8582"
     },
     {
       "id": "kidapp-eye",
@@ -1488,7 +1488,7 @@
       "row": 5,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-eye.png",
-      "sha256": "f06193a40f73c69551ee98017f0e8a167dbb88ca0a9d11dbe756e4a48b0c668d"
+      "sha256": "81ef4efaf95b02d734c4444d433a338d6fab983e5ff859d6d3a9899e92811cf9"
     },
     {
       "id": "kidapp-ear",
@@ -1500,7 +1500,7 @@
       "row": 5,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-ear.png",
-      "sha256": "3994d56b2fea8a320f5b4da61e2a582ffe8344f74b565ac6350bb38852ca60c9"
+      "sha256": "45f97a7572f684abb88ab2dfbcef458eaed666e139aa5544026f57d834c7f8e6"
     },
     {
       "id": "kidapp-nose",
@@ -1512,7 +1512,7 @@
       "row": 5,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-nose.png",
-      "sha256": "7e00fb11a70717d0992277559d289930640a1407df6eb12eb2e42525d667841d"
+      "sha256": "b6d1d24d8ef1f69408e2733cc220f51ed3155ae94fc82cf7c70b310cd752c459"
     },
     {
       "id": "kidapp-mouth",
@@ -1524,7 +1524,7 @@
       "row": 5,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-mouth.png",
-      "sha256": "e749db6e2c8939f5dee5f653b423e58167e050093b1834c5da06cc0a134c2cf8"
+      "sha256": "d07238c27c7c5cb7e84fcb93a6fc1217a8c1b25c4318de1276260996136b6581"
     },
     {
       "id": "kidapp-hand",
@@ -1536,7 +1536,7 @@
       "row": 5,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hand.png",
-      "sha256": "8b09d142091fc04aa7a728a86c8f8491af4ec5bac11d3ac79f47e3353c77f85a"
+      "sha256": "a537a7d8c1179b425fe7888ec58117386ce8bb635f28d73abebac81b8a22b8b6"
     },
     {
       "id": "kidapp-foot",
@@ -1548,7 +1548,7 @@
       "row": 5,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-foot.png",
-      "sha256": "9c79c97c273f76a543d31e4ecfb7a8452b470ea0ed78e691cf6ee3f00700b830"
+      "sha256": "1971e6726139cc9f07487fbf778556aa1f898a58e0108ecab19627b7bb1d5d1c"
     },
     {
       "id": "kidapp-sock",
@@ -1560,7 +1560,7 @@
       "row": 6,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-sock.png",
-      "sha256": "39d28af2e21e8029d79d8635f258ce6487673d48150f5a0a2b17dfaca4597ac1"
+      "sha256": "04b2b35fd787a88e21c1fd7660b45c91ada949ba0a6740eb7998eddf574a69fd"
     },
     {
       "id": "kidapp-shirt",
@@ -1572,7 +1572,7 @@
       "row": 6,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-shirt.png",
-      "sha256": "4434931cf1819126841d9685811562ba61a1c8e864ee953f75c7342708e25f59"
+      "sha256": "98e561417f705c4d75d4373082c41cdfac27ea02863378120f174a56ec79ac76"
     },
     {
       "id": "kidapp-pants",
@@ -1584,7 +1584,7 @@
       "row": 6,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-pants.png",
-      "sha256": "8fc21f92508719bb29aaf74d8b5c484877bed95f44b7670ceabbedf5a337ef20"
+      "sha256": "c703fb845e54f3b04355306cfacadc9c998de6e22fe0a935d66626639e28fa76"
     },
     {
       "id": "kidapp-dress",
@@ -1596,7 +1596,7 @@
       "row": 6,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-dress.png",
-      "sha256": "a712b240beea7c43b0282ef93ee46906b624d2882caae971eea875350529db3e"
+      "sha256": "f8a71960c03e267ae381b3340e0109607b97c23d39c030b7d0a268ce7aa3ffe5"
     },
     {
       "id": "kidapp-lamp",
@@ -1608,7 +1608,7 @@
       "row": 6,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-lamp.png",
-      "sha256": "807c3a771d960892526ee4311d563af9eb3638ec44f1497b6d866a851ef936fd"
+      "sha256": "b4f28609dd2eca487991827c6de903f16fbee54966caee2e453fdad15909ee7f"
     },
     {
       "id": "kidapp-tv",
@@ -1620,7 +1620,7 @@
       "row": 6,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-tv.png",
-      "sha256": "ff3d509a25a94e4cf65d6e1d9cb5c5996d34c521cbe413b103f3f1cbfbf38f8d"
+      "sha256": "05a3079eeda90e36aeaff2baa5df105222d897c4b4a36760c268184332a36438"
     },
     {
       "id": "kidapp-sofa",
@@ -1632,7 +1632,7 @@
       "row": 7,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-sofa.png",
-      "sha256": "a70d2161c4e71863d1143176ff160b6af05383b9d7b5883e0cb775c75a32aff7"
+      "sha256": "72a562ce82e1016f75b1bafcf769c75a981c045eb9f5cf19c70e1bffe90928de"
     },
     {
       "id": "kidapp-pen",
@@ -1644,7 +1644,7 @@
       "row": 7,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-pen.png",
-      "sha256": "ddfbd20f6f57f1631ba0efffd6d0c07a9885005c7dfd5c3aa5690643f390dc8e"
+      "sha256": "b366189f4c3b59f3210b081a6f930b709e6a2b1958dc86f7a682bbf38a3e0c28"
     },
     {
       "id": "kidapp-paper",
@@ -1656,7 +1656,7 @@
       "row": 7,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-paper.png",
-      "sha256": "4cddac5be59e399611d9ae1d40b4f08c69255bc55bf50484f8345ea64ce8bca5"
+      "sha256": "a9ce722aef7b76442afe5af5dca5a9b565090f7da16a6bc7b17a0765ad27eac2"
     },
     {
       "id": "kidapp-bag",
@@ -1668,7 +1668,7 @@
       "row": 7,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-bag.png",
-      "sha256": "bfd19a25042d1af2b8f866adb6c61b7860fc4414f7fc816eca8ac85eedba98a9"
+      "sha256": "9d9a602878303bfe3df5d5de91ee16ddc011c3403f0a5f2b1ebd3f0b452cdeaf"
     },
     {
       "id": "kidapp-truck",
@@ -1680,7 +1680,7 @@
       "row": 7,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-truck.png",
-      "sha256": "010849dfa08744a4091819917a6c1098a5f40c9a8e0d17a43b27d5fae66027e7"
+      "sha256": "af9eff8d78ffb639b1b8aa3d1a11240f1c398bf2576f8b20361dd0a338539682"
     },
     {
       "id": "kidapp-taxi",
@@ -1692,7 +1692,7 @@
       "row": 7,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-taxi.png",
-      "sha256": "142fafe6ba9d5027c0134ca7c308b6138fc52c5165d266b35033a86408b03d2a"
+      "sha256": "df8b7e175612def2d6b924f92f72a84e6f82a3346bae62e010dd3d7b68ed2984"
     },
     {
       "id": "kidapp-doll",
@@ -1704,7 +1704,7 @@
       "row": 8,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-doll.png",
-      "sha256": "d405d64d49f6255647c56920b4caaa086f88e5cf1a67f07a5c6d45d0cf7404fa"
+      "sha256": "58fedb2d2120a31644729bd9a8714b13dd9b14a5487a0d54fe03445a69388229"
     },
     {
       "id": "kidapp-robot",
@@ -1716,7 +1716,7 @@
       "row": 8,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-robot.png",
-      "sha256": "d39b2047ba234878f03bc915a81fd2d12589df5f8d14002d98a12098d1a6c51e"
+      "sha256": "e029c011ab942ae771c0f499f20c2276473acdf4da831827e33dd11880a8e2f8"
     },
     {
       "id": "kidapp-telescope",
@@ -1728,7 +1728,7 @@
       "row": 8,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-telescope.png",
-      "sha256": "40a4337fcddf0577b3e23a814c0c26fe33d4f7ced4c4fc32a43bf972263c6e8e"
+      "sha256": "652d539c4c2708f796557cd41f83b72b9e07262b6ff6eca2eacc416c6e7ecd79"
     },
     {
       "id": "kidapp-microscope",
@@ -1740,7 +1740,7 @@
       "row": 8,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-microscope.png",
-      "sha256": "5131f8cc64922f80c2872d512924d792498e33d74d1fc5b2214409c2c063e10b"
+      "sha256": "3edaa2c59d5b474cfc06dba4a320423c042f91742105a33d75e459d31523b929"
     },
     {
       "id": "kidapp-satellite",
@@ -1752,7 +1752,7 @@
       "row": 8,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-satellite.png",
-      "sha256": "9609e63b27aaf7be615ac1dc71d6ef9654ec94a9205785505f7630fed4718035"
+      "sha256": "95f74718ac92a23a1588d0e6d8d56db2782c54a94a1d89cba24d19b8d916daa2"
     },
     {
       "id": "kidapp-parachute",
@@ -1764,7 +1764,7 @@
       "row": 8,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-parachute.png",
-      "sha256": "84477d82076203ae758b0c11b6b9d9ca2834e862b2cacea2f8b616842c4d2226"
+      "sha256": "01231a3b35b7e015d38eeb9fc4be7e1af8d29f3e26544db1e5d16f8696836781"
     },
     {
       "id": "kidapp-boomerang",
@@ -1776,7 +1776,7 @@
       "row": 1,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-boomerang.png",
-      "sha256": "a9170478b67723f1e2ea2eadd578ac27dd584babb4bd278297b71d48f79e51c8"
+      "sha256": "3a1cddbbc34bb50552849d0bfefbe5ba3a00833c39ffbad0bfa2456023604bcc"
     },
     {
       "id": "kidapp-compass",
@@ -1788,7 +1788,7 @@
       "row": 1,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-compass.png",
-      "sha256": "610a2248e8a125063fd64c7a685a4b65383515692116652ef737b0c3c9c10bb3"
+      "sha256": "81365321c9310ded01e979440797adafe4f1ef40573f05bd5708f2b301acc6d4"
     },
     {
       "id": "kidapp-magnet",
@@ -1800,7 +1800,7 @@
       "row": 1,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-magnet.png",
-      "sha256": "c6327a8f89592998ff9ac82db6ee5ad8dbc8a67143f14cf9175d797233d28c7c"
+      "sha256": "a48009d33caf6ee11a822f28023ea31a46b62fb6972f8f7a951849ee67af9d8d"
     },
     {
       "id": "kidapp-hourglass",
@@ -1812,7 +1812,7 @@
       "row": 1,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hourglass.png",
-      "sha256": "5a0cccd21eff0d94b8e1b2bee72c8e96eeee2970e611bef5e48935f32fb149b3"
+      "sha256": "0229b88b6a1a243d5cf43bdb45c9a7b9d67dd8fb62b3af22551a1bc4f64f0c90"
     },
     {
       "id": "kidapp-abacus",
@@ -1824,7 +1824,7 @@
       "row": 1,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-abacus.png",
-      "sha256": "a76c18ec8b881e7ffc4db5f092d849ee9f83b809086d5d7d7abec66fc5fc1b11"
+      "sha256": "b61089be882221f958bd04cc2750922457c1dee268408304639d384072ac0de3"
     },
     {
       "id": "kidapp-police",
@@ -1836,7 +1836,7 @@
       "row": 1,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-police.png",
-      "sha256": "065310dbed3e6d045d71c65629717c62b5b1d4f5ef841b8f0e1c14a23f31da22"
+      "sha256": "a1b6688091528a0f58e55c48c2b9d2b0ee522b9ff8770cc9bbdccdce288d232e"
     },
     {
       "id": "kidapp-school",
@@ -1848,7 +1848,7 @@
       "row": 2,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-school.png",
-      "sha256": "ffd2c94d6a8978e98508939dac7e6a602d9dd33dba1b63312693b4dacb6cd3fa"
+      "sha256": "de8e2851d7af438acef84aaf39689f776fafc8cf984d8258df3102cd19bf671c"
     },
     {
       "id": "kidapp-hospital",
@@ -1860,7 +1860,7 @@
       "row": 2,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hospital.png",
-      "sha256": "43ef8771bbd7e0436824b4bb9e92d5e6030573b1f61282ef7155bab3e1d1ffa7"
+      "sha256": "cae48c44a4995f85d85638c5173ed6679540eaaa3614f31e6c0522d9b6d04fa3"
     },
     {
       "id": "kidapp-bell",
@@ -1872,7 +1872,7 @@
       "row": 2,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-bell.png",
-      "sha256": "828c0a00d9f60ff4ac9a554bb24a470c8cd297e8b1eaf68c237847ce18be2b9c"
+      "sha256": "38cccb42849afecaabfe80e97a7e01dd0624543864310a210e7c8aa932f083cc"
     },
     {
       "id": "kidapp-hammer",
@@ -1884,7 +1884,7 @@
       "row": 2,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hammer.png",
-      "sha256": "561884796d7b1604216059c058f52866076812a4427449893e285fb7d00804e8"
+      "sha256": "239833160ae94c371d9acc87dd5cab5d14c3f65856a07cfbb33293224f33ce00"
     },
     {
       "id": "kidapp-helicopter",
@@ -1896,7 +1896,7 @@
       "row": 2,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-helicopter.png",
-      "sha256": "c5d6902b0aaaeeb94da233ca9efdd899b00192033a7d6db88995833156e3f58f"
+      "sha256": "16c1939eb33532ecc70c0b2b09167cdfa54b134de7eb270942c2121bf018e1c3"
     },
     {
       "id": "kidapp-ambulance",
@@ -1908,7 +1908,7 @@
       "row": 2,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-ambulance.png",
-      "sha256": "e19312e10bad0b1a46f5061c3da66103a82cf0cd69d4fb4abc0640c646998775"
+      "sha256": "80bc5eecd5edabbd04cd427d42e4592d462b6eb287392a80e9e8abc3860e0fac"
     },
     {
       "id": "kidapp-firetruck",
@@ -1920,7 +1920,7 @@
       "row": 3,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-firetruck.png",
-      "sha256": "846f6be33446d1c5637a7cb61571ff99a45c61c568f99531ebed67d436e41a29"
+      "sha256": "407f4931cbd85cc02ce29b390ffbb89c568be80acdcd61414e367ce14db2061e"
     },
     {
       "id": "kidapp-motorcycle",
@@ -1932,7 +1932,7 @@
       "row": 3,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-motorcycle.png",
-      "sha256": "0f064d0c1015490ec2fa85f31b0e2b96c99a6b791a9dd9f330046c5b5bc3c6b6"
+      "sha256": "9bafef4c20b2cfa3921fd4c8946e629383b229c524fd343af6ffe289eae7ccc5"
     },
     {
       "id": "kidapp-rocket",
@@ -1944,7 +1944,7 @@
       "row": 3,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-rocket.png",
-      "sha256": "7cb28fc2840c393051021aa848e66572b6985e0109839c94baf7478c902484cf"
+      "sha256": "d9b0f9b528784001d384dc65e0437fc4fc9a8db097689d07d5650a2448e929ec"
     },
     {
       "id": "kidapp-blue",
@@ -1956,7 +1956,7 @@
       "row": 3,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-blue.png",
-      "sha256": "aae6676da4f1e9217d062a7c4435b72c0449b6d8d36aedeb8dbde05e2bc555c5"
+      "sha256": "1caaa91086c56e84b36070ba9250554618f413b11a74ffe3495f8dadb59f121f"
     },
     {
       "id": "kidapp-green",
@@ -1968,7 +1968,7 @@
       "row": 3,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-green.png",
-      "sha256": "6a14961c4944065849b1c63335d9d41fdd070c305001edcd16dbf40531947397"
+      "sha256": "09d9ff2b4b3ca78d73df282ebd1efc9e084ad99b403bd364994863fc348a12be"
     },
     {
       "id": "kidapp-red",
@@ -1980,7 +1980,7 @@
       "row": 3,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-red.png",
-      "sha256": "53ac530e9961ccc9e6e04aa3d41c0661774c81f993f2451eb06b53aa1e761bbf"
+      "sha256": "c0936366df00bc1670d446efbc5128a5f8a815f8d25a80d63893e8d9aecf032b"
     },
     {
       "id": "kidapp-black",
@@ -1992,7 +1992,7 @@
       "row": 4,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-black.png",
-      "sha256": "b4db8672538eed071634d3c39afcf0a0ac509480f2efc395f869c3c64545ab92"
+      "sha256": "c696a98e8c563e544daf73adbebe430dfe67774a015170d2aa7de5a8a916b248"
     },
     {
       "id": "kidapp-brown",
@@ -2004,7 +2004,7 @@
       "row": 4,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-brown.png",
-      "sha256": "deed2e72b5a12c2c22f8f8850b2b8a0cea4012526fb352affa1c137554f5597e"
+      "sha256": "6ed3318e2f8de0fd66a099e7119ef330ba0b35f88d89a7c52fb79c2026baef49"
     },
     {
       "id": "kidapp-gray",
@@ -2016,7 +2016,7 @@
       "row": 4,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-gray.png",
-      "sha256": "5be89d4e9c366009f9775eb0518330a808a56d6d53dc42803d8d1d698186c8a6"
+      "sha256": "c88ed89029b7aea29610e425207b8f16788d3153f048f742dbb8e988bedbad39"
     },
     {
       "id": "kidapp-pink",
@@ -2028,7 +2028,7 @@
       "row": 4,
       "column": 4,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-pink.png",
-      "sha256": "637825594864f17696391bc6d5afd5cf3a6b93b2869e2e78e03fb66e270102af"
+      "sha256": "16598da9cd8ccb895fb047213da0b08a4baafde0b0d4c3cacc1d326c86fad8b5"
     },
     {
       "id": "kidapp-purple",
@@ -2040,7 +2040,7 @@
       "row": 4,
       "column": 5,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-purple.png",
-      "sha256": "b49d509e981a1c4b53070f6c9378c05ee4865969ed965896e926d7a9dfcfeb5e"
+      "sha256": "cb3afc475f303038aea3bf9cd83e412df73f1ca9c6f5006c7c00b2b592efd55b"
     },
     {
       "id": "kidapp-white",
@@ -2052,7 +2052,7 @@
       "row": 4,
       "column": 6,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-white.png",
-      "sha256": "2f6248447f4dd19e3cef6b8b35854315620bc1d11c97a6f5caca6283612a0e50"
+      "sha256": "5069f15b442d6068a9d42692b99c864a5eca651414223bc237cf8d1911ff08c8"
     },
     {
       "id": "kidapp-yellow",
@@ -2064,7 +2064,7 @@
       "row": 5,
       "column": 1,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-yellow.png",
-      "sha256": "900098f37540d1518513cc768faf170ad1c080c997570b6c2c8cc88fc688b5c9"
+      "sha256": "26a8bb14105b6377d404348d1a891bb760707dba5c76b423cd3925230aecc6f6"
     },
     {
       "id": "kidapp-violin",
@@ -2076,7 +2076,7 @@
       "row": 5,
       "column": 2,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-violin.png",
-      "sha256": "d58ba308fbc2097950e4a8dfc721085c518255d04715368e91d1375662aed061"
+      "sha256": "d395d53e23e7a40d43a9a98eef9c4d5c0e5d2705723a193ad2f91117ee1ad2fa"
     },
     {
       "id": "kidapp-king",
@@ -2088,7 +2088,11 @@
       "row": 5,
       "column": 3,
       "image": "assets/rebuilt/emoji-6x8-v1/kidapp-king.png",
-      "sha256": "5ffd59a33c53fe4f68b8163b6096ad066322f7091e2b6b252dc8b912f59c0af5"
+      "sha256": "fcee9197efdc5e7c2a2b1819f63e1340dddc8c88bf5692a2c374d5ae09cf9356"
     }
-  ]
+  ],
+  "crop": {
+    "tool": "tools/recrop_grid_sheets.py",
+    "method": "grid-line cells, edge fragments removed, trimmed square"
+  }
 }

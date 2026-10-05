@@ -37,7 +37,7 @@
       "sheet": 1,
       "cell": 0,
       "image": "assets/rebuilt/new100/new-goat.png",
-      "sha256": "c10c5e9bef9ad7aec454e323c0117d347b990f48e13c4b07b522918d396f8a15",
+      "sha256": "ab2950172ed05c989859c313082beb4a18990935e98b3f5f36c3835aa64ea11e",
       "status": "generated-candidate"
     },
     {
@@ -46,7 +46,7 @@
       "sheet": 1,
       "cell": 1,
       "image": "assets/rebuilt/new100/new-deer.png",
-      "sha256": "0587d10c66c618b2ec607f24331f299c45b730d458444f2f165b4775b6ef6a16",
+      "sha256": "0b69a581315ea63032414f00715350dc578e3b3090690482afc35fc041c25309",
       "status": "generated-candidate"
     },
     {
@@ -55,7 +55,7 @@
       "sheet": 1,
       "cell": 2,
       "image": "assets/rebuilt/new100/new-goose.png",
-      "sha256": "138ade3b2fd8ea82c8d59563825cab1da99ac974019e0c2239f5facc8b656442",
+      "sha256": "186a57298b9455b00f3a44386d3908d08d67e2503f12dd31ae8f2b6a4374c5a2",
       "status": "generated-candidate"
     },
     {
@@ -64,7 +64,7 @@
       "sheet": 1,
       "cell": 3,
       "image": "assets/rebuilt/new100/new-hen.png",
-      "sha256": "f320559274bf88c2e361cda94c7350f1d64ad57e0287962cee7db80b76492948",
+      "sha256": "fd45fd312c9ac19540eeeb1cbe5f718d1f96f722452775e995199b5c0dafc558",
       "status": "generated-candidate"
     },
     {
@@ -73,7 +73,7 @@
       "sheet": 1,
       "cell": 4,
       "image": "assets/rebuilt/new100/new-donkey.png",
-      "sha256": "dc70681c99efdf061e2c6d9a71f378eae186ffc09e49f90e73186e1c18ed70fb",
+      "sha256": "4a1b52b52ff80203a2597b0d27577bf2c9e11df31dc51fe60c58057ac0a52d19",
       "status": "generated-candidate"
     },
     {
@@ -82,7 +82,7 @@
       "sheet": 1,
       "cell": 5,
       "image": "assets/rebuilt/new100/new-camel.png",
-      "sha256": "13dd7931f29362c03aa4216d52350e9e4d8681fffb287e0a933f9cad4aa1b99e",
+      "sha256": "f6821306f4ed2bc3994fad8fa6c1d862002dc2a69a7181eeaf231a1446c6bb24",
       "status": "generated-candidate"
     },
     {
@@ -91,7 +91,7 @@
       "sheet": 1,
       "cell": 6,
       "image": "assets/rebuilt/new100/new-seal.png",
-      "sha256": "1155d883bd03dd7b3057d337544930b7f1b72c8add7d151b1269f86ffc0c2411",
+      "sha256": "62cefa24063bacacee40b79749fedb7d34b5a17e23f65071ccb9a4d29f68b2bd",
       "status": "generated-candidate"
     },
     {
@@ -100,7 +100,7 @@
       "sheet": 1,
       "cell": 7,
       "image": "assets/rebuilt/new100/new-worm.png",
-      "sha256": "20e7984584a3e2bba844500e6630be64fb665ea84affdebc1f623b6defd80ea6",
+      "sha256": "2bb2e36ab16a8c63b9d719d5b5c91738e998c97ac3c133cf22d18f1c898a6b1c",
       "status": "generated-candidate"
     },
     {
@@ -109,7 +109,7 @@
       "sheet": 1,
       "cell": 8,
       "image": "assets/rebuilt/new100/new-bean.png",
-      "sha256": "77a164b122e89e10b880d024e066bc5194a1ea346e755dc658004b6b60f499db",
+      "sha256": "e5240353669451ab22f3235209f3d858ed3121b08bae53d31f77b60259c76dd7",
       "status": "generated-candidate"
     },
     {
@@ -118,7 +118,7 @@
       "sheet": 1,
       "cell": 9,
       "image": "assets/rebuilt/new100/new-butter.png",
-      "sha256": "cc81d6e958fc8db9a4e5727de84e96e706eb2023750e4397fa4fb1f6f748fb26",
+      "sha256": "d3e22387f306926fa5d5e5ad60a44c11931629ef365e59033752e23e367b4b8b",
       "status": "generated-candidate"
     },
     {
@@ -127,7 +127,7 @@
       "sheet": 1,
       "cell": 10,
       "image": "assets/rebuilt/new100/new-jam.png",
-      "sha256": "c6349fab1878e814c7e5bbe8c11138fd2e774645129c406c97c021ded650945f",
+      "sha256": "7ab83b3e57e8227e42e670935285ece907fcc5654e877186e0d2a638ce376745",
       "status": "generated-candidate"
     },
     {
@@ -136,7 +136,7 @@
       "sheet": 1,
       "cell": 11,
       "image": "assets/rebuilt/new100/new-juice.png",
-      "sha256": "bd0ecc6e87f0830328dbdbd1de13b765ba54e7bb1d621f64c9427cf1ff956c40",
+      "sha256": "49e1abf8801343f870c8e84465c1143dea0481fcc0734e53c72fd1590ac21f34",
       "status": "generated-candidate"
     },
     {
@@ -145,7 +145,7 @@
       "sheet": 1,
       "cell": 13,
       "image": "assets/rebuilt/new100/new-lettuce.png",
-      "sha256": "40214bb014c3e837b0797aca4c184a4d3df090be60532a6c150b966905d02748",
+      "sha256": "1706d88076d8eae5c838b2013612877dcb96118895007ee43985c952da17a88a",
       "status": "generated-candidate"
     },
     {
@@ -154,7 +154,7 @@
       "sheet": 1,
       "cell": 14,
       "image": "assets/rebuilt/new100/new-plum.png",
-      "sha256": "a231b209e3d8f8290635698fde866397e07db09853533fe4fcc6771371f0d594",
+      "sha256": "6ce34726a6792c8e9bea7d8545aabd361d48a75de52913c86c6acae9b920253d",
       "status": "generated-candidate"
     },
     {
@@ -163,7 +163,7 @@
       "sheet": 1,
       "cell": 15,
       "image": "assets/rebuilt/new100/new-melon.png",
-      "sha256": "ac0a489ebfdeb2596c5916146f01c3948fec431bd84830dd14a72eea0d57f55f",
+      "sha256": "8cfaeec0f37353af245d177c0e7408ac21d01329b50a1dae47b9aab6eed2d3c5",
       "status": "generated-candidate"
     },
     {
@@ -172,7 +172,7 @@
       "sheet": 1,
       "cell": 16,
       "image": "assets/rebuilt/new100/new-brush.png",
-      "sha256": "3d6f74ac3ebc0c14e21823865b65084a875bb157a2ce387320762d7ddde325bb",
+      "sha256": "dafea93c96fa70e676ee4a32c6b87f16f09d7e65786176db9cbbe497cb1f2db0",
       "status": "generated-candidate"
     },
     {
@@ -181,7 +181,7 @@
       "sheet": 1,
       "cell": 17,
       "image": "assets/rebuilt/new100/new-comb.png",
-      "sha256": "c3fe4524457a0182842e1d7d4b5f2c822317b34c8c1ef8d901f67ab07b07e9cd",
+      "sha256": "168cacb7467e019633ab734cf793a993423262a77009267af661e8e7b26a4a26",
       "status": "generated-candidate"
     },
     {
@@ -190,7 +190,7 @@
       "sheet": 1,
       "cell": 18,
       "image": "assets/rebuilt/new100/new-mirror.png",
-      "sha256": "42591d3649fb137d8fbaf19068ab8d3a671e4d1a6a063470a95ac7b6e7778acf",
+      "sha256": "2d675a194a243ede4543e8ea164cd1860123747b8ded159a4071ed99e24e9f47",
       "status": "generated-candidate"
     },
     {
@@ -199,7 +199,7 @@
       "sheet": 1,
       "cell": 19,
       "image": "assets/rebuilt/new100/new-pillow.png",
-      "sha256": "2eb9824ca29793f5bf5cb9073fd9e10ab0f5b35f18f495d0ca5f42996d5c8d6b",
+      "sha256": "8e097a025537b473b7c80ed190d047096c70b8d542d3848e7532a0451081e4a9",
       "status": "generated-candidate"
     },
     {
@@ -208,7 +208,7 @@
       "sheet": 1,
       "cell": 20,
       "image": "assets/rebuilt/new100/new-blanket.png",
-      "sha256": "a003cb357598607b6a545c0c22863ce5bf872e818dd5ae3cdc55da4f4605d622",
+      "sha256": "e0adca5b347f1d7060ac034e5b5ead200f8f58fa0fea71e5f0eb658e89811e8a",
       "status": "generated-candidate"
     },
     {
@@ -217,7 +217,7 @@
       "sheet": 1,
       "cell": 21,
       "image": "assets/rebuilt/new100/new-box.png",
-      "sha256": "a03701b2e3b5e84c16c7397fe70e1e0a95ab1d201d44c353cc003f9acb9df2f9",
+      "sha256": "f75fc56278d4342d9cca9d088c559e0d316c5c4f3a99c8a5c80ee9c35c3e0619",
       "status": "generated-candidate"
     },
     {
@@ -226,7 +226,7 @@
       "sheet": 1,
       "cell": 22,
       "image": "assets/rebuilt/new100/new-bottle.png",
-      "sha256": "b93209860ba932c19d2cbb8c2c2271598f15ec30fa0880e47cb0fce62fafd6ba",
+      "sha256": "c25358730741695371898a16e9eb0aad7d7f3fe69c794aa52e0ceb1b99d1c5c0",
       "status": "generated-candidate"
     },
     {
@@ -235,7 +235,7 @@
       "sheet": 1,
       "cell": 23,
       "image": "assets/rebuilt/new100/new-basket.png",
-      "sha256": "f41830dcba6cb9e2e1f5b20eb11e563b78aab6f1b59fcc4ab422559efc5475a9",
+      "sha256": "3e38cfbc637b5946fde2996cdc105fdba2c3d2d64c68f72af224e3d717da9c98",
       "status": "generated-candidate"
     },
     {
@@ -244,7 +244,7 @@
       "sheet": 1,
       "cell": 24,
       "image": "assets/rebuilt/new100/new-sky.png",
-      "sha256": "389e6c176d459ea1602c5ad152b861bf69931f3ec7b4f6ee42d4f268ab116f25",
+      "sha256": "0bf86f5f73c5629d2feb03a41f55cd0ad33f3e23f5e382383ac588a3ae7829a2",
       "status": "generated-candidate"
     },
     {
@@ -253,7 +253,7 @@
       "sheet": 1,
       "cell": 25,
       "image": "assets/rebuilt/new100/new-sand.png",
-      "sha256": "9faf2f790a395878235b79a2c784b0645b392498080905d344a2e2f9d216f2ff",
+      "sha256": "0e014c8d8878ddcced710376cb955ee8c23430f52b96b42e7dfabb1ab1feaf79",
       "status": "generated-candidate"
     },
     {
@@ -262,7 +262,7 @@
       "sheet": 1,
       "cell": 26,
       "image": "assets/rebuilt/new100/new-pond.png",
-      "sha256": "bacae10d9ac5de9774fa76eb48fb80a4dd1af86dfa46fbb253d6c8070e985156",
+      "sha256": "5433693feba823cd832d75568bb2d1958d27136cefe51e560d1730e575749a73",
       "status": "generated-candidate"
     },
     {
@@ -271,7 +271,7 @@
       "sheet": 1,
       "cell": 27,
       "image": "assets/rebuilt/new100/new-six.png",
-      "sha256": "0480be861bfd8405cc2d4027f922d62ccc964e61dbf3da1a50daf88bb43fbca9",
+      "sha256": "f43a8fa4aae9ac117c4af95107f8957b25a110c79e80bc46acfb9c63f4537e0a",
       "status": "generated-candidate"
     },
     {
@@ -280,7 +280,7 @@
       "sheet": 1,
       "cell": 28,
       "image": "assets/rebuilt/new100/new-seven.png",
-      "sha256": "0667137ad87822bf14e23dbeaaf41896cbabbbe60064bfb33d1278ee913dc998",
+      "sha256": "2af82cea457bb29a70763138539bbde2f6e35f0ef80c0c4db73fc000633550eb",
       "status": "generated-candidate"
     },
     {
@@ -289,7 +289,7 @@
       "sheet": 1,
       "cell": 29,
       "image": "assets/rebuilt/new100/new-eight.png",
-      "sha256": "174ba8f1af1f880e8aef20bfa47bd4b0d9d86493e35153e9163791e6927f68c5",
+      "sha256": "f69592f7a96d98c86f410cb09801116173dd387394d87b41531333a13e3d2f6c",
       "status": "generated-candidate"
     },
     {
@@ -298,7 +298,7 @@
       "sheet": 2,
       "cell": 0,
       "image": "assets/rebuilt/new100/new-raccoon.png",
-      "sha256": "42f9e1aa879e46afc292e82dcf8219bf5e854d664be6c5616687da159dcccf4b",
+      "sha256": "a4f6613ffc21d34694fbbb907db215578536bc638847099c304968182fdd1c4a",
       "status": "generated-candidate"
     },
     {
@@ -307,7 +307,7 @@
       "sheet": 2,
       "cell": 1,
       "image": "assets/rebuilt/new100/new-otter.png",
-      "sha256": "262acf58da51d8fbf316218b02d4eb93fecaba2fe1c8354e2060dfa77114a6a9",
+      "sha256": "2728d2dc909b0c86a874aa0db3a99d240055e94e3a7df3bd02139bc45fb69b89",
       "status": "generated-candidate"
     },
     {
@@ -316,7 +316,7 @@
       "sheet": 2,
       "cell": 2,
       "image": "assets/rebuilt/new100/new-beaver.png",
-      "sha256": "4c529ae8191f9c51fa84579a90793eeaa3d354e97aec1fb55d75ac6eb96bb760",
+      "sha256": "3e11267f3ea5763e751ba00cfcff89725fd1494caeea04ab7a0c182e090405de",
       "status": "generated-candidate"
     },
     {
@@ -325,7 +325,7 @@
       "sheet": 2,
       "cell": 3,
       "image": "assets/rebuilt/new100/new-moose.png",
-      "sha256": "0346073ba7e1b3a7faf02bb9e193e8997dfbea3e04dc79e3eb46115a988b0770",
+      "sha256": "aa28bf2fa268342f601544d4833b3f09fc64981d894514244f494bf34a8d8f3e",
       "status": "generated-candidate"
     },
     {
@@ -334,7 +334,7 @@
       "sheet": 2,
       "cell": 4,
       "image": "assets/rebuilt/new100/new-parrot.png",
-      "sha256": "19406666ddda33b047765779d36ec94083bc5cbe1e728c3f3b820f00e293507d",
+      "sha256": "371284ed21c44bba440150cb775d76706f5fa8f9b45e1070b833c824befbcd4a",
       "status": "generated-candidate"
     },
     {
@@ -343,7 +343,7 @@
       "sheet": 2,
       "cell": 5,
       "image": "assets/rebuilt/new100/new-seahorse.png",
-      "sha256": "5b19be9ac0240cc2904f3ef58d31fa6c9167cacecb71105d9ec6751e76d2547a",
+      "sha256": "30c61e741aa6c88a813c60a30c2fd58e1dad27e0702f646ba6176b98a9a8dbad",
       "status": "generated-candidate"
     },
     {
@@ -352,7 +352,7 @@
       "sheet": 2,
       "cell": 6,
       "image": "assets/rebuilt/new100/new-jellyfish.png",
-      "sha256": "111aa574dbf87ff820cf3330747960849509e47d3e5959758d9a9ddbd25c2c59",
+      "sha256": "01ba08e6ec680b16a26ff1f71c280240a258f30c9f475f8b388f5effc6963e2a",
       "status": "generated-candidate"
     },
     {
@@ -361,7 +361,7 @@
       "sheet": 2,
       "cell": 7,
       "image": "assets/rebuilt/new100/new-yogurt.png",
-      "sha256": "5307c9009dc0646d46cfd448116a4c018e16b7ee8d6d028d7d98c471bfec9432",
+      "sha256": "6181d35ed7ffd111d40aa6dabbddb436a4cacc23f9a029f121d1016b481398b0",
       "status": "generated-candidate"
     },
     {
@@ -370,7 +370,7 @@
       "sheet": 2,
       "cell": 8,
       "image": "assets/rebuilt/new100/new-cereal.png",
-      "sha256": "8b077e0591dd0ac84839060cc25a3049b266682b5f317d8dc26b89cbd877393a",
+      "sha256": "761120fdcb1dd8e7fbd4185dcc51c87fb23875d43706b10ac1eff702b2b46c65",
       "status": "generated-candidate"
     },
     {
@@ -379,7 +379,7 @@
       "sheet": 2,
       "cell": 9,
       "image": "assets/rebuilt/new100/new-pancake.png",
-      "sha256": "9811ce5193ee7e1f2674aa6bd7a7bf2d7d0d529e80a77fbc4790a54d2930f411",
+      "sha256": "fc24de6bc1c4cbc839b2afc550770e27c8cae8b6af0d86a0b307da0fb1fe9b57",
       "status": "generated-candidate"
     },
     {
@@ -388,7 +388,7 @@
       "sheet": 2,
       "cell": 10,
       "image": "assets/rebuilt/new100/new-waffle.png",
-      "sha256": "d558965fda18fd8f1088f8ead924426057909928e157057c80980a292b1382b4",
+      "sha256": "3cf80e98f28cd5f1281e10cf6d4fad9fd0425a271ca426aa8a77c284cbc0fbeb",
       "status": "generated-candidate"
     },
     {
@@ -397,7 +397,7 @@
       "sheet": 2,
       "cell": 11,
       "image": "assets/rebuilt/new100/new-sausage.png",
-      "sha256": "b1aa1966e96e5ebbab9dcbf0eadc546a287a8bc2f5f29fb0d99e14393a6eb302",
+      "sha256": "ae1f698db729ef7665d901739142478dd1bcf45d03c282dc931276fee3eddd24",
       "status": "generated-candidate"
     },
     {
@@ -406,7 +406,7 @@
       "sheet": 2,
       "cell": 12,
       "image": "assets/rebuilt/new100/new-shrimp.png",
-      "sha256": "4241bca6c878c453ff2659bf95485ba63f9357be7d3e6343ae956662c26c774e",
+      "sha256": "887b178d171c588643711aa1278235eed76a9b8bf0db2b7032d0ba00e60ceb0e",
       "status": "generated-candidate"
     },
     {
@@ -415,7 +415,7 @@
       "sheet": 2,
       "cell": 13,
       "image": "assets/rebuilt/new100/new-spinach.png",
-      "sha256": "60ba577ff33c24f0aaf4c7d88b497c9aea368ad98a79f87f0c15c875744c4560",
+      "sha256": "f3af82626343c57dae0f9f1f50df19b29e5e6e82ae72f7484afe2a86b8800fd1",
       "status": "generated-candidate"
     },
     {
@@ -424,7 +424,7 @@
       "sheet": 2,
       "cell": 14,
       "image": "assets/rebuilt/new100/new-cabbage.png",
-      "sha256": "4d603f4eb731999159077aaeb6441500596c70cb239a6178a805e428814bf4d4",
+      "sha256": "19b206683cac464ca3dd785ea97e1007a6e80678d6a26022ea63b1355d13cb07",
       "status": "generated-candidate"
     },
     {
@@ -433,7 +433,7 @@
       "sheet": 2,
       "cell": 15,
       "image": "assets/rebuilt/new100/new-suitcase.png",
-      "sha256": "925cfdd6c28289827d970d6b7f7a040bf324bfa1d92a241bd46b6fbed35807b1",
+      "sha256": "0316bea28afe212c83df78ab74af75a5dcb3ab8d7cc35378fab05b1fa98c6b7e",
       "status": "generated-candidate"
     },
     {
@@ -442,7 +442,7 @@
       "sheet": 2,
       "cell": 16,
       "image": "assets/rebuilt/new100/new-wallet.png",
-      "sha256": "e6dd36e9f2dec1d7f7d0af0a56a9406707158e05e923115e3fae97446be4510c",
+      "sha256": "96f48d40f19463d50b03c948099c55dac1e89aebf9d7b95b623d48ebb612fb69",
       "status": "generated-candidate"
     },
     {
@@ -451,7 +451,7 @@
       "sheet": 2,
       "cell": 17,
       "image": "assets/rebuilt/new100/new-zipper.png",
-      "sha256": "28d6238a984ff39ec0db1e65c9508f174d5c8e99739f4e63aa2f94dae4b6dcde",
+      "sha256": "eeeb953c55b1783b5fe31afa306b311b8d719ade8036da3548800bc17b5ef676",
       "status": "generated-candidate"
     },
     {
@@ -460,7 +460,7 @@
       "sheet": 2,
       "cell": 18,
       "image": "assets/rebuilt/new100/new-ladder.png",
-      "sha256": "3aea5907b6afaf3f613f5563da2184dce1c5b3122ec43cc982b216816cd72a16",
+      "sha256": "6adfcb362ca515c1f438bd47d1821cf952cf675eb854e8ee09dd80eb081cb819",
       "status": "generated-candidate"
     },
     {
@@ -469,7 +469,7 @@
       "sheet": 2,
       "cell": 19,
       "image": "assets/rebuilt/new100/new-bucket.png",
-      "sha256": "f8075eec99f904449e8d8f220d19bc00509ec18f1a4cdf84e9b054fd0916cd9c",
+      "sha256": "02dbc7a268f21d41ee532d6000afc32c18438e4b4ec347c8dae5568bd09fdadc",
       "status": "generated-candidate"
     },
     {
@@ -478,7 +478,7 @@
       "sheet": 2,
       "cell": 20,
       "image": "assets/rebuilt/new100/new-shovel.png",
-      "sha256": "a0cd44205a347fcca86456eb02762be8b08712a3aa535201e8cef26b9abc41bb",
+      "sha256": "124dc9589f8549648e8058491c9f4737e8b42c96853e3da22f9fdfc329107584",
       "status": "generated-candidate"
     },
     {
@@ -487,7 +487,7 @@
       "sheet": 2,
       "cell": 21,
       "image": "assets/rebuilt/new100/new-broom.png",
-      "sha256": "a5ecac52d13c8b44c98d249b689bba09bbfd2e6c30599226b8f435424c8f66f7",
+      "sha256": "641f2ebfd67c6a598b71ef969a8728f92f8674074acca6bc4b9943ee08c2ff45",
       "status": "generated-candidate"
     },
     {
@@ -496,7 +496,7 @@
       "sheet": 2,
       "cell": 22,
       "image": "assets/rebuilt/new100/new-mop.png",
-      "sha256": "21aaa5bcfa3fb75536c93c21842db8818c4253367ac6ac9647c7606d0c0a95be",
+      "sha256": "9bc5c3c333e1c92b9de39b2dc2979fd7174223c20c944b41d7c22c0590e84024",
       "status": "generated-candidate"
     },
     {
@@ -505,7 +505,7 @@
       "sheet": 2,
       "cell": 23,
       "image": "assets/rebuilt/new100/new-towel.png",
-      "sha256": "4a5595100821d3c0274549d0dd676ac01a5b6f0bd8493584f41dd0c1624b7a08",
+      "sha256": "b25e9f63ed4c5ef28e5b4d1489ec9b49a96fa00dcc82550badcb635bda0a7670",
       "status": "generated-candidate"
     },
     {
@@ -514,7 +514,7 @@
       "sheet": 2,
       "cell": 24,
       "image": "assets/rebuilt/new100/new-bathtub.png",
-      "sha256": "f5d23bd50923a418ef24e1afdc6396cfae7e267fb446b9e1f30f781d2e376f07",
+      "sha256": "fb3c4ad690c91131e9eec562cac7b68a2960892548ce396cc1580aea50f59e95",
       "status": "generated-candidate"
     },
     {
@@ -523,7 +523,7 @@
       "sheet": 2,
       "cell": 25,
       "image": "assets/rebuilt/new100/new-kettle.png",
-      "sha256": "09217440b1990e044a756cccddebd7020515b66965b42a047acd9335da464ae9",
+      "sha256": "8961e688762a60f898cf82ce6269a3e5ae0b235c0218d824610962d7a30717f4",
       "status": "generated-candidate"
     },
     {
@@ -532,7 +532,7 @@
       "sheet": 2,
       "cell": 26,
       "image": "assets/rebuilt/new100/new-oven.png",
-      "sha256": "b9558f9c5cb1747f6457cd0f0dd029620c72bd10c38a1f57911a4fdc09ca5d6c",
+      "sha256": "bc14d5ae85ed139344f72f1833c9e5d04922d4e4e7036433753d8bec60e1056c",
       "status": "generated-candidate"
     },
     {
@@ -541,7 +541,7 @@
       "sheet": 2,
       "cell": 27,
       "image": "assets/rebuilt/new100/new-fridge.png",
-      "sha256": "2e3196027f1bc24fe8028d7960f7e9fb94c5964eac4b34bb41eef519bb00ff26",
+      "sha256": "42a6a37e16ea6c17ec9179d46d3890351a7636ffa06926ff1427b526751cf424",
       "status": "generated-candidate"
     },
     {
@@ -550,7 +550,7 @@
       "sheet": 2,
       "cell": 28,
       "image": "assets/rebuilt/new100/new-toaster.png",
-      "sha256": "0702ae80aaf74d512e9d3e3d66ad8673fa66da878174cc8a13848f021e2ef1f3",
+      "sha256": "61777e43cc924fd003bcf3056c3f97b8d509b8827fa39819839d61e7f33ec3d7",
       "status": "generated-candidate"
     },
     {
@@ -559,7 +559,7 @@
       "sheet": 2,
       "cell": 29,
       "image": "assets/rebuilt/new100/new-island.png",
-      "sha256": "5211d75aa0f7dca1e4d686be2a3096c02719efdcec5c5e02249af23e45e0df78",
+      "sha256": "d50c0a0f0c26c18fe8edb129c462ad28148829b29da0df23c6d51ad639c227c5",
       "status": "generated-candidate"
     },
     {
@@ -568,7 +568,7 @@
       "sheet": 3,
       "cell": 0,
       "image": "assets/rebuilt/new100/new-desert.png",
-      "sha256": "41d32f1c746b9f46bc6f708494754b29f176274f02eb930c9db81341489c4893",
+      "sha256": "d2ff2e9fc5d3771781523ee0e1bf0c77c191bf2a8d6bd9715b0a80376d692a4a",
       "status": "generated-candidate"
     },
     {
@@ -577,7 +577,7 @@
       "sheet": 3,
       "cell": 1,
       "image": "assets/rebuilt/new100/new-cave.png",
-      "sha256": "030887c95dc4bc6be1391c35c29c06461f2a83c49789b5a4e6a8a7749eca618e",
+      "sha256": "cda5fd413c12862ceefbb590490c706d7709356467d867b6511c6dc7661a5313",
       "status": "generated-candidate"
     },
     {
@@ -586,7 +586,7 @@
       "sheet": 3,
       "cell": 2,
       "image": "assets/rebuilt/new100/new-waterfall.png",
-      "sha256": "40a7780920cf608c6806878071d571ca5079bba2d656246a5a336cdd8509207b",
+      "sha256": "bd63ce59ae23efb6dbb3c1be9af56ff285a85d94e87dda0ac936106c9051038a",
       "status": "generated-candidate"
     },
     {
@@ -595,7 +595,7 @@
       "sheet": 3,
       "cell": 3,
       "image": "assets/rebuilt/new100/new-hill.png",
-      "sha256": "23f5aa56706402d3ed2f543fbe1600ed64046b347c76f42845f294973421668b",
+      "sha256": "da8084551e7587f5fd6bbb97b581368a159b89be6f5ead0ea2d047c5b8ef3694",
       "status": "generated-candidate"
     },
     {
@@ -604,7 +604,7 @@
       "sheet": 3,
       "cell": 4,
       "image": "assets/rebuilt/new100/new-lake.png",
-      "sha256": "54e6411477a1ec9df7490248b82dec15ecbc08f04d48a0a490cdda28345b3165",
+      "sha256": "de13fffed673a5222e0b469294a33eae70b954567fe171f446662ea485b53e11",
       "status": "generated-candidate"
     },
     {
@@ -613,7 +613,7 @@
       "sheet": 3,
       "cell": 5,
       "image": "assets/rebuilt/new100/new-nine.png",
-      "sha256": "1de3b836923999016149aac38d5520621777ff489a8adc44fda850ee4be26104",
+      "sha256": "37f96e4262bbf12a4c4c18e1ea33d5dc71ae113357ad4848de0dbe7466367697",
       "status": "generated-candidate"
     },
     {
@@ -622,7 +622,7 @@
       "sheet": 3,
       "cell": 6,
       "image": "assets/rebuilt/new100/new-ten.png",
-      "sha256": "9ca1a33401e1060d27feab711adfac23c35a746a7d0c2418215e50786906763f",
+      "sha256": "152fd6c44153ebf1e7b6e31217fe7088599980932d86420d11534925b01bfebf",
       "status": "generated-candidate"
     },
     {
@@ -631,7 +631,7 @@
       "sheet": 3,
       "cell": 7,
       "image": "assets/rebuilt/new100/new-guitar.png",
-      "sha256": "305184141590ec0aa0546c0ca90b0ad8c00de7aa0b2f72756855cb4ba810fab9",
+      "sha256": "dcc51bc27a20633dde191987c28d81848b3a06f7fc900a57d12f9bb81a8e4a09",
       "status": "generated-candidate"
     },
     {
@@ -640,7 +640,7 @@
       "sheet": 3,
       "cell": 8,
       "image": "assets/rebuilt/new100/new-trumpet.png",
-      "sha256": "944c925c48b6105e9eb5b043beccdd5907410132413881145459ea6dbb1195af",
+      "sha256": "b99971503c7a5b8a68b3307d6945c1a004cfb6408c2970d8b814421d99599700",
       "status": "generated-candidate"
     },
     {
@@ -649,7 +649,7 @@
       "sheet": 3,
       "cell": 9,
       "image": "assets/rebuilt/new100/new-flute.png",
-      "sha256": "5a51be515304c65d0700cb73c45953fd6fc4860985e0614914a7ec87fb5312d9",
+      "sha256": "da4164cd7aa5855c46788e646d56d7446fcc3dc410ad241b8e19c75f67444c3d",
       "status": "generated-candidate"
     },
     {
@@ -658,7 +658,7 @@
       "sheet": 3,
       "cell": 10,
       "image": "assets/rebuilt/new100/new-chameleon.png",
-      "sha256": "69c9d432e38c74e680210f0eb85bdc6dc33f13e0f3ecce32d5112f972f16eb3a",
+      "sha256": "7bb08e1e2e267a22d9e84e586d62e80a9bbde171b08e0824a449f5493a4b74cd",
       "status": "generated-candidate"
     },
     {
@@ -667,7 +667,7 @@
       "sheet": 3,
       "cell": 11,
       "image": "assets/rebuilt/new100/new-armadillo.png",
-      "sha256": "38403a7a80f4fba39136088af9bce88a3c4ca8f2981b051c4992a0b26fa8d360",
+      "sha256": "2c4f80b3e3397240b5d5b6035ddd5a25185a43ceac88975b43a4e12d7c4c3824",
       "status": "generated-candidate"
     },
     {
@@ -676,7 +676,7 @@
       "sheet": 3,
       "cell": 12,
       "image": "assets/rebuilt/new100/new-porcupine.png",
-      "sha256": "4cc66dc2caf112633e935cf039ecff62a8a47bf755d829d772d597664048572d",
+      "sha256": "0e79082b8e593ccde56323b5778c03cad2077d80402fe3bc9afb4f92805919db",
       "status": "generated-candidate"
     },
     {
@@ -685,7 +685,7 @@
       "sheet": 3,
       "cell": 13,
       "image": "assets/rebuilt/new100/new-lemur.png",
-      "sha256": "3c801251a455ca1d80b049bea50cdbbf50b1e2adf64b052d716289a13ada72b8",
+      "sha256": "8d369be360503109043555be9cb600d982295dfa2c75cafd0e4702cae9abf7df",
       "status": "generated-candidate"
     },
     {
@@ -694,7 +694,7 @@
       "sheet": 3,
       "cell": 14,
       "image": "assets/rebuilt/new100/new-narwhal.png",
-      "sha256": "756eb8e4e79dff7adfa923d7ec4537ec7674d9b6c2989d36378362a69b1bf375",
+      "sha256": "c0928cc2e06477f719dc205ea5a58d3c3b647d273c448539b0dfbdf3ae45cc2e",
       "status": "generated-candidate"
     },
     {
@@ -703,7 +703,7 @@
       "sheet": 3,
       "cell": 15,
       "image": "assets/rebuilt/new100/new-asparagus.png",
-      "sha256": "e606689045fd93090a2ee64f1fbc9eb11f02fab7c12de54730b7c469a7ae4d7a",
+      "sha256": "10683ee329b89cc8224b9c6e63309d71b22cbad7017503389733a2ca5a1a16bf",
       "status": "generated-candidate"
     },
     {
@@ -712,7 +712,7 @@
       "sheet": 3,
       "cell": 17,
       "image": "assets/rebuilt/new100/new-pomegranate.png",
-      "sha256": "b9ae8bddac088b0ab3b16d2213e175fa0446693efcb73d987abab0b323a05b61",
+      "sha256": "2743d8c2217feb861f9dfd1f641b99b80cb2a9415f6a5dafc4263a883f29e0df",
       "status": "generated-candidate"
     },
     {
@@ -721,7 +721,7 @@
       "sheet": 3,
       "cell": 18,
       "image": "assets/rebuilt/new100/new-papaya.png",
-      "sha256": "1e348b22c0f3b748b6a96a56ac88657c3fa66321ddcb0b37b3235f6771893327",
+      "sha256": "c72abe9e850a5fab73188a5c5bd43b902e975fcf7bb8aee879c80108f1368c98",
       "status": "generated-candidate"
     },
     {
@@ -730,7 +730,7 @@
       "sheet": 3,
       "cell": 19,
       "image": "assets/rebuilt/new100/new-dumpling.png",
-      "sha256": "8374f80d500281b16f08c83b389f92f313aea1b081dfb9b2e64ea2aac27341a2",
+      "sha256": "0f08c9b526eb208d0128b1fee501e240e51d9d353c1554d211e58cc4d37f8232",
       "status": "generated-candidate"
     },
     {
@@ -739,7 +739,7 @@
       "sheet": 3,
       "cell": 21,
       "image": "assets/rebuilt/new100/new-flashlight.png",
-      "sha256": "b88079fed7923473ceb95b3f2bd898e411b389156850e4dbe4f044e3fe52128d",
+      "sha256": "522d3715130845629bf9e329d81893b5c431c6f43c372819c44247ba4d86d29d",
       "status": "generated-candidate"
     },
     {
@@ -748,7 +748,7 @@
       "sheet": 3,
       "cell": 22,
       "image": "assets/rebuilt/new100/new-thermometer.png",
-      "sha256": "6fc76164098b3e72dde4acba6a085f75816088c28c90ced6d5f419767a6a52c4",
+      "sha256": "3035a436cd966d552158a97876a862510b7722b2027c6e17691d9c3754804111",
       "status": "generated-candidate"
     },
     {
@@ -757,7 +757,7 @@
       "sheet": 3,
       "cell": 23,
       "image": "assets/rebuilt/new100/new-stapler.png",
-      "sha256": "5a77a228ada326bc9353739e0e1639f3de18721181efcece69d796ea845044f6",
+      "sha256": "6bbe68dddf3900ea8a00e8466cb7a393fa3b7d9540742e007b5b9a730d317b31",
       "status": "generated-candidate"
     },
     {
@@ -766,7 +766,7 @@
       "sheet": 3,
       "cell": 24,
       "image": "assets/rebuilt/new100/new-calculator.png",
-      "sha256": "d156defc049e5ea4ccf668bda7da0d9bf556b2327ca60297cf41d5eda96dbd34",
+      "sha256": "73a4309e6a029da926d8543dcb326d38429bc5a2c4d02dbce1617c491e840dbe",
       "status": "generated-candidate"
     },
     {
@@ -775,7 +775,7 @@
       "sheet": 3,
       "cell": 25,
       "image": "assets/rebuilt/new100/new-skateboard.png",
-      "sha256": "df7da0a850fe0798573e68edc615ffe488187fe0a5587e78ca6fbbec2dad0f32",
+      "sha256": "c59c5ee96af1f87843c0d9e609b984ffbb676a68c6dddfb485227c2f8f4c95d7",
       "status": "generated-candidate"
     },
     {
@@ -784,7 +784,7 @@
       "sheet": 3,
       "cell": 26,
       "image": "assets/rebuilt/new100/new-vacuum.png",
-      "sha256": "688b294d4e85dbc3a82ebbdcc08033d527ed960393ceebb0fac8d619ce3d7256",
+      "sha256": "a370c5827e941bcc23a17542561ba642e5d929ba28dfd60e444c57f23d6dc51b",
       "status": "generated-candidate"
     },
     {
@@ -793,7 +793,7 @@
       "sheet": 3,
       "cell": 27,
       "image": "assets/rebuilt/new100/new-mailbox.png",
-      "sha256": "7840fe8c02ab8a0016571f355dd6e64b2e8c65e314ee4cd86563fe74ee142fcc",
+      "sha256": "ba52008ddd7c6df67b5664793772ab1c43a7ad6be67b21bd5067053946c1bcfd",
       "status": "generated-candidate"
     },
     {
@@ -802,7 +802,7 @@
       "sheet": 3,
       "cell": 28,
       "image": "assets/rebuilt/new100/new-wheelbarrow.png",
-      "sha256": "0c4003d14da6b3d312866fae4c70e7bbc6491ca1c7d975150dfac85383213647",
+      "sha256": "e1a982ce2a615f661bde0a528f33cc90ed6a89d02e72f68f7797db05d47f3acc",
       "status": "generated-candidate"
     },
     {
@@ -811,7 +811,7 @@
       "sheet": 3,
       "cell": 29,
       "image": "assets/rebuilt/new100/new-projector.png",
-      "sha256": "18e9a84b3b1ef89ad85cc159978bf9e7ab1e40e70cd5ef7cb9774b921ceef9bb",
+      "sha256": "b62305ceeb2d2493182b219c09aa4a3717d68da4c126208c84c50831ce208281",
       "status": "generated-candidate"
     },
     {
@@ -820,7 +820,7 @@
       "sheet": 4,
       "cell": 0,
       "image": "assets/rebuilt/new100/new-glacier.png",
-      "sha256": "38609bde1cefb36332a3fccd2f2e4efe7a98b117f9089d757ce1c5d4e3777048",
+      "sha256": "b36908987018207cbe0e67a378020a115802516e16a6f011af333b159ac7a63a",
       "status": "generated-candidate"
     },
     {
@@ -829,7 +829,7 @@
       "sheet": 4,
       "cell": 1,
       "image": "assets/rebuilt/new100/new-geyser.png",
-      "sha256": "26e7588f0f8270472c2b1ab13bade3252ff77239d555609511523c095c8e92d4",
+      "sha256": "691156c387f561ee94ec30399b089c40be1ff525dbd7b179856cee91433bb69b",
       "status": "generated-candidate"
     },
     {
@@ -838,7 +838,7 @@
       "sheet": 4,
       "cell": 2,
       "image": "assets/rebuilt/new100/new-canyon.png",
-      "sha256": "041fac5d08991709ff7e4ae7bbc9d328521e9277912d0c8d9d199c57855ce7b9",
+      "sha256": "17a355bb9413f36b31b5b17f13dc2c7570ea139494d541c7602b1255e5fa6ad2",
       "status": "generated-candidate"
     },
     {
@@ -847,7 +847,7 @@
       "sheet": 4,
       "cell": 3,
       "image": "assets/rebuilt/new100/new-cliff.png",
-      "sha256": "f684e8e05cff02038f30a7cfc2473134168d9bac29ffc7862c8935e66b864578",
+      "sha256": "c8d5af058cdbcd2cc4d99b3042a261f3605c46a7540be164e34f022d0cd58764",
       "status": "generated-candidate"
     },
     {
@@ -856,7 +856,7 @@
       "sheet": 4,
       "cell": 4,
       "image": "assets/rebuilt/new100/new-swamp.png",
-      "sha256": "06f042ca05c2265bf6babbbe505970103882e0120f0b6d448a4984c47525af7b",
+      "sha256": "40836e834d5c38954542f2971bac77d06617d6863446c5a84a561e8995a582a2",
       "status": "generated-candidate"
     },
     {
@@ -865,7 +865,7 @@
       "sheet": 4,
       "cell": 5,
       "image": "assets/rebuilt/new100/new-castle.png",
-      "sha256": "9a5307a9c2020d28964a9830fdb02955182b234832c272bf0bb045ba28036683",
+      "sha256": "e4e0f38a04b4cec42efbe0ee6be10cd57703875cd2291d853c0a32e163eb9186",
       "status": "generated-candidate"
     },
     {
@@ -874,7 +874,7 @@
       "sheet": 4,
       "cell": 6,
       "image": "assets/rebuilt/new100/new-museum.png",
-      "sha256": "7158895ed63604f52dfafd21ece8905c1b32a378422736d51a6042275f420fbe",
+      "sha256": "2c89c212cb0c1ac0456a05a3787f57b39906d55b67daedae61159f998fe36ba5",
       "status": "generated-candidate"
     },
     {
@@ -883,7 +883,7 @@
       "sheet": 4,
       "cell": 7,
       "image": "assets/rebuilt/new100/new-library.png",
-      "sha256": "992a700e6e119dc7ca56dc36f1cbb2c911a2f7584943b28754c6f315c83d8cba",
+      "sha256": "2a106c6541317f899de0bef6f080050ebf77818f52a40708fa0d40b0f7bccab1",
       "status": "generated-candidate"
     },
     {
@@ -892,7 +892,7 @@
       "sheet": 4,
       "cell": 8,
       "image": "assets/rebuilt/new100/new-bakery.png",
-      "sha256": "30c92f6ceb2297e469404364bcfdb564bc4e1fa37dcb41dd27f4d04ad5749fbb",
+      "sha256": "4969d327cffd9a68dc4242f8fff1e0d3cb27ec13ec10d7694f71098e7090115d",
       "status": "generated-candidate"
     },
     {
@@ -901,8 +901,12 @@
       "sheet": 4,
       "cell": 9,
       "image": "assets/rebuilt/new100/new-airport.png",
-      "sha256": "ff48b1b40e1da2f5727dc69f12e9d53e17630b7f2f21a4e49ae011fb3a14d135",
+      "sha256": "5bc04c629f7d0351913ca3863a51d2dc6607fe092fe8976bd15872b4cb287ff8",
       "status": "generated-candidate"
     }
-  ]
+  ],
+  "crop": {
+    "tool": "tools/recrop_grid_sheets.py",
+    "method": "grid-line cells, edge fragments removed, trimmed square"
+  }
 }

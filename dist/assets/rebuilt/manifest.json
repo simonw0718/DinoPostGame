@@ -46,7 +46,7 @@
       "cell": 1,
       "newImage": "assets/rebuilt/kidapp-ankylosaurus.png",
       "status": "generated-candidate",
-      "sha256": "8abc4458e582913d988c516606ac5ffe03553049564459eca8dca37b21b2fe2c"
+      "sha256": "d6782e8f173e108ea66fbb14b4963549b4bfa1f7adc993768ad25396ae454d4d"
     },
     {
       "id": "kidapp-archaeopteryx",
@@ -58,7 +58,7 @@
       "cell": 2,
       "newImage": "assets/rebuilt/kidapp-archaeopteryx.png",
       "status": "generated-candidate",
-      "sha256": "6325a2277d177124e997b904107732900e2d6c6e2b2cd6a25c5270c81b68f56b"
+      "sha256": "7c36186ad39968d0e7f55d22da83245acd08c138d2e1074ea6d78fc075ffd938"
     },
     {
       "id": "kidapp-brachiosaurus",
@@ -70,7 +70,7 @@
       "cell": 3,
       "newImage": "assets/rebuilt/kidapp-brachiosaurus.png",
       "status": "generated-candidate",
-      "sha256": "24cc4bbfbe6025a5ffc247c2f0a17eec00873064b7febbdad4eebba0f8abadcd"
+      "sha256": "12844a8d47992ebb984e1907831093cbf2bca8a6283cc112ea9addf5bfb0bba9"
     },
     {
       "id": "kidapp-carnotaurus",
@@ -82,7 +82,7 @@
       "cell": 4,
       "newImage": "assets/rebuilt/kidapp-carnotaurus.png",
       "status": "generated-candidate",
-      "sha256": "14bd4c8c4ec2277bb36a3c147c1ccf5ab9d365488e47bdaa823030c056a83ecb"
+      "sha256": "dbf77e9c443ea1a5a2c62c0d62a057633753412ca63f0c5fb8ab059371ecf26b"
     },
     {
       "id": "kidapp-compsognathus",
@@ -94,7 +94,7 @@
       "cell": 5,
       "newImage": "assets/rebuilt/kidapp-compsognathus.png",
       "status": "generated-candidate",
-      "sha256": "00ab32284dd66d31beb0ff89884df836f9a4762e611b58d9cc7b2673e3379662"
+      "sha256": "5149a38b481f4028acfd6d9e4d27bc4cbfee739a27ee2b097dd8219788eb8aa7"
     },
     {
       "id": "kidapp-corythosaurus",
@@ -136,7 +136,7 @@
       "cell": 8,
       "newImage": "assets/rebuilt/kidapp-dilophosaurus.png",
       "status": "generated-candidate",
-      "sha256": "fa7f721ddbd298549a718838fd036ddd71b2c240894eb61b119cc8ecd86306a7"
+      "sha256": "4f8ec7d4f88437282d37f17fd6aef9ee939e8ceb2f23fb5533a4a4ea1b920bc6"
     },
     {
       "id": "kidapp-diplodocus",
@@ -148,7 +148,7 @@
       "cell": 9,
       "newImage": "assets/rebuilt/kidapp-diplodocus.png",
       "status": "generated-candidate",
-      "sha256": "1a20dff169dbad127e18c953a5f7d40cadc8c06556fc5453a95c00a08c29c177"
+      "sha256": "fb6498ac781f4a59b9b7d1c1609ec99b7cc5df62828fabd24b0efc98e8cc9d85"
     },
     {
       "id": "kidapp-edmontosaurus",
@@ -175,7 +175,7 @@
       "cell": 11,
       "newImage": "assets/rebuilt/kidapp-giganotosaurus.png",
       "status": "generated-candidate",
-      "sha256": "f2ff93f8f0cf3fa5ced7274de219bc3b28fda13147236dc0a45a5b167195268c"
+      "sha256": "176ca005a345bc7f4eae15e0285f5ab21e24ab8e4fe6c0447046fe23164e25c3"
     },
     {
       "id": "kidapp-hatzegopteryx",
@@ -187,7 +187,7 @@
       "cell": 12,
       "newImage": "assets/rebuilt/kidapp-hatzegopteryx.png",
       "status": "generated-candidate",
-      "sha256": "bb536bcc182733baeb0e95702ccdf922ff0d0dfd1af6ab6ba809664aa598d252"
+      "sha256": "432c5574aafbf676caaac5c117085f640dd1b81c295140d91291d2a5140ac84b"
     },
     {
       "id": "kidapp-ichthyosaurus",
@@ -199,7 +199,7 @@
       "cell": 13,
       "newImage": "assets/rebuilt/kidapp-ichthyosaurus.png",
       "status": "generated-candidate",
-      "sha256": "f9689cf06488ebddebc2757055484c3ff67037e803722ed0f21ec446aeb705cf"
+      "sha256": "15d91a1e3b6470b159d3bd325cb6a6e317962b9d97ea6d6d28aa63f23426a498"
     },
     {
       "id": "kidapp-iguanodon",
@@ -226,7 +226,7 @@
       "cell": 15,
       "newImage": "assets/rebuilt/kidapp-maiasaura.png",
       "status": "generated-candidate",
-      "sha256": "a40699c3a349c5939e09e327e05d63949cc3ac4d35b7d5fa3b02a9fc8728479d"
+      "sha256": "3800a3cb48c501c5acb4baade9f9eee7d9408bd43ded2e7919d9917784964246"
     },
     {
       "id": "kidapp-mamenchisaurus",
@@ -253,7 +253,7 @@
       "cell": 17,
       "newImage": "assets/rebuilt/kidapp-mammoth.png",
       "status": "generated-candidate",
-      "sha256": "68408a1f49a503cc75ce012dbf612d2171eed4a2a5b9d1991b1ff2fd17aec68d"
+      "sha256": "d9023bee8dbac30adafc8c86652f6ad7f9209d8cd74299b9a89d0a16fedd7dc2"
     },
     {
       "id": "kidapp-microraptor",
@@ -265,7 +265,7 @@
       "cell": 18,
       "newImage": "assets/rebuilt/kidapp-microraptor.png",
       "status": "generated-candidate",
-      "sha256": "19489b51fcfe53b339054567334265ff406f937521df9f7fa51904c0914a177d"
+      "sha256": "2ff99791806281a28587e85e8a4d2aee47492cfd5b91890fc6759df4d2eb570a"
     },
     {
       "id": "kidapp-mosasaurus",
@@ -277,7 +277,7 @@
       "cell": 19,
       "newImage": "assets/rebuilt/kidapp-mosasaurus.png",
       "status": "generated-candidate",
-      "sha256": "81a4f6487af07acf7aa9336b06d242a873855a4175ff67bec97d18ed8d612a7e"
+      "sha256": "902b38405a09eec5e9bfadf37e7770b2fe5669fb9145812fc41a3213e804e6a8"
     },
     {
       "id": "kidapp-oviraptor",
@@ -289,7 +289,7 @@
       "cell": 20,
       "newImage": "assets/rebuilt/kidapp-oviraptor.png",
       "status": "generated-candidate",
-      "sha256": "81bcf1482f8e0f31177bf73fc05772fc6e4e3edfb62768579ece0147d37477bd"
+      "sha256": "bc7348cfe31270af56335728aa2819ba8efab437928361d1e1b0fbee8dbaf2b2"
     },
     {
       "id": "kidapp-pachycephalosaurus",
@@ -301,7 +301,7 @@
       "cell": 21,
       "newImage": "assets/rebuilt/kidapp-pachycephalosaurus.png",
       "status": "generated-candidate",
-      "sha256": "57862a7fb9998cd370bb219dfa700851361f3c07a0a57465092064176ce25b77"
+      "sha256": "46f1b73575a8ee98b60df6a0dfdcc2453545d2072464acc510098814a5775bc5"
     },
     {
       "id": "kidapp-parasaurolophus",
@@ -313,7 +313,7 @@
       "cell": 22,
       "newImage": "assets/rebuilt/kidapp-parasaurolophus.png",
       "status": "generated-candidate",
-      "sha256": "0a7f9c9228a7243bd570b1a0b396c01074937858ffc7e5612f3d2b53b70c640b"
+      "sha256": "4da35df2bd4d39cb19510510d0778b7eaed3051af1225d99e49b7badcc5f1a10"
     },
     {
       "id": "kidapp-plesiosaurus",
@@ -325,7 +325,7 @@
       "cell": 23,
       "newImage": "assets/rebuilt/kidapp-plesiosaurus.png",
       "status": "generated-candidate",
-      "sha256": "4e6e4e9a08b1f0f47a36d347ce6268b0e4ac060bb453f6081b7eebfa9bd5a816"
+      "sha256": "f8a8d7db6724974ad444c1852a3fa04ceb7ce5fe1874d9dbbf9a9675b658d47b"
     },
     {
       "id": "kidapp-protoceratops",
@@ -337,7 +337,7 @@
       "cell": 24,
       "newImage": "assets/rebuilt/kidapp-protoceratops.png",
       "status": "generated-candidate",
-      "sha256": "caf3b0892083bef91827d19039b2cd08fce575ffe753070d5cee4502ede36cf6"
+      "sha256": "be58889b0271dea89540e29618ce0524c7544f4211b561bf76158c5568c31d64"
     },
     {
       "id": "kidapp-pteranodon",
@@ -349,7 +349,7 @@
       "cell": 25,
       "newImage": "assets/rebuilt/kidapp-pteranodon.png",
       "status": "generated-candidate",
-      "sha256": "626bcc6f825c8648d0ccd3d77ac3427d0c5db173199425566805d5fcedd00828"
+      "sha256": "8f24e8cbec3699b040c60a3d80cca8d3d5cb6027d659f71ce4adf6e67fa4defc"
     },
     {
       "id": "kidapp-quetzalcoatlus",
@@ -361,7 +361,7 @@
       "cell": 26,
       "newImage": "assets/rebuilt/kidapp-quetzalcoatlus.png",
       "status": "generated-candidate",
-      "sha256": "5b39bc77240779d793433769785fc237504901d674ed21139532e03fb24b006a"
+      "sha256": "fe8fef7e39c9847fcc134f8bf2c56796c6d688fed8a782db83c2a06216f86678"
     },
     {
       "id": "kidapp-smilodon",
@@ -373,7 +373,7 @@
       "cell": 27,
       "newImage": "assets/rebuilt/kidapp-smilodon.png",
       "status": "generated-candidate",
-      "sha256": "3d0b1882610ff8da84cb6da7ee18423b45d2833a27a5eb192acb9b72d0d5ece4"
+      "sha256": "0d183d3849310274495e4581c5a4b4df8aa15f89510c1ff06c16c476b5df134d"
     },
     {
       "id": "kidapp-spinosaurus",
@@ -385,7 +385,7 @@
       "cell": 28,
       "newImage": "assets/rebuilt/kidapp-spinosaurus.png",
       "status": "generated-candidate",
-      "sha256": "cdb16292c0347bd4a419b1440d8f14d54e0b1bf16d3fe9fce0cc3006eb511741"
+      "sha256": "c73547270a5125eb120e734bc8d1944fa911d449d924df5e0dd72cecdb62db21"
     },
     {
       "id": "kidapp-stegosaurus",
@@ -397,7 +397,7 @@
       "cell": 29,
       "newImage": "assets/rebuilt/kidapp-stegosaurus.png",
       "status": "generated-candidate",
-      "sha256": "b81d8c4c27e2d3acbdfd8fa119a875d89d27007af4b46c016aba8dccfa86c570"
+      "sha256": "fae2c693658da08cb5bfe0f98e459ce9813477d1e3598d4e29a70131688187ee"
     },
     {
       "id": "kidapp-therizinosaurus",
@@ -424,7 +424,7 @@
       "cell": 1,
       "newImage": "assets/rebuilt/kidapp-triceratops.png",
       "status": "generated-candidate",
-      "sha256": "c384e9d76821a87fc2e46bffec1ad24f1a286a77712617f13f4c8a505251b1b9"
+      "sha256": "57937288822719ed95046042c400ead4a6a8d27c297e04961762674f072ee996"
     },
     {
       "id": "kidapp-troodon",
@@ -451,7 +451,7 @@
       "cell": 3,
       "newImage": "assets/rebuilt/kidapp-tyrannosaurus.png",
       "status": "generated-candidate",
-      "sha256": "0cae722b9e4083ac9bcb58712427fd725fbb97fe969f97b4946d9574bb905f0c"
+      "sha256": "1c2e8a0e389f7872970665ab0ff4784800dbf957869c751f7612f11777ed1439"
     },
     {
       "id": "kidapp-velociraptor",
@@ -463,7 +463,7 @@
       "cell": 4,
       "newImage": "assets/rebuilt/kidapp-velociraptor.png",
       "status": "generated-candidate",
-      "sha256": "acce349c97d6ad96e5ad70e3e7f45a2dc542235efa77a68add8ec5dcdcc5b24e"
+      "sha256": "ec5279136b5086530a3d1ad02a9ee253174e047757ca6be460622dfa2cab3872"
     },
     {
       "id": "kidapp-crocodile",
@@ -475,7 +475,7 @@
       "cell": 5,
       "newImage": "assets/rebuilt/kidapp-crocodile.png",
       "status": "generated-candidate",
-      "sha256": "b4a6884b00676db7fb9475f73f4169f4144ca39162a404b53f6a3d1a7b5343f4"
+      "sha256": "f3eb8faf35e46ce76e22210a112a184b6cef669dd2eff13dc35b39a08b41dfd9"
     },
     {
       "id": "kidapp-peacock",
@@ -487,7 +487,7 @@
       "cell": 6,
       "newImage": "assets/rebuilt/kidapp-peacock.png",
       "status": "generated-candidate",
-      "sha256": "83e8288ac49d1aa2f471309b299cc676e8a9682ba917c3a0dfb2bd3720d4cd7a"
+      "sha256": "dff47069c507f584a40656945c38bee706204520b46f48513ac0468ee403bd2b"
     },
     {
       "id": "kidapp-lighthouse",
@@ -499,7 +499,7 @@
       "cell": 7,
       "newImage": "assets/rebuilt/kidapp-lighthouse.png",
       "status": "generated-candidate",
-      "sha256": "8e00e2193dadd79b3f9977668108e444ca39778094d75527ccbb05742ee3782e"
+      "sha256": "99bf98a0ca59b2b5862fec46ff0aeab1298e33179a5ecebe8c5e9c9903bc08a8"
     },
     {
       "id": "kidapp-pyramid",
@@ -511,7 +511,7 @@
       "cell": 8,
       "newImage": "assets/rebuilt/kidapp-pyramid.png",
       "status": "generated-candidate",
-      "sha256": "5172dba8972a9e5191700770127f46ffb565129698f3c3eb73f2e0b9bcf4ed01"
+      "sha256": "79574ac39c685d3fae820dc88d9840a85b8609bc3af55c22ed70a920d28dce1a"
     },
     {
       "id": "kidapp-windmill",
@@ -523,7 +523,7 @@
       "cell": 9,
       "newImage": "assets/rebuilt/kidapp-windmill.png",
       "status": "generated-candidate",
-      "sha256": "841b51a05c1489ac8e1f068c2f260fcd02a5d912bc06926684fa0a4e38e880a4"
+      "sha256": "084067d372453fa8604efd46fe755c857e11796a5d6796ff3f4e37c0e9b6d418"
     },
     {
       "id": "kidapp-harmonica",
@@ -535,7 +535,7 @@
       "cell": 10,
       "newImage": "assets/rebuilt/kidapp-harmonica.png",
       "status": "generated-candidate",
-      "sha256": "d0b2b6ea8fdcb3dff503982676b96bec5fa8597e34410a20bffb0080de4cc18e"
+      "sha256": "4ad731e58f4c11306acdbb9e64a175048eece0490191ed0d15bf7509d802bafe"
     },
     {
       "id": "kidapp-xylophone",
@@ -547,7 +547,7 @@
       "cell": 11,
       "newImage": "assets/rebuilt/kidapp-xylophone.png",
       "status": "generated-candidate",
-      "sha256": "a05040aad8a13bc34505e5ccd3d4344423955ac89d2c606b63924fba33d84862"
+      "sha256": "0f08c70679ffe187c0b3868289d3ca21c179d50d12d36c3513572562bac2ac93"
     },
     {
       "id": "kidapp-beach",
@@ -559,7 +559,7 @@
       "cell": 12,
       "newImage": "assets/rebuilt/kidapp-beach.png",
       "status": "generated-candidate",
-      "sha256": "cced8d413728fafd86efe13070d63e540dae688251807877f6b788891c3dd1c0"
+      "sha256": "e806ba71312d929ae004e27ee81968dcbf17650f4e4fa37021c45f5e9d3e18bb"
     },
     {
       "id": "kidapp-forest",
@@ -571,7 +571,7 @@
       "cell": 13,
       "newImage": "assets/rebuilt/kidapp-forest.png",
       "status": "generated-candidate",
-      "sha256": "8aabf16d1a351e881d95876268bdd189cd6b9e96792c606540f6494964d49adb"
+      "sha256": "00f835d6eb6334f3191131fbf656424cbf8518f6027ea2f3fdb40e781090f284"
     },
     {
       "id": "kidapp-lightning",
@@ -583,7 +583,7 @@
       "cell": 14,
       "newImage": "assets/rebuilt/kidapp-lightning.png",
       "status": "generated-candidate",
-      "sha256": "025b3f10a4dcedc7012bf6fd85796bceddac8f8b3295ddc6edaeeae0350e15d5"
+      "sha256": "4458b73821aead7d9a71c215d92b2111cc433d7e9dfd9b9b0d3671e581d99a38"
     },
     {
       "id": "kidapp-ocean",
@@ -595,7 +595,7 @@
       "cell": 15,
       "newImage": "assets/rebuilt/kidapp-ocean.png",
       "status": "generated-candidate",
-      "sha256": "0e20d7351ab76a32ea72df4691d2ff9cee2b95c8a3d9628de4bdb5456ccfb327"
+      "sha256": "242fd8522e29e5d67befb98be9c1d3dab420865e79f5d1021c863af0d9dfa499"
     },
     {
       "id": "kidapp-park",
@@ -607,7 +607,7 @@
       "cell": 16,
       "newImage": "assets/rebuilt/kidapp-park.png",
       "status": "generated-candidate",
-      "sha256": "c52c542e49639e1653ec72001da5e7ed84f552678ce2729c8402022b4e740701"
+      "sha256": "c9ca3a9b6880f565835250b2a6dbb74e435c1146baf823c5eca65b07d997793c"
     },
     {
       "id": "kidapp-river",
@@ -619,7 +619,7 @@
       "cell": 17,
       "newImage": "assets/rebuilt/kidapp-river.png",
       "status": "generated-candidate",
-      "sha256": "acf3fb985736419c12e3461705e864c29781a5875d825b47d7025c48efe9b3c4"
+      "sha256": "c1f4b3700d7bb997653691e1c6f7bc385356e38a5ffbd0b77d06f8469263b6b2"
     },
     {
       "id": "kidapp-zoo",
@@ -631,7 +631,7 @@
       "cell": 18,
       "newImage": "assets/rebuilt/kidapp-zoo.png",
       "status": "generated-candidate",
-      "sha256": "b41e57cf3d7075a6fce0aa59978c1b24968fbd9429370c384c0401a5c82a0944"
+      "sha256": "ec590954f4a671ddb4db7265b37bc0d52e3b164185eb3df04b7e2ee394f46b77"
     },
     {
       "id": "kidapp-bridge",
@@ -643,7 +643,7 @@
       "cell": 19,
       "newImage": "assets/rebuilt/kidapp-bridge.png",
       "status": "generated-candidate",
-      "sha256": "e814fa82bca846bd17d63f51538675cdb1518e3fd331d6fc760c72d74796bae1"
+      "sha256": "c1cee2f048ab91ce289903b1768ac7dea4d81c46797476a34a1275fbeac2a831"
     },
     {
       "id": "kidapp-chef",
@@ -655,7 +655,7 @@
       "cell": 20,
       "newImage": "assets/rebuilt/kidapp-chef.png",
       "status": "generated-candidate",
-      "sha256": "7964fcc95a6679eaba2dc7d383ae36794d8636631e678eb371e589c633a2b32b"
+      "sha256": "320d6cf3d0648da3dde313d36f9855d75b656c01ecf540a0998a59bdfacd4ccb"
     },
     {
       "id": "kidapp-doctor",
@@ -667,7 +667,7 @@
       "cell": 21,
       "newImage": "assets/rebuilt/kidapp-doctor.png",
       "status": "generated-candidate",
-      "sha256": "3805987b23e9ded896e9a72cab8a6cafd497e8708e29ff25b3e75a71f8e75aee"
+      "sha256": "8995663911da83e338c6b5386bccd90bd4b6a72a0bc5a666e8352a208e0e0d08"
     },
     {
       "id": "kidapp-farmer",
@@ -679,7 +679,7 @@
       "cell": 22,
       "newImage": "assets/rebuilt/kidapp-farmer.png",
       "status": "generated-candidate",
-      "sha256": "9b78fc05dab84627e91838db770cfbac699828717a95b8ab1ce600743afb99bf"
+      "sha256": "0660ca6911c15cf8a1a04b3dcaacfa63925fc00aafccfa6a50db0c5609b07296"
     },
     {
       "id": "kidapp-nurse",
@@ -691,7 +691,7 @@
       "cell": 23,
       "newImage": "assets/rebuilt/kidapp-nurse.png",
       "status": "generated-candidate",
-      "sha256": "68f45983ca7c205e1e43b1aa6d6e024b3025edfbaefff42db3e4e60b3c630c90"
+      "sha256": "dfe92322a232254a792dbc1c344af74112d82e9c737a240d0b888077700f6e53"
     },
     {
       "id": "kidapp-table",
@@ -703,7 +703,7 @@
       "cell": 24,
       "newImage": "assets/rebuilt/kidapp-table.png",
       "status": "generated-candidate",
-      "sha256": "05baad43bf25bf3c4506e5d4614a0998591ad8702f98bbb3417836cc6dd918e9"
+      "sha256": "82f78ddb6f5d560ea3df30293c4c600dee9a101be9a5c1d928f4b39c8a22f218"
     },
     {
       "id": "kidapp-teacher",
@@ -715,7 +715,7 @@
       "cell": 25,
       "newImage": "assets/rebuilt/kidapp-teacher.png",
       "status": "generated-candidate",
-      "sha256": "7259c9b365d4f9e831b980145dc964f7af1b9921dc86cd8b4093b84b54268d6c"
+      "sha256": "8ca01b0522f1f093eadb46660f1252264be2612cf9b3e38abbae86ea63f24341"
     }
   ],
   "replacementSheets": [
@@ -727,5 +727,9 @@
       "cropTool": "tools/crop_dinosaur_grid.py",
       "usedCells": 8
     }
-  ]
+  ],
+  "crop": {
+    "tool": "tools/recrop_grid_sheets.py",
+    "method": "grid-line cells, edge fragments removed, trimmed square"
+  }
 }
