@@ -17,6 +17,8 @@
   Cache-Control: no-cache
 /shared.js
   Cache-Control: no-cache
+/progress.js
+  Cache-Control: no-cache
 /app.js
   Cache-Control: no-cache
 /game-homes.js

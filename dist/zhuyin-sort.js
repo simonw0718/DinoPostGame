@@ -173,7 +173,7 @@
   function setAutoAudio(value) {
     state.nextAutoAudio = Boolean(value); saveSelection(); renderSelectionControls();
   }
-  function selectRound(pool) { return Dino.selectRound(pool, Dino.loadHistory(), state.count); }
+  function selectRound(pool) { return DinoProgress.selectRound(pool, state.count); }
   function setStatus(message) { setKidText($('status'), message); }
   function duration(seconds) { return reducedMotion.matches ? .01 : seconds; }
   function setRoute(progress) {
@@ -359,6 +359,7 @@
     if (state.audio) { state.audio.pause(); state.audio.currentTime = 0; }
     playSound('correct');
     state.firstTry += Number(state.attempts === 1);
+    state.progressResults.push(DinoProgress.record(word.id, state.attempts === 1));
     state.streak = state.attempts === 1 ? state.streak + 1 : 0;
     Dino.burst(mailbox);
     updateScore();
@@ -478,7 +479,7 @@
     state.activePool = pool;
     setKidText($('mailModeBadge'), modeLabel(state.mode, state.level));
     state.round = selectRound(usable);
-    state.index = 0; state.firstTry = 0; state.streak = 0; state.answerResults = [];
+    state.index = 0; state.firstTry = 0; state.streak = 0; state.answerResults = []; state.progressResults = [];
     updateScore();
     $('finishOverlay').hidden = true;
     setKidText($('modeTitle'), state.format === 'english' ? '英文送信' : '注音送信');

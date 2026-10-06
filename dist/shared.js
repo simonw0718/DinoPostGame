@@ -107,18 +107,6 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
         && Number.isFinite(item.score) && Number.isFinite(item.total) && !Number.isNaN(Date.parse(item.date))).slice(0, 10) : [];
     } catch { return []; }
   }
-  // Weighted pick: missed words come back more often, the last two rounds less often.
-  function selectRound(pool, history, count) {
-    const missed = new Map();
-    history.forEach(record => record.ids.forEach((id, index) => {
-      if (record.results[index] === false) missed.set(id, (missed.get(id) || 0) + 1);
-    }));
-    const recent = new Set(history.slice(0, 2).flatMap(record => record.ids));
-    return pool.map(word => {
-      const weight = 1 + Math.min(3, missed.get(word.id) || 0);
-      return { word, priority: Math.pow(Math.random(), 1 / weight) - (recent.has(word.id) ? .3 : 0) };
-    }).sort((a, b) => b.priority - a.priority).slice(0, count).map(item => item.word);
-  }
   const audioPath = word => `assets/audio/${word.id}.mp3`;
 
   // Small stamp-and-star burst around an element; skipped when reduced motion is on.
@@ -149,5 +137,5 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
   const streakThreshold = 3;
 
   return { characters, storageKeys, shuffle, loadQueue, fitActor, parseZhuyin, makeBpmUnit, kidText,
-    visualGroup, eligibleWords, loadHistory, selectRound, audioPath, burst, streakThreshold };
+    visualGroup, eligibleWords, loadHistory, audioPath, burst, streakThreshold };
 })();

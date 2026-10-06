@@ -1,6 +1,6 @@
 const $ = (id) => document.getElementById(id);
 const screens = ['startScreen', 'playScreen', 'resultScreen'];
-const state = { words: [], disabledIds: new Set(), roundChoices: [], count: 5, mode: 'all', level: 1, answerFormat: 'image', autoAudio: true, round: [], pendingRound: [], index: 0, firstTryScore: 0, streak: 0, attempts: 0, results: [], phase: 'start', audio: null, chineseAudio: null, previewAudio: null, loadedWordId: null, completedRounds: 0, screenCasts: { start: [], play: [], result: [] }, characterQueue: [], history: [] };
+const state = { words: [], disabledIds: new Set(), roundChoices: [], count: 5, mode: 'all', level: 1, answerFormat: 'image', autoAudio: true, round: [], pendingRound: [], index: 0, firstTryScore: 0, streak: 0, progressResults: [], attempts: 0, results: [], phase: 'start', audio: null, chineseAudio: null, previewAudio: null, loadedWordId: null, completedRounds: 0, screenCasts: { start: [], play: [], result: [] }, characterQueue: [], history: [] };
 const bankStorageKey = Dino.storageKeys.disabled;
 const characterStorageKey = 'dinopost-character-queue-v2';
 const answerStorageKey = 'dinopost-match-answer-v1';
@@ -314,7 +314,7 @@ function saveHistory() {
   try { localStorage.setItem(Dino.storageKeys.history, JSON.stringify(state.history.slice(0, 10))); }
   catch { /* The game remains playable when browser storage is unavailable. */ }
 }
-function selectRound(pool) { return Dino.selectRound(pool, state.history, state.count); }
+function selectRound(pool) { return DinoProgress.selectRound(pool, state.count); }
 function prepareRound() {
   if (!state.words.length) return;
   state.pendingRound = selectRound(eligibleWords());
@@ -470,6 +470,7 @@ function choose(button, id) {
   button.classList.add('correct');
   state.phase = 'reveal';
   const firstTry = state.attempts === 1;
+  state.progressResults.push(DinoProgress.record(currentWord().id, firstTry));
   state.results[state.index] = firstTry;
   if (firstTry) state.firstTryScore++;
   state.streak = firstTry ? state.streak + 1 : 0;
@@ -510,7 +511,7 @@ function startRound() {
   state.round = state.pendingRound.length === state.count && state.pendingRound.every(word => eligibleIds.has(word.id))
     ? state.pendingRound : selectRound(pool);
   state.pendingRound = [];
-  state.index = 0; state.firstTryScore = 0; state.streak = 0; state.results = [];
+  state.index = 0; state.firstTryScore = 0; state.streak = 0; state.results = []; state.progressResults = [];
   // The first play call stays inside the Start button's user gesture on iOS.
   if (state.autoAudio) playWord(state.round[0]);
   advanceCast('play');
