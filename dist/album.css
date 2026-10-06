@@ -1,0 +1,46 @@
+.album-shell{max-width:760px;padding-bottom:40px}
+.album-shell .topbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+.album-title{margin:0;font-size:24px;color:#1f6245}
+.album-spacer{display:block}
+.album-summary{margin:4px 2px 12px;padding:12px 14px;border:3px solid #fff4d9;border-radius:18px;background:#fffdf4;box-shadow:0 5px 0 #d9c58f;color:#315b42}
+.album-summary .summary-line{display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:center;font-size:18px;font-weight:1000}
+.album-summary .summary-line strong{color:#c4572f;font-size:22px}
+.summary-bar{height:10px;margin:8px 4px 6px;border-radius:99px;background:#e6dcc0;overflow:hidden}
+.summary-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#f2b945,#f6ac34);border-radius:99px;transition:width .6s ease}
+.summary-next{margin:0;text-align:center;font-weight:900;color:#8a6a2f;font-size:15px}
+.album-tabs{display:flex;gap:8px;margin:0 2px 10px}
+.album-tabs button{flex:1;min-height:48px;border:2px solid #cfe0c6;border-radius:14px;background:#eef5e8;color:#2d6848;font-size:18px;font-weight:1000}
+.album-tabs button[aria-selected=true]{background:#2b7954;border-color:#2b7954;color:#fff;box-shadow:0 3px 0 #1c5238}
+.album-chips{flex:none;min-height:48px;display:flex;gap:8px;margin:0 2px 12px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.album-chips::-webkit-scrollbar{display:none}
+.album-chips[hidden]{display:none}
+.album-chips button{flex:none;min-height:40px;padding:4px 12px;border:2px solid #e6c98f;border-radius:99px;background:#fffaf0;color:#7a5a2c;font-size:16px;font-weight:900;white-space:nowrap}
+.album-chips button[aria-pressed=true]{background:#f2b945;border-color:#d99a25;color:#4a3412}
+.album-chips .chip-count{margin-left:4px;font-size:12px;opacity:.75}
+.album-grid{flex:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 8px}
+@media(min-width:560px){.album-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.album-slot{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;padding:0;border:0;background:none;color:#315b42;font-weight:900;touch-action:manipulation}
+.album-slot .stamp-frame{width:100%;aspect-ratio:1;--emoji:44px}
+.album-slot.card-slot .stamp-frame{aspect-ratio:5/6}
+.album-slot .slot-label{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px}
+.album-slot.locked .stamp-frame{filter:grayscale(1) opacity(.55) drop-shadow(0 2px 2px #6b4f2a33)}
+.album-slot.locked .stamp-inner{background:#ece6d6}
+.album-slot.locked .slot-q{font-size:34px;color:#b7ab8a;font-weight:1000}
+.album-slot.locked .slot-label{color:#a79c7c}
+.album-slot.progress .stamp-frame{filter:saturate(.35) opacity(.8) drop-shadow(0 2px 2px #6b4f2a33)}
+.album-slot .stamp-dots{margin-top:0}
+.album-slot.wiggle{animation:wiggle .35s}
+@keyframes wiggle{25%{transform:rotate(-5deg)}75%{transform:rotate(5deg)}}
+.album-slot.card-slot .card-actor{width:92%;height:92%;background-repeat:no-repeat}
+.album-empty{grid-column:1/-1;text-align:center;color:#8a7a55;font-weight:900;padding:24px 0}
+.stamp-dialog{width:min(88vw,340px);padding:20px 18px 22px;border:5px solid #fff4d9;border-radius:24px;background:#fffdf4;color:#315b42;box-shadow:0 20px 60px #16452f77;text-align:center}
+.stamp-dialog::backdrop{background:#103c2dbb;backdrop-filter:blur(4px)}
+.stamp-dialog .stamp-frame{width:190px;height:190px;margin:0 auto 10px;--emoji:84px}
+.stamp-dialog .stamp-frame.tall{height:228px}
+.dialog-english{font-size:34px;font-weight:1000;color:#18583e;line-height:1.1}
+.dialog-chinese{display:flex;justify-content:center;gap:2px;margin:8px 0;min-height:48px;font-size:30px;font-weight:1000;color:#226547}
+.dialog-meta{font-size:14px;color:#8a7a55;font-weight:800}
+.dialog-sound{margin-top:10px;min-height:46px;padding:6px 18px;border:2px solid #abcdb0;border-radius:99px;background:#e9f6e7;color:#2d6848;font-size:16px;font-weight:900}
+.stamp-dialog-close{position:absolute;right:10px;top:10px;width:36px;height:36px;border:0;border-radius:11px;background:#e9f0e2;color:#40654b;font-size:17px}
+.album-error{text-align:center;color:#c4572f;font-weight:900}
+@media(prefers-reduced-motion:reduce){.album-slot.wiggle{animation:none}.summary-bar i{transition:none}}

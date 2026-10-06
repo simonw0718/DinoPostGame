@@ -43,6 +43,11 @@
   if (page === 'select') {
     if (new URLSearchParams(location.search).has('settings')) location.replace(`match.html${location.search}`);
     annotate($('selectTitle'),'選遊戲！');
+    const settings = document.querySelector('.topbar .settings-button');
+    if (settings && window.DinoStampsUI) {
+      const actions = document.createElement('div'); actions.className = 'topbar-actions';
+      settings.before(actions); actions.append(DinoStampsUI.albumLink(), settings);
+    }
     document.querySelectorAll('[data-reading]').forEach(el => annotate(el,el.dataset.reading));
     return;
   }

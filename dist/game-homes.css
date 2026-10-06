@@ -22,3 +22,5 @@ body[data-page="select"] .selector-title{white-space:normal}
 .mail-format-picker{margin:9px 0 6px}
 .mail-auto-control{min-height:34px;margin:4px 0 8px}
 @media(max-width:680px){.mail-format-picker{margin:5px 0 3px}.mail-auto-control{margin:2px 0 4px}.mail-format-picker .answer-option{min-height:38px}}
+.topbar-actions{display:flex;align-items:center;gap:8px}
+@media(max-width:680px){.topbar-actions .album-link{min-height:38px;padding:4px 8px;font-size:13px}.topbar-actions .album-link .album-icon{font-size:16px}}

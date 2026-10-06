@@ -21,6 +21,14 @@
   Cache-Control: no-cache
 /stamps-ui.js
   Cache-Control: no-cache
+/album
+  Cache-Control: no-cache
+/album.html
+  Cache-Control: no-cache
+/album.js
+  Cache-Control: no-cache
+/album.css
+  Cache-Control: no-cache
 /app.js
   Cache-Control: no-cache
 /game-homes.js
