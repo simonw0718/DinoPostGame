@@ -3,6 +3,7 @@
 
 Usage: python3 tools/check_data.py   (exit 1 on errors; warnings do not fail)
 """
+import hashlib
 import json
 import re
 import sys
@@ -106,6 +107,21 @@ def main():
     for asset in re.findall(r"asset: '([^']+)'", shared):
         if not file_ok(f'assets/{asset}', 1000):
             errors.append(f'缺角色圖: {asset}')
+
+    cards_path = DIST / 'assets/cards/manifest.json'
+    if cards_path.is_file():
+        cards = json.loads(cards_path.read_text(encoding='utf-8'))['items']
+        need = len(words) // 10
+        if len(cards) < need:
+            errors.append(f'角色郵票圖只有 {len(cards)} 張，需要 {need} 張')
+        for c in cards:
+            f = DIST / c['image']
+            if not f.is_file():
+                errors.append(f'缺角色郵票圖: {c["image"]}')
+            elif hashlib.sha256(f.read_bytes()).hexdigest() != c['sha256']:
+                errors.append(f'角色郵票圖與 manifest 的 sha256 不符: {c["image"]}')
+        approved = sum(1 for c in cards if c.get('status') == 'approved')
+        print(f'角色郵票：{len(cards)} 張（已核准 {approved}／候選 {len(cards) - approved}）')
 
     for line in warnings:
         print('WARN', line)

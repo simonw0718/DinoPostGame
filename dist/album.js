@@ -174,6 +174,7 @@
       const response = await fetch('data.json');
       if (!response.ok) throw Error(`HTTP ${response.status}`);
       state.words = await response.json();
+      await DinoStampsUI.ready;
       const tab = new URLSearchParams(location.search).get('tab');
       if (tab === 'cards') state.tab = 'cards';
       render();

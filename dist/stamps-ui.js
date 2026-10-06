@@ -27,6 +27,7 @@ window.DinoStampsUI = (() => {
   background:radial-gradient(circle at 5px 5px,#0000 2.6px,#fffdf6 3px) -5px -5px/10px 10px;filter:drop-shadow(0 2px 2px #6b4f2a55)}
 .stamp-frame>.stamp-inner{width:100%;height:100%;display:grid;place-items:center;overflow:hidden;border:1.5px solid #e6c98f;background:#fffaf0}
 .stamp-frame img,.stamp-frame .stamp-art{width:88%;height:88%;object-fit:contain}
+.stamp-frame img.card-pic{width:100%;height:100%;object-fit:cover}
 .stamp-frame .stamp-sheet{background-size:500% 200%;background-repeat:no-repeat}
 .stamp-frame .stamp-emoji{font-size:var(--emoji,26px);line-height:1}
 .stamp-summary{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;margin:10px auto 4px}
@@ -68,10 +69,20 @@ window.DinoStampsUI = (() => {
     return frame;
   }
 
-  // Placeholder character art until the P4 card catalog exists: every pose of every game character, in order.
-  const catalog = Dino.characters.flatMap(c => Array.from({ length: c.frames }, (_, frame) => ({ character: c, frame })));
+  // Character stamp pictures: dist/assets/cards/manifest.json (built by tools/make_character_cards.py).
+  // Falls back to the game's pose sheets if the manifest is missing.
+  let cardItems = null;
+  const ready = fetch('assets/cards/manifest.json').then(r => (r.ok ? r.json() : Promise.reject(r.status)))
+    .then(m => { cardItems = m.items; }).catch(() => { cardItems = null; });
+  const poseCatalog = Dino.characters.flatMap(c => Array.from({ length: c.frames }, (_, frame) => ({ character: c, frame })));
   function cardArt(n) {
-    const { character, frame } = catalog[(n - 1) % catalog.length];
+    if (cardItems?.length) {
+      const item = cardItems[(n - 1) % cardItems.length];
+      const picture = document.createElement('img'); picture.className = 'card-pic'; picture.alt = '';
+      picture.src = item.image; picture.loading = 'lazy';
+      return { actor: picture, name: item.name, pose: item.pose };
+    }
+    const { character, frame } = poseCatalog[(n - 1) % poseCatalog.length];
     const actor = document.createElement('span'); actor.className = 'card-actor';
     actor.style.backgroundImage = `url('assets/${character.asset}')`;
     actor.style.backgroundSize = `${character.frames * 100}% 100%`;
@@ -124,7 +135,7 @@ window.DinoStampsUI = (() => {
   }
 
   function cardReveal(card) {
-    return new Promise(resolve => {
+    return ready.then(() => new Promise(resolve => {
       const overlay = document.createElement('div'); overlay.className = 'card-reveal';
       overlay.setAttribute('role', 'dialog'); overlay.setAttribute('aria-modal', 'true');
       const box = document.createElement('div'); box.className = 'card-box';
@@ -141,7 +152,7 @@ window.DinoStampsUI = (() => {
       document.body.append(overlay);
       Dino.burst(frame);
       close.focus();
-    });
+    }));
   }
 
   // Fill a result-screen container with the round's new stamps, fly them into the album link,
@@ -168,5 +179,5 @@ window.DinoStampsUI = (() => {
     for (const card of cards) await cardReveal(card);
   }
 
-  return { dots, message, albumLink, wordStamp, cardArt, cardReveal, showRoundStamps };
+  return { ready, dots, message, albumLink, wordStamp, cardArt, cardReveal, showRoundStamps };
 })();
