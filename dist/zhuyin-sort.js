@@ -64,6 +64,7 @@
     '再試一次': ['ㄗㄞˋ', 'ㄕˋ', 'ㄧ', 'ㄘˋ'],
     '配對成功！': ['ㄆㄟˋ', 'ㄉㄨㄟˋ', 'ㄔㄥˊ', 'ㄍㄨㄥ', ''],
     '連續送對！': ['ㄌㄧㄢˊ', 'ㄒㄩˋ', 'ㄙㄨㄥˋ', 'ㄉㄨㄟˋ', ''],
+    '拿到郵票了！': ['ㄋㄚˊ', 'ㄉㄠˋ', 'ㄧㄡˊ', 'ㄆㄧㄠˋ', 'ㄌㄜ˙', ''],
     '送達啦！': ['ㄙㄨㄥˋ', 'ㄉㄚˊ', 'ㄌㄚ˙', ''],
     '按下一封，投入郵箱': ['ㄢˋ', 'ㄒㄧㄚˋ', 'ㄧ', 'ㄈㄥ', '', 'ㄊㄡˊ', 'ㄖㄨˋ', 'ㄧㄡˊ', 'ㄒㄧㄤ'],
     '點信，再選郵箱': ['ㄉㄧㄢˇ', 'ㄒㄧㄣˋ', '', 'ㄗㄞˋ', 'ㄒㄩㄢˇ', 'ㄧㄡˊ', 'ㄒㄧㄤ'],
@@ -373,6 +374,7 @@
     setKidText($('revealChinese'), state.round[state.index].zh, state.round[state.index].zhuyin);
     $('revealChinese').classList.toggle('is-long', state.round[state.index].zh.length > 3);
     $('revealEnglish').textContent = state.round[state.index].en;
+    $('revealEnglish').after(DinoStampsUI.dots(state.progressResults.at(-1)));
     setStatus(state.streak >= Dino.streakThreshold ? '連續送對！' : '配對成功！');
     // Prompt audio belongs to the question and follows the auto-play switch.
     $('letterDrag').classList.add('is-flipped');
@@ -385,7 +387,7 @@
       state.phase = 'reveal';
       $('nextButton').hidden = false;
       setKidText($('nextLabel'), state.index === state.count - 1 ? '看成果' : '下一封');
-      setStatus(state.streak >= Dino.streakThreshold ? '連續送對！' : '送達啦！');
+      setStatus(DinoStampsUI.message(state.progressResults.at(-1)) || (state.streak >= Dino.streakThreshold ? '連續送對！' : '送達啦！'));
     }, reducedMotion.matches ? 20 : 620);
     // The postmark lands after the correct chime; the stamp sound follows the impact (64% of the 0.52s stampDown).
     const stampIndex = state.index;
@@ -412,6 +414,7 @@
     letter.style.transform = 'translate3d(0px,0px,0)';
     letter.classList.remove('is-armed', 'is-dragging', 'is-flipped');
     renderReading(word);
+    document.querySelectorAll('.letter-back .stamp-dots').forEach(el => el.remove());
     setKidText($('instructionText'), state.format === 'english' ? '看單字，送到郵箱' : '讀注音，送到郵箱');
     state.choices = choicesFor(word, state.activePool);
     renderMailboxes(state.choices);
@@ -445,6 +448,7 @@
     $('finishOverlay').hidden = false;
     animate(document.querySelector('.finish-card'), { opacity: [0, 1], scale: [.8, 1] }, { type: 'spring', stiffness: 190, damping: 16, duration: duration(.6) });
     saveRound();
+    DinoStampsUI.showRoundStamps($('stampSummary'), state.progressResults, state.words, albumLink);
   }
   async function nextQuestion() {
     if (state.phase !== 'reveal') return;
@@ -538,6 +542,8 @@
       if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); $('letterDrag').click(); }
     });
   }
+  const albumLink = DinoStampsUI.albumLink();
+  document.querySelector('.finish-actions').append(albumLink);
   async function init() {
     annotateStaticUI();
     buildRouteStops();

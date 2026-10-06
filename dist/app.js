@@ -243,6 +243,7 @@ const uiReadings = {
   '再試一次！': ['ㄗㄞˋ', 'ㄕˋ', 'ㄧˊ', 'ㄘˋ', ''],
   '答對了！': ['ㄉㄚˊ', 'ㄉㄨㄟˋ', 'ㄌㄜ˙', ''],
   '連續答對！': ['ㄌㄧㄢˊ', 'ㄒㄩˋ', 'ㄉㄚˊ', 'ㄉㄨㄟˋ', ''],
+  '拿到郵票了！': ['ㄋㄚˊ', 'ㄉㄠˋ', 'ㄧㄡˊ', 'ㄆㄧㄠˋ', 'ㄌㄜ˙', ''],
   '下一題': ['ㄒㄧㄚˋ', 'ㄧˋ', 'ㄊㄧˊ'],
   '看成績': ['ㄎㄢˋ', 'ㄔㄥˊ', 'ㄐㄧˋ'],
   '今天的郵件': ['ㄐㄧㄣ', 'ㄊㄧㄢ', 'ㄉㄜ˙', 'ㄧㄡˊ', 'ㄐㄧㄢˋ'],
@@ -481,7 +482,7 @@ function choose(button, id) {
     void $('scoreText').offsetWidth;
     $('scoreText').classList.add('is-stamped');
   }
-  setKidText($('feedback'), state.streak >= Dino.streakThreshold ? '連續答對！' : '答對了！');
+  setKidText($('feedback'), DinoStampsUI.message(state.progressResults.at(-1)) || (state.streak >= Dino.streakThreshold ? '連續答對！' : '答對了！'));
   $('instruction').textContent = '';
   for (const slot of ['A', 'B', 'C']) {
     setActorPose($(`playActor${slot}`), 'celebrate');
@@ -502,6 +503,7 @@ function choose(button, id) {
     choice.querySelector('.choice-back').removeAttribute('aria-hidden');
     choice.setAttribute('aria-label', option.id === currentWord().id && option.zhAudio ? `${option.zh}，點一下聽中文` : option.zh);
   });
+  $('choices').querySelector(`.choice[data-word-id="${currentWord().id}"] .choice-back`)?.append(DinoStampsUI.dots(state.progressResults.at(-1)));
   $('nextButton').classList.remove('hidden');
   $('trayBottom').classList.add('has-next');
 }
@@ -545,6 +547,7 @@ function nextQuestion() {
     advanceCast('result');
     showScreen('resultScreen');
     playEffect('finish');
+    DinoStampsUI.showRoundStamps($('stampSummary'), state.progressResults, state.words, albumLink);
     prepareRound();
     return;
   }
@@ -770,6 +773,8 @@ async function init() {
     console.error(error);
   }
 }
+const albumLink = DinoStampsUI.albumLink();
+$('resultScreen').querySelector('.result-actions').append(albumLink);
 $('startButton').addEventListener('click', startRound);
 $('againButton').addEventListener('click', startRound);
 $('audioButton').addEventListener('click', () => playWord());

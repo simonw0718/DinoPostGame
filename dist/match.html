@@ -10,7 +10,7 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="stylesheet" href="style.css">
-  <script src="shared.js" defer></script><script src="progress.js" defer></script><script src="app.js" defer></script>
+  <script src="shared.js" defer></script><script src="progress.js" defer></script><script src="stamps-ui.js" defer></script><script src="app.js" defer></script>
 </head>
 <body>
   <div class="ambient ambient-a" aria-hidden="true"></div>
@@ -74,6 +74,7 @@
       <h1 id="resultTitle"><span id="resultTitleLine1">今天的郵件</span><br><span id="resultTitleLine2">送達啦！</span></h1>
       <p class="result-score"><span id="resultScoreLabel">第一次就答對</span> <strong id="finalScore">0／5</strong> <span id="resultCountUnit">題</span></p>
       <p id="resultCopy" class="result-copy">你完成任務了！</p>
+      <div id="stampSummary" class="stamp-summary" hidden></div>
       <div class="result-actions"><button id="againButton" class="primary-button" type="button"><span class="again-label">再玩一次</span><span class="button-arrow" aria-hidden="true">➜</span></button><button id="resultHomeButton" class="home-button result-home" type="button"><span aria-hidden="true">⌂</span><span class="home-label">回首頁</span></button></div>
     </section>
   </main>
