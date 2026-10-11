@@ -9,7 +9,9 @@ window.DinoProgress = (() => {
     cardEvery: 10,       // word stamps per character card
     newPerFive: 3,       // new words per 5-question round
     openLimit: 25,       // in-progress words before new words slow down
-    reviewStampedDays: 14
+    reviewStampedDays: 14,
+    recentRounds: 2,     // rounds whose words are rested before being picked again
+    reviewPerRound: 2    // wrong-answer words re-asked per round
   };
   const DAY = 86400000;
   let state = null;
@@ -89,24 +91,34 @@ window.DinoProgress = (() => {
       else if (w.count > 0 || w.seen > 0) groups.progress.push(word);
       else groups.fresh.push(word);
     }
-    groups.review.sort((a, b) => (info(a).wrongAt || 0) - (info(b).wrongAt || 0));
-    groups.progress = shuffle(groups.progress).sort((a, b) => info(b).count - info(a).count || (info(a).lastSeen || 0) - (info(b).lastSeen || 0));
+    // Words from the last two rounds are skipped on the first pass so questions don't repeat round after round.
+    const recent = new Set((window.Dino ? Dino.loadHistory() : []).slice(0, RULES.recentRounds).flatMap(r => r.ids));
+        groups.review.sort((a, b) => (info(a).wrongAt || 0) - (info(b).wrongAt || 0));
+        groups.progress = (shuffle(groups.progress).sort((a, b) => (info(a).lastSeen || 0) - (info(b).lastSeen || 0)));
     const fresh = shuffle(groups.fresh);
     const picked = [];
+    let skipRecent = true;
     const take = (list, limit = Infinity) => {
       for (const word of list) {
         if (picked.length >= count || limit <= 0) break;
+        if (skipRecent && recent.has(word.id)) continue;
         if (!picked.includes(word)) { picked.push(word); limit--; }
       }
     };
-    take(fresh, Math.min(reservedNew, count));
-    take(groups.review);
-    take(groups.progress);
-    take(fresh, newCap - picked.filter(word => !info(word).seen).length);
-    take(shuffle(groups.stampedDue), 1);
-    take(shuffle(groups.capped));
-    take(shuffle(groups.rest));
-    take(fresh);
+    // Two passes: first without words from the last rounds, then allow them only if the round cannot fill.
+    for (const pass of [true, false]) {
+      skipRecent = pass;
+      take(fresh, Math.min(reservedNew, count));
+      take(groups.review, RULES.reviewPerRound);
+      take(groups.progress, Math.max(1, count - reservedNew - 1));
+      take(fresh, newCap - picked.filter(word => !info(word).seen).length);
+      take(shuffle(groups.stampedDue), 1);
+      take(shuffle(groups.capped));
+      take(shuffle(groups.rest));
+      take(fresh);
+      take(groups.progress);
+      take(groups.review);
+    }
     return shuffle(picked);
   }
 

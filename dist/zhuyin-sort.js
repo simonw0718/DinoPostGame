@@ -20,20 +20,10 @@
   routeDone.style.strokeDasharray = String(routeLength);
   routeDone.style.strokeDashoffset = String(routeLength);
   const animate = Motion.animate;
-  const sounds = {
-    correct: new Audio('assets/audio/effects/correct.mp3'),
-    stamp: new Audio('assets/audio/effects/stamp.mp3'),
-    wrong: new Audio('assets/audio/effects/wrong.mp3'),
-    finish: new Audio('assets/audio/effects/finish.mp3')
-  };
-  Object.values(sounds).forEach(sound => { sound.preload = 'auto'; sound.volume = .9; });
-  function playSound(kind, startAt = 0) {
-    const sound = sounds[kind];
-    if (!sound) return;
-    if (kind === 'finish') sounds.stamp.pause();
-    sound.pause();
-    try { sound.currentTime = startAt; } catch { /* Playback still starts from the beginning. */ }
-    sound.play().catch(error => console.warn(`${kind} 音效無法播放`, error));
+  const sfx = Dino.makeSfx(['correct', 'stamp', 'wrong', 'finish']);
+  function playSound(kind) {
+    if (kind === 'finish') sfx.stop('finish');
+    sfx.play(kind);
   }
   const uiReadings = {
     '首頁': ['ㄕㄡˇ', 'ㄧㄝˋ'],

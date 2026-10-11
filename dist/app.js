@@ -182,22 +182,9 @@ function showZhuyinPrompt(word) {
 }
 
 // Recorded effects shared with the mail game (assets/audio/effects/).
-const effectFiles = {
-  correct: new Audio('assets/audio/effects/correct.mp3'),
-  wrong: new Audio('assets/audio/effects/wrong.mp3'),
-  finish: new Audio('assets/audio/effects/finish.mp3')
-};
-Object.values(effectFiles).forEach(sound => { sound.preload = 'auto'; sound.volume = .9; });
-function stopEffect() {
-  Object.values(effectFiles).forEach(sound => sound.pause());
-}
-function playEffect(kind) {
-  stopEffect();
-  const sound = effectFiles[kind];
-  if (!sound) return;
-  try { sound.currentTime = 0; } catch {}
-  sound.play().catch(error => console.warn('音效無法播放', error));
-}
+const sfx = Dino.makeSfx(['correct', 'wrong', 'finish']);
+function stopEffect() { sfx.stop(); }
+function playEffect(kind) { sfx.stop(); sfx.play(kind); }
 const uiReadings = {
   '聽單字，': ['ㄊㄧㄥ', 'ㄉㄢ', 'ㄗˋ', ''],
   '聽英文，': ['ㄊㄧㄥ', 'ㄧㄥ', 'ㄨㄣˊ', ''],

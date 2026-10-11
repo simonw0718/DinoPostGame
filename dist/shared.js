@@ -133,9 +133,45 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
       ], { duration: 820 + Math.random() * 260, easing: 'cubic-bezier(.2,.8,.3,1)' }).finished.finally(() => piece.remove());
     }
   }
+  // Sound effects decoded up front with WebAudio so the first chime is instant; falls back to <audio>.
+  function makeSfx(names, base = 'assets/audio/effects/') {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    const ctx = Ctx ? new Ctx() : null;
+    const buffers = {}, playing = new Set();
+    const fallback = {};
+    names.forEach(name => {
+      const audio = new Audio(`${base}${name}.mp3`); audio.preload = 'auto'; audio.volume = .9; fallback[name] = audio;
+      if (!ctx) return;
+      fetch(`${base}${name}.mp3`).then(r => r.arrayBuffer())
+        .then(data => new Promise((ok, no) => ctx.decodeAudioData(data, ok, no)))
+        .then(buffer => { buffers[name] = buffer; }).catch(() => {});
+    });
+    const unlock = () => { if (ctx?.state === 'suspended') ctx.resume().catch(() => {}); };
+    ['pointerdown', 'touchstart', 'keydown'].forEach(type => document.addEventListener(type, unlock, { capture: true, passive: true }));
+    function stop(except) {
+      playing.forEach(node => { if (node.sfxName !== except) { try { node.stop(); } catch {} } });
+      names.forEach(name => { if (name !== except) fallback[name].pause(); });
+    }
+    function play(name) {
+      if (!fallback[name]) return;
+      unlock();
+      if (ctx && buffers[name] && ctx.state === 'running') {
+        const node = ctx.createBufferSource(), gain = ctx.createGain();
+        node.buffer = buffers[name]; gain.gain.value = .9; node.sfxName = name;
+        node.connect(gain).connect(ctx.destination);
+        node.onended = () => playing.delete(node);
+        playing.add(node); node.start();
+        return;
+      }
+      const audio = fallback[name];
+      audio.pause(); try { audio.currentTime = 0; } catch {}
+      audio.play().catch(error => console.warn('音效無法播放', error));
+    }
+    return { play, stop };
+  }
   // First-try answers in a row that earn the streak message.
   const streakThreshold = 3;
 
   return { characters, storageKeys, shuffle, loadQueue, fitActor, parseZhuyin, makeBpmUnit, kidText,
-    visualGroup, eligibleWords, loadHistory, audioPath, burst, streakThreshold };
+    visualGroup, eligibleWords, loadHistory, audioPath, burst, makeSfx, streakThreshold };
 })();
