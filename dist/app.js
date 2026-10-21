@@ -658,11 +658,14 @@ function renderHistory() {
     const label = document.createElement('strong');
     const modeName = record.mode === 'dinosaur' ? '恐龍挑戰' : record.mode === 'level'
       ? `第${['一', '二', '三'][record.level - 1]}級` : record.mode === 'zhuyin-sort' ? '第一級' : '全部單字';
-    label.textContent = record.game === 'zhuyin-sort' || record.mode === 'zhuyin-sort' ? `注音送信 · ${modeName}` : `${record.answerFormat === 'english' ? '聽英文找單字' : '找圖片'} · ${modeName}`;
+    const mail = record.game === 'zhuyin-sort' || record.mode === 'zhuyin-sort';
+    const gameName = mail ? '注音送信' : record.game === 'flip' ? '郵差翻翻樂' : record.game === 'belt' ? '注音輸送帶'
+      : record.answerFormat === 'english' ? '聽英文找單字' : '找圖片';
+    label.textContent = `${gameName} · ${modeName}`;
     const date = document.createElement('small');
     date.textContent = new Date(record.date).toLocaleString('zh-TW', { dateStyle: 'short', timeStyle: 'short' });
     const score = document.createElement('span');
-    score.textContent = `${record.score}／${record.total} ${record.game === 'zhuyin-sort' || record.mode === 'zhuyin-sort' ? '封' : '題'}一次答對`;
+    score.textContent = `${record.score}／${record.total} ${mail ? '封' : record.game === 'flip' ? '對' : record.game === 'belt' ? '個詞' : '題'}一次答對`;
     row.append(label, date, score);
     return row;
   }));

@@ -6,6 +6,8 @@ body[data-page="select"] .start-description{margin:13px 0 22px}
 .game-choices{display:grid;gap:15px}
 .game-choice{display:flex;align-items:center;gap:14px;min-height:105px;padding:12px 15px;border:3px solid #bbd6b8;border-radius:19px;background:#f3f8e8;color:#195d42;text-decoration:none;box-shadow:0 6px 0 #9fc7a2;touch-action:manipulation;transition:transform .2s,box-shadow .2s}
 .game-choice:nth-child(2){border-color:#e4bf77;background:#fff2d2;box-shadow:0 6px 0 #c9a666;color:#705023}
+.game-choice:nth-child(3){border-color:#a9c8e8;background:#eaf3fc;box-shadow:0 6px 0 #8fb0d3;color:#22507e}.game-choice:nth-child(3) .game-choice-copy small{color:#5f7f9f}
+.game-choice:nth-child(4){border-color:#d3b8e2;background:#f6eefb;box-shadow:0 6px 0 #b99acb;color:#5b3874}.game-choice:nth-child(4) .game-choice-copy small{color:#8a6c9c}
 .game-choice:hover{transform:translateY(-3px)}.game-choice:active{transform:translateY(4px);box-shadow:0 2px 0 #9fc7a2}
 .game-choice-icon{display:grid;place-items:center;flex:none;width:55px;height:55px;border-radius:16px;background:#d8efdb;color:#24714d;font-size:32px}.game-choice:nth-child(2) .game-choice-icon{background:#ffe1a3;color:#9f6924}
 .game-choice-copy{display:grid;gap:7px;min-width:0}.game-choice-copy strong{font-size:clamp(20px,2.8vw,29px);line-height:1.22;white-space:nowrap}.game-choice-copy small{font-size:13px;font-weight:800;color:#64816a}.game-choice:nth-child(2) .game-choice-copy small{color:#997a53}.game-choice-arrow{margin-left:auto;font-size:23px}

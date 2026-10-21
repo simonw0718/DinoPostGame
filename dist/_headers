@@ -55,3 +55,19 @@
   Cache-Control: no-cache
 /home-cast.js
   Cache-Control: no-cache
+/flip
+  Cache-Control: no-cache
+/flip.html
+  Cache-Control: no-cache
+/flip.js
+  Cache-Control: no-cache
+/flip.css
+  Cache-Control: no-cache
+/belt
+  Cache-Control: no-cache
+/belt.html
+  Cache-Control: no-cache
+/belt.js
+  Cache-Control: no-cache
+/belt.css
+  Cache-Control: no-cache

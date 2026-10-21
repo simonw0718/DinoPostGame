@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#164d39">
+  <meta name="apple-mobile-web-app-title" content="DINO單字任務">
+  <title>郵差翻翻樂・恐龍郵局</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="flip.css"><link rel="stylesheet" href="dino-mode.css">
+  <script src="vendor/motion.js"></script>
+  <script src="shared.js" defer></script><script src="progress.js" defer></script><script src="flip.js" defer></script>
+</head>
+<body>
+  <div id="shell" class="fs-shell">
+    <header class="fs-top">
+      <a class="fs-home" href="index.html" aria-label="回首頁">⌂</a>
+      <h1 id="title" class="fs-title">郵差翻翻樂</h1>
+    </header>
+
+    <section class="fs-host">
+      <div class="fs-actor"><img id="actorImg" alt=""></div>
+      <p id="bubble" class="fs-bubble" role="status" aria-live="polite"></p>
+    </section>
+
+    <main id="board" class="fs-board" role="group" aria-label="信封"></main>
+
+    <footer class="fs-bag">
+      <span class="fs-bag-icon" aria-hidden="true">📮</span>
+      <ol id="slots" class="fs-slots" aria-label="已配好的信"></ol>
+    </footer>
+
+    <div id="reveal" class="fs-reveal" hidden aria-hidden="true">
+      <div class="fs-reveal-card">
+        <span id="revealArt" class="fs-reveal-art"></span>
+        <strong id="revealZh" class="fs-reveal-zh"></strong>
+        <span id="revealEn" class="fs-reveal-en"></span>
+        <span class="fs-reveal-mark"><img src="assets/dinopost-workmark-stamp-transparent-v1.png" alt=""></span>
+      </div>
+    </div>
+  </div>
+
+  <div id="readyOverlay" class="ready-tap">
+    <div class="ready-pick" role="group" aria-label="信的數量"><button type="button" data-pick="6">6</button><button type="button" data-pick="8">8</button><button type="button" data-pick="10">10</button><span id="pickUnit">對</span></div>
+    <button id="readyStart" class="ready-start" type="button" aria-label="點一下，開始翻信">
+      <span class="ready-go" aria-hidden="true"><span class="ready-ring"></span><span class="ready-ring r2"></span><span class="ready-icon">▶</span></span>
+      <span id="readyTitle" class="ready-label">點一下，開始翻信！</span>
+    </button>
+  </div>
+
+  <div id="finishOverlay" class="finish-overlay" hidden>
+    <div class="finish-card">
+      <img id="finishActor" class="finish-actor" alt="">
+      <h2 id="finishTitle">信都配好了！</h2>
+      <p id="finishStars" class="finish-stars" aria-label="星星"></p>
+      <p class="finish-count"><span id="finishFlipsLabel">翻了</span> <strong id="finishFlips"></strong> <span id="finishTimes">次</span></p>
+      <div class="finish-actions"><button id="playAgain" type="button">再玩一次</button><a id="finishHome" href="index.html">回首頁</a></div>
+    </div>
+  </div>
+</body>
+</html>
