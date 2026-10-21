@@ -20,12 +20,17 @@ html.dino-mode #levelControl, html.dino-mode #mailLevelControl { display: none !
 /* Theme: warm amber "fossil dig" tint, footprints on the page background. */
 html.dino-mode body {
   background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='%23c98a2e' fill-opacity='.16'%3E%3Cellipse cx='30' cy='40' rx='9' ry='11'/%3E%3Cellipse cx='19' cy='25' rx='3.5' ry='6' transform='rotate(-25 19 25)'/%3E%3Cellipse cx='30' cy='21' rx='3.5' ry='6.5'/%3E%3Cellipse cx='41' cy='25' rx='3.5' ry='6' transform='rotate(25 41 25)'/%3E%3Cellipse cx='88' cy='95' rx='9' ry='11'/%3E%3Cellipse cx='77' cy='80' rx='3.5' ry='6' transform='rotate(-25 77 80)'/%3E%3Cellipse cx='88' cy='76' rx='3.5' ry='6.5'/%3E%3Cellipse cx='99' cy='80' rx='3.5' ry='6' transform='rotate(25 99 80)'/%3E%3C/g%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='%23c98a2e' fill-opacity='.3'%3E%3Cellipse cx='30' cy='40' rx='9' ry='11'/%3E%3Cellipse cx='19' cy='25' rx='3.5' ry='6' transform='rotate(-25 19 25)'/%3E%3Cellipse cx='30' cy='21' rx='3.5' ry='6.5'/%3E%3Cellipse cx='41' cy='25' rx='3.5' ry='6' transform='rotate(25 41 25)'/%3E%3Cellipse cx='88' cy='95' rx='9' ry='11'/%3E%3Cellipse cx='77' cy='80' rx='3.5' ry='6' transform='rotate(-25 77 80)'/%3E%3Cellipse cx='88' cy='76' rx='3.5' ry='6.5'/%3E%3Cellipse cx='99' cy='80' rx='3.5' ry='6' transform='rotate(25 99 80)'/%3E%3C/g%3E%3C/svg%3E"),
     radial-gradient(circle at 10% 0%, #ffe9b8 0, transparent 40%), radial-gradient(circle at 95% 75%, #e9c48f 0, transparent 40%), #f3e6cc;
 }
-/* The scene layer animates its own filter, so tint it with an overlay instead. */
-html.dino-mode .start-world::after { content: ""; position: absolute; inset: 0; pointer-events: none; mix-blend-mode: multiply;
-  background: linear-gradient(180deg, #ffcf7a66 0%, #e8932f55 55%, #9c5a1f55 100%); }
+/* Dinosaur world (director 2026-10-21 picked master:location-prehistoric-valley-intro → assets/dino-valley.jpg). */
+html.dino-mode .start-world { background: url('assets/dino-valley.jpg') center 40%/cover no-repeat, #7dbb52 !important; }
+@media (max-width: 680px) {
+  html.dino-mode .start-world { background: linear-gradient(180deg, transparent 0 calc(69% - 30px), #9ccf62 calc(69% - 1px), #86c257 100%),
+    url('assets/dino-valley.jpg') 50% top/auto 69% no-repeat, #86c257 !important; }
+}
+html.dino-mode .board-scene { background: url('assets/dino-valley.jpg') center 38%/cover no-repeat; }
+html.dino-mode .board-scene > * { display: none; }
 html.dino-mode .brand-seal { border-color: #e8932f; }
 html.dino-mode .primary-button { filter: hue-rotate(-14deg) saturate(1.15); }
 html.dino-mode .topbar::after { content: "🦖 DINO MODE"; order: 1; padding: 4px 10px; border-radius: 99px; background: #e8932f; color: #fff;
