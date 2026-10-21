@@ -54,6 +54,7 @@ python3 -m http.server 4173 -d dist
 python3 tools/word_bank.py add new_words.tsv          # 先看結果；確認後加 --write
 python3 tools/word_bank.py levels --write             # 改了 reference/topics.json 的規則後重算
 python3 tools/word_bank.py report                     # 各小類詞數、各級詞數
+python3 tools/word_audio.py status                    # 缺哪些英文／中文音檔；en、zh-plan、zh-generate、zh-cut 補齊
 python3 tools/check_data.py
 ```
 

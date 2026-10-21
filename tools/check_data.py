@@ -90,6 +90,9 @@ def main():
 
     if errors:
         print('\n'.join('✗ ' + e for e in errors)); sys.exit(1)
+    exported = DIST / 'topics.json'
+    if not exported.is_file() or set(json.loads(exported.read_text(encoding='utf-8'))['topics']) != set(TOPICS):
+        errors.append('dist/topics.json 與 reference/topics.json 不一致；跑 python3 tools/word_bank.py levels')
     topic_counts = {t: sum(w['topic'] == t for w in words) for t in TOPICS}
     small = [f'{t}({n})' for t, n in topic_counts.items() if 0 < n < 4]
     if small:

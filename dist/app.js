@@ -598,10 +598,33 @@ function saveBankSelection() {
 function bankFilterWords() {
   const query = $('bankSearch').value.trim().toLocaleLowerCase();
   const filter = $('bankFilter').value;
+  const topic = $('bankTopic').value;
   return state.words.filter(word => {
     const inPool = filter === 'all' || (filter === 'dinosaur' ? isDino(word) : !isDino(word) && word.level[SKILL] === Number(filter));
-    return inPool && (!query || word.en.toLocaleLowerCase().includes(query) || word.zh.includes(query));
+    // Topic filter: 'all', a whole group ('g:animal') or one topic ('animal.farm').
+    const inTopic = topic === 'all' || (topic.startsWith('g:') ? topicGroup(word) === topic.slice(2) : word.topic === topic);
+    return inPool && inTopic && (!query || word.en.toLocaleLowerCase().includes(query) || word.zh.includes(query));
   });
+}
+// Topic names come from dist/topics.json (written by tools/word_bank.py from reference/topics.json).
+// Without it the parent page simply hides the topic filter.
+async function loadBankTopics() {
+  try {
+    const response = await fetch('topics.json');
+    if (!response.ok) return;
+    const { groups, topics } = await response.json();
+    const count = test => state.words.filter(test).length;
+    const options = Object.entries(groups).filter(([group]) => count(word => topicGroup(word) === group)).map(([group, name]) => {
+      const optgroup = document.createElement('optgroup'); optgroup.label = name;
+      const whole = new Option(`全部${name}（${count(word => topicGroup(word) === group)}）`, `g:${group}`);
+      const subs = Object.entries(topics).filter(([id]) => id.split('.')[0] === group && id.includes('.') && count(word => word.topic === id))
+        .map(([id, topic]) => new Option(`${topic.zh}（${count(word => word.topic === id)}）`, id));
+      optgroup.append(whole, ...subs);
+      return optgroup;
+    });
+    $('bankTopic').append(...options);
+    $('bankTopicRow').hidden = false;
+  } catch { /* Topic filter is optional. */ }
 }
 function makeBankArt(word) {
   const art = document.createElement(word.image && !isNumber(word) ? 'img' : 'span');
@@ -766,6 +789,7 @@ async function init() {
       }
     } catch { /* Browser storage can be unavailable; the default bank remains usable. */ }
     state.history = loadHistory();
+    loadBankTopics();
     renderBank();
     prepareRound();
     $('startButton').disabled = false; setKidText(document.querySelector('.start-label'), '開始任務');
@@ -797,6 +821,7 @@ document.querySelectorAll('[data-close-settings]').forEach(button => button.addE
 $('settingsDialog').addEventListener('close', () => { $('settingsDialog').classList.remove('bank-open'); if (state.phase === 'start') prepareRound(); });
 $('bankSearch').addEventListener('input', renderBank);
 $('bankFilter').addEventListener('change', renderBank);
+$('bankTopic').addEventListener('change', renderBank);
 $('resetWordBank').addEventListener('click', () => {
   state.disabledIds.clear(); saveBankSelection(); renderBank(); prepareRound(); $('bankMessage').textContent = '所有單字已恢復啟用。';
 });

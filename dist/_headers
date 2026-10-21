@@ -43,6 +43,8 @@
   Cache-Control: no-cache
 /data.json
   Cache-Control: no-cache
+/topics.json
+  Cache-Control: no-cache
 /assets/cards/manifest.json
   Cache-Control: no-cache
 /fonts.css

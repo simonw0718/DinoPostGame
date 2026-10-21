@@ -110,8 +110,15 @@ def load():
     return json.loads(DATA.read_text())
 
 
+def export_topics():
+    # The parent word-bank page reads names from here; reference/topics.json stays the only place to edit them.
+    names = {'groups': TAXONOMY['groups'], 'topics': {k: {'zh': v['zh']} for k, v in TOPICS.items()}}
+    (ROOT / 'dist/topics.json').write_text(json.dumps(names, ensure_ascii=False, indent=1) + '\n')
+
+
 def save(words):
     DATA.write_text(json.dumps(words, ensure_ascii=False, indent=2) + '\n')
+    export_topics()
     print(f'已寫入 {DATA.relative_to(ROOT)}（{len(words)} 詞）；接著跑 python3 tools/check_data.py')
 
 
@@ -123,6 +130,7 @@ def cmd_levels(args):
         words[i] = apply_levels(dict(word))
         if before != (words[i].get('level'), words[i].get('metrics'), words[i].get('pack')):
             changed.append(f"{word['id']}: {before[0]} → {words[i].get('level')}")
+    export_topics()
     print(f'{len(changed)} 詞的級別或指標有變動')
     for line in changed[:20]:
         print('  ' + line)
@@ -166,8 +174,9 @@ def cmd_add(args):
             reading = zhuyin_for(zh, cells[4] if len(cells) > 4 else '', known)
             if not reading or len(reading) != len(zh):
                 errors.append(f'第 {n} 行 {en}/{zh}：找不到唯一注音，請在第 5 欄填（空白分隔，例：ㄊㄨˋ ˙ㄗ）'); continue
+            # zhAudio is set by tools/word_audio.py zh-cut once the clip exists.
             word = apply_levels({'id': word_id, 'topic': topic, 'en': en, 'zh': zh, 'zhuyin': reading, 'emoji': emoji,
-                                 'zhAudio': f'assets/audio/zh/{word_id}.mp3', 'artStatus': 'emoji'})
+                                 'artStatus': 'emoji'})
             ids.add(word_id); english.add(en.lower()); added.append(word)
     for word in added:
         print(f"+ {word['id']} {word['zh']} {' '.join(word['zhuyin'])} {word['pack']} level={word.get('level')}")
@@ -177,7 +186,7 @@ def cmd_add(args):
         sys.exit(1)
     if args.write and added:
         save(words + added)
-        print('下一步：補英文音檔（tools/generate_audio.py）與中文音檔，再跑 check_data.py；有圖後填 image 並把 artStatus 改 candidate')
+        print('下一步：python3 tools/word_audio.py en，再 zh-plan → zh-generate → 導演聽 → zh-cut；有圖後填 image 並把 artStatus 改 candidate')
 
 
 def cmd_report(args):  # noqa: ARG001 (argparse passes args to every command)

@@ -1,0 +1,111 @@
+{
+ "groups": {
+  "animal": "動物",
+  "food": "食物",
+  "body": "身體",
+  "clothes": "穿戴",
+  "home": "家裡",
+  "school": "學校與玩具",
+  "vehicle": "交通工具",
+  "tool": "工具與機器",
+  "people": "人物",
+  "place": "地點",
+  "nature": "自然",
+  "music": "樂器",
+  "color": "顏色",
+  "number": "數字",
+  "dino": "恐龍與史前動物"
+ },
+ "topics": {
+  "animal.farm": {
+   "zh": "家裡與農場動物"
+  },
+  "animal.wild": {
+   "zh": "野生動物"
+  },
+  "animal.water": {
+   "zh": "水裡的動物"
+  },
+  "animal.bird": {
+   "zh": "鳥"
+  },
+  "animal.bug": {
+   "zh": "小蟲"
+  },
+  "animal.reptile": {
+   "zh": "爬蟲類"
+  },
+  "food.fruit": {
+   "zh": "水果"
+  },
+  "food.veg": {
+   "zh": "蔬菜"
+  },
+  "food.meal": {
+   "zh": "正餐"
+  },
+  "food.snack": {
+   "zh": "點心與飲料"
+  },
+  "body": {
+   "zh": "身體"
+  },
+  "clothes": {
+   "zh": "穿戴"
+  },
+  "home.room": {
+   "zh": "房間"
+  },
+  "home.kitchen": {
+   "zh": "廚房"
+  },
+  "home.clean": {
+   "zh": "清潔與收納"
+  },
+  "school.toy": {
+   "zh": "文具與玩具"
+  },
+  "vehicle": {
+   "zh": "交通工具"
+  },
+  "tool.gadget": {
+   "zh": "工具與機器"
+  },
+  "people": {
+   "zh": "人物"
+  },
+  "place": {
+   "zh": "地點"
+  },
+  "nature.sky": {
+   "zh": "天空與天氣"
+  },
+  "nature.land": {
+   "zh": "山水地形"
+  },
+  "nature.plant": {
+   "zh": "植物"
+  },
+  "music": {
+   "zh": "樂器"
+  },
+  "color": {
+   "zh": "顏色"
+  },
+  "number": {
+   "zh": "數字"
+  },
+  "dino.dinosaur": {
+   "zh": "恐龍"
+  },
+  "dino.flying": {
+   "zh": "飛行爬蟲與早期鳥類"
+  },
+  "dino.sea": {
+   "zh": "海中爬蟲"
+  },
+  "dino.iceage": {
+   "zh": "冰河時期動物"
+  }
+ }
+}
