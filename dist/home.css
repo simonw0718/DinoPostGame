@@ -48,7 +48,7 @@
 .pv-flip .cards{position:absolute;inset:7px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:5px}
 .pv-flip .cards b{position:relative;display:grid;place-items:center;border-radius:7px;background:#4f8fd6;box-shadow:inset 0 -4px 0 rgba(0,0,0,.15)}
 .pv-flip .cards b.pic{background:#ecd6a4}
-.pv-flip .cards i{display:grid;place-items:center;width:100%;height:100%;border-radius:7px;background:#fffdf6;color:#2b6fb8;font:900 20px/1 system-ui;font-style:normal;opacity:0}
+.pv-flip .cards i{display:grid;place-items:center;width:100%;height:100%;border-radius:7px;background:#fffdf6;color:#2b6fb8;font:900 20px/1 "Naikai",ui-rounded,system-ui,sans-serif;font-style:normal;opacity:0}
 .pv-flip .cards img{height:80%;width:auto;max-width:90%;min-height:0}
 .pv-flip .snd.ok{animation:pvFlipA 3.2s infinite}.pv-flip .snd.ok i{animation:pvFaceA 3.2s infinite}
 .pv-flip .pic.ok{animation:pvFlipB 3.2s infinite}.pv-flip .pic.ok i{animation:pvFaceB 3.2s infinite}
@@ -63,7 +63,7 @@
 .pv-belt .word{position:absolute;left:8px;right:8px;top:7px;height:40px;display:flex;align-items:center;justify-content:center;gap:6px}
 .pv-belt .word img{height:36px;width:auto;border-radius:6px;background:#fff;padding:2px}
 .pv-belt .slot{display:grid;place-items:center;width:28px;height:28px;border:2px dashed #9c7fb0;border-radius:6px;background:#fff;color:transparent;font:900 17px/1 "Naikai",ui-rounded,system-ui,sans-serif;animation:pvSlot 3.2s infinite}
-.pv-belt .word em{margin-left:-4px;color:#6a4b80;font:900 15px/1 system-ui;font-style:normal}
+.pv-belt .word em{margin-left:-4px;color:#6a4b80;font:900 15px/1 "Naikai",ui-rounded,system-ui,sans-serif;font-style:normal}
 .pv-belt .belt{position:absolute;left:0;right:0;bottom:6px;height:34px;overflow:hidden;background:repeating-linear-gradient(90deg,#5b6470 0 8px,#4c545f 8px 16px);box-shadow:inset 0 3px 0 rgba(0,0,0,.2)}
 .pv-belt .run{position:absolute;left:0;top:4px;display:flex;gap:8px;animation:pvRun 3.2s linear infinite}
 .pv-belt .run b{display:grid;place-items:center;flex:none;width:26px;height:26px;border-radius:5px;background:#fff7e0;color:#18583e;font:900 15px/1 "Naikai",ui-rounded,system-ui,sans-serif;box-shadow:0 2px 0 #c9a666}
