@@ -6,10 +6,10 @@
   <meta name="theme-color" content="#164d39">
   <title>注音送信・恐龍郵局</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="zhuyin-sort.css?v=12"><link rel="stylesheet" href="dino-mode.css">
+  <link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="zhuyin-sort.css?v=13"><link rel="stylesheet" href="dino-mode.css">
   <script src="vendor/interact.min.js"></script>
   <script src="vendor/motion.js"></script>
-  <script src="shared.js" defer></script><script src="progress.js" defer></script><script src="stamps-ui.js" defer></script><script src="zhuyin-sort.js?v=12" defer></script>
+  <script src="shared.js" defer></script><script src="progress.js" defer></script><script src="stamps-ui.js" defer></script><script src="zhuyin-sort.js?v=13" defer></script>
 </head>
 <body>
   <!-- 導演 2026-10-21 核准 mail-sample v10 後套用：紅郵筒之字排（手機 375×812 舞台）／寬螢幕一排版（900×562） -->
@@ -47,15 +47,11 @@
     </main>
   </div>
 
-  <div id="readyOverlay" class="ready-overlay" hidden>
-    <div class="ready-card">
-      <img src="assets/dinopost-workmark-stamp-transparent-v1.png" alt="" class="ready-mark">
-      <h1 id="readyTitle">第一封信準備好了！</h1>
-      <p id="readyHint">按開始，聽題目發音。</p>
-      <button id="readyButton" type="button"><span id="readyButtonLabel">開始送信</span><span aria-hidden="true">➜</span></button>
-      <a id="readyHome" href="mail.html">回首頁</a>
-    </div>
-  </div>
+  <!-- 手機要先點一下才能出聲（導演 2026-10-21 重新設計）：不用彈窗，遊戲已在背後擺好，整個畫面點哪裡都開始 -->
+  <button id="readyOverlay" class="ready-tap" type="button" hidden aria-label="點一下，開始送信">
+    <span class="ready-go" aria-hidden="true"><span class="ready-ring"></span><span class="ready-ring r2"></span><span class="ready-icon">▶</span></span>
+    <span id="readyTitle" class="ready-label">點一下，開始送信！</span>
+  </button>
 
   <dialog id="settingsDialog" class="settings-dialog">
     <div class="dialog-head"><span aria-hidden="true">✉</span><h2>遊戲設定</h2><button id="closeSettings" class="close-button" type="button" aria-label="關閉設定">✕</button></div>

@@ -36,8 +36,7 @@
   const rotationStorageKey = 'dinopost-mail-rotation-v2';   // 下一回合的背景與第一位送信角色
 
   const uiReadings = {
-    '第一封信準備好了！': ['ㄉㄧˋ', 'ㄧ', 'ㄈㄥ', 'ㄒㄧㄣˋ', 'ㄓㄨㄣˇ', 'ㄅㄟˋ', 'ㄏㄠˇ', 'ㄌㄜ˙', ''],
-    '按開始，聽題目發音。': ['ㄢˋ', 'ㄎㄞ', 'ㄕˇ', '', 'ㄊㄧㄥ', 'ㄊㄧˊ', 'ㄇㄨˋ', 'ㄈㄚ', 'ㄧㄣ', ''],
+    '點一下，開始送信！': ['ㄉㄧㄢˇ', 'ㄧ', 'ㄒㄧㄚˋ', '', 'ㄎㄞ', 'ㄕˇ', 'ㄙㄨㄥˋ', 'ㄒㄧㄣˋ', ''],
     '開始送信': ['ㄎㄞ', 'ㄕˇ', 'ㄙㄨㄥˋ', 'ㄒㄧㄣˋ'],
     '讀注音，送到郵箱': ['ㄉㄨˊ', 'ㄓㄨˋ', 'ㄧㄣ', '', 'ㄙㄨㄥˋ', 'ㄉㄠˋ', 'ㄧㄡˊ', 'ㄒㄧㄤ'],
     '看圖片，送到郵箱': ['ㄎㄢˋ', 'ㄊㄨˊ', 'ㄆㄧㄢˋ', '', 'ㄙㄨㄥˋ', 'ㄉㄠˋ', 'ㄧㄡˊ', 'ㄒㄧㄤ'],
@@ -84,10 +83,12 @@
   const letterPhys = { x: spring(0, 150, 13), y: spring(0, 150, 13), s: spring(1, 220, 18), tilt: spring(0, 160, 9) };
   // ---------- 舞台：設計座標，整體等比例縮放；所有座標都用設計座標 ----------
   const LW = 300, LH = 176, MAGNET = 100;
-  // 版面：手機＝375×812 之字排；寬螢幕（寬高比>1.15）改用 900×562 一排版（導演 2026-10-21 選定）。
+  // 版面：手機＝375×812 之字排；iPad 直式＝560×812 倒三角；寬螢幕（寬高比>1.15）改用 900×562 一排版（導演 2026-10-21 選定）。
   // 座標都是設計 px：boxes 郵筒左上、letter 信左上、home 角色腳底、replay ♫、next 下一封、bubbleY 題目泡泡底、lift 往上拖多遠縮到最小
   const LAYOUTS = {
     phone: { DW: 375, DH: 812, boxes: [[8, 62], [195, 196], [8, 330]], letter: [63, 624], home: [300, 612], replay: [12, 636], next: [63, 552], bubbleY: 606, lift: 260 },
+    // iPad 直式（寬高比 0.6–1.15，導演 2026-10-21）：舞台加寬到 560，三郵筒排成倒三角，物件跟著畫面放大不留白
+    tablet: { DW: 560, DH: 812, boxes: [[30, 62], [358, 62], [194, 318]], letter: [150, 624], home: [387, 612], replay: [99, 636], next: [150, 552], bubbleY: 606, lift: 260 },
     row: { DW: 900, DH: 562, boxes: [[114, 62], [364, 62], [614, 62]], letter: [300, 366], home: [700, 548], replay: [232, 378], next: [110, 470], bubbleY: 356, lift: 200 },
   };
   let L = LAYOUTS.phone, DW = L.DW, DH = L.DH, BOXES = L.boxes;
@@ -175,7 +176,7 @@
     document.documentElement.classList.add('wide');   // 先放開外框寬度再量（窄螢幕會在 applyLayout 收回）
     const W = shell.clientWidth, H = shell.clientHeight;
     document.documentElement.classList.toggle('wide', L !== LAYOUTS.phone);
-    applyLayout(W / H > 1.15 ? LAYOUTS.row : LAYOUTS.phone);
+    applyLayout(W / H > 1.15 ? LAYOUTS.row : W / H > .6 ? LAYOUTS.tablet : LAYOUTS.phone);
     K = Math.min(shell.clientWidth / DW, shell.clientHeight / DH);
     stageEl.style.transform = `translate(${(shell.clientWidth - DW * K) / 2}px, ${(shell.clientHeight - DH * K) / 2}px) scale(${K})`;
     if (state.phase === 'question' || state.phase === 'loading') placeActor(home.x, home.y, 1);
@@ -315,7 +316,13 @@
     if (!word?.zhAudio) return;
     if (state.audio) state.audio.pause();
     state.audio = new Audio(word.zhAudio);
-    state.audio.play().catch(() => {});
+    // 手機剛進頁還沒點過畫面時會被擋：蓋上「點一下開始」，點了再補播
+    state.audio.play().catch(error => { if (error.name === 'NotAllowedError') showTapToStart(); });
+  }
+  function showTapToStart() {
+    const tap = $('readyOverlay');
+    if (!tap.hidden) return;
+    tap.hidden = false; tap.focus();
   }
   function renderQuestion() {
     const word = state.round[state.index];
@@ -376,6 +383,7 @@
     if (state.audio) state.audio.pause();
     vibrate(30);
     playSound('correct');
+    if (state.dino) setTimeout(() => Dino.sfx('dino-chirp', .7), 450);   // 恐龍模式：答對多一聲小恐龍叫
     $('ghost').hidden = true;
     document.querySelectorAll('.mailbox').forEach(b => { b.disabled = true; b.classList.remove('armed-hint', 'dim'); b.classList.toggle('mouth', b === box); });
     $('replayButton').hidden = true;
@@ -426,7 +434,7 @@
     await animate(actor, { opacity: [1, 0] }, { duration: dur(.25) }).finished;
     if (state.phase !== 'leaving') return;
     state.index++;
-    if (state.index >= state.count) { playSound('finish'); finishRound(); return; }
+    if (state.index >= state.count) { playSound('finish'); if (state.dino) setTimeout(() => Dino.sfx('dino-roar', .8), 900); finishRound(); return; }
     renderQuestion();
   }
 
@@ -526,7 +534,7 @@
   const albumLink = DinoStampsUI.albumLink();
   document.querySelector('.finish-actions').append(albumLink);
   async function init() {
-    [['readyTitle', '第一封信準備好了！'], ['readyHint', '按開始，聽題目發音。'], ['readyButtonLabel', '開始送信'], ['readyHome', '回首頁'],
+    [['readyTitle', '點一下，開始送信！'],
       ['finishCopy', '信都送到了！'], ['finishTitle', '送信任務完成'], ['playAgainButton', '再送一次'], ['finishHome', '回首頁'],
       ['receiptBrand', '恐龍郵局'], ['receiptConfirm', '收件確認'], ['nextLabel', '下一封']]
       .forEach(([id, text]) => setKidText($(id), text));
@@ -534,7 +542,7 @@
     $('settingsButton').addEventListener('click', () => $('settingsDialog').showModal());
     if (new URLSearchParams(location.search).has('settings')) $('settingsDialog').showModal();
     $('closeSettings').addEventListener('click', () => $('settingsDialog').close());
-    $('restartFromSettings').addEventListener('click', () => { $('settingsDialog').close(); if (startRound()) $('readyOverlay').hidden = true; });
+    $('restartFromSettings').addEventListener('click', () => { $('settingsDialog').close(); startRound(); });
     document.querySelectorAll('.mail-mode-option').forEach(button => button.addEventListener('click', () => {
       if (['all', 'level', 'dinosaur'].includes(button.dataset.mailMode)) setSelection({ nextMode: Dino.taskMode(button.dataset.mailMode) });
     }));
@@ -545,7 +553,10 @@
     $('nextButton').addEventListener('click', next);
     $('replayButton').addEventListener('click', () => { playPrompt(); animate($('replayButton'), { scale: [1, .82, 1.1, 1] }, { duration: dur(.4) }); });
     $('playAgainButton').addEventListener('click', startRound);
-    $('readyButton').addEventListener('click', () => { if (startRound()) $('readyOverlay').hidden = true; });
+    $('readyOverlay').addEventListener('click', () => {
+      $('readyOverlay').hidden = true; Dino.sfx('pop', .6);
+      if (state.phase === 'question') playPrompt();
+    });
     initDrag();
     addEventListener('resize', layout);
     layout();
@@ -574,8 +585,7 @@
         const disabled = JSON.parse(localStorage.getItem(disabledStorageKey) || '[]');
         if (Array.isArray(disabled)) state.disabledIds = new Set(disabled.filter(id => allIds.has(id)));
       } catch { /* Ignore invalid saved settings. */ }
-      if (state.nextAutoAudio) { $('readyOverlay').hidden = false; $('readyButton').focus(); }   // 自動發音要先有一次點擊
-      else startRound();
+      startRound();   // 直接開始；自動發音被手機擋下時 playPrompt 才蓋上「點一下開始」
     } catch (error) {
       console.error(error);
       say('題庫載入失敗', 0, false);

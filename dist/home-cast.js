@@ -163,7 +163,7 @@
   const go = () => setTimeout(start, 150);
   screen.dataset.intro === 'done' ? go() : document.addEventListener('intro:done', go, { once: true });
 
-  // 碰到遊戲選項：台上角色轉正面看著；點下去才歡呼，0.65 秒後進遊戲
+  // 碰到遊戲選項：台上角色轉正面看著；點下去才歡呼，0.32 秒後進遊戲
   const lookAll = on => actors().forEach(a => a.look(on));
   document.querySelectorAll('.game-choice').forEach(ch => {
     ch.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') lookAll(true); });
@@ -173,7 +173,7 @@
     ch.addEventListener('click', e => {
       if (!actors().length || e.metaKey || e.ctrlKey) return;
       e.preventDefault(); actors().forEach(a => a.cheer());
-      setTimeout(() => { location.href = ch.href; }, 650);
+      Dino.goTo(ch.href, 320);   // 導演 2026-10-21：原 0.65 秒體感太久
     });
   });
 })();

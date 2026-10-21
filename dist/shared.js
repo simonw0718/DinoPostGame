@@ -36,6 +36,7 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
   function setDinoMode(on) {
     try { localStorage.setItem(dinoModeKey, on ? '1' : '0'); } catch { /* Stays on for this page only. */ }
     document.documentElement.classList.toggle('dino-mode', Boolean(on));
+    bgm.refresh();   // 選單 BGM 跟著換恐龍版
   }
   // A game's task mode ('all' | 'level' | 'dinosaur') resolved against the switch.
   const taskMode = mode => (dinoMode() ? 'dinosaur' : mode === 'dinosaur' ? 'all' : mode);
@@ -170,6 +171,68 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
   // First-try answers in a row that earn the streak message.
   const streakThreshold = 3;
 
+  // 音效與選單 BGM（導演 2026-10-21）：素材出自 media_library（bgm:HAPPY_KIDS、bgm:HAPPY_B、sfx:SFX_點擊／泡泡-單／轉場-咻／恐龍吼叫／恐龍-小恐龍）。
+  // BGM 只在首頁與各遊戲選單播；換頁從同一秒接著播。手機要先有一次點擊才會出聲，所以第一下觸控時才開始。
+  const sfxCache = {};
+  function sfx(name, volume = .8) {
+    let sound = sfxCache[name];
+    if (!sound) { sound = sfxCache[name] = new Audio(`assets/audio/effects/${name}.mp3`); sound.preload = 'auto'; }
+    sound.volume = volume; sound.pause();
+    try { sound.currentTime = 0; } catch { /* ok */ }
+    sound.play().catch(() => {});
+  }
+  const musicKey = 'dinopost-music-v1', bgmPosKey = 'dinopost-bgm-pos';
+  const musicOn = () => { try { return localStorage.getItem(musicKey) !== '0'; } catch { return true; } };
+  const bgm = (() => {
+    let audio = null, wanted = false, button = null;
+    const track = () => (dinoMode() ? 'menu-dino' : 'menu');
+    const save = () => { if (audio) try { sessionStorage.setItem(bgmPosKey, JSON.stringify({ track: audio.dataset.track, t: audio.currentTime })); } catch { /* ok */ } };
+    function load() {
+      if (audio && audio.dataset.track === track()) return audio;
+      audio?.pause();
+      audio = new Audio(`assets/audio/bgm/${track()}.mp3`); audio.dataset.track = track();
+      audio.loop = true; audio.volume = .32; audio.preload = 'auto';
+      try { const pos = JSON.parse(sessionStorage.getItem(bgmPosKey) || 'null'); if (pos?.track === track()) audio.currentTime = pos.t; } catch { /* ok */ }
+      return audio;
+    }
+    const tryPlay = () => { if (wanted && musicOn() && !document.hidden) load().play().catch(() => {}); };
+    const sync = () => { if (!button) return; const on = musicOn(); button.setAttribute('aria-pressed', String(on)); button.textContent = on ? '♫' : '♫̸'; button.classList.toggle('off', !on); };
+    function ensureButton() {
+      if (button) return;
+      const style = document.createElement('style');
+      style.textContent = `.dino-music{position:fixed;left:max(12px,env(safe-area-inset-left));bottom:max(12px,env(safe-area-inset-bottom));z-index:40;width:44px;height:44px;border:3px solid #fffdf2;border-radius:50%;background:#1f6b4b;color:#fff;font:900 20px/1 system-ui;box-shadow:0 4px 0 #0f3b2a;cursor:pointer}
+.dino-music.off{background:#9aa79f;box-shadow:0 4px 0 #6d7a72}.dino-music:active{transform:translateY(3px);box-shadow:0 1px 0 #0f3b2a}`;
+      document.head.append(style);
+      button = document.createElement('button'); button.type = 'button'; button.className = 'dino-music'; button.setAttribute('aria-label', '背景音樂開關');
+      button.addEventListener('click', event => {
+        event.stopPropagation();
+        try { localStorage.setItem(musicKey, musicOn() ? '0' : '1'); } catch { /* ok */ }
+        sync(); musicOn() ? tryPlay() : audio?.pause();
+      });
+      document.body.append(button); sync();
+    }
+    // 第一下觸控／按鍵才能開聲音（iOS）；之後每次點擊都補一次，以防被系統暫停
+    ['pointerup', 'touchend', 'keydown'].forEach(type => document.addEventListener(type, tryPlay, { capture: true, passive: true }));
+    document.addEventListener('visibilitychange', () => { if (document.hidden) { save(); audio?.pause(); } else tryPlay(); });
+    addEventListener('pagehide', save);
+    return {
+      start() { wanted = true; ensureButton(); button.hidden = false; tryPlay(); },
+      stop() { wanted = false; save(); audio?.pause(); if (button) button.hidden = true; },
+      refresh() { if (audio && audio.dataset.track !== track()) { save(); audio.pause(); audio = null; } tryPlay(); }
+    };
+  })();
+  // 選單頁的按鈕點擊音（開關、選項、連結）；遊戲中的按鈕由各遊戲自己決定
+  function menuTaps(root = document) {
+    root.addEventListener('click', event => {
+      const target = event.target.closest('button, a');
+      if (!target || target.matches('.dino-music, #dinoModeSwitch')) return;   // DINO MODE 有自己的吼聲
+      sfx(target.matches('[aria-pressed], .mode-option, .answer-option') ? 'pop' : 'tap', .6);
+    }, true);
+  }
+  // 點連結先播「咻」再換頁，避免聲音被換頁切掉
+  function goTo(href, delay = 180) { sfx('swoosh', .7); setTimeout(() => { location.href = href; }, delay); }
+
   return { characters, storageKeys, shuffle, loadQueue, fitActor, parseZhuyin, makeBpmUnit, kidText,
-    isDino, isNumber, topicGroup, visualGroup, eligibleWords, loadHistory, selectRound, audioPath, burst, streakThreshold, dinoMode, setDinoMode, taskMode };
+    isDino, isNumber, topicGroup, visualGroup, eligibleWords, loadHistory, selectRound, audioPath, burst, streakThreshold, dinoMode, setDinoMode, taskMode,
+    sfx, bgm, menuTaps, goTo };
 })();

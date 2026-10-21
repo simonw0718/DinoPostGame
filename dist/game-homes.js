@@ -52,9 +52,10 @@
     const dinoSwitch = $('dinoModeSwitch');
     if (dinoSwitch) {
       const sync = () => dinoSwitch.setAttribute('aria-checked', String(Dino.dinoMode()));
-      dinoSwitch.addEventListener('click', () => { Dino.setDinoMode(!Dino.dinoMode()); sync(); });
+      dinoSwitch.addEventListener('click', () => { Dino.setDinoMode(!Dino.dinoMode()); sync(); Dino.sfx(Dino.dinoMode() ? 'dino-roar' : 'pop', Dino.dinoMode() ? .9 : .6); });
       sync();
     }
+    Dino.bgm.start(); Dino.menuTaps();
     return;
   }
   if (page !== 'mail') return;
@@ -81,7 +82,10 @@
   document.querySelectorAll('[data-mail-format]').forEach(button=>button.addEventListener('click',()=>{selection.format=button.dataset.mailFormat==='picture'?'picture':'zhuyin';render();}));
   $('mailHomeAutoAudio').addEventListener('change',event=>{selection.autoAudio=event.target.checked;render();});
   $('mailHomeCount').addEventListener('input',event=>{selection.count=Number(event.target.value);render();});
-  $('startButton').addEventListener('click',() => {render(); location.href='zhuyin-sort.html';});
+  $('startButton').addEventListener('click',() => {render(); Dino.goTo('zhuyin-sort.html',120);});
+  Dino.bgm.start(); Dino.menuTaps();
+  // 先把遊戲要用的題庫抓進快取，按開始後進遊戲不用再等下載
+  ['data.json','assets/cast/cast.json'].forEach(href => { const l=document.createElement('link'); l.rel='prefetch'; l.href=href; document.head.append(l); });
   $('mailSettingsButton').addEventListener('click',() => $('mailSettingsDialog').showModal());
   $('mailSettingsClose').addEventListener('click',() => $('mailSettingsDialog').close());
   render();

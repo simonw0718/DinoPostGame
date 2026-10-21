@@ -51,6 +51,7 @@ function advanceCast(screen) {
 
 function showScreen(id) {
   screens.forEach(name => $(name).classList.toggle('hidden', name !== id));
+  id === 'startScreen' ? Dino.bgm.start() : Dino.bgm.stop();   // BGM 只在選單
   requestAnimationFrame(fitVisibleActors);
 }
 const actorObserver = new ResizeObserver(() => requestAnimationFrame(fitVisibleActors));
@@ -472,6 +473,7 @@ function choose(button, id) {
     return;
   }
   playEffect('correct');
+  if (Dino.dinoMode()) setTimeout(() => Dino.sfx('dino-chirp', .7), 450);   // 恐龍模式：答對多一聲小恐龍叫
   button.classList.add('correct');
   state.phase = 'reveal';
   const firstTry = state.attempts === 1;
@@ -520,6 +522,7 @@ function startRound() {
   state.index = 0; state.firstTryScore = 0; state.streak = 0; state.results = []; state.progressResults = [];
   // The first play call stays inside the Start button's user gesture on iOS.
   if (state.autoAudio) playWord(state.round[0]);
+  else if (Dino.dinoMode()) Dino.sfx('dino-chirp', .7);
   advanceCast('play');
   state.roundChoices = state.words.filter(word => !state.disabledIds.has(word.id));
   const title = state.mode === 'dinosaur' ? '恐龍挑戰' : state.mode === 'level'
@@ -551,6 +554,7 @@ function nextQuestion() {
     advanceCast('result');
     showScreen('resultScreen');
     playEffect('finish');
+    if (Dino.dinoMode()) setTimeout(() => Dino.sfx('dino-roar', .8), 900);   // 恐龍模式完成回合：恐龍吼一聲
     DinoStampsUI.showRoundStamps($('stampSummary'), state.progressResults, state.words, albumLink);
     prepareRound();
     return;
@@ -834,3 +838,5 @@ $('autoAudioToggle').addEventListener('change', event => { state.autoAudio = eve
 $('levelSlider').addEventListener('input', event => setLevel(event.target.value));
 window.addEventListener('resize', fitVisibleActors);
 init();
+Dino.menuTaps($('startScreen'));
+if (!$('startScreen').classList.contains('hidden')) Dino.bgm.start();   // 一進頁就是選單

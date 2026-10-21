@@ -340,3 +340,17 @@ button,.choice,.mode-option,.settings-link{touch-action:manipulation}
 .is-picture-prompt .parcel-sent .parcel-cover{opacity:1;transform:none}
 .is-picture-prompt .chinese-audio-cue{position:absolute;left:8px;top:6px;margin:0;padding:3px 7px;font-size:13px}
 .is-picture-prompt .chinese-audio-cue > span{display:none}
+/* iPad 直式（導演 2026-10-21）：遊戲畫面撐滿高度、加寬，四張選項卡跟著變大，不留大片空白 */
+@media (min-width:681px) and (max-aspect-ratio:1/1){
+.shell{min-height:100svh;display:flex;flex-direction:column}
+.play-screen:not(.hidden){display:flex;flex:1;flex-direction:column;width:100%;max-width:960px;min-height:0;padding-bottom:18px}
+.play-screen .game-board{display:flex;flex:1;flex-direction:column;min-height:0}
+.play-screen .board-scene{height:120px}
+.play-screen .question-card{min-height:140px}
+.play-screen .sort-tray{display:flex;flex:1;flex-direction:column;min-height:0;padding:14px 22px 12px}
+.play-screen .choices,.is-picture-prompt .choices{flex:1;width:100%;max-width:none;min-height:0;grid-template-rows:repeat(2,minmax(0,1fr));align-content:stretch;gap:16px}
+.play-screen .choice,.is-picture-prompt .choice{height:auto;min-height:0}
+.play-screen .choice-art{font-size:clamp(84px,13vw,140px)}
+.play-screen .choice-english{font-size:clamp(30px,5vw,46px)}
+.is-picture-prompt .choice-meaning{font-size:clamp(30px,4.6vw,42px)}
+}
