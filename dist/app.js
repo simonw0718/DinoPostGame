@@ -206,6 +206,7 @@ const uiReadings = {
   '看包裹圖片，選英文單字。': ['ㄎㄢˋ','ㄅㄠ','ㄍㄨㄛˇ','ㄊㄨˊ','ㄆㄧㄢˋ','','ㄒㄩㄢˇ','ㄧㄥ','ㄨㄣˊ','ㄉㄢ','ㄗˋ',''],
   '選單字': ['ㄒㄩㄢˇ','ㄉㄢ','ㄗˋ'],
   '聽英文': ['ㄊㄧㄥ','ㄧㄥ','ㄨㄣˊ'],
+  '看圖片': ['ㄎㄢˋ','ㄊㄨˊ','ㄆㄧㄢˋ'],
   '讀注音，': ['ㄉㄨˊ', 'ㄓㄨˋ', 'ㄧㄣ', ''],
   '找英文！': ['ㄓㄠˇ', 'ㄧㄥ', 'ㄨㄣˊ', ''],
   '讀注音，選英文。': ['ㄉㄨˊ', 'ㄓㄨˋ', 'ㄧㄣ', '', 'ㄒㄩㄢˇ', 'ㄧㄥ', 'ㄨㄣˊ', ''],
@@ -436,7 +437,9 @@ function renderQuestion(autoPlay = true) {
   $('feedback').textContent = '';
   $('feedback').removeAttribute('aria-label');
   setKidText($('instruction'), state.answerFormat === 'english' ? '選單字' : word.category === 'number' ? '選數字' : '選圖片');
-  setKidText($('questionTag'), state.answerFormat === 'english' ? '聽英文' : '聽單字');
+  setKidText($('questionTag'), state.answerFormat === 'english' ? '看圖片' : '聽單字');
+  // Picture → word: the picture is the question, so it gets a large stamp frame and the word cards get shorter.
+  $('playScreen').classList.toggle('is-picture-prompt', state.answerFormat === 'english');
   $('audioButton').setAttribute('aria-label', '播放英文發音');
   $('audioStatus').textContent = '';
   $('nextButton').classList.add('hidden');
