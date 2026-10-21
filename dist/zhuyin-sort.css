@@ -207,3 +207,6 @@
 @keyframes dinoPageOut{to{opacity:0;transform:translateY(-14px) scale(.985)}}
 @keyframes dinoPageIn{from{opacity:0;transform:translateY(22px) scale(.985)}}
 @media(prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}}
+
+/* 送信只做注音（導演 2026-10-21）：不再提供英文信件選項 */
+.mail-format-picker{display:none!important}

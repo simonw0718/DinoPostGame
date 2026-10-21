@@ -164,7 +164,7 @@
     renderSelectionControls();
   }
   function setFormat(format) {
-    if (!['zhuyin', 'english'].includes(format)) return;
+    if (format !== 'zhuyin') return; // 送信只做注音（導演 2026-10-21）；英文單字由找圖片負責
     state.nextFormat = format; saveSelection(); renderSelectionControls();
   }
   function setCount(value) {
@@ -571,7 +571,6 @@
         const savedSelection = JSON.parse(localStorage.getItem(selectionStorageKey) || 'null');
         if (['all', 'level', 'dinosaur'].includes(savedSelection?.mode)) state.nextMode = savedSelection.mode;
         if (Number.isInteger(savedSelection?.level) && savedSelection.level >= 1 && savedSelection.level <= 3) state.nextLevel = savedSelection.level;
-        if (['zhuyin', 'english'].includes(savedSelection?.format)) state.nextFormat = savedSelection.format;
         if (typeof savedSelection?.autoAudio === 'boolean') state.nextAutoAudio = savedSelection.autoAudio;
         if (Number.isInteger(savedSelection?.count) && savedSelection.count >= 3 && savedSelection.count <= 10) state.nextCount = savedSelection.count;
       } catch { /* Keep default selection. */ }
