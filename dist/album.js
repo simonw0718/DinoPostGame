@@ -164,7 +164,7 @@
   }
 
   async function init() {
-    setKidText($('albumTitle'), '集郵冊'); setKidText($('homeLabel'), '回首頁');
+    setKidText($('albumTitle'), '集郵冊');
     $('tabWords').replaceChildren(kid('span', '單字郵票'));
     $('tabCards').replaceChildren(kid('span', '角色郵票'));
     $('tabWords').addEventListener('click', () => { state.tab = 'words'; render(); });

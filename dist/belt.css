@@ -10,8 +10,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 html.dino-mode .zb-shell::before{--bg:url('assets/dino-valley.jpg')}
 
 .zb-top{position:relative;display:flex;align-items:center;gap:10px;flex:none}
-.zb-top::after{content:"";width:46px;flex:none}
-.zb-home{display:grid;place-items:center;width:46px;height:46px;border:3px solid var(--gold);border-radius:14px;background:var(--cream);color:var(--ink);font-size:24px;font-weight:900;text-decoration:none;box-shadow:0 4px 0 #c89c52}
+.zb-top::after{content:"";width:54px;flex:none}
 .zb-title{flex:1;display:flex;justify-content:center;white-space:nowrap;margin:0;color:var(--cream);font-size:clamp(20px,6vw,34px);font-weight:1000;text-shadow:0 3px 0 #0b3324}
 .zb-title .bpm-column{color:#ffe7a6}
 

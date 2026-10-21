@@ -71,3 +71,5 @@
   Cache-Control: no-cache
 /belt.css
   Cache-Control: no-cache
+/home-button.css
+  Cache-Control: no-cache

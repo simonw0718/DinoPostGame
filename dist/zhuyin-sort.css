@@ -10,7 +10,7 @@ button:focus-visible,a:focus-visible,.ms-letter:focus-visible{outline:4px solid 
   --box-w:calc((min(100vw,560px) - 18px) / 3 - 4px);--win:calc(var(--box-w) - 16px)}
 
 .ms-top{position:relative;z-index:8;flex:none;height:54px;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:6px;padding:5px 10px}
-.ms-home,.ms-settings{display:grid;place-items:center;width:42px;height:42px;padding:0;border:2px solid #b5d1b7;border-radius:14px;background:#fffdf1;color:#236246;font-size:22px;text-decoration:none;box-shadow:0 3px 0 #2c5e4555}
+.ms-settings{display:grid;place-items:center;width:42px;height:42px;padding:0;border:2px solid #b5d1b7;border-radius:14px;background:#fffdf1;color:#236246;font-size:22px;text-decoration:none;box-shadow:0 3px 0 #2c5e4555}
 .ms-progress{display:flex;justify-content:center;gap:6px;margin:0;padding:7px 11px;list-style:none;border-radius:99px;background:#fffdf1e6;box-shadow:0 3px 0 #2c5e4544;justify-self:center}
 .ms-progress li{position:relative;width:26px;height:19px;border:2px solid #c8a96a;border-radius:4px;background:#fff9e8;transition:background .3s,border-color .3s}
 .ms-progress li:after{content:"";position:absolute;inset:0 0 auto;height:55%;clip-path:polygon(0 0,100% 0,50% 100%);background:#ead6a8}

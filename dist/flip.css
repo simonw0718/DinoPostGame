@@ -11,8 +11,7 @@ html.dino-mode .fs-shell::before{--bg:url('assets/dino-valley.jpg')}
 
 /* 頂列 */
 .fs-top{position:relative;display:flex;align-items:center;gap:10px;flex:none}
-.fs-top::after{content:"";width:46px;flex:none}
-.fs-home{display:grid;place-items:center;width:46px;height:46px;border:3px solid var(--gold);border-radius:14px;background:var(--cream);color:var(--ink);font-size:24px;font-weight:900;text-decoration:none;box-shadow:0 4px 0 #c89c52}
+.fs-top::after{content:"";width:54px;flex:none}
 .fs-title{flex:1;margin:0;text-align:center;color:var(--cream);font-size:clamp(24px,5vw,34px);font-weight:1000;letter-spacing:.04em;text-shadow:0 3px 0 #0b3324}
 
 /* 角色＋提示泡泡 */

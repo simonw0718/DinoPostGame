@@ -52,6 +52,7 @@ function advanceCast(screen) {
 function showScreen(id) {
   screens.forEach(name => $(name).classList.toggle('hidden', name !== id));
   id === 'startScreen' ? Dino.bgm.start() : Dino.bgm.stop();   // BGM 只在選單
+  document.querySelector('.topbar .dino-home').hidden = id !== 'startScreen';   // 遊戲中只留一顆房子（回找圖片選單）
   requestAnimationFrame(fitVisibleActors);
 }
 const actorObserver = new ResizeObserver(() => requestAnimationFrame(fitVisibleActors));

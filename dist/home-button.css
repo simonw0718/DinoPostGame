@@ -1,0 +1,9 @@
+/* 左上角回首頁鈕（導演 2026-10-21 統一）：所有頁面同一顆橘紅房子，不放字（小朋友看圖就懂）。
+   房子＝回上一層：遊戲中回該遊戲的選單，選單／集郵冊回選遊戲首頁。 */
+.dino-home{display:grid;place-items:center;flex:none;width:54px;height:54px;padding:0;border:4px solid #fffaf0;border-radius:18px;background:radial-gradient(circle at 35% 28%,#ff9a72,#ec5a3c 62%,#cf4630);color:#fff;text-decoration:none;box-shadow:0 5px 0 #a33a26,0 8px 14px rgba(40,30,10,.22);cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:transform .12s,box-shadow .12s}
+.dino-home svg{display:block;width:30px;height:30px;filter:drop-shadow(0 2px 0 rgba(120,30,15,.35))}
+.dino-home:hover{transform:translateY(-2px) rotate(-3deg)}
+.dino-home:active{transform:translateY(4px);box-shadow:0 1px 0 #a33a26,0 3px 6px rgba(40,30,10,.2)}
+.dino-home:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
+@media(max-width:680px){.dino-home{width:48px;height:48px;border-width:3px;border-radius:16px}.dino-home svg{width:26px;height:26px}}
+.dino-home[hidden]{display:none}
