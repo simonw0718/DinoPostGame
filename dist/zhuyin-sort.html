@@ -6,71 +6,44 @@
   <meta name="theme-color" content="#164d39">
   <title>注音送信・恐龍郵局</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="zhuyin-sort.css"><link rel="stylesheet" href="dino-mode.css">
+  <link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="zhuyin-sort.css?v=11"><link rel="stylesheet" href="dino-mode.css">
   <script src="vendor/interact.min.js"></script>
   <script src="vendor/motion.js"></script>
-  <script src="shared.js" defer></script><script src="progress.js" defer></script><script src="stamps-ui.js" defer></script><script src="zhuyin-sort.js" defer></script>
+  <script src="shared.js" defer></script><script src="progress.js" defer></script><script src="stamps-ui.js" defer></script><script src="zhuyin-sort.js?v=11" defer></script>
 </head>
 <body>
-  <div class="game-shell">
-    <header class="topbar">
-      <a class="brand" href="index.html" aria-label="返回選遊戲首頁"><span class="brand-seal" aria-hidden="true"><img src="assets/dinopost-workmark-master.jpg" alt=""></span><span class="brand-copy"><strong id="brandTitle">恐龍郵局</strong><small>WORD MISSION</small></span></a>
-      <button id="settingsButton" class="settings-button" type="button" aria-label="開啟設定"><span aria-hidden="true">⚙</span><span id="settingsLabel">設定</span></button>
-    </header>
-    <div class="game-topline">
-      <a class="home-button" href="mail.html" aria-label="回送信首頁"><span aria-hidden="true">⌂</span><span id="homeLabel">回首頁</span></a>
-      <span class="task-label"><span aria-hidden="true">✉</span><span id="modeTitle">注音送信</span><span id="mailModeBadge" class="mail-mode-badge">全部</span></span>
-      <span id="scoreText" class="score-pill">第一次答對 0 封</span>
-    </div>
-
-    <section class="route-panel" aria-label="送信路線">
-      <div class="route-caption"><span id="routeStart">郵局</span><strong id="progressLabel">第 1／5 封</strong><span id="routeEnd">收件地</span></div>
-      <div class="route-track" id="routeTrack">
-        <svg viewBox="0 0 1000 140" preserveAspectRatio="none" aria-hidden="true">
-          <path id="routePath" class="route-path" d="M 55 85 C 200 13, 330 118, 485 70 S 760 13, 945 68"/>
-          <path id="routeDone" class="route-done" d="M 55 85 C 200 13, 330 118, 485 70 S 760 13, 945 68"/>
-          <g id="routeStops"></g>
-        </svg>
-        <div id="routeCourier" class="route-courier" aria-hidden="true"><span class="courier-art"></span></div>
+  <!-- 導演 2026-10-21 核准 mail-sample v10 後套用：紅郵筒之字排（手機 375×812 舞台）／寬螢幕一排版（900×562） -->
+  <div class="ms-shell">
+    <main id="stage" class="ms-stage">
+      <header class="ms-top">
+        <a class="ms-home" href="mail.html" aria-label="回送信首頁">⌂</a>
+        <ol id="progress" class="ms-progress" aria-label="送信進度"></ol>
+        <button id="settingsButton" class="ms-settings" type="button" aria-label="開啟設定">⚙</button>
+      </header>
+      <div id="mailboxes" class="ms-mailboxes" role="group" aria-label="三個圖片郵箱"></div>
+      <div id="actor" class="ms-actor" aria-hidden="true">
+        <span class="ms-actor-shadow"></span>
+        <div class="ms-actor-bob"><img id="actorImg" alt=""></div>
       </div>
-    </section>
-
-    <main id="gameArea" class="game-area">
-      <p class="instruction"><span class="instruction-icon" aria-hidden="true">✉</span> <span id="instructionText">讀注音，送到郵箱</span></p>
-      <div id="mailboxes" class="mailboxes" role="group" aria-label="三個圖片郵箱"></div>
-      <div class="letter-area" id="letterArea">
-        <div class="mail-conveyor" aria-hidden="true">
-          <div class="mail-sack"><span class="sack-neck"></span><span class="sack-body"><span class="sack-mark">P</span></span></div>
-          <div class="belt"><span class="belt-slats"></span><span class="belt-roller belt-roller-a"></span><span class="belt-roller belt-roller-b"></span></div>
+      <p id="status" class="ms-bubble" role="status" aria-live="polite"></p>
+      <button id="nextButton" class="ms-next" type="button" hidden><span id="nextLabel">下一封</span><span aria-hidden="true">➜</span></button>
+      <div id="ghost" class="ms-ghost" aria-hidden="true" hidden><i style="left:206px;top:700px"></i><i style="left:188px;top:670px"></i><i style="left:170px;top:640px"></i><i style="left:152px;top:610px"></i><i style="left:134px;top:580px"></i><span class="ms-hand">👆</span></div>
+      <div id="letter" class="ms-letter" tabindex="0" role="button" aria-label="拿起注音信件">
+        <div id="letterFace" class="ms-letter-face">
+          <span class="letter-edge" aria-hidden="true"></span>
+          <span class="letter-stamp" aria-hidden="true"><img src="assets/dinopost-workmark-master.jpg" alt=""></span>
+          <strong id="reading" class="letter-reading"></strong>
         </div>
-        <div id="letterDrag" class="letter-drag" tabindex="0" role="button" aria-label="拿起注音信件">
-          <div id="letterVisual" class="letter-visual">
-            <div class="letter-flip-inner">
-              <div class="letter-front">
-                <span class="letter-edge" aria-hidden="true"></span>
-                <span class="letter-stamp" aria-hidden="true"><img src="assets/dinopost-workmark-master.jpg" alt=""></span>
-                <span class="letter-to">TO: <span id="letterTo">找圖片郵箱</span></span>
-                <strong id="letterReading" class="letter-reading"></strong>
-                <span class="letter-hint" id="letterHint">拖曳或點選</span>
-              </div>
-              <div class="letter-back" aria-hidden="true">
-                <span class="back-fold" aria-hidden="true"></span>
-                <span class="back-label"><span id="backBrand">恐龍郵局</span> · <span id="backConfirm">收件確認</span></span>
-                <strong id="revealChinese" class="back-chinese"></strong>
-                <span id="revealEnglish" class="back-english"></span>
-                <span id="backPostmark" class="back-postmark" aria-hidden="true"><img src="assets/dinopost-workmark-stamp-transparent-v1.png" alt=""></span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <button id="replayButton" class="replay-button" type="button" aria-label="播放題目發音">♫ <span id="replayLabel">重聽</span></button>
+      </div>
+      <button id="replayButton" class="ms-replay" type="button" aria-label="播放中文發音">♫</button>
+      <div id="receipt" class="ms-receipt" hidden>
+        <span class="back-fold" aria-hidden="true"></span>
+        <span class="back-label"><span id="receiptBrand">恐龍郵局</span> · <span id="receiptConfirm">收件確認</span></span>
+        <strong id="receiptZh" class="back-chinese"></strong>
+        <span id="receiptEn" class="back-english"></span>
+        <span id="postmark" class="back-postmark" aria-hidden="true"><img src="assets/dinopost-workmark-stamp-transparent-v1.png" alt=""></span>
       </div>
     </main>
-
-    <footer class="game-footer">
-      <p id="status" role="status" aria-live="polite">信件準備中…</p>
-      <button id="nextButton" class="next-button" type="button" hidden><span id="nextLabel">下一封</span><span aria-hidden="true">➜</span></button>
-    </footer>
   </div>
 
   <div id="readyOverlay" class="ready-overlay" hidden>
@@ -85,8 +58,7 @@
 
   <dialog id="settingsDialog" class="settings-dialog">
     <div class="dialog-head"><span aria-hidden="true">✉</span><h2>遊戲設定</h2><button id="closeSettings" class="close-button" type="button" aria-label="關閉設定">✕</button></div>
-    <p class="setting-note">信件內容、發音與封數會在下一回合生效；題庫及作答紀錄與配對遊戲共用。</p>
-    <fieldset class="mail-format-picker"><legend>信件內容</legend><div class="mail-format-options"><button class="mail-format-option" type="button" data-mail-format="zhuyin" aria-pressed="true">看注音</button><button class="mail-format-option" type="button" data-mail-format="english" aria-pressed="false">看英文單字</button></div></fieldset>
+    <p class="setting-note">發音與封數會在下一回合生效；題庫及作答紀錄與配對遊戲共用。</p>
     <label class="auto-audio-control mail-auto-control"><input id="mailAutoAudio" type="checkbox" checked><span class="switch-track" aria-hidden="true"></span><span class="switch-label">自動發音</span></label>
     <label class="mail-count-label" for="mailCount">每回合封數：<output id="mailCountValue">5</output></label><input id="mailCount" type="range" min="3" max="10" value="5" aria-label="每回合封數">
     <fieldset class="mail-mode-picker"><legend>選任務</legend><div class="mail-mode-options">
