@@ -1,0 +1,35 @@
+/* DINO MODE (director 2026-10-21): home switch + dinosaur theme for every game. State lives in shared.js. */
+
+/* Off: the dinosaur bank is not a task option. On: dinosaurs are the whole bank, so task/level pickers go away. */
+html:not(.dino-mode) [data-mode="dinosaur"], html:not(.dino-mode) [data-mail-mode="dinosaur"] { display: none !important; }
+html.dino-mode .mode-picker, html.dino-mode .mail-mode-picker,
+html.dino-mode #levelControl, html.dino-mode #mailLevelControl { display: none !important; }
+
+/* Home switch */
+.dino-switch { display: flex; align-items: center; gap: 8px; min-height: 42px; padding: 4px 12px 4px 5px; border: 2px solid #b9d1b4; border-radius: 99px;
+  background: #fffdf3; color: #24634a; font: inherit; font-size: 13px; font-weight: 900; letter-spacing: .06em; box-shadow: 0 3px 0 #c5d9be; cursor: pointer; }
+.dino-switch-track { position: relative; width: 50px; height: 30px; border-radius: 99px; background: #d7e4d2; transition: background .25s; }
+.dino-switch-knob { position: absolute; top: 2px; left: 2px; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%;
+  background: #fff; font-size: 17px; line-height: 1; box-shadow: 0 2px 4px #23402f40; transition: transform .3s cubic-bezier(.3,1.5,.5,1); filter: grayscale(1); }
+.dino-switch[aria-checked="true"] { border-color: #c98a2e; background: #fff4d8; color: #8a4b12; box-shadow: 0 3px 0 #d9a24f; }
+.dino-switch[aria-checked="true"] .dino-switch-track { background: #e8932f; }
+.dino-switch[aria-checked="true"] .dino-switch-knob { transform: translateX(20px) rotate(-8deg); filter: none; }
+@media (max-width: 420px) { .dino-switch { padding-right: 9px; font-size: 11px; gap: 6px; } }
+@media (prefers-reduced-motion: reduce) { .dino-switch-knob, .dino-switch-track { transition: none; } }
+
+/* Theme: warm amber "fossil dig" tint, footprints on the page background. */
+html.dino-mode body {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='%23c98a2e' fill-opacity='.16'%3E%3Cellipse cx='30' cy='40' rx='9' ry='11'/%3E%3Cellipse cx='19' cy='25' rx='3.5' ry='6' transform='rotate(-25 19 25)'/%3E%3Cellipse cx='30' cy='21' rx='3.5' ry='6.5'/%3E%3Cellipse cx='41' cy='25' rx='3.5' ry='6' transform='rotate(25 41 25)'/%3E%3Cellipse cx='88' cy='95' rx='9' ry='11'/%3E%3Cellipse cx='77' cy='80' rx='3.5' ry='6' transform='rotate(-25 77 80)'/%3E%3Cellipse cx='88' cy='76' rx='3.5' ry='6.5'/%3E%3Cellipse cx='99' cy='80' rx='3.5' ry='6' transform='rotate(25 99 80)'/%3E%3C/g%3E%3C/svg%3E"),
+    radial-gradient(circle at 10% 0%, #ffe9b8 0, transparent 40%), radial-gradient(circle at 95% 75%, #e9c48f 0, transparent 40%), #f3e6cc;
+}
+/* The scene layer animates its own filter, so tint it with an overlay instead. */
+html.dino-mode .start-world::after { content: ""; position: absolute; inset: 0; pointer-events: none; mix-blend-mode: multiply;
+  background: linear-gradient(180deg, #ffcf7a66 0%, #e8932f55 55%, #9c5a1f55 100%); }
+html.dino-mode .brand-seal { border-color: #e8932f; }
+html.dino-mode .primary-button { filter: hue-rotate(-14deg) saturate(1.15); }
+html.dino-mode .topbar::after { content: "🦖 DINO MODE"; order: 1; padding: 4px 10px; border-radius: 99px; background: #e8932f; color: #fff;
+  font-size: 11px; font-weight: 900; letter-spacing: .08em; white-space: nowrap; }
+@media (max-width: 420px) { html.dino-mode .topbar::after { content: "🦖"; padding: 4px 8px; font-size: 16px; } }
+html.dino-mode body[data-page="select"] .topbar::after { content: none; }
+html.dino-mode .topbar > :last-child { order: 2; }

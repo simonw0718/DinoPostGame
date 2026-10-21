@@ -704,6 +704,7 @@ function setAnswerFormat(format) {
 }
 function setMode(mode) {
   if (!['all', 'level', 'dinosaur'].includes(mode)) return;
+  mode = Dino.taskMode(mode);
   state.mode = mode;
   document.querySelectorAll('.mode-option').forEach(button => {
     button.setAttribute('aria-pressed', String(button.dataset.mode === mode));
@@ -746,6 +747,7 @@ async function init() {
   } catch {}
   $('autoAudioToggle').checked = state.autoAudio;
   setAnswerFormat(state.answerFormat);
+  setMode(state.mode);
   $('startButton').disabled = true; document.querySelector('.start-label').textContent = '準備題目中…';
   try {
     const response = await fetch('data.json');

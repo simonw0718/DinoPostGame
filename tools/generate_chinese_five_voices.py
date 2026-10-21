@@ -26,22 +26,26 @@ def audio_data(result):
     return audio
 
 
-def main(label):
-    manifest = json.loads(ASSIGNMENT.read_text(encoding='utf-8'))
+DEFAULT_STYLE = ('Natural Taiwan Mandarin. Read each vocabulary item once, clearly and gently at a calm medium pace. '
+                 'Use the assigned voice consistently. Do not read any explanations or item numbers.')
+
+
+def main(label, assignment=ASSIGNMENT):
+    manifest = json.loads(assignment.read_text(encoding='utf-8'))
     batch = next((x for x in manifest['batches'] if x['voice_label'] == label), None)
     if batch is None:
         raise ValueError('Unknown voice label')
-    out = ASSIGNMENT.parent / label
+    out = assignment.parent / label
     out.mkdir(parents=True, exist_ok=True)
     wav = out / 'full.wav'
     if wav.exists():
         print(f'{label}: full.wav exists; no API request.')
         return
-    transcript = ' <long pause> '.join(x['tts_text'] + '。' for x in batch['words'])
-    body = {'model': MODEL, 'input': [{'type': 'user_input', 'content': [{
+    end = batch.get('item_end', '。')
+    transcript = ' <long pause> '.join(x['tts_text'] + end for x in batch['words'])
+    body = {'model': batch.get('model', MODEL), 'input': [{'type': 'user_input', 'content': [{
         'type': 'text', 'text': transcript,
-        'annotations': [{'type': 'speech_metadata', 'style':
-            'Natural Taiwan Mandarin. Read each vocabulary item once, clearly and gently at a calm medium pace. Use the assigned voice consistently. Do not read any explanations or item numbers.'}]
+        'annotations': [{'type': 'speech_metadata', 'style': batch.get('style', DEFAULT_STYLE)}]
     }]}], 'response_format': {'type': 'audio'},
         'generation_config': {'speech_config': [{'voice': batch['voice_id']}]}}
     (out / 'transcript.txt').write_text(transcript + '\n', encoding='utf-8')
@@ -62,7 +66,7 @@ def main(label):
         raise RuntimeError(f'HTTP {error.code}; see request-error.txt') from None
     audio = audio_data(result)
     wav.write_bytes(audio)
-    summary = {'voice_label':label,'voice_id':batch['voice_id'],'model':MODEL,
+    summary = {'voice_label':label,'voice_id':batch['voice_id'],'model':body['model'],
                'word_count':len(batch['words']),'wav_bytes':len(audio),
                'sha256':hashlib.sha256(audio).hexdigest(),'interaction_id':result.get('id'),
                'usage':result.get('usage',{})}
@@ -71,6 +75,7 @@ def main(label):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        raise SystemExit('Usage: python3 tools/generate_chinese_five_voices.py LABEL')
-    main(sys.argv[1])
+    # Optional second argument: another assignment.json with the same shape (e.g. symbol/letter pilots).
+    if len(sys.argv) not in (2, 3):
+        raise SystemExit('Usage: python3 tools/generate_chinese_five_voices.py LABEL [ASSIGNMENT_JSON]')
+    main(sys.argv[1], Path(sys.argv[2]).resolve() if len(sys.argv) == 3 else ASSIGNMENT)

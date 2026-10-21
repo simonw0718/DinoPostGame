@@ -29,6 +29,21 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
     document.addEventListener('dragstart', event => { if (event.target.tagName === 'IMG') event.preventDefault(); });
   })();
   const storageKeys = { disabled: 'dinopost-disabled-words-v1', history: 'dinopost-round-history-v1' };
+  // DINO MODE (director 2026-10-21): one switch on the home page turns every game into dinosaur-only.
+  // Off: dinosaurs never enter the normal bank. On: games use the dinosaur bank and the page gets html.dino-mode.
+  const dinoModeKey = 'dinopost-dino-mode-v1';
+  function dinoMode() { try { return localStorage.getItem(dinoModeKey) === '1'; } catch { return false; } }
+  function setDinoMode(on) {
+    try { localStorage.setItem(dinoModeKey, on ? '1' : '0'); } catch { /* Stays on for this page only. */ }
+    document.documentElement.classList.toggle('dino-mode', Boolean(on));
+  }
+  // A game's task mode ('all' | 'level' | 'dinosaur') resolved against the switch.
+  const taskMode = mode => (dinoMode() ? 'dinosaur' : mode === 'dinosaur' ? 'all' : mode);
+  document.documentElement.classList.toggle('dino-mode', dinoMode());
+  // Back/forward cache can show a page from before the switch changed.
+  window.addEventListener('pageshow', event => {
+    if (event.persisted && document.documentElement.classList.contains('dino-mode') !== dinoMode()) location.reload();
+  });
 
   function shuffle(source) {
     const items = [...source];
@@ -150,5 +165,5 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
   const streakThreshold = 3;
 
   return { characters, storageKeys, shuffle, loadQueue, fitActor, parseZhuyin, makeBpmUnit, kidText,
-    visualGroup, eligibleWords, loadHistory, selectRound, audioPath, burst, streakThreshold };
+    visualGroup, eligibleWords, loadHistory, selectRound, audioPath, burst, streakThreshold, dinoMode, setDinoMode, taskMode };
 })();

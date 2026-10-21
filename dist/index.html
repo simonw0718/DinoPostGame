@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-title" content="DINO單字任務">
   <title>選遊戲・恐龍郵局</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="game-homes.css"><link rel="stylesheet" href="home.css">
+  <link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="game-homes.css"><link rel="stylesheet" href="home.css"><link rel="stylesheet" href="dino-mode.css">
   <script src="shared.js" defer></script><script src="progress.js" defer></script><script src="stamps-ui.js" defer></script><script src="game-homes.js" defer></script><script src="home-intro.js" defer></script><script src="home-cast.js" defer></script>
 </head>
 <body data-page="select">
@@ -15,6 +15,7 @@
   <main class="shell">
     <header class="topbar">
       <div class="brand"><span class="brand-seal" aria-hidden="true"><img src="assets/dinopost-workmark-master.jpg" alt=""></span><span class="brand-copy"><strong>恐龍郵局</strong><small>WORD MISSION</small></span></div>
+      <button id="dinoModeSwitch" class="dino-switch" type="button" role="switch" aria-checked="false" aria-label="DINO MODE"><span class="dino-switch-track" aria-hidden="true"><span class="dino-switch-knob">🦖</span></span><span>DINO MODE</span></button>
       <a class="settings-button" href="match.html?settings=bank" aria-label="開啟題庫管理"><span aria-hidden="true">⚙</span><span>設定</span></a>
     </header>
     <section class="screen start-screen game-selector" aria-labelledby="selectTitle">

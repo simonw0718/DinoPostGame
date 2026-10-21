@@ -154,7 +154,7 @@
   }
   function setMode(mode) {
     if (!['all', 'level', 'dinosaur'].includes(mode)) return;
-    state.nextMode = mode;
+    state.nextMode = Dino.taskMode(mode);
     saveSelection();
     renderSelectionControls();
   }
@@ -575,6 +575,7 @@
         if (typeof savedSelection?.autoAudio === 'boolean') state.nextAutoAudio = savedSelection.autoAudio;
         if (Number.isInteger(savedSelection?.count) && savedSelection.count >= 3 && savedSelection.count <= 10) state.nextCount = savedSelection.count;
       } catch { /* Keep default selection. */ }
+      state.nextMode = Dino.taskMode(state.nextMode);
       renderSelectionControls();
       const allIds = new Set(state.words.map(word => word.id));
       state.disabledIds = new Set();
