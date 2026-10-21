@@ -25,5 +25,4 @@ body[data-page="select"] .selector-title{white-space:normal}
 .topbar-actions{display:flex;align-items:center;gap:8px}
 @media(max-width:680px){.topbar-actions .album-link{min-height:38px;padding:4px 8px;font-size:13px}.topbar-actions .album-link .album-icon{font-size:16px}}
 
-/* 送信只做注音（導演 2026-10-21）：不再提供英文信件選項 */
-.mail-format-picker{display:none!important}
+/* 送信信件內容（導演 2026-10-21）：看注音找圖片／看圖片找注音；不再提供英文 */

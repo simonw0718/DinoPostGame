@@ -6,10 +6,10 @@
   <meta name="theme-color" content="#164d39">
   <title>注音送信・恐龍郵局</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="zhuyin-sort.css?v=11"><link rel="stylesheet" href="dino-mode.css">
+  <link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="zhuyin-sort.css?v=12"><link rel="stylesheet" href="dino-mode.css">
   <script src="vendor/interact.min.js"></script>
   <script src="vendor/motion.js"></script>
-  <script src="shared.js" defer></script><script src="progress.js" defer></script><script src="stamps-ui.js" defer></script><script src="zhuyin-sort.js?v=11" defer></script>
+  <script src="shared.js" defer></script><script src="progress.js" defer></script><script src="stamps-ui.js" defer></script><script src="zhuyin-sort.js?v=12" defer></script>
 </head>
 <body>
   <!-- 導演 2026-10-21 核准 mail-sample v10 後套用：紅郵筒之字排（手機 375×812 舞台）／寬螢幕一排版（900×562） -->
@@ -33,6 +33,7 @@
           <span class="letter-edge" aria-hidden="true"></span>
           <span class="letter-stamp" aria-hidden="true"><img src="assets/dinopost-workmark-master.jpg" alt=""></span>
           <strong id="reading" class="letter-reading"></strong>
+          <span id="letterArt" class="letter-art" hidden></span>
         </div>
       </div>
       <button id="replayButton" class="ms-replay" type="button" aria-label="播放中文發音">♫</button>
@@ -58,7 +59,8 @@
 
   <dialog id="settingsDialog" class="settings-dialog">
     <div class="dialog-head"><span aria-hidden="true">✉</span><h2>遊戲設定</h2><button id="closeSettings" class="close-button" type="button" aria-label="關閉設定">✕</button></div>
-    <p class="setting-note">發音與封數會在下一回合生效；題庫及作答紀錄與配對遊戲共用。</p>
+    <p class="setting-note">信件內容、發音與封數會在下一回合生效；題庫及作答紀錄與配對遊戲共用。</p>
+    <fieldset class="mail-format-picker"><legend>信件內容</legend><div class="mail-format-options"><button class="mail-format-option" type="button" data-mail-format="zhuyin" aria-pressed="true">看注音</button><button class="mail-format-option" type="button" data-mail-format="picture" aria-pressed="false">看圖片</button></div></fieldset>
     <label class="auto-audio-control mail-auto-control"><input id="mailAutoAudio" type="checkbox" checked><span class="switch-track" aria-hidden="true"></span><span class="switch-label">自動發音</span></label>
     <label class="mail-count-label" for="mailCount">每回合封數：<output id="mailCountValue">5</output></label><input id="mailCount" type="range" min="3" max="10" value="5" aria-label="每回合封數">
     <fieldset class="mail-mode-picker"><legend>選任務</legend><div class="mail-mode-options">

@@ -40,6 +40,7 @@
     '按開始，聽題目發音。': ['ㄢˋ', 'ㄎㄞ', 'ㄕˇ', '', 'ㄊㄧㄥ', 'ㄊㄧˊ', 'ㄇㄨˋ', 'ㄈㄚ', 'ㄧㄣ', ''],
     '開始送信': ['ㄎㄞ', 'ㄕˇ', 'ㄙㄨㄥˋ', 'ㄒㄧㄣˋ'],
     '讀注音，送到郵箱': ['ㄉㄨˊ', 'ㄓㄨˋ', 'ㄧㄣ', '', 'ㄙㄨㄥˋ', 'ㄉㄠˋ', 'ㄧㄡˊ', 'ㄒㄧㄤ'],
+    '看圖片，送到郵箱': ['ㄎㄢˋ', 'ㄊㄨˊ', 'ㄆㄧㄢˋ', '', 'ㄙㄨㄥˋ', 'ㄉㄠˋ', 'ㄧㄡˊ', 'ㄒㄧㄤ'],
     '選一個郵箱': ['ㄒㄩㄢˇ', 'ㄧ', 'ㄍㄜ˙', 'ㄧㄡˊ', 'ㄒㄧㄤ'],
     '先點信，再選郵箱': ['ㄒㄧㄢ', 'ㄉㄧㄢˇ', 'ㄒㄧㄣˋ', '', 'ㄗㄞˋ', 'ㄒㄩㄢˇ', 'ㄧㄡˊ', 'ㄒㄧㄤ'],
     '再試一次': ['ㄗㄞˋ', 'ㄕˋ', 'ㄧ', 'ㄘˋ'],
@@ -71,7 +72,8 @@
   const state = { words: [], activePool: [], round: [], choices: [], index: 0, attempts: 0, streak: 0, firstTry: 0, phase: 'loading',
     armed: false, dragging: false, audio: null, cast: null, dino: Dino.dinoMode(), bg: 0, courier: 0,
     disabledIds: new Set(), answerResults: [], progressResults: [],
-    mode: 'all', level: 1, count: 5, autoAudio: true, nextMode: 'all', nextLevel: 1, nextCount: 5, nextAutoAudio: true };
+    mode: 'all', level: 1, count: 5, autoAudio: true, format: 'zhuyin',
+    nextMode: 'all', nextLevel: 1, nextCount: 5, nextAutoAudio: true, nextFormat: 'zhuyin' };   // format：zhuyin＝看注音找圖片；picture＝看圖片找注音
 
   // ---------- 彈簧物理（每個值：位置、速度、目標；k 硬度、c 阻尼） ----------
   const spring = (value, k = 170, c = 14) => ({ v: value, vel: 0, to: value, k, c });
@@ -213,15 +215,16 @@
   // ---------- 設定（下一回合生效） ----------
   const modeLabel = (mode = state.nextMode, level = state.nextLevel) => mode === 'dinosaur' ? '恐龍挑戰' : mode === 'level' ? ['第一級', '第二級', '第三級'][level - 1] : '全部';
   function saveSelection() {
-    try { localStorage.setItem(selectionStorageKey, JSON.stringify({ mode: state.nextMode, level: state.nextLevel, count: state.nextCount, format: 'zhuyin', autoAudio: state.nextAutoAudio })); } catch { /* Selection still works for this visit. */ }
+    try { localStorage.setItem(selectionStorageKey, JSON.stringify({ mode: state.nextMode, level: state.nextLevel, count: state.nextCount, format: state.nextFormat, autoAudio: state.nextAutoAudio })); } catch { /* Selection still works for this visit. */ }
   }
   function renderSelectionControls() {
     document.querySelectorAll('.mail-mode-option').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.mailMode === state.nextMode)));
     $('mailLevelControl').hidden = state.nextMode !== 'level';
     $('mailLevelSlider').value = String(state.nextLevel);
     $('mailLevelText').textContent = ['第一級', '第二級', '第三級'][state.nextLevel - 1];
+    document.querySelectorAll('.mail-format-option').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.mailFormat === state.nextFormat)));
     $('mailAutoAudio').checked = state.nextAutoAudio; $('mailCount').value = String(state.nextCount); $('mailCountValue').value = String(state.nextCount);
-    $('mailSelectionSummary').textContent = `下一回合：${modeLabel()} · ${state.nextCount} 封`;
+    $('mailSelectionSummary').textContent = `下一回合：${modeLabel()} · ${state.nextFormat === 'picture' ? '看圖片' : '看注音'} · ${state.nextCount} 封`;
   }
   function setSelection(change) { Object.assign(state, change); saveSelection(); renderSelectionControls(); }
 
@@ -235,8 +238,7 @@
     $('progress').classList.toggle('many', state.round.length > 6);
     $('progress').setAttribute('aria-label', `第 ${state.index + 1}／${state.count} 封`);
   }
-  function renderReading(word) {   // 注音直排、聲調在右
-    const container = $('reading');
+  function renderReading(word, container) {   // 注音直排、聲調在右（信面或看圖片模式的郵筒窗）
     container.replaceChildren();
     container.classList.toggle('is-long', word.zhuyin.length > 3);
     for (const raw of word.zhuyin) {
@@ -250,7 +252,7 @@
       if (tone) { const m = document.createElement('span'); m.className = 'zy-tone' + (neutral ? ' neutral' : ''); m.textContent = tone; syllable.append(m); }
       container.append(syllable);
     }
-    $('letter').setAttribute('aria-label', `拿起注音信件：${word.zhuyin.join('，')}`);
+    return container;
   }
   function makeArt(word) {
     let art;
@@ -278,8 +280,9 @@
     const candidates = distractorPools(word, pool).flatMap(same => Dino.shuffle(same.filter(i => i.topic === word.topic))
       .concat(Dino.shuffle(same.filter(i => i.topic !== word.topic && Dino.topicGroup(i) === group)))
       .concat(Dino.shuffle(same.filter(i => Dino.topicGroup(i) !== group))));
-    const seen = new Set([word.zh]), other = [];
-    for (const item of candidates) { if (seen.has(item.zh)) continue; seen.add(item.zh); other.push(item); if (other.length === 2) break; }
+    const sound = item => item.zhuyin.join(' ');   // 看圖片模式郵筒寫注音，所以注音也不能重複
+    const seen = new Set([word.zh, sound(word)]), other = [];
+    for (const item of candidates) { if (seen.has(item.zh) || seen.has(sound(item))) continue; seen.add(item.zh); seen.add(sound(item)); other.push(item); if (other.length === 2) break; }
     if (other.length !== 2) throw Error(`這個單字找不到三個同風格郵箱：${word.id}`);
     return Dino.shuffle([word, ...other]);
   }
@@ -292,7 +295,7 @@
       b.style.left = `${BOXES[i][0]}px`; b.style.top = `${BOXES[i][1]}px`;
       b.setAttribute('aria-label', `郵筒 ${i + 1}：${word.zh}`);
       b.innerHTML = '<span class="pb-shadow"></span><span class="pb-legs"><i></i><i></i></span><span class="pb-body"><span class="pb-medal">P</span><span class="pb-slot"></span><span class="pb-cap"></span><span class="pb-win"></span></span><span class="pb-flag" aria-hidden="true"></span>';
-      b.querySelector('.pb-win').append(makeArt(word));
+      b.querySelector('.pb-win').append(state.format === 'picture' ? renderReading(word, Object.assign(document.createElement('span'), { className: 'box-reading' })) : makeArt(word));
       b.addEventListener('click', () => {
         if (state.phase !== 'question' || state.dragging) return;
         if (!state.armed) {   // 還沒拿信：郵筒被按得扁扁再彈回來，信也跳一下提醒
@@ -319,7 +322,11 @@
     window.__answerId = word.id;   // 截圖驗收腳本用
     state.phase = 'question'; state.attempts = 0; state.armed = false; state.dragging = false; state.magnet = -1;
     renderProgress();
-    renderReading(word);
+    const picture = state.format === 'picture';
+    $('reading').hidden = picture; $('letterArt').hidden = !picture;
+    if (picture) $('letterArt').replaceChildren(makeArt(word));
+    else renderReading(word, $('reading'));
+    $('letter').setAttribute('aria-label', picture ? '拿起圖片信件' : `拿起注音信件：${word.zhuyin.join('，')}`);
     state.choices = choicesFor(word, state.activePool);
     renderMailboxes(state.choices);
     $('receipt').hidden = true; $('postmark').classList.remove('is-stamping');
@@ -337,7 +344,7 @@
     letterPhys.s.v = .25; letterPhys.tilt.v = -25; letterPhys.y.vel = -300;
     ['x', 'y', 's'].forEach(k => { letterPhys[k].to = k === 's' ? 1 : 0; });
     animate(actor, { opacity: 1 }, { duration: dur(.3) });   // 每封都由 Motion 淡入（再送一次時才不會停在淡出狀態）
-    say('讀注音，送到郵箱', 3000, false);
+    say(picture ? '看圖片，送到郵箱' : '讀注音，送到郵箱', 3000, false);
     if (state.audio) state.audio.pause();
     if (state.autoAudio) playPrompt();
   }
@@ -427,7 +434,7 @@
   function saveRound() {
     try {
       const history = Dino.loadHistory();
-      const record = { date: new Date().toISOString(), game: 'zhuyin-sort', mode: state.mode, level: state.level,
+      const record = { date: new Date().toISOString(), game: 'zhuyin-sort', format: state.format, mode: state.mode, level: state.level,
         score: state.firstTry, total: state.count, ids: state.round.map(word => word.id), results: [...state.answerResults] };
       localStorage.setItem(Dino.storageKeys.history, JSON.stringify([record, ...history].slice(0, 10)));
     } catch { /* The game still works when local storage is unavailable. */ }
@@ -502,7 +509,7 @@
     const pool = Dino.eligibleWords(state.words, state.disabledIds, state.nextMode, state.nextLevel, 'zhuyin');   // 注音送信看注音等級
     const usable = pool.filter(word => new Set(distractorPools(word, pool).flat().map(other => other.zh)).size >= 2);
     if (usable.length < state.nextCount) { say('可用單字不足', 0, false); return false; }
-    state.mode = state.nextMode; state.level = state.nextLevel; state.count = state.nextCount; state.autoAudio = state.nextAutoAudio;
+    state.mode = state.nextMode; state.level = state.nextLevel; state.count = state.nextCount; state.autoAudio = state.nextAutoAudio; state.format = state.nextFormat;
     state.activePool = pool;
     state.round = Dino.selectRound(usable, Dino.loadHistory(), state.count);
     state.index = 0; state.firstTry = 0; state.streak = 0; state.answerResults = []; state.progressResults = [];
@@ -531,6 +538,7 @@
     document.querySelectorAll('.mail-mode-option').forEach(button => button.addEventListener('click', () => {
       if (['all', 'level', 'dinosaur'].includes(button.dataset.mailMode)) setSelection({ nextMode: Dino.taskMode(button.dataset.mailMode) });
     }));
+    document.querySelectorAll('.mail-format-option').forEach(button => button.addEventListener('click', () => setSelection({ nextFormat: button.dataset.mailFormat === 'picture' ? 'picture' : 'zhuyin' })));
     $('mailAutoAudio').addEventListener('change', event => setSelection({ nextAutoAudio: event.target.checked }));
     $('mailCount').addEventListener('input', event => setSelection({ nextCount: clamp(Number(event.target.value) || 5, 3, 10) }));
     $('mailLevelSlider').addEventListener('input', event => setSelection({ nextLevel: clamp(Number(event.target.value) || 1, 1, 3) }));
@@ -555,6 +563,7 @@
         const saved = JSON.parse(localStorage.getItem(selectionStorageKey) || 'null');
         if (['all', 'level', 'dinosaur'].includes(saved?.mode)) state.nextMode = saved.mode;
         if (Number.isInteger(saved?.level) && saved.level >= 1 && saved.level <= 3) state.nextLevel = saved.level;
+        if (saved?.format === 'picture') state.nextFormat = 'picture';
         if (typeof saved?.autoAudio === 'boolean') state.nextAutoAudio = saved.autoAudio;
         if (Number.isInteger(saved?.count) && saved.count >= 3 && saved.count <= 10) state.nextCount = saved.count;
       } catch { /* Keep default selection. */ }

@@ -219,3 +219,16 @@ html.wide .ms-shell{width:100%}
 .ms-settings{font-size:21px}
 .ms-receipt .stamp-dots{position:relative;z-index:1}
 .ready-card h1.kid-text,.finish-card h1.kid-text{display:flex;flex-wrap:nowrap}
+.mail-format-picker{border:0;padding:0;margin:8px 0 10px}.mail-format-picker legend{margin-bottom:7px;color:#315d43;font-weight:900}
+.mail-format-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.mail-format-option{min-height:46px;padding:6px;border:2px solid #b9d3ae;border-radius:12px;background:#f0f6e7;color:#226046;font-weight:900}
+.mail-format-option[aria-pressed=true]{border-color:#e7bc5a;background:#246c4c;color:#fffbed;box-shadow:0 3px 0 #135039}
+/* 看圖片模式（導演 2026-10-21）：信上放大圖片、郵筒窗寫直排注音 */
+.letter-art{position:absolute;inset:14px 20px;display:grid;place-items:center}
+.letter-art .mailbox-art{max-width:100%;max-height:100%;font-size:110px}
+.letter-art img.mailbox-art{position:absolute;inset:0;width:100%;height:100%;max-width:none;max-height:none;object-fit:contain}
+.letter-art .mailbox-art.sheet{height:100%;width:auto}
+.pb-win .box-reading{position:static;inset:auto;display:flex;align-items:center;justify-content:center;gap:4px;width:100%;height:100%;padding:0 4px}
+.pb-win .box-reading .zy-main{font-size:30px}.pb-win .box-reading .zy-tone{font-size:24px;right:-4px}.pb-win .box-reading .zy-tone.neutral{font-size:20px;right:8px}
+.pb-win .box-reading .zy-syllable{min-width:30px;padding-right:9px}
+.pb-win .box-reading.is-long{gap:1px}.pb-win .box-reading.is-long .zy-main{font-size:21px}.pb-win .box-reading.is-long .zy-syllable{min-width:22px;padding-right:7px}.pb-win .box-reading.is-long .zy-tone{font-size:18px}

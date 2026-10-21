@@ -31,10 +31,10 @@
     '開始任務':['ㄎㄞ','ㄕˇ','ㄖㄣˋ','ㄨˋ'],
     '信件內容':['ㄒㄧㄣˋ','ㄐㄧㄢˋ','ㄋㄟˋ','ㄖㄨㄥˊ'],
     '看注音':['ㄎㄢˋ','ㄓㄨˋ','ㄧㄣ'],
-    '看英文單字':['ㄎㄢˋ','ㄧㄥ','ㄨㄣˊ','ㄉㄢ','ㄗˋ'],
+    '看圖片':['ㄎㄢˋ','ㄊㄨˊ','ㄆㄧㄢˋ'],
     '自動發音':['ㄗˋ','ㄉㄨㄥˋ','ㄈㄚ','ㄧㄣ'],
-    '看單字，':['ㄎㄢˋ','ㄉㄢ','ㄗˋ',''],
-    '看英文單字，選圖片郵箱。':['ㄎㄢˋ','ㄧㄥ','ㄨㄣˊ','ㄉㄢ','ㄗˋ','','ㄒㄩㄢˇ','ㄊㄨˊ','ㄆㄧㄢˋ','ㄧㄡˊ','ㄒㄧㄤ',''],
+    '看圖片，':['ㄎㄢˋ','ㄊㄨˊ','ㄆㄧㄢˋ',''],
+    '看圖片，選注音郵箱。':['ㄎㄢˋ','ㄊㄨˊ','ㄆㄧㄢˋ','','ㄒㄩㄢˇ','ㄓㄨˋ','ㄧㄣ','ㄧㄡˊ','ㄒㄧㄤ',''],
     '讀注音，選圖片郵箱。':['ㄉㄨˊ','ㄓㄨˋ','ㄧㄣ','','ㄒㄩㄢˇ','ㄊㄨˊ','ㄆㄧㄢˋ','ㄧㄡˊ','ㄒㄧㄤ','']
   };
   const setKidText = Dino.kidText(readings);
@@ -60,7 +60,7 @@
   if (page !== 'mail') return;
   const key = 'dinopost-mail-selection-v1';
   const selection = {mode:'all',level:1,format:'zhuyin',autoAudio:true,count:5};
-  try { const saved = JSON.parse(localStorage.getItem(key) || 'null'); if (['all','level','dinosaur'].includes(saved?.mode)) selection.mode=saved.mode; if ([1,2,3].includes(saved?.level)) selection.level=saved.level; if (typeof saved?.autoAudio==='boolean') selection.autoAudio=saved.autoAudio; if (Number.isInteger(saved?.count) && saved.count>=3 && saved.count<=10) selection.count=saved.count; } catch {}
+  try { const saved = JSON.parse(localStorage.getItem(key) || 'null'); if (['all','level','dinosaur'].includes(saved?.mode)) selection.mode=saved.mode; if ([1,2,3].includes(saved?.level)) selection.level=saved.level; if (saved?.format==='picture') selection.format='picture'; if (typeof saved?.autoAudio==='boolean') selection.autoAudio=saved.autoAudio; if (Number.isInteger(saved?.count) && saved.count>=3 && saved.count<=10) selection.count=saved.count; } catch {}
   selection.mode = Dino.taskMode(selection.mode);
   function render() {
     document.querySelectorAll('.mode-option').forEach(button => button.setAttribute('aria-pressed',String(button.dataset.mode===selection.mode)));
@@ -68,7 +68,7 @@
     $('levelSlider').value=String(selection.level);
     document.querySelectorAll('[data-mail-format]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.mailFormat===selection.format)));
     $('mailHomeAutoAudio').checked=selection.autoAudio; $('mailHomeCount').value=String(selection.count); $('mailHomeCountValue').value=String(selection.count); $('startCount').textContent=String(selection.count);
-    annotate($('startTitleLine1'),selection.format==='english'?'看單字，':'讀注音，'); annotate($('startDescription'),selection.format==='english'?'看英文單字，選圖片郵箱。':'讀注音，選圖片郵箱。');
+    annotate($('startTitleLine1'),selection.format==='picture'?'看圖片，':'讀注音，'); annotate($('startDescription'),selection.format==='picture'?'看圖片，選注音郵箱。':'讀注音，選圖片郵箱。');
     annotate($('levelText'),['第一級','第二級','第三級'][selection.level-1]);
     try { localStorage.setItem(key,JSON.stringify(selection)); } catch {}
   }
@@ -78,7 +78,7 @@
   document.querySelectorAll('.mode-label').forEach(el => annotate(el,el.textContent.trim()));
   document.querySelectorAll('.mode-option').forEach(button => button.addEventListener('click',() => {selection.mode=Dino.taskMode(button.dataset.mode);render();}));
   $('levelSlider').addEventListener('input',event => {selection.level=Number(event.target.value);render();});
-  document.querySelectorAll('[data-mail-format]').forEach(button=>button.addEventListener('click',()=>{selection.format='zhuyin';render();}));
+  document.querySelectorAll('[data-mail-format]').forEach(button=>button.addEventListener('click',()=>{selection.format=button.dataset.mailFormat==='picture'?'picture':'zhuyin';render();}));
   $('mailHomeAutoAudio').addEventListener('change',event=>{selection.autoAudio=event.target.checked;render();});
   $('mailHomeCount').addEventListener('input',event=>{selection.count=Number(event.target.value);render();});
   $('startButton').addEventListener('click',() => {render(); location.href='zhuyin-sort.html';});
