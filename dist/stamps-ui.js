@@ -58,7 +58,7 @@ window.DinoStampsUI = (() => {
     const frame = document.createElement('span'); frame.className = 'stamp-frame';
     const inner = document.createElement('span'); inner.className = 'stamp-inner';
     let art;
-    if (word.image && word.category !== 'number') { art = document.createElement('img'); art.src = word.image; art.alt = ''; art.className = 'stamp-art'; }
+    if (word.image && word.topic !== 'number') { art = document.createElement('img'); art.src = word.image; art.alt = ''; art.className = 'stamp-art'; }
     else if (word.sheet && Number.isInteger(word.cell)) {
       art = document.createElement('span'); art.className = 'stamp-art stamp-sheet';
       art.style.backgroundImage = `url('assets/${word.sheet}-grid-v1.jpg')`;

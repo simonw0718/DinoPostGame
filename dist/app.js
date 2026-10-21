@@ -4,7 +4,10 @@ const state = { words: [], disabledIds: new Set(), roundChoices: [], count: 5, m
 const bankStorageKey = Dino.storageKeys.disabled;
 const characterStorageKey = 'dinopost-character-queue-v2';
 const answerStorageKey = 'dinopost-match-answer-v1';
-const { characters, shuffle, visualGroup, audioPath, parseZhuyin, makeBpmUnit } = Dino;
+const { characters, shuffle, isDino, isNumber, topicGroup, visualGroup, audioPath, parseZhuyin, makeBpmUnit } = Dino;
+// 找圖片 reads the English level (word bank plan B).
+const SKILL = 'en';
+const atLevel = item => state.mode !== 'level' || item.level[SKILL] === state.level;
 function saveCharacterQueue() {
   try { localStorage.setItem(characterStorageKey, JSON.stringify(state.characterQueue)); } catch {}
 }
@@ -72,7 +75,7 @@ const actorImages = characters.map(character => {
 });
 function currentWord() { return state.round[state.index]; }
 function eligibleWords() {
-  return Dino.eligibleWords(state.words, state.disabledIds, state.mode, state.level);
+  return Dino.eligibleWords(state.words, state.disabledIds, state.mode, state.level, SKILL);
 }
 const wordBreaks = {
   watermelon: ['water', 'melon'], toothbrush: ['tooth', 'brush'], pineapple: ['pine', 'apple'],
@@ -108,7 +111,7 @@ function showEnglishWord(word) {
   element.setAttribute('aria-label', word.en);
   element.classList.toggle('long-word', word.en.length > 7);
   element.classList.toggle('very-long-word', word.en.length > 15);
-  element.classList.toggle('dinosaur-word', word.category === 'dinosaur');
+  element.classList.toggle('dinosaur-word', isDino(word));
   element.classList.remove('zhuyin-question', 'long-reading');
 }
 function showPicturePrompt(word) {
@@ -116,9 +119,9 @@ function showPicturePrompt(word) {
   element.className = 'parcel-prompt';
   element.setAttribute('aria-label', `包裹封面圖片：${word.zh}`);
   const cover = document.createElement('span'); cover.className = 'parcel-cover';
-  const art = document.createElement(word.image && word.category !== 'number' ? 'img' : 'span');
+  const art = document.createElement(word.image && !isNumber(word) ? 'img' : 'span');
   art.className = 'parcel-art';
-  if (word.image && word.category !== 'number') { art.src = word.image; art.alt = ''; }
+  if (word.image && !isNumber(word)) { art.src = word.image; art.alt = ''; }
   else if (word.sheet && Number.isInteger(word.cell)) {
     art.classList.add('parcel-sheet');
     art.style.backgroundImage = `url('assets/${word.sheet}-grid-v1.jpg')`;
@@ -348,7 +351,7 @@ function updateProgress() {
   }));
 }
 function drawChoices(word) {
-  const displayImage = item => item.category === 'number' ? null : item.image;
+  const displayImage = item => isNumber(item) ? null : item.image;
   const uniqueOptions = items => {
     const meanings = new Set([word.zh]);
     const images = new Set(displayImage(word) ? [displayImage(word)] : []);
@@ -364,27 +367,25 @@ function drawChoices(word) {
   let pool;
   if (state.answerFormat === 'english') {
     const candidates = state.roundChoices.filter(item => item.id !== word.id
-      && (item.category === 'dinosaur') === (word.category === 'dinosaur'));
-    pool = uniqueOptions(candidates.filter(item => item.category === word.category
-      && (state.mode !== 'level' || item.difficulty === state.level)));
-    if (pool.length < 3) pool = uniqueOptions(candidates.filter(item => state.mode !== 'level' || item.difficulty === state.level));
+      && isDino(item) === isDino(word));
+    // Closest meaning first: same topic, then same topic group, then same level.
+    pool = uniqueOptions(candidates.filter(item => item.topic === word.topic && atLevel(item)));
+    if (pool.length < 3) pool = uniqueOptions(candidates.filter(item => topicGroup(item) === topicGroup(word) && atLevel(item)));
+    if (pool.length < 3) pool = uniqueOptions(candidates.filter(atLevel));
     if (pool.length < 3) pool = uniqueOptions(candidates);
   } else {
-    pool = uniqueOptions(state.roundChoices.filter(item => item.category === word.category
-      && (state.mode !== 'level' || item.difficulty === state.level)
-      && visualGroup(item) === visualGroup(word) && item.id !== word.id));
-    if (pool.length < 3) pool = uniqueOptions(state.roundChoices.filter(item => item.category === word.category
-      && visualGroup(item) === visualGroup(word) && item.id !== word.id));
-    if (pool.length < 3) pool = uniqueOptions(state.roundChoices.filter(item => (state.mode !== 'level' || item.difficulty === state.level) && visualGroup(item) === visualGroup(word) && item.id !== word.id));
-    if (pool.length < 3) pool = uniqueOptions(state.roundChoices.filter(item => visualGroup(item) === visualGroup(word)
-      && (item.category === 'dinosaur') === (word.category === 'dinosaur') && item.id !== word.id));
+    const sameLook = item => visualGroup(item) === visualGroup(word) && item.id !== word.id;
+    pool = uniqueOptions(state.roundChoices.filter(item => item.topic === word.topic && atLevel(item) && sameLook(item)));
+    if (pool.length < 3) pool = uniqueOptions(state.roundChoices.filter(item => topicGroup(item) === topicGroup(word) && sameLook(item)));
+    if (pool.length < 3) pool = uniqueOptions(state.roundChoices.filter(item => atLevel(item) && sameLook(item)));
+    if (pool.length < 3) pool = uniqueOptions(state.roundChoices.filter(item => sameLook(item) && isDino(item) === isDino(word)));
   }
   const distractors = pool.slice(0, 3);
   const options = shuffle([word, ...distractors]);
   $('choices').replaceChildren(...options.map(option => {
     const button = document.createElement('button');
     button.type = 'button'; button.className = 'choice is-entering';
-    button.setAttribute('aria-label', state.answerFormat === 'english' ? option.en : option.category === 'number' ? `${option.zh}的數字` : `${option.zh}的圖片`);
+    button.setAttribute('aria-label', state.answerFormat === 'english' ? option.en : isNumber(option) ? `${option.zh}的數字` : `${option.zh}的圖片`);
     button.dataset.wordId = option.id;
     const inner = document.createElement('span'); inner.className = 'choice-inner';
     const front = document.createElement('span'); front.className = 'choice-face choice-front';
@@ -396,7 +397,7 @@ function drawChoices(word) {
     } else {
       const art = document.createElement(displayImage(option) ? 'img' : 'span');
       art.className = 'choice-art'; art.setAttribute('aria-hidden', 'true');
-      if (option.category === 'number') {
+      if (isNumber(option)) {
         art.classList.add('number-art'); art.textContent = option.emoji;
       } else if (option.image) {
         art.classList.add('choice-image'); art.src = option.image; art.alt = '';
@@ -436,7 +437,7 @@ function renderQuestion(autoPlay = true) {
   if (state.answerFormat === 'english') showPicturePrompt(word); else showEnglishWord(word);
   $('feedback').textContent = '';
   $('feedback').removeAttribute('aria-label');
-  setKidText($('instruction'), state.answerFormat === 'english' ? '選單字' : word.category === 'number' ? '選數字' : '選圖片');
+  setKidText($('instruction'), state.answerFormat === 'english' ? '選單字' : isNumber(word) ? '選數字' : '選圖片');
   setKidText($('questionTag'), state.answerFormat === 'english' ? '看圖片' : '聽單字');
   // Picture → word: the picture is the question, so it gets a large stamp frame and the word cards get shorter.
   $('playScreen').classList.toggle('is-picture-prompt', state.answerFormat === 'english');
@@ -575,16 +576,16 @@ function setCount(value) {
 function bankIssue(disabledIds) {
   const active = state.words.filter(word => !disabledIds.has(word.id));
   for (const [name, pool] of [
-    ['第一級', active.filter(word => word.category !== 'dinosaur' && word.difficulty === 1)],
-    ['第二級', active.filter(word => word.category !== 'dinosaur' && word.difficulty === 2)],
-    ['第三級', active.filter(word => word.category !== 'dinosaur' && word.difficulty === 3)],
-    ['恐龍挑戰', active.filter(word => word.category === 'dinosaur')]
+    // Both games filter on their own level, so every level must stay usable for each skill.
+    ...['en', 'zhuyin'].flatMap(skill => [1, 2, 3].map(level => [`${skill === 'en' ? '英文' : '注音'}第${['一', '二', '三'][level - 1]}級`,
+      active.filter(word => !isDino(word) && word.level[skill] === level)])),
+    ['恐龍', active.filter(isDino)]
   ]) {
     if (pool.length < 10) return `${name}至少需要保留 10 個單字，才能支援每回合最多 10 題。`;
   }
   const groups = new Map();
   active.forEach(word => {
-    const key = `${word.category === 'dinosaur' ? 'dino' : 'regular'}:${visualGroup(word)}`;
+    const key = `${isDino(word) ? 'dino' : 'regular'}:${visualGroup(word)}`;
     groups.set(key, (groups.get(key) || 0) + 1);
   });
   if ([...groups.values()].some(count => count < 4)) return '同一種圖片樣式至少要保留 4 個單字，才能組成四張選項。';
@@ -598,14 +599,14 @@ function bankFilterWords() {
   const query = $('bankSearch').value.trim().toLocaleLowerCase();
   const filter = $('bankFilter').value;
   return state.words.filter(word => {
-    const inPool = filter === 'all' || (filter === 'dinosaur' ? word.category === 'dinosaur' : word.category !== 'dinosaur' && word.difficulty === Number(filter));
+    const inPool = filter === 'all' || (filter === 'dinosaur' ? isDino(word) : !isDino(word) && word.level[SKILL] === Number(filter));
     return inPool && (!query || word.en.toLocaleLowerCase().includes(query) || word.zh.includes(query));
   });
 }
 function makeBankArt(word) {
-  const art = document.createElement(word.image && word.category !== 'number' ? 'img' : 'span');
+  const art = document.createElement(word.image && !isNumber(word) ? 'img' : 'span');
   art.className = 'bank-art'; art.setAttribute('aria-hidden', 'true');
-  if (word.category === 'number') art.textContent = word.emoji;
+  if (isNumber(word)) art.textContent = word.emoji;
   // Lazy: the bank list sits in a closed dialog, so images load only when a parent opens it.
   else if (word.image) { art.loading = 'lazy'; art.src = word.image; art.alt = ''; }
   else if (word.sheet && Number.isInteger(word.cell)) {
@@ -646,8 +647,8 @@ function renderBank() {
   $('settingsBankSummary').textContent = `已啟用 ${active.length}／${state.words.length} 個單字`;
   $('bankStats').replaceChildren(...[
     ['題庫總數', active.length, state.words.length],
-    ...[1, 2, 3].map(level => [`第${['一', '二', '三'][level - 1]}級`, count(word => word.category !== 'dinosaur' && word.difficulty === level), state.words.filter(word => word.category !== 'dinosaur' && word.difficulty === level).length]),
-    ['恐龍', count(word => word.category === 'dinosaur'), state.words.filter(word => word.category === 'dinosaur').length]
+    ...[1, 2, 3].map(level => [`英文第${['一', '二', '三'][level - 1]}級`, count(word => !isDino(word) && word.level[SKILL] === level), state.words.filter(word => !isDino(word) && word.level[SKILL] === level).length]),
+    ['恐龍', count(isDino), state.words.filter(isDino).length]
   ].map(([label, enabled, total]) => {
     const item = document.createElement('div'); item.className = 'bank-stat';
     const title = document.createElement('small'); title.textContent = label;
@@ -726,16 +727,16 @@ function validateWords(words) {
   const ids = new Set();
   const english = new Set();
   for (const word of words) {
-    if (!word.id || !word.category || !word.en || !word.zh || !word.emoji || ids.has(word.id) || english.has(word.en.toLowerCase())) throw Error('題庫資料不完整或單字重複');
+    if (!word.id || !word.topic || !word.pack || !word.en || !word.zh || !word.emoji || ids.has(word.id) || english.has(word.en.toLowerCase())) throw Error('題庫資料不完整或單字重複');
     if (!Array.isArray(word.zhuyin) || word.zhuyin.length !== [...word.zh].length || word.zhuyin.some(reading => !reading)) throw Error(`注音資料不完整：${word.id}`);
-    if (![1, 2, 3].includes(word.difficulty)) throw Error(`難度資料錯誤：${word.id}`);
+    if (!isDino(word) && !['en', 'zhuyin', 'hanzi'].every(skill => [1, 2, 3].includes(word.level?.[skill]))) throw Error(`難度資料錯誤：${word.id}`);
     ids.add(word.id); english.add(word.en.toLowerCase());
   }
   for (const mode of ['all', 'level', 'dinosaur']) {
     const levels = mode === 'level' ? [1, 2, 3] : [1];
     for (const level of levels) {
-      const eligible = words.filter(word => mode === 'dinosaur' ? word.category === 'dinosaur'
-        : word.category !== 'dinosaur' && (mode !== 'level' || word.difficulty === level));
+      const eligible = words.filter(word => mode === 'dinosaur' ? isDino(word)
+        : !isDino(word) && (mode !== 'level' || word.level[SKILL] === level));
       if (eligible.length < 10) throw Error(`題庫不足：${mode} ${level}`);
     }
   }

@@ -1,4 +1,4 @@
-// Stamp album: word stamps (by category) and character cards. Reads progress from DinoProgress.
+// Stamp album: word stamps (by topic group) and character cards. Reads progress from DinoProgress.
 (() => {
   'use strict';
   const $ = id => document.getElementById(id);
@@ -21,12 +21,13 @@
   const kid = (tag, text, className) => { const el = document.createElement(tag); if (className) el.className = className; setKidText(el, text); return el; };
 
   const groups = [
-    { id: 'animals', label: '動物', cats: ['animals'] },
+    // cats = topic groups (first part of word.topic, reference/topics.json).
+    { id: 'animals', label: '動物', cats: ['animal'] },
     { id: 'food', label: '食物', cats: ['food'] },
-    { id: 'objects', label: '物品', cats: ['objects'] },
-    { id: 'nature', label: '自然', cats: ['nature'] },
-    { id: 'dinosaur', label: '恐龍', cats: ['dinosaur'] },
-    { id: 'other', label: '其他', cats: ['color', 'number', 'music', 'building', 'job'] }
+    { id: 'objects', label: '物品', cats: ['body', 'clothes', 'home', 'school', 'vehicle', 'tool'] },
+    { id: 'nature', label: '自然', cats: ['nature', 'place'] },
+    { id: 'dinosaur', label: '恐龍', cats: ['dino'] },
+    { id: 'other', label: '其他', cats: ['color', 'number', 'music', 'people'] }
   ];
   const state = { words: [], tab: 'words', group: 'animals', audio: null };
 
@@ -145,7 +146,7 @@
     }
     const chips = $('chips'); chips.replaceChildren();
     for (const group of groups) {
-      const words = state.words.filter(word => group.cats.includes(word.category));
+      const words = state.words.filter(word => group.cats.includes(word.topic.split('.')[0]));
       const got = words.filter(word => progress[word.id]?.stampedAt).length;
       const chip = document.createElement('button'); chip.type = 'button'; chip.setAttribute('aria-pressed', String(group.id === state.group));
       const count = document.createElement('span'); count.className = 'chip-count'; count.textContent = `${got}/${words.length}`;
@@ -155,7 +156,7 @@
     }
     const group = groups.find(item => item.id === state.group);
     const order = { stamped: 0, progress: 1, locked: 2 };
-    const words = state.words.filter(word => group.cats.includes(word.category))
+    const words = state.words.filter(word => group.cats.includes(word.topic.split('.')[0]))
       .map((word, index) => ({ word, index, rank: order[statusOf(word, progress)] }))
       .sort((a, b) => a.rank - b.rank || a.index - b.index);
     // Words with the same status keep data order so a child can find "the same place" next time.

@@ -135,7 +135,7 @@
     image.src = `assets/${courier.asset}`;
   }
   function eligibleWords(mode = state.mode, level = state.level) {
-    return Dino.eligibleWords(state.words, state.disabledIds, mode, level);
+    return Dino.eligibleWords(state.words, state.disabledIds, mode, level, 'zhuyin'); // 注音送信 reads the zhuyin level
   }
   function modeLabel(mode = state.nextMode, level = state.nextLevel) {
     return mode === 'dinosaur' ? '恐龍挑戰' : mode === 'level' ? ['第一級', '第二級', '第三級'][level - 1] : '全部';
@@ -233,7 +233,7 @@
   }
   function makeArt(word) {
     let art;
-    if (word.category !== 'number' && word.image) {
+    if (!Dino.isNumber(word) && word.image) {
       art = document.createElement('img');
       art.src = word.image;
       art.alt = '';
@@ -252,13 +252,15 @@
   }
   // Distractors come from the round's pool first, then from other levels with the same picture style.
   function distractorPools(word, pool) {
-    const isDino = word.category === 'dinosaur';
-    const wider = state.words.filter(item => !state.disabledIds.has(item.id) && (item.category === 'dinosaur') === isDino);
+    const wider = state.words.filter(item => !state.disabledIds.has(item.id) && Dino.isDino(item) === Dino.isDino(word));
     return [pool, wider].map(list => list.filter(item => item.id !== word.id && visualGroup(item) === visualGroup(word) && item.zh !== word.zh));
   }
   function choicesFor(word, pool) {
-    const candidates = distractorPools(word, pool).flatMap(sameVisual => shuffle(sameVisual.filter(item => item.category === word.category))
-      .concat(shuffle(sameVisual.filter(item => item.category !== word.category))));
+    // Same topic first, then same topic group, then the rest of the same picture style.
+    const group = Dino.topicGroup(word);
+    const candidates = distractorPools(word, pool).flatMap(sameVisual => shuffle(sameVisual.filter(item => item.topic === word.topic))
+      .concat(shuffle(sameVisual.filter(item => item.topic !== word.topic && Dino.topicGroup(item) === group)))
+      .concat(shuffle(sameVisual.filter(item => Dino.topicGroup(item) !== group))));
     const seen = new Set([word.zh]);
     const other = [];
     for (const item of candidates) {

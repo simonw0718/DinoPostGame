@@ -1,0 +1,35 @@
+{
+ "tbcl_hanzi": {
+  "name": "臺灣華語文能力基準 漢字表（111-09-20）",
+  "publisher": "國家教育研究院",
+  "url": "https://coct.naer.edu.tw/file/files/%E8%87%BA%E7%81%A3%E8%8F%AF%E8%AA%9E%E6%96%87%E8%83%BD%E5%8A%9B%E5%9F%BA%E6%BA%96%E6%BC%A2%E5%AD%97%E8%A1%A8_111-09-20.ods",
+  "page": "https://coct.naer.edu.tw/page.jsp?ID=41",
+  "file": "tbcl_hanzi_111-09-20.ods",
+  "sha256": "1b7fecb905a3ea5982048a70c32fa16e283e7341dff083fbef23e75806052b76",
+  "downloaded": "2026-10-21",
+  "use": "國字級 level.hanzi"
+ },
+ "tbcl_words": {
+  "name": "臺灣華語文能力基準 14452 詞語表（2025-04）",
+  "publisher": "國家教育研究院",
+  "url": "https://coct.naer.edu.tw/file/files/14452%E8%A9%9E%E8%AA%9E%E8%A1%A8202504.xlsx",
+  "page": "https://coct.naer.edu.tw/page.jsp?ID=41",
+  "file": "tbcl_words_202504.xlsx",
+  "sha256": "0cf6666bd1ed9af62b452bc5306bdc4d4520aead9c31b404e2065e8e075dfbad",
+  "downloaded": "2026-10-21",
+  "use": "新增單字時的注音建議；中文詞等級僅記錄（metrics.zhWordTbcl）"
+ },
+ "cambridge_yle": {
+  "name": "Cambridge English Young Learners wordlists (exams from 2018): Pre A1 Starters / A1 Movers / A2 Flyers",
+  "publisher": "Cambridge Assessment English",
+  "url": "https://www.cambridgeenglish.org/Images/149681-yle-flyers-word-list.pdf",
+  "file": "cambridge_yle_wordlist_2018.pdf",
+  "sha256": "1bc0ceb3453251a119faea8dbe39ea5d7251f84e5820f9475ffd8773a597e2f4",
+  "downloaded": "2026-10-21",
+  "use": "英文常見度 metrics.yle",
+  "combined_list_pages": [
+   23,
+   30
+  ]
+ }
+}

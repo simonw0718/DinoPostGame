@@ -104,16 +104,22 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
     };
   }
 
+  // Word bank plan B (director 2026-10-21): topic = 'group.sub' stable ID, pack 'dino' is the DINO MODE block
+  // (no levels), level = { en, zhuyin, hanzi } each 1–3. Rules: reference/topics.json; tool: tools/word_bank.py.
+  const isDino = word => word.pack === 'dino';
+  const isNumber = word => word.topic === 'number';
+  const topicGroup = word => word.topic.split('.')[0];
   function visualGroup(word) {
-    if (word.category === 'number') return 'number-emoji';
+    if (isNumber(word)) return 'number-emoji';
     if (word.sheet) return `sheet:${word.sheet}`;
-    if (word.image) return word.category === 'dinosaur' ? 'dinosaur-image' : 'regular-image';
+    if (word.image) return isDino(word) ? 'dinosaur-image' : 'regular-image';
     return 'emoji';
   }
-  function eligibleWords(words, disabledIds, mode, level) {
+  // skill: 'en' (找圖片) or 'zhuyin' (注音送信) picks which level the slider filters on.
+  function eligibleWords(words, disabledIds, mode, level, skill) {
     return words.filter(word => !disabledIds.has(word.id) && (mode === 'dinosaur'
-      ? word.category === 'dinosaur'
-      : word.category !== 'dinosaur' && (mode !== 'level' || word.difficulty === level)));
+      ? isDino(word)
+      : !isDino(word) && (mode !== 'level' || word.level[skill] === level)));
   }
   function loadHistory() {
     try {
@@ -165,5 +171,5 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
   const streakThreshold = 3;
 
   return { characters, storageKeys, shuffle, loadQueue, fitActor, parseZhuyin, makeBpmUnit, kidText,
-    visualGroup, eligibleWords, loadHistory, selectRound, audioPath, burst, streakThreshold, dinoMode, setDinoMode, taskMode };
+    isDino, isNumber, topicGroup, visualGroup, eligibleWords, loadHistory, selectRound, audioPath, burst, streakThreshold, dinoMode, setDinoMode, taskMode };
 })();

@@ -4,7 +4,7 @@
 
 ## 目前功能
 
-- 359 個詞：一般詞 324 個，分三級（52／143／129）；恐龍與史前夥伴 35 個，獨立成「恐龍挑戰」。
+- 359 個詞：一般詞 324 個，英文／注音／國字各自分三級（規則見 `reference/topics.json`）；恐龍與史前動物 35 個是 DINO MODE 專用區塊，不分級。
 - 每回合預設 5 題，可在設定中改為 3–10 題；顯示第一次就答對的題數。
 - 題目進入時播放單字錄音，可按「再聽」重播；答錯、答對、完成各有短音效。
 - 選項答對後直接翻面。中文字與右側直排注音固定成對，包含聲調和輕聲點。
@@ -46,11 +46,18 @@ python3 -m http.server 4173 -d dist
 
 ## 題庫維護
 
-`dist/data.json` 是唯一正式題庫。每筆使用穩定 `id`、英文 `en`、中文 `zh`、對應每個國字的 `zhuyin`、`difficulty`、`category`、圖像欄位，以及美術狀態 `artStatus`（`emoji`／`candidate` 候選／`approved` 已審核）。英文音檔放在 `dist/assets/audio/<id>.mp3`；359 詞的中文發音由 `zhAudio` 指向 `dist/assets/audio/zh/<id>.mp3`。新增或修改後執行：
+`dist/data.json` 是唯一正式題庫。每筆使用穩定 `id`、主題 `topic`（大類.小類，清單在 `reference/topics.json`）、`pack`（`general`／`dino`）、英文 `en`、中文 `zh`、對應每個國字的 `zhuyin`、`level`（`en`／`zhuyin`／`hanzi` 各 1–3；恐龍包沒有）、計算依據 `metrics`、圖像欄位，以及美術狀態 `artStatus`（`emoji`／`candidate` 候選／`approved` 已審核）。英文音檔放在 `dist/assets/audio/<id>.mp3`；中文發音由 `zhAudio` 指向 `dist/assets/audio/zh/<id>.mp3`。
+
+`level` 與 `metrics` 由程式算，不手改。新增單字、重算、查看分布都用同一支工具（流程細節在 skill `kidgame-word-bank`）：
 
 ```sh
+python3 tools/word_bank.py add new_words.tsv          # 先看結果；確認後加 --write
+python3 tools/word_bank.py levels --write             # 改了 reference/topics.json 的規則後重算
+python3 tools/word_bank.py report                     # 各小類詞數、各級詞數
 python3 tools/check_data.py
 ```
+
+分級依據是官方字表：國教院「臺灣華語文能力基準」漢字表與詞語表、劍橋兒童英檢 Starters／Movers／Flyers 字表。原始檔放 `reference/raw/`（不進 Git），來源網址與 SHA 在 `reference/sources.json`；`python3 tools/build_reference_lists.py` 轉成 `reference/*.tsv`。
 
 `check_data.py` 是唯一的題庫檢查程式（沒有 Node 也能跑；舊的 `validate-data.mjs` 已移除），除了基本檢查，還會列出多餘的音檔、送信遊戲不會出到的詞，以及缺少的角色圖。`tools/check_flow.cjs` 是手機版操作的冒煙測試（需要 Node 和 playwright），目前裡面的按鈕文字還沒跟上現在的介面。
 

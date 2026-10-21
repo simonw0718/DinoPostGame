@@ -1,0 +1,142 @@
+{
+ "_rule": "主題 ID＝大類.小類，建立後不改名；顯示名稱只改 zh。小類不足 4 詞時，干擾選項往大類找。pack=dino 是 DINO MODE 專用特殊區塊（含史前動物），不分級、不進一般題庫。導演 2026-10-21 選方案 B。",
+ "groups": {
+  "animal": "動物",
+  "food": "食物",
+  "body": "身體",
+  "clothes": "穿戴",
+  "home": "家裡",
+  "school": "學校與玩具",
+  "vehicle": "交通工具",
+  "tool": "工具與機器",
+  "people": "人物",
+  "place": "地點",
+  "nature": "自然",
+  "music": "樂器",
+  "color": "顏色",
+  "number": "數字",
+  "dino": "恐龍與史前動物"
+ },
+ "topics": {
+  "animal.farm": {
+   "zh": "家裡與農場動物"
+  },
+  "animal.wild": {
+   "zh": "野生動物"
+  },
+  "animal.water": {
+   "zh": "水裡的動物"
+  },
+  "animal.bird": {
+   "zh": "鳥"
+  },
+  "animal.bug": {
+   "zh": "小蟲"
+  },
+  "animal.reptile": {
+   "zh": "爬蟲類"
+  },
+  "food.fruit": {
+   "zh": "水果"
+  },
+  "food.veg": {
+   "zh": "蔬菜"
+  },
+  "food.meal": {
+   "zh": "正餐"
+  },
+  "food.snack": {
+   "zh": "點心與飲料"
+  },
+  "body": {
+   "zh": "身體"
+  },
+  "clothes": {
+   "zh": "穿戴"
+  },
+  "home.room": {
+   "zh": "房間"
+  },
+  "home.kitchen": {
+   "zh": "廚房"
+  },
+  "home.clean": {
+   "zh": "清潔與收納"
+  },
+  "school.toy": {
+   "zh": "文具與玩具"
+  },
+  "vehicle": {
+   "zh": "交通工具"
+  },
+  "tool.gadget": {
+   "zh": "工具與機器"
+  },
+  "people": {
+   "zh": "人物"
+  },
+  "place": {
+   "zh": "地點"
+  },
+  "nature.sky": {
+   "zh": "天空與天氣"
+  },
+  "nature.land": {
+   "zh": "山水地形"
+  },
+  "nature.plant": {
+   "zh": "植物"
+  },
+  "music": {
+   "zh": "樂器"
+  },
+  "color": {
+   "zh": "顏色"
+  },
+  "number": {
+   "zh": "數字"
+  },
+  "dino.dinosaur": {
+   "zh": "恐龍",
+   "pack": "dino"
+  },
+  "dino.flying": {
+   "zh": "飛行爬蟲與早期鳥類",
+   "pack": "dino"
+  },
+  "dino.sea": {
+   "zh": "海中爬蟲",
+   "pack": "dino"
+  },
+  "dino.iceage": {
+   "zh": "冰河時期動物",
+   "pack": "dino"
+  }
+ },
+ "levels": {
+  "en": {
+   "for": "找圖片",
+   "inputs": "metrics.yle（劍橋 Starters=1／Movers=2／Flyers=3／不在表=4）、字母數、音節",
+   "score": "2×(yle−1)＋字長分(≤4:0, 5–6:1, 7–8:2, ≥9:3)＋音節分(1:0, 2:1, ≥3:2)",
+   "cuts": [
+    3,
+    6
+   ]
+  },
+  "zhuyin": {
+   "for": "注音送信",
+   "inputs": "字數、注音符號數、難分辨符號 ㄓㄔㄕㄖㄗㄘㄙㄦㄩ、輕聲（不看國字常見度，導演 2026-10-21）；輕聲音節的符號不再算難符號",
+   "score": "字數分(1:0, 2:1, ≥3:2)＋符號分(≤3:0, 4–6:1, ≥7:2)＋min(2, 難符號數)＋輕聲 1",
+   "cuts": [
+    2,
+    3
+   ]
+  },
+  "hanzi": {
+   "for": "之後的國字 section",
+   "inputs": "metrics.hanziTbcl＝詞中最難一個字的 TBCL 級（1–7，不在表＝8）",
+   "map": "TBCL 1–2→1、3–4→2、≥5→3"
+  },
+  "_cuts": "分數 ≤cuts[0]→1 級；≤cuts[1]→2 級；其餘 3 級。門檻固定，新增字不會讓舊字跳級。"
+ }
+}

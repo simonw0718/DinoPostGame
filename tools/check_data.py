@@ -17,13 +17,21 @@ ART_STATUS = ('emoji', 'candidate', 'approved')
 IMAGE_PATH = re.compile(r'^assets/(kidsapp|rebuilt)/[^/]+(/[^/]+)*\.(png|svg)$')
 
 
+TOPICS = json.loads((DIST.parent / 'reference/topics.json').read_text(encoding='utf-8'))['topics']
+SKILLS = ('en', 'zhuyin', 'hanzi')
+
+
+def is_dino(w):
+    return w['pack'] == 'dino'
+
+
 def visual_group(w):
-    if w['category'] == 'number':
+    if w['topic'] == 'number':
         return 'number-emoji'
     if w.get('sheet'):
         return f"sheet:{w['sheet']}"
     if w.get('image'):
-        return 'dinosaur-image' if w['category'] == 'dinosaur' else 'regular-image'
+        return 'dinosaur-image' if is_dino(w) else 'regular-image'
     return 'emoji'
 
 
@@ -36,19 +44,23 @@ def main():
     words = json.loads((DIST / 'data.json').read_text(encoding='utf-8'))
     errors, warnings = [], []
     ids, english = set(), set()
-    counts = {1: 0, 2: 0, 3: 0, 'dinosaur': 0}
 
     for w in words:
         wid = w.get('id')
-        if not all(w.get(k) for k in ('id', 'category', 'en', 'zh', 'emoji')) or wid in ids:
+        if not all(w.get(k) for k in ('id', 'topic', 'pack', 'en', 'zh', 'emoji', 'metrics')) or wid in ids:
             errors.append(f'缺欄位或 id 重複: {wid}')
             continue
         key = re.sub(r'[^a-z0-9]', '', w['en'].lower())
         if key in english:
             errors.append(f'英文重複: {w["en"]}')
-        if w.get('difficulty') not in (1, 2, 3):
-            errors.append(f'難度錯誤: {wid}')
-        if w['category'] == 'number' and w['emoji'] != NUMBER_EMOJI.get(w['en']):
+        if w['topic'] not in TOPICS:
+            errors.append(f'topic 不在 reference/topics.json: {wid} {w["topic"]}')
+            continue
+        if w['pack'] != TOPICS[w['topic']].get('pack', 'general'):
+            errors.append(f'pack 與 topic 不符: {wid}')
+        if is_dino(w) != ('level' not in w) or (not is_dino(w) and any(w['level'].get(k) not in (1, 2, 3) for k in SKILLS)):
+            errors.append(f'level 錯誤（一般詞需 en/zhuyin/hanzi 1–3，恐龍包不分級）: {wid}')
+        if w['topic'] == 'number' and w['emoji'] != NUMBER_EMOJI.get(w['en']):
             errors.append(f'數字 emoji 錯誤: {wid}')
         zy = w.get('zhuyin')
         if not isinstance(zy, list) or len(zy) != len(w['zh']) or any(
@@ -75,12 +87,19 @@ def main():
             errors.append(f'缺英文音檔: {wid}')
         ids.add(wid)
         english.add(key)
-        counts['dinosaur' if w['category'] == 'dinosaur' else w['difficulty']] += 1
 
+    if errors:
+        print('\n'.join('✗ ' + e for e in errors)); sys.exit(1)
+    topic_counts = {t: sum(w['topic'] == t for w in words) for t in TOPICS}
+    small = [f'{t}({n})' for t, n in topic_counts.items() if 0 < n < 4]
+    if small:
+        warnings.append(f'小類不足 4 詞（干擾選項會往大類找）: {", ".join(small)}')
+    # 找圖片 filters on level.en, 注音送信 on level.zhuyin; hanzi is stored for the future 國字 section.
     pools = {
-        'all': [w for w in words if w['category'] != 'dinosaur'],
-        **{lv: [w for w in words if w['category'] != 'dinosaur' and w.get('difficulty') == lv] for lv in (1, 2, 3)},
-        'dinosaur': [w for w in words if w['category'] == 'dinosaur'],
+        'all': [w for w in words if not is_dino(w)],
+        **{f'{skill}{lv}': [w for w in words if not is_dino(w) and w['level'][skill] == lv]
+           for skill in ('en', 'zhuyin') for lv in (1, 2, 3)},
+        'dinosaur': [w for w in words if is_dino(w)],
     }
     for mode, pool in pools.items():
         if len(pool) < 10:
@@ -88,7 +107,7 @@ def main():
         for t in pool:
             same = [w for w in pool if w['id'] != t['id'] and visual_group(w) == visual_group(t)]
             fallback = [w for w in words if w['id'] != t['id'] and visual_group(w) == visual_group(t)
-                        and (w['category'] == 'dinosaur') == (t['category'] == 'dinosaur')]
+                        and is_dino(w) == is_dino(t)]
             if len(same) < 3 and len(fallback) < 3:
                 errors.append(f'找圖片：同風格干擾選項不足: {t["id"]} ({mode})')
             # Mail game (zhuyin-sort.js distractorPools) needs 2 other meanings in the same visual group,
@@ -152,7 +171,7 @@ def main():
         print('ERROR', line)
     art = {k: sum(1 for w in words if w.get('artStatus') == k) for k in ART_STATUS}
     print(f'美術狀態：已審核 {art["approved"]}／候選 {art["candidate"]}／emoji {art["emoji"]}')
-    print(f'{len(words)} 詞；{counts}；錯誤 {len(errors)}，警告 {len(warnings)}')
+    print(f'{len(words)} 詞；' + '／'.join(f'{k} {len(v)}' for k, v in pools.items()) + f'；錯誤 {len(errors)}，警告 {len(warnings)}')
     return 1 if errors else 0
 
 
