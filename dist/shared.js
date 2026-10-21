@@ -172,30 +172,67 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
   const streakThreshold = 3;
 
   // 音效與選單 BGM（導演 2026-10-21）：素材出自 media_library（bgm:HAPPY_KIDS、bgm:HAPPY_B、sfx:SFX_點擊／泡泡-單／轉場-咻／恐龍吼叫／恐龍-小恐龍）。
-  // BGM 只在首頁與各遊戲選單播；換頁從同一秒接著播。手機要先有一次點擊才會出聲，所以第一下觸控時才開始。
-  const sfxCache = {};
+  // BGM 只在首頁與各遊戲選單播；換頁從同一秒接著播。手機每頁都要先有一次點擊才會出聲，所以第一下觸控時才開始。
+  // iPhone 上兩個 <audio> 同時播會互搶（點擊音把 BGM 擠掉），所以 BGM 與音效都走同一個 Web Audio 混音器。
+  // audioSession=playback：靜音鍵開著也照常出聲（Safari 16.4+）。
+  try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch { /* ok */ }
+  let ctx = null;
+  const buffers = {};
+  function audioCtx() {
+    if (!ctx) { const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return null; ctx = new AC(); }
+    return ctx;
+  }
+  function loadBuffer(url) {
+    if (!buffers[url]) buffers[url] = fetch(url).then(r => r.arrayBuffer())
+      .then(data => new Promise((res, rej) => audioCtx().decodeAudioData(data, res, rej)))
+      .catch(error => { delete buffers[url]; throw error; });
+    return buffers[url];
+  }
   function sfx(name, volume = .8) {
-    let sound = sfxCache[name];
-    if (!sound) { sound = sfxCache[name] = new Audio(`assets/audio/effects/${name}.mp3`); sound.preload = 'auto'; }
-    sound.volume = volume; sound.pause();
-    try { sound.currentTime = 0; } catch { /* ok */ }
-    sound.play().catch(() => {});
+    const c = audioCtx(); if (!c) return;
+    if (c.state !== 'running') c.resume().catch(() => {});
+    loadBuffer(`assets/audio/effects/${name}.mp3`).then(buffer => {
+      const src = c.createBufferSource(), gain = c.createGain();
+      src.buffer = buffer; gain.gain.value = volume;
+      src.connect(gain).connect(c.destination); src.start();
+    }).catch(() => {});
   }
   const musicKey = 'dinopost-music-v1', bgmPosKey = 'dinopost-bgm-pos';
   const musicOn = () => { try { return localStorage.getItem(musicKey) !== '0'; } catch { return true; } };
   const bgm = (() => {
-    let audio = null, wanted = false, button = null;
+    let wanted = false, button = null, playing = null;   // playing = { track, src, gain, startedAt, offset, duration }
     const track = () => (dinoMode() ? 'menu-dino' : 'menu');
-    const save = () => { if (audio) try { sessionStorage.setItem(bgmPosKey, JSON.stringify({ track: audio.dataset.track, t: audio.currentTime })); } catch { /* ok */ } };
-    function load() {
-      if (audio && audio.dataset.track === track()) return audio;
-      audio?.pause();
-      audio = new Audio(`assets/audio/bgm/${track()}.mp3`); audio.dataset.track = track();
-      audio.loop = true; audio.volume = .32; audio.preload = 'auto';
-      try { const pos = JSON.parse(sessionStorage.getItem(bgmPosKey) || 'null'); if (pos?.track === track()) audio.currentTime = pos.t; } catch { /* ok */ }
-      return audio;
+    const position = () => playing ? (playing.offset + ctx.currentTime - playing.startedAt) % playing.duration : 0;
+    function save() {
+      if (!playing) return;
+      try { sessionStorage.setItem(bgmPosKey, JSON.stringify({ track: playing.track, t: position() })); } catch { /* ok */ }
     }
-    const tryPlay = () => { if (wanted && musicOn() && !document.hidden) load().play().catch(() => {}); };
+    function halt() {
+      if (!playing) return;
+      save();
+      const p = playing; playing = null;
+      try { p.gain.gain.setTargetAtTime(0, ctx.currentTime, .08); p.src.stop(ctx.currentTime + .4); } catch { /* ok */ }
+    }
+    let starting = false;
+    async function tryPlay() {
+      const c = audioCtx(); if (!c) return;
+      if (c.state !== 'running') c.resume().catch(() => {});   // 必須在點擊當下呼叫，iPhone 才放行
+      if (!wanted || !musicOn() || document.hidden || starting) return;
+      const name = track();
+      if (playing?.track === name) return;
+      halt(); starting = true;
+      try {
+        const buffer = await loadBuffer(`assets/audio/bgm/${name}.mp3`);
+        if (!wanted || !musicOn() || track() !== name || playing) return;
+        let offset = 0;
+        try { const pos = JSON.parse(sessionStorage.getItem(bgmPosKey) || 'null'); if (pos?.track === name) offset = pos.t % buffer.duration; } catch { /* ok */ }
+        const src = c.createBufferSource(), gain = c.createGain();
+        src.buffer = buffer; src.loop = true;
+        gain.gain.setValueAtTime(0, c.currentTime); gain.gain.linearRampToValueAtTime(.32, c.currentTime + .6);
+        src.connect(gain).connect(c.destination); src.start(0, offset);
+        playing = { track: name, src, gain, startedAt: c.currentTime, offset, duration: buffer.duration };
+      } catch { /* 載入失敗就安靜 */ } finally { starting = false; }
+    }
     const sync = () => { if (!button) return; const on = musicOn(); button.setAttribute('aria-pressed', String(on)); button.textContent = on ? '♫' : '♫̸'; button.classList.toggle('off', !on); };
     function ensureButton() {
       if (button) return;
@@ -207,18 +244,22 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
       button.addEventListener('click', event => {
         event.stopPropagation();
         try { localStorage.setItem(musicKey, musicOn() ? '0' : '1'); } catch { /* ok */ }
-        sync(); musicOn() ? tryPlay() : audio?.pause();
+        sync(); musicOn() ? tryPlay() : halt();
       });
       document.body.append(button); sync();
     }
-    // 第一下觸控／按鍵才能開聲音（iOS）；之後每次點擊都補一次，以防被系統暫停
-    ['pointerup', 'touchend', 'keydown'].forEach(type => document.addEventListener(type, tryPlay, { capture: true, passive: true }));
-    document.addEventListener('visibilitychange', () => { if (document.hidden) { save(); audio?.pause(); } else tryPlay(); });
+    // 第一下觸控／點擊才能開聲音（iOS）；每次點擊都補一次，被系統暫停也會接回來
+    ['touchend', 'click', 'keydown'].forEach(type => document.addEventListener(type, tryPlay, { capture: true, passive: true }));
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { save(); ctx?.suspend().catch(() => {}); } else if (wanted) tryPlay();
+    });
     addEventListener('pagehide', save);
+    // 從上一頁「返回」時（bfcache）頁面不重載，要重新接上
+    addEventListener('pageshow', event => { if (event.persisted && wanted) tryPlay(); });
     return {
-      start() { wanted = true; ensureButton(); button.hidden = false; tryPlay(); },
-      stop() { wanted = false; save(); audio?.pause(); if (button) button.hidden = true; },
-      refresh() { if (audio && audio.dataset.track !== track()) { save(); audio.pause(); audio = null; } tryPlay(); }
+      start() { wanted = true; ensureButton(); button.hidden = false; loadBuffer(`assets/audio/bgm/${track()}.mp3`).catch(() => {}); tryPlay(); },
+      stop() { wanted = false; halt(); if (button) button.hidden = true; },
+      refresh() { if (playing && playing.track !== track()) halt(); tryPlay(); }
     };
   })();
   // 選單頁的按鈕點擊音（開關、選項、連結）；遊戲中的按鈕由各遊戲自己決定

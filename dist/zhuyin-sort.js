@@ -314,8 +314,9 @@
   function playPrompt() {
     const word = state.round[state.index];
     if (!word?.zhAudio) return;
-    if (state.audio) state.audio.pause();
-    state.audio = new Audio(word.zhAudio);
+    // 同一個播放器換音檔：iPhone 點過一次後，自動接下一封也能出聲
+    if (!state.audio) state.audio = new Audio();
+    state.audio.pause(); state.audio.src = word.zhAudio;
     // 手機剛進頁還沒點過畫面時會被擋：蓋上「點一下開始」，點了再補播
     state.audio.play().catch(error => { if (error.name === 'NotAllowedError') showTapToStart(); });
   }
@@ -393,7 +394,7 @@
     const lc = centerOf(letter), sc = centerOf(slot), s0 = letterPhys.s.v, S = .14;
     const tx = letterPhys.x.v + (sc.x - lc.x) - (S - s0) * (LW / 2 - letterO.x), ty = letterPhys.y.v + (sc.y - lc.y) - (S - s0) * (LH / 2 - letterO.y);
     await animate(letter, { transform: [letter.style.transform || 'none', `translate3d(${tx}px,${ty}px,0) scale(${S})`], opacity: [1, 1, 0] },
-      { duration: dur(.42), ease: [.3, .7, .3, 1] }).finished;
+      { duration: dur(.3), ease: [.3, .7, .3, 1] }).finished;
     if (state.phase !== 'posting' || state.index !== index) return;   // 中途從設定重新開始
     letter.hidden = true;
     // 2. 吞信：郵筒壓扁回彈 → 黃旗阻尼擺動後立起
@@ -406,25 +407,25 @@
     pose(courier().cheer);
     bob.animate([{ translate: '0 0' }, { translate: '0 -16px' }, { translate: '0 0' }], { duration: dur(.42) * 1000, easing: 'ease-out' });
     // 3. 收件確認卡＋DINO POST 郵戳（stamp 音效在 stampDown 64% 落下；卡片被壓一下）
-    await wait(260);
+    await wait(80);
     if (state.phase !== 'posting' || state.index !== index) return;
     setKidText($('receiptZh'), word.zh, word.zhuyin);
     $('receiptZh').classList.toggle('is-long', word.zh.length > 3);
     $('receiptEn').textContent = word.en;
     $('receiptEn').after(DinoStampsUI.dots(state.progressResults.at(-1)));
     $('receipt').hidden = false;
-    await animate($('receipt'), { opacity: [0, 1], transform: ['translateY(30px) scale(.9)', 'translateY(0) scale(1)'] }, { type: 'spring', stiffness: 230, damping: 19, duration: dur(.5) }).finished;
+    await animate($('receipt'), { opacity: [0, 1], transform: ['translateY(30px) scale(.9)', 'translateY(0) scale(1)'] }, { type: 'spring', stiffness: 320, damping: 22, duration: dur(.3) }).finished;
     $('postmark').classList.add('is-stamping');
-    await wait(330);
+    await wait(210);
     if (state.phase !== 'posting' || state.index !== index) return;
     playSound('stamp');
     animate($('receipt'), { transform: ['translateY(0) scale(1)', 'translateY(5px) scale(.965,.94)', 'translateY(-2px) scale(1.01)', 'translateY(0) scale(1)'] }, { duration: dur(.4), ease: 'easeOut' });
     state.phase = 'reveal';
     say(DinoStampsUI.message(state.progressResults.at(-1)) || (state.streak >= Dino.streakThreshold ? '連續送對！' : '送達啦！'), 1800);
-    setKidText($('nextLabel'), state.index === state.count - 1 ? '看成果' : '下一封');
-    $('nextButton').hidden = false;
-    animate($('nextButton'), { scale: [.5, 1] }, { type: 'spring', stiffness: 400, damping: 14, duration: dur(.5) });
     renderProgress(state.index + 1);
+    // 導演 2026-10-21：蓋完章看一眼就自動接下一封，不用按「下一封」
+    await wait(650);
+    if (state.phase === 'reveal' && state.index === index) next();
   }
   async function next() {
     if (state.phase !== 'reveal') return;

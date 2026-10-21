@@ -73,7 +73,7 @@ button:focus-visible,a:focus-visible,.ms-letter:focus-visible{outline:4px solid 
 .back-english{max-width:72%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#4d805d;font-size:clamp(16px,4.6vw,22px);font-weight:900}
 .back-postmark{position:absolute;z-index:2;right:4px;bottom:4px;width:78px;height:70px;opacity:0;transform:translateY(-45px) rotate(-22deg) scale(2.2)}
 .back-postmark img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 1px #744c3044)}
-.back-postmark.is-stamping{animation:stampDown .52s cubic-bezier(.18,1.4,.5,1) forwards}
+.back-postmark.is-stamping{animation:stampDown .34s cubic-bezier(.18,1.4,.5,1) forwards}
 @keyframes stampDown{0%{opacity:0;transform:translateY(-45px) rotate(-22deg) scale(2.2)}64%{opacity:1;transform:translateY(0) rotate(-11deg) scale(.86)}80%{transform:translateY(-3px) rotate(-11deg) scale(1.07)}100%{opacity:.88;transform:translateY(0) rotate(-11deg) scale(1)}}
 
 /* 字旁直排注音（Dino.kidText） */
