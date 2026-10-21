@@ -174,7 +174,7 @@
   function setAutoAudio(value) {
     state.nextAutoAudio = Boolean(value); saveSelection(); renderSelectionControls();
   }
-  function selectRound(pool) { return DinoProgress.selectRound(pool, state.count); }
+  function selectRound(pool) { return Dino.selectRound(pool, Dino.loadHistory(), state.count); }
   function setStatus(message) { setKidText($('status'), message); }
   function duration(seconds) { return reducedMotion.matches ? .01 : seconds; }
   function setRoute(progress) {

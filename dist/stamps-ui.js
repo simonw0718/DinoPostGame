@@ -179,5 +179,13 @@ window.DinoStampsUI = (() => {
     for (const card of cards) await cardReveal(card);
   }
 
-  return { ready, dots, message, albumLink, wordStamp, cardArt, cardReveal, showRoundStamps };
+  // Album paused (director 2026-10-21): answers are still recorded, but games show no stamp UI or album link.
+  // Set ALBUM_ENABLED = true to bring it back.
+  const ALBUM_ENABLED = false;
+  if (!ALBUM_ENABLED) {
+    const hiddenLink = () => { const span = document.createElement('span'); span.hidden = true; span.style.display = 'none'; span.refresh = () => {}; return span; };
+    return { ready, dots: () => document.createDocumentFragment(), message: () => '', albumLink: hiddenLink, wordStamp, cardArt, cardReveal,
+      showRoundStamps: async container => { container.replaceChildren(); container.hidden = true; }, enabled: false };
+  }
+  return { ready, dots, message, albumLink, wordStamp, cardArt, cardReveal, showRoundStamps, enabled: true };
 })();

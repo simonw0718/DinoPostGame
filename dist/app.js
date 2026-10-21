@@ -315,7 +315,7 @@ function saveHistory() {
   try { localStorage.setItem(Dino.storageKeys.history, JSON.stringify(state.history.slice(0, 10))); }
   catch { /* The game remains playable when browser storage is unavailable. */ }
 }
-function selectRound(pool) { return DinoProgress.selectRound(pool, state.count); }
+function selectRound(pool) { return Dino.selectRound(pool, state.history, state.count); }
 function prepareRound() {
   if (!state.words.length) return;
   state.pendingRound = selectRound(eligibleWords());
