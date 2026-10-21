@@ -1,4 +1,4 @@
-:root{font-family:"Noto Sans TC","PingFang TC",system-ui,sans-serif;color:#174c37;background:#e3eddb;font-synthesis:none}
+:root{font-family:"Naikai","Noto Sans TC","PingFang TC",system-ui,sans-serif;color:#174c37;background:#e3eddb;font-synthesis:none}
 *{box-sizing:border-box}html,body{width:100%;height:100%;margin:0}body{overflow:hidden;background:radial-gradient(circle at 10% 9%,#fff8dd 0 13%,transparent 32%),linear-gradient(160deg,#d8ead9,#ecf0dc 55%,#d2e2cf);-webkit-tap-highlight-color:transparent}button,a{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,.letter-drag:focus-visible{outline:4px solid #e8a92b;outline-offset:3px}[hidden]{display:none!important}
 .game-shell{width:min(100%,900px);height:100dvh;min-height:0;margin:auto;padding:env(safe-area-inset-top) 12px max(8px,env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:7px;overflow:hidden;background:linear-gradient(175deg,#fbf7e8,#e6f2dd 58%,#d8e9cf);box-shadow:0 0 45px #164d3920}
 .page-top{height:54px;flex:none;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px}.home-link,.restart-button{display:inline-flex;align-items:center;justify-content:center;min-width:48px;height:46px;padding:0 11px;border:2px solid #bfd8b7;border-radius:14px;background:#fffcf0;color:#1e6546;font-weight:900;text-decoration:none;box-shadow:0 3px 0 #b3d0aa}.home-link{gap:5px;font-size:22px}.home-link span{font-size:15px}.restart-button{font-size:29px}.mode-brand{min-width:0;display:flex;align-items:center;justify-content:center;gap:8px}.mode-brand img{width:42px;height:42px;border-radius:50%;object-fit:cover}.mode-brand strong,.mode-brand small{display:block;line-height:1.08}.mode-brand strong{font-size:22px;white-space:nowrap}.mode-brand small{margin-top:3px;font-size:9px;letter-spacing:.08em;color:#6e8c6d}
@@ -53,7 +53,7 @@
 @media(prefers-reduced-motion:reduce){.letter-flip-inner{transition-duration:.01ms}.back-postmark.is-stamping{animation-duration:.01ms}}
 .zy-syllable{height:auto;min-height:1em;align-self:center}
 .zy-tone.neutral{top:-.65em;right:10px}
-.zy-main{font-family:"Bopomofo Ruby","Noto Sans TC","PingFang TC",system-ui,sans-serif}
+.zy-main{font-family:"Naikai","Noto Sans TC","PingFang TC",system-ui,sans-serif}
 /* Route couriers use each transparent sprite frame's true aspect ratio. */
 .route-courier{width:auto;aspect-ratio:1}
 .courier-art{background-position:0 0}
@@ -64,7 +64,7 @@
 .kid-text{display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;column-gap:.02em;row-gap:.02em;max-width:100%;vertical-align:middle;line-height:1.16}
 .bpm-word{display:inline-flex;align-items:center;justify-content:center;flex:none;padding-right:.18em;white-space:nowrap}
 .bpm-main-char{display:inline-block;flex:none;font-size:1em;font-weight:inherit;line-height:1.04}
-.bpm-column{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;margin-left:.03em;font-family:"Bopomofo Ruby","Noto Sans TC","PingFang TC",system-ui,sans-serif;font-size:.39em;font-weight:850;line-height:1;color:currentColor}
+.bpm-column{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;margin-left:.03em;font-family:"Naikai","Noto Sans TC","PingFang TC",system-ui,sans-serif;font-size:.39em;font-weight:850;line-height:1;color:currentColor}
 .bpm-onset,.bpm-rime{display:block;line-height:1.03}
 .bpm-tone{position:absolute;right:-.55em;top:85%;transform:translateY(-50%) scale(1.5,1.8);font-size:1.2em;font-weight:900;color:#d32f2f;line-height:1}
 .bpm-tone-dot{position:absolute;right:0;top:-.6em;font-size:1.4em;font-weight:900;color:#d32f2f;line-height:1}

@@ -45,3 +45,11 @@
   Cache-Control: no-cache
 /assets/cards/manifest.json
   Cache-Control: no-cache
+/fonts.css
+  Cache-Control: no-cache
+/home.css
+  Cache-Control: no-cache
+/home-intro.js
+  Cache-Control: no-cache
+/home-cast.js
+  Cache-Control: no-cache

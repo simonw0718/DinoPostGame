@@ -21,6 +21,13 @@
 - 其中八種恐龍已依 Design Master 風格重新繪製成 4×2 圖組，裁為透明選項圖；底排的愛德蒙頓龍、馬門溪龍、異特龍、冠龍各自鏡像朝右。來源及雜湊記於 `dist/assets/rebuilt/manifest.json`，可用 `tools/crop_dinosaur_grid.py` 重現裁切。
 - 新增詞（目前保留 97 詞）有四張 6×5 圖組切出的候選圖片與 Samantha 美式英語 MP3；逐格對照與雜湊在 `dist/assets/rebuilt/new100/manifest.json`，產生流程見 `tools/add_100_words.py`。
 
+## 介面文字規則（導演 2026-10-21 指定）
+
+- **注音**：需要注音的字一律用 `dist/shared.js` 的 `Dino.kidText(table)(元素, 文字, 讀音陣列)`，注音直排在字的右側。不得手寫 `<ruby>`、不得另寫注音排版。
+- **字型**：全站一律用內海字型（Naikai，OFL）。每個 HTML 先載入 `fonts.css`；CSS 的字型堆疊第一位是 `"Naikai"`（emoji 除外）。
+- **補字**：網頁用的是只含遊戲用字的子集 `dist/assets/fonts/naikai-subset.woff2`。新增文字後執行 `python3 tools/build_naikai_font.py`（需 `pip install fonttools brotli`）。
+- `python3 tools/check_data.py` 會擋手寫 `<ruby>`、沒載入 `fonts.css`、字型沒用內海，並警告字型缺字。
+
 ## 本機預覽
 
 這是沒有建置步驟的靜態網站。於倉庫根目錄執行：

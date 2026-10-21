@@ -1,0 +1,2 @@
+/* 全站字型：內海（Naikai, OFL）。子集由 tools/build_naikai_font.py 產生，新增文字後重跑 */
+@font-face{font-family:"Naikai";src:url("assets/fonts/naikai-subset.woff2") format("woff2");font-display:swap}

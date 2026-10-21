@@ -123,6 +123,29 @@ def main():
         approved = sum(1 for c in cards if c.get('status') == 'approved')
         print(f'角色郵票：{len(cards)} 張（已核准 {approved}／候選 {len(cards) - approved}）')
 
+    # 介面規則：注音只用 shared.js 的 Dino.kidText（不得手寫 <ruby>）；全站字型內海，字型子集要涵蓋頁面用到的字
+    for f in sorted(DIST.glob('*.html')) + sorted(DIST.glob('*.js')) + sorted(DIST.glob('*.css')):
+        text = f.read_text(encoding='utf-8')
+        if '<ruby' in text or '<rt>' in text:
+            errors.append(f'{f.name} 手寫 <ruby> 注音；改用 Dino.kidText')
+        if f.suffix == '.html' and 'fonts.css' not in text:
+            errors.append(f'{f.name} 沒載入 fonts.css（內海字型）')
+        for stack in re.findall(r'font(?:-family)?:[^;}]*', text) if f.suffix in ('.css', '.html') else []:
+            if 'Naikai' not in stack and 'Emoji' not in stack and 'inherit' not in stack:
+                errors.append(f'{f.name} 字型未用內海: {stack[:60]}')
+    font = DIST / 'assets/fonts/naikai-subset.woff2'
+    if not font.is_file():
+        errors.append('缺 assets/fonts/naikai-subset.woff2；跑 tools/build_naikai_font.py')
+    else:
+        have = set((DIST / 'assets/fonts/naikai-subset.chars.txt').read_text(encoding='utf-8'))
+        used = set()
+        for g in DIST.glob('*.*'):
+            if g.suffix in ('.html', '.js', '.css', '.json'):
+                used |= {c for c in g.read_text(encoding='utf-8') if ord(c) > 0x2e7f and c.isprintable()}
+        missing = ''.join(sorted(used - have))
+        if missing:
+            warnings.append(f'內海字型子集缺 {len(missing)} 字（{missing[:20]}）；跑 tools/build_naikai_font.py')
+
     for line in warnings:
         print('WARN', line)
     for line in errors:

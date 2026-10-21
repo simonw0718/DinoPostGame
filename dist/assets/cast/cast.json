@@ -1,0 +1,307 @@
+{
+ "iggy": {
+  "height": 1.0,
+  "poses": {
+   "walk_r": {
+    "src": "assets/cast/iggy__walk_r.webp",
+    "ratio": 0.5021,
+    "pose_factor": 1.0,
+    "card": "card:iggy/iggy__right__walk_hold_parcel__e2n01",
+    "sha256": "b5ad2b7ee72344b3001a704749439ed2701e2416d90985f0d63303998fc2ce29"
+   },
+   "walk_l": {
+    "src": "assets/cast/iggy__walk_l.webp",
+    "ratio": 0.5208,
+    "pose_factor": 1.0,
+    "card": "card:iggy/iggy__left__walk__kg1",
+    "sha256": "4196f9ea00e76f2913cbe262c30a840dc4ac6623b95f17a7459fc48f6021ac55"
+   },
+   "run_r": {
+    "src": "assets/cast/iggy__run_r.webp",
+    "ratio": 0.6708,
+    "pose_factor": 1.0,
+    "card": "card:iggy/iggy__right__run_hold_parcel__n1",
+    "sha256": "16d3c082cad8f7a4749d2b8e6852751f67a6b26a9030aa168821c3e3b3a08b6f"
+   },
+   "busy_read": {
+    "src": "assets/cast/iggy__busy_read.webp",
+    "ratio": 0.5479,
+    "pose_factor": 0.98,
+    "card": "card:iggy/iggy__left_3q__read_parcel__i2",
+    "sha256": "e7f7489d7524aca61a57c06e59979056643346c74e7d28b04a066b5cbd494021"
+   },
+   "busy_place": {
+    "src": "assets/cast/iggy__busy_place.webp",
+    "ratio": 0.7708,
+    "pose_factor": 1.0,
+    "card": "card:iggy/iggy__right_3q__crouch_place__e2n15",
+    "sha256": "5294519cac21086a1d303a55446d744d8a53ab540da98e5dc157d1eaadad0f08"
+   },
+   "busy_write": {
+    "src": "assets/cast/iggy__busy_write.webp",
+    "ratio": 0.6562,
+    "pose_factor": 1.0,
+    "card": "card:iggy/iggy__left_3q__crouch_write_note__e2n02",
+    "sha256": "4f462a54a99c49ec9c02dbaf64413ebe2a3105c3fec5870684dccd4682d1673f"
+   },
+   "busy_look": {
+    "src": "assets/cast/iggy__busy_look.webp",
+    "ratio": 0.425,
+    "pose_factor": 1.0,
+    "card": "card:iggy/iggy__left_3q__squint_far__e2n22",
+    "sha256": "1416c23a48c633e000b34e625a58b2d5e8e7287d1af426388ce409e7d96ae5e4"
+   },
+   "hello": {
+    "src": "assets/cast/iggy__hello.webp",
+    "ratio": 0.5062,
+    "pose_factor": 1.0,
+    "card": "card:iggy/iggy__front__wave_happy__n6",
+    "sha256": "27db74cee0a0a6dfac54e0ca4353d13dc04f08a7635f1fd8636a95830bd47df3"
+   },
+   "cheer": {
+    "src": "assets/cast/iggy__cheer.webp",
+    "ratio": 0.4271,
+    "pose_factor": 1.0,
+    "card": "card:iggy/iggy__right_3q__stand_laugh__n11",
+    "sha256": "4f4da920d23279a8524fa422eda4a1f75db2f590d48fe90f6841e2a9c3233269"
+   },
+   "point": {
+    "src": "assets/cast/iggy__point.webp",
+    "ratio": 0.5208,
+    "pose_factor": 1.0,
+    "card": "card:iggy/iggy__right_3q__point__g01",
+    "sha256": "3b46cf0fea1b2128edafe5fbb24dc6574b042c1abb34b0e8b32c0f099f16b33f"
+   }
+  }
+ },
+ "feifei": {
+  "height": 1.0,
+  "poses": {
+   "walk_r": {
+    "src": "assets/cast/feifei__walk_r.webp",
+    "ratio": 0.6375,
+    "pose_factor": 1.0,
+    "card": "card:feifei/feifei__right__walk__n4",
+    "sha256": "3b2888f021a192c1d459615ec97fc924d19aff71e4988af6463eafc6920602df"
+   },
+   "walk_parcel_r": {
+    "src": "assets/cast/feifei__walk_parcel_r.webp",
+    "ratio": 0.6479,
+    "pose_factor": 1.0,
+    "card": "card:feifei/feifei__right__walk_hold_parcel__e2n06",
+    "sha256": "c45d9cc7eb9ddb814bf2f406556f9accacced8dc170276f10847870f8561fc68"
+   },
+   "run_r": {
+    "src": "assets/cast/feifei__run_r.webp",
+    "ratio": 1.3854,
+    "pose_factor": 0.75,
+    "card": "card:feifei/feifei__right__run__n4b",
+    "sha256": "4cdec64bd1e28621c8d9834862aee398d731294c1025065af1e464461f6f5211"
+   },
+   "fly_r": {
+    "src": "assets/cast/feifei__fly_r.webp",
+    "ratio": 1.5312,
+    "pose_factor": 1.0,
+    "card": "card:feifei/fly_right",
+    "sha256": "9234dc4d8774a7ee185c9b61615d10e3844906f9fbf9f0c39fd57c2d58e278e9"
+   },
+   "fly_l": {
+    "src": "assets/cast/feifei__fly_l.webp",
+    "ratio": 1.55,
+    "pose_factor": 1.0,
+    "card": "card:feifei/fly_left",
+    "sha256": "967c9152ed36224e78fc60780117c7c8bd0efe78aee62970f96c66717353addb"
+   },
+   "busy_study": {
+    "src": "assets/cast/feifei__busy_study.webp",
+    "ratio": 0.7167,
+    "pose_factor": 1.0,
+    "card": "card:feifei/feifei__right_3q__study__ff2",
+    "sha256": "f12e792a814601392183ee5fc448e319670f52693a126c9e350e05edbd274a68"
+   },
+   "busy_talk": {
+    "src": "assets/cast/feifei__busy_talk.webp",
+    "ratio": 0.6875,
+    "pose_factor": 1.0,
+    "card": "card:feifei/feifei__left_3q__talk__cf1",
+    "sha256": "0487d9d56f0eb469badf66eae129214cc2c9e76a9ef6eaa28b320e458fc063e4"
+   },
+   "hello": {
+    "src": "assets/cast/feifei__hello.webp",
+    "ratio": 0.7021,
+    "pose_factor": 1.0,
+    "card": "card:feifei/feifei__front__wave_inner_a__g02",
+    "sha256": "f4de2785e8af8ee627953b1c0bcfc3bdaf506582eaa64406794139381edcf373"
+   },
+   "cheer": {
+    "src": "assets/cast/feifei__cheer.webp",
+    "ratio": 0.6312,
+    "pose_factor": 1.0,
+    "card": "card:feifei/feifei__front__happy__e2",
+    "sha256": "cafc43c289e9b813dc9e7682dfddfc6517a3fc6c2ecb3a24ffed3986722ecf35"
+   },
+   "point": {
+    "src": "assets/cast/feifei__point.webp",
+    "ratio": 1.1375,
+    "pose_factor": 1.0,
+    "card": "card:feifei/feifei__left_3q__point_happy__n3",
+    "sha256": "f2f0aaa64e26c603270c048bea0902258734dc8dd55c026ee6a34801a369c1c0"
+   }
+  }
+ },
+ "chick_abao": {
+  "height": 0.68,
+  "poses": {
+   "walk_l": {
+    "src": "assets/cast/chick_abao__walk_l.webp",
+    "ratio": 0.6542,
+    "pose_factor": 1.0,
+    "card": "card:chick_abao/chick_abao__left_side__neutral__c01",
+    "sha256": "4dc7441303c37c85c5513bc97fa814b2a22f16c78dd4b62fb2db57f892fcee7e"
+   },
+   "walk_r": {
+    "src": "assets/cast/chick_abao__walk_r.webp",
+    "ratio": 0.6917,
+    "pose_factor": 1.0,
+    "card": "card:chick_abao/chick_abao__right__walk__kg1",
+    "sha256": "42cb85228d2d4878acf65c5dbe89389080971b7f42b5b62c787b32f3a93b089a"
+   },
+   "busy_sort": {
+    "src": "assets/cast/chick_abao__busy_sort.webp",
+    "ratio": 0.6062,
+    "pose_factor": 1.0,
+    "card": "card:chick_abao/chick_abao__front__sort_letter__g01",
+    "sha256": "edfe870de31602f48a97162480319ab8d83d55c2c59e6f9a96e84cbb307aee3d"
+   },
+   "busy_letter": {
+    "src": "assets/cast/chick_abao__busy_letter.webp",
+    "ratio": 0.8333,
+    "pose_factor": 1.0,
+    "card": "card:chick_abao/chick_abao__front__letter__game01",
+    "sha256": "24a7f6aacdcc0bc68b3e78701126f47ac1064576c0cbdd53f2198d680c2cdf5a"
+   },
+   "busy_talk": {
+    "src": "assets/cast/chick_abao__busy_talk.webp",
+    "ratio": 0.6417,
+    "pose_factor": 1.0,
+    "card": "card:chick_abao/chick_abao__right_3q__talk__n1",
+    "sha256": "490e4abb2d367db140ae868dc92c9cccb55c7a110ee4978b80f940163a516084"
+   },
+   "hello": {
+    "src": "assets/cast/chick_abao__hello.webp",
+    "ratio": 0.6708,
+    "pose_factor": 1.0,
+    "card": "card:chick_abao/chick_abao__front__wave_right_wing__g02",
+    "sha256": "af783c81e082e680babf73b2d45eea8f6ca362cae280377e17536ea4773edbff"
+   },
+   "cheer": {
+    "src": "assets/cast/chick_abao__cheer.webp",
+    "ratio": 0.6375,
+    "pose_factor": 1.0,
+    "card": "card:chick_abao/chick_abao__front__chest_out_proud__n1",
+    "sha256": "a70b3fc35735e1433746c8deed1dd2979c86c376e2eb85753960d4a3e9385460"
+   },
+   "point": {
+    "src": "assets/cast/chick_abao__point.webp",
+    "ratio": 0.7104,
+    "pose_factor": 1.0,
+    "card": "card:chick_abao/chick_abao__front__point_finger__g01",
+    "sha256": "f1744d453bc8b5cf7ad1878cdaf5be4170b952d2a5d0ddb1036f8eb990987c3e"
+   }
+  }
+ },
+ "xiaokong": {
+  "height": 0.72,
+  "poses": {
+   "run_r": {
+    "src": "assets/cast/xiaokong__run_r.webp",
+    "ratio": 1.675,
+    "pose_factor": 0.73,
+    "card": "card:xiaokong/xiaokong__right__run_sprint__k2",
+    "sha256": "2fae6c8525eb6169186e423ba3899cfe9afdef08cabcb81f4150a9f0b906d8b4"
+   },
+   "leap_r": {
+    "src": "assets/cast/xiaokong__leap_r.webp",
+    "ratio": 1.5396,
+    "pose_factor": 0.8,
+    "card": "card:xiaokong/xiaokong__right__run_leap__k2",
+    "sha256": "f8bd24b94aa899a6a906d86a051ba2fb428dc14fb92a4d71f7982c16477f1d49"
+   },
+   "busy_look": {
+    "src": "assets/cast/xiaokong__busy_look.webp",
+    "ratio": 0.7833,
+    "pose_factor": 1.0,
+    "card": "card:xiaokong/xiaokong__left_3q__point_attentive__cf1",
+    "sha256": "23db1787dd2e528ceb1efc1991206a667b2792beaf5dcdc82fadc8fadc594562"
+   },
+   "hello": {
+    "src": "assets/cast/xiaokong__hello.webp",
+    "ratio": 0.7812,
+    "pose_factor": 1.0,
+    "card": "card:xiaokong/xiaokong__front__happy__e1",
+    "sha256": "1f90bfb292e9a956f05c4ff81320ddf868e2bf16c9e4248a117f4738278e9618"
+   },
+   "cheer": {
+    "src": "assets/cast/xiaokong__cheer.webp",
+    "ratio": 0.825,
+    "pose_factor": 1.0,
+    "card": "card:xiaokong/xiaokong__front__surprised__e1",
+    "sha256": "1e6c84808e30a2b9ae280b14cb36d89a550383ebdb0b68439543480a8985035a"
+   },
+   "point": {
+    "src": "assets/cast/xiaokong__point.webp",
+    "ratio": 0.8167,
+    "pose_factor": 1.0,
+    "card": "card:xiaokong/xiaokong__right_3q__point__mirror01",
+    "sha256": "c92b50cef50f7d707f08b79049bd89e719a5f15b54dd7ba55c7534abf17bb6d6"
+   }
+  }
+ },
+ "pairo": {
+  "height": 1.3,
+  "poses": {
+   "walk_r": {
+    "src": "assets/cast/pairo__walk_r.webp",
+    "ratio": 0.6771,
+    "pose_factor": 1.0,
+    "card": "card:pairo/pairo__right__walk__g02",
+    "sha256": "2c343e08dd4d49a0e3e54e359faa046b63f8496bec0e1e4fbb555fc6a217348c"
+   },
+   "busy_parcel": {
+    "src": "assets/cast/pairo__busy_parcel.webp",
+    "ratio": 0.7417,
+    "pose_factor": 1.0,
+    "card": "card:pairo/pairo__left_3q__hold_parcel__n1",
+    "sha256": "f213b5261840dc016f71ba7a656c3a92cf9e66a5e68c7801ed3a6eb5114a4b98"
+   },
+   "busy_chin": {
+    "src": "assets/cast/pairo__busy_chin.webp",
+    "ratio": 0.6,
+    "pose_factor": 1.0,
+    "card": "card:pairo/pairo__right_3q__hand_chin__g01",
+    "sha256": "3447fb246543441ba7a22c6b100f162c39aa41b66d257b293a4875dbbed97dbf"
+   },
+   "busy_crest": {
+    "src": "assets/cast/pairo__busy_crest.webp",
+    "ratio": 0.5437,
+    "pose_factor": 1.0,
+    "card": "card:pairo/pairo__left_3q__touch_crest__p1",
+    "sha256": "04105c8d771e4fe02ed657c6d4b4ea9ec1560d6795c55325dd92c16f5cefc95a"
+   },
+   "hello": {
+    "src": "assets/cast/pairo__hello.webp",
+    "ratio": 0.5542,
+    "pose_factor": 1.0,
+    "card": "card:pairo/pairo__right_3q__wave__g01",
+    "sha256": "397ccdb311b0a607a38fb1968cf7126219064a22a83f7d03dbf6594ee9a48034"
+   },
+   "cheer": {
+    "src": "assets/cast/pairo__cheer.webp",
+    "ratio": 0.6354,
+    "pose_factor": 1.0,
+    "card": "card:pairo/pairo__right_3q__talk_happy__cf1",
+    "sha256": "fca95ab96e3742f8ededef1f05c32ffa141247bf0ef5531b82dd351110e84890"
+   }
+  }
+ }
+}
