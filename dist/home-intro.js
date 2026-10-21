@@ -20,7 +20,14 @@
   const stickers = [...document.querySelectorAll('.start-sticker,.start-feifei,.start-abao')];
   const done = () => { if (screen?.dataset.intro === 'done') return; if (screen) screen.dataset.intro = 'done'; document.dispatchEvent(new Event('intro:done')); };
   let seen = false; try { seen = sessionStorage.getItem('dino-intro') === '1'; sessionStorage.setItem('dino-intro', '1'); } catch {}
-  if (seen || !screen || !letter || matchMedia('(prefers-reduced-motion: reduce)').matches) { done(); return; }
+  if (!screen || !letter || matchMedia('(prefers-reduced-motion: reduce)').matches) { done(); return; }
+  // 切換 DINO MODE 時重播（dino-anim.js 發 intro:replay）
+  let stop = null;
+  document.addEventListener('intro:replay', () => { stop?.(); screen.dataset.intro = 'replay'; play(); });
+  if (seen) { done(); return; }
+  play();
+
+  function play() {
 
   const ease = { out: 'cubic-bezier(.16,1,.3,1)', back: 'cubic-bezier(.34,1.56,.64,1)', in: 'cubic-bezier(.5,0,.75,0)', drift: 'cubic-bezier(.45,.05,.35,1)' };
   const veil = document.createElement('div'); veil.className = 'intro-veil'; screen.appendChild(veil);
@@ -59,8 +66,9 @@
   anim(document.querySelector('.letter-postmark'), [{ opacity: 0, transform: 'scale(2.4) rotate(-30deg)' }, { opacity: 1, transform: 'rotate(17deg)' }], { delay: 3700, duration: 300, easing: ease.back });
   // 點畫面任何地方就跳過（大人不必每次等）
   let end;
-  const skip = () => { clearTimeout(end); all.forEach(a => a.finish()); veil.remove(); done(); };
-  end = setTimeout(() => { veil.remove(); done(); screen.removeEventListener('pointerdown', skip, true); }, 4000);
+  const skip = () => { clearTimeout(end); all.forEach(a => a.finish()); veil.remove(); stop = null; done(); };
+  end = setTimeout(() => { veil.remove(); stop = null; done(); screen.removeEventListener('pointerdown', skip, true); }, 4000);
   screen.addEventListener('pointerdown', skip, { once: true, capture: true });
-
+  stop = () => { screen.removeEventListener('pointerdown', skip, true); skip(); };
+  }
 })();
