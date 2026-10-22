@@ -209,8 +209,12 @@
     flyer.remove();
     slot.el.textContent = slot.sym; slot.el.classList.add('is-filled');
     const charDone = state.slots.filter(s => s.char === slot.char).every(s => s.el.classList.contains('is-filled'));
-    if (charDone) slot.char.classList.add('is-done');
+    if (charDone) { slot.char.classList.add('is-done'); shakeScreen(); }   // 拼好一個字（如ㄉㄤ）：變綠＋畫面震一下（導演 2026-10-22）
     if (!advance) await wordDone();
+  }
+
+  function shakeScreen() {
+    document.querySelector('.zb-shell').animate([{ transform: 'none' }, { transform: 'translate(3px, 6px)' }, { transform: 'translate(-4px, -3px)' }, { transform: 'translate(2px, 2px)' }, { transform: 'none' }], { duration: 300, easing: 'ease-out' });
   }
 
   async function wordDone() {
