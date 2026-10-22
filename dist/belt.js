@@ -67,9 +67,8 @@
   }
   function play(src, volume = 1) {
     if (!src) return Promise.resolve();
-    if (state.audio) state.audio.pause();
-    const a = new Audio(src); a.volume = volume; state.audio = a;
-    return new Promise(res => { a.onended = res; a.onerror = res; a.play().catch(res); });
+    Dino.voice.stop();   // Web Audio：計時器自動念下一個字，iPhone 也念得出來
+    return Dino.voice(src, volume);
   }
   function say(text) {
     const b = $('bubble'); setKidText(b, text);

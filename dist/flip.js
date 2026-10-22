@@ -120,9 +120,8 @@
     $('actorImg').src = poseSrc(state.courier, pose);
   }
   function playWord(src) {
-    if (state.audio) state.audio.pause();
-    const a = new Audio(src); state.audio = a;
-    return new Promise(res => { a.onended = res; a.onerror = res; a.play().catch(res); });
+    Dino.voice.stop();   // Web Audio：iPhone 計時器觸發也念得出來
+    return Dino.voice(src);
   }
   function flip(card, on) { card.el.classList.toggle('is-open', on); }
 

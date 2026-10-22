@@ -54,15 +54,13 @@
   try { const s = localStorage.getItem('dinopost-catch-speed'); if (SPEED[s]) speed = s; } catch { /* ok */ }
 
   const G = { round: 0, got: 0, wrong: 0, wrongs: [], target: null, pool: [], letters: [], bagX: .5, running: false, paused: false, pending: null, started: false, last: 0, spawnIn: 0 };
-  const audio = {};
-  function clip(name) { return audio[name] || (audio[name] = new Audio(name.startsWith('shape-') ? `assets/audio/${name}.mp3` : `assets/audio/kidapp-${name.replace(/^kidapp-/, '')}.mp3`)); }
-  function play(name) { const a = clip(name); a.currentTime = 0; return a.play().catch(() => {}); }
-  // 題目念法：顏色 → "red"；形狀 → "circle"；最後一關 → "red" 接著 "circle"
-  let sayT;
+  const clipUrl = name => name.startsWith('shape-') ? `assets/audio/${name}.mp3` : `assets/audio/kidapp-${name.replace(/^kidapp-/, '')}.mp3`;
+  // 題目念法：顏色 → "red"；形狀 → "circle"；最後一關 → "red" 念完接著 "circle"
+  let sayN = 0;
   function sayOrder() {
-    const t = G.target; clearTimeout(sayT);
-    if (t.color && t.shape) { play(t.color.id); sayT = setTimeout(() => play(t.shape.audio), 750); }
-    else play(t.color ? t.color.id : t.shape.audio);
+    const t = G.target, n = ++sayN; Dino.voice.stop();
+    const first = t.color ? t.color.id : t.shape.audio;
+    Dino.voice(clipUrl(first)).then(() => { if (t.color && t.shape && n === sayN) setTimeout(() => n === sayN && Dino.voice(clipUrl(t.shape.audio)), 150); });
   }
 
   let clipN = 0;
@@ -184,7 +182,7 @@
       G.got += add; syncCount(); bagAnim('is-yes');
       if (L.kind === 'gold') { Dino.sfx('stamp', .7); Dino.burst(cart); floatText('+2', cx, 'is-gold'); pose('cheer', 700); }
       else { Dino.sfx('pop', .6); floatText(G.got, cx); }
-      play(NUM[G.got - 1]);
+      Dino.voice(clipUrl(NUM[G.got - 1]));
       if (G.got >= need) roundDone();
     } else {
       // 接錯退一格（已經是 0 就只晃一下）；奇怪物品讓伊奇皺眉
