@@ -1,0 +1,113 @@
+/* 接信大郵袋（sample v3 導演 2026-10-22 定版）：左右移郵袋接住指定顏色的信；聽英文顏色、接到時用英文數數。
+   v2（導演 2026-10-22「太慢、沒挑戰」）：①每關越來越快 ②接錯退一格 ③金色星星信（+2）與左右飄的調皮信；美術重整天空、信封、郵袋
+   v3（導演 2026-10-22）：加形狀 7 種、最後一關顏色＋形狀；不能接的奇怪物品（題庫圖）；郵袋改正面郵件推車＋伊奇站車後 */
+:root{--ink:#17593f;--cream:#fffdf2;--gold:#e3bd70;--sky-a:#8fd0f2;--sky-b:#d9f1fb;--grass:#7cc46a;--grass-d:#4f9f55;font-family:"Naikai",ui-rounded,"Noto Sans TC",system-ui,sans-serif;color:var(--ink)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:#164d39;overflow:hidden}
+::selection{background:#ffe08a;color:var(--ink)}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
+.cs-shell{position:relative;display:flex;flex-direction:column;height:100svh;max-width:1200px;margin:0 auto;padding:max(10px,env(safe-area-inset-top)) 14px max(10px,env(safe-area-inset-bottom));gap:10px;isolation:isolate}
+.cs-shell::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(#0f3d2c22,#0f3d2caa 80%),url('assets/mail-bg/grass-slope-wide-village-view.jpg') center/cover no-repeat}
+
+/* 訂單：要接什麼顏色＋接到幾封 */
+.cs-order{display:flex;align-items:center;justify-content:center;gap:10px 14px;flex:none;flex-wrap:wrap;padding:8px 14px;border:3px solid var(--gold);border-radius:20px;background:var(--cream);box-shadow:0 4px 0 #c89c52,0 8px 16px #0a2a1c33}
+.cs-order.is-pop{animation:pop .35s cubic-bezier(.2,1.5,.4,1)}
+.cs-ask{display:flex;align-items:center;gap:10px;padding:0;border:0;background:none;font-size:clamp(20px,5vw,30px);font-weight:1000}
+.cs-chip{position:relative;flex:none;width:50px;height:36px;border-radius:7px;background:var(--c);border:3px solid color-mix(in srgb,var(--c) 62%,#000);box-shadow:0 3px 0 color-mix(in srgb,var(--c) 55%,#000)}
+.cs-chip::before{content:"";position:absolute;inset:0;border-radius:4px;background:color-mix(in srgb,var(--c) 70%,#fff);clip-path:polygon(0 0,100% 0,50% 60%)}
+.cs-chip.is-shape{width:42px;height:42px;background:none;border:0;box-shadow:none}
+.cs-chip.is-shape::before{display:none}
+.cs-chip.is-shape svg{display:block;width:100%;height:100%;overflow:visible}
+.cs-ear{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#2b7751;color:#fff;box-shadow:0 3px 0 #17593f}
+.cs-ear svg{width:22px;height:22px}
+.cs-count{display:flex;gap:6px;margin:0;padding:0;list-style:none}
+.cs-count li{width:38px;height:38px;border:3px dashed #d8c08e;border-radius:11px;background:#fff6dd;display:grid;place-items:center;font-size:20px;font-weight:1000;color:#fff;text-shadow:0 2px 0 #0004}
+.cs-count li.is-filled{border-style:solid;border-color:#3d8a5b;background:#4fb46a;animation:slot .4s cubic-bezier(.2,1.5,.4,1)}
+.cs-count li.is-lost{animation:lost .45s ease-out}
+
+/* 天空：淡藍漸層＋雲＋草地，郵袋站在草地上 */
+.cs-sky{position:relative;flex:1;min-height:0;border:5px solid var(--cream);border-radius:26px;background:linear-gradient(180deg,var(--sky-a),var(--sky-b) 70%,#f2fbff);overflow:hidden;touch-action:none;box-shadow:0 10px 26px #0a2a1c66;isolation:isolate}
+.cs-sky::after{content:"";position:absolute;left:0;right:0;bottom:0;height:clamp(26px,7%,48px);z-index:0;background:radial-gradient(circle at 20px 0,var(--grass) 19px,transparent 20px) 0 0/40px 100% repeat-x,linear-gradient(var(--grass),var(--grass-d));background-position:0 -8px,0 10px;background-size:40px 22px,100% 100%;background-repeat:repeat-x,no-repeat}
+.sun{position:absolute;right:9%;top:8%;width:clamp(54px,12vw,96px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#fff6c9,#ffe07a 60%,#ffd25e00 72%);z-index:0}
+.cloud{position:absolute;z-index:0;width:110px;height:26px;border-radius:99px;background:#fffefa;opacity:.92;box-shadow:24px -12px 0 4px #fffefa,52px -2px 0 #fffefa;animation:drift 18s ease-in-out infinite alternate}
+.cloud.c1{left:6%;top:14%}
+.cloud.c2{left:auto;right:24%;top:34%;transform:scale(.6);animation-duration:24s;animation-direction:alternate-reverse}
+.cs-rounds{position:absolute;left:12px;top:12px;z-index:3;display:flex;gap:6px;margin:0;padding:6px 9px;list-style:none;border-radius:99px;background:#fffdf2cc;box-shadow:0 3px 0 #0a2a1c22}
+.cs-rounds li{width:12px;height:12px;border-radius:50%;background:#d6e4cf;transition:background .3s,transform .3s}
+.cs-rounds li.is-done{background:#4fb46a}
+.cs-rounds li.is-now{background:#f2b945;transform:scale(1.35)}
+
+/* 信封：顏色是 --c，信封蓋用淺一點的同色；角落郵票 */
+.letter{--flap:color-mix(in srgb,var(--c) 55%,#fff);--edge:color-mix(in srgb,var(--c) 62%,#000);position:absolute;left:0;top:0;z-index:1;width:var(--lw);height:calc(var(--lw)*.68);border-radius:9px;border:3px solid var(--edge);box-shadow:0 6px 10px #0a2a1c40;will-change:transform;
+  background:linear-gradient(to top right,var(--c) calc(50% - 2px),var(--edge) calc(50% - 2px) 50%,var(--flap) 50%) left top/50.5% 62% no-repeat,linear-gradient(to top left,var(--c) calc(50% - 2px),var(--edge) calc(50% - 2px) 50%,var(--flap) 50%) right top/50.5% 62% no-repeat,var(--c)}
+.letter::after{content:"";position:absolute;right:7%;bottom:11%;width:19%;aspect-ratio:1;border-radius:3px;background:var(--edge);box-shadow:inset 0 0 0 3px #fffdf2}
+.letter.is-wiggly{border-radius:12px}
+.letter.is-wiggly::after{border-radius:50%}
+.letter.is-gold{--c:#ffc21a;width:calc(var(--lw)*1.15);height:calc(var(--lw)*.78);background:linear-gradient(135deg,#fff4b8,#ffc824 38%,#f09a00 62%,#ffe07a);border-color:#9c6200;box-shadow:0 0 0 4px #fffdf2,0 6px 12px #0a2a1c55,0 0 22px 8px #ffb300aa;animation:glow .6s ease-in-out infinite alternate}
+.letter.is-gold::after{display:none}
+.letter.is-gold svg{position:absolute;z-index:1;left:50%;top:50%;width:62%;height:auto;transform:translate(-50%,-44%);filter:drop-shadow(0 2px 0 #b9820f)}
+.item{position:absolute;left:0;top:0;z-index:2;width:var(--lw);height:var(--lw);will-change:transform;filter:drop-shadow(0 5px 4px #0a2a1c44)}
+.item svg{display:block;width:100%;height:100%;overflow:visible}
+.junk{position:absolute;left:0;top:0;z-index:2;width:calc(var(--lw)*1.08);height:calc(var(--lw)*1.08);will-change:transform;mix-blend-mode:multiply}   /* 題庫圖是米白底：multiply 讓底色消失（不能加 filter，會擋住混色） */
+.junk img{display:block;width:100%;height:100%;object-fit:contain}
+.letter{z-index:2}
+.spark{position:absolute;z-index:1;width:10px;height:10px;pointer-events:none;background:#fff6b0;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);animation:spark .6s ease-out forwards}
+
+/* 伊奇站在郵件推車後面（露胸口以上）：伊奇 z1 → 掉落物 z2 → 推車正面 z3，信看起來掉進車裡 */
+.iggy,.cart{position:absolute;left:0;bottom:0;width:var(--bw);will-change:transform;pointer-events:none}
+.iggy{z-index:1;height:calc(var(--ch)*1.75);bottom:calc(var(--ch)*.15)}
+.iggy img{position:absolute;left:50%;bottom:0;height:100%;transform:translateX(-50%);filter:drop-shadow(0 4px 4px #0a2a1c33)}
+.cart{z-index:3;height:var(--ch)}
+.cart img{display:block;width:100%;height:100%;filter:drop-shadow(0 6px 6px #0a2a1c44)}
+.cart.is-yes{animation:gulp .35s}
+.cart.is-no{animation:wobble .4s}
+.iggy.is-yes{animation:hop .4s}
+.float{position:absolute;z-index:4;font-size:36px;font-weight:1000;color:#fff;text-shadow:0 3px 0 #17593f;pointer-events:none;animation:rise .9s ease-out forwards}
+.float.is-minus{color:#ffd9d2;text-shadow:0 3px 0 #b8322a}
+.float.is-gold{font-size:44px;color:#fff3a8;text-shadow:0 3px 0 #a86f00}
+.banner{position:absolute;left:50%;top:38%;z-index:5;display:grid;justify-items:center;gap:4px;padding:12px 26px;border:5px solid var(--gold);border-radius:24px;background:var(--cream);box-shadow:0 7px 0 #c89c52,0 14px 26px #0a2a1c55;font-size:clamp(28px,8vw,42px);font-weight:1000;pointer-events:none;transform:translate(-50%,-50%);animation:banner 1.3s cubic-bezier(.2,1.4,.4,1) forwards}
+.banner small{color:#e0473a;font-size:.62em}
+
+.bpm-word{display:inline-flex;align-items:center;justify-content:center;flex:none;padding-right:.26em;white-space:nowrap}
+.bpm-main-char{display:inline-block;flex:none;font-size:1em;line-height:1.04}
+.bpm-column{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;margin-left:.05em;font-size:.4em;font-weight:850;line-height:1}
+.bpm-onset,.bpm-rime{display:block;line-height:1.03}
+.bpm-tone{position:absolute;right:-.55em;top:85%;transform:translateY(-50%) scale(1.5,1.8);font-size:1.2em;font-weight:900;color:#d32f2f;line-height:1}
+.bpm-tone-dot{position:absolute;right:0;top:-.6em;font-size:1.4em;font-weight:900;color:#d32f2f;line-height:1}
+
+.overlay{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:16px;background:#0e3a28aa}
+.overlay[hidden]{display:none}
+.pick{display:flex;align-items:center;gap:8px;padding:8px 14px;border:4px solid var(--gold);border-radius:999px;background:var(--cream);font-size:clamp(18px,5vw,24px);font-weight:1000;box-shadow:0 5px 0 #c89c52}
+.pick button{min-width:64px;min-height:52px;padding:4px 12px;border:3px solid #cfe0c8;border-radius:16px;background:#f1f7ea}
+.pick button[aria-pressed="true"]{background:linear-gradient(#ffca58,#f6ac34);border-color:#b9792b;color:#573e1d;box-shadow:0 3px 0 #b9792b}
+.start{display:flex;flex-direction:column;align-items:center;gap:18px;padding:0;border:0;background:none}
+.go{display:grid;place-items:center;width:128px;height:128px;border:7px solid var(--cream);border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff8a6e,#e0473a 60%,#b8322a);color:var(--cream);box-shadow:0 8px 0 #8e2620,0 14px 24px #0a2a1c55;animation:breathe 1.6s ease-in-out infinite alternate}
+.go svg{width:56px;height:56px;margin-left:8px}
+.start:active .go{transform:translateY(5px);box-shadow:0 3px 0 #8e2620}
+.label{white-space:nowrap;padding:10px 20px;border:4px solid var(--gold);border-radius:999px;background:var(--cream);font-size:clamp(18px,5.2vw,28px);font-weight:1000;box-shadow:0 5px 0 #c89c52}
+.card{display:grid;justify-items:center;gap:10px;width:min(92vw,400px);padding:22px;border:6px solid var(--gold);border-radius:28px;background:var(--cream);text-align:center;box-shadow:0 12px 0 #c89c52;animation:pop .45s cubic-bezier(.2,1.5,.4,1)}
+.card img{height:130px}
+.card h2{margin:0;font-size:clamp(24px,6.4vw,38px);white-space:nowrap;display:flex;justify-content:center}
+.stars{margin:0;color:#f2b945;font-size:44px;letter-spacing:.08em;text-shadow:0 3px 0 #c98a12}
+.stars .off{color:#e6dcc4;text-shadow:none}
+.actions{display:flex;gap:12px;width:100%}
+.actions button,.actions a{flex:1;min-height:54px;display:flex;align-items:center;justify-content:center;border:0;border-radius:16px;font-size:clamp(17px,4.8vw,22px);font-weight:1000;text-decoration:none;color:var(--ink)}
+.actions button{background:linear-gradient(#ffca58,#f6ac34);box-shadow:0 5px 0 #b9792b}
+.actions a{background:#e5f2df;box-shadow:0 5px 0 #a9c8a2}
+@media(max-width:680px){.cs-order{gap:8px 10px;padding:7px 10px}.cs-count li{width:34px;height:34px}.cs-chip{width:44px;height:32px}}
+
+@keyframes pop{from{transform:scale(.85)}}
+@keyframes slot{from{transform:scale(.3) rotate(-20deg)}}
+@keyframes lost{0%{transform:scale(1.15);background:#ffb4a6;border-color:#e0473a}30%{transform:translateX(-5px)}60%{transform:translateX(5px)}100%{transform:none}}
+@keyframes gulp{40%{scale:1.06 .9}}
+@keyframes hop{40%{translate:0 -10px}}
+@keyframes wobble{25%{rotate:-8deg}75%{rotate:8deg}}
+@keyframes rise{to{transform:translateY(-70px);opacity:0}}
+@keyframes glow{to{box-shadow:0 0 0 4px #fff7c2,0 6px 12px #0a2a1c55,0 0 34px 14px #ffb300cc}}
+@keyframes spark{from{transform:scale(1)}to{transform:translateY(16px) scale(.2);opacity:0}}
+@keyframes drift{to{translate:40px 0}}
+@keyframes banner{0%{transform:translate(-50%,-50%) scale(.5);opacity:0}18%{transform:translate(-50%,-50%) scale(1);opacity:1}78%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(-50%,-80%) scale(.9);opacity:0}}
+@keyframes breathe{to{transform:scale(1.06)}}
+@media(prefers-reduced-motion:reduce){.cloud,.go,.letter.is-gold{animation:none}}

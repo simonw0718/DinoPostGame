@@ -1,0 +1,74 @@
+/* 郵差走小路（sample v3 導演 2026-10-22 定版）：按住郵差沿路拖到朋友家，照星星 ①② 的順序走到郵筒；可短暫走出路外（太遠／太久退回上一顆星），完美度＝走在路上的比例。難度在開始選單（簡單／普通／困難），遊戲中按右上 ⚙ 回選單可重調；房子永遠回首頁。玩法說明＝小框框，點一下就關 */
+:root{--ink:#17593f;--cream:#fffdf2;--gold:#e3bd70;--red:#e0473a;font-family:"Naikai",ui-rounded,"Noto Sans TC",system-ui,sans-serif;color:var(--ink)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:#164d39;overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+.ps-shell{position:relative;display:flex;flex-direction:column;height:100svh;max-width:1200px;margin:0 auto;padding:max(10px,env(safe-area-inset-top)) 14px max(10px,env(safe-area-inset-bottom));gap:10px}
+.ps-shell::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(#0f3d2c33,#0f3d2caa 75%),url('assets/mail-bg/forest-delivery-path-ferns.jpg') center/cover no-repeat}
+.ps-info{display:flex;align-items:center;justify-content:space-between;gap:10px;flex:none}
+.ps-bubble{margin:0;padding:8px 16px;border:3px solid var(--gold);border-radius:20px;background:var(--cream);font-size:clamp(18px,4.4vw,26px);font-weight:1000;box-shadow:0 4px 0 #c89c52;min-height:1.6em}
+.ps-bubble.is-pop{animation:pop .35s cubic-bezier(.2,1.5,.4,1)}
+.ps-levels{display:flex;gap:6px;margin:0;padding:0;list-style:none}
+.ps-levels li{width:30px;height:30px;border:3px solid #fffdf2aa;border-radius:50%;background:#0d332588;display:grid;place-items:center;color:#fff;font-size:15px}
+.ps-levels li.is-now{border-color:#ffd56a;background:#ffca58;color:#573e1d;transform:scale(1.15)}
+.ps-levels li.is-done{border-color:#9be39f;background:#4fb577}
+.ps-stage{position:relative;flex:1;min-height:0;border:4px solid #fffdf244;border-radius:26px;background:#2b6b3f55;overflow:hidden;touch-action:none}
+.ps-stage svg{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+.road-edge{fill:none;stroke:#7a5a2c;stroke-linecap:round;stroke-linejoin:round}
+.road{fill:none;stroke:#f3dca6;stroke-linecap:round;stroke-linejoin:round}
+.road-mid{fill:none;stroke:#d4b679;stroke-width:5;stroke-dasharray:18 22;stroke-linecap:round}
+.trail{fill:none;stroke:#7fd48a;stroke-linecap:round;stroke-linejoin:round;opacity:.85}
+.arrow{fill:none;stroke:#c9a55f;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+.star polygon{fill:#ffd23f;stroke:#c98a12;stroke-width:5;stroke-linejoin:round}
+.star text{font-size:38px;font-weight:1000;fill:#7a4b00;text-anchor:middle;dominant-baseline:central}
+.star .pulse{transform-box:fill-box;transform-origin:center}
+.star.is-next .pulse{animation:starPulse .9s ease-in-out infinite alternate}
+.star.is-got polygon{fill:#bfe9b8;stroke:#4fb577}
+.star.is-got text{fill:#2c7a3e}
+.courier{cursor:grab;transition:transform .09s linear}
+.courier.is-snap{transition:none}
+.courier{cursor:grab}
+.courier.is-drag{cursor:grabbing}
+.courier-ring{fill:#ffffff22;stroke:#ffd56a;stroke-width:6;stroke-dasharray:14 10;animation:ring 1.2s linear infinite}
+.courier.is-drag .courier-ring{opacity:0}
+.hand{font-size:120px;pointer-events:none;filter:drop-shadow(0 4px 3px #0a2a1c88)}
+.mark{fill:#ff8a3d;stroke:#fffdf2;stroke-width:4;opacity:.95}
+@keyframes starPulse{to{transform:scale(1.18)}}
+@keyframes fadeIn{from{opacity:0}}
+.ps-right{display:flex;align-items:center;gap:10px}
+.ps-score{position:absolute;left:50%;top:14px;z-index:5;display:grid;justify-items:center;padding:8px 20px;border:4px solid var(--gold);border-radius:20px;background:var(--cream);box-shadow:0 5px 0 #c89c52;transform:translateX(-50%);pointer-events:none;animation:scoreIn .5s cubic-bezier(.2,1.5,.4,1)}
+.ps-score[hidden]{display:none}
+.ps-score b{color:#f2b945;font-size:40px;letter-spacing:.06em;line-height:1}
+.ps-score b .off{color:#e6dcc4}
+.ps-score span{font-size:24px;font-weight:1000}
+.finish-score{margin:0;font-size:22px;font-weight:1000}
+@keyframes scoreIn{from{transform:translateX(-50%) scale(.4)}}
+.ps-stage.is-off{animation:shake .38s}
+.glyph{font-size:120px;font-weight:1000;fill:#fffdf2;stroke:#17593f;stroke-width:6;paint-order:stroke;text-anchor:middle;dominant-baseline:central}
+.bpm-word{display:inline-flex;align-items:center;justify-content:center;flex:none;padding-right:.26em;white-space:nowrap}
+.bpm-main-char{display:inline-block;flex:none;font-size:1em;line-height:1.04}
+.bpm-column{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;margin-left:.05em;font-size:.4em;font-weight:850;line-height:1}
+.bpm-onset,.bpm-rime{display:block;line-height:1.03}
+.bpm-tone{position:absolute;right:-.55em;top:85%;transform:translateY(-50%) scale(1.5,1.8);font-size:1.2em;font-weight:900;color:#d32f2f;line-height:1}
+.bpm-tone-dot{position:absolute;right:0;top:-.6em;font-size:1.4em;font-weight:900;color:#d32f2f;line-height:1}
+.overlay{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:16px;background:#0e3a28aa}
+.overlay[hidden]{display:none}
+.pick{display:flex;align-items:center;gap:8px;padding:8px 14px;border:4px solid var(--gold);border-radius:999px;background:var(--cream);font-size:clamp(18px,5vw,24px);font-weight:1000;box-shadow:0 5px 0 #c89c52}
+.pick button{min-width:84px;min-height:52px;padding:4px 12px;border:3px solid #cfe0c8;border-radius:16px;background:#f1f7ea}
+.pick button[aria-pressed="true"]{background:linear-gradient(#ffca58,#f6ac34);border-color:#b9792b;color:#573e1d;box-shadow:0 3px 0 #b9792b}
+.go{display:grid;place-items:center;width:128px;height:128px;padding-left:10px;border:7px solid var(--cream);border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff8a6e,#e0473a 60%,#b8322a);color:var(--cream);font-size:56px;box-shadow:0 8px 0 #8e2620}
+.label{white-space:nowrap;padding:10px 20px;border:4px solid var(--gold);border-radius:999px;background:var(--cream);font-size:clamp(18px,5.2vw,28px);font-weight:1000;box-shadow:0 5px 0 #c89c52}
+.card{display:grid;justify-items:center;gap:10px;width:min(92vw,400px);padding:22px;border:6px solid var(--gold);border-radius:28px;background:var(--cream);text-align:center;box-shadow:0 12px 0 #c89c52}
+.card img{height:130px}
+.card h2{margin:0;font-size:clamp(24px,6.4vw,38px);white-space:nowrap;display:flex;justify-content:center}
+.stars{margin:0;color:#f2b945;font-size:44px;letter-spacing:.08em}
+.stars .off{color:#e6dcc4}
+.actions{display:flex;gap:12px;width:100%}
+.actions button,.actions a{flex:1;min-height:54px;display:flex;align-items:center;justify-content:center;border:0;border-radius:16px;font-size:clamp(17px,4.8vw,22px);font-weight:1000;text-decoration:none;color:var(--ink)}
+.actions button{background:linear-gradient(#ffca58,#f6ac34);box-shadow:0 5px 0 #b9792b}
+.actions a{background:#e5f2df;box-shadow:0 5px 0 #a9c8a2}
+@keyframes pop{from{transform:scale(.8)}}
+@keyframes ring{to{stroke-dashoffset:-48}}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+@media(max-width:680px){.ps-levels li{width:24px;height:24px;font-size:12px}.ps-info{flex-wrap:wrap}.ps-bubble{order:2;flex:1 1 100%;text-align:center}.ps-right{order:1;margin-left:auto}}

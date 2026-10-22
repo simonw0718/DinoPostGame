@@ -37,14 +37,15 @@
 /* iPad 直式：四個入口時信紙加寬，五字遊戲名不擠成三行 */
 @media(min-width:681px) and (orientation:portrait){body[data-page="select"] .selector-letter{width:min(580px,84%);right:8%}}
 @media(min-width:681px){body[data-page="select"] .game-choice-copy strong.kid-text{flex-wrap:nowrap;font-size:clamp(20px,2.4vw,27px)}}
-/* 電腦／平板橫式：四個入口排 2×2、預覽在上遊戲名在下，整封信不出捲軸（導演 2026-10-21 回報翻翻樂／輸送帶被切掉）；越矮越精簡 */
+/* 電腦／平板橫式：六個入口排 3×2（2026-10-22 加走小路、接信大郵袋；原 2×2）、預覽在上遊戲名在下，整封信不出捲軸（導演 2026-10-21 回報翻翻樂／輸送帶被切掉）；越矮越精簡 */
 @media(min-width:681px) and (orientation:landscape){
-  body[data-page="select"] .selector-letter{width:min(820px,66%);overflow:visible;max-height:none}
-  body[data-page="select"] .game-choices{grid-template-columns:1fr 1fr;gap:14px}
+  body[data-page="select"] .selector-letter{width:min(880px,74%);overflow:visible;max-height:none}
+  body[data-page="select"] .game-choices{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
   .game-choice.has-preview{flex-direction:column;justify-content:center;gap:8px;min-height:0;padding:10px 10px 12px}
   .game-choice.has-preview .game-choice-copy{justify-items:center;text-align:center}
   .game-choice.has-preview .game-choice-arrow{display:none}
-  body[data-page="select"] .game-choice.has-preview .game-choice-copy strong.kid-text{justify-content:center}
+  body[data-page="select"] .game-choice.has-preview .game-choice-copy strong.kid-text{justify-content:center;font-size:clamp(15px,1.45vw,22px)}
+  body[data-page="select"] .game-choice{min-width:0}
 }
 @media(min-width:681px) and (orientation:landscape) and (max-height:760px){
   body[data-page="select"] .selector-letter{padding:20px 26px 20px}
@@ -63,3 +64,14 @@
 /* 手機：郵局圖下方不再露出天空藍，改用圖片底部的草地／小路色延伸 */
 @media(max-width:680px){.start-world{background:linear-gradient(180deg,transparent 0 calc(69% - 36px),#d4d86e calc(69% - 1px),#b9d468 100%),url('assets/postoffice-master.jpg') 46% top/auto 69% no-repeat,#b9d468}}
 .letter-stage[hidden]{display:none}
+/* 手機與直式平板：六個入口排 2 欄×3 列，預覽在上、遊戲名在下，一頁放得下（iOS 已鎖整頁滑動） */
+@media(orientation:portrait),(max-width:680px){
+  body[data-page="select"] .game-choices{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .game-choice.has-preview{flex-direction:column;justify-content:center;gap:4px;min-width:0;min-height:0;padding:7px 6px 8px}
+  .game-choice.has-preview .game-choice-copy{justify-items:center;text-align:center}
+  .game-choice.has-preview .game-choice-arrow{display:none}
+  body[data-page="select"] .game-choice.has-preview .game-choice-copy strong.kid-text{justify-content:center}
+  body[data-page="select"] .game-choice-copy small{display:none}
+}
+@media(max-width:680px){body[data-page="select"] .start-description{display:none}body[data-page="select"] .game-choice-copy strong.kid-text{flex-wrap:nowrap;font-size:clamp(14px,4.3vw,20px)}}
+@media(max-width:680px) and (max-height:700px){.pv{transform:scale(.72);margin:-12px -15px}body[data-page="select"] .selector-letter .eyebrow{display:none}}

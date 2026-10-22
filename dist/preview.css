@@ -65,3 +65,25 @@
 @keyframes pvGrab{0%,40%{opacity:1;transform:none}52%{opacity:0;transform:translateY(-30px) scale(.8)}100%{opacity:0}}
 @keyframes pvSlot{0%,50%{color:transparent;background:#fff;border-style:dashed}56%,92%{color:#18583e;background:#d9f2d0;border-style:solid;border-color:#4fb577}100%{color:transparent}}
 @keyframes pvTapBelt{0%,24%{opacity:0;left:110%;top:120%}36%{opacity:1;left:46px;top:68px}40%{transform:scale(.7)}44%{transform:scale(1);opacity:1}52%,100%{opacity:0;left:46px;top:68px}}
+
+/* 郵差走小路：路慢慢變綠、伊奇沿路走到郵筒 */
+.pv-path{background:#eaf4dc}
+.pv-path svg{position:absolute;inset:0;width:100%;height:100%}
+.pv-path .road{fill:none;stroke:#f3dca6;stroke-width:16;stroke-linecap:round}
+.pv-path .trail{fill:none;stroke:#7fd48a;stroke-width:7;stroke-linecap:round;stroke-dasharray:100 101;stroke-dashoffset:100;animation:pvTrail 3.2s linear infinite}
+.pv-path .star{fill:#ffd23f;stroke:#c98a12;stroke-width:1.5;stroke-linejoin:round}
+.pv-path .box rect{fill:#e0473a;stroke:#8e2620;stroke-width:1.5}
+.pv-path .box .post{fill:#8e5a2b;stroke:none}
+@keyframes pvTrail{0%,15%{stroke-dashoffset:100}85%,100%{stroke-dashoffset:0}}
+/* 接信大郵袋：信封掉進推車、襪子掉到旁邊 */
+.pv-catch{background:linear-gradient(#a9dcf6,#e3f5fc 70%,#7cc46a 70% 100%)}
+.pv-catch .env{position:absolute;top:-18px;width:22px;height:15px;border-radius:3px;background:#e8574a;border:2px solid #9b3229;animation:pvFall 2.4s ease-in infinite}
+.pv-catch .env::before{content:"";position:absolute;inset:0;background:#f5a49c;clip-path:polygon(0 0,100% 0,50% 60%)}
+.pv-catch .e1{left:50px}
+.pv-catch .e2{left:50px;animation-delay:1.2s}
+.pv-catch .junk{position:absolute;left:96px;top:-22px;width:22px;height:22px;mix-blend-mode:multiply;animation:pvJunk 2.4s ease-in .6s infinite}
+.pv-catch .cart{position:absolute;left:36px;bottom:4px;width:50px;height:52px}
+.pv-catch .who{position:absolute;left:50%;bottom:20px;height:34px;transform:translateX(-50%)}
+.pv-catch .car{position:absolute;left:0;bottom:0;width:50px}
+@keyframes pvFall{0%{transform:translateY(0);opacity:1}55%{transform:translateY(66px);opacity:1}62%,100%{transform:translateY(70px);opacity:0}}
+@keyframes pvJunk{0%{transform:translateY(0) rotate(0)}70%,100%{transform:translateY(120px) rotate(160deg)}}
