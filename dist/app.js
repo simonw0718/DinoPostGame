@@ -52,7 +52,6 @@ function advanceCast(screen) {
 function showScreen(id) {
   screens.forEach(name => $(name).classList.toggle('hidden', name !== id));
   id === 'startScreen' ? Dino.bgm.start() : Dino.bgm.stop();   // BGM 只在選單
-  document.querySelector('.topbar .dino-home').hidden = id !== 'startScreen';   // 遊戲中只留一顆房子（回找圖片選單）
   requestAnimationFrame(fitVisibleActors);
 }
 const actorObserver = new ResizeObserver(() => requestAnimationFrame(fitVisibleActors));
@@ -261,7 +260,8 @@ const uiReadings = {
   '你完成任務了！': ['ㄋㄧˇ', 'ㄨㄢˊ', 'ㄔㄥˊ', 'ㄖㄣˋ', 'ㄨˋ', 'ㄌㄜ˙', ''],
   '星星郵票送給你！': ['ㄒㄧㄥ', 'ㄒㄧㄥ', 'ㄧㄡˊ', 'ㄆㄧㄠˋ', 'ㄙㄨㄥˋ', 'ㄍㄟˇ', 'ㄋㄧˇ', ''],
   '再玩一次': ['ㄗㄞˋ', 'ㄨㄢˊ', 'ㄧˊ', 'ㄘˋ'],
-  '聽中文': ['ㄊㄧㄥ', 'ㄓㄨㄥ', 'ㄨㄣˊ']
+  '聽中文': ['ㄊㄧㄥ', 'ㄓㄨㄥ', 'ㄨㄣˊ'],
+  '知道了': ['ㄓ', 'ㄉㄠˋ', 'ㄌㄜ˙']
 };
 const setKidText = Dino.kidText(uiReadings);
 function annotateStaticUI() {
@@ -817,9 +817,17 @@ $('startButton').addEventListener('click', startRound);
 $('againButton').addEventListener('click', startRound);
 $('audioButton').addEventListener('click', () => playWord());
 $('nextButton').addEventListener('click', nextQuestion);
-$('homeButton').addEventListener('click', goHome);
 $('resultHomeButton').addEventListener('click', goHome);
-$('settingsButton').addEventListener('click', () => { showSettingsPage('main'); $('settingsDialog').showModal(); });
+// 標題列（2026-10-22 統一）：房子＝回選遊戲首頁；⚙＝遊戲中回開始選單，已在選單則開原本的設定面板（題數／題庫／紀錄）；?＝玩法框
+document.querySelector('.gh .dino-home').addEventListener('click', event => { event.preventDefault(); Dino.goTo('index.html'); });
+$('settingsButton').addEventListener('click', () => {
+  Dino.sfx('tap', .5);
+  if ($('startScreen').classList.contains('hidden')) { goHome(); return; }
+  showSettingsPage('main'); $('settingsDialog').showModal();
+});
+const howto = Dino.howto({ preview: 'match.html', text: '聽英文，選圖片。', kid: setKidText });
+$('helpButton').addEventListener('click', () => { Dino.sfx('tap', .5); howto.show(); });
+setKidText($('gameTitle'), '找圖片');
 $('openWordBank').addEventListener('click', () => showSettingsPage('bank'));
 $('backToSettings').addEventListener('click', () => showSettingsPage('main'));
 $('openHistory').addEventListener('click', () => showSettingsPage('history'));

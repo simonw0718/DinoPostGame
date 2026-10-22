@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
-"""Build the 35 character-stamp pictures for the game from the EP01 video character cards.
+"""Build the 36 character-stamp pictures for the game from the EP01 video character cards.
 
 Zero model calls: local Real-ESRGAN (ncnn, from the main project's .tools/) upscales each transparent card
 4x, ffmpeg fits it on a soft per-character background with a ground shadow.
 Needs: ffmpeg, <project root>/.tools/realesrgan/ (binary + models), media_library/visual/cards/characters/.
-Usage (from anywhere): python3 tools/make_character_cards.py
+Usage (from anywhere): python3 tools/make_character_cards.py [--only N …]
 Output: dist/assets/cards/NN.png (400x480) and dist/assets/cards/manifest.json (status: candidate until approved).
 The selection below is the single place to edit; card numbers follow the order of CARDS.
 """
 import hashlib
 import json
 import subprocess
+import sys
 import tempfile
 from pathlib import Path
 
@@ -45,9 +46,9 @@ CARDS = [
     'iggy__left_3q__wave__g01', 'chick_abao__front__sort_letter__g01', 'xiaokong__left__run__g01',
     'pairo__left_3q__stand_dup__g01', 'iggy__left_3q__puzzled_parcel__g01', 'chick_abao__left_3q__stern__g01',
     'pairo__right_3q__hand_chin__g01', 'iggy__right_3q__give_parcel__g01', 'pairo__right__walk__g01',
-    'iggy__right__run__g01', 'iggy__right__walk__g02',
+    'iggy__right__run__g01', 'iggy__right__walk__g02', 'feifei__front__happy__e2',   # 36：題庫 365 詞（形狀 2026-10-22）
 ]
-assert len(CARDS) == 35 and len(set(CARDS)) == 35
+assert len(CARDS) == 36 and len(set(CARDS)) == 36
 
 
 def sha(path):
@@ -81,11 +82,19 @@ def build(card_id, number, tmp):
 
 
 def main():
+    # --only N [N…]：只重做這幾張（其他張的來源卡可能已改名，整批重做會失敗）；manifest 其餘項目保留
+    only = {int(n) for n in sys.argv[sys.argv.index('--only') + 1:]} if '--only' in sys.argv else None
     OUT.mkdir(parents=True, exist_ok=True)
+    old = {}
+    if only and (OUT / 'manifest.json').is_file():
+        old = {c['n']: c for c in json.loads((OUT / 'manifest.json').read_text(encoding='utf-8'))['items']}
     items = []
     with tempfile.TemporaryDirectory() as td:
         tmp = Path(td)
         for number, card_id in enumerate(CARDS, start=1):
+            if only and number not in only:
+                items.append(old[number])
+                continue
             src, target = build(card_id, number, tmp)
             folder = card_id.split('__')[0]
             items.append({

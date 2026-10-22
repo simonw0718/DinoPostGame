@@ -15,7 +15,8 @@
   "music": "樂器",
   "color": "顏色",
   "number": "數字",
-  "dino": "恐龍與史前動物"
+  "dino": "恐龍與史前動物",
+  "shape": "形狀"
  },
  "topics": {
   "animal.farm": {
@@ -111,6 +112,9 @@
   "dino.iceage": {
    "zh": "冰河時期動物",
    "pack": "dino"
+  },
+  "shape": {
+   "zh": "形狀"
   }
  },
  "levels": {

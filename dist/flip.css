@@ -5,14 +5,10 @@ html,body{height:100%;margin:0}
 body{background:#164d39;overflow:hidden}
 button{font:inherit;color:inherit;cursor:pointer}
 
-.fs-shell{position:relative;display:flex;flex-direction:column;height:100svh;max-width:1100px;margin:0 auto;padding:max(10px,env(safe-area-inset-top)) 14px max(10px,env(safe-area-inset-bottom));gap:10px;isolation:isolate}
+.fs-shell{position:relative;display:flex;flex-direction:column;height:100svh;max-width:1100px;margin:0 auto;padding:max(10px,env(safe-area-inset-top)) 14px max(10px,env(safe-area-inset-bottom));gap:10px}   /* 不用 isolation：標題列要疊在開始畫面遮罩之上（背景 ::before 用 z-index:-1 即可） */
 .fs-shell::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(#0f3d2c55,#0f3d2ccc 70%),var(--bg,url('assets/mail-bg/near-village.jpg')) center/cover no-repeat}
 html.dino-mode .fs-shell::before{--bg:url('assets/dino-valley.jpg')}
 
-/* 頂列 */
-.fs-top{position:relative;display:flex;align-items:center;gap:10px;flex:none}
-.fs-top::after{content:"";width:54px;flex:none}
-.fs-title{flex:1;margin:0;text-align:center;color:var(--cream);font-size:clamp(24px,5vw,34px);font-weight:1000;letter-spacing:.04em;text-shadow:0 3px 0 #0b3324}
 
 /* 角色＋提示泡泡 */
 .fs-host{display:flex;align-items:flex-end;gap:8px;flex:none;height:clamp(84px,13svh,130px)}
@@ -82,7 +78,6 @@ html.dino-mode .fs-shell::before{--bg:url('assets/dino-valley.jpg')}
 .bpm-onset,.bpm-rime{display:block;line-height:1.03}
 .bpm-tone{position:absolute;right:-.55em;top:85%;transform:translateY(-50%) scale(1.5,1.8);font-size:1.2em;font-weight:900;color:#d32f2f;line-height:1}
 .bpm-tone-dot{position:absolute;right:0;top:-.6em;font-size:1.4em;font-weight:900;color:#d32f2f;line-height:1}
-.fs-title .bpm-column{color:#ffe7a6}
 
 /* 開始＋完成 */
 .ready-tap{position:fixed;z-index:60;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;width:100%;padding:0;border:0;background:radial-gradient(circle at 50% 50%,#0e3a2810 0 90px,#0e3a2899 72%);animation:fadeIn .35s ease-out both}
@@ -134,4 +129,3 @@ html.dino-mode .fs-shell::before{--bg:url('assets/dino-valley.jpg')}
 .finish-actions button,.finish-actions a{min-width:0;flex:1 1 auto;padding:8px 14px;font-size:clamp(17px,4.8vw,22px)}
 .fs-slots{flex:1;justify-content:center;min-width:0}
 .fs-slots li{flex:0 1 44px;width:auto;height:auto;aspect-ratio:1;min-width:0}
-.fs-title{display:flex;justify-content:center;white-space:nowrap;font-size:clamp(20px,6vw,34px)}

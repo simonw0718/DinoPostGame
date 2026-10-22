@@ -22,7 +22,8 @@
     '次': ['ㄘˋ'],
     '對': ['ㄉㄨㄟˋ'],
     '再玩一次': ['ㄗㄞˋ', 'ㄨㄢˊ', 'ㄧ', 'ㄘˋ'],
-    '回首頁': ['ㄏㄨㄟˊ', 'ㄕㄡˇ', 'ㄧㄝˋ']
+    '回首頁': ['ㄏㄨㄟˊ', 'ㄕㄡˇ', 'ㄧㄝˋ'],
+    '知道了': ['ㄓ', 'ㄉㄠˋ', 'ㄌㄜ˙']
   };
   const setKidText = Dino.kidText(uiReadings);
 
@@ -248,6 +249,11 @@
     try { state.disabledIds = new Set(JSON.parse(localStorage.getItem(Dino.storageKeys.disabled) || '[]')); } catch { /* 全部可出題 */ }
     state.words = await fetch('data.json').then(r => r.json());
     startRound();
+    // 標題列（2026-10-22 統一）：房子回選遊戲首頁；⚙ 回開始畫面（可改對數）；? 玩法框
+    document.querySelector('.gh .dino-home').addEventListener('click', e => { e.preventDefault(); Dino.goTo('index.html'); });
+    $('menuBtn').addEventListener('click', () => { if (!$('readyOverlay').hidden) return; Dino.sfx('tap', .5); $('readyOverlay').hidden = false; Dino.bgm.start(); });
+    const howto = Dino.howto({ preview: 'flip.html', text: '先聽聲音，再找圖片', kid: setKidText });
+    $('helpButton').addEventListener('click', () => { Dino.sfx('tap', .5); howto.show(); });
     $('readyStart').addEventListener('click', () => { $('readyOverlay').hidden = true; state.started = true; Dino.bgm.stop(); });
     $('playAgain').addEventListener('click', () => { Dino.bgm.stop(); startRound(); });
     let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(layout, 120); });

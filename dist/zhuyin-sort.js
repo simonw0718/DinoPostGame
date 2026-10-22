@@ -48,6 +48,9 @@
     '拿到郵票了！': ['ㄋㄚˊ', 'ㄉㄠˋ', 'ㄧㄡˊ', 'ㄆㄧㄠˋ', 'ㄌㄜ˙', ''],
     '下一封': ['ㄒㄧㄚˋ', 'ㄧ', 'ㄈㄥ'],
     '看成果': ['ㄎㄢˋ', 'ㄔㄥˊ', 'ㄍㄨㄛˇ'],
+    '注音送信': ['ㄓㄨˋ', 'ㄧㄣ', 'ㄙㄨㄥˋ', 'ㄒㄧㄣˋ'],
+    '讀注音，選郵箱。': ['ㄉㄨˊ', 'ㄓㄨˋ', 'ㄧㄣ', '', 'ㄒㄩㄢˇ', 'ㄧㄡˊ', 'ㄒㄧㄤ', ''],
+    '知道了': ['ㄓ', 'ㄉㄠˋ', 'ㄌㄜ˙'],
     '恐龍郵局': ['ㄎㄨㄥˇ', 'ㄌㄨㄥˊ', 'ㄧㄡˊ', 'ㄐㄩˊ'],
     '收件確認': ['ㄕㄡ', 'ㄐㄧㄢˋ', 'ㄑㄩㄝˋ', 'ㄖㄣˋ'],
     '信件準備中': ['ㄒㄧㄣˋ', 'ㄐㄧㄢˋ', 'ㄓㄨㄣˇ', 'ㄅㄟˋ', 'ㄓㄨㄥ'],
@@ -82,7 +85,7 @@
   }
   const letterPhys = { x: spring(0, 150, 13), y: spring(0, 150, 13), s: spring(1, 220, 18), tilt: spring(0, 160, 9) };
   // ---------- 舞台：設計座標，整體等比例縮放；所有座標都用設計座標 ----------
-  const LW = 300, LH = 176, MAGNET = 100;
+  const LW = 300, LH = 176, MAGNET = 100, TOP_H = 54;
   // 版面：手機＝375×812 之字排；iPad 直式＝560×812 倒三角；寬螢幕（寬高比>1.15）改用 900×562 一排版（導演 2026-10-21 選定）。
   // 座標都是設計 px：boxes 郵筒左上、letter 信左上、home 角色腳底、replay ♫、next 下一封、bubbleY 題目泡泡底、lift 往上拖多遠縮到最小
   const LAYOUTS = {
@@ -164,7 +167,7 @@
   function applyLayout(next) {   // 只在版面種類改變時搬家；彈簧位移是相對位置，不必重算
     if (L === next) return;
     L = next; DW = L.DW; DH = L.DH; BOXES = L.boxes; home.x = L.home[0]; home.y = L.home[1];
-    stageEl.style.width = `${DW}px`; stageEl.style.height = `${DH}px`; document.querySelector('.ms-top').style.width = `${DW}px`;
+    stageEl.style.width = `${DW}px`; stageEl.style.height = `${DH}px`; 
     document.documentElement.classList.toggle('wide', L !== LAYOUTS.phone);
     [$('letter'), $('receipt')].forEach(el => px(el, L.letter));
     px($('replayButton'), L.replay); px($('nextButton'), L.next);
@@ -172,13 +175,14 @@
     document.querySelectorAll('.mailbox').forEach((b, i) => px(b, BOXES[i]));
   }
   function layout() {
-    const shell = document.querySelector('.ms-shell');
+    const shell = $('play');   // 舞台區（標題列與進度圓點以下）
     document.documentElement.classList.add('wide');   // 先放開外框寬度再量（窄螢幕會在 applyLayout 收回）
     const W = shell.clientWidth, H = shell.clientHeight;
     document.documentElement.classList.toggle('wide', L !== LAYOUTS.phone);
     applyLayout(W / H > 1.15 ? LAYOUTS.row : W / H > .6 ? LAYOUTS.tablet : LAYOUTS.phone);
-    K = Math.min(shell.clientWidth / DW, shell.clientHeight / DH);
-    stageEl.style.transform = `translate(${(shell.clientWidth - DW * K) / 2}px, ${(shell.clientHeight - DH * K) / 2}px) scale(${K})`;
+    // 設計座標最上方 TOP_H 是舊標題列位置，現由標題列接手：不佔版面，往上推出舞台區
+    K = Math.min(shell.clientWidth / DW, shell.clientHeight / (DH - TOP_H));
+    stageEl.style.transform = `translate(${(shell.clientWidth - DW * K) / 2}px, ${(shell.clientHeight - (DH - TOP_H) * K) / 2 - TOP_H * K}px) scale(${K})`;
     if (state.phase === 'question' || state.phase === 'loading') placeActor(home.x, home.y, 1);
   }
   function placeActor(x, y, s) {
@@ -540,7 +544,12 @@
       ['receiptBrand', '恐龍郵局'], ['receiptConfirm', '收件確認'], ['nextLabel', '下一封']]
       .forEach(([id, text]) => setKidText($(id), text));
     state.bg = loadRotation().bg; applyBackground();
-    $('settingsButton').addEventListener('click', () => $('settingsDialog').showModal());
+    // 標題列（2026-10-22 統一）：房子回選遊戲首頁；⚙ 回送信選單（mail.html 有同一組選項＋封數＋題庫／紀錄連結，功能不減）；? 玩法框
+    document.querySelector('.gh .dino-home').addEventListener('click', event => { event.preventDefault(); Dino.goTo('index.html'); });
+    $('settingsButton').addEventListener('click', () => { Dino.sfx('tap', .5); Dino.goTo('mail.html'); });
+    setKidText($('gameTitle'), '注音送信');
+    const howto = Dino.howto({ preview: 'mail.html', text: '讀注音，選郵箱。', kid: setKidText });
+    $('helpButton').addEventListener('click', () => { Dino.sfx('tap', .5); howto.show(); });
     if (new URLSearchParams(location.search).has('settings')) $('settingsDialog').showModal();
     $('closeSettings').addEventListener('click', () => $('settingsDialog').close());
     $('restartFromSettings').addEventListener('click', () => { $('settingsDialog').close(); startRound(); });

@@ -354,3 +354,8 @@ button,.choice,.mode-option,.settings-link{touch-action:manipulation}
 .play-screen .choice-english{font-size:clamp(30px,5vw,46px)}
 .is-picture-prompt .choice-meaning{font-size:clamp(30px,4.6vw,42px)}
 }
+
+/* 統一標題列後（2026-10-22）：遊戲中房子移到標題列，任務名靠左、分數靠右 */
+.game-topline{grid-template-columns:minmax(0,1fr) auto!important}
+.game-topline .task-label{grid-column:auto!important;grid-row:auto!important;justify-self:start!important}
+.game-topline .score-pill{grid-column:2;justify-self:end}

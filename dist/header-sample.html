@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>統一標題列・恐龍郵局（sample）</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css">
+  <script src="shared.js"></script>
+  <style>
+    /* 標題列統一 sample（2026-10-22）：每款遊戲套同一個 .gh 標題列，下面註明跟現在差在哪 */
+    :root{--ink:#17593f;--cream:#fffdf2;--gold:#e3bd70;font-family:"Naikai",ui-rounded,"Noto Sans TC",system-ui,sans-serif;color:var(--ink)}
+    *{box-sizing:border-box}
+    body{margin:0;background:#164d39;padding:16px 14px;-webkit-user-select:text;user-select:text}
+    h1.page{margin:0 0 4px;color:var(--cream);font-size:24px}
+    p.lead{margin:0 0 16px;color:#d9eadf;font-size:16px}
+    .rule{display:grid;gap:6px;margin:0 0 18px;padding:12px 16px;border:3px solid var(--gold);border-radius:18px;background:var(--cream);font-size:16px;font-weight:700}
+    .rule b{font-weight:1000}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(347px,100%),1fr));gap:16px}
+    .item{border-radius:20px;overflow:hidden;background:#0d3325}
+    .frame{padding:12px 0;background:linear-gradient(#0f3d2c55,#0f3d2ccc),url('assets/mail-bg/near-village.jpg') center/cover}
+    .note{padding:10px 14px;background:var(--cream);font-size:15px;line-height:1.5}
+    .note .now{color:#a33a26}
+    .note .new{color:#2c7a3e}
+    .kid-text .bpm-word{display:inline-flex;align-items:center;padding-right:.26em}
+    .bpm-column{display:flex;flex-direction:column;align-items:center;margin-left:.05em;font-size:.4em;line-height:1;position:relative}
+    .bpm-tone{position:absolute;right:-.55em;top:85%;transform:translateY(-50%) scale(1.5,1.8);font-size:1.2em;color:#d32f2f}
+    .bpm-tone-dot{position:absolute;right:0;top:-.6em;font-size:1.4em;color:#d32f2f}
+  </style>
+</head>
+<body>
+  <h1 class="page">全站標題列統一（sample）</h1>
+  <p class="lead">每款遊戲同一條標題列。下面每格＝套用後的樣子＋跟現在差在哪。</p>
+  <div class="rule">
+    <span><b>左：橘紅房子</b>＝永遠回「選遊戲首頁」（不再有「回上一層」）。</span>
+    <span><b>中：遊戲名</b>＋注音，固定置中。</span>
+    <span><b>右：藍色工具鈕</b>　<b>?</b>＝玩法小框框　<b>⚙</b>＝這款遊戲的選單（難度、題數、速度等）。</span>
+    <span>開始選單打開時，標題列仍在最上層，房子隨時可以按。首頁本身不變（品牌＋DINO MODE＋設定）。</span>
+  </div>
+  <div id="grid" class="grid"></div>
+
+<script>
+(() => {
+  const GEAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96a7 7 0 0 0-1.62-.94l-.36-2.54a.48.48 0 0 0-.48-.41h-3.84a.47.47 0 0 0-.47.41l-.36 2.54a7.4 7.4 0 0 0-1.62.94l-2.39-.96a.48.48 0 0 0-.59.22L2.74 8.87a.47.47 0 0 0 .12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54a7 7 0 0 0 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.47.47 0 0 0-.12-.61zM12 15.6a3.6 3.6 0 1 1 0-7.2 3.6 3.6 0 0 1 0 7.2z"/></svg>';
+  const HOUSE = document.createElement('template');
+  HOUSE.innerHTML = '<a class="dino-home" href="index.html" aria-label="回選遊戲首頁"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.6 1.6 11.4a1 1 0 0 0 1.3 1.5L4.5 11.6V20a1.5 1.5 0 0 0 1.5 1.5h3.8v-5.8a.7.7 0 0 1 .7-.7h3a.7.7 0 0 1 .7.7v5.8H18a1.5 1.5 0 0 0 1.5-1.5v-8.4l1.6 1.3a1 1 0 0 0 1.3-1.5Z"/></svg></a>';
+  const setKidText = Dino.kidText({
+    '找圖片': ['ㄓㄠˇ', 'ㄊㄨˊ', 'ㄆㄧㄢˋ'], '注音送信': ['ㄓㄨˋ', 'ㄧㄣ', 'ㄙㄨㄥˋ', 'ㄒㄧㄣˋ'],
+    '郵差翻翻樂': ['ㄧㄡˊ', 'ㄔㄞ', 'ㄈㄢ', 'ㄈㄢ', 'ㄌㄜˋ'], '注音輸送帶': ['ㄓㄨˋ', 'ㄧㄣ', 'ㄕㄨ', 'ㄙㄨㄥˋ', 'ㄉㄞˋ'],
+    '郵差走小路': ['ㄧㄡˊ', 'ㄔㄞ', 'ㄗㄡˇ', 'ㄒㄧㄠˇ', 'ㄌㄨˋ'], '接信大郵袋': ['ㄐㄧㄝ', 'ㄒㄧㄣˋ', 'ㄉㄚˋ', 'ㄧㄡˊ', 'ㄉㄞˋ'],
+    '集郵冊': ['ㄐㄧˊ', 'ㄧㄡˊ', 'ㄘㄜˋ']
+  });
+  // tools: 右邊放哪些鈕；now: 現在的樣子
+  const PAGES = [
+    { name: '找圖片', tools: ['?', '⚙'], now: '房子＋恐龍郵局品牌＋⚙設定；遊戲中房子回「找圖片選單」', change: '品牌字樣拿掉、換成遊戲名；房子改回首頁；⚙＝回找圖片選單' },
+    { name: '注音送信', tools: ['?', '⚙'], now: '選單頁：房子＋品牌＋⚙；遊戲中：房子回「送信選單」＋進度＋⚙', change: '兩頁同一條標題列；房子都回首頁；進度圓點移到標題列下方' },
+    { name: '郵差翻翻樂', tools: ['?', '⚙'], now: '房子＋標題，右邊空白；換對數只能在開始畫面', change: '加 ⚙：遊戲中可回開始畫面改 6／8／10 對' },
+    { name: '注音輸送帶', tools: ['?', '⚙'], now: '房子＋標題，右邊空白；換速度只能在開始畫面', change: '加 ⚙：遊戲中可回開始畫面改速度' },
+    { name: '郵差走小路', tools: ['?', '⚙'], now: 'sample v3：房子會回難度選單（容易搞混）', change: '已改：房子回首頁、⚙＝難度選單、?＝玩法框（sample 已套用）' },
+    { name: '接信大郵袋', tools: ['?', '⚙'], now: 'sample v1：房子＋標題', change: '加 ?、⚙（⚙＝速度選單）' },
+    { name: '集郵冊', tools: [], now: '房子＋標題＋空白', change: '只換成同一條標題列，右邊沒有工具鈕（不是遊戲）' }
+  ];
+  const grid = document.getElementById('grid');
+  PAGES.forEach(p => {
+    const item = document.createElement('section'); item.className = 'item';
+    const frame = document.createElement('div'); frame.className = 'frame';
+    const header = document.createElement('header'); header.className = 'gh';
+    const title = document.createElement('h2'); title.className = 'gh-title'; setKidText(title, p.name);
+    const tools = document.createElement('div'); tools.className = 'gh-tools';
+    p.tools.forEach(t => { const b = document.createElement('button'); b.type = 'button'; b.className = 'gh-btn'; b.setAttribute('aria-label', t === '?' ? '玩法' : '選單'); b.innerHTML = t === '⚙' ? GEAR : '?'; tools.append(b); });
+    header.append(HOUSE.content.cloneNode(true), title, tools);
+    frame.append(header);
+    const note = document.createElement('div'); note.className = 'note';
+    note.innerHTML = `<div class="now">現在：${p.now}</div><div class="new">改成：${p.change}</div>`;
+    item.append(frame, note); grid.append(item);
+  });
+  document.querySelectorAll('.dino-home').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+})();
+</script>
+</body>
+</html>

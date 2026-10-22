@@ -8,20 +8,22 @@
   <title>注音送信・恐龍郵局</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="zhuyin-sort.css?v=14"><link rel="stylesheet" href="dino-mode.css"><link rel="stylesheet" href="home-button.css">
+  <link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="zhuyin-sort.css?v=15"><link rel="stylesheet" href="dino-mode.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css"><link rel="stylesheet" href="howto.css"><link rel="stylesheet" href="preview.css">
   <script src="vendor/interact.min.js"></script>
   <script src="vendor/motion.js"></script>
-  <script src="shared.js" defer></script><script src="progress.js" defer></script><script src="stamps-ui.js" defer></script><script src="zhuyin-sort.js?v=14" defer></script>
+  <script src="shared.js" defer></script><script src="progress.js" defer></script><script src="stamps-ui.js" defer></script><script src="zhuyin-sort.js?v=15" defer></script>
 </head>
 <body>
   <!-- 導演 2026-10-21 核准 mail-sample v10 後套用：紅郵筒之字排（手機 375×812 舞台）／寬螢幕一排版（900×562） -->
   <div class="ms-shell">
+    <header class="gh">
+      <a class="dino-home" href="index.html" aria-label="回選遊戲首頁"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.6 1.6 11.4a1 1 0 0 0 1.3 1.5L4.5 11.6V20a1.5 1.5 0 0 0 1.5 1.5h3.8v-5.8a.7.7 0 0 1 .7-.7h3a.7.7 0 0 1 .7.7v5.8H18a1.5 1.5 0 0 0 1.5-1.5v-8.4l1.6 1.3a1 1 0 0 0 1.3-1.5Z"/></svg></a>
+      <h1 id="gameTitle" class="gh-title">注音送信</h1>
+      <div class="gh-tools"><button id="helpButton" class="gh-btn" type="button" aria-label="玩法">?</button><button id="settingsButton" class="gh-btn" type="button" aria-label="回送信選單"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96a7 7 0 0 0-1.62-.94l-.36-2.54a.48.48 0 0 0-.48-.41h-3.84a.47.47 0 0 0-.47.41l-.36 2.54a7.4 7.4 0 0 0-1.62.94l-2.39-.96a.48.48 0 0 0-.59.22L2.74 8.87a.47.47 0 0 0 .12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54a7 7 0 0 0 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.47.47 0 0 0-.12-.61zM12 15.6a3.6 3.6 0 1 1 0-7.2 3.6 3.6 0 0 1 0 7.2z"/></svg></button></div>
+    </header>
+    <ol id="progress" class="ms-progress" aria-label="送信進度"></ol>
+    <div id="play" class="ms-play">
     <main id="stage" class="ms-stage">
-      <header class="ms-top">
-        <a class="dino-home" href="mail.html" aria-label="回送信選單"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.6 1.6 11.4a1 1 0 0 0 1.3 1.5L4.5 11.6V20a1.5 1.5 0 0 0 1.5 1.5h3.8v-5.8a.7.7 0 0 1 .7-.7h3a.7.7 0 0 1 .7.7v5.8H18a1.5 1.5 0 0 0 1.5-1.5v-8.4l1.6 1.3a1 1 0 0 0 1.3-1.5Z"/></svg></a>
-        <ol id="progress" class="ms-progress" aria-label="送信進度"></ol>
-        <button id="settingsButton" class="ms-settings" type="button" aria-label="開啟設定">⚙</button>
-      </header>
       <div id="mailboxes" class="ms-mailboxes" role="group" aria-label="三個圖片郵箱"></div>
       <div id="actor" class="ms-actor" aria-hidden="true">
         <span class="ms-actor-shadow"></span>
@@ -47,6 +49,7 @@
         <span id="postmark" class="back-postmark" aria-hidden="true"><img src="assets/dinopost-workmark-stamp-transparent-v1.png" alt=""></span>
       </div>
     </main>
+    </div>
   </div>
 
   <!-- 手機要先點一下才能出聲（導演 2026-10-21 重新設計）：不用彈窗，遊戲已在背後擺好，整個畫面點哪裡都開始 -->

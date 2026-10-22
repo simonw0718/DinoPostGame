@@ -31,6 +31,7 @@
     '分難度':['ㄈㄣ','ㄋㄢˊ','ㄉㄨˋ'],'恐龍挑戰':['ㄎㄨㄥˇ','ㄌㄨㄥˊ','ㄊㄧㄠˇ','ㄓㄢˋ'],
     '第一級':['ㄉㄧˋ','ㄧ','ㄐㄧˊ'],'第二級':['ㄉㄧˋ','ㄦˋ','ㄐㄧˊ'],'第三級':['ㄉㄧˋ','ㄙㄢ','ㄐㄧˊ'],
     '開始任務':['ㄎㄞ','ㄕˇ','ㄖㄣˋ','ㄨˋ'],
+    '知道了':['ㄓ','ㄉㄠˋ','ㄌㄜ˙'],
     '信件內容':['ㄒㄧㄣˋ','ㄐㄧㄢˋ','ㄋㄟˋ','ㄖㄨㄥˊ'],
     '看注音':['ㄎㄢˋ','ㄓㄨˋ','ㄧㄣ'],
     '看圖片':['ㄎㄢˋ','ㄊㄨˊ','ㄆㄧㄢˋ'],
@@ -88,7 +89,12 @@
   Dino.bgm.start(); Dino.menuTaps();
   // 先把遊戲要用的題庫抓進快取，按開始後進遊戲不用再等下載
   ['data.json','assets/cast/cast.json'].forEach(href => { const l=document.createElement('link'); l.rel='prefetch'; l.href=href; document.head.append(l); });
-  $('mailSettingsButton').addEventListener('click',() => $('mailSettingsDialog').showModal());
+  // 標題列（2026-10-22 統一）：房子回選遊戲首頁；⚙ 開送信設定；? 玩法框
+  document.querySelector('.gh .dino-home').addEventListener('click',event => {event.preventDefault(); Dino.goTo('index.html');});
+  annotate($('gameTitle'),'注音送信');
+  const howto = Dino.howto({preview:'mail.html',text:'讀注音，選郵箱。',kid:setKidText});
+  $('helpButton').addEventListener('click',() => {Dino.sfx('tap',.5); howto.show();});
+  $('mailSettingsButton').addEventListener('click',() => {Dino.sfx('tap',.5); $('mailSettingsDialog').showModal();});
   $('mailSettingsClose').addEventListener('click',() => $('mailSettingsDialog').close());
   render();
 })();

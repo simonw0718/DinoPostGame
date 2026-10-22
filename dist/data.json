@@ -11200,5 +11200,194 @@
     "image": "assets/rebuilt/new100/new-airport.png",
     "zhAudio": "assets/audio/zh/new-airport.mp3",
     "artStatus": "approved"
+  },
+  {
+    "id": "shape-circle",
+    "topic": "shape",
+    "pack": "general",
+    "en": "circle",
+    "zh": "圓形",
+    "zhuyin": [
+      "ㄩㄢˊ",
+      "ㄒㄧㄥˊ"
+    ],
+    "emoji": "⚪",
+    "level": {
+      "en": 2,
+      "zhuyin": 2,
+      "hanzi": 2
+    },
+    "metrics": {
+      "yle": 2,
+      "letters": 6,
+      "enSyl": 2,
+      "zhChars": 2,
+      "zhSymbols": 5,
+      "zhHard": 1,
+      "zhNeutral": 0,
+      "hanziTbcl": 3,
+      "zhWordTbcl": 4
+    },
+    "artStatus": "candidate",
+    "image": "assets/rebuilt/shapes-v1/kidapp-circle.png",
+    "zhAudio": "assets/audio/zh/shape-circle.mp3"
+  },
+  {
+    "id": "shape-square",
+    "topic": "shape",
+    "pack": "general",
+    "en": "square",
+    "zh": "正方形",
+    "zhuyin": [
+      "ㄓㄥˋ",
+      "ㄈㄤ",
+      "ㄒㄧㄥˊ"
+    ],
+    "emoji": "🟩",
+    "level": {
+      "en": 1,
+      "zhuyin": 3,
+      "hanzi": 2
+    },
+    "metrics": {
+      "yle": 2,
+      "letters": 6,
+      "enSyl": 1,
+      "zhChars": 3,
+      "zhSymbols": 7,
+      "zhHard": 1,
+      "zhNeutral": 0,
+      "hanziTbcl": 3,
+      "zhWordTbcl": null
+    },
+    "artStatus": "candidate",
+    "image": "assets/rebuilt/shapes-v1/kidapp-square.png",
+    "zhAudio": "assets/audio/zh/shape-square.mp3"
+  },
+  {
+    "id": "shape-rectangle",
+    "topic": "shape",
+    "pack": "general",
+    "en": "rectangle",
+    "zh": "長方形",
+    "zhuyin": [
+      "ㄔㄤˊ",
+      "ㄈㄤ",
+      "ㄒㄧㄥˊ"
+    ],
+    "emoji": "▭",
+    "level": {
+      "en": 3,
+      "zhuyin": 3,
+      "hanzi": 2
+    },
+    "metrics": {
+      "yle": 4,
+      "letters": 9,
+      "enSyl": 3,
+      "zhChars": 3,
+      "zhSymbols": 7,
+      "zhHard": 1,
+      "zhNeutral": 0,
+      "hanziTbcl": 3,
+      "zhWordTbcl": null
+    },
+    "artStatus": "candidate",
+    "image": "assets/rebuilt/shapes-v1/kidapp-rectangle.png",
+    "zhAudio": "assets/audio/zh/shape-rectangle.mp3"
+  },
+  {
+    "id": "shape-triangle",
+    "topic": "shape",
+    "pack": "general",
+    "en": "triangle",
+    "zh": "三角形",
+    "zhuyin": [
+      "ㄙㄢ",
+      "ㄐㄧㄠˇ",
+      "ㄒㄧㄥˊ"
+    ],
+    "emoji": "🔺",
+    "level": {
+      "en": 3,
+      "zhuyin": 3,
+      "hanzi": 2
+    },
+    "metrics": {
+      "yle": 4,
+      "letters": 8,
+      "enSyl": 2,
+      "zhChars": 3,
+      "zhSymbols": 8,
+      "zhHard": 1,
+      "zhNeutral": 0,
+      "hanziTbcl": 4,
+      "zhWordTbcl": 4
+    },
+    "artStatus": "candidate",
+    "image": "assets/rebuilt/shapes-v1/kidapp-triangle.png",
+    "zhAudio": "assets/audio/zh/shape-triangle.mp3"
+  },
+  {
+    "id": "shape-diamond",
+    "topic": "shape",
+    "pack": "general",
+    "en": "diamond",
+    "zh": "菱形",
+    "zhuyin": [
+      "ㄌㄧㄥˊ",
+      "ㄒㄧㄥˊ"
+    ],
+    "emoji": "🔷",
+    "level": {
+      "en": 3,
+      "zhuyin": 1,
+      "hanzi": 3
+    },
+    "metrics": {
+      "yle": 4,
+      "letters": 7,
+      "enSyl": 2,
+      "zhChars": 2,
+      "zhSymbols": 6,
+      "zhHard": 0,
+      "zhNeutral": 0,
+      "hanziTbcl": 8,
+      "zhWordTbcl": null
+    },
+    "artStatus": "candidate",
+    "image": "assets/rebuilt/shapes-v1/kidapp-diamond.png",
+    "zhAudio": "assets/audio/zh/shape-diamond.mp3"
+  },
+  {
+    "id": "shape-heart",
+    "topic": "shape",
+    "pack": "general",
+    "en": "heart",
+    "zh": "愛心",
+    "zhuyin": [
+      "ㄞˋ",
+      "ㄒㄧㄣ"
+    ],
+    "emoji": "❤️",
+    "level": {
+      "en": 3,
+      "zhuyin": 1,
+      "hanzi": 1
+    },
+    "metrics": {
+      "yle": 4,
+      "letters": 5,
+      "enSyl": 1,
+      "zhChars": 2,
+      "zhSymbols": 4,
+      "zhHard": 0,
+      "zhNeutral": 0,
+      "hanziTbcl": 1,
+      "zhWordTbcl": 4
+    },
+    "artStatus": "candidate",
+    "image": "assets/rebuilt/shapes-v1/kidapp-heart.png",
+    "zhAudio": "assets/audio/zh/shape-heart.mp3"
   }
 ]

@@ -18,7 +18,8 @@
     '全部拼好了！': ['ㄑㄩㄢˊ', 'ㄅㄨˋ', 'ㄆㄧㄣ', 'ㄏㄠˇ', 'ㄌㄜ˙', ''],
     '再玩一次': ['ㄗㄞˋ', 'ㄨㄢˊ', 'ㄧ', 'ㄘˋ'],
     '回首頁': ['ㄏㄨㄟˊ', 'ㄕㄡˇ', 'ㄧㄝˋ'],
-    '慢': ['ㄇㄢˋ'], '中': ['ㄓㄨㄥ'], '快': ['ㄎㄨㄞˋ']
+    '慢': ['ㄇㄢˋ'], '中': ['ㄓㄨㄥ'], '快': ['ㄎㄨㄞˋ'],
+    '知道了': ['ㄓ', 'ㄉㄠˋ', 'ㄌㄜ˙']
   };
   const setKidText = Dino.kidText(uiReadings);
 
@@ -272,6 +273,11 @@
     const [words, symbols] = await Promise.all(['data.json', 'assets/audio/symbols.json'].map(u => fetch(u).then(r => r.json())));
     state.words = words; state.symbolAudio = symbols.zhuyin;
     startRound();
+    // 標題列（2026-10-22 統一）：房子回選遊戲首頁；⚙ 回開始畫面（暫停，可改速度）；? 玩法框
+    document.querySelector('.gh .dino-home').addEventListener('click', e => { e.preventDefault(); Dino.goTo('index.html'); });
+    $('menuBtn').addEventListener('click', () => { if (!$('readyOverlay').hidden) return; Dino.sfx('tap', .5); state.started = false; state.playing = false; $('readyOverlay').hidden = false; Dino.bgm.start(); });
+    const howto = Dino.howto({ preview: 'belt.html', text: '抓住對的注音', kid: setKidText });
+    $('helpButton').addEventListener('click', () => { Dino.sfx('tap', .5); howto.show(); });
     $('readyStart').addEventListener('click', () => {
       $('readyOverlay').hidden = true; state.started = true; state.playing = true; Dino.bgm.stop();
       play(state.round[state.index].zhAudio);

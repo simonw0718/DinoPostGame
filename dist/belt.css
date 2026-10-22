@@ -5,14 +5,10 @@ html,body{height:100%;margin:0}
 body{background:#164d39;overflow:hidden}
 button{font:inherit;color:inherit;cursor:pointer}
 
-.zb-shell{position:relative;display:flex;flex-direction:column;height:100svh;max-width:1100px;margin:0 auto;padding:max(10px,env(safe-area-inset-top)) 14px max(10px,env(safe-area-inset-bottom));gap:8px;isolation:isolate}
+.zb-shell{position:relative;display:flex;flex-direction:column;height:100svh;max-width:1100px;margin:0 auto;padding:max(10px,env(safe-area-inset-top)) 14px max(10px,env(safe-area-inset-bottom));gap:8px}   /* 不用 isolation：標題列要疊在開始畫面遮罩之上 */
 .zb-shell::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(#0f3d2c44,#0f3d2cbb 60%),var(--bg,url('assets/postoffice-master.jpg')) center/cover no-repeat}
 html.dino-mode .zb-shell::before{--bg:url('assets/dino-valley.jpg')}
 
-.zb-top{position:relative;display:flex;align-items:center;gap:10px;flex:none}
-.zb-top::after{content:"";width:54px;flex:none}
-.zb-title{flex:1;display:flex;justify-content:center;white-space:nowrap;margin:0;color:var(--cream);font-size:clamp(20px,6vw,34px);font-weight:1000;text-shadow:0 3px 0 #0b3324}
-.zb-title .bpm-column{color:#ffe7a6}
 
 /* 角色、泡泡、進度 */
 .zb-host{display:grid;grid-template-columns:auto 1fr;grid-template-rows:1fr auto;column-gap:8px;flex:none;height:clamp(92px,14svh,140px)}

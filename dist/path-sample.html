@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#164d39">
+  <title>郵差走小路・恐龍郵局（sample）</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="dino-mode.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css"><link rel="stylesheet" href="howto.css">
+  <script src="shared.js"></script>
+  <style>
+    /* 郵差走小路 sample v3（2026-10-22）：按住郵差沿路拖到朋友家，照星星 ①② 的順序走到郵筒；可短暫走出路外（太遠／太久退回上一顆星），完美度＝走在路上的比例。難度在開始選單（簡單／普通／困難），遊戲中按右上 ⚙ 回選單可重調；房子永遠回首頁。玩法說明＝小框框，點一下就關 */
+    :root{--ink:#17593f;--cream:#fffdf2;--gold:#e3bd70;--red:#e0473a;font-family:"Naikai",ui-rounded,"Noto Sans TC",system-ui,sans-serif;color:var(--ink)}
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0}
+    body{background:#164d39;overflow:hidden}
+    button{font:inherit;color:inherit;cursor:pointer}
+    .ps-shell{position:relative;display:flex;flex-direction:column;height:100svh;max-width:1200px;margin:0 auto;padding:max(10px,env(safe-area-inset-top)) 14px max(10px,env(safe-area-inset-bottom));gap:10px}
+    .ps-shell::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(#0f3d2c33,#0f3d2caa 75%),url('assets/mail-bg/forest-delivery-path-ferns.jpg') center/cover no-repeat}
+    .ps-info{display:flex;align-items:center;justify-content:space-between;gap:10px;flex:none}
+    .ps-bubble{margin:0;padding:8px 16px;border:3px solid var(--gold);border-radius:20px;background:var(--cream);font-size:clamp(18px,4.4vw,26px);font-weight:1000;box-shadow:0 4px 0 #c89c52;min-height:1.6em}
+    .ps-bubble.is-pop{animation:pop .35s cubic-bezier(.2,1.5,.4,1)}
+    .ps-levels{display:flex;gap:6px;margin:0;padding:0;list-style:none}
+    .ps-levels li{width:30px;height:30px;border:3px solid #fffdf2aa;border-radius:50%;background:#0d332588;display:grid;place-items:center;color:#fff;font-size:15px}
+    .ps-levels li.is-now{border-color:#ffd56a;background:#ffca58;color:#573e1d;transform:scale(1.15)}
+    .ps-levels li.is-done{border-color:#9be39f;background:#4fb577}
+    .ps-stage{position:relative;flex:1;min-height:0;border:4px solid #fffdf244;border-radius:26px;background:#2b6b3f55;overflow:hidden;touch-action:none}
+    .ps-stage svg{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+    .road-edge{fill:none;stroke:#7a5a2c;stroke-linecap:round;stroke-linejoin:round}
+    .road{fill:none;stroke:#f3dca6;stroke-linecap:round;stroke-linejoin:round}
+    .road-mid{fill:none;stroke:#d4b679;stroke-width:5;stroke-dasharray:18 22;stroke-linecap:round}
+    .trail{fill:none;stroke:#7fd48a;stroke-linecap:round;stroke-linejoin:round;opacity:.85}
+    .arrow{fill:none;stroke:#c9a55f;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
+    .star polygon{fill:#ffd23f;stroke:#c98a12;stroke-width:5;stroke-linejoin:round}
+    .star text{font-size:38px;font-weight:1000;fill:#7a4b00;text-anchor:middle;dominant-baseline:central}
+    .star .pulse{transform-box:fill-box;transform-origin:center}
+    .star.is-next .pulse{animation:starPulse .9s ease-in-out infinite alternate}
+    .star.is-got polygon{fill:#bfe9b8;stroke:#4fb577}
+    .star.is-got text{fill:#2c7a3e}
+    .courier{cursor:grab;transition:transform .09s linear}
+    .courier.is-snap{transition:none}
+    .courier{cursor:grab}
+    .courier.is-drag{cursor:grabbing}
+    .courier-ring{fill:#ffffff22;stroke:#ffd56a;stroke-width:6;stroke-dasharray:14 10;animation:ring 1.2s linear infinite}
+    .courier.is-drag .courier-ring{opacity:0}
+    .hand{font-size:120px;pointer-events:none;filter:drop-shadow(0 4px 3px #0a2a1c88)}
+    .mark{fill:#ff8a3d;stroke:#fffdf2;stroke-width:4;opacity:.95}
+    @keyframes starPulse{to{transform:scale(1.18)}}
+    @keyframes fadeIn{from{opacity:0}}
+    .ps-right{display:flex;align-items:center;gap:10px}
+    .ps-score{position:absolute;left:50%;top:14px;z-index:5;display:grid;justify-items:center;padding:8px 20px;border:4px solid var(--gold);border-radius:20px;background:var(--cream);box-shadow:0 5px 0 #c89c52;transform:translateX(-50%);pointer-events:none;animation:scoreIn .5s cubic-bezier(.2,1.5,.4,1)}
+    .ps-score[hidden]{display:none}
+    .ps-score b{color:#f2b945;font-size:40px;letter-spacing:.06em;line-height:1}
+    .ps-score b .off{color:#e6dcc4}
+    .ps-score span{font-size:24px;font-weight:1000}
+    .finish-score{margin:0;font-size:22px;font-weight:1000}
+    @keyframes scoreIn{from{transform:translateX(-50%) scale(.4)}}
+    .ps-stage.is-off{animation:shake .38s}
+    .glyph{font-size:120px;font-weight:1000;fill:#fffdf2;stroke:#17593f;stroke-width:6;paint-order:stroke;text-anchor:middle;dominant-baseline:central}
+    .bpm-word{display:inline-flex;align-items:center;justify-content:center;flex:none;padding-right:.26em;white-space:nowrap}
+    .bpm-main-char{display:inline-block;flex:none;font-size:1em;line-height:1.04}
+    .bpm-column{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;margin-left:.05em;font-size:.4em;font-weight:850;line-height:1}
+    .bpm-onset,.bpm-rime{display:block;line-height:1.03}
+    .bpm-tone{position:absolute;right:-.55em;top:85%;transform:translateY(-50%) scale(1.5,1.8);font-size:1.2em;font-weight:900;color:#d32f2f;line-height:1}
+    .bpm-tone-dot{position:absolute;right:0;top:-.6em;font-size:1.4em;font-weight:900;color:#d32f2f;line-height:1}
+    .overlay{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:16px;background:#0e3a28aa}
+    .overlay[hidden]{display:none}
+    .pick{display:flex;align-items:center;gap:8px;padding:8px 14px;border:4px solid var(--gold);border-radius:999px;background:var(--cream);font-size:clamp(18px,5vw,24px);font-weight:1000;box-shadow:0 5px 0 #c89c52}
+    .pick button{min-width:84px;min-height:52px;padding:4px 12px;border:3px solid #cfe0c8;border-radius:16px;background:#f1f7ea}
+    .pick button[aria-pressed="true"]{background:linear-gradient(#ffca58,#f6ac34);border-color:#b9792b;color:#573e1d;box-shadow:0 3px 0 #b9792b}
+    .go{display:grid;place-items:center;width:128px;height:128px;padding-left:10px;border:7px solid var(--cream);border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff8a6e,#e0473a 60%,#b8322a);color:var(--cream);font-size:56px;box-shadow:0 8px 0 #8e2620}
+    .label{padding:10px 22px;border:4px solid var(--gold);border-radius:999px;background:var(--cream);font-size:clamp(20px,6vw,28px);font-weight:1000;box-shadow:0 5px 0 #c89c52}
+    .card{display:grid;justify-items:center;gap:10px;width:min(92vw,400px);padding:22px;border:6px solid var(--gold);border-radius:28px;background:var(--cream);text-align:center;box-shadow:0 12px 0 #c89c52}
+    .card img{height:130px}
+    .card h2{margin:0;font-size:clamp(24px,6.4vw,38px);white-space:nowrap;display:flex;justify-content:center}
+    .stars{margin:0;color:#f2b945;font-size:44px;letter-spacing:.08em}
+    .stars .off{color:#e6dcc4}
+    .actions{display:flex;gap:12px;width:100%}
+    .actions button,.actions a{flex:1;min-height:54px;display:flex;align-items:center;justify-content:center;border:0;border-radius:16px;font-size:clamp(17px,4.8vw,22px);font-weight:1000;text-decoration:none;color:var(--ink)}
+    .actions button{background:linear-gradient(#ffca58,#f6ac34);box-shadow:0 5px 0 #b9792b}
+    .actions a{background:#e5f2df;box-shadow:0 5px 0 #a9c8a2}
+    @keyframes pop{from{transform:scale(.8)}}
+    @keyframes ring{to{stroke-dashoffset:-48}}
+    @keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+    @media(max-width:680px){.ps-levels li{width:24px;height:24px;font-size:12px}.ps-info{flex-wrap:wrap}.ps-bubble{order:2;flex:1 1 100%;text-align:center}.ps-right{order:1;margin-left:auto}}
+  </style>
+</head>
+<body>
+  <div class="ps-shell">
+    <header class="gh">
+      <a class="dino-home" href="index.html" aria-label="回選遊戲首頁"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.6 1.6 11.4a1 1 0 0 0 1.3 1.5L4.5 11.6V20a1.5 1.5 0 0 0 1.5 1.5h3.8v-5.8a.7.7 0 0 1 .7-.7h3a.7.7 0 0 1 .7.7v5.8H18a1.5 1.5 0 0 0 1.5-1.5v-8.4l1.6 1.3a1 1 0 0 0 1.3-1.5Z"/></svg></a>
+      <h1 id="title" class="gh-title">郵差走小路</h1>
+      <div class="gh-tools"><button id="help" class="gh-btn" type="button" aria-label="玩法">?</button><button id="menuBtn" class="gh-btn" type="button" aria-label="難度選單"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96a7 7 0 0 0-1.62-.94l-.36-2.54a.48.48 0 0 0-.48-.41h-3.84a.47.47 0 0 0-.47.41l-.36 2.54a7.4 7.4 0 0 0-1.62.94l-2.39-.96a.48.48 0 0 0-.59.22L2.74 8.87a.47.47 0 0 0 .12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54a7 7 0 0 0 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.47.47 0 0 0-.12-.61zM12 15.6a3.6 3.6 0 1 1 0-7.2 3.6 3.6 0 0 1 0 7.2z"/></svg></button></div>
+    </header>
+    <div class="ps-info">
+      <p id="bubble" class="ps-bubble" role="status" aria-live="polite"></p>
+      <div class="ps-right"><ol id="levels" class="ps-levels" aria-label="關卡"></ol></div>
+    </div>
+    <main id="stage" class="ps-stage"><svg id="svg" aria-label="小路"></svg><div id="score" class="ps-score" hidden></div></main>
+  </div>
+
+  <div id="ready" class="overlay">
+    <div class="pick" role="group" aria-label="難度"><button type="button" data-road="easy" id="pickEasy">簡單</button><button type="button" data-road="mid" id="pickMid">普通</button><button type="button" data-road="hard" id="pickHard">困難</button></div>
+    <button id="start" type="button" style="display:flex;flex-direction:column;align-items:center;gap:18px;border:0;background:none">
+      <span class="go" aria-hidden="true">▶</span><span id="startLabel" class="label">點一下，開始送信！</span>
+    </button>
+  </div>
+
+  <div id="finish" class="overlay" hidden>
+    <div class="card">
+      <img id="finishActor" alt="">
+      <h2 id="finishTitle">信都送到了！</h2>
+      <p id="finishStars" class="stars"></p>
+      <p id="finishScore" class="finish-score"></p>
+      <div class="actions"><button id="again" type="button">再玩一次</button><a id="home" href="index.html">回首頁</a></div>
+    </div>
+  </div>
+
+<script>
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const NS = 'http://www.w3.org/2000/svg';
+  const setKidText = Dino.kidText({
+    '郵差走小路': ['ㄧㄡˊ', 'ㄔㄞ', 'ㄗㄡˇ', 'ㄒㄧㄠˇ', 'ㄌㄨˋ'],
+    '點一下，開始送信！': ['ㄉㄧㄢˇ', 'ㄧ', 'ㄒㄧㄚˋ', '', 'ㄎㄞ', 'ㄕˇ', 'ㄙㄨㄥˋ', 'ㄒㄧㄣˋ', ''],
+    '按住郵差，走到朋友家': ['ㄢˋ', 'ㄓㄨˋ', 'ㄧㄡˊ', 'ㄔㄞ', '', 'ㄗㄡˇ', 'ㄉㄠˋ', 'ㄆㄥˊ', 'ㄧㄡˇ', 'ㄐㄧㄚ'],
+    '按住郵差，照星星走到郵筒': ['ㄢˋ', 'ㄓㄨˋ', 'ㄧㄡˊ', 'ㄔㄞ', '', 'ㄓㄠˋ', 'ㄒㄧㄥ', 'ㄒㄧㄥ', 'ㄗㄡˇ', 'ㄉㄠˋ', 'ㄧㄡˊ', 'ㄊㄨㄥˇ'],
+    '沿著路走喔': ['ㄧㄢˊ', 'ㄓㄜ˙', 'ㄌㄨˋ', 'ㄗㄡˇ', 'ㄛ'],
+    '回到路上': ['ㄏㄨㄟˊ', 'ㄉㄠˋ', 'ㄌㄨˋ', 'ㄕㄤˋ'],
+    '送到了！': ['ㄙㄨㄥˋ', 'ㄉㄠˋ', 'ㄌㄜ˙', ''],
+    '寫出注音ㄑ': ['ㄒㄧㄝˇ', 'ㄔㄨ', 'ㄓㄨˋ', 'ㄧㄣ', ''],
+    '信都送到了！': ['ㄒㄧㄣˋ', 'ㄉㄡ', 'ㄙㄨㄥˋ', 'ㄉㄠˋ', 'ㄌㄜ˙', ''],
+    '簡單': ['ㄐㄧㄢˇ', 'ㄉㄢ'], '普通': ['ㄆㄨˇ', 'ㄊㄨㄥ'], '困難': ['ㄎㄨㄣˋ', 'ㄋㄢˊ'],
+    '知道了': ['ㄓ', 'ㄉㄠˋ', 'ㄌㄜ˙'],
+    '再玩一次': ['ㄗㄞˋ', 'ㄨㄢˊ', 'ㄧ', 'ㄘˋ'], '回首頁': ['ㄏㄨㄟˊ', 'ㄕㄡˇ', 'ㄧㄝˋ']
+  });
+
+  // 關卡：橫式座標 1000×600；直式手機自動轉成上→下（注音關不轉，字形不能歪）。cross＝路會交叉，後半段畫成橋
+  const LEVELS = [
+    { pts: [[110, 300], [890, 300]], lines: true },
+    { pts: [[110, 430], [300, 170], [500, 430], [700, 170], [890, 400]] },
+    { pts: [[110, 470], [260, 150], [420, 470], [580, 150], [740, 470], [890, 170]], lines: true },
+    { pts: [[100, 500], [380, 470], [620, 300], [680, 130], [520, 70], [400, 150], [430, 330], [560, 470], [760, 520], [900, 400]], cross: [520, 70] },
+    { pts: [[640, 70], [380, 300], [650, 530]], lines: true, glyph: 'ㄑ', keep: true }
+  ];
+  const COURIERS = [['chick_abao', 'walk_r'], ['feifei', 'walk_r'], ['iggy', 'walk_r'], ['pairo', 'walk_r'], ['xiaokong', 'run_r']];
+  const FRIENDS = ['chick_abao', 'feifei', 'iggy', 'pairo', 'xiaokong'];
+  // 難度（導演 2026-10-22）：路寬＋可走出路外多遠（grace）＋出去後手指最多再走多遠（travel）；困難＝一出去就退回
+  const MODES = {
+    easy: { road: 110, slack: 10, grace: 90, travel: 360 },
+    mid: { road: 84, slack: 8, grace: 60, travel: 240 },
+    hard: { road: 66, slack: 14, grace: 0, travel: 0 }
+  };
+  const STEP = 5;
+  let mode = 'easy';
+  try { const m = localStorage.getItem('dinopost-path-mode'); if (MODES[m]) mode = m; } catch { /* ok */ }
+
+  const S = { level: 0, offs: 0, samples: [], i: 0, status: [], checkpoints: [], cp: 0, drag: false, done: false, hinting: false,
+    offset: [0, 0], offNow: false, offTravel: 0, lastP: null, lastMark: null, courier: null, friend: null, results: [], trails: [], el: {} };
+
+  const say = text => { const b = $('bubble'); setKidText(b, text); b.classList.remove('is-pop'); void b.offsetWidth; b.classList.add('is-pop'); };
+  const el = (tag, attrs = {}, parent) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); parent?.append(n); return n; };
+  const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+  const ease = k => k < .5 ? 2 * k * k : 1 - (-2 * k + 2) ** 2 / 2;
+  const onTol = () => MODES[mode].road / 2 + MODES[mode].slack;
+  const prompt = () => LEVELS[S.level].glyph ? '寫出注音ㄑ' : '按住郵差，走到朋友家';
+  const inGame = () => $('ready').hidden && $('finish').hidden;
+
+  function pathD(pts, lines) {
+    if (lines || pts.length < 3) return 'M' + pts.map(p => p.join(' ')).join(' L');
+    // Catmull-Rom 轉貝茲，讓彎路圓順
+    let d = `M${pts[0][0]} ${pts[0][1]}`;
+    for (let k = 0; k < pts.length - 1; k++) {
+      const p0 = pts[k - 1] || pts[k], p1 = pts[k], p2 = pts[k + 1], p3 = pts[k + 2] || p2;
+      d += ` C${p1[0] + (p2[0] - p0[0]) / 6} ${p1[1] + (p2[1] - p0[1]) / 6} ${p2[0] - (p3[0] - p1[0]) / 6} ${p2[1] - (p3[1] - p1[1]) / 6} ${p2[0]} ${p2[1]}`;
+    }
+    return d;
+  }
+  const polyD = list => 'M' + list.map(p => `${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(' L');
+
+  // 一段路：邊框、路面、中線、方向箭頭、走過的綠色軌跡
+  function drawRoad(svg, list, width) {
+    const d = polyD(list);
+    el('path', { d, class: 'road-edge', 'stroke-width': width + 16 }, svg);
+    el('path', { d, class: 'road', 'stroke-width': width }, svg);
+    el('path', { d, class: 'road-mid' }, svg);
+    const trail = el('path', { d, class: 'trail', 'stroke-width': width * .42 }, svg);
+    for (let k = 20; k < list.length - 14; k += 34) {
+      const [x, y] = list[k], [ax, ay] = list[k + 3];
+      el('path', { class: 'arrow', d: 'M-9 -13 L7 0 L-9 13', transform: `translate(${x} ${y}) rotate(${Math.atan2(ay - y, ax - x) * 180 / Math.PI}) scale(${width / 110})` }, svg);
+    }
+    return trail;
+  }
+
+  function build() {
+    stopHint();
+    const L = LEVELS[S.level];
+    const box = $('stage').getBoundingClientRect();
+    const portrait = box.height > box.width * 1.05 && !L.keep;
+    let X0 = 0, Y0 = 0, W = portrait ? 600 : 1000, H = portrait ? 1000 : 600;
+    const pts = portrait ? L.pts.map(([x, y]) => [y, x]) : L.pts;
+    if (L.keep) {   // 注音關不轉向：畫面框住字形再放大，直式手機也夠大
+      const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]), pad = 190;
+      X0 = Math.min(...xs) - pad; Y0 = Math.min(...ys) - pad; W = Math.max(...xs) - X0 + pad; H = Math.max(...ys) - Y0 + pad;
+    }
+    const svg = $('svg'); svg.replaceChildren(); svg.setAttribute('viewBox', `${X0} ${Y0} ${W} ${H}`);
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+    const width = MODES[mode].road;
+    // 取樣：每 STEP 單位一點
+    const probe = el('path', { d: pathD(pts, L.lines) }, svg), len = probe.getTotalLength();
+    S.samples = []; for (let s = 0; s <= len; s += STEP) { const p = probe.getPointAtLength(s); S.samples.push([p.x, p.y]); }
+    probe.remove();
+    const N = S.samples.length;
+    if (L.glyph) el('text', { class: 'glyph', x: X0 + W - 90, y: Y0 + 100 }, svg).textContent = L.glyph;
+    // 交叉的路：分兩段畫，後半段疊在上面像一座橋，孩子看得出路往哪接
+    let cut = N - 1;
+    if (L.cross) { const c = portrait ? [L.cross[1], L.cross[0]] : L.cross; cut = S.samples.reduce((b, p, k) => dist(p, c) < dist(S.samples[b], c) ? k : b, 0); }
+    S.trails = [{ a: 0, el: drawRoad(svg, S.samples.slice(0, cut + 1), width) }];
+    if (L.cross) {
+      S.trails.push({ a: cut, el: drawRoad(svg, S.samples.slice(cut), width) });
+      el('path', { d: polyD(S.samples.slice(cut - 4, cut + 5)), class: 'road', 'stroke-width': width, 'stroke-linecap': 'butt' }, svg);   // 蓋掉接縫的圓頭
+    }
+    S.trails.forEach(t => { t.len = t.el.getTotalLength(); });
+    S.el.marks = el('g', {}, svg);   // 走出路外的橘色腳印
+    // 三分之一、三分之二各一顆星＝存檔點，標 1、2 告訴孩子先去哪
+    S.checkpoints = [0, Math.floor(N / 3), Math.floor(N * 2 / 3)].map(idx => {
+      // 星星不要放在交叉口：附近若有另一段路就往前挪
+      const near = k => S.samples.some((p, j) => Math.abs(j - k) > 40 && dist(p, S.samples[k]) < width * 1.3);
+      while (idx > 0 && idx < N - 20 && near(idx)) idx += 4;
+      return idx;
+    });
+    S.el.stars = S.checkpoints.slice(1).map((idx, n) => {
+      const [x, y] = S.samples[idx];
+      const g = el('g', { class: 'star', transform: `translate(${x} ${y})` }, svg), inner = el('g', { class: 'pulse' }, g);
+      const r = Math.max(30, width * .42), pts5 = [];
+      for (let k = 0; k < 10; k++) { const a = -Math.PI / 2 + k * Math.PI / 5, rr = k % 2 ? r * .5 : r; pts5.push(`${(Math.cos(a) * rr).toFixed(1)},${(Math.sin(a) * rr).toFixed(1)}`); }
+      el('polygon', { points: pts5.join(' ') }, inner);
+      el('text', { y: 3 }, inner).textContent = n + 1;
+      return g;
+    });
+    const [ex, ey] = S.samples.at(-1);
+    S.friend = S.friend && S.friend !== S.courier[0] ? S.friend : Dino.shuffle(FRIENDS.filter(id => id !== S.courier[0]))[0];
+    el('text', { x: ex, y: ey, 'font-size': 60, 'text-anchor': 'middle', 'dominant-baseline': 'central' }, svg).textContent = '📮';
+    const fx = Math.min(X0 + W - 70, ex + (portrait ? 110 : 0)), fy = portrait ? ey - 30 : Math.max(150, ey - 70);
+    el('image', { href: `assets/cast/${S.friend}__hello.webp`, x: fx - 70, y: fy - 170, width: 140, height: 160, preserveAspectRatio: 'xMidYMax meet' }, svg);
+    const g = el('g', { class: 'courier is-snap' }, svg);
+    el('circle', { class: 'courier-ring', r: 70, cx: 0, cy: -10 }, g);
+    S.el.img = el('image', { href: `assets/cast/${S.courier[0]}__${S.courier[1]}.webp`, x: -75, y: -150, width: 150, height: 170, preserveAspectRatio: 'xMidYMax meet' }, g);
+    S.el.courier = g;
+    S.el.hand = el('text', { class: 'hand', 'text-anchor': 'middle', 'dominant-baseline': 'hanging', opacity: 0 }, svg); S.el.hand.textContent = '👆';
+    resetWalk();
+    renderLevels();
+    requestAnimationFrame(() => g.classList.remove('is-snap'));
+  }
+
+  function resetWalk() {
+    S.i = 0; S.cp = 0; S.offs = 0; S.done = false; S.status = []; S.offset = [0, 0]; S.offNow = false; S.offTravel = 0;
+    S.el.marks.replaceChildren(); place();
+  }
+
+  // 郵差＝路上進度點＋手指離路的偏移：走在路上、走出路外都同一條公式，不會跳格
+  function place() {
+    const [sx, sy] = S.samples[S.i];
+    const x = sx + S.offset[0], y = sy + S.offset[1] + 30;
+    const ahead = S.samples[Math.min(S.samples.length - 1, S.i + 6)], back = S.samples[Math.max(0, S.i - 6)];
+    S.el.courier.style.transform = `translate(${x}px,${y}px)`;
+    S.el.img.setAttribute('transform', ahead[0] < back[0] - 2 ? 'scale(-1 1)' : '');
+    S.trails.forEach(t => { const v = Math.min(t.len, Math.max(0, (S.i - t.a) * STEP)); t.el.style.strokeDasharray = `${v} ${t.len + 10}`; });
+    S.el.stars.forEach((st, n) => { st.classList.toggle('is-got', n < S.cp); st.classList.toggle('is-next', n === S.cp); });
+  }
+  const handAt = ([x, y], press = false) => S.el.hand.setAttribute('transform', `translate(${x + 16} ${y - 50}) scale(${press ? .85 : 1})`);
+  function dropMark(p) {
+    if (S.lastMark && dist(p, S.lastMark) < 24) return;
+    S.lastMark = p; el('circle', { class: 'mark', cx: p[0], cy: p[1] + 30, r: 13 }, S.el.marks);
+  }
+
+  // ---------- 提示：手指從郵差身上沿著路往前滑，重複到孩子按下去 ----------
+  function startHint() {
+    stopHint(); S.hinting = true;
+    const t0 = performance.now();
+    const loop = t => {
+      if (!S.hinting) return;
+      const c = ((t - t0) % 2400) / 1600, k = Math.min(1, c);
+      handAt(S.samples[Math.min(S.samples.length - 1, S.i + Math.round(60 * ease(k)))], k < .12);
+      S.el.hand.setAttribute('opacity', c > 1 ? 0 : 1);
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+  }
+  function stopHint() { S.hinting = false; S.el.hand?.setAttribute('opacity', 0); }
+
+  // ---------- 玩法小框框（像首頁預覽）：小動畫循環播，點哪裡都關 ----------
+  function buildHowto(stage) {
+    const svg = el('svg', { viewBox: '0 0 240 130', 'aria-hidden': 'true' }, stage), d = 'M22 100 C70 104 64 34 118 34 S170 98 214 52';
+    const road = el('path', { d, fill: 'none', stroke: '#f3dca6', 'stroke-width': 26, 'stroke-linecap': 'round' }, svg);
+    el('path', { d, fill: 'none', stroke: '#d4b679', 'stroke-width': 2, 'stroke-dasharray': '6 7' }, svg);
+    const trail = el('path', { d, fill: 'none', stroke: '#7fd48a', 'stroke-width': 10, 'stroke-linecap': 'round', pathLength: 100, 'stroke-dasharray': '100 101' }, svg);
+    el('animate', { attributeName: 'stroke-dashoffset', values: '100;100;0;0', keyTimes: '0;.15;.85;1', dur: '3.2s', repeatCount: 'indefinite' }, trail);
+    const L = road.getTotalLength();
+    [1 / 3, 2 / 3].forEach((f, n) => {
+      const p = road.getPointAtLength(L * f), g = el('g', { transform: `translate(${p.x} ${p.y})` }, svg), pts5 = [];
+      for (let k = 0; k < 10; k++) { const a = -Math.PI / 2 + k * Math.PI / 5, rr = k % 2 ? 6 : 12; pts5.push(`${(Math.cos(a) * rr).toFixed(1)},${(Math.sin(a) * rr).toFixed(1)}`); }
+      el('polygon', { points: pts5.join(' '), fill: '#ffd23f', stroke: '#c98a12', 'stroke-width': 2 }, g);
+      el('text', { y: 1, 'font-size': 11, 'font-weight': 900, fill: '#7a4b00', 'text-anchor': 'middle', 'dominant-baseline': 'central' }, g).textContent = n + 1;
+    });
+    const end = road.getPointAtLength(L);
+    el('text', { x: end.x + 4, y: end.y - 4, 'font-size': 24, 'text-anchor': 'middle', 'dominant-baseline': 'central' }, svg).textContent = '📮';
+    const mover = el('g', {}, svg);
+    el('image', { href: `assets/cast/${S.courier[0]}__${S.courier[1]}.webp`, x: -17, y: -40, width: 34, height: 40, preserveAspectRatio: 'xMidYMax meet' }, mover);
+    el('text', { x: 6, y: -18, 'font-size': 26, 'dominant-baseline': 'hanging' }, mover).textContent = '👆';
+    el('animateMotion', { path: d, keyPoints: '0;0;1;1', keyTimes: '0;.15;.85;1', calcMode: 'linear', dur: '3.2s', repeatCount: 'indefinite' }, mover);
+  }
+  let HW;   // 共用玩法框（Dino.howto），在檔尾建立
+  function showHowto() { stopHint(); HW.show(); }
+
+  function toSvg(e) {
+    const svg = $('svg'), pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+    const p = pt.matrixTransform(svg.getScreenCTM().inverse()); return [p.x, p.y];
+  }
+
+  function onDown(e) {
+    if (S.done) return;
+    const p = toSvg(e), [x, y] = S.samples[S.i];
+    if (dist(p, [x, y - 40]) > 130) { say(prompt()); return; }
+    S.drag = true; S.lastP = p; S.grab = [p[0] - x, p[1] - y]; S.el.courier.classList.add('is-drag'); $('svg').setPointerCapture(e.pointerId);
+    stopHint(); Dino.sfx('tap', .4);
+  }
+  function onMove(e) {
+    if (!S.drag || S.done) return;
+    const raw = toSvg(e), M = MODES[mode];
+    // 手指按在郵差身上哪裡就以那點拖，不會一按就跳；偏移慢慢歸零，最後以手指為準
+    S.grab = S.grab.map(v => v * .85);
+    const p = [raw[0] - S.grab[0], raw[1] - S.grab[1]];
+    // 只在目前位置附近往前找，跨過彎道直接跳不算
+    let best = -1, bd = Infinity;
+    for (let k = Math.max(0, S.i - 8); k < Math.min(S.samples.length, S.i + 25); k++) {
+      const dd = dist(p, S.samples[k]); if (dd < bd) { bd = dd; best = k; }
+    }
+    if (bd > onTol() + M.grace) return goOff();
+    const on = bd <= onTol();
+    if (on) {
+      if (S.offNow) { S.offNow = false; S.offTravel = 0; say(prompt()); }
+    } else {
+      if (!S.offNow) { S.offNow = true; Dino.sfx('wrong', .18); say('回到路上'); }
+      S.offTravel += dist(p, S.lastP || p);
+      dropMark(p);
+      if (S.offTravel > M.travel) return goOff();
+    }
+    S.lastP = p;
+    if (best > S.i) { for (let k = S.i + 1; k <= best; k++) S.status[k] = on ? 1 : 0; S.i = best; }
+    const [sx, sy] = S.samples[S.i];
+    S.offset = [p[0] - sx, p[1] - sy];
+    const reached = S.checkpoints.findIndex((idx, n) => n > S.cp && S.i >= idx);
+    if (reached > 0) { S.cp = reached; Dino.sfx('pop', .7); Dino.burst(S.el.stars[reached - 1]); }
+    place();
+    if (S.i >= S.samples.length - 3 && on) arrive();
+  }
+  function onUp() { S.drag = false; S.el.courier?.classList.remove('is-drag'); S.offset = [0, 0]; S.offNow = false; S.offTravel = 0; if (S.samples.length) place(); }
+
+  function goOff() {
+    S.drag = false; S.el.courier.classList.remove('is-drag'); S.offs++;
+    S.offset = [0, 0]; S.offNow = false; S.offTravel = 0; S.lastMark = null;
+    Dino.sfx('wrong', .35); say('沿著路走喔');
+    $('stage').classList.remove('is-off'); void $('stage').offsetWidth; $('stage').classList.add('is-off');
+    // 慢慢退回上一顆星，退回的那段重新算
+    const target = S.checkpoints[S.cp];
+    S.status.length = target + 1;
+    setTimeout(() => S.el.marks.replaceChildren(), 500);
+    const tick = () => { S.i = Math.max(target, S.i - 6); place(); if (S.i > target) requestAnimationFrame(tick); };
+    tick();
+  }
+
+  // 完美度＝走在路上的比例，每退回一次扣 10
+  function levelScore() {
+    const walked = S.status.slice(1), on = walked.filter(v => v === 1).length;
+    return Math.max(0, Math.round(on / Math.max(1, walked.length) * 100) - S.offs * 10);
+  }
+  const starsOf = score => score >= 90 ? 3 : score >= 70 ? 2 : 1;
+  const starHtml = n => [0, 1, 2].map(i => `<span class="${i < n ? '' : 'off'}">★</span>`).join('');
+
+  function arrive() {
+    S.done = true; S.drag = false; S.offset = [0, 0]; S.cp = 3; place();
+    Dino.sfx('stamp', .8); setTimeout(() => Dino.sfx('correct', .8), 250);
+    Dino.burst(S.el.courier); say('送到了！');
+    S.el.img.setAttribute('href', `assets/cast/${S.courier[0]}__cheer.webp`); S.el.img.removeAttribute('transform');
+    const L = LEVELS[S.level];
+    if (L.glyph) fetch('assets/audio/symbols.json').then(r => r.json()).then(m => { const a = new Audio(m.zhuyin[L.glyph]); setTimeout(() => a.play().catch(() => {}), 700); }).catch(() => {});
+    const score = levelScore(); S.results.push(score);
+    $('score').innerHTML = `<b>${starHtml(starsOf(score))}</b><span>${score}%</span>`; $('score').hidden = false;
+    setTimeout(() => { $('score').hidden = true; if (!inGame()) return; S.level++; S.friend = null; S.level < LEVELS.length ? (build(), say(prompt()), startHint()) : finish(); }, 2000);
+  }
+
+  function renderLevels() {
+    $('levels').replaceChildren(...LEVELS.map((L, n) => { const li = document.createElement('li'); li.textContent = L.glyph || n + 1; li.className = n < S.level ? 'is-done' : n === S.level ? 'is-now' : ''; return li; }));
+  }
+
+  function finish() {
+    const avg = Math.round(S.results.reduce((a, b) => a + b, 0) / S.results.length);
+    $('finishStars').innerHTML = starHtml(starsOf(avg));
+    $('finishScore').textContent = `${avg}%`;
+    $('finishActor').src = `assets/cast/${S.courier[0]}__cheer.webp`;
+    $('finish').hidden = false; Dino.sfx('finish', .8); Dino.bgm.start();
+  }
+
+  function newGame() {
+    S.level = 0; S.results = []; S.friend = null;
+    S.courier = Dino.shuffle(COURIERS.filter(c => c !== S.courier))[0];
+    build(); say(prompt());
+  }
+
+  function syncPick() { document.querySelectorAll('[data-road]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.road === mode))); }
+
+  setKidText($('title'), '郵差走小路'); setKidText($('startLabel'), '點一下，開始送信！');
+  setKidText($('pickEasy'), '簡單'); setKidText($('pickMid'), '普通'); setKidText($('pickHard'), '困難');
+  setKidText($('finishTitle'), '信都送到了！'); setKidText($('again'), '再玩一次'); setKidText($('home'), '回首頁');
+  document.documentElement.classList.toggle('dino-mode', Dino.dinoMode());
+  Dino.bgm.start(); Dino.menuTaps($('ready')); Dino.menuTaps($('finish'));
+  // 換難度＝這一輪重來（跟翻翻樂換對數一樣）
+  document.querySelectorAll('[data-road]').forEach(b => b.addEventListener('click', () => {
+    if (b.dataset.road === mode) return;
+    mode = b.dataset.road; try { localStorage.setItem('dinopost-path-mode', mode); } catch { /* ok */ }
+    syncPick(); newGame();
+  }));
+  syncPick();
+  // 導演 2026-10-22：房子永遠回首頁；難度另用右上 ⚙ 打開本遊戲的開始選單
+  document.querySelector('.dino-home').addEventListener('click', e => { e.preventDefault(); Dino.goTo('index.html'); });
+  $('menuBtn').addEventListener('click', () => { if (!inGame()) return; stopHint(); S.drag = false; Dino.sfx('tap', .5); $('ready').hidden = false; Dino.bgm.start(); });
+  let howtoSeen = false;
+  $('start').addEventListener('click', () => {
+    $('ready').hidden = true; Dino.bgm.stop();
+    if (S.done) return;
+    if (!howtoSeen) { howtoSeen = true; showHowto(); } else startHint();
+  });
+  $('help').addEventListener('click', () => { Dino.sfx('tap', .5); showHowto(); });
+  $('again').addEventListener('click', () => { $('finish').hidden = true; Dino.bgm.stop(); newGame(); startHint(); });
+  const svg = $('svg');
+  svg.addEventListener('pointerdown', onDown); svg.addEventListener('pointermove', onMove);
+  svg.addEventListener('pointerup', onUp); svg.addEventListener('pointercancel', onUp);
+  let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { if (S.done) return; const i = S.i, cp = S.cp, st = S.status, offs = S.offs; build(); S.i = Math.min(i, S.samples.length - 1); S.cp = cp; S.status = st; S.offs = offs; place(); if (inGame() && !HW.isOpen()) startHint(); }, 150); });
+  newGame();
+  HW = Dino.howto({ preview: buildHowto, text: '按住郵差，照星星走到郵筒', kid: setKidText, onClose: () => { if (inGame() && !S.drag && !S.done) startHint(); } });
+  window.__path = S;
+})();
+</script>
+</body>
+</html>

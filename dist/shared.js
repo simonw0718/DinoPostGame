@@ -1,6 +1,24 @@
 // Shared by index/mail (game-homes.js), match (app.js) and zhuyin-sort (zhuyin-sort.js).
 window.Dino = (() => {
   'use strict';
+  // 測試用靜音：網址加 ?mute=1 後，同一分頁之後的頁面都不出聲（?mute=0 解除）。
+  const muteQ = new URLSearchParams(location.search).get('mute');
+  try { if (muteQ !== null) sessionStorage.setItem('dinoMute', muteQ); } catch { /* ok */ }
+  let muted = false; try { muted = sessionStorage.getItem('dinoMute') === '1'; } catch { /* ok */ }
+  if (muted) { const play = HTMLMediaElement.prototype.play; HTMLMediaElement.prototype.play = function () { this.muted = true; return play.call(this); }; }
+  // 鎖住 iOS 整頁上下滑動／彈動：只放行真的捲得動的框（題庫清單、設定框）與滑桿。
+  document.documentElement.style.overscrollBehavior = 'none';
+  const scrollable = el => {
+    for (; el && el !== document.body && el !== document.documentElement; el = el.parentElement) {
+      const y = getComputedStyle(el).overflowY;
+      if ((y === 'auto' || y === 'scroll') && el.scrollHeight > el.clientHeight + 1) return true;
+    }
+    return false;
+  };
+  addEventListener('touchmove', e => {
+    if (e.touches.length > 1 || e.target.closest?.('input,textarea,select') || scrollable(e.target)) return;
+    e.preventDefault();
+  }, { passive: false });
   // Candidate AI pose sheets; not registered as visual masters yet.
   const characters = [
     { id: 'xiaokong', name: '小空', asset: 'xiaokong-poses-v1.png', frames: 2, ratio: 1 },
@@ -179,6 +197,7 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
   let ctx = null;
   const buffers = {};
   function audioCtx() {
+    if (muted) return null;   // 測試靜音：音效、BGM 都不啟動
     if (!ctx) { const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return null; ctx = new AC(); }
     return ctx;
   }
@@ -228,7 +247,7 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
         try { const pos = JSON.parse(sessionStorage.getItem(bgmPosKey) || 'null'); if (pos?.track === name) offset = pos.t % buffer.duration; } catch { /* ok */ }
         const src = c.createBufferSource(), gain = c.createGain();
         src.buffer = buffer; src.loop = true;
-        gain.gain.setValueAtTime(0, c.currentTime); gain.gain.linearRampToValueAtTime(.32, c.currentTime + .6);
+        gain.gain.setValueAtTime(0, c.currentTime); gain.gain.linearRampToValueAtTime(.2, c.currentTime + .6);
         src.connect(gain).connect(c.destination); src.start(0, offset);
         playing = { track: name, src, gain, startedAt: c.currentTime, offset, duration: buffer.duration };
       } catch { /* 載入失敗就安靜 */ } finally { starting = false; }
@@ -273,7 +292,32 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
   // 點連結先播「咻」再換頁，避免聲音被換頁切掉
   function goTo(href, delay = 180) { sfx('swoosh', .7); setTimeout(() => { location.href = href; }, delay); }
 
+  // 玩法預覽小動畫 markup（首頁入口卡＋各遊戲 ? 玩法框共用；樣式 preview.css）。之後新增遊戲只要多一筆
+  const pvImg = n => `assets/rebuilt/emoji-6x8-v1/${n}.png`;
+  const previews = {
+    'match.html': `<div class="pv pv-match" aria-hidden="true"><span class="say"><i>▶</i>duck</span><div class="grid"><b class="ok"><img src="${pvImg('animal-duck')}" alt=""></b><b><img src="${pvImg('animal-fish')}" alt=""></b><b><img src="${pvImg('animal-panda')}" alt=""></b><b><img src="${pvImg('animal-bee')}" alt=""></b></div><span class="tap"></span><span class="seal">OK</span></div>`,
+    'mail.html': `<div class="pv pv-mail" aria-hidden="true"><div class="letter"><span>ㄩˊ</span></div><div class="boxes"><b class="ok"><img src="${pvImg('animal-fish')}" alt=""></b><b><img src="${pvImg('animal-duck')}" alt=""></b><b><img src="${pvImg('animal-bee')}" alt=""></b></div><span class="tap"></span><span class="seal">OK</span></div>`,
+    'flip.html': `<div class="pv pv-flip" aria-hidden="true"><div class="cards"><b class="snd ok"><i>♫</i></b><b class="pic"></b><b class="snd"></b><b class="pic ok"><i><img src="${pvImg('animal-duck')}" alt=""></i></b></div><span class="tap"></span><span class="seal">OK</span></div>`,
+    'belt.html': `<div class="pv pv-belt" aria-hidden="true"><div class="word"><img src="${pvImg('animal-fish')}" alt=""><span class="slot">ㄩ</span><em>ˊ</em></div><div class="belt"><div class="run"><b>ㄧ</b><b class="ok">ㄩ</b><b>ㄨ</b><b>ㄧ</b><b>ㄩ</b><b>ㄨ</b></div></div><span class="tap"></span><span class="seal">OK</span></div>`
+  };
+
+  // 玩法小框框（樣式 howto.css）：preview＝previews 的 key／html 字串／(stage)=>void 自畫；text 用 kid（頁面的 setKidText）加注音。點哪裡都關
+  function howto({ preview, text, kid, onClose } = {}) {
+    const root = document.createElement('div'); root.className = 'howto'; root.hidden = true;
+    root.innerHTML = '<div class="howto-card" role="dialog" aria-label="玩法"><button class="howto-x" type="button" aria-label="關掉">✕</button><div class="howto-stage"></div><p class="howto-text"></p><button class="howto-ok" type="button">知道了</button></div>';
+    document.body.append(root);
+    const stage = root.querySelector('.howto-stage'), say = (el, t) => kid ? kid(el, t) : (el.textContent = t);
+    say(root.querySelector('.howto-text'), text); say(root.querySelector('.howto-ok'), '知道了');
+    if (typeof preview === 'function') { stage.classList.add('is-free'); preview(stage); }
+    else { stage.innerHTML = previews[preview] || preview || ''; }
+    const fit = () => { const pv = stage.querySelector('.pv'); if (pv && stage.clientWidth) pv.style.transform = `scale(${stage.clientWidth / pv.offsetWidth})`; };
+    const hide = () => { if (root.hidden) return; root.hidden = true; sfx('tap', .4); onClose?.(); };
+    root.addEventListener('click', hide);
+    addEventListener('resize', fit);
+    return { el: root, isOpen: () => !root.hidden, hide, show() { root.hidden = false; fit(); } };
+  }
+
   return { characters, storageKeys, shuffle, loadQueue, fitActor, parseZhuyin, makeBpmUnit, kidText,
     isDino, isNumber, topicGroup, visualGroup, eligibleWords, loadHistory, selectRound, audioPath, burst, streakThreshold, dinoMode, setDinoMode, taskMode,
-    sfx, bgm, menuTaps, goTo };
+    sfx, bgm, menuTaps, goTo, previews, howto };
 })();

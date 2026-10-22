@@ -165,6 +165,7 @@
 
   async function init() {
     setKidText($('albumTitle'), '集郵冊');
+    document.querySelector('.gh .dino-home').addEventListener('click', event => { event.preventDefault(); Dino.goTo('index.html'); });
     $('tabWords').replaceChildren(kid('span', '單字郵票'));
     $('tabCards').replaceChildren(kid('span', '角色郵票'));
     $('tabWords').addEventListener('click', () => { state.tab = 'words'; render(); });

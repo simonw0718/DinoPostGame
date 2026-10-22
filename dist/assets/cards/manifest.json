@@ -426,6 +426,18 @@
       "source_sha256": "423352ff989ea6110821ba0b81e500fc6a79cffa1e1a264ac5a840764a025cc8",
       "sha256": "8e63cab7f6990c78079c1c5d2536950273f56b5344db2d94f5d21b99f736fad9",
       "status": "candidate"
+    },
+    {
+      "n": 36,
+      "character": "feifei",
+      "name": "飛飛",
+      "card_id": "feifei__front__happy__e2",
+      "pose": "front__happy__e2",
+      "image": "assets/cards/36.png",
+      "source": "media_library/visual/cards/characters/feifei/feifei__front__happy__e2.png",
+      "source_sha256": "b447de0fb8049a1ac47f11914f3b9714fd45343298be889efa69efc4151e662d",
+      "sha256": "68fa8ca4d48712e1c6a9cd64911bf585132c7084ffaccb741144433b58cb24db",
+      "status": "candidate"
     }
   ]
 }

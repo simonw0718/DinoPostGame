@@ -1,13 +1,6 @@
 // 首頁開場：信封從左上角飄到中央停住 → 打開 → 信紙滑出；結束時發 intro:done 讓角色上台。點畫面可跳過；同一次瀏覽只播一次
 (() => {
-  const img = n => `assets/rebuilt/emoji-6x8-v1/${n}.png`;
-  // 預覽腳本：之後新增遊戲只要多一筆
-  const previews = {
-    'match.html': `<div class="pv pv-match" aria-hidden="true"><span class="say"><i>▶</i>duck</span><div class="grid"><b class="ok"><img src="${img('animal-duck')}" alt=""></b><b><img src="${img('animal-fish')}" alt=""></b><b><img src="${img('animal-panda')}" alt=""></b><b><img src="${img('animal-bee')}" alt=""></b></div><span class="tap"></span><span class="seal">OK</span></div>`,
-    'mail.html': `<div class="pv pv-mail" aria-hidden="true"><div class="letter"><span>ㄩˊ</span></div><div class="boxes"><b class="ok"><img src="${img('animal-fish')}" alt=""></b><b><img src="${img('animal-duck')}" alt=""></b><b><img src="${img('animal-bee')}" alt=""></b></div><span class="tap"></span><span class="seal">OK</span></div>`,
-    'flip.html': `<div class="pv pv-flip" aria-hidden="true"><div class="cards"><b class="snd ok"><i>♫</i></b><b class="pic"></b><b class="snd"></b><b class="pic ok"><i><img src="${img('animal-duck')}" alt=""></i></b></div><span class="tap"></span><span class="seal">OK</span></div>`,
-    'belt.html': `<div class="pv pv-belt" aria-hidden="true"><div class="word"><img src="${img('animal-fish')}" alt=""><span class="slot">ㄩ</span><em>ˊ</em></div><div class="belt"><div class="run"><b>ㄧ</b><b class="ok">ㄩ</b><b>ㄨ</b><b>ㄧ</b><b>ㄩ</b><b>ㄨ</b></div></div><span class="tap"></span><span class="seal">OK</span></div>`,
-  };
+  const previews = Dino.previews;   // 預覽 markup 在 shared.js，各遊戲 ? 玩法框共用
   document.querySelectorAll('.game-choice').forEach(a => {
     const html = previews[a.getAttribute('href')];
     if (!html) return;

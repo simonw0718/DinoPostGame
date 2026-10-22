@@ -1,0 +1,21 @@
+/* 全站遊戲標題列（sample，2026-10-22 導演要求統一）：
+   左＝橘紅房子，永遠回選遊戲首頁；中＝遊戲名（注音）；右＝工具：? 玩法、⚙ 選單（難度／選項，回本遊戲的開始選單）。
+   三欄 grid，右邊工具多寡不影響標題置中。房子樣式沿用 home-button.css。 */
+.gh{position:relative;z-index:65;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;flex:none}   /* 疊在開始選單上面：選單打開時房子仍可回首頁 */
+.gh>.dino-home{justify-self:start}
+.gh-title{display:flex;justify-content:center;margin:0;color:#fffdf2;font-size:clamp(17px,5.1vw,34px);font-weight:1000;white-space:nowrap;text-shadow:0 3px 0 #0b3324}
+.gh-title .bpm-column{color:#ffe7a6}
+.gh-tools{display:flex;justify-content:flex-end;gap:8px}
+.gh-btn{display:grid;place-items:center;flex:none;width:54px;height:54px;padding:0;border:4px solid #fffaf0;border-radius:18px;background:radial-gradient(circle at 35% 28%,#7cc0ea,#2f86c4 62%,#246a9e);color:#fff;font:1000 26px/1 "Naikai",ui-rounded,system-ui,sans-serif;text-decoration:none;box-shadow:0 5px 0 #1b5079,0 8px 14px rgba(40,30,10,.22);cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:transform .12s,box-shadow .12s}
+.gh-btn svg{display:block;width:30px;height:30px;filter:drop-shadow(0 2px 0 rgba(15,50,80,.35))}
+.gh-btn:hover{transform:translateY(-2px)}
+.gh-btn:active{transform:translateY(4px);box-shadow:0 1px 0 #1b5079,0 3px 6px rgba(40,30,10,.2)}
+.gh-btn:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
+.gh-btn[hidden]{display:none}
+@media(max-width:680px){.gh{gap:6px}.gh-btn{width:48px;height:48px;border-width:3px;border-radius:16px}.gh-btn svg{width:26px;height:26px}}
+/* 套在 style.css 的 .shell 頁面（找圖片／送信選單／集郵冊）：高度同舊 topbar；亮底頁面用 .gh-light 把標題改深綠 */
+.shell>.gh{min-height:84px}
+@media(max-width:680px){.shell>.gh{min-height:56px}}
+@media(max-width:680px) and (max-height:610px){.shell>.gh{min-height:49px}}
+.gh-light .gh-title{color:#18583e;text-shadow:0 2px 0 #fff}
+.gh-light .gh-title .bpm-column{color:#2c7a56}
