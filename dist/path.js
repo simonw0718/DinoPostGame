@@ -325,11 +325,28 @@
     if (M.fence) { const o = Math.hypot(...S.offset), lim = M.road / 2; if (o > lim) S.offset = S.offset.map(v => v * lim / o); }
     const reached = S.checkpoints.findIndex((idx, n) => n > S.cp && S.i >= idx);
     if (reached > 0) { S.cp = reached; Dino.sfx('pop', .7); Dino.burst(S.el.stars[reached - 1]); }
-    if (S.i >= S.samples.length - 3 && on) arrive();
+    if (nearEnd() && dist(p, S.samples.at(-1)) < 160) magnet();
+  }
+  // 終點磁吸（導演 2026-10-22）：走到信箱前一小段（約一個路寬）或在那裡放手，郵差自己滑進信箱
+  const MAGNET = 26;   // 取樣點數，×STEP ≈ 130
+  const nearEnd = () => S.i >= S.samples.length - 1 - MAGNET;
+  function magnet() {
+    if (S.done || S.back) return;
+    S.drag = false; S.done = true; S.offset = [0, 0]; S.offNow = false;
+    S.el.courier.classList.remove('is-drag'); $('stage').classList.remove('is-dragging');
+    const N = S.samples.length;
+    const tick = () => {
+      const next = Math.min(N - 1, S.i + 3);
+      for (let k = S.max + 1; k <= next; k++) S.status[k] = 1;
+      S.i = S.max = next; place();
+      if (S.i < N - 1) setTimeout(tick, 16); else { S.done = false; arrive(); }
+    };
+    tick();
   }
   function onUp() {
     if (rawRaf) { cancelAnimationFrame(rawRaf); flushMove(); }
     $('stage').classList.remove('is-dragging');
+    if (S.drag && !S.done && nearEnd()) return magnet();
     const was = S.drag; S.drag = false; S.el.courier?.classList.remove('is-drag'); S.offset = [0, 0]; S.offNow = false; S.offTravel = 0; if (S.samples.length) place();
     if (was && MODES[mode].fence && !S.done) { clearTimeout(S.idleT); S.idleT = setTimeout(() => { if (inGame() && !S.drag && !S.done) startHint(); }, 3000); }
   }
