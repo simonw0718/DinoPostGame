@@ -253,7 +253,7 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
         try { const pos = JSON.parse(sessionStorage.getItem(bgmPosKey) || 'null'); if (pos?.track === name) offset = pos.t % buffer.duration; } catch { /* ok */ }
         const src = c.createBufferSource(), gain = c.createGain();
         src.buffer = buffer; src.loop = true;
-        gain.gain.setValueAtTime(0, c.currentTime); gain.gain.linearRampToValueAtTime(.2, c.currentTime + .6);
+        gain.gain.setValueAtTime(0, c.currentTime); gain.gain.linearRampToValueAtTime(.1, c.currentTime + .6);
         src.connect(gain).connect(c.destination); src.start(0, offset);
         playing = { track: name, src, gain, startedAt: c.currentTime, offset, duration: buffer.duration };
       } catch { /* 載入失敗就安靜 */ } finally { starting = false; }
