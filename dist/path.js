@@ -280,9 +280,10 @@
     const raw = toSvg(e), M = MODES[mode];
     // 手指按在郵差身上哪裡就以那點拖，偏移固定不歸零（歸零會把判定點拉到郵差身上、離開路面而被退回）
     const p = [raw[0] - S.grab[0], raw[1] - S.grab[1]];
-    // 只在目前位置附近往前找，跨過彎道直接跳不算：往前最多只能走手指這一下移動的距離（尖角兩邊靠很近也不會跳過去）
+    // 只在目前位置附近往前找，跨過彎道直接跳不算：往前最多走「手指離郵差的直線距離＋這一下移動」那麼遠的路
+    // （郵差落後時追得回來；尖角兩邊靠很近時，沿路走過去比直線遠很多，所以不會跳過去）
     let best = -1, bd = Infinity;
-    const reach = Math.min(25, Math.ceil(dist(p, S.lastP || p) / STEP) + 4);
+    const reach = Math.min(60, Math.ceil((dist(p, S.samples[S.i]) + dist(p, S.lastP || p)) / STEP) + 4);
     for (let k = Math.max(0, S.i - 8); k < Math.min(S.samples.length, S.i + reach); k++) {
       const dd = dist(p, S.samples[k]); if (dd < bd) { bd = dd; best = k; }
     }
