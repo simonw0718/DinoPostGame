@@ -213,9 +213,10 @@
     // 手指按在郵差身上哪裡就以那點拖，不會一按就跳；偏移慢慢歸零，最後以手指為準
     S.grab = S.grab.map(v => v * .85);
     const p = [raw[0] - S.grab[0], raw[1] - S.grab[1]];
-    // 只在目前位置附近往前找，跨過彎道直接跳不算
+    // 只在目前位置附近往前找，跨過彎道直接跳不算：往前最多只能走手指這一下移動的距離（尖角兩邊靠很近也不會跳過去）
     let best = -1, bd = Infinity;
-    for (let k = Math.max(0, S.i - 8); k < Math.min(S.samples.length, S.i + 25); k++) {
+    const reach = Math.min(25, Math.ceil(dist(p, S.lastP || p) / STEP) + 4);
+    for (let k = Math.max(0, S.i - 8); k < Math.min(S.samples.length, S.i + reach); k++) {
       const dd = dist(p, S.samples[k]); if (dd < bd) { bd = dd; best = k; }
     }
     if (bd > onTol() + M.grace) return goOff();
