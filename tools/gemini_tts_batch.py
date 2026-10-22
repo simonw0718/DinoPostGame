@@ -1,6 +1,9 @@
 """Generate one DinoPost word-audio batch with Gemini TTS, then split it locally.
 
 Usage: python3 tools/gemini_tts_batch.py 1|2|3
+       python3 tools/gemini_tts_batch.py redo NAME ID [ID ...]   cut to audio-pilot/NAME, no replace
+       python3 tools/gemini_tts_batch.py tempo NAME FACTOR       slow/speed cut clips locally (0.9 = 10% slower)
+       python3 tools/gemini_tts_batch.py apply NAME              after listening: back up old MP3, replace
 The key stays in ~/.config/dinopost/gemini-key-DINOZ. Never prints or saves it.
 Already generated batches are never sent again by this script.
 """
@@ -77,17 +80,7 @@ def speech_intervals(wav, expected):
     raise RuntimeError(f'Expected {expected} speech intervals; counts: {[a["speech_count"] for a in attempts]}')
 
 
-def main():
-    batch_number = int(sys.argv[1])
-    assert batch_number in (1, 2, 3)
-    words = json.loads((ROOT / 'dist/data.json').read_text())
-    target = [w for w in words if w.get('levelSource') != 'kidsapp' or w['category'] == 'dinosaur']
-    pilot_ids = {w['id'] for w in json.loads((PILOT / 'manifest.json').read_text())}
-    remaining = [w for w in target if w['id'] not in pilot_ids]
-    assert len(remaining) == 123
-    batch = remaining[(batch_number - 1) * 50:batch_number * 50]
-    assert len(batch) == (23 if batch_number == 3 else 50)
-    folder = ROOT / 'audio-pilot' / f'gemini-3.8-flash-lite-DINOZ-batch-{batch_number:02d}-{len(batch)}'
+def generate(batch, folder, label):
     folder.mkdir(parents=True, exist_ok=True)
     wav = folder / 'full.wav'
     manifest = [{'index': i + 1, 'id': w['id'], 'en': w['en'], 'source': w.get('levelSource')}
@@ -109,7 +102,7 @@ def main():
         req = urllib.request.Request('https://generativelanguage.googleapis.com/v1beta/interactions',
             data=json.dumps(request_body).encode(),
             headers={'Content-Type': 'application/json', 'x-goog-api-key': key}, method='POST')
-        print(f'Batch {batch_number}: sending ONE TTS request for {len(batch)} words', flush=True)
+        print(f'{label}: sending ONE TTS request for {len(batch)} words', flush=True)
         try:
             with urllib.request.urlopen(req, timeout=360) as response:
                 result = json.load(response)
@@ -131,7 +124,7 @@ def main():
             'interaction_id': result.get('id'), 'model': MODEL, 'voice': VOICE,
             'audio_bytes': len(data), 'audio_blocks': len(blocks)}, indent=2) + '\n')
     else:
-        print(f'Batch {batch_number}: using saved WAV; no additional TTS request', flush=True)
+        print(f'{label}: using saved WAV; no additional TTS request', flush=True)
     duration, speech, threshold = speech_intervals(wav, len(batch))
     clips = folder / 'clips'
     clips.mkdir(exist_ok=True)
@@ -148,9 +141,28 @@ def main():
                      'duration': round(b - a, 3), 'file': 'clips/' + path.name,
                      'bytes': path.stat().st_size})
     (folder / 'clips-manifest.json').write_text(json.dumps(rows, ensure_ascii=False, indent=2) + '\n')
+    return rows, duration, threshold
+
+
+def main():
+    if sys.argv[1] == 'tempo':
+        return tempo(sys.argv[2], float(sys.argv[3]))
+    if sys.argv[1] in ('redo', 'apply'):
+        return redo(sys.argv[1], sys.argv[2], sys.argv[3:])
+    batch_number = int(sys.argv[1])
+    assert batch_number in (1, 2, 3)
+    words = json.loads((ROOT / 'dist/data.json').read_text())
+    target = [w for w in words if w.get('levelSource') != 'kidsapp' or w['category'] == 'dinosaur']
+    pilot_ids = {w['id'] for w in json.loads((PILOT / 'manifest.json').read_text())}
+    remaining = [w for w in target if w['id'] not in pilot_ids]
+    assert len(remaining) == 123
+    batch = remaining[(batch_number - 1) * 50:batch_number * 50]
+    assert len(batch) == (23 if batch_number == 3 else 50)
+    folder = ROOT / 'audio-pilot' / f'gemini-3.8-flash-lite-DINOZ-batch-{batch_number:02d}-{len(batch)}'
+    rows, duration, threshold = generate(batch, folder, f'Batch {batch_number}')
     # Replace only after the entire batch has been segmented and decoded successfully.
     for row in rows:
-        shutil.copy2(clips / (row['id'] + '.mp3'), ROOT / 'dist/assets/audio' / (row['id'] + '.mp3'))
+        shutil.copy2(folder / row['file'], ROOT / 'dist/assets/audio' / (row['id'] + '.mp3'))
     (folder / 'README.md').write_text(
         f'# Gemini TTS batch {batch_number}\n\n'
         f'- {len(batch)} words; one request; model `{MODEL}`; voice `{VOICE}`.\n'
@@ -161,6 +173,38 @@ def main():
     print(f'Batch {batch_number}: saved WAV {duration:.2f}s, cut and replaced {len(rows)} MP3; threshold {threshold}dB', flush=True)
     for row in rows:
         print(f"{row['index']:2d} {row['en']:19s} {row['duration']:.2f}s", flush=True)
+
+
+def redo(mode, name, ids):
+    folder = ROOT / 'audio-pilot' / name
+    audio = ROOT / 'dist/assets/audio'
+    if mode == 'apply':
+        rows = json.loads((folder / 'clips-manifest.json').read_text())
+        backup = ROOT / 'audio-pilot/original-audio-backup' / name
+        backup.mkdir(parents=True, exist_ok=True)
+        for row in rows:
+            if not (backup / (row['id'] + '.mp3')).exists():
+                shutil.copy2(audio / (row['id'] + '.mp3'), backup / (row['id'] + '.mp3'))
+            shutil.copy2(folder / row['file'], audio / (row['id'] + '.mp3'))
+        print(f'{name}: replaced {len(rows)} MP3; old files in {backup.relative_to(ROOT)}')
+        return
+    words = {w['id']: w for w in json.loads((ROOT / 'dist/data.json').read_text())}
+    batch = [words[i] for i in ids]
+    rows, duration, threshold = generate(batch, folder, name)
+    print(f'{name}: WAV {duration:.2f}s, cut {len(rows)} MP3 (threshold {threshold}dB); not replaced yet')
+
+
+def tempo(name, factor):
+    """Re-render clips from clips_raw/ with ffmpeg atempo; repeatable, never compounds."""
+    folder = ROOT / 'audio-pilot' / name
+    raw, clips = folder / 'clips_raw', folder / 'clips'
+    if not raw.exists():
+        shutil.copytree(clips, raw)
+    for src in sorted(raw.glob('*.mp3')):
+        run(['ffmpeg', '-v', 'error', '-y', '-i', str(src), '-af', f'atempo={factor}',
+             '-ac', '1', '-ar', '24000', '-codec:a', 'libmp3lame', '-qscale:a', '4', str(clips / src.name)])
+    (folder / 'tempo.json').write_text(json.dumps({'atempo': factor}) + '\n')
+    print(f'{name}: atempo {factor} applied to {len(list(raw.glob("*.mp3")))} clips')
 
 if __name__ == '__main__':
     main()
