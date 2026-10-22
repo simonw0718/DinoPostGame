@@ -12,6 +12,7 @@ import array
 import math
 import wave
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -23,7 +24,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 VOICE = 'erinome'
 MODEL = 'gemini-3.8-flash-lite-tts'
-KEY_PATH = Path('/Users/simon/.config/dinopost/gemini-key-DINOZ')
+KEY_PATH = Path(os.environ.get('GEMINI_KEY_FILE', '/Users/simon/.config/dinopost/gemini-key-DINOZ'))  # override to switch key
 PILOT = ROOT / 'audio-pilot/gemini-3.8-flash-lite-DINOZ-20'
 
 

@@ -217,8 +217,7 @@
     sky.append(b); setTimeout(() => b.remove(), 1350);
   }
 
-  // sample（?hint）：每關開始，目標在天空中央彈簧放大，停一下再縮回左上題目格
-  const HINT = new URLSearchParams(location.search).has('hint');
+  // 導演 2026-10-22 定版：每關開始，目標在天空中央彈簧放大，停一下再縮回左上題目格
   function showTarget() {
     const chip = $('chip'), c = chip.getBoundingClientRect(), k = sky.getBoundingClientRect();
     const big = chip.cloneNode(true); big.removeAttribute('id'); big.classList.add('target-hint');
@@ -243,7 +242,7 @@
     G.got = 0; G.wrong = 0; G.last = 0;
     pose('hello');
     setOrder();
-    const name = ROUND_NAMES[G.round], wait = HINT ? showTarget() : 0;
+    const name = ROUND_NAMES[G.round], wait = showTarget();
     if (name) setTimeout(() => { showBanner(name); Dino.sfx('swoosh', .5); }, wait);
     G.spawnIn = wait + (name ? 1300 : 600);   // 有提示／關卡牌子時，等收掉才開始掉
     G.running = true; requestAnimationFrame(frame);
