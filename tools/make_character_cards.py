@@ -16,7 +16,7 @@ import tempfile
 from pathlib import Path
 
 GAME = Path(__file__).resolve().parent.parent
-PROJECT = GAME.parent
+PROJECT = GAME.parent / '恐龍郵局｜整體工作流處理'  # sibling production folder (split 2026-10-22)
 ESRGAN = PROJECT / '.tools/realesrgan/realesrgan-ncnn-vulkan'
 MODELS = PROJECT / '.tools/realesrgan/models'
 SRC = PROJECT / 'media_library/visual/cards/characters'

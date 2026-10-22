@@ -1,14 +1,14 @@
 """Subset 內海字型 (Naikai, OFL) to the characters the game uses -> dist/assets/fonts/naikai-subset.woff2.
 
 Rerun after adding any new text (pages, scripts, data.json). Needs: pip install fonttools brotli
-Source font lives in the workflow repo: ../tools/card_stage/fonts/NaikaiFont-Regular.ttf
+Source font lives in the workflow repo: ../恐龍郵局｜整體工作流處理/tools/card_stage/fonts/NaikaiFont-Regular.ttf
 """
 import pathlib, shutil, sys
 from fontTools import subset
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 DIST = ROOT / 'dist'
-SRC = ROOT.parent / 'tools/card_stage/fonts/NaikaiFont-Regular.ttf'
+SRC = ROOT.parent / '恐龍郵局｜整體工作流處理/tools/card_stage/fonts/NaikaiFont-Regular.ttf'
 OUT = DIST / 'assets/fonts/naikai-subset.woff2'
 
 chars = set(chr(c) for c in range(0x20, 0x7f))                   # ASCII

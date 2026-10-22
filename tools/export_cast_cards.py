@@ -11,7 +11,7 @@ from PIL import Image
 from pathlib import Path
 
 GAME = Path(__file__).resolve().parents[1]
-STUDIO = GAME.parent                                  # 恐龍郵局｜整體工作流處理
+STUDIO = GAME.parent / '恐龍郵局｜整體工作流處理'      # sibling production folder (split 2026-10-22)
 OUT = GAME / 'dist/assets/cast'
 MAX_H = 480                                           # 輸出圖高（px），webp 約 20–40KB
 
