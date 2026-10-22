@@ -202,7 +202,7 @@
   }
 
   function resetWalk() {
-    S.i = 0; S.cp = 0; S.offs = 0; S.done = false; S.status = []; S.offset = [0, 0]; S.offNow = false; S.offTravel = 0;
+    S.i = 0; S.max = 0; S.cp = 0; S.offs = 0; S.done = false; S.status = []; S.offset = [0, 0]; S.offNow = false; S.offTravel = 0;
     S.el.marks.replaceChildren(); place();
   }
 
@@ -213,7 +213,7 @@
     const ahead = S.samples[Math.min(S.samples.length - 1, S.i + 6)], back = S.samples[Math.max(0, S.i - 6)];
     S.el.courier.style.transform = `translate(${x}px,${y}px)`;
     S.el.img.setAttribute('transform', ahead[0] < back[0] - 2 ? 'scale(-1 1)' : '');
-    S.trails.forEach(t => { const v = Math.min(t.len, Math.max(0, (S.i - t.a) * STEP)); t.el.style.strokeDasharray = `${v} ${t.len + 10}`; });
+    S.trails.forEach(t => { const v = Math.min(t.len, Math.max(0, (S.max - t.a) * STEP)); t.el.style.strokeDasharray = `${v} ${t.len + 10}`; t.el.style.opacity = v > 0 ? '' : 0; });   // 長度 0 時圓頭會留一顆綠點，藏起來
     S.el.stars.forEach((st, n) => { st.classList.toggle('is-got', n < S.cp); st.classList.toggle('is-next', n === S.cp); });
   }
   const handAt = ([x, y], press = false) => S.el.hand.setAttribute('transform', `translate(${x + 16} ${y - 50}) scale(${press ? .85 : 1})`);
@@ -272,21 +272,37 @@
     clearTimeout(S.idleT);
     const p = toSvg(e), [x, y] = S.samples[S.i];
     if (dist(p, [x, y - 40]) > 130) { say(prompt()); return; }
-    S.drag = true; S.lastP = p; S.grab = [p[0] - x, p[1] - y]; S.el.courier.classList.add('is-drag'); $('svg').setPointerCapture(e.pointerId);
+    S.drag = true; S.lastP = p; S.grab = [p[0] - x, p[1] - y]; S.el.courier.classList.add('is-drag'); $('stage').classList.add('is-dragging'); $('svg').setPointerCapture(e.pointerId);
     stopHint(); Dino.sfx('tap', .4);
   }
+  // 手指移動：一個畫面只算一次（手機一次送很多點時不會塞車），跳很遠的一下切成小段逐段走，中間經過路外也算得到
+  let rawNext = null, rawRaf = 0;
   function onMove(e) {
     if (!S.drag || S.done) return;
-    const raw = toSvg(e), M = MODES[mode];
-    // 手指按在郵差身上哪裡就以那點拖，偏移固定不歸零（歸零會把判定點拉到郵差身上、離開路面而被退回）
-    const p = [raw[0] - S.grab[0], raw[1] - S.grab[1]];
-    // 只在目前位置附近往前找，跨過彎道直接跳不算：往前最多走「手指離郵差的直線距離＋這一下移動」那麼遠的路
-    // （郵差落後時追得回來；尖角兩邊靠很近時，沿路走過去比直線遠很多，所以不會跳過去）
-    let best = -1, bd = Infinity;
-    const reach = Math.min(60, Math.ceil((dist(p, S.samples[S.i]) + dist(p, S.lastP || p)) / STEP) + 4);
-    for (let k = Math.max(0, S.i - 8); k < Math.min(S.samples.length, S.i + reach); k++) {
-      const dd = dist(p, S.samples[k]); if (dd < bd) { bd = dd; best = k; }
+    rawNext = toSvg(e);
+    if (!rawRaf) rawRaf = requestAnimationFrame(flushMove);
+  }
+  function flushMove() {
+    rawRaf = 0; const raw = rawNext; rawNext = null;
+    if (!raw || !S.drag || S.done) return;
+    const p = [raw[0] - S.grab[0], raw[1] - S.grab[1]], from = S.lastP || p, n = Math.max(1, Math.ceil(dist(p, from) / 20));
+    for (let k = 1; k <= n && S.drag && !S.done; k++) step([from[0] + (p[0] - from[0]) * k / n, from[1] + (p[1] - from[1]) * k / n]);
+    if (S.drag || S.done) place();
+  }
+  // 沿著路往手指滑：只要下一點離手指更近（容許一點抖動）就繼續走，停在最近的地方
+  // 切彎落後時一路追得回來；U 型彎、尖角對面的路要先「離手指更遠」才到得了，所以跳不過去，下一段路不會突然變綠
+  function slide(p, dir) {
+    const N = S.samples.length; let k = S.i, best = S.i, bd = dist(p, S.samples[S.i]);
+    while (k + dir >= 0 && k + dir < N && Math.abs(k - S.i) < 120) {
+      k += dir; const dd = dist(p, S.samples[k]);
+      if (dd < bd) { bd = dd; best = k; } else if (dd > bd + 10) break;
     }
+    return [best, bd];
+  }
+  function step(p) {
+    const M = MODES[mode];
+    let [best, bd] = slide(p, 1);
+    if (M.fence && best === S.i) [best, bd] = slide(p, -1);   // 新手：往前沒有更近就試著往回走
     if (M.fence && bd > M.road / 2) {   // 新手：郵差被框在路裡，最多走到路邊
       const c = S.samples[best], k = (M.road / 2) / bd; p[0] = c[0] + (p[0] - c[0]) * k; p[1] = c[1] + (p[1] - c[1]) * k; bd = M.road / 2;
     }
@@ -301,22 +317,25 @@
       if (S.offTravel > M.travel) return goOff();
     }
     S.lastP = p;
-    if (best > S.i) { for (let k = S.i + 1; k <= best; k++) S.status[k] = on ? 1 : 0; S.i = best; }
+    if (best > S.max) for (let k = S.max + 1; k <= best; k++) S.status[k] = on ? 1 : 0;
+    if (best > S.i || M.fence) S.i = best;   // 新手可以沿路往回走（還是框在路裡）；其他難度只往前
+    S.max = Math.max(S.max, S.i);
     const [sx, sy] = S.samples[S.i];
     S.offset = [p[0] - sx, p[1] - sy];
     if (M.fence) { const o = Math.hypot(...S.offset), lim = M.road / 2; if (o > lim) S.offset = S.offset.map(v => v * lim / o); }
     const reached = S.checkpoints.findIndex((idx, n) => n > S.cp && S.i >= idx);
     if (reached > 0) { S.cp = reached; Dino.sfx('pop', .7); Dino.burst(S.el.stars[reached - 1]); }
-    place();
     if (S.i >= S.samples.length - 3 && on) arrive();
   }
   function onUp() {
+    if (rawRaf) { cancelAnimationFrame(rawRaf); flushMove(); }
+    $('stage').classList.remove('is-dragging');
     const was = S.drag; S.drag = false; S.el.courier?.classList.remove('is-drag'); S.offset = [0, 0]; S.offNow = false; S.offTravel = 0; if (S.samples.length) place();
     if (was && MODES[mode].fence && !S.done) { clearTimeout(S.idleT); S.idleT = setTimeout(() => { if (inGame() && !S.drag && !S.done) startHint(); }, 3000); }
   }
 
   function goOff() {
-    S.drag = false; S.el.courier.classList.remove('is-drag'); S.offs++;
+    S.drag = false; S.el.courier.classList.remove('is-drag'); $('stage').classList.remove('is-dragging'); S.offs++;
     S.offset = [0, 0]; S.offNow = false; S.offTravel = 0; S.lastMark = null;
     Dino.sfx('wrong', .35); say('沿著路走喔');
     $('stage').classList.remove('is-off'); void $('stage').offsetWidth; $('stage').classList.add('is-off');
@@ -325,7 +344,7 @@
     S.status.length = target + 1;
     setTimeout(() => S.el.marks.replaceChildren(), 500);
     S.back = true; S.lastP = null;
-    const tick = () => { S.i = Math.max(target, S.i - 6); place(); if (S.i > target) setTimeout(tick, 16); else S.back = false; };
+    const tick = () => { S.i = Math.max(target, S.i - 6); S.max = S.i; place(); if (S.i > target) setTimeout(tick, 16); else S.back = false; };
     tick();
   }
 
@@ -398,7 +417,7 @@
   const svg = $('svg');
   svg.addEventListener('pointerdown', onDown); svg.addEventListener('pointermove', onMove);
   svg.addEventListener('pointerup', onUp); svg.addEventListener('pointercancel', onUp);
-  let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { if (S.done) return; const i = S.i, cp = S.cp, st = S.status, offs = S.offs; build(); S.i = Math.min(i, S.samples.length - 1); S.cp = cp; S.status = st; S.offs = offs; place(); if (inGame() && !HW.isOpen()) startHint(); }, 150); });
+  let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { if (S.done) return; const i = S.i, mx = S.max, cp = S.cp, st = S.status, offs = S.offs; build(); S.i = Math.min(i, S.samples.length - 1); S.max = Math.min(mx, S.samples.length - 1); S.cp = cp; S.status = st; S.offs = offs; place(); if (inGame() && !HW.isOpen()) startHint(); }, 150); });
   newGame();
   HW = Dino.howto({ preview: buildHowto, text: '按住郵差，照星星走到郵筒', kid: setKidText, onClose: () => { if (inGame() && !S.drag && !S.done) startHint(); } });
   window.__path = S;

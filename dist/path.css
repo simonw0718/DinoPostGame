@@ -29,7 +29,9 @@ button{font:inherit;color:inherit;cursor:pointer}
 .courier{cursor:grab;transition:transform .09s linear}
 .courier.is-snap{transition:none}
 .courier{cursor:grab}
-.courier.is-drag{cursor:grabbing}
+.courier.is-drag{cursor:grabbing;transition:none}
+/* 拖曳中停掉一直重畫的動畫（星星脈動、郵差光圈），手機才跟得上手指 */
+.ps-stage.is-dragging .star .pulse,.ps-stage.is-dragging .courier-ring{animation:none}
 .courier-ring{fill:#ffffff22;stroke:#ffd56a;stroke-width:6;stroke-dasharray:14 10;animation:ring 1.2s linear infinite}
 .courier.is-drag .courier-ring{opacity:0}
 .hand{font-size:120px;pointer-events:none;filter:drop-shadow(0 4px 3px #0a2a1c88)}
