@@ -168,8 +168,29 @@
     const [ex, ey] = S.samples.at(-1);
     S.friend = S.friend && S.friend !== S.courier[0] ? S.friend : Dino.shuffle(FRIENDS.filter(id => id !== S.courier[0]))[0];
     el('text', { x: ex, y: ey, 'font-size': 60, 'text-anchor': 'middle', 'dominant-baseline': 'central' }, svg).textContent = '📮';
-    const fx = Math.min(X0 + W - 70, ex + (portrait ? 110 : 0)), fy = portrait ? ey - 30 : Math.max(150, ey - 70);
-    el('image', { href: `assets/cast/${S.friend}__hello.webp`, x: fx - 70, y: fy - 170, width: 140, height: 160, preserveAspectRatio: 'xMidYMax meet' }, svg);
+    // 朋友圖放在終點附近、不蓋到路（也不蓋右上角的字形）：繞終點找離路最遠夠用的空位；路太密就縮小再找
+    let fx = ex, fy = ey - 70, fs = 1, best = -1e9;
+    // 可放的範圍＝實際看得到的舞台（viewBox 置中後上下或左右多出來的空白也算）
+    const k0 = Math.min(box.width / W, box.height / H), VX = X0 - (box.width / k0 - W) / 2, VY = Y0 - (box.height / k0 - H) / 2, VW = box.width / k0, VH = box.height / k0;
+    for (const sc of [1, .8, .65, .55]) {
+      const hw = 70 * sc, hh = 160 * sc;
+      const gap = (p, x, y) => Math.hypot(Math.max(x - hw - p[0], 0, p[0] - x - hw), Math.max(y - hh - 10 - p[1], 0, p[1] - y + 10));
+      const spot = (x, y) => {
+        if (x - hw < VX + 10 || x + hw > VX + VW - 10 || y - hh - 10 < VY + 10 || y > VY + VH - 10) return -1e9;
+        let g = Math.min(...S.samples.map(p => gap(p, x, y))) - width / 2;
+        if (L.glyph) g = Math.min(g, gap([X0 + W - 90, Y0 + 60], x, y) - 60);
+        return g;
+      };
+      for (const r of [110, 150, 190, 240, 300]) {
+        for (let k = 0; k < 16; k++) {
+          const t = k * Math.PI / 8, x = ex + Math.cos(t) * r, y = ey + hh / 2 + Math.sin(t) * r, g = spot(x, y);
+          if (g > best) { best = g; fx = x; fy = y; fs = sc; }
+        }
+        if (best >= 12) break;
+      }
+      if (best >= 12) break;
+    }
+    el('image', { href: `assets/cast/${S.friend}__hello.webp`, x: fx - 70 * fs, y: fy - 10 - 160 * fs, width: 140 * fs, height: 160 * fs, preserveAspectRatio: 'xMidYMax meet' }, svg);
     const g = el('g', { class: 'courier is-snap' }, svg);
     el('circle', { class: 'courier-ring', r: 70, cx: 0, cy: -10 }, g);
     S.el.img = el('image', { href: `assets/cast/${S.courier[0]}__${S.courier[1]}.webp`, x: -75, y: -150, width: 150, height: 170, preserveAspectRatio: 'xMidYMax meet' }, g);
