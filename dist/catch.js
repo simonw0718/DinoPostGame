@@ -217,6 +217,23 @@
     sky.append(b); setTimeout(() => b.remove(), 1350);
   }
 
+  // sample（?hint）：每關開始，目標在天空中央彈簧放大，停一下再縮回左上題目格
+  const HINT = new URLSearchParams(location.search).has('hint');
+  function showTarget() {
+    const chip = $('chip'), c = chip.getBoundingClientRect(), k = sky.getBoundingClientRect();
+    const big = chip.cloneNode(true); big.removeAttribute('id'); big.classList.add('target-hint');
+    Object.assign(big.style, { position: 'fixed', left: c.left + 'px', top: c.top + 'px', margin: 0, zIndex: 40 });
+    document.body.append(big);
+    const dx = k.left + k.width / 2 - (c.left + c.width / 2), dy = k.top + k.height * .38 - (c.top + c.height / 2);
+    const at = s => `translate(${dx}px,${dy}px) scale(${s})`;
+    big.animate([{ transform: at(0) }, { transform: at(3.9), offset: .45 }, { transform: at(3.05), offset: .7 }, { transform: at(3.45), offset: .88 }, { transform: at(3.3) }],
+      { duration: 650, easing: 'ease-out' });
+    big.animate([{ transform: at(3.3) }, { transform: at(3.6) }, { transform: at(3.3) }], { duration: 500, delay: 700, easing: 'ease-in-out' });
+    const fly = big.animate([{ transform: at(3.3) }, { transform: 'none' }], { duration: 450, delay: 1250, easing: 'cubic-bezier(.5,0,.75,0)', fill: 'forwards' });
+    fly.onfinish = () => { big.remove(); const o = $('order'); o.classList.remove('is-pop'); void o.offsetWidth; o.classList.add('is-pop'); Dino.sfx('tap', .5); };
+    return 1700;
+  }
+
   function nextRound() {
     const mode = MODES[G.round], prev = G.target || {};
     const color = mode !== 'shape' ? pick(COLORS.filter(c => c !== prev.color)) : null;
@@ -226,9 +243,9 @@
     G.got = 0; G.wrong = 0; G.last = 0;
     pose('hello');
     setOrder();
-    const name = ROUND_NAMES[G.round];
-    if (name) { showBanner(name); Dino.sfx('swoosh', .5); }
-    G.spawnIn = name ? 1300 : 600;   // 有關卡牌子時，等牌子收掉才開始掉
+    const name = ROUND_NAMES[G.round], wait = HINT ? showTarget() : 0;
+    if (name) setTimeout(() => { showBanner(name); Dino.sfx('swoosh', .5); }, wait);
+    G.spawnIn = wait + (name ? 1300 : 600);   // 有提示／關卡牌子時，等收掉才開始掉
     G.running = true; requestAnimationFrame(frame);
   }
 
