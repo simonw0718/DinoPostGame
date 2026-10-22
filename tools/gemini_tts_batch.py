@@ -183,7 +183,7 @@ def redo(mode, name, ids):
         backup = ROOT / 'audio-pilot/original-audio-backup' / name
         backup.mkdir(parents=True, exist_ok=True)
         for row in rows:
-            if not (backup / (row['id'] + '.mp3')).exists():
+            if (audio / (row['id'] + '.mp3')).exists() and not (backup / (row['id'] + '.mp3')).exists():
                 shutil.copy2(audio / (row['id'] + '.mp3'), backup / (row['id'] + '.mp3'))
             shutil.copy2(folder / row['file'], audio / (row['id'] + '.mp3'))
         print(f'{name}: replaced {len(rows)} MP3; old files in {backup.relative_to(ROOT)}')
@@ -205,6 +205,31 @@ def tempo(name, factor):
              '-ac', '1', '-ar', '24000', '-codec:a', 'libmp3lame', '-qscale:a', '4', str(clips / src.name)])
     (folder / 'tempo.json').write_text(json.dumps({'atempo': factor}) + '\n')
     print(f'{name}: atempo {factor} applied to {len(list(raw.glob("*.mp3")))} clips')
+
+
+# Director-approved pace (2026-10-22): always at least 10% slower (A: 0.9), faster batches down to 0.8 (B).
+TARGET_SEC_PER_SYLLABLE = 0.37
+
+
+def suggested_tempo(name):
+    """atempo that brings a batch to the approved pace; Gemini pace varies per request."""
+    rows = json.loads((ROOT / 'audio-pilot' / name / 'clips-manifest.json').read_text())
+    syllables = sum(max(1, len(re.findall(r'[aeiouy]+', r['en'].lower().rstrip('e')))) for r in rows)
+    pace = sum(r['duration'] - 0.16 for r in rows) / syllables
+    return round(min(0.9, max(0.8, pace / TARGET_SEC_PER_SYLLABLE)), 2), pace
+
+
+def listen_file(name):
+    """Join the cut clips with 0.7 s gaps so the director hears exactly what will be installed."""
+    folder = ROOT / 'audio-pilot' / name
+    rows = json.loads((folder / 'clips-manifest.json').read_text())
+    run(['ffmpeg', '-v', 'error', '-y', '-f', 'lavfi', '-i', 'anullsrc=r=24000:cl=mono', '-t', '0.7',
+         '-codec:a', 'libmp3lame', '-qscale:a', '4', str(folder / 'gap.mp3')])
+    (folder / 'listen.txt').write_text(''.join(f"file '{r['file']}'\nfile 'gap.mp3'\n" for r in rows))
+    out = folder / 'listen.mp3'
+    run(['ffmpeg', '-v', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', str(folder / 'listen.txt'),
+         '-codec:a', 'libmp3lame', '-qscale:a', '4', str(out)])
+    return out
 
 if __name__ == '__main__':
     main()

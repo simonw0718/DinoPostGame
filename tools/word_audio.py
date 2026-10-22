@@ -3,7 +3,9 @@
 
 Usage:
   python3 tools/word_audio.py status                         which words lack English / Chinese audio
-  python3 tools/word_audio.py en                             English for missing words (macOS say, offline)
+  python3 tools/word_audio.py en [--allow-model]             English for missing words: Gemini erinome, one request,
+                                                             cut + auto pace -> audio-pilot/en-erinome-<date>-<n>/listen.mp3
+  python3 tools/word_audio.py en-apply NAME                  after the director listened: install (old files backed up)
   python3 tools/word_audio.py zh-plan [--voice F11]          lock a batch of words missing Chinese audio
   python3 tools/word_audio.py zh-generate BATCH --allow-model   one Gemini TTS request -> BATCH/<voice>/full.wav
   python3 tools/word_audio.py zh-cut BATCH --approved        after the director listened: cut, stage, then install
@@ -19,13 +21,13 @@ import json
 import shutil
 import subprocess
 import sys
-import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'tools'))
 from cut_chinese_assigned import intervals  # noqa: E402  silence cut proven on the 359-word bank
 import generate_chinese_five_voices as tts  # noqa: E402  single long-WAV request
+import gemini_tts_batch as gemini  # noqa: E402  English erinome batches
 
 DATA = ROOT / 'dist/data.json'
 AUDIO = ROOT / 'dist/assets/audio'
@@ -55,15 +57,24 @@ def cmd_status(args):  # noqa: ARG001
     print(f"缺中文音檔 {len(zh)}：{' '.join(w['id'] for w in zh) or '無'}")
 
 
-def cmd_en(args):  # noqa: ARG001
+def cmd_en(args):
+    # Director 2026-10-22: English uses Gemini erinome only, never macOS say.
     en, _ = missing(load())
-    for word in en:
-        with tempfile.NamedTemporaryFile(suffix='.aiff') as temp:
-            subprocess.run(['say', '-v', 'Samantha', '-r', '155', '-o', temp.name, word['en']], check=True, timeout=30)
-            subprocess.run(['ffmpeg', '-hide_banner', '-loglevel', 'error', '-y', '-i', temp.name,
-                            '-codec:a', 'libmp3lame', '-qscale:a', '5', str(AUDIO / f"{word['id']}.mp3")], check=True)
-        print('英文', word['id'])
-    print(f'完成 {len(en)} 個英文音檔')
+    print(f"缺英文音檔 {len(en)}：{' '.join(w['en'] for w in en) or '無'}")
+    if not en or not args.allow_model:
+        return print('要生成請加 --allow-model（一次 Gemini 請求，只送這批英文字）') if en else None
+    date = datetime.date.today().strftime('%Y%m%d')
+    n = 1 + sum(1 for _ in BATCHES.glob(f'en-erinome-{date}-*'))
+    name = f'en-erinome-{date}-{n}'
+    gemini.generate(en, BATCHES / name, name)
+    factor, pace = gemini.suggested_tempo(name)
+    gemini.tempo(name, factor)
+    print(f'實測 {pace:.3f} 秒/音節 → atempo {factor}；試聽 {gemini.listen_file(name).relative_to(ROOT)}')
+    print(f'導演聽過後：python3 tools/word_audio.py en-apply {name}')
+
+
+def cmd_en_apply(args):
+    gemini.redo('apply', args.name, [])
 
 
 def voices():
@@ -151,7 +162,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = parser.add_subparsers(dest='cmd', required=True)
     sub.add_parser('status').set_defaults(fn=cmd_status)
-    sub.add_parser('en').set_defaults(fn=cmd_en)
+    p = sub.add_parser('en'); p.add_argument('--allow-model', action='store_true'); p.set_defaults(fn=cmd_en)
+    p = sub.add_parser('en-apply'); p.add_argument('name'); p.set_defaults(fn=cmd_en_apply)
     p = sub.add_parser('zh-plan'); p.add_argument('--voice', default='F11'); p.set_defaults(fn=cmd_zh_plan)
     p = sub.add_parser('zh-generate'); p.add_argument('batch'); p.add_argument('--allow-model', action='store_true'); p.set_defaults(fn=cmd_zh_generate)
     p = sub.add_parser('zh-cut'); p.add_argument('batch'); p.add_argument('--approved', action='store_true'); p.set_defaults(fn=cmd_zh_cut)
