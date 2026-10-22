@@ -72,3 +72,4 @@ button{font:inherit;color:inherit;cursor:pointer}
 @keyframes ring{to{stroke-dashoffset:-48}}
 @keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
 @media(max-width:680px){.ps-levels li{width:24px;height:24px;font-size:12px}.ps-info{flex-wrap:wrap}.ps-bubble{order:2;flex:1 1 100%;text-align:center}.ps-right{order:1;margin-left:auto}}
+@media(max-width:430px){.pick{gap:5px;padding:6px 8px;font-size:18px}.pick button{min-width:0;padding:4px 8px}.pick button{display:inline-flex;flex-wrap:nowrap;justify-content:center;align-items:center}}

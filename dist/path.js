@@ -11,24 +11,69 @@
     '回到路上': ['ㄏㄨㄟˊ', 'ㄉㄠˋ', 'ㄌㄨˋ', 'ㄕㄤˋ'],
     '送到了！': ['ㄙㄨㄥˋ', 'ㄉㄠˋ', 'ㄌㄜ˙', ''],
     '寫出注音ㄑ': ['ㄒㄧㄝˇ', 'ㄔㄨ', 'ㄓㄨˋ', 'ㄧㄣ', ''],
+    ...Object.fromEntries('CLMNSUVWZJO23'.split('').map(g => [`照著寫 ${g}`, ['ㄓㄠˋ', 'ㄓㄜ˙', 'ㄒㄧㄝˇ', '', '']])),
+    '新手': ['ㄒㄧㄣ', 'ㄕㄡˇ'],
     '信都送到了！': ['ㄒㄧㄣˋ', 'ㄉㄡ', 'ㄙㄨㄥˋ', 'ㄉㄠˋ', 'ㄌㄜ˙', ''],
     '簡單': ['ㄐㄧㄢˇ', 'ㄉㄢ'], '普通': ['ㄆㄨˇ', 'ㄊㄨㄥ'], '困難': ['ㄎㄨㄣˋ', 'ㄋㄢˊ'],
     '知道了': ['ㄓ', 'ㄉㄠˋ', 'ㄌㄜ˙'],
     '再玩一次': ['ㄗㄞˋ', 'ㄨㄢˊ', 'ㄧ', 'ㄘˋ'], '回首頁': ['ㄏㄨㄟˊ', 'ㄕㄡˇ', 'ㄧㄝˋ']
   });
 
-  // 關卡：橫式座標 1000×600；直式手機自動轉成上→下（注音關不轉，字形不能歪）。cross＝路會交叉，後半段畫成橋
-  const LEVELS = [
-    { pts: [[110, 300], [890, 300]], lines: true },
-    { pts: [[110, 430], [300, 170], [500, 430], [700, 170], [890, 400]] },
-    { pts: [[110, 470], [260, 150], [420, 470], [580, 150], [740, 470], [890, 170]], lines: true },
-    { pts: [[100, 500], [380, 470], [620, 300], [680, 130], [520, 70], [400, 150], [430, 330], [560, 470], [760, 520], [900, 400]], cross: [520, 70] },
-    { pts: [[640, 70], [380, 300], [650, 530]], lines: true, glyph: 'ㄑ', keep: true }
+  // 關卡池（導演 2026-10-22：每輪 5 關、池子 20–30 條、可用注音／英文）：橫式座標 1000×600；直式手機自動轉成上→下。
+  // tier 1 簡單、2 中等、3 難；glyph＝照著寫（字形不轉向、不鏡像）；cross＝路會交叉，後半段畫成橋
+  const POOL = [
+    { tier: 1, pts: [[110, 300], [890, 300]], lines: true },
+    { tier: 1, pts: [[110, 420], [500, 170], [890, 420]] },
+    { tier: 1, pts: [[110, 480], [890, 130]], lines: true },
+    { tier: 1, pts: [[110, 200], [350, 450], [650, 150], [890, 400]] },
+    { tier: 1, pts: [[110, 150], [600, 150], [600, 470], [890, 470]], lines: true },
+    { tier: 2, pts: [[110, 430], [300, 170], [500, 430], [700, 170], [890, 400]] },
+    { tier: 2, pts: [[110, 470], [260, 150], [420, 470], [580, 150], [740, 470], [890, 170]], lines: true },
+    { tier: 2, pts: [[110, 500], [300, 500], [300, 350], [500, 350], [500, 200], [700, 200], [700, 100], [890, 100]], lines: true },
+    { tier: 2, pts: [[120, 150], [780, 150], [880, 300], [780, 450], [120, 450]] },
+    { tier: 2, pts: [[110, 480], [300, 160], [560, 120], [760, 300], [620, 480], [890, 480]] },
+    { tier: 2, pts: [[110, 450], [250, 180], [400, 450], [550, 180], [700, 450], [890, 300]] },
+    { tier: 3, pts: [[100, 500], [380, 470], [620, 300], [680, 130], [520, 70], [400, 150], [430, 330], [560, 470], [760, 520], [900, 400]], cross: [520, 70] },
+    { tier: 3, pts: [[110, 120], [880, 120], [880, 300], [120, 300], [120, 480], [890, 480]], lines: true },
+    { tier: 3, pts: [[110, 520], [230, 90], [350, 520], [470, 90], [590, 520], [710, 90], [890, 500]], lines: true },
+    { tier: 3, pts: [[90, 300], [220, 120], [360, 480], [500, 120], [640, 480], [780, 120], [910, 300]] },
+    { glyph: 'ㄑ', pts: [[640, 70], [380, 300], [650, 530]], lines: true },
+    { glyph: 'C', pts: [[640, 140], [500, 85], [370, 170], [330, 300], [370, 430], [500, 515], [640, 460]] },
+    { glyph: 'L', pts: [[400, 80], [400, 510], [660, 510]], lines: true },
+    { glyph: 'M', pts: [[300, 510], [330, 90], [500, 330], [670, 90], [700, 510]], lines: true },
+    { glyph: 'N', pts: [[350, 510], [350, 90], [650, 510], [650, 90]], lines: true },
+    { glyph: 'S', pts: [[650, 150], [500, 80], [360, 170], [420, 280], [580, 330], [640, 440], [500, 525], [350, 460]] },
+    { glyph: 'U', pts: [[360, 80], [360, 370], [430, 505], [570, 505], [640, 370], [640, 80]] },
+    { glyph: 'V', pts: [[330, 80], [500, 515], [670, 80]], lines: true },
+    { glyph: 'W', pts: [[230, 80], [360, 515], [500, 220], [640, 515], [770, 80]], lines: true },
+    { glyph: 'Z', pts: [[330, 100], [670, 100], [330, 500], [670, 500]], lines: true },
+    { glyph: 'J', pts: [[620, 80], [620, 400], [560, 510], [440, 505], [370, 420]] },
+    { glyph: 'O', pts: [[500, 80], [355, 145], [310, 300], [355, 455], [500, 520], [645, 455], [690, 300], [645, 145], [520, 84]] },
+    { glyph: '2', pts: [[360, 180], [450, 90], [580, 105], [625, 220], [540, 340], [360, 510], [665, 510]] },
+    { glyph: '3', pts: [[370, 140], [500, 85], [625, 160], [585, 270], [470, 300], [600, 330], [635, 445], [500, 520], [365, 460]] }
   ];
+  const GLYPH_AUDIO = { '2': 'assets/audio/kidapp-two.mp3', '3': 'assets/audio/kidapp-three.mp3' };
+  let LEVELS = [];
+  // 每輪 5 關：簡單→簡單/中等→照著寫→中等→難；非字形路隨機鏡像、上下翻、點位微調，每次都不一樣
+  function makeRound(prev) {
+    const fresh = list => { const f = list.filter(L => !prev.includes(L)); return Dino.shuffle(f.length ? f : list); };
+    const of = t => POOL.filter(L => L.tier === t), t1 = fresh(of(1)), t12 = fresh([...of(1), ...of(2)]), t2 = fresh(of(2));
+    const picks = [t1[0], t12.find(L => L !== t1[0]), fresh(POOL.filter(L => L.glyph))[0], t2.find(L => L !== t12[0]) || t2[0], fresh(of(3))[0]];
+    return picks.map(L => {
+      if (L.glyph) return { ...L, keep: true, src: L };
+      const mx = Math.random() < .5, my = Math.random() < .5, n = L.pts.length;
+      const tf = ([x, y]) => [mx ? 1000 - x : x, my ? 600 - y : y];
+      const pts = L.pts.map((p, k) => { const [x, y] = tf(p); const j = k && k < n - 1 && !L.cross ? 22 : 0;
+        return [Math.round(x + (Math.random() * 2 - 1) * j), Math.round(Math.min(540, Math.max(60, y + (Math.random() * 2 - 1) * j)))]; });
+      return { ...L, pts, cross: L.cross && tf(L.cross), src: L };
+    });
+  }
   const COURIERS = [['chick_abao', 'walk_r'], ['feifei', 'walk_r'], ['iggy', 'walk_r'], ['pairo', 'walk_r'], ['xiaokong', 'run_r']];
   const FRIENDS = ['chick_abao', 'feifei', 'iggy', 'pairo', 'xiaokong'];
   // 難度（導演 2026-10-22）：路寬＋可走出路外多遠（grace）＋出去後手指最多再走多遠（travel）；困難＝一出去就退回
+  // 新手（導演 2026-10-22，不預設）：路更寬、郵差被框在路裡，不扣分不退回；停 3 秒自動再示範
   const MODES = {
+    novice: { road: 130, slack: 10, grace: 0, travel: 0, fence: true },
     easy: { road: 110, slack: 10, grace: 90, travel: 360 },
     mid: { road: 84, slack: 8, grace: 60, travel: 240 },
     hard: { road: 66, slack: 14, grace: 0, travel: 0 }
@@ -37,7 +82,7 @@
   let mode = 'easy';
   try { const m = localStorage.getItem('dinopost-path-mode'); if (MODES[m]) mode = m; } catch { /* ok */ }
 
-  const S = { level: 0, offs: 0, samples: [], i: 0, status: [], checkpoints: [], cp: 0, drag: false, done: false, hinting: false,
+  const S = { level: 0, back: false, idleT: 0, round: [], offs: 0, samples: [], i: 0, status: [], checkpoints: [], cp: 0, drag: false, done: false, hinting: false,
     offset: [0, 0], offNow: false, offTravel: 0, lastP: null, lastMark: null, courier: null, friend: null, results: [], trails: [], el: {} };
 
   const say = text => { const b = $('bubble'); setKidText(b, text); b.classList.remove('is-pop'); void b.offsetWidth; b.classList.add('is-pop'); };
@@ -45,7 +90,7 @@
   const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
   const ease = k => k < .5 ? 2 * k * k : 1 - (-2 * k + 2) ** 2 / 2;
   const onTol = () => MODES[mode].road / 2 + MODES[mode].slack;
-  const prompt = () => LEVELS[S.level].glyph ? '寫出注音ㄑ' : '按住郵差，走到朋友家';
+  const prompt = () => { const g = LEVELS[S.level].glyph; return g ? (g === 'ㄑ' ? '寫出注音ㄑ' : `照著寫 ${g}`) : '按住郵差，走到朋友家'; };
   const inGame = () => $('ready').hidden && $('finish').hidden;
 
   function pathD(pts, lines) {
@@ -162,8 +207,9 @@
     const t0 = performance.now();
     const loop = t => {
       if (!S.hinting) return;
-      const c = ((t - t0) % 2400) / 1600, k = Math.min(1, c);
-      handAt(S.samples[Math.min(S.samples.length - 1, S.i + Math.round(60 * ease(k)))], k < .12);
+      const dur = MODES[mode].fence ? 2600 : 1600, c = ((t - t0) % (dur + 800)) / dur, k = Math.min(1, c);
+      const span = MODES[mode].fence ? Math.max(60, (S.checkpoints[S.cp + 1] ?? S.samples.length - 1) - S.i) : 60;
+      handAt(S.samples[Math.min(S.samples.length - 1, S.i + Math.round(span * ease(k)))], k < .12);
       S.el.hand.setAttribute('opacity', c > 1 ? 0 : 1);
       requestAnimationFrame(loop);
     };
@@ -201,7 +247,8 @@
   }
 
   function onDown(e) {
-    if (S.done) return;
+    if (S.done || S.back) return;   // 退回動畫中不能抓，否則跟退回互搶會卡住
+    clearTimeout(S.idleT);
     const p = toSvg(e), [x, y] = S.samples[S.i];
     if (dist(p, [x, y - 40]) > 130) { say(prompt()); return; }
     S.drag = true; S.lastP = p; S.grab = [p[0] - x, p[1] - y]; S.el.courier.classList.add('is-drag'); $('svg').setPointerCapture(e.pointerId);
@@ -210,14 +257,16 @@
   function onMove(e) {
     if (!S.drag || S.done) return;
     const raw = toSvg(e), M = MODES[mode];
-    // 手指按在郵差身上哪裡就以那點拖，不會一按就跳；偏移慢慢歸零，最後以手指為準
-    S.grab = S.grab.map(v => v * .85);
+    // 手指按在郵差身上哪裡就以那點拖，偏移固定不歸零（歸零會把判定點拉到郵差身上、離開路面而被退回）
     const p = [raw[0] - S.grab[0], raw[1] - S.grab[1]];
     // 只在目前位置附近往前找，跨過彎道直接跳不算：往前最多只能走手指這一下移動的距離（尖角兩邊靠很近也不會跳過去）
     let best = -1, bd = Infinity;
     const reach = Math.min(25, Math.ceil(dist(p, S.lastP || p) / STEP) + 4);
     for (let k = Math.max(0, S.i - 8); k < Math.min(S.samples.length, S.i + reach); k++) {
       const dd = dist(p, S.samples[k]); if (dd < bd) { bd = dd; best = k; }
+    }
+    if (M.fence && bd > M.road / 2) {   // 新手：郵差被框在路裡，最多走到路邊
+      const c = S.samples[best], k = (M.road / 2) / bd; p[0] = c[0] + (p[0] - c[0]) * k; p[1] = c[1] + (p[1] - c[1]) * k; bd = M.road / 2;
     }
     if (bd > onTol() + M.grace) return goOff();
     const on = bd <= onTol();
@@ -233,12 +282,16 @@
     if (best > S.i) { for (let k = S.i + 1; k <= best; k++) S.status[k] = on ? 1 : 0; S.i = best; }
     const [sx, sy] = S.samples[S.i];
     S.offset = [p[0] - sx, p[1] - sy];
+    if (M.fence) { const o = Math.hypot(...S.offset), lim = M.road / 2; if (o > lim) S.offset = S.offset.map(v => v * lim / o); }
     const reached = S.checkpoints.findIndex((idx, n) => n > S.cp && S.i >= idx);
     if (reached > 0) { S.cp = reached; Dino.sfx('pop', .7); Dino.burst(S.el.stars[reached - 1]); }
     place();
     if (S.i >= S.samples.length - 3 && on) arrive();
   }
-  function onUp() { S.drag = false; S.el.courier?.classList.remove('is-drag'); S.offset = [0, 0]; S.offNow = false; S.offTravel = 0; if (S.samples.length) place(); }
+  function onUp() {
+    const was = S.drag; S.drag = false; S.el.courier?.classList.remove('is-drag'); S.offset = [0, 0]; S.offNow = false; S.offTravel = 0; if (S.samples.length) place();
+    if (was && MODES[mode].fence && !S.done) { clearTimeout(S.idleT); S.idleT = setTimeout(() => { if (inGame() && !S.drag && !S.done) startHint(); }, 3000); }
+  }
 
   function goOff() {
     S.drag = false; S.el.courier.classList.remove('is-drag'); S.offs++;
@@ -249,7 +302,8 @@
     const target = S.checkpoints[S.cp];
     S.status.length = target + 1;
     setTimeout(() => S.el.marks.replaceChildren(), 500);
-    const tick = () => { S.i = Math.max(target, S.i - 6); place(); if (S.i > target) requestAnimationFrame(tick); };
+    S.back = true; S.lastP = null;
+    const tick = () => { S.i = Math.max(target, S.i - 6); place(); if (S.i > target) setTimeout(tick, 16); else S.back = false; };
     tick();
   }
 
@@ -267,7 +321,8 @@
     Dino.burst(S.el.courier); say('送到了！');
     S.el.img.setAttribute('href', `assets/cast/${S.courier[0]}__cheer.webp`); S.el.img.removeAttribute('transform');
     const L = LEVELS[S.level];
-    if (L.glyph) fetch('assets/audio/symbols.json').then(r => r.json()).then(m => { const a = new Audio(m.zhuyin[L.glyph]); setTimeout(() => a.play().catch(() => {}), 700); }).catch(() => {});
+    if (L.glyph && L.glyph !== 'ㄑ') setTimeout(() => Dino.voice(GLYPH_AUDIO[L.glyph] || `assets/audio/letters/letter-${L.glyph.toLowerCase()}.mp3`), 700);
+    else if (L.glyph) fetch('assets/audio/symbols.json').then(r => r.json()).then(m => { const a = new Audio(m.zhuyin[L.glyph]); setTimeout(() => a.play().catch(() => {}), 700); }).catch(() => {});
     const score = levelScore(); S.results.push(score);
     $('score').innerHTML = `<b>${starHtml(starsOf(score))}</b><span>${score}%</span>`; $('score').hidden = false;
     setTimeout(() => { $('score').hidden = true; if (!inGame()) return; S.level++; S.friend = null; S.level < LEVELS.length ? (build(), say(prompt()), startHint()) : finish(); }, 2000);
@@ -287,7 +342,8 @@
   }
 
   function newGame() {
-    S.level = 0; S.results = []; S.friend = null;
+    S.level = 0; S.results = []; S.friend = null; clearTimeout(S.idleT);
+    LEVELS = makeRound(S.round); S.round = LEVELS.map(L => L.src);
     S.courier = Dino.shuffle(COURIERS.filter(c => c !== S.courier))[0];
     build(); say(prompt());
   }
@@ -295,7 +351,7 @@
   function syncPick() { document.querySelectorAll('[data-road]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.road === mode))); }
 
   setKidText($('title'), '郵差走小路'); setKidText($('startLabel'), '點一下，開始送信！');
-  setKidText($('pickEasy'), '簡單'); setKidText($('pickMid'), '普通'); setKidText($('pickHard'), '困難');
+  setKidText($('pickNovice'), '新手'); setKidText($('pickEasy'), '簡單'); setKidText($('pickMid'), '普通'); setKidText($('pickHard'), '困難');
   setKidText($('finishTitle'), '信都送到了！'); setKidText($('again'), '再玩一次'); setKidText($('home'), '回首頁');
   document.documentElement.classList.toggle('dino-mode', Dino.dinoMode());
   Dino.bgm.start(); Dino.menuTaps($('ready')); Dino.menuTaps($('finish'));
