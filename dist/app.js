@@ -657,16 +657,19 @@ function renderHistory() {
   list.replaceChildren(...state.history.map(record => {
     const row = document.createElement('div'); row.className = 'history-row';
     const label = document.createElement('strong');
-    const modeName = record.mode === 'dinosaur' ? '恐龍挑戰' : record.mode === 'level'
+    const pace = record.game === 'path' ? { easy: '簡單', mid: '普通', hard: '困難' } : { slow: '慢', mid: '中', fast: '快' };
+    const modeName = (record.game === 'path' || record.game === 'catch') ? (pace[record.mode] || '') : record.mode === 'dinosaur' ? '恐龍挑戰' : record.mode === 'level'
       ? `第${['一', '二', '三'][record.level - 1]}級` : record.mode === 'zhuyin-sort' ? '第一級' : '全部單字';
     const mail = record.game === 'zhuyin-sort' || record.mode === 'zhuyin-sort';
-    const gameName = mail ? '注音送信' : record.game === 'flip' ? '郵差翻翻樂' : record.game === 'belt' ? '注音輸送帶'
+    const gameName = mail ? '注音送信' : record.game === 'path' ? '郵差走小路' : record.game === 'catch' ? '接信大郵袋' : record.game === 'flip' ? '郵差翻翻樂' : record.game === 'belt' ? '注音輸送帶'
       : record.answerFormat === 'english' ? '聽英文找單字' : '找圖片';
     label.textContent = `${gameName} · ${modeName}`;
     const date = document.createElement('small');
     date.textContent = new Date(record.date).toLocaleString('zh-TW', { dateStyle: 'short', timeStyle: 'short' });
     const score = document.createElement('span');
-    score.textContent = `${record.score}／${record.total} ${mail ? '封' : record.game === 'flip' ? '對' : record.game === 'belt' ? '個詞' : '題'}一次答對`;
+    score.textContent = record.game === 'path' ? `${record.score}／${record.total} 關三顆星（平均 ${record.avg}%）`
+      : record.game === 'catch' ? `${record.score}／${record.total} 回合沒接錯`
+      : `${record.score}／${record.total} ${mail ? '封' : record.game === 'flip' ? '對' : record.game === 'belt' ? '個詞' : '題'}一次答對`;
     row.append(label, date, score);
     return row;
   }));

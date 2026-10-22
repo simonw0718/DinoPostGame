@@ -236,6 +236,7 @@
     G.started = false;
     const clean = G.wrongs.filter(n => n === 0).length;
     const stars = clean >= 4 ? 3 : clean >= 2 ? 2 : 1;
+    Dino.saveHistory({ game: 'catch', mode: speed, score: clean, total: G.wrongs.length });
     $('finishStars').innerHTML = [0, 1, 2].map(i => `<span class="${i < stars ? '' : 'off'}">★</span>`).join('');
     $('finishActor').src = 'assets/cast/iggy__cheer.webp';
     $('finish').hidden = false; Dino.sfx('finish', .8); Dino.bgm.start();

@@ -147,6 +147,12 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
         && Number.isFinite(item.score) && Number.isFinite(item.total) && !Number.isNaN(Date.parse(item.date))).slice(0, 10) : [];
     } catch { return []; }
   }
+  // 沒有單字的遊戲（走小路、接信）也寫最近 10 回合紀錄：ids／results 留空，不影響選字
+  function saveHistory(record) {
+    try {
+      localStorage.setItem(storageKeys.history, JSON.stringify([{ date: new Date().toISOString(), ids: [], results: [], ...record }, ...loadHistory()].slice(0, 10)));
+    } catch { /* 沒有儲存空間也照樣能玩 */ }
+  }
   // Weighted pick: missed words come back more often, the last two rounds less often.
   // Restored 2026-10-21 (director): the stamp-based DinoProgress.selectRound repeated the same words too much.
   function selectRound(pool, history, count) {
@@ -320,6 +326,6 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
   }
 
   return { characters, storageKeys, shuffle, loadQueue, fitActor, parseZhuyin, makeBpmUnit, kidText,
-    isDino, isNumber, topicGroup, visualGroup, eligibleWords, loadHistory, selectRound, audioPath, burst, streakThreshold, dinoMode, setDinoMode, taskMode,
+    isDino, isNumber, topicGroup, visualGroup, eligibleWords, loadHistory, saveHistory, selectRound, audioPath, burst, streakThreshold, dinoMode, setDinoMode, taskMode,
     sfx, bgm, menuTaps, goTo, previews, howto };
 })();

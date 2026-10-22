@@ -280,6 +280,7 @@
     const avg = Math.round(S.results.reduce((a, b) => a + b, 0) / S.results.length);
     $('finishStars').innerHTML = starHtml(starsOf(avg));
     $('finishScore').textContent = `${avg}%`;
+    Dino.saveHistory({ game: 'path', mode, score: S.results.filter(r => starsOf(r) === 3).length, total: S.results.length, avg });
     $('finishActor').src = `assets/cast/${S.courier[0]}__cheer.webp`;
     $('finish').hidden = false; Dino.sfx('finish', .8); Dino.bgm.start();
   }
