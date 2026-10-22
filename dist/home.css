@@ -73,5 +73,7 @@
   body[data-page="select"] .game-choice.has-preview .game-choice-copy strong.kid-text{justify-content:center}
   body[data-page="select"] .game-choice-copy small{display:none}
 }
-@media(max-width:680px){body[data-page="select"] .start-description{display:none}body[data-page="select"] .game-choice-copy strong.kid-text{flex-wrap:nowrap;font-size:clamp(14px,4.3vw,20px)}}
+@media(max-width:680px){body[data-page="select"] .start-description{display:none}body[data-page="select"] .game-choice-copy strong.kid-text{flex-wrap:nowrap;font-size:clamp(14px,4.3vw,20px)}
+/* 手機：遊戲名依卡片寬度縮放，五字＋注音也不超出框 */
+@media(max-width:680px){.game-choice.has-preview{container-type:inline-size}body[data-page="select"] .game-choice.has-preview .game-choice-copy strong.kid-text{font-size:min(20px,4.3vw,11cqi)}}
 @media(max-width:680px) and (max-height:700px){.pv{transform:scale(.72);margin:-12px -15px}body[data-page="select"] .selector-letter .eyebrow{display:none}}
