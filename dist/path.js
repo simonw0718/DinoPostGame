@@ -105,19 +105,14 @@
   }
   const polyD = list => 'M' + list.map(p => `${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(' L');
 
-  // 一段路：邊框、路面、中線、方向箭頭、走過的綠色軌跡
-  function drawRoad(svg, list, width) {
-    const d = polyD(list);
-    el('path', { d, class: 'road-edge', 'stroke-width': width + 16 }, svg);
-    el('path', { d, class: 'road', 'stroke-width': width }, svg);
-    el('path', { d, class: 'road-mid' }, svg);
-    const trail = el('path', { d, class: 'trail', 'stroke-width': width * .42 }, svg);
-    for (let k = 20; k < list.length - 14; k += 34) {
-      const [x, y] = list[k], [ax, ay] = list[k + 3];
-      el('path', { class: 'arrow', d: 'M-9 -13 L7 0 L-9 13', transform: `translate(${x} ${y}) rotate(${Math.atan2(ay - y, ax - x) * 180 / Math.PI}) scale(${width / 110})` }, svg);
-    }
-    return trail;
+  // 一段路：邊框、路面、中線；橋用平頭（butt）接回底下同一條路，看不出接縫
+  function drawRoad(svg, list, width, cap = 'round', dash = 0) {
+    const d = polyD(list), lc = { style: `stroke-linecap:${cap}` };   // 用 style：CSS 的 round 會蓋過屬性
+    el('path', { d, class: 'road-edge', 'stroke-width': width + 16, ...lc }, svg);
+    el('path', { d, class: 'road', 'stroke-width': width, ...lc }, svg);
+    el('path', { d, class: 'road-mid', style: `stroke-linecap:${cap};stroke-dashoffset:${dash}` }, svg);
   }
+  const drawTrail = (svg, list, width) => el('path', { d: polyD(list), class: 'trail', 'stroke-width': width * .42 }, svg);
 
   function build() {
     stopHint();
@@ -139,21 +134,35 @@
     probe.remove();
     const N = S.samples.length;
     if (L.glyph) el('text', { class: 'glyph', x: X0 + W - 90, y: Y0 + 100 }, svg).textContent = L.glyph;
-    // 交叉的路：分兩段畫，後半段疊在上面像一座橋，孩子看得出路往哪接
-    let cut = N - 1;
-    if (L.cross) { const c = portrait ? [L.cross[1], L.cross[0]] : L.cross; cut = S.samples.reduce((b, p, k) => dist(p, c) < dist(S.samples[b], c) ? k : b, 0); }
-    S.trails = [{ a: 0, el: drawRoad(svg, S.samples.slice(0, cut + 1), width) }];
+    // 交叉的路（導演 2026-10-23 破圖修正）：整條路一次畫完，只在後半段經過交叉口的那一小段疊一座橋，路面、中線都接得起來
+    const near = (k, r) => S.samples.some((p, j) => Math.abs(j - k) > 40 && dist(p, S.samples[k]) < r);
+    drawRoad(svg, S.samples, width);
+    let b0 = N - 1;
     if (L.cross) {
-      S.trails.push({ a: cut, el: drawRoad(svg, S.samples.slice(cut), width) });
-      el('path', { d: polyD(S.samples.slice(cut - 4, cut + 5)), class: 'road', 'stroke-width': width, 'stroke-linecap': 'butt' }, svg);   // 蓋掉接縫的圓頭
+      let best = 1e9, j = N - 1, c = 0;   // 交叉口＝後半段 j 離前半段 c 最近的地方
+      for (let k = 41; k < N; k++) for (let i = 0; i < k - 40; i++) { const d = dist(S.samples[i], S.samples[k]); if (d < best) { best = d; j = k; c = i; } }
+      // 橋只蓋住底下那條路的寬度（只看交叉口附近的前半段），不往外延伸到別段
+      const over = k => S.samples.slice(Math.max(0, c - 30), c + 31).some(p => dist(p, S.samples[k]) < width + 16);
+      let b1 = j; b0 = j;
+      while (b0 > 0 && over(b0)) b0--;
+      while (b1 < N - 1 && over(b1)) b1++;
+      b0 = Math.max(0, b0 - 2); b1 = Math.min(N - 1, b1 + 2);
+      S.trails = [{ a: 0, el: drawTrail(svg, S.samples.slice(0, b0 + 1), width) }];
+      drawRoad(svg, S.samples.slice(b0, b1 + 1), width, 'butt', b0 * STEP);
+      S.trails.push({ a: b0, el: drawTrail(svg, S.samples.slice(b0), width) });
+    } else S.trails = [{ a: 0, el: drawTrail(svg, S.samples, width) }];
+    // 方向箭頭：交叉口附近不放（會疊到橋上）
+    for (let k = 20; k < N - 14; k += 34) {
+      if (L.cross && near(k, width * 1.2)) continue;
+      const [x, y] = S.samples[k], [ax, ay] = S.samples[k + 3];
+      el('path', { class: 'arrow', d: 'M-9 -13 L7 0 L-9 13', transform: `translate(${x} ${y}) rotate(${Math.atan2(ay - y, ax - x) * 180 / Math.PI}) scale(${width / 110})` }, svg);
     }
     S.trails.forEach(t => { t.len = t.el.getTotalLength(); });
     S.el.marks = el('g', {}, svg);   // 走出路外的橘色腳印
     // 三分之一、三分之二各一顆星＝存檔點，標 1、2 告訴孩子先去哪
     S.checkpoints = [0, Math.floor(N / 3), Math.floor(N * 2 / 3)].map(idx => {
       // 星星不要放在交叉口：附近若有另一段路就往前挪
-      const near = k => S.samples.some((p, j) => Math.abs(j - k) > 40 && dist(p, S.samples[k]) < width * 1.3);
-      while (idx > 0 && idx < N - 20 && near(idx)) idx += 4;
+      while (idx > 0 && idx < N - 20 && near(idx, width * 1.3)) idx += 4;
       return idx;
     });
     S.el.stars = S.checkpoints.slice(1).map((idx, n) => {
