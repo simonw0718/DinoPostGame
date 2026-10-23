@@ -58,6 +58,9 @@
     return art;
   }
 
+  // 圖幾乎一樣、孩子分不出來的字，不放同一回合（導演 2026-10-23）
+  const LOOKALIKE = [['kidapp-quetzalcoatlus', 'kidapp-hatzegopteryx']];
+
   // ---------- 出題：同一種畫風，避免一回合混雜 ----------
   function pickRound() {
     const pool = state.words.filter(w => !state.disabledIds.has(w.id) && (prefs.dino ? Dino.isDino(w) : !Dino.isDino(w) && !Dino.isNumber(w)) && (w.image || w.sheet));
@@ -65,10 +68,10 @@
     pool.forEach(w => { const g = Dino.visualGroup(w); groups.set(g, [...(groups.get(g) || []), w]); });
     const usable = [...groups.values()].filter(list => list.length >= prefs.pairs);
     const chosen = usable.length ? usable.sort((a, b) => b.length - a.length)[Math.random() < .75 ? 0 : Math.floor(Math.random() * usable.length)] : pool;
-    // 中文同字或英文同字的不放同一回合，免得孩子以為兩張都對
+    // 中文同字、英文同字或圖太像的不放同一回合，免得孩子以為兩張都對
     const picked = [];
     for (const w of Dino.selectRound(chosen, Dino.loadHistory(), chosen.length)) {
-      if (picked.some(p => p.en === w.en || p.zh === w.zh)) continue;
+      if (picked.some(p => p.en === w.en || p.zh === w.zh || LOOKALIKE.some(g => g.includes(p.id) && g.includes(w.id)))) continue;
       picked.push(w);
       if (picked.length === prefs.pairs) break;
     }
