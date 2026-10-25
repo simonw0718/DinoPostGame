@@ -73,3 +73,31 @@
   Cache-Control: no-cache
 /home-button.css
   Cache-Control: no-cache
+/catch
+  Cache-Control: no-cache
+/catch.html
+  Cache-Control: no-cache
+/catch.js
+  Cache-Control: no-cache
+/catch.css
+  Cache-Control: no-cache
+/path
+  Cache-Control: no-cache
+/path.html
+  Cache-Control: no-cache
+/path.js
+  Cache-Control: no-cache
+/path.css
+  Cache-Control: no-cache
+/pack
+  Cache-Control: no-cache
+/pack.html
+  Cache-Control: no-cache
+/pack.js
+  Cache-Control: no-cache
+/pack.css
+  Cache-Control: no-cache
+/pack_levels.json
+  Cache-Control: no-cache
+/assets/audio/*
+  Cache-Control: no-cache

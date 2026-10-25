@@ -224,17 +224,21 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
   }
   // 念字：跟音效同一個 Web Audio 混音器。iPhone 只要第一次點擊解鎖過，之後計時器觸發也念得出來（<audio> 不行）。
   // 回傳的 Promise 在念完時 resolve，可以串接（例：顏色念完再念形狀）。
+  // voice.stop() 也取消「還在下載」的字：下載完不念（2026-10-25 修：第一輪沒快取時，慢到的舊字接在新字後面念，聽起來配錯）
+  let voiceEpoch = 0, stopPlaying = () => {};
   function voice(url, volume = 1) {
     const c = audioCtx(); if (!c) return Promise.resolve();
     if (c.state !== 'running') c.resume().catch(() => {});
+    const epoch = voiceEpoch;
     return loadBuffer(url).then(buffer => new Promise(done => {
+      if (epoch !== voiceEpoch) return done();
       const src = c.createBufferSource(), gain = c.createGain();
       src.buffer = buffer; gain.gain.value = volume; src.onended = done;
       src.connect(gain).connect(c.destination); src.start();
-      voice.stop = () => { src.onended = null; try { src.stop(); } catch { /* ok */ } done(); };
+      stopPlaying = () => { src.onended = null; try { src.stop(); } catch { /* ok */ } done(); };
     })).catch(() => {});
   }
-  voice.stop = () => {};
+  voice.stop = () => { voiceEpoch++; stopPlaying(); stopPlaying = () => {}; };
   const musicKey = 'dinopost-music-v1', bgmPosKey = 'dinopost-bgm-pos';
   const musicOn = () => { try { return localStorage.getItem(musicKey) !== '0'; } catch { return true; } };
   const bgm = (() => {
