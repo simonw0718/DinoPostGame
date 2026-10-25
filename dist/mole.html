@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#164d39">
+  <title>單字打地鼠・恐龍郵局</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="dino-mode.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css"><link rel="stylesheet" href="howto.css">
+  <script src="shared.js"></script>
+  <script src="progress.js"></script>
+  <link rel="stylesheet" href="mole.css">
+</head>
+<body>
+  <div class="ml-shell">
+    <header class="gh">
+      <a class="dino-home" href="index.html" aria-label="回選遊戲首頁"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.6 1.6 11.4a1 1 0 0 0 1.3 1.5L4.5 11.6V20a1.5 1.5 0 0 0 1.5 1.5h3.8v-5.8a.7.7 0 0 1 .7-.7h3a.7.7 0 0 1 .7.7v5.8H18a1.5 1.5 0 0 0 1.5-1.5v-8.4l1.6 1.3a1 1 0 0 0 1.3-1.5Z"/></svg></a>
+      <h1 id="title" class="gh-title">單字打地鼠</h1>
+      <div class="gh-tools"><button id="help" class="gh-btn" type="button" aria-label="玩法">?</button><button id="menuBtn" class="gh-btn" type="button" aria-label="難度選單"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96a7 7 0 0 0-1.62-.94l-.36-2.540a.48.48 0 0 0-.48-.41h-3.84a.47.47 0 0 0-.47.41l-.36 2.54a7.4 7.4 0 0 0-1.62.94l-2.39-.96a.48.48 0 0 0-.59.22L2.74 8.87a.47.47 0 0 0 .12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.320c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54a7 7 0 0 0 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.47.47 0 0 0-.12-.61zM12 15.6a3.6 3.6 0 1 1 0-7.2 3.6 3.6 0 0 1 0 7.2z"/></svg></button></div>
+    </header>
+    <main id="yard" class="ml-yard">
+      <div class="ml-bar">
+        <button id="replay" class="ml-say" type="button" aria-label="再聽一次"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 9.2v5.6c0 .6.4 1 1 1h3l4.3 3.6c.6.5 1.7.1 1.7-.8V5.4c0-.9-1.1-1.3-1.7-.8L8 8.2H5c-.6 0-1 .4-1 1zm12.5-2.6a1 1 0 0 0-.2 1.4 6.6 6.6 0 0 1 0 8 1 1 0 1 0 1.6 1.2 8.6 8.6 0 0 0 0-10.4 1 1 0 0 0-1.4-.2z"/></svg></button>
+        <div id="letter" class="ml-letter" hidden></div>
+        <ol id="hits" class="ml-hits" aria-label="打到幾隻"></ol>
+      </div>
+      <div id="board" class="ml-board"></div>
+    </main>
+  </div>
+
+  <div id="ready" class="overlay">
+    <div class="pick" role="group" aria-label="玩法"><button type="button" data-mode="pic">聽音打圖</button><button type="button" data-mode="abc">開頭字母</button></div>
+    <div class="pick" role="group" aria-label="速度"><button type="button" data-speed="slow">慢</button><button type="button" data-speed="mid">中</button><button type="button" data-speed="fast">快</button></div>
+    <button id="start" class="start" type="button">
+      <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M7 4.6v14.8a1 1 0 0 0 1.5.9l12-7.4a1 1 0 0 0 0-1.8l-12-7.4A1 1 0 0 0 7 4.6z"/></svg></span><span id="startLabel" class="label">點一下，開始打地鼠！</span>
+    </button>
+  </div>
+
+  <div id="finish" class="overlay" hidden>
+    <div class="card">
+      <img id="finishActor" alt="">
+      <h2 id="finishTitle">打到5隻！</h2>
+      <p id="finishStars" class="stars"></p>
+      <div class="actions"><button id="again" type="button">再玩一次</button><a id="home" href="index.html">回首頁</a></div>
+    </div>
+  </div>
+
+<script src="mole.js"></script>
+</body>
+</html>

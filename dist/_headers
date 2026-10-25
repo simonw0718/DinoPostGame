@@ -101,3 +101,11 @@
   Cache-Control: no-cache
 /assets/audio/*
   Cache-Control: no-cache
+/mole
+  Cache-Control: no-cache
+/mole.html
+  Cache-Control: no-cache
+/mole.js
+  Cache-Control: no-cache
+/mole.css
+  Cache-Control: no-cache
