@@ -54,11 +54,12 @@
     p.el.innerHTML = boxes.join('') + tapes.join('');
   }
 
-  // ── 版面：格子大小跟著院子大小算；包裹架上的包裹用 0.6 倍
+  // ── 版面：格子大小用題庫裡最大的院子算，每關都一樣大（不會忽大忽小）；包裹架上的包裹用 0.6 倍
   function measure() {
-    if (!G.lv) return;
+    if (!G.bank) return;
+    const rows = Math.max(...G.bank.map(lv => lv.rows)), cols = Math.max(...G.bank.map(lv => lv.cols));
     const w = yard.clientWidth - 24, h = yard.clientHeight - 56;
-    CS = Math.max(36, Math.floor(Math.min(w / G.lv.cols, h / G.lv.rows, 132)));
+    CS = Math.max(36, Math.floor(Math.min(w / cols, h / rows, 132)));
     document.documentElement.style.setProperty('--cs', `${CS}px`);
     document.documentElement.style.setProperty('--tcs', `${Math.round(Math.min(CS * .6, 64))}px`);
   }
