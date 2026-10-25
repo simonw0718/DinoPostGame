@@ -5,7 +5,7 @@ Usage:
   python3 tools/en_audio_check.py [--ids food-pineapple ...]
     -> audio-pilot/en-check-<date>/report.tsv (all words) + review.html (mismatches only, with players)
 
-Local only: no model API call, no audio changed. whisper.cpp and the small model come from the
+Mismatches are retried slowed 10% then 15% (temp copy only). Local only: no model API call, no audio changed. whisper.cpp and the small model come from the
 恐龍郵局 production project (override with DINO_WHISPER_CLI / DINO_WHISPER_MODEL).
 """
 import argparse
@@ -56,8 +56,18 @@ def main():
         for i, w in enumerate(words, 1):
             mp3 = AUDIO / f"{w['id']}.mp3"
             heard = transcribe(mp3, tmp) if mp3.is_file() else '(無檔)'
+            # Short words: whisper often mishears at normal speed; retry slowed 10% / 15% on a temp copy
+            for factor in (0.9, 0.85):
+                if norm(w['en']) == norm(heard) or not mp3.is_file():
+                    break
+                slow = Path(tmp) / 'slow.mp3'
+                subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', str(mp3), '-filter:a', f'atempo={factor}',
+                                str(slow)], check=True)
+                if norm(w['en']) == norm(retry := transcribe(slow, tmp)):
+                    heard = f'{retry} (放慢 {round((1 - factor) * 100)}%)'
+                    break
             score = difflib.SequenceMatcher(None, norm(w['en']), norm(heard)).ratio()
-            status = 'ok' if norm(w['en']) == norm(heard) else 'check'
+            status = 'ok' if norm(w['en']) == norm(heard.split(' (')[0]) else 'check'
             rows.append((w['id'], w['en'], heard, f'{score:.2f}', status))
             print(f"{i}/{len(words)} {status} {w['en']} -> {heard}", flush=True)
     (out / 'report.tsv').write_text('id\tword\theard\tsimilarity\tstatus\n'
