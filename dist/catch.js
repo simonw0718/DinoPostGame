@@ -258,6 +258,7 @@
 
   function newGame() {
     G.round = 0; G.wrongs = []; G.target = null; G.started = true; G.paused = false; G.pending = null;
+    Dino.preload([...COLORS.map(c => clipUrl(c.id)), ...SHAPES.map(s => clipUrl(s.audio)), ...NUM.map(clipUrl)]);
     G.letters.forEach(L => L.el.remove()); G.letters = [];
     measure(); nextRound();
   }

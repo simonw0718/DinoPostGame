@@ -215,6 +215,7 @@
     $('finishOverlay').hidden = true;
     document.documentElement.classList.toggle('dino-mode', prefs.dino);
     state.round = pickRound();
+    Dino.preload(state.round.map(Dino.audioPath));
     // 角色每回合隨機，盡量不連續同一位
     state.courier = Dino.shuffle(couriers.filter(id => id !== state.courier))[0];
     state.open = { sound: null, picture: null }; state.busy = false; state.flips = 0; state.matched = 0;

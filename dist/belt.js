@@ -255,6 +255,7 @@
     $('finishOverlay').hidden = true;
     document.documentElement.classList.toggle('dino-mode', prefs.dino);
     state.round = pickRound(); state.index = 0; state.misses = 0; state.results = [];
+    Dino.preload([...state.round.map(w => w.zhAudio), ...Object.values(state.symbolAudio || {})]);
     state.courier = Dino.shuffle(couriers.filter(id => id !== state.courier))[0];
     $('actorImg').src = poseSrc(state.courier, 'hello');
     measure(); renderWord(); fillBelt();

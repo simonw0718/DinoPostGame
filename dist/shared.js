@@ -239,6 +239,8 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
     })).catch(() => {});
   }
   voice.stop = () => { voiceEpoch++; stopPlaying(); stopPlaying = () => {}; };
+  // 開局先在背景把這回合的音檔下載解碼好，第一次點也馬上出聲（2026-10-25）
+  function preload(urls) { if (!audioCtx()) return; urls.forEach(u => { if (u) loadBuffer(u).catch(() => {}); }); }
   const musicKey = 'dinopost-music-v1', bgmPosKey = 'dinopost-bgm-pos';
   const musicOn = () => { try { return localStorage.getItem(musicKey) !== '0'; } catch { return true; } };
   const bgm = (() => {
@@ -344,5 +346,5 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
 
   return { voice, characters, storageKeys, shuffle, loadQueue, fitActor, parseZhuyin, makeBpmUnit, kidText,
     isDino, isNumber, topicGroup, visualGroup, eligibleWords, loadHistory, saveHistory, selectRound, audioPath, burst, streakThreshold, dinoMode, setDinoMode, taskMode,
-    sfx, bgm, menuTaps, goTo, previews, howto };
+    sfx, bgm, menuTaps, goTo, previews, howto, preload };
 })();
