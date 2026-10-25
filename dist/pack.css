@@ -1,5 +1,5 @@
 /* 包裹拼拼樂（sample v1，2026-10-25）：把包裹塞滿空地，每隻恐龍旁邊都要有一封信。拖曳移動、點一下轉向。題目 pack_levels.json（tools/gen_pack_levels.py） */
-:root{--ink:#17593f;--cream:#fffdf2;--gold:#e3bd70;--grass:#8fcf6e;--grass-d:#5ea956;--cs:64px;--tcs:40px;font-family:"Naikai",ui-rounded,"Noto Sans TC",system-ui,sans-serif;color:var(--ink)}
+:root{--ink:#17593f;--cream:#fffdf2;--gold:#e3bd70;--grass:#8fcf6e;--grass-d:#5ea956;--cs:64px;--tcs:40px;--noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .2 0 0 0 0 .15 0 0 0 0 .05 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");--tuft:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%23589e3e' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M22 72q-2-9 2-15M26 73q1-8 7-12M18 73q-4-6-3-12'/%3E%3Cpath d='M70 38q-2-9 2-15M74 39q1-8 7-12M66 39q-4-6-3-12'/%3E%3C/g%3E%3Ccircle cx='60' cy='76' r='3' fill='%23fff6c7'/%3E%3Ccircle cx='64' cy='73' r='2' fill='%23ffd34d'/%3E%3C/svg%3E");font-family:"Naikai",ui-rounded,"Noto Sans TC",system-ui,sans-serif;color:var(--ink)}
 *{box-sizing:border-box}
 html,body{height:100%;margin:0}
 body{background:#164d39;overflow:hidden}
@@ -11,39 +11,51 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
 /* 直式：院子在上、包裹架在下；寬版：院子左、包裹架右 */
 .pk-play{flex:1;min-height:0;display:flex;flex-direction:column;gap:10px}
 @media(min-aspect-ratio:11/10){.pk-play{flex-direction:row}.pk-tray{width:38%;align-content:center}}
-.pk-yard{position:relative;flex:1;min-height:0;display:grid;place-items:center;border:5px solid var(--cream);border-radius:26px;background:radial-gradient(ellipse at 50% 40%,#c7ecb0,#9fd88a 70%,#86c873);box-shadow:0 10px 26px #0a2a1c66;touch-action:none}
-.pk-tray{flex:none;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;min-height:calc(var(--tcs)*2.4);padding:12px;border:4px solid var(--gold);border-radius:22px;background:#f6e3bdee;box-shadow:inset 0 4px 0 #ffffff88,0 6px 0 #c89c52;touch-action:none}
+.pk-yard{position:relative;flex:1;min-height:0;display:grid;place-items:center;border:5px solid var(--cream);border-radius:26px;background:var(--noise),radial-gradient(ellipse at 50% 38%,#b9e59c,#8fcd70 55%,#5f9e4c);box-shadow:inset 0 0 60px #2d5e2a66,0 10px 26px #0a2a1c66;touch-action:none}
+.pk-tray{flex:none;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px;min-height:calc(var(--tcs)*2.6);padding:14px 12px 18px;border:5px solid #8a5a2e;border-radius:22px;touch-action:none;
+  background:var(--noise),linear-gradient(#ffffff26,#0000 30%,#0000 80%,#0000001f),repeating-linear-gradient(0deg,#c8915a 0 9px,#d6a36b 9px 17px,#c48a52 17px 21px,#d09a62 21px 34px);box-shadow:inset 0 3px 0 #f2c48b,inset 0 -6px 0 #9c6a39,0 6px 0 #5e3a1a,0 12px 20px #0a2a1c55}
 .pk-rounds{position:absolute;left:12px;top:12px;z-index:3;display:flex;gap:6px;margin:0;padding:6px 9px;list-style:none;border-radius:99px;background:#fffdf2cc;box-shadow:0 3px 0 #0a2a1c22}
 .pk-rounds li{width:12px;height:12px;border-radius:50%;background:#d6e4cf;transition:background .3s,transform .3s}
 .pk-rounds li.is-done{background:#4fb46a}
 .pk-rounds li.is-now{background:#f2b945;transform:scale(1.35)}
 
-/* 院子格子：草皮方塊；恐龍站在格子上（圖往上凸出一點） */
-.pk-board{position:relative;width:calc(var(--cols)*var(--cs));height:calc(var(--rows)*var(--cs))}
-.tile{position:absolute;width:var(--cs);height:var(--cs);padding:3px}
-.tile::before{content:"";display:block;width:100%;height:100%;border-radius:12px;background:linear-gradient(#a9df8c,#7fc565);box-shadow:inset 0 -5px 0 #5ea95655,inset 0 3px 0 #ffffff66}
-.tile.is-hot::before{background:linear-gradient(#fff3b5,#ffd86a)}
-.dino{position:absolute;z-index:4;width:var(--cs);height:var(--cs);display:flex;align-items:flex-end;justify-content:center;pointer-events:none}
-.dino::before{content:"";position:absolute;inset:3px;border-radius:12px;background:#d9c49a;box-shadow:inset 0 -5px 0 #b59c6b66}
-.dino img{position:relative;height:128%;max-width:118%;object-fit:contain;object-position:bottom;filter:drop-shadow(0 4px 3px #0a2a1c55);transform-origin:bottom center;transition:transform .2s}
-.dino .got{position:absolute;right:-6%;top:-10%;z-index:2;width:46%;opacity:0;transform:scale(.3) rotate(-20deg);transition:opacity .2s,transform .35s cubic-bezier(.2,1.5,.4,1)}
+/* 院子：浮空小島——每格是一塊草皮方塊（上面草、側面土），恐龍站在石頭台上。後排先畫、前排蓋住後排的側面 */
+.pk-board{position:relative;width:calc(var(--cols)*var(--cs));height:calc(var(--rows)*var(--cs));margin-bottom:calc(var(--cs)*.18)}
+.tile,.dino{position:absolute;z-index:0;width:var(--cs);height:var(--cs)}
+.tile::before,.dino::before{content:"";position:absolute;inset:3%;z-index:1;border-radius:16%;
+  background:var(--noise),var(--tuft) var(--tx,0) var(--ty,0)/100% 100% no-repeat,radial-gradient(circle at 28% 22%,#d2f5ab,#0000 55%),linear-gradient(160deg,#a9e27f,#7cc35b 60%,#64ad48);
+  box-shadow:inset 0 calc(var(--cs)*.04) 0 #ffffff55,inset 0 calc(var(--cs)*-.04) 0 #3f8a3155}
+.tile::after,.dino::after{content:"";position:absolute;left:3%;right:3%;top:40%;bottom:-13%;z-index:0;border-radius:0 0 16% 16%/0 0 22% 22%;
+  background:var(--noise),linear-gradient(#5d9a3f 0 10%,#a9774a 10%,#8c5d35 70%,#6e4526);box-shadow:0 calc(var(--cs)*.1) calc(var(--cs)*.12) #0a2a1c55}
+.tile.v1{--tx:30%;--ty:20%}.tile.v2{--tx:-25%;--ty:30%}.tile.v3{--tx:15%;--ty:-25%}
+.tile.is-hot::before{background:var(--noise),radial-gradient(circle at 50% 45%,#fff8c8,#ffe27a 70%,#f5c64a);box-shadow:inset 0 0 0 calc(var(--cs)*.05) #fffbe6,0 0 calc(var(--cs)*.2) #ffe27a}
+.dino{z-index:4;display:flex;align-items:flex-end;justify-content:center;pointer-events:none}
+.dino::before{background:var(--noise),radial-gradient(circle at 30% 25%,#f4ead6,#0000 60%),linear-gradient(160deg,#e3d4b6,#c7b18a 65%,#a8916a);box-shadow:inset 0 calc(var(--cs)*.04) 0 #ffffff77,inset 0 calc(var(--cs)*-.04) 0 #7d684555}
+.dino::after{background:var(--noise),linear-gradient(#b39b72,#8f7a57 70%,#6d5c40)}
+.dino .shadow{position:absolute;left:22%;right:22%;bottom:12%;z-index:2;height:16%;border-radius:50%;background:radial-gradient(#2c3a1f88,#0000 70%)}
+.dino img{position:relative;z-index:3;height:128%;max-width:118%;margin-bottom:8%;object-fit:contain;object-position:bottom;filter:drop-shadow(0 3px 2px #0a2a1c55);transform-origin:bottom center;transition:transform .2s}
+.dino .got{position:absolute;right:-8%;top:-12%;z-index:4;width:50%;opacity:0;transform:scale(.3) rotate(-20deg);transition:opacity .2s,transform .35s cubic-bezier(.2,1.5,.4,1);filter:drop-shadow(0 3px 2px #0005)}
 .dino.is-happy img{animation:hop .5s ease-out}
-.dino.is-happy .got{opacity:1;transform:none}
+.dino.is-happy .got{opacity:1;transform:rotate(8deg)}
 .dino.is-sad img{animation:shake .5s ease-in-out}
-.dino.is-sad::after{content:"?";position:absolute;top:-24%;left:50%;z-index:3;translate:-50% 0;display:grid;place-items:center;width:44%;aspect-ratio:1;border-radius:50%;background:var(--cream);border:3px solid #e0473a;color:#e0473a;font-size:calc(var(--cs)*.3);font-weight:1000;animation:pop .35s cubic-bezier(.2,1.5,.4,1)}
+.dino.is-sad .q{display:grid}
+.dino .q{position:absolute;top:-26%;left:50%;z-index:5;translate:-50% 0;display:none;place-items:center;width:44%;aspect-ratio:1;border-radius:50%;background:var(--cream);border:3px solid #e0473a;color:#e0473a;font-size:calc(var(--cs)*.3);font-weight:1000;animation:pop .35s cubic-bezier(.2,1.5,.4,1)}
 
-/* 包裹：每格一個紙箱色塊，只畫外框（相鄰格不畫邊，看起來是一整塊）；信那格印信封 */
-.piece{position:relative;flex:none;width:calc(var(--w)*var(--pcs));height:calc(var(--h)*var(--pcs));--pcs:var(--tcs);cursor:grab;touch-action:none;transition:transform .18s}
+/* 包裹：每格一個有厚度的紙箱（上蓋＋前側面），相鄰的箱子用膠帶黏在一起；信那格貼一封信。後排先畫 */
+.piece{position:relative;flex:none;width:calc(var(--w)*var(--pcs));height:calc(var(--h)*var(--pcs));--pcs:var(--tcs);cursor:grab;touch-action:none;transition:transform .18s;filter:drop-shadow(0 calc(var(--pcs)*.08) calc(var(--pcs)*.06) #0a2a1c55)}
 .piece.on-board{position:absolute;z-index:2;--pcs:var(--cs)}
-.piece.is-drag{--pcs:var(--cs);transition:none;cursor:grabbing;filter:drop-shadow(0 12px 10px #0a2a1c66)}
+.piece.is-drag{--pcs:var(--cs);transition:none;cursor:grabbing;filter:drop-shadow(0 calc(var(--pcs)*.3) calc(var(--pcs)*.16) #0a2a1c66);translate:0 calc(var(--pcs)*-.12)}
 .piece.is-turn{animation:turn .25s ease-out}
-.box{position:absolute;width:var(--pcs);height:var(--pcs);background:var(--c);box-shadow:inset 0 0 0 calc(var(--pcs)*.012) #0000}
-.box.t{border-top:calc(var(--pcs)*.06) solid var(--e)}.box.b{border-bottom:calc(var(--pcs)*.09) solid var(--e)}
-.box.l{border-left:calc(var(--pcs)*.06) solid var(--e)}.box.r{border-right:calc(var(--pcs)*.06) solid var(--e)}
-.box.t.l{border-top-left-radius:calc(var(--pcs)*.18)}.box.t.r{border-top-right-radius:calc(var(--pcs)*.18)}
-.box.b.l{border-bottom-left-radius:calc(var(--pcs)*.18)}.box.b.r{border-bottom-right-radius:calc(var(--pcs)*.18)}
-.box .env{position:absolute;left:14%;top:20%;z-index:1;width:72%;height:auto;filter:drop-shadow(0 2px 0 #0003)}
-.piece.on-board .box .env{animation:none}
+.box{position:absolute;width:var(--pcs);height:var(--pcs)}
+.box::after{content:"";position:absolute;left:4%;right:4%;top:30%;bottom:-12%;border-radius:0 0 14% 14%/0 0 24% 24%;
+  background:var(--noise),linear-gradient(color-mix(in srgb,var(--c) 70%,#000),color-mix(in srgb,var(--c) 55%,#000))}
+.box::before{content:"";position:absolute;inset:4% 4% 8%;z-index:1;border-radius:14%;
+  background:var(--noise),linear-gradient(90deg,#0000 47%,#00000014 47% 53%,#0000 53%),radial-gradient(circle at 26% 20%,color-mix(in srgb,var(--c) 45%,#fff),#0000 60%),linear-gradient(150deg,color-mix(in srgb,var(--c) 85%,#fff),var(--c) 55%,color-mix(in srgb,var(--c) 85%,#000));
+  box-shadow:inset calc(var(--pcs)*.03) calc(var(--pcs)*.03) 0 #ffffff66,inset calc(var(--pcs)*-.03) calc(var(--pcs)*-.03) 0 #00000022}
+.tape{position:absolute;z-index:3;background:linear-gradient(#ffeec1d9,#ecc98cd9);box-shadow:0 1px 1px #0002,inset 0 0 0 1px #ffffff55;pointer-events:none}
+.tape.h{width:calc(var(--pcs)*.34);height:calc(var(--pcs)*.22);clip-path:polygon(0 4%,8% 0,16% 6%,24% 0,100% 0,100% 100%,0 100%)}
+.tape.v{width:calc(var(--pcs)*.22);height:calc(var(--pcs)*.34);clip-path:polygon(0 0,100% 0,100% 100%,0 100%,4% 84%,0 72%)}
+.box .env{position:absolute;left:12%;top:16%;z-index:2;width:76%;height:auto;rotate:-6deg;filter:drop-shadow(0 calc(var(--pcs)*.03) calc(var(--pcs)*.02) #0005)}
 .pk-drag{position:fixed;inset:0;z-index:40;pointer-events:none}
 .pk-drag .piece{position:absolute;left:0;top:0}
 

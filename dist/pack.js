@@ -7,7 +7,12 @@
   const CAST = ['iggy', 'feifei', 'xiaokong', 'pairo', 'chick_abao'];
   // 紙箱顏色：底色 c、外框 e
   const BOXES = [['#eaa75f', '#a8662a'], ['#73b9e6', '#2f78ad'], ['#f0908a', '#b8483f'], ['#a5d77c', '#5b9a3c'], ['#c7a4ee', '#7c55b0'], ['#f5cf55', '#b48a17']];
-  const ENV = '<svg class="env" viewBox="0 0 40 28" aria-hidden="true"><rect x="1.5" y="1.5" width="37" height="25" rx="4" fill="#fffdf2" stroke="#c0392b" stroke-width="3"/><path d="M3 4l17 12L37 4" fill="none" stroke="#c0392b" stroke-width="3" stroke-linejoin="round"/><rect x="28" y="16" width="7" height="7" rx="1.5" fill="#e0473a"/></svg>';
+  // 信封：有紙的明暗、信封蓋陰影、鋸齒郵票（每次用不同 id，避免同頁漸層衝突）
+  let envN = 0;
+  const envSvg = cls => { const i = ++envN; return `<svg class="${cls}" viewBox="0 0 44 32" aria-hidden="true"><defs><linearGradient id="ep${i}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fffef6"/><stop offset="1" stop-color="#efe3c4"/></linearGradient><linearGradient id="ef${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6ecd2"/><stop offset="1" stop-color="#e2d2aa"/></linearGradient></defs>`
+    + `<rect x="1" y="2" width="42" height="28" rx="3.5" fill="url(#ep${i})" stroke="#c9b48a" stroke-width="1.2"/><path d="M2 4l20 14 20-14" fill="url(#ef${i})" stroke="#c9b48a" stroke-width="1.2" stroke-linejoin="round"/>`
+    + `<path d="M2 29l14-11M42 29L28 18" stroke="#d9c79f" stroke-width="1.2"/>`
+    + `<rect x="30" y="18.5" width="9.5" height="9" rx="1" fill="#fff" stroke="#fff" stroke-width="2" stroke-dasharray="1 1.1"/><rect x="31.2" y="19.7" width="7.1" height="6.6" rx=".6" fill="#e0473a"/><path d="M33 24.5l1.6-2.2 1.3 1.4 1-1" fill="none" stroke="#ffd34d" stroke-width=".9" stroke-linecap="round"/></svg>`; };
   const table = {
     '包裹拼拼樂': ['ㄅㄠ', 'ㄍㄨㄛˇ', 'ㄆㄧㄣ', 'ㄆㄧㄣ', 'ㄌㄜˋ'],
     '點一下，開始拼包裹！': ['ㄉㄧㄢˇ', 'ㄧ', 'ㄒㄧㄚˋ', '', 'ㄎㄞ', 'ㄕˇ', 'ㄆㄧㄣ', 'ㄅㄠ', 'ㄍㄨㄛˇ', ''],
@@ -38,11 +43,15 @@
   function drawPiece(p) {
     const [h, w] = size(p.cells), own = new Set(p.cells.map(([r, c]) => key(r, c)));
     p.el.style.setProperty('--h', h); p.el.style.setProperty('--w', w);
-    p.el.innerHTML = p.cells.map(([r, c]) => {
-      const side = ['t', 'b', 'l', 'r'].filter((s, i) => !own.has(key(r + [-1, 1, 0, 0][i], c + [0, 0, -1, 1][i]))).join(' ');
-      const env = r === p.env[0] && c === p.env[1];
-      return `<span class="box ${side}" style="left:calc(${c} * var(--pcs));top:calc(${r} * var(--pcs))">${env ? ENV : ''}</span>`;
-    }).join('');
+    const cells = p.cells.slice().sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+    const at = (r, c) => `left:calc(${c} * var(--pcs));top:calc(${r} * var(--pcs))`;
+    const boxes = cells.map(([r, c]) => `<span class="box" style="${at(r, c)}">${r === p.env[0] && c === p.env[1] ? envSvg('env') : ''}</span>`);
+    const tapes = [];
+    cells.forEach(([r, c]) => {
+      if (own.has(key(r, c + 1))) tapes.push(`<span class="tape h" style="left:calc(${c + 1 - .17} * var(--pcs));top:calc(${r + .3} * var(--pcs))"></span>`);
+      if (own.has(key(r + 1, c))) tapes.push(`<span class="tape v" style="left:calc(${c + .62} * var(--pcs));top:calc(${r + 1 - .2} * var(--pcs))"></span>`);
+    });
+    p.el.innerHTML = boxes.join('') + tapes.join('');
   }
 
   // ── 版面：格子大小跟著院子大小算；包裹架上的包裹用 0.6 倍
@@ -78,12 +87,12 @@
     G.dinoAt = new Set(lv.dinos.map(([r, c]) => key(r, c)));
     board.style.setProperty('--rows', lv.rows); board.style.setProperty('--cols', lv.cols);
     board.innerHTML = lv.board.filter(([r, c]) => !G.dinoAt.has(key(r, c)))
-      .map(([r, c]) => `<span class="tile" data-k="${key(r, c)}" style="left:calc(${c} * var(--cs));top:calc(${r} * var(--cs))"></span>`).join('');
+      .map(([r, c]) => `<span class="tile v${(r * 7 + c * 3) % 4}" data-k="${key(r, c)}" style="left:calc(${c} * var(--cs));top:calc(${r} * var(--cs))"></span>`).join('');
     const who = Dino.shuffle(CAST.slice());
     G.dinos = lv.dinos.map(([r, c], i) => {
       const el = document.createElement('div'); el.className = 'dino';
       el.style.left = `calc(${c} * var(--cs))`; el.style.top = `calc(${r} * var(--cs))`;
-      el.innerHTML = `<img alt="" src="assets/cast/${who[i % who.length]}__hello.webp">${ENV.replace('class="env"', 'class="got"')}`;
+      el.innerHTML = `<span class="shadow"></span><img alt="" src="assets/cast/${who[i % who.length]}__hello.webp">${envSvg('got')}<span class="q">?</span>`;
       board.append(el);
       return { r, c, el, img: el.querySelector('img'), name: who[i % who.length], happy: false };
     });
@@ -222,7 +231,7 @@
   Dino.bgm.start(); Dino.menuTaps($('ready')); Dino.menuTaps($('finish'));
 
   const HW = Dino.howto({
-    preview: `<div class="pv pv-pack" aria-hidden="true"><div class="g"><i></i><i></i><i style="visibility:hidden"></i><i></i><i></i><i></i></div><img class="d" src="assets/cast/iggy__hello.webp" alt=""><div class="p">${ENV}</div><span class="seal">OK</span></div>`,
+    preview: `<div class="pv pv-pack" aria-hidden="true"><div class="g"><i></i><i></i><i style="visibility:hidden"></i><i></i><i></i><i></i></div><img class="d" src="assets/cast/iggy__hello.webp" alt=""><div class="p">${envSvg('env')}</div><span class="seal">OK</span></div>`,
     text: '塞滿空地，恐龍旁邊要有信', kid: setKidText
   });
   let howtoSeen = false;
