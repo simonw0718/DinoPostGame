@@ -1,0 +1,97 @@
+/* 包裹拼拼樂（sample v1，2026-10-25）：把包裹塞滿空地，每隻恐龍旁邊都要有一封信。拖曳移動、點一下轉向。題目 pack_levels.json（tools/gen_pack_levels.py） */
+:root{--ink:#17593f;--cream:#fffdf2;--gold:#e3bd70;--grass:#8fcf6e;--grass-d:#5ea956;--cs:64px;--tcs:40px;font-family:"Naikai",ui-rounded,"Noto Sans TC",system-ui,sans-serif;color:var(--ink)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:#164d39;overflow:hidden}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
+.pk-shell{position:relative;display:flex;flex-direction:column;height:100svh;max-width:1200px;margin:0 auto;padding:max(10px,env(safe-area-inset-top)) 14px max(10px,env(safe-area-inset-bottom));gap:10px;isolation:isolate}
+.pk-shell::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(#0f3d2c22,#0f3d2caa 80%),url('assets/mail-bg/near-village.jpg') center/cover no-repeat}
+
+/* 直式：院子在上、包裹架在下；寬版：院子左、包裹架右 */
+.pk-play{flex:1;min-height:0;display:flex;flex-direction:column;gap:10px}
+@media(min-aspect-ratio:11/10){.pk-play{flex-direction:row}.pk-tray{width:38%;align-content:center}}
+.pk-yard{position:relative;flex:1;min-height:0;display:grid;place-items:center;border:5px solid var(--cream);border-radius:26px;background:radial-gradient(ellipse at 50% 40%,#c7ecb0,#9fd88a 70%,#86c873);box-shadow:0 10px 26px #0a2a1c66;touch-action:none}
+.pk-tray{flex:none;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px;min-height:calc(var(--tcs)*2.4);padding:12px;border:4px solid var(--gold);border-radius:22px;background:#f6e3bdee;box-shadow:inset 0 4px 0 #ffffff88,0 6px 0 #c89c52;touch-action:none}
+.pk-rounds{position:absolute;left:12px;top:12px;z-index:3;display:flex;gap:6px;margin:0;padding:6px 9px;list-style:none;border-radius:99px;background:#fffdf2cc;box-shadow:0 3px 0 #0a2a1c22}
+.pk-rounds li{width:12px;height:12px;border-radius:50%;background:#d6e4cf;transition:background .3s,transform .3s}
+.pk-rounds li.is-done{background:#4fb46a}
+.pk-rounds li.is-now{background:#f2b945;transform:scale(1.35)}
+
+/* 院子格子：草皮方塊；恐龍站在格子上（圖往上凸出一點） */
+.pk-board{position:relative;width:calc(var(--cols)*var(--cs));height:calc(var(--rows)*var(--cs))}
+.tile{position:absolute;width:var(--cs);height:var(--cs);padding:3px}
+.tile::before{content:"";display:block;width:100%;height:100%;border-radius:12px;background:linear-gradient(#a9df8c,#7fc565);box-shadow:inset 0 -5px 0 #5ea95655,inset 0 3px 0 #ffffff66}
+.tile.is-hot::before{background:linear-gradient(#fff3b5,#ffd86a)}
+.dino{position:absolute;z-index:4;width:var(--cs);height:var(--cs);display:flex;align-items:flex-end;justify-content:center;pointer-events:none}
+.dino::before{content:"";position:absolute;inset:3px;border-radius:12px;background:#d9c49a;box-shadow:inset 0 -5px 0 #b59c6b66}
+.dino img{position:relative;height:128%;max-width:118%;object-fit:contain;object-position:bottom;filter:drop-shadow(0 4px 3px #0a2a1c55);transform-origin:bottom center;transition:transform .2s}
+.dino .got{position:absolute;right:-6%;top:-10%;z-index:2;width:46%;opacity:0;transform:scale(.3) rotate(-20deg);transition:opacity .2s,transform .35s cubic-bezier(.2,1.5,.4,1)}
+.dino.is-happy img{animation:hop .5s ease-out}
+.dino.is-happy .got{opacity:1;transform:none}
+.dino.is-sad img{animation:shake .5s ease-in-out}
+.dino.is-sad::after{content:"?";position:absolute;top:-24%;left:50%;z-index:3;translate:-50% 0;display:grid;place-items:center;width:44%;aspect-ratio:1;border-radius:50%;background:var(--cream);border:3px solid #e0473a;color:#e0473a;font-size:calc(var(--cs)*.3);font-weight:1000;animation:pop .35s cubic-bezier(.2,1.5,.4,1)}
+
+/* 包裹：每格一個紙箱色塊，只畫外框（相鄰格不畫邊，看起來是一整塊）；信那格印信封 */
+.piece{position:relative;flex:none;width:calc(var(--w)*var(--pcs));height:calc(var(--h)*var(--pcs));--pcs:var(--tcs);cursor:grab;touch-action:none;transition:transform .18s}
+.piece.on-board{position:absolute;z-index:2;--pcs:var(--cs)}
+.piece.is-drag{--pcs:var(--cs);transition:none;cursor:grabbing;filter:drop-shadow(0 12px 10px #0a2a1c66)}
+.piece.is-turn{animation:turn .25s ease-out}
+.box{position:absolute;width:var(--pcs);height:var(--pcs);background:var(--c);box-shadow:inset 0 0 0 calc(var(--pcs)*.012) #0000}
+.box.t{border-top:calc(var(--pcs)*.06) solid var(--e)}.box.b{border-bottom:calc(var(--pcs)*.09) solid var(--e)}
+.box.l{border-left:calc(var(--pcs)*.06) solid var(--e)}.box.r{border-right:calc(var(--pcs)*.06) solid var(--e)}
+.box.t.l{border-top-left-radius:calc(var(--pcs)*.18)}.box.t.r{border-top-right-radius:calc(var(--pcs)*.18)}
+.box.b.l{border-bottom-left-radius:calc(var(--pcs)*.18)}.box.b.r{border-bottom-right-radius:calc(var(--pcs)*.18)}
+.box .env{position:absolute;left:14%;top:20%;z-index:1;width:72%;height:auto;filter:drop-shadow(0 2px 0 #0003)}
+.piece.on-board .box .env{animation:none}
+.pk-drag{position:fixed;inset:0;z-index:40;pointer-events:none}
+.pk-drag .piece{position:absolute;left:0;top:0}
+
+.banner{position:absolute;left:50%;top:42%;z-index:5;display:grid;justify-items:center;gap:4px;padding:12px 26px;border:5px solid var(--gold);border-radius:24px;background:var(--cream);box-shadow:0 7px 0 #c89c52,0 14px 26px #0a2a1c55;font-size:clamp(28px,8vw,42px);font-weight:1000;pointer-events:none;transform:translate(-50%,-50%);animation:banner 1.3s cubic-bezier(.2,1.4,.4,1) forwards}
+
+.overlay{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:16px;background:#0e3a28aa}
+.overlay[hidden]{display:none}
+.pick{display:flex;align-items:center;gap:8px;padding:8px 14px;border:4px solid var(--gold);border-radius:999px;background:var(--cream);font-size:clamp(18px,5vw,24px);font-weight:1000;box-shadow:0 5px 0 #c89c52}
+.pick button{min-width:64px;min-height:52px;padding:4px 12px;border:3px solid #cfe0c8;border-radius:16px;background:#f1f7ea}
+.pick button[aria-pressed="true"]{background:linear-gradient(#ffca58,#f6ac34);border-color:#b9792b;color:#573e1d;box-shadow:0 3px 0 #b9792b}
+.start{display:flex;flex-direction:column;align-items:center;gap:18px;padding:0;border:0;background:none}
+.go{display:grid;place-items:center;width:128px;height:128px;border:7px solid var(--cream);border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff8a6e,#e0473a 60%,#b8322a);color:var(--cream);box-shadow:0 8px 0 #8e2620,0 14px 24px #0a2a1c55;animation:breathe 1.6s ease-in-out infinite alternate}
+.go svg{width:56px;height:56px;margin-left:8px}
+.start:active .go{transform:translateY(5px);box-shadow:0 3px 0 #8e2620}
+.label{white-space:nowrap;padding:10px 20px;border:4px solid var(--gold);border-radius:999px;background:var(--cream);font-size:clamp(18px,5.2vw,28px);font-weight:1000;box-shadow:0 5px 0 #c89c52}
+.card{display:grid;justify-items:center;gap:10px;width:min(92vw,400px);padding:22px;border:6px solid var(--gold);border-radius:28px;background:var(--cream);text-align:center;box-shadow:0 12px 0 #c89c52;animation:pop .45s cubic-bezier(.2,1.5,.4,1)}
+.card img{height:130px}
+.card h2{margin:0;font-size:clamp(24px,6.4vw,38px);white-space:nowrap;display:flex;justify-content:center}
+.stars{margin:0;color:#f2b945;font-size:44px;letter-spacing:.08em;text-shadow:0 3px 0 #c98a12}
+.stars .off{color:#e6dcc4;text-shadow:none}
+.actions{display:flex;gap:12px;width:100%}
+.actions button,.actions a{flex:1;min-height:54px;display:flex;align-items:center;justify-content:center;border:0;border-radius:16px;font-size:clamp(17px,4.8vw,22px);font-weight:1000;text-decoration:none;color:var(--ink)}
+.actions button{background:linear-gradient(#ffca58,#f6ac34);box-shadow:0 5px 0 #b9792b}
+.actions a{background:#e5f2df;box-shadow:0 5px 0 #a9c8a2}
+
+/* 玩法動畫：一塊包裹滑進空格、恐龍拿到信 */
+.pv-pack{position:relative;width:124px;height:96px;background:radial-gradient(ellipse at 50% 40%,#c7ecb0,#9fd88a 70%)}
+.pv-pack .g{position:absolute;left:22px;top:18px;display:grid;grid-template-columns:repeat(3,26px);gap:2px}
+.pv-pack .g i{width:26px;height:26px;border-radius:6px;background:#86c96a}
+.pv-pack .d{position:absolute;left:76px;top:2px;width:26px;height:46px;object-fit:contain;object-position:bottom}
+.pv-pack .p{position:absolute;left:22px;top:46px;width:54px;height:26px;border-radius:7px;background:#e8a25a;border:3px solid #a8662a;animation:pvslide 2.4s ease-in-out infinite}
+.pv-pack .p svg{position:absolute;right:3px;top:3px;width:18px}
+.pv-pack .seal{position:absolute;right:6px;bottom:4px;padding:1px 6px;border-radius:8px;background:#4fb46a;color:#fff;font-size:12px;font-weight:1000;opacity:0;animation:pvseal 2.4s infinite}
+@keyframes pvslide{0%,15%{transform:translate(0,30px)}55%,100%{transform:translate(28px,0)}}
+@keyframes pvseal{0%,60%{opacity:0}70%,100%{opacity:1}}
+
+@keyframes pop{from{transform:scale(.85)}}
+@keyframes hop{40%{translate:0 -12%}}
+@keyframes shake{25%{rotate:-8deg}75%{rotate:8deg}}
+@keyframes turn{from{rotate:-90deg}}
+@keyframes banner{0%{transform:translate(-50%,-50%) scale(.5);opacity:0}18%{transform:translate(-50%,-50%) scale(1);opacity:1}78%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(-50%,-80%) scale(.9);opacity:0}}
+@keyframes breathe{to{transform:scale(1.06)}}
+@media(prefers-reduced-motion:reduce){.go{animation:none}}
+
+/* 注音（同 catch.css）*/
+.bpm-word{display:inline-flex;align-items:center;justify-content:center;flex:none;padding-right:.26em;white-space:nowrap}
+.bpm-main-char{display:inline-block;flex:none;font-size:1em;line-height:1.04}
+.bpm-column{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;margin-left:.05em;font-size:.4em;font-weight:850;line-height:1}
+.bpm-onset,.bpm-rime{display:block;line-height:1.03}
+.bpm-tone{position:absolute;right:-.55em;top:85%;transform:translateY(-50%) scale(1.5,1.8);font-size:1.2em;font-weight:900;color:#d32f2f;line-height:1}
+.bpm-tone-dot{position:absolute;right:0;top:-.6em;font-size:1.4em;font-weight:900;color:#d32f2f;line-height:1}
