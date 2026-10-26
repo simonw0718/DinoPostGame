@@ -8,7 +8,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="fonts.css">
 <script src="shared.js"></script>
-<!-- 恐龍蛋快打 sample（導演 2026-10-26）：2.5D 草地上 5／7／9 顆蛋輪流孵化，找題目欄的目標圖；一次 1 或 2 題；點錯圖卡縮回去；找到 5 個結束。美術之後再用 Gemini 元件精修 -->
+<!-- 恐龍蛋快打 sample（導演 2026-10-26）：2.5D 草地上固定 5 顆蛋輪流孵化，找題目欄的目標圖；一次 1 或 2 題；開頭字母模式＝題目給圖＋聲音、蛋裡孵出字母；點錯圖卡縮回去；找到 5 個結束。美術之後再用 Gemini 元件精修 -->
 <style>
 :root{--ink:#17593f;--cream:#fffdf2;--gold:#e3bd70;font-family:"Naikai",ui-rounded,system-ui,sans-serif;color:var(--ink)}
 *{box-sizing:border-box}
@@ -50,6 +50,9 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
 .egg .bot{z-index:2}
 .card{display:grid;place-items:center;width:calc(var(--s)*.74);aspect-ratio:1;border:calc(var(--s)*.025) solid #ead9b2;border-radius:16%;background:linear-gradient(160deg,#fffef8,#f2e6c8);box-shadow:0 calc(var(--s)*.03) 0 #c9ad78,0 calc(var(--s)*.06) calc(var(--s)*.06) #0a2a1c40}
 .card img{width:84%;height:84%;object-fit:contain;pointer-events:none}
+.card .abc{font-size:calc(var(--s)*.4);font-weight:1000;line-height:1;color:#d0601a;letter-spacing:-.03em;font-family:ui-rounded,"Arial Rounded MT Bold",system-ui,sans-serif}
+.slot img{width:86%;height:86%;object-fit:contain;pointer-events:none}
+.slot .tag{position:absolute;left:-10px;bottom:-10px;padding:2px 8px;border-radius:12px;background:#d0601a;color:#fff;font-size:20px;font-weight:1000;font-family:ui-rounded,system-ui,sans-serif}
 .egg .card{position:absolute;left:50%;top:34%;z-index:1;translate:-50% 0;transform:translateY(40%) scale(.5);opacity:0}
 .fx{position:absolute;z-index:200;pointer-events:none}
 .fly{position:fixed;z-index:300;pointer-events:none;margin:0}
@@ -66,7 +69,6 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
 <body>
 <div class="shell">
   <div class="opts">
-    <div class="seg" data-opt="n"><button type="button" data-v="5">5 顆</button><button type="button" data-v="7">7 顆</button><button type="button" data-v="9">9 顆</button></div>
     <div class="seg" data-opt="q"><button type="button" data-v="1">一次 1 題</button><button type="button" data-v="2">一次 2 題</button></div>
     <div class="seg" data-opt="mode"><button type="button" data-v="listen">聽音找圖</button><button type="button" data-v="abc">開頭字母</button></div>
   </div>
@@ -86,21 +88,24 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
   const done = (a, ms) => Promise.race([a.finished, wait(ms + 80)]);   // 動畫被暫停（分頁在背景）也不卡住流程
   const ease = { out: 'cubic-bezier(.16,1,.3,1)', back: 'cubic-bezier(.34,1.56,.64,1)' };
   const GOAL = 5, OPEN_MS = 2800, REPEAT_MS = 9000;
-  const MAX_OPEN = { 5: 2, 7: 3, 9: 3 };
+  const N = 5, MAX_OPEN = 2;   // 導演 2026-10-26：固定 5 顆
   // [數量, 蛋底 y（佔畫面比例）, 縮放]：後排小、前排大
-  const LAYOUT = { 5: [[2, .52, .74], [3, .84, 1]], 7: [[3, .52, .74], [4, .84, 1]], 9: [[3, .45, .7], [3, .65, .85], [3, .87, 1]] };
-  const GAP = { 2: .32, 3: .3, 4: .24 };
+  const LAYOUT = [[2, .52, .74], [3, .84, 1]];
+  const GAP = { 2: .32, 3: .3 };
   const ODD_START = /^(kn|wr|ps|gn|ph|c[eiy]|hour|honest|x)/;
   const KEY = 'dinopost-egg-sample-v1';
   const SPEAKER = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 9.2v5.6c0 .6.4 1 1 1h3l4.3 3.6c.6.5 1.7.1 1.7-.8V5.4c0-.9-1.1-1.3-1.7-.8L8 8.2H5c-.6 0-1 .4-1 1zm12.5-2.6a1 1 0 0 0-.2 1.4 6.6 6.6 0 0 1 0 8 1 1 0 1 0 1.6 1.2 8.6 8.6 0 0 0 0-10.4 1 1 0 0 0-1.4-.2z"/></svg>';
 
-  let prefs = { n: 7, q: 2, mode: 'listen' };
+  let prefs = { q: 2, mode: 'listen' };
   try { Object.assign(prefs, JSON.parse(localStorage.getItem(KEY)) || {}); } catch { /* ok */ }
-  let pool = [], spots = [], targets = [], found = [], gen = 0, hatching = false, sinceTarget = 0, lastSay = 0, nextHatch = 0;
+  let LETTERS = [], pool = [], spots = [], targets = [], found = [], gen = 0, hatching = false, sinceTarget = 0, lastSay = 0, nextHatch = 0;
 
   const first = w => w.en.toLowerCase()[0];
-  const card = w => { const c = document.createElement('div'); c.className = 'card'; c.innerHTML = `<img alt="" src="${w.image}">`; return c; };
-  const hits = (t, w) => (t.letter ? first(w) === t.letter : t.w.en === w.en);
+  const abc = l => `<span class="abc">${l.toUpperCase()}${l}</span>`;
+  // 蛋裡的東西：單字圖卡，或開頭字母模式的字母卡 { letter, en }
+  const card = w => { const c = document.createElement('div'); c.className = 'card'; c.innerHTML = w.letter ? abc(w.letter) : `<img alt="" src="${w.image}">`; return c; };
+  const hits = (t, w) => (w.letter ? first(t.w) === w.letter : t.w.en === w.en);
+  const letterItem = l => ({ letter: l, en: l });
   const shown = () => spots.filter(s => s.w && (s.state === 'opening' || s.state === 'open')).map(s => s.w);
 
   // ───────── 蛋（SVG：鋸齒線分上下殼）
@@ -121,9 +126,9 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
   function buildField() {
     stage.querySelectorAll('.spot').forEach(n => n.remove());
     const W = stage.clientWidth, H = stage.clientHeight;
-    const s = Math.min(W * (prefs.n === 5 ? .24 : .2), H * (prefs.n === 9 ? .22 : .27), 190);
+    const s = Math.min(W * .24, H * .27, 190);
     spots = [];
-    LAYOUT[prefs.n].forEach(([count, y, k], row) => {
+    LAYOUT.forEach(([count, y, k], row) => {
       for (let i = 0; i < count; i++) {
         const el = document.createElement('div'); el.className = 'spot';
         const col = pick(SPOTS);
@@ -166,9 +171,10 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
     if (need.length && (sinceTarget >= 1 || Math.random() < .4)) {
       sinceTarget = 0;
       const t = pick(need);
-      return t.letter ? pick(pool.filter(w => first(w) === t.letter && !now.some(x => x.en === w.en))) : t.w;
+      return prefs.mode === 'abc' ? letterItem(first(t.w)) : t.w;
     }
     sinceTarget++;
+    if (prefs.mode === 'abc') return letterItem(pick(LETTERS.filter(l => !targets.some(t => !t.found && first(t.w) === l) && !now.some(x => x.en === l))));
     return pick(pool.filter(w => !targets.some(t => hits(t, w)) && !now.some(x => x.en === w.en)));
   }
   function tick() {
@@ -178,20 +184,20 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
     if (t - lastSay > REPEAT_MS) { sayTargets(gen); return; }
     if (t < nextHatch) return;
     const free = spots.filter(o => o.state === 'closed' && t > o.until);
-    if (free.length && shown().length < MAX_OPEN[prefs.n]) {
+    if (free.length && shown().length < MAX_OPEN) {
       open(pick(free), chooseWord(), gen);
       nextHatch = t + rand(650, 1050);
     }
   }
   setInterval(tick, 50);
-  window.__egg = () => ({ targets, found, spots });   // 自動測試用
 
   async function say(src, el) {
     el?.classList.add('is-on');
     await Promise.race([Dino.voice(src), wait(2500)]);
     el?.classList.remove('is-on');
   }
-  const targetSrc = t => (t.letter ? `assets/audio/letters/letter-${t.letter}.mp3` : Dino.audioPath(t.w));
+  const targetSrc = t => Dino.audioPath(t.w);
+  const letterSrc = l => `assets/audio/letters/letter-${l}.mp3`;
   async function sayTargets(my) {
     hatching = false;
     for (const t of targets.filter(x => !x.found)) {
@@ -206,7 +212,7 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
     $('slots').innerHTML = '';
     targets.forEach(t => {
       const b = document.createElement('button'); b.type = 'button'; b.className = 'slot';
-      b.innerHTML = t.letter ? `<span class="abc">${t.letter.toUpperCase()}${t.letter}</span>` : SPEAKER;
+      b.innerHTML = prefs.mode === 'abc' ? `<img alt="" src="${t.w.image}">` : SPEAKER;
       b.setAttribute('aria-label', '再聽一次');
       b.addEventListener('click', () => { if (!t.found) say(targetSrc(t), b); });
       t.el = b; $('slots').append(b);
@@ -215,11 +221,10 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
   }
   function newTargets() {
     const k = Math.min(prefs.q, GOAL - found.length), out = [];
-    if (prefs.mode === 'abc') {
-      const letters = Dino.shuffle([...new Set(pool.map(first))].filter(l => pool.filter(w => first(w) === l).length >= 2));
-      letters.slice(0, k).forEach(letter => out.push({ letter }));
-    } else {
-      for (const w of Dino.shuffle(pool.slice())) { if (out.length >= k) break; if (!out.some(t => t.w.en === w.en) && !found.some(f => f.en === w.en)) out.push({ w }); }
+    // 開頭字母模式：同一輪兩題的開頭字母不同
+    for (const w of Dino.shuffle(pool.slice())) {
+      if (out.length >= k) break;
+      if (!out.some(t => t.w.en === w.en || (prefs.mode === 'abc' && first(t.w) === first(w))) && !found.some(f => f.en === w.en)) out.push({ w });
     }
     targets = out; sinceTarget = 1; renderBar();
   }
@@ -238,7 +243,7 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
       return close(o, true);
     }
     const my = gen, w = o.w, c = o.egg.querySelector('.card');
-    t.found = true; found.push(w); o.state = 'hatched';
+    t.found = true; found.push(t.w); o.state = 'hatched';
     Dino.sfx('correct', .8);
     await done(c.animate([{ scale: '1' }, { scale: '1.16', offset: .35 }, { scale: '1.16', offset: .7 }, { scale: '1' }], { duration: 220 }), 220);
     // 殼炸開，圖卡飛進題目格
@@ -251,13 +256,13 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
     const dx = to.left + to.width / 2 - (from.left + from.width / 2), dy = to.top + to.height / 2 - (from.top + from.height / 2), k = to.width / from.width;
     done(f.animate([{ transform: 'none' }, { transform: `translate(${dx * .5}px,${dy * .5 - 80}px) scale(${(1 + k) / 2 * 1.2}) rotate(-10deg)`, offset: .5 }, { transform: `translate(${dx}px,${dy}px) scale(${k})` }], { duration: 650, easing: 'ease-in-out' }), 650).then(() => {
       f.remove();
-      t.el.classList.add('found'); t.el.innerHTML = `<img alt="" src="${w.image}">`;
+      t.el.classList.add('found'); t.el.innerHTML = `<img alt="" src="${t.w.image}">` + (w.letter ? `<b class="tag">${w.letter.toUpperCase()}${w.letter}</b>` : '');
       t.el.animate([{ scale: '1.3' }, { scale: '1' }], { duration: 380, easing: ease.back });
       const r = t.el.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, { n: 10, size: 14 });
       document.querySelectorAll('#dots i')[found.length - 1]?.classList.add('on');
     });
     cheer();
-    Promise.race([Dino.voice(Dino.audioPath(w)), wait(2500)]);
+    Promise.race([Dino.voice(w.letter ? letterSrc(w.letter) : Dino.audioPath(w)), wait(2500)]);
     // 蛋窩過一下長出新蛋
     setTimeout(() => {
       if (my !== gen) return;
@@ -317,6 +322,7 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
 
   fetch('data.json').then(r => r.json()).then(d => {
     pool = d.filter(w => w.image && !Dino.isDino(w) && !Dino.isNumber(w) && Dino.visualGroup(w) === 'regular-image' && /^[a-z]/i.test(w.en) && !ODD_START.test(w.en.toLowerCase()));
+    LETTERS = [...new Set(pool.map(first))];
     start();
   });
 })();
