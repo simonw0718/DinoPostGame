@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#164d39">
+<title>分類快打・sample</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="fonts.css">
+<script src="shared.js"></script>
+<!-- 恐龍蛋分類快打 sample（導演 2026-10-26）：題目＝一個分類（蔬菜、樂器、天氣…，每回合隨機），蛋孵出圖卡，只打屬於這個分類的；干擾題用差很多的分類（A）；圖卡只放圖；打對念中文、打錯念「這是什麼」不扣分；沒打到的自己縮回；打到 10 個過關。美術沿用 egg-art-sample -->
+<style>
+:root{--ink:#17593f;--cream:#fffdf2;--gold:#e3bd70;font-family:"Naikai",ui-rounded,system-ui,sans-serif;color:var(--ink)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{overflow:hidden;background:#164d39;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
+.shell{display:flex;flex-direction:column;height:100svh;padding:max(10px,env(safe-area-inset-top)) 14px max(10px,env(safe-area-inset-bottom));gap:10px}
+.opts{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;flex:none}
+.seg{display:flex;border:3px solid #fffaf0;border-radius:16px;overflow:hidden;box-shadow:0 4px 0 #0d3b28}
+.seg button{min-height:44px;padding:2px 14px;border:0;background:#2c6e52;color:#fffdf2;font-size:19px;font-weight:1000}
+.seg button+button{border-left:2px solid #fffaf055}
+.seg button[aria-pressed=true]{background:linear-gradient(#ffca58,#f6ac34);color:#573e1d}
+/* 題目欄：伊奇＋1–2 個題目格＋進度點 */
+.bar{position:relative;display:flex;align-items:center;gap:14px;flex:none;min-height:100px;padding:8px 18px 8px 8px;border:5px solid var(--cream);border-radius:26px;background:linear-gradient(#fff8e2,#f3e5c2);box-shadow:0 6px 0 #0a2a1c55}
+.buddy{height:104px;margin:-22px 0 -12px;filter:drop-shadow(0 4px 3px #0004);transform-origin:50% 100%}
+.slots{display:flex;gap:12px}
+.slot{position:relative;display:grid;place-items:center;width:84px;height:84px;padding:0;border:4px dashed #c9ad78;border-radius:20px;background:#fffdf2;color:#d07a1a;box-shadow:inset 0 3px 0 #0001}
+.slot svg{width:44px;height:44px}
+.slot .abc{font-size:44px;font-weight:1000;line-height:1;letter-spacing:-.02em}
+.slot.is-on{animation:breathe .45s ease-in-out infinite alternate}
+.slot.found{border:4px solid #2f9d5a;background:#eafbef}
+.slot.found img{width:86%;height:86%;object-fit:contain}
+.slot.found::after{content:"";position:absolute;right:-10px;top:-10px;width:30px;height:30px;border-radius:50%;background:#2f9d5a url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.2 4.2L19 7' fill='none' stroke='%23fff' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/70% no-repeat;box-shadow:0 3px 0 #1d6b3b}
+.dots{display:flex;gap:8px;margin-left:auto}
+.dots i{width:22px;height:22px;border-radius:50%;background:#e6d6b2;box-shadow:inset 0 3px 0 #0001}
+.dots i.on{background:radial-gradient(circle at 35% 30%,#ffe28a,#f6ac34 70%);box-shadow:0 3px 0 #b9792b}
+/* 2.5D 草地：天空、遠山、梯形草坪（近大遠小） */
+.stage{position:relative;flex:1;min-height:0;overflow:hidden;border:5px solid var(--cream);border-radius:28px;box-shadow:0 10px 26px #0a2a1c66;background:#c5e59a url(assets/egg/meadow.webp) 50% 100%/cover no-repeat}
+.spot{position:absolute;width:var(--s);height:calc(var(--s)*1.3);translate:-50% -100%;touch-action:manipulation;cursor:pointer}
+.spot .nest{position:absolute;left:-28%;right:-28%;bottom:calc(var(--s)*-.25);height:calc(var(--s)*1.24);background:url(assets/egg/nest.webp) center/100% 100% no-repeat;filter:drop-shadow(0 calc(var(--s)*.04) calc(var(--s)*.03) #2a4a1a55)}
+.spot .rim{position:absolute;left:-28%;right:-28%;bottom:calc(var(--s)*-.25);height:calc(var(--s)*1.24);z-index:4;pointer-events:none;background:url(assets/egg/nest_front.webp) center/100% 100% no-repeat}
+.egg{position:absolute;left:8%;right:8%;bottom:8%;height:86%;z-index:2;transform-origin:50% 95%}
+.egg svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.egg .top{z-index:3;transform-origin:20% 55%}
+.egg .bot{z-index:2}
+.card{display:grid;place-items:center;width:calc(var(--s)*.74);aspect-ratio:1;border:calc(var(--s)*.025) solid #ead9b2;border-radius:16%;background:linear-gradient(160deg,#fffef8,#f2e6c8);box-shadow:0 calc(var(--s)*.03) 0 #c9ad78,0 calc(var(--s)*.06) calc(var(--s)*.06) #0a2a1c40}
+.card img{width:84%;height:84%;object-fit:contain;pointer-events:none}
+.card .abc{font-size:calc(var(--s)*.4);font-weight:1000;line-height:1;color:#d0601a;letter-spacing:-.03em;font-family:ui-rounded,"Arial Rounded MT Bold",system-ui,sans-serif}
+.slot img{width:86%;height:86%;object-fit:contain;pointer-events:none}
+.slot .tag{position:absolute;left:-10px;bottom:-10px;padding:2px 8px;border-radius:12px;background:#d0601a;color:#fff;font-size:20px;font-weight:1000;font-family:ui-rounded,system-ui,sans-serif}
+.egg .card{position:absolute;left:50%;top:34%;z-index:1;translate:-50% 0;transform:translateY(40%) scale(.5);opacity:0}
+.fx{position:absolute;z-index:200;pointer-events:none}
+.fly{position:fixed;z-index:300;pointer-events:none;margin:0}
+.layer{position:fixed;inset:0;z-index:90;display:grid;place-items:center;align-content:center;gap:18px;background:#0e3a28cc;text-align:center}
+.layer[hidden]{display:none}
+.layer .big{padding:18px 34px;border:6px solid var(--gold);border-radius:999px;background:var(--cream);font-size:30px;font-weight:1000;box-shadow:0 7px 0 #c89c52}
+.layer img.cheer{height:min(34vh,260px);filter:drop-shadow(0 8px 6px #0006)}
+.layer .got{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:90vw}
+.layer .got .card{--s:110px}
+@keyframes breathe{to{transform:scale(1.07)}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:0s!important}}
+.ask{display:flex;align-items:center;gap:12px;padding:4px 14px;border:0;border-radius:20px;background:transparent;font-size:40px;font-weight:1000;color:var(--ink)}
+.ask .q,.ask .cat{display:inline-flex;flex-wrap:nowrap;white-space:nowrap}
+.ask .q{font-size:.62em;color:#8a6a3a}
+.ask .cat{color:#d0601a}
+.ask.is-on{animation:breathe .45s ease-in-out infinite alternate}
+.eg{display:flex;gap:6px}
+.eg img{width:54px;height:54px;object-fit:contain;padding:4px;border:3px solid #ead9b2;border-radius:14px;background:#fffdf2}
+.dots{flex-wrap:wrap;max-width:150px;justify-content:flex-end}
+.dots i{width:20px;height:20px}
+.bpm-word{display:inline-flex;align-items:center;justify-content:center;flex:none;padding-right:.26em;white-space:nowrap}
+.bpm-main-char{display:inline-block;flex:none;font-size:1em;line-height:1.04}
+.bpm-column{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;margin-left:.05em;font-size:.4em;font-weight:850;line-height:1;color:currentColor}
+.bpm-onset,.bpm-rime{display:block;line-height:1.03}
+.bpm-tone{position:absolute;right:-.55em;top:85%;transform:translateY(-50%) scale(1.5,1.8);font-size:1.2em;font-weight:900;color:#d32f2f;line-height:1}
+.bpm-tone-dot{position:absolute;right:0;top:-.6em;font-size:1.4em;font-weight:900;color:#d32f2f;line-height:1}
+@media(max-width:900px){.bar{gap:8px}.ask{font-size:30px;gap:6px;padding:4px 6px}.eg img{width:38px;height:38px;padding:2px}.dots{max-width:90px;gap:5px}.dots i{width:14px;height:14px}.buddy{height:84px}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="bar"><img class="buddy" id="buddy" alt="" src="assets/cast/iggy__hello.webp"><button class="ask" id="ask" type="button"><span class="q" id="askQ"></span><span class="cat" id="askCat"></span></button><div class="eg" id="eg"></div><div class="dots" id="dots"></div></div>
+  <main class="stage" id="stage"></main>
+</div>
+<div class="layer" id="start"><button class="big" type="button">點一下開始</button></div>
+<div class="layer" id="done" hidden><img class="cheer" alt="" src="assets/cast/iggy__cheer.webp"><div class="got" id="got"></div><button class="big" type="button">再玩一次</button></div>
+<script>
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const stage = $('stage');
+  const pick = a => a[Math.floor(Math.random() * a.length)];
+  const rand = (a, b) => a + Math.random() * (b - a);
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const done = (a, ms) => Promise.race([a.finished, wait(ms + 80)]);
+  const ease = { out: 'cubic-bezier(.16,1,.3,1)', back: 'cubic-bezier(.34,1.56,.64,1)' };
+  const GOAL = 10, OPEN_MS = 2600, N_EG = 3;
+  const MAX_OPEN = 2, HIT_RATE = .5;
+  const LAYOUT = [[2, .52, .74], [3, .84, 1]];
+  const GAP = { 2: .32, 3: .3 };
+  // 分類題目：topic 前綴或指定 id；干擾題只從「不同大類」挑（導演 2026-10-26 選 A：差很多的分類）
+  const CATS = [
+    { zh: '蔬菜', r: ['ㄕㄨ', 'ㄘㄞˋ'], topic: 'food.veg' },
+    { zh: '水果', r: ['ㄕㄨㄟˇ', 'ㄍㄨㄛˇ'], topic: 'food.fruit' },
+    { zh: '樂器', r: ['ㄩㄝˋ', 'ㄑㄧˋ'], topic: 'music' },
+    { zh: '天氣', r: ['ㄊㄧㄢ', 'ㄑㄧˋ'], ids: ['kidapp-sun', 'kidapp-cloud', 'kidapp-rain', 'kidapp-snow', 'kidapp-lightning', 'kidapp-rainbow', 'kidapp-tornado', 'kidapp-wind'] },
+    { zh: '交通工具', r: ['ㄐㄧㄠ', 'ㄊㄨㄥ', 'ㄍㄨㄥ', 'ㄐㄩˋ'], topic: 'vehicle' },
+    { zh: '海裡的動物', r: ['ㄏㄞˇ', 'ㄌㄧˇ', 'ㄉㄜ˙', 'ㄉㄨㄥˋ', 'ㄨˋ'], topic: 'animal.water' },
+    { zh: '農場動物', r: ['ㄋㄨㄥˊ', 'ㄔㄤˇ', 'ㄉㄨㄥˋ', 'ㄨˋ'], topic: 'animal.farm' },
+    { zh: '恐龍', r: ['ㄎㄨㄥˇ', 'ㄌㄨㄥˊ'], topic: 'dino.dinosaur' }
+  ];
+  const setKidText = Dino.kidText({ '請打': ['ㄑㄧㄥˇ', 'ㄉㄚˇ'] });
+  const group = t => t.split('.')[0];
+
+  let all = [], cat = null, lastCat = null, yes = [], no = [], spots = [], found = [], gen = 0, hatching = false, nextHatch = 0, sinceHit = 0;
+  const inCat = w => (cat.ids ? cat.ids.includes(w.id) : w.topic === cat.topic || w.topic.startsWith(cat.topic + '.'));
+  const shown = () => spots.filter(s => s.w && (s.state === 'opening' || s.state === 'open')).map(s => s.w);
+  const card = w => { const c = document.createElement('div'); c.className = 'card'; c.innerHTML = `<img alt="" src="${w.image}">`; return c; };
+  const zh = w => w.zhAudio || Dino.audioPath(w);
+
+  const EGG_ZIG = '0,62 12,54 24,64 36,52 48,63 60,51 72,62 84,52 100,60';
+  let eggN = 0;
+  function eggSvg(part) {
+    const i = ++eggN, clip = part === 'top' ? `0,0 100,0 ${EGG_ZIG.split(' ').reverse().join(' ')}` : `${EGG_ZIG} 100,130 0,130`;
+    return `<svg class="${part}" viewBox="0 0 100 130" aria-hidden="true"><defs><clipPath id="ec${i}"><polygon points="${clip}"/></clipPath></defs>`
+      + `<image href="assets/egg/egg.webp" x="0" y="0" width="100" height="130" preserveAspectRatio="xMidYMax meet" clip-path="url(#ec${i})"/>`
+      + (part === 'top' ? `<polyline points="${EGG_ZIG}" fill="none" stroke="#c98a3e" stroke-width="1.6" stroke-linejoin="round" opacity=".55"/>` : '') + '</svg>';
+  }
+
+  function buildField() {
+    stage.querySelectorAll('.spot').forEach(n => n.remove());
+    const W = stage.clientWidth, H = stage.clientHeight;
+    const s = Math.min(W * .24, H * .27, 190);
+    spots = [];
+    LAYOUT.forEach(([count, y, k], row) => {
+      for (let i = 0; i < count; i++) {
+        const el = document.createElement('div'); el.className = 'spot';
+        el.style.cssText = `left:${(.5 + (i - (count - 1) / 2) * GAP[count] * k) * 100}%;top:${y * 100}%;--s:${s * k}px;z-index:${10 + row * 10}`;
+        el.innerHTML = `<span class="nest"></span><div class="egg">${eggSvg('bot')}${eggSvg('top')}</div><span class="rim"></span>`;
+        stage.append(el);
+        const egg = el.querySelector('.egg');
+        const o = { el, egg, top: egg.querySelector('.top'), z: 10 + row * 10, state: 'closed', w: null, until: 0 };
+        egg.animate([{ rotate: '0deg' }, { rotate: '1.4deg' }, { rotate: '-1.2deg' }, { rotate: '0deg' }], { duration: rand(2300, 3200), iterations: Infinity, easing: 'ease-in-out' });
+        el.addEventListener('pointerdown', ev => { ev.preventDefault(); tap(o); });
+        spots.push(o);
+      }
+    });
+  }
+
+  async function open(o, w, my) {
+    o.state = 'opening'; o.w = w; o.el.style.zIndex = 100;
+    o.egg.querySelector('.card')?.remove();
+    const c = card(w); o.egg.append(c);
+    await done(o.egg.animate([{ rotate: '0deg' }, { rotate: '-7deg' }, { rotate: '7deg' }, { rotate: '-9deg' }, { rotate: '9deg' }, { rotate: '0deg' }], { duration: 520, easing: 'ease-in-out' }), 520);
+    if (my !== gen || o.state !== 'opening') return;
+    Dino.sfx('pop', .35);
+    o.state = 'open'; o.until = performance.now() + OPEN_MS;
+    o.topAnim = o.top.animate([{ transform: 'none' }, { transform: 'translate(-34%,-22%) rotate(-48deg)' }], { duration: 360, easing: ease.back, fill: 'forwards' });
+    o.cardAnim = c.animate([{ transform: 'translateY(40%) scale(.5)', opacity: 0 }, { transform: 'translateY(-92%) scale(1)', opacity: 1 }], { duration: 440, easing: ease.back, fill: 'forwards' });
+    o.egg.animate([{ scale: '1 1' }, { scale: '1.06 .92' }, { scale: '1 1' }], { duration: 260 });
+  }
+  function close(o, fast) {
+    if (o.state !== 'open') return;
+    o.state = 'closing';
+    if (fast) { o.topAnim.playbackRate = 2; o.cardAnim.playbackRate = 2; }
+    o.topAnim.reverse(); o.cardAnim.reverse();
+    done(o.cardAnim, 440).then(() => { if (o.state === 'closing') { o.state = 'closed'; o.w = null; o.el.style.zIndex = o.z; o.until = performance.now() + 600; } });
+  }
+
+  // 約一半是對的；連續 2 顆干擾題後下一顆一定是對的
+  function chooseWord() {
+    const now = shown(), notNow = w => !now.some(x => x.id === w.id);
+    const hit = sinceHit >= 2 || Math.random() < HIT_RATE;
+    const list = (hit ? yes : no).filter(notNow);
+    sinceHit = hit ? 0 : sinceHit + 1;
+    return pick(list.length ? list : yes.filter(notNow));
+  }
+  function tick() {
+    const t = performance.now();
+    spots.forEach(o => { if (o.state === 'open' && t > o.until) close(o); });
+    if (!hatching || t < nextHatch) return;
+    const free = spots.filter(o => o.state === 'closed' && t > o.until);
+    if (free.length && shown().length < MAX_OPEN) {
+      open(pick(free), chooseWord(), gen);
+      nextHatch = t + rand(700, 1100);
+    }
+  }
+  setInterval(tick, 50);
+
+  function renderBar() {
+    setKidText($('askQ'), '請打');
+    setKidText($('askCat'), cat.zh, cat.r);
+    $('eg').innerHTML = Dino.shuffle(yes.slice()).slice(0, N_EG).map(w => `<img alt="" src="${w.image}">`).join('');
+    $('dots').innerHTML = Array.from({ length: GOAL }, (_, i) => `<i class="${i < found.length ? 'on' : ''}"></i>`).join('');
+  }
+  // 題目示意：伊奇跳一下、題目欄呼吸（還沒有「請打蔬菜」語音）
+  async function announce(my) {
+    hatching = false;
+    const a = $('ask'); a.classList.add('is-on');
+    $('buddy').animate([{ transform: 'none' }, { transform: 'translateY(-14px)' }, { transform: 'none' }], { duration: 420, easing: ease.back });
+    await wait(1400);
+    a.classList.remove('is-on');
+    if (my !== gen) return;
+    hatching = true;
+  }
+
+  async function tap(o) {
+    if (o.state !== 'open') return;
+    const w = o.w;
+    if (!inCat(w)) {
+      Dino.sfx('wrong', .45);
+      Promise.race([Dino.voice(zh(w)), wait(2000)]);
+      o.egg.animate([{ rotate: '0deg' }, { rotate: '-9deg' }, { rotate: '8deg' }, { rotate: '-5deg' }, { rotate: '0deg' }], { duration: 360, easing: 'ease-in-out' });
+      return close(o, true);
+    }
+    const my = gen, c = o.egg.querySelector('.card');
+    found.push(w); o.state = 'hatched';
+    Dino.sfx('correct', .8);
+    await done(c.animate([{ scale: '1' }, { scale: '1.16', offset: .35 }, { scale: '1.16', offset: .7 }, { scale: '1' }], { duration: 220 }), 220);
+    const tb = o.top.getBoundingClientRect();
+    burst(tb.left + tb.width / 2, tb.top + tb.height / 2, { n: 14, colors: ['#fffef4', '#f6ebcf', '#d9c39a', '#7fbf6a'], size: 18, shape: 'shard' });
+    o.top.animate([{ transform: 'translate(-34%,-22%) rotate(-48deg)' }, { transform: 'translate(-60%,-160%) rotate(-140deg)', opacity: 0 }], { duration: 600, easing: ease.out, fill: 'forwards' });
+    // 圖卡飛向進度點
+    const dot = document.querySelectorAll('#dots i')[found.length - 1];
+    const from = c.getBoundingClientRect(), to = dot.getBoundingClientRect();
+    const f = card(w); f.classList.add('fly'); f.style.cssText = `--s:${from.width / .74}px;left:${from.left}px;top:${from.top}px`;
+    document.body.append(f); c.style.visibility = 'hidden';
+    const dx = to.left + to.width / 2 - (from.left + from.width / 2), dy = to.top + to.height / 2 - (from.top + from.height / 2), k = to.width / from.width;
+    done(f.animate([{ transform: 'none' }, { transform: `translate(${dx * .5}px,${dy * .5 - 80}px) scale(.9) rotate(-10deg)`, offset: .5 }, { transform: `translate(${dx}px,${dy}px) scale(${k})`, opacity: .3 }], { duration: 650, easing: 'ease-in-out' }), 650).then(() => {
+      f.remove(); dot.classList.add('on');
+      dot.animate([{ scale: '1.6' }, { scale: '1' }], { duration: 380, easing: ease.back });
+      const r = dot.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, { n: 8, size: 12 });
+    });
+    cheer();
+    Promise.race([Dino.voice(zh(w)), wait(2500)]);
+    setTimeout(() => {
+      if (my !== gen) return;
+      c.remove(); o.top.getAnimations().forEach(a => a.cancel()); o.topAnim = o.cardAnim = null;
+      o.egg.animate([{ transform: 'scale(.3)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], { duration: 420, easing: ease.back });
+      o.state = 'closed'; o.w = null; o.el.style.zIndex = o.z; o.until = performance.now() + 900;
+    }, 1300);
+    if (found.length >= GOAL) {
+      hatching = false;
+      await wait(900); if (my !== gen) return;
+      spots.forEach(s => close(s));
+      await wait(700); if (my !== gen) return;
+      finish();
+    }
+  }
+  function cheer() {
+    const b = $('buddy'); b.src = 'assets/cast/iggy__cheer.webp';
+    b.animate([{ transform: 'none' }, { transform: 'translateY(-16px) scale(1.06,.96)' }, { transform: 'none' }], { duration: 420, easing: ease.back });
+    clearTimeout(cheer.t); cheer.t = setTimeout(() => { b.src = 'assets/cast/iggy__hello.webp'; }, 1400);
+  }
+  function burst(x, y, { n = 12, colors = ['#ffd34d', '#ff8a6e', '#8fe6b5', '#8fc8ff'], size = 14, shape = 'star' } = {}) {
+    for (let i = 0; i < n; i++) {
+      const p = document.createElement('div'); p.className = 'fx';
+      const s = size * rand(.6, 1.3), a = (i / n) * Math.PI * 2 + rand(-.3, .3), v = rand(90, 190);
+      p.style.cssText = `position:fixed;left:${x}px;top:${y}px;width:${s}px;height:${s}px;background:${pick(colors)};` +
+        (shape === 'star' ? 'clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)' : 'clip-path:polygon(0 0,100% 30%,40% 100%)');
+      document.body.append(p);
+      const dx = Math.cos(a) * v, dy = Math.sin(a) * v - 80;
+      p.animate([{ transform: 'translate(-50%,-50%) rotate(0)', opacity: 1 }, { transform: `translate(calc(-50% + ${dx}px),calc(-50% + ${dy + 160}px)) rotate(${rand(-300, 300)}deg)`, opacity: 0 }],
+        { duration: rand(600, 900), easing: 'cubic-bezier(.2,.6,.4,1)' }).finished.then(() => p.remove());
+    }
+  }
+  function finish() {
+    Dino.sfx('finish', .8);
+    $('got').innerHTML = ''; found.forEach(w => $('got').append(card(w)));
+    $('done').hidden = false;
+  }
+
+  // 每回合隨機換分類（不連續同一個）
+  function pickCat() {
+    cat = pick(CATS.filter(c => c !== lastCat)); lastCat = cat;
+    yes = all.filter(inCat);
+    const g = cat.ids ? 'nature' : group(cat.topic);
+    no = all.filter(w => group(w.topic) !== g && !Dino.isDino(w) && !/^(number|color|shape)$/.test(w.topic));
+  }
+  function start(newCat) {
+    gen++; hatching = false; found = []; sinceHit = 0; Dino.voice.stop();
+    document.querySelectorAll('.fly').forEach(n => n.remove());
+    if (newCat || !cat) pickCat();
+    buildField(); renderBar();
+    if (!$('start').hidden) return;
+    announce(gen);
+  }
+  $('ask').addEventListener('click', () => announce(gen));
+  $('start').addEventListener('click', () => { $('start').hidden = true; Dino.sfx('tap', .5); start(false); });
+  $('done').querySelector('button').addEventListener('click', () => { $('done').hidden = true; Dino.sfx('tap', .5); start(true); });
+  let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => start(false), 300); });
+
+  fetch('data.json').then(r => r.json()).then(d => {
+    all = d.filter(w => w.image && !w.sheet);
+    start(true);
+  });
+})();
+</script>
+</body>
+</html>
