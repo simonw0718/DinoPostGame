@@ -1,0 +1,241 @@
+{
+ "_rule": "恐龍蛋分類快打（導演 2026-10-26）：yes＝一看就屬於這類才收；干擾題＝不同大類（group）的單張圖卡，扣掉 avoid（容易讓孩子覺得也算的）；同大類但不在 yes 的（如駱駝、番茄）不出現",
+ "categories": [
+  {
+   "id": "veg",
+   "zh": "蔬菜",
+   "zhuyin": [
+    "ㄕㄨ",
+    "ㄘㄞˋ"
+   ],
+   "en": "vegetables",
+   "group": "food",
+   "yes": [
+    "food-carrot",
+    "food-corn",
+    "food-potato",
+    "food-broccoli",
+    "kidapp-cucumber",
+    "kidapp-eggplant",
+    "kidapp-onion",
+    "kidapp-pumpkin",
+    "new-bean",
+    "new-lettuce",
+    "new-spinach",
+    "new-cabbage",
+    "new-asparagus"
+   ],
+   "avoid": []
+  },
+  {
+   "id": "fruit",
+   "zh": "水果",
+   "zhuyin": [
+    "ㄕㄨㄟˇ",
+    "ㄍㄨㄛˇ"
+   ],
+   "en": "fruits",
+   "group": "food",
+   "yes": [
+    "food-apple",
+    "food-banana",
+    "food-strawberry",
+    "food-watermelon",
+    "food-orange",
+    "food-grape",
+    "food-lemon",
+    "food-peach",
+    "food-cherry",
+    "food-pineapple",
+    "kidapp-coconut",
+    "kidapp-kiwi",
+    "kidapp-pear",
+    "kidapp-blueberry",
+    "kidapp-mango",
+    "new-plum",
+    "new-melon",
+    "new-pomegranate",
+    "new-papaya"
+   ],
+   "avoid": []
+  },
+  {
+   "id": "music",
+   "zh": "樂器",
+   "zhuyin": [
+    "ㄩㄝˋ",
+    "ㄑㄧˋ"
+   ],
+   "en": "musical instruments",
+   "group": "music",
+   "yes": [
+    "kidapp-harmonica",
+    "kidapp-xylophone",
+    "kidapp-piano",
+    "kidapp-drum",
+    "kidapp-violin",
+    "new-guitar",
+    "new-trumpet",
+    "new-flute"
+   ],
+   "avoid": [
+    "kidapp-bell"
+   ]
+  },
+  {
+   "id": "weather",
+   "zh": "天氣",
+   "zhuyin": [
+    "ㄊㄧㄢ",
+    "ㄑㄧˋ"
+   ],
+   "en": "weather",
+   "group": "nature",
+   "yes": [
+    "kidapp-sun",
+    "kidapp-cloud",
+    "kidapp-rain",
+    "kidapp-snow",
+    "kidapp-lightning",
+    "kidapp-rainbow",
+    "kidapp-tornado",
+    "kidapp-wind"
+   ],
+   "avoid": [
+    "object-umbrella"
+   ]
+  },
+  {
+   "id": "vehicle",
+   "zh": "交通工具",
+   "zhuyin": [
+    "ㄐㄧㄠ",
+    "ㄊㄨㄥ",
+    "ㄍㄨㄥ",
+    "ㄐㄩˋ"
+   ],
+   "en": "vehicles",
+   "group": "vehicle",
+   "yes": [
+    "object-car",
+    "object-bus",
+    "object-train",
+    "object-bicycle",
+    "object-boat",
+    "object-airplane",
+    "kidapp-truck",
+    "kidapp-taxi",
+    "kidapp-helicopter",
+    "kidapp-ambulance",
+    "kidapp-firetruck",
+    "kidapp-motorcycle",
+    "kidapp-rocket"
+   ],
+   "avoid": [
+    "new-skateboard",
+    "kidapp-satellite",
+    "new-airport"
+   ]
+  },
+  {
+   "id": "sea",
+   "zh": "海裡的動物",
+   "zhuyin": [
+    "ㄏㄞˇ",
+    "ㄌㄧˇ",
+    "ㄉㄜ˙",
+    "ㄉㄨㄥˋ",
+    "ㄨˋ"
+   ],
+   "en": "sea animals",
+   "group": "animal",
+   "yes": [
+    "animal-fish",
+    "animal-crab",
+    "animal-octopus",
+    "kidapp-dolphin",
+    "kidapp-shark",
+    "kidapp-whale",
+    "new-seal",
+    "new-seahorse",
+    "new-jellyfish",
+    "new-narwhal"
+   ],
+   "avoid": [
+    "new-shrimp",
+    "kidapp-ocean",
+    "kidapp-beach"
+   ]
+  },
+  {
+   "id": "farm",
+   "zh": "農場動物",
+   "zhuyin": [
+    "ㄋㄨㄥˊ",
+    "ㄔㄤˇ",
+    "ㄉㄨㄥˋ",
+    "ㄨˋ"
+   ],
+   "en": "farm animals",
+   "group": "animal",
+   "yes": [
+    "animal-cow",
+    "animal-pig",
+    "animal-horse",
+    "animal-sheep",
+    "new-goat",
+    "animal-duck",
+    "new-goose",
+    "new-hen",
+    "new-donkey"
+   ],
+   "avoid": [
+    "kidapp-chicken",
+    "kidapp-meat",
+    "kidapp-farmer"
+   ]
+  },
+  {
+   "id": "dino",
+   "zh": "恐龍",
+   "zhuyin": [
+    "ㄎㄨㄥˇ",
+    "ㄌㄨㄥˊ"
+   ],
+   "en": "dinosaurs",
+   "group": "dino",
+   "yes": [
+    "kidapp-allosaurus",
+    "kidapp-ankylosaurus",
+    "kidapp-brachiosaurus",
+    "kidapp-carnotaurus",
+    "kidapp-compsognathus",
+    "kidapp-corythosaurus",
+    "kidapp-dilophosaurus",
+    "kidapp-diplodocus",
+    "kidapp-giganotosaurus",
+    "kidapp-iguanodon",
+    "kidapp-mamenchisaurus",
+    "kidapp-oviraptor",
+    "kidapp-pachycephalosaurus",
+    "kidapp-parasaurolophus",
+    "kidapp-protoceratops",
+    "kidapp-spinosaurus",
+    "kidapp-stegosaurus",
+    "kidapp-therizinosaurus",
+    "kidapp-triceratops",
+    "kidapp-tyrannosaurus",
+    "kidapp-velociraptor",
+    "kidapp-deinonychus",
+    "kidapp-troodon",
+    "kidapp-edmontosaurus",
+    "kidapp-maiasaura"
+   ],
+   "avoid": [
+    "kidapp-lizard",
+    "new-chameleon",
+    "animal-snake"
+   ]
+  }
+ ]
+}

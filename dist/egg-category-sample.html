@@ -8,7 +8,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="fonts.css">
 <script src="shared.js"></script>
-<!-- 恐龍蛋分類快打 sample（導演 2026-10-26）：題目＝一個分類（蔬菜、樂器、天氣…，每回合隨機），蛋孵出圖卡，只打屬於這個分類的；干擾題用差很多的分類（A）；圖卡只放圖；打對念中文、打錯念「這是什麼」不扣分；沒打到的自己縮回；打到 10 個過關。美術沿用 egg-art-sample -->
+<!-- 恐龍蛋分類快打 sample（導演 2026-10-26）：題目＝一個分類（蔬菜、樂器、天氣…，每回合隨機），蛋孵出圖卡，只打屬於這個分類的；干擾題用差很多的分類（A）；圖卡只放圖；打對念中文、打錯念名稱；沒打到的自己縮回；打到 5 個過關並計時，打錯 +2 秒，每分類記自己最快 5 次。美術沿用 egg-art-sample -->
 <style>
 :root{--ink:#17593f;--cream:#fffdf2;--gold:#e3bd70;font-family:"Naikai",ui-rounded,system-ui,sans-serif;color:var(--ink)}
 *{box-sizing:border-box}
@@ -68,6 +68,20 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
 .intro .pics{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;max-width:94vw}
 .intro .pics .card{--s:clamp(86px,17vw,150px)}
 .intro .go{margin-top:6px;padding:12px 40px;border:6px solid var(--gold);border-radius:999px;background:linear-gradient(#ffca58,#f6ac34);color:#573e1d;font-size:30px;font-weight:1000;box-shadow:0 7px 0 #b9792b}
+.card .sheet,.mini .sheet{display:block;width:84%;height:84%;border-radius:12%;background-size:500% 200%}
+.mini{display:grid;place-items:center;width:54px;height:54px;padding:4px;border:3px solid #ead9b2;border-radius:14px;background:#fffdf2}
+.mini img,.mini .sheet{width:100%;height:100%;object-fit:contain}
+.clock{display:flex;align-items:baseline;gap:4px;margin-left:auto;padding:4px 14px;border-radius:16px;background:#17593f;color:#fffdf2;font:1000 34px ui-rounded,"Arial Rounded MT Bold",system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.clock small{font-size:16px;font-family:"Naikai",system-ui}
+.clock+.dots{margin-left:0}
+.plus{z-index:250;color:#d32f2f;font:1000 44px ui-rounded,"Arial Rounded MT Bold",system-ui,sans-serif;text-shadow:0 3px 0 #fff}
+.layer .time{font-size:40px}
+.newrec{padding:6px 22px;border-radius:999px;background:#d32f2f;color:#fff;font-size:28px;font-weight:1000;animation:breathe .45s ease-in-out infinite alternate}
+.rec{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:0;padding:0;list-style:none}
+.rec li{display:flex;align-items:center;gap:6px;padding:4px 12px;border-radius:14px;background:#fffdf2cc;font-size:20px;font-weight:1000;font-variant-numeric:tabular-nums}
+.rec li b{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#e3bd70;color:#573e1d;font-size:16px}
+.rec li.me{background:#ffca58;outline:3px solid #fffdf2}
+.layer .got .card{--s:84px}
 @keyframes breathe{to{transform:scale(1.07)}}
 @media(prefers-reduced-motion:reduce){*{animation-duration:0s!important}}
 .ask{display:flex;align-items:center;gap:12px;padding:4px 14px;border:0;border-radius:20px;background:transparent;font-size:40px;font-weight:1000;color:var(--ink)}
@@ -76,7 +90,6 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
 .ask .cat{color:#d0601a}
 .ask.is-on{animation:breathe .45s ease-in-out infinite alternate}
 .eg{display:flex;gap:6px}
-.eg img{width:54px;height:54px;object-fit:contain;padding:4px;border:3px solid #ead9b2;border-radius:14px;background:#fffdf2}
 .dots{flex-wrap:wrap;max-width:150px;justify-content:flex-end}
 .dots i{width:20px;height:20px}
 .bpm-word{display:inline-flex;align-items:center;justify-content:center;flex:none;padding-right:.26em;white-space:nowrap}
@@ -85,17 +98,17 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
 .bpm-onset,.bpm-rime{display:block;line-height:1.03}
 .bpm-tone{position:absolute;right:-.55em;top:85%;transform:translateY(-50%) scale(1.5,1.8);font-size:1.2em;font-weight:900;color:#d32f2f;line-height:1}
 .bpm-tone-dot{position:absolute;right:0;top:-.6em;font-size:1.4em;font-weight:900;color:#d32f2f;line-height:1}
-@media(max-width:900px){.bar{gap:8px}.ask{font-size:30px;gap:6px;padding:4px 6px}.eg img{width:38px;height:38px;padding:2px}.dots{max-width:90px;gap:5px}.dots i{width:14px;height:14px}.buddy{height:84px}}
+@media(max-width:900px){.clock{font-size:26px;padding:2px 8px}.mini{width:38px;height:38px;padding:2px}.bar{gap:8px}.ask{font-size:30px;gap:6px;padding:4px 6px}.dots{max-width:90px;gap:5px}.dots i{width:14px;height:14px}.buddy{height:84px}}
 </style>
 </head>
 <body>
 <div class="shell">
-  <div class="bar"><img class="buddy" id="buddy" alt="" src="assets/cast/iggy__hello.webp"><button class="ask" id="ask" type="button"><span class="q" id="askQ"></span><span class="cat" id="askCat"></span></button><div class="eg" id="eg"></div><div class="dots" id="dots"></div></div>
+  <div class="bar"><img class="buddy" id="buddy" alt="" src="assets/cast/iggy__hello.webp"><button class="ask" id="ask" type="button"><span class="q" id="askQ"></span><span class="cat" id="askCat"></span></button><div class="eg" id="eg"></div><div class="clock"><span id="time">0.0</span><small>秒</small></div><div class="dots" id="dots"></div></div>
   <main class="stage" id="stage"></main>
 </div>
 <div class="layer" id="start"><button class="big" type="button">點一下開始</button></div>
 <div class="layer intro" id="intro" hidden><div class="lets" id="lets">Let's hit…</div><div class="name"><span class="e" id="introEn"></span><span class="z" id="introZh"></span></div><div class="pics" id="introPics"></div><button class="go" type="button" id="introGo">開始</button></div>
-<div class="layer" id="done" hidden><img class="cheer" alt="" src="assets/cast/iggy__cheer.webp"><div class="got" id="got"></div><button class="big" type="button">再玩一次</button></div>
+<div class="layer" id="done" hidden><img class="cheer" alt="" src="assets/cast/iggy__cheer.webp"><div class="newrec" id="doneNew" hidden>新紀錄！</div><div class="big time" id="doneTime"></div><ol class="rec" id="doneRec"></ol><div class="got" id="got"></div><button class="big" type="button">再玩一次</button></div>
 <script>
 (() => {
   'use strict';
@@ -106,28 +119,21 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
   const wait = ms => new Promise(r => setTimeout(r, ms));
   const done = (a, ms) => Promise.race([a.finished, wait(ms + 80)]);
   const ease = { out: 'cubic-bezier(.16,1,.3,1)', back: 'cubic-bezier(.34,1.56,.64,1)' };
-  const GOAL = 10, OPEN_MS = 2600, N_EG = 3;
+  const GOAL = 5, PENALTY = 2, REC_KEY = 'dinopost-egg-category-records-v1', OPEN_MS = 2600, N_EG = 3;
   const MAX_OPEN = 2, HIT_RATE = .5;
   const LAYOUT = [[2, .52, .74], [3, .84, 1]];
   const GAP = { 2: .32, 3: .3 };
-  // 分類題目：topic 前綴或指定 id；干擾題只從「不同大類」挑（導演 2026-10-26 選 A：差很多的分類）
-  const CATS = [
-    { zh: '蔬菜', en: 'vegetables', r: ['ㄕㄨ', 'ㄘㄞˋ'], topic: 'food.veg' },
-    { zh: '水果', en: 'fruits', r: ['ㄕㄨㄟˇ', 'ㄍㄨㄛˇ'], topic: 'food.fruit' },
-    { zh: '樂器', en: 'musical instruments', r: ['ㄩㄝˋ', 'ㄑㄧˋ'], topic: 'music' },
-    { zh: '天氣', en: 'weather', r: ['ㄊㄧㄢ', 'ㄑㄧˋ'], ids: ['kidapp-sun', 'kidapp-cloud', 'kidapp-rain', 'kidapp-snow', 'kidapp-lightning', 'kidapp-rainbow', 'kidapp-tornado', 'kidapp-wind'] },
-    { zh: '交通工具', en: 'vehicles', r: ['ㄐㄧㄠ', 'ㄊㄨㄥ', 'ㄍㄨㄥ', 'ㄐㄩˋ'], topic: 'vehicle' },
-    { zh: '海裡的動物', en: 'sea animals', r: ['ㄏㄞˇ', 'ㄌㄧˇ', 'ㄉㄜ˙', 'ㄉㄨㄥˋ', 'ㄨˋ'], topic: 'animal.water' },
-    { zh: '農場動物', en: 'farm animals', r: ['ㄋㄨㄥˊ', 'ㄔㄤˇ', 'ㄉㄨㄥˋ', 'ㄨˋ'], topic: 'animal.farm' },
-    { zh: '恐龍', en: 'dinosaurs', r: ['ㄎㄨㄥˇ', 'ㄌㄨㄥˊ'], topic: 'dino.dinosaur' }
-  ];
+  // 分類名單唯一來源：whack_categories.json（yes＝答案、group＝干擾題排除的大類、avoid＝也不拿來當干擾題）
+  let CATS = [];
   const setKidText = Dino.kidText({ '請打': ['ㄑㄧㄥˇ', 'ㄉㄚˇ'] });
   const group = t => t.split('.')[0];
 
-  let all = [], cat = null, lastCat = null, yes = [], no = [], spots = [], found = [], gen = 0, hatching = false, nextHatch = 0, sinceHit = 0;
-  const inCat = w => (cat.ids ? cat.ids.includes(w.id) : w.topic === cat.topic || w.topic.startsWith(cat.topic + '.'));
+  let lastTime = 0, t0 = 0, penalty = 0, timing = false, all = [], cat = null, lastCat = null, yes = [], no = [], spots = [], found = [], gen = 0, hatching = false, nextHatch = 0, sinceHit = 0;
+  const inCat = w => cat.yes.includes(w.id);
   const shown = () => spots.filter(s => s.w && (s.state === 'opening' || s.state === 'open')).map(s => s.w);
-  const card = w => { const c = document.createElement('div'); c.className = 'card'; c.innerHTML = `<img alt="" src="${w.image}">`; return c; };
+  // 單張圖或拼圖表（5×2 格）的常見字都能用
+  const art = w => (w.image ? `<img alt="" src="${w.image}">` : `<i class="sheet" style="background-image:url('assets/${w.sheet}-grid-v1.jpg');background-position:${(w.cell % 5) * 25}% ${w.cell < 5 ? 0 : 100}%"></i>`);
+  const card = w => { const c = document.createElement('div'); c.className = 'card'; c.innerHTML = art(w); return c; };
   const zh = w => w.zhAudio || Dino.audioPath(w);
 
   const EGG_ZIG = '0,62 12,54 24,64 36,52 48,63 60,51 72,62 84,52 100,60';
@@ -202,7 +208,8 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
   function renderBar() {
     setKidText($('askQ'), '請打');
     setKidText($('askCat'), cat.zh, cat.r);
-    $('eg').innerHTML = Dino.shuffle(yes.slice()).slice(0, N_EG).map(w => `<img alt="" src="${w.image}">`).join('');
+    $('eg').innerHTML = Dino.shuffle(yes.slice()).slice(0, N_EG).map(w => `<span class="mini">${art(w)}</span>`).join('');
+    showTime();
     $('dots').innerHTML = Array.from({ length: GOAL }, (_, i) => `<i class="${i < found.length ? 'on' : ''}"></i>`).join('');
   }
   // 出題動畫（導演 2026-10-26）：彈出 Let's hit… → 分類名（英文＋中文注音）→ 示意圖一張張跳出；英文語音先用裝置內建 TTS 暫代；點一下才開始
@@ -236,6 +243,7 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
     await wait(900);
     a.classList.remove('is-on');
     if (my !== gen) return;
+    t0 = performance.now(); penalty = 0; timing = true;
     hatching = true;
   }
 
@@ -244,6 +252,7 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
     const w = o.w;
     if (!inCat(w)) {
       Dino.sfx('wrong', .45);
+      if (timing) { penalty += PENALTY; plus(o); }
       Promise.race([Dino.voice(zh(w)), wait(2000)]);
       o.egg.animate([{ rotate: '0deg' }, { rotate: '-9deg' }, { rotate: '8deg' }, { rotate: '-5deg' }, { rotate: '0deg' }], { duration: 360, easing: 'ease-in-out' });
       return close(o, true);
@@ -275,7 +284,7 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
       o.state = 'closed'; o.w = null; o.el.style.zIndex = o.z; o.until = performance.now() + 900;
     }, 1300);
     if (found.length >= GOAL) {
-      hatching = false;
+      hatching = false; timing = false; lastTime = elapsed();
       await wait(900); if (my !== gen) return;
       spots.forEach(s => close(s));
       await wait(700); if (my !== gen) return;
@@ -301,19 +310,37 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
   }
   function finish() {
     Dino.sfx('finish', .8);
+    let rec = {}; try { rec = JSON.parse(localStorage.getItem(REC_KEY)) || {}; } catch { /* ok */ }
+    const list = (rec[cat.id] || []), best = list.length ? list[0] : Infinity, now = Math.round(lastTime * 10) / 10;
+    const top = [...list, now].sort((x, y) => x - y).slice(0, 5); rec[cat.id] = top;
+    try { localStorage.setItem(REC_KEY, JSON.stringify(rec)); } catch { /* ok */ }
     $('got').innerHTML = ''; found.forEach(w => $('got').append(card(w)));
+    $('doneTime').textContent = `${now.toFixed(1)} 秒` + (penalty ? `（含打錯 +${penalty}）` : '');
+    let marked = false;
+    $('doneRec').innerHTML = top.map((t, i) => { const me = !marked && t === now; if (me) marked = true; return `<li class="${me ? 'me' : ''}"><b>${i + 1}</b>${t.toFixed(1)} 秒</li>`; }).join('');
+    $('doneNew').hidden = !(now < best);
     $('done').hidden = false;
+    if (now < best) { const r = $('doneTime').getBoundingClientRect(); for (let i = 0; i < 4; i++) setTimeout(() => burst(r.left + rand(0, r.width), r.top + rand(-20, 20), { n: 16, size: 16 }), i * 260); }
+  }
+  const elapsed = () => (performance.now() - t0) / 1000 + penalty;
+  function showTime() { $('time').textContent = (timing ? elapsed() : 0).toFixed(1); }
+  setInterval(() => { if (timing) showTime(); }, 100);
+  function plus(o) {
+    const r = o.el.getBoundingClientRect(), p = document.createElement('div');
+    p.className = 'fx plus'; p.textContent = `+${PENALTY}`; p.style.cssText = `position:fixed;left:${r.left + r.width / 2}px;top:${r.top}px`;
+    document.body.append(p);
+    p.animate([{ transform: 'translate(-50%,0) scale(.6)', opacity: 0 }, { transform: 'translate(-50%,-30px) scale(1.2)', opacity: 1, offset: .3 }, { transform: 'translate(-50%,-70px)', opacity: 0 }], { duration: 1000, easing: 'ease-out' }).finished.then(() => p.remove());
+    $('time').animate([{ color: '#d32f2f', scale: '1.3' }, { color: '', scale: '1' }], { duration: 600 });
   }
 
   // 每回合隨機換分類（不連續同一個）
   function pickCat() {
     cat = pick(CATS.filter(c => c !== lastCat)); lastCat = cat;
     yes = all.filter(inCat);
-    const g = cat.ids ? 'nature' : group(cat.topic);
-    no = all.filter(w => group(w.topic) !== g && !Dino.isDino(w) && !/^(number|color|shape)$/.test(w.topic));
+    no = all.filter(w => group(w.topic) !== cat.group && !cat.avoid.includes(w.id) && !Dino.isDino(w) && !/^(number|color|shape)$/.test(w.topic));
   }
   function start(newCat) {
-    gen++; hatching = false; found = []; sinceHit = 0; Dino.voice.stop();
+    gen++; hatching = false; timing = false; penalty = 0; found = []; sinceHit = 0; Dino.voice.stop();
     document.querySelectorAll('.fly').forEach(n => n.remove());
     if (newCat || !cat) pickCat();
     buildField(); renderBar();
@@ -326,9 +353,9 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
   let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => start(false), 300); });
 
   fetch('data.json').then(r => r.json()).then(d => {
-    all = d.filter(w => w.image && !w.sheet);
-    start(true);
-  });
+    all = d.filter(w => w.image || (w.sheet && Number.isInteger(w.cell)));
+    return fetch('whack_categories.json').then(r => r.json());
+  }).then(c => { CATS = c.categories; start(true); });
 })();
 </script>
 </body>
