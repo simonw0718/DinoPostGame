@@ -4,6 +4,7 @@ Usage: python3 tools/gemini_tts_batch.py 1|2|3
        python3 tools/gemini_tts_batch.py redo NAME ID [ID ...]   cut to audio-pilot/NAME, no replace
        python3 tools/gemini_tts_batch.py tempo NAME FACTOR       slow/speed cut clips locally (0.9 = 10% slower)
        python3 tools/gemini_tts_batch.py apply NAME              after listening: back up old MP3, replace
+       python3 tools/gemini_tts_batch.py whack [ID ...]          分類快打出題句 "Let's hit... X!"（全部一次請求再裁切）→ dist/assets/audio/whack/
 The key stays in ~/.config/dinopost/gemini-key-DINOZ. Never prints or saves it.
 Already generated batches are never sent again by this script.
 """
@@ -81,6 +82,36 @@ def speech_intervals(wav, expected):
     raise RuntimeError(f'Expected {expected} speech intervals; counts: {[a["speech_count"] for a in attempts]}')
 
 
+def request_tts(request_body, folder, wav, message):
+    """Send one TTS request and save the WAV; the key is read here and never printed."""
+    key = KEY_PATH.read_text().strip()
+    assert key, 'DINOZ key is empty'
+    req = urllib.request.Request('https://generativelanguage.googleapis.com/v1beta/interactions',
+        data=json.dumps(request_body).encode(),
+        headers={'Content-Type': 'application/json', 'x-goog-api-key': key}, method='POST')
+    print(message, flush=True)
+    try:
+        with urllib.request.urlopen(req, timeout=360) as response:
+            result = json.load(response)
+    except urllib.error.HTTPError as error:
+        message = error.read().decode(errors='replace')
+        (folder / 'request-error.txt').write_text(f'HTTP {error.code}\n{message[:5000]}\n')
+        raise RuntimeError(f'Gemini HTTP {error.code}; see request-error.txt') from None
+    blocks = [part for step in result.get('steps', []) if step.get('type') == 'model_output'
+              for part in step.get('content', []) if part.get('type') == 'audio' and part.get('data')]
+    if not blocks and result.get('output_audio', {}).get('data'):
+        blocks = [result['output_audio']]
+    if not blocks:
+        (folder / 'response-diagnostic.json').write_text(json.dumps(result, ensure_ascii=False, indent=2)[:10000])
+        raise RuntimeError('No audio response; see response-diagnostic.json')
+    data = base64.b64decode(blocks[-1]['data'])
+    assert data[:4] == b'RIFF', 'Expected WAV response'
+    wav.write_bytes(data)
+    (folder / 'response-summary.json').write_text(json.dumps({
+        'interaction_id': result.get('id'), 'model': MODEL, 'voice': VOICE,
+        'audio_bytes': len(data), 'audio_blocks': len(blocks)}, indent=2) + '\n')
+
+
 def generate(batch, folder, label):
     folder.mkdir(parents=True, exist_ok=True)
     wav = folder / 'full.wav'
@@ -98,32 +129,7 @@ def generate(batch, folder, label):
     }
     (folder / 'request.json').write_text(json.dumps(request_body, ensure_ascii=False, indent=2) + '\n')
     if not wav.exists():
-        key = KEY_PATH.read_text().strip()
-        assert key, 'DINOZ key is empty'
-        req = urllib.request.Request('https://generativelanguage.googleapis.com/v1beta/interactions',
-            data=json.dumps(request_body).encode(),
-            headers={'Content-Type': 'application/json', 'x-goog-api-key': key}, method='POST')
-        print(f'{label}: sending ONE TTS request for {len(batch)} words', flush=True)
-        try:
-            with urllib.request.urlopen(req, timeout=360) as response:
-                result = json.load(response)
-        except urllib.error.HTTPError as error:
-            message = error.read().decode(errors='replace')
-            (folder / 'request-error.txt').write_text(f'HTTP {error.code}\n{message[:5000]}\n')
-            raise RuntimeError(f'Gemini HTTP {error.code}; see request-error.txt') from None
-        blocks = [part for step in result.get('steps', []) if step.get('type') == 'model_output'
-                  for part in step.get('content', []) if part.get('type') == 'audio' and part.get('data')]
-        if not blocks and result.get('output_audio', {}).get('data'):
-            blocks = [result['output_audio']]
-        if not blocks:
-            (folder / 'response-diagnostic.json').write_text(json.dumps(result, ensure_ascii=False, indent=2)[:10000])
-            raise RuntimeError('No audio response; see response-diagnostic.json')
-        data = base64.b64decode(blocks[-1]['data'])
-        assert data[:4] == b'RIFF', 'Expected WAV response'
-        wav.write_bytes(data)
-        (folder / 'response-summary.json').write_text(json.dumps({
-            'interaction_id': result.get('id'), 'model': MODEL, 'voice': VOICE,
-            'audio_bytes': len(data), 'audio_blocks': len(blocks)}, indent=2) + '\n')
+        request_tts(request_body, folder, wav, f'{label}: sending ONE TTS request for {len(batch)} words')
     else:
         print(f'{label}: using saved WAV; no additional TTS request', flush=True)
     duration, speech, threshold = speech_intervals(wav, len(batch))
@@ -145,7 +151,53 @@ def generate(batch, folder, label):
     return rows, duration, threshold
 
 
+WHACK_STYLE = 'Cheerful, playful game-show host talking to young children; a short excited pause after "Let\'s hit", then say the category clearly with energy.'
+
+
+def split_by_longest_gaps(wav, count):
+    """Cut at the count-1 longest silences (phrase-internal pauses like "Let's hit..." stay inside)."""
+    duration = float(run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration',
+                          '-of', 'default=nokey=1:noprint_wrappers=1', str(wav)]).stdout.strip())
+    err = run(['ffmpeg', '-hide_banner', '-i', str(wav), '-af', 'silencedetect=noise=-38dB:d=0.2', '-f', 'null', '-']).stderr
+    sil = list(zip(map(float, re.findall(r'silence_start: ([\d.]+)', err)), map(float, re.findall(r'silence_end: ([\d.]+)', err))))
+    inner = sorted((s for s in sil if s[0] > 0.05 and s[1] < duration - 0.05), key=lambda s: s[1] - s[0], reverse=True)[:count - 1]
+    assert len(inner) == count - 1, f'only {len(inner)} gaps for {count} phrases'
+    cuts = [0.0] + [x for s in sorted(inner) for x in s] + [duration]
+    lead = sil[0][1] if sil and sil[0][0] <= 0.05 else 0.0
+    tail = sil[-1][0] if sil and sil[-1][1] >= duration - 0.05 else duration
+    cuts[0], cuts[-1] = lead, tail
+    return [(cuts[i], cuts[i + 1]) for i in range(0, len(cuts), 2)], duration
+
+
+def whack(ids):
+    """Category prompts "Let's hit... X!": ONE request for all phrases, then cut locally (導演 2026-10-26).
+    A saved full.wav is never re-sent; pass ids to regenerate only those into a new folder."""
+    cats = [c for c in json.loads((ROOT / 'dist/whack_categories.json').read_text())['categories'] if not ids or c['id'] in ids]
+    folder = ROOT / 'audio-pilot/whack-prompts' / ('batch-' + '-'.join(c['id'] for c in cats))
+    folder.mkdir(parents=True, exist_ok=True)
+    wav = folder / 'full.wav'
+    texts = [f"Let's hit... {c['en']}!" for c in cats]
+    body = {'model': MODEL,
+            'input': [{'type': 'user_input', 'content': [{'type': 'text', 'text': ' <long pause> <long pause> <long pause> '.join(texts),
+                'annotations': [{'type': 'speech_metadata', 'style': WHACK_STYLE}]}]}],
+            'response_format': {'type': 'audio'},
+            'generation_config': {'speech_config': [{'voice': VOICE}]}}
+    (folder / 'request.json').write_text(json.dumps(body, ensure_ascii=False, indent=2) + '\n')
+    if not wav.exists():
+        request_tts(body, folder, wav, f'whack: sending ONE TTS request for {len(cats)} phrases')
+    spans, _ = split_by_longest_gaps(wav, len(cats))
+    out = ROOT / 'dist/assets/audio/whack'
+    out.mkdir(parents=True, exist_ok=True)
+    for c, text, (a, b) in zip(cats, texts, spans):
+        mp3 = out / f"{c['id']}.mp3"
+        run(['ffmpeg', '-v', 'error', '-y', '-ss', f'{max(0, a - 0.05):.3f}', '-to', f'{b + 0.1:.3f}', '-i', str(wav),
+             '-ac', '1', '-ar', '24000', '-codec:a', 'libmp3lame', '-qscale:a', '4', str(mp3)])
+        print(f"{c['id']:8s} {b - a:.2f}s  {text}", flush=True)
+
+
 def main():
+    if sys.argv[1] == 'whack':
+        return whack(sys.argv[2:])
     if sys.argv[1] == 'tempo':
         return tempo(sys.argv[2], float(sys.argv[3]))
     if sys.argv[1] in ('redo', 'apply'):

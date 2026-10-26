@@ -212,15 +212,9 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
     showTime();
     $('dots').innerHTML = Array.from({ length: GOAL }, (_, i) => `<i class="${i < found.length ? 'on' : ''}"></i>`).join('');
   }
-  // 出題動畫（導演 2026-10-26）：彈出 Let's hit… → 分類名（英文＋中文注音）→ 示意圖一張張跳出；英文語音先用裝置內建 TTS 暫代；點一下才開始
-  function speak(text) {
-    try {
-      speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text); u.lang = 'en-US'; u.rate = .85; u.pitch = 1.15;
-      speechSynthesis.speak(u);
-    } catch { /* 沒有 TTS 也照樣能玩 */ }
-  }
-  const sayCat = () => speak(`Let's hit... ${cat.en}!`);
+  // 出題動畫（導演 2026-10-26）：彈出 Let's hit… → 分類名（英文＋中文注音）→ 示意圖一張張跳出；英文語音 Gemini 生成；點一下才開始
+  // 出題語音：Gemini 生成 assets/audio/whack/<分類 id>.mp3（tools/gemini_tts_batch.py whack）
+  const sayCat = () => Dino.voice(`assets/audio/whack/${cat.id}.mp3`);
   async function announce(my) {
     hatching = false;
     const L = $('intro'); L.hidden = false;
@@ -236,7 +230,7 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
     await new Promise(r => { L.onclick = () => { L.onclick = null; r(); }; });
     if (my !== gen) return;
     Dino.sfx('tap', .5);
-    try { speechSynthesis.cancel(); } catch { /* ok */ }
+    Dino.voice.stop();
     L.hidden = true;
     const a = $('ask'); a.classList.add('is-on');
     $('buddy').animate([{ transform: 'none' }, { transform: 'translateY(-14px)' }, { transform: 'none' }], { duration: 420, easing: ease.back });
