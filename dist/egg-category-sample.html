@@ -8,7 +8,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="fonts.css">
 <script src="shared.js"></script>
-<!-- 恐龍蛋分類快打 sample（導演 2026-10-26）：題目＝一個分類（蔬菜、樂器、天氣…，每回合隨機），蛋孵出圖卡，只打屬於這個分類的；干擾題用差很多的分類（A）；圖卡只放圖；打對念中文、打錯念名稱；沒打到的自己縮回；打到 5 個過關並計時，打錯 +2 秒，每分類記自己最快 5 次。美術沿用 egg-art-sample -->
+<!-- 恐龍蛋分類快打 sample（導演 2026-10-26）：題目＝一個分類（蔬菜、樂器、天氣…，每回合隨機），蛋孵出圖卡，只打屬於這個分類的；干擾題用差很多的分類（A）；圖卡只放圖；打對念英文、打錯念名稱；沒打到的自己縮回；打到 5 個過關並計時，打錯 +2 秒，每分類記自己最快 5 次。美術沿用 egg-art-sample -->
 <style>
 :root{--ink:#17593f;--cream:#fffdf2;--gold:#e3bd70;font-family:"Naikai",ui-rounded,system-ui,sans-serif;color:var(--ink)}
 *{box-sizing:border-box}
@@ -82,6 +82,8 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
 .rec li b{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#e3bd70;color:#573e1d;font-size:16px}
 .rec li.me{background:#ffca58;outline:3px solid #fffdf2}
 .layer .got .card{--s:84px}
+.layer .got .word{display:flex;flex-direction:column;align-items:center;gap:6px;padding:0;border:0;background:none}
+.layer .got .word span{padding:2px 12px;border-radius:12px;background:#fffdf2;color:#d0601a;font:1000 22px ui-rounded,"Arial Rounded MT Bold",system-ui,sans-serif}
 @keyframes breathe{to{transform:scale(1.07)}}
 @media(prefers-reduced-motion:reduce){*{animation-duration:0s!important}}
 .ask{display:flex;align-items:center;gap:12px;padding:4px 14px;border:0;border-radius:20px;background:transparent;font-size:40px;font-weight:1000;color:var(--ink)}
@@ -134,7 +136,7 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
   // 單張圖或拼圖表（5×2 格）的常見字都能用
   const art = w => (w.image ? `<img alt="" src="${w.image}">` : `<i class="sheet" style="background-image:url('assets/${w.sheet}-grid-v1.jpg');background-position:${(w.cell % 5) * 25}% ${w.cell < 5 ? 0 : 100}%"></i>`);
   const card = w => { const c = document.createElement('div'); c.className = 'card'; c.innerHTML = art(w); return c; };
-  const zh = w => w.zhAudio || Dino.audioPath(w);
+  const en = w => Dino.audioPath(w);   // 導演 2026-10-26：打到念英文
 
   const EGG_ZIG = '0,62 12,54 24,64 36,52 48,63 60,51 72,62 84,52 100,60';
   let eggN = 0;
@@ -247,7 +249,7 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
     if (!inCat(w)) {
       Dino.sfx('wrong', .45);
       if (timing) { penalty += PENALTY; plus(o); }
-      Promise.race([Dino.voice(zh(w)), wait(2000)]);
+      Promise.race([Dino.voice(en(w)), wait(2000)]);
       o.egg.animate([{ rotate: '0deg' }, { rotate: '-9deg' }, { rotate: '8deg' }, { rotate: '-5deg' }, { rotate: '0deg' }], { duration: 360, easing: 'ease-in-out' });
       return close(o, true);
     }
@@ -270,7 +272,7 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
       const r = dot.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, { n: 8, size: 12 });
     });
     cheer();
-    Promise.race([Dino.voice(zh(w)), wait(2500)]);
+    Promise.race([Dino.voice(en(w)), wait(2500)]);
     setTimeout(() => {
       if (my !== gen) return;
       c.remove(); o.top.getAnimations().forEach(a => a.cancel()); o.topAnim = o.cardAnim = null;
@@ -308,7 +310,14 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
     const list = (rec[cat.id] || []), best = list.length ? list[0] : Infinity, now = Math.round(lastTime * 10) / 10;
     const top = [...list, now].sort((x, y) => x - y).slice(0, 5); rec[cat.id] = top;
     try { localStorage.setItem(REC_KEY, JSON.stringify(rec)); } catch { /* ok */ }
-    $('got').innerHTML = ''; found.forEach(w => $('got').append(card(w)));
+    // 結束畫面：打到的圖卡縮圖＋英文（不重複），點一下再念
+    $('got').innerHTML = '';
+    found.filter((w, i) => found.findIndex(x => x.id === w.id) === i).forEach(w => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'word';
+      b.append(card(w)); b.insertAdjacentHTML('beforeend', `<span>${w.en}</span>`);
+      b.addEventListener('click', () => Dino.voice(en(w)));
+      $('got').append(b);
+    });
     $('doneTime').textContent = `${now.toFixed(1)} 秒` + (penalty ? `（含打錯 +${penalty}）` : '');
     let marked = false;
     $('doneRec').innerHTML = top.map((t, i) => { const me = !marked && t === now; if (me) marked = true; return `<li class="${me ? 'me' : ''}"><b>${i + 1}</b>${t.toFixed(1)} 秒</li>`; }).join('');
