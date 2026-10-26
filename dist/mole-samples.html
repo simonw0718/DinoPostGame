@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#164d39">
+<title>聽音快打・手感 sample</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="fonts.css">
+<script src="shared.js"></script>
+<!-- 手感比較 sample（2026-10-26）：同一個玩法（聽英文、在時限內點對的圖）換三種畫面：恐龍蛋、泡泡、小火車。只比動態手感，美術之後再用 Gemini 元件精修 -->
+<style>
+:root{--ink:#17593f;--cream:#fffdf2;--gold:#e3bd70;--s:min(30vw,26vh,230px);font-family:"Naikai",ui-rounded,system-ui,sans-serif;color:var(--ink)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{overflow:hidden;background:#164d39;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+::selection{background:#ffe27a}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
+.shell{position:relative;display:flex;flex-direction:column;height:100svh;padding:max(10px,env(safe-area-inset-top)) 14px max(10px,env(safe-area-inset-bottom));gap:10px;isolation:isolate}
+.tabs{display:flex;justify-content:center;gap:8px;flex:none}
+.tabs button{min-height:52px;padding:4px 20px;border:4px solid #fffaf0;border-radius:18px;background:#2c6e52;color:#fffdf2;font-size:22px;font-weight:1000;box-shadow:0 5px 0 #0d3b28}
+.tabs button[aria-pressed=true]{background:linear-gradient(#ffca58,#f6ac34);color:#573e1d;box-shadow:0 5px 0 #b9792b}
+.bar{position:absolute;left:28px;top:84px;z-index:20;display:flex;gap:12px;align-items:center}
+.say{display:grid;place-items:center;width:74px;height:74px;padding:0;border:5px solid var(--cream);border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffd36b,#f6ac34 60%,#d98a1b);color:#5b3a12;box-shadow:0 6px 0 #a86a17,0 10px 18px #0a2a1c44}
+.say svg{width:38px;height:38px}
+.say.is-on{animation:breathe .45s ease-in-out infinite alternate}
+.count{padding:8px 16px;border-radius:99px;background:#fffdf2e6;font-size:24px;font-weight:1000;box-shadow:0 4px 0 #0a2a1c22}
+.stage{position:relative;flex:1;min-height:0;overflow:hidden;border:5px solid var(--cream);border-radius:28px;box-shadow:0 10px 26px #0a2a1c66}
+.scene{position:absolute;inset:0}
+.scene[hidden]{display:none}
+.card{display:grid;place-items:center;width:calc(var(--s)*.62);aspect-ratio:1;border:calc(var(--s)*.022) solid #ead9b2;border-radius:16%;background:linear-gradient(160deg,#fffef8,#f2e6c8);box-shadow:0 calc(var(--s)*.03) 0 #c9ad78,0 calc(var(--s)*.06) calc(var(--s)*.06) #0a2a1c40}
+.card img{width:84%;height:84%;object-fit:contain;pointer-events:none}
+.fx{position:absolute;z-index:30;pointer-events:none}
+.start{position:fixed;inset:0;z-index:90;display:grid;place-items:center;background:#0e3a28bb}
+.start button{padding:18px 34px;border:6px solid var(--gold);border-radius:999px;background:var(--cream);font-size:30px;font-weight:1000;box-shadow:0 7px 0 #c89c52}
+.start[hidden]{display:none}
+
+/* ① 恐龍蛋：草窩裡三顆蛋；搖一搖（預告）→ 上半殼掀開、圖卡升起 → 時間到合起來 */
+.s-egg{background:radial-gradient(ellipse 120% 70% at 50% 100%,#79b85a,#9fd27c 45%,#cdeab0 75%,#e9f6dc)}
+.s-egg::before{content:"";position:absolute;left:-10%;right:-10%;bottom:-12%;height:46%;border-radius:50% 50% 0 0;background:radial-gradient(ellipse at 50% 0,#8fca6c,#6aa94f 60%,#4f8c3d)}
+.eggs{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;gap:calc(var(--s)*.12);padding-bottom:16%}
+.nest{position:relative;width:var(--s);height:calc(var(--s)*1.35)}
+.nest .straw{position:absolute;left:-6%;right:-6%;bottom:0;height:34%;z-index:4;pointer-events:none}
+.nest .back{position:absolute;left:-2%;right:-2%;bottom:12%;height:24%;z-index:0;border-radius:50%;background:radial-gradient(ellipse at 50% 40%,#5a3a1c,#8a6232 70%,#b98d4f)}
+.egg{position:absolute;left:12%;right:12%;bottom:13%;height:84%;z-index:2;transform-origin:50% 95%;cursor:pointer;touch-action:manipulation}
+.egg svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.egg .top{z-index:3;transform-origin:20% 55%}
+.egg .bot{z-index:2}
+.egg .card{position:absolute;left:50%;top:38%;z-index:1;translate:-50% 0;transform:translateY(40%) scale(.5);opacity:0}
+.egg .baby{position:absolute;left:50%;bottom:30%;z-index:5;height:70%;translate:-50% 0;opacity:0;pointer-events:none;filter:drop-shadow(0 4px 3px #0005)}
+
+/* ② 泡泡：水裡冒泡泡往上飄，裡面裝圖；點破啵一聲 */
+.s-bub{background:linear-gradient(#bfe8ff,#e3f6ff 55%,#9ed8f0 70%,#4aa6cf)}
+.s-bub .sun{position:absolute;right:8%;top:8%;width:18%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#fff7c2,#ffe27a 60%,#ffe27a00 72%)}
+.s-bub .water{position:absolute;left:0;right:0;bottom:0;height:26%;background:linear-gradient(#5fb8dc,#2f87b5);}
+.s-bub .water::before{content:"";position:absolute;left:0;right:0;top:-14px;height:28px;background:radial-gradient(28px 14px at 28px 14px,#5fb8dc 98%,#0000) 0 0/56px 28px repeat-x;animation:wave 3s linear infinite}
+.s-bub .shore{position:absolute;left:2%;bottom:8%;z-index:6;height:28%;pointer-events:none;filter:drop-shadow(0 6px 4px #0004)}
+.bubble{position:absolute;left:0;top:0;width:var(--s);aspect-ratio:1;border-radius:50%;cursor:pointer;touch-action:manipulation;border:3px solid #ffffffb8;
+  background:radial-gradient(circle at 32% 28%,#ffffffee 0 7%,#ffffff55 9%,#ffffff00 20%),radial-gradient(circle at 50% 50%,#ffffff00 58%,#d8f4ff66 70%,#ffffffb0 76%,#9fd8f0 79%,#ffffff00 81%);
+  box-shadow:inset -8px -10px 24px #7ad0f566,inset 10px 8px 18px #ffffff66}
+.bubble::after{content:"";position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 200deg,#ff9ad755,#ffe27a44,#8fe6b544,#8fc8ff55,#ff9ad755);mix-blend-mode:screen;opacity:.55;mask:radial-gradient(circle,#0000 64%,#000 72%,#0000 80%)}
+.bubble .card{position:absolute;left:50%;top:50%;width:62%;translate:-50% -50%;border-width:3px;box-shadow:0 4px 0 #c9ad78}
+
+/* ③ 小火車：恐龍開火車經過，每節車廂載一張圖；點對的車廂，貨跳起來蓋章 */
+.s-train{background:linear-gradient(#cdefff,#eaf8ff 45%,#bfe6a4 46%,#94cf73 70%,#7bbb5d)}
+.s-train .hills{position:absolute;left:-5%;right:-5%;top:28%;height:22%;background:radial-gradient(ellipse 30% 100% at 20% 100%,#a8dc88 98%,#0000),radial-gradient(ellipse 34% 90% at 62% 100%,#9ad47a 98%,#0000),radial-gradient(ellipse 26% 80% at 92% 100%,#b2e092 98%,#0000)}
+.s-train .rail{position:absolute;left:0;right:0;top:72%;height:28px;background:repeating-linear-gradient(90deg,#8a5a2e 0 14px,#0000 14px 44px) 0 6px/100% 16px no-repeat,linear-gradient(#0000 0 4px,#6d7a85 4px 9px,#0000 9px 19px,#6d7a85 19px 24px,#0000 24px)}
+.train{position:absolute;left:0;top:72%;display:flex;align-items:flex-end;gap:calc(var(--s)*.06);transform:translateY(-100%);will-change:transform}
+.loco{position:relative;width:calc(var(--s)*1.05);height:calc(var(--s)*.95)}
+.loco svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.loco .driver{position:absolute;left:8%;bottom:44%;height:62%;z-index:2;filter:drop-shadow(0 3px 2px #0004)}
+.wagon{position:relative;width:calc(var(--s)*.86);height:calc(var(--s)*.86);cursor:pointer;touch-action:manipulation}
+.wagon .body{position:absolute;left:0;right:0;bottom:12%;height:34%;border-radius:12px 12px 8px 8px;background:linear-gradient(var(--c),var(--e));box-shadow:inset 0 5px 0 #ffffff55,inset 0 -6px 0 #0002,0 6px 8px #0003}
+.wagon .wheel,.loco .wheel{position:absolute;bottom:0;width:22%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#ffd34d 0 18%,#3b3f45 20% 58%,#22262b 60%);animation:roll .5s linear infinite}
+.wagon .w1{left:10%}.wagon .w2{right:10%}
+.wagon .card{position:absolute;left:50%;bottom:36%;width:74%;translate:-50% 0;rotate:var(--tilt)}
+.smoke{position:absolute;width:38px;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 40% 35%,#fff,#e9eef2 60%,#d5dde3);pointer-events:none}
+
+.stamp{position:absolute;z-index:31;display:grid;place-items:center;width:calc(var(--s)*.36);aspect-ratio:1;border:5px solid #2f9d5a;border-radius:50%;color:#2f9d5a;background:#fffdf2cc;pointer-events:none}
+.stamp svg{width:60%}
+@keyframes breathe{to{transform:scale(1.07)}}
+@keyframes wave{to{background-position:56px 0}}
+@keyframes roll{to{rotate:360deg}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:0s!important}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <nav class="tabs" aria-label="三種畫面"><button type="button" data-tab="egg">① 恐龍蛋</button><button type="button" data-tab="bub">② 泡泡</button><button type="button" data-tab="train">③ 小火車</button></nav>
+  <div class="bar"><button id="say" class="say" type="button" aria-label="再聽一次"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 9.2v5.6c0 .6.4 1 1 1h3l4.3 3.6c.6.5 1.7.1 1.7-.8V5.4c0-.9-1.1-1.3-1.7-.8L8 8.2H5c-.6 0-1 .4-1 1zm12.5-2.6a1 1 0 0 0-.2 1.4 6.6 6.6 0 0 1 0 8 1 1 0 1 0 1.6 1.2 8.6 8.6 0 0 0 0-10.4 1 1 0 0 0-1.4-.2z"/></svg></button><span id="count" class="count">0</span></div>
+  <main class="stage" id="stage">
+    <section class="scene s-egg" data-scene="egg" hidden><div class="eggs" id="eggs"></div></section>
+    <section class="scene s-bub" data-scene="bub" hidden><span class="sun"></span><div class="water"></div><img class="shore" id="shore" alt=""></section>
+    <section class="scene s-train" data-scene="train" hidden><div class="hills"></div><div class="rail"></div></section>
+  </main>
+</div>
+<div class="start" id="start"><button type="button">點一下開始試手感</button></div>
+
+<script>
+(() => {
+  'use strict';
+  const $ = id => document.getElementById(id);
+  const stage = $('stage');
+  const CAST = ['iggy', 'feifei', 'xiaokong', 'pairo', 'chick_abao'];
+  const cast = (id, pose) => `assets/cast/${id}__${pose}.webp`;
+  const pick = a => a[Math.floor(Math.random() * a.length)];
+  const rand = (a, b) => a + Math.random() * (b - a);
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  const ease = { out: 'cubic-bezier(.16,1,.3,1)', back: 'cubic-bezier(.34,1.56,.64,1)', in: 'cubic-bezier(.5,0,.75,0)' };
+  let words = [], tab = 'egg', gen = 0, hits = 0, answer = null;
+
+  const card = w => { const c = document.createElement('div'); c.className = 'card'; c.innerHTML = `<img alt="" src="${w.image}">`; return c; };
+  const roundWords = n => { const out = []; for (const w of Dino.shuffle(words.slice())) { if (out.length >= n) break; if (!out.some(o => o.en === w.en)) out.push(w); } return out; };
+  async function say(w) {
+    $('say').classList.add('is-on');
+    await Promise.race([Dino.voice(Dino.audioPath(w)), wait(2500)]);
+    $('say').classList.remove('is-on');
+  }
+  function score() { hits++; $('count').textContent = hits; $('count').animate([{ transform: 'scale(1.4)' }, { transform: 'scale(1)' }], { duration: 400, easing: ease.back }); }
+
+  // 共用特效：碎片／水滴／星星從某點炸開（有重力）
+  function burst(x, y, { n = 12, colors = ['#ffd34d', '#ff8a6e', '#8fe6b5', '#8fc8ff'], size = 14, shape = 'star', spread = 1 } = {}) {
+    const r = stage.getBoundingClientRect();
+    for (let i = 0; i < n; i++) {
+      const p = document.createElement('div'); p.className = 'fx';
+      const s = size * rand(.6, 1.3), a = (i / n) * Math.PI * 2 + rand(-.3, .3), v = rand(90, 190) * spread;
+      p.style.cssText = `left:${x - r.left}px;top:${y - r.top}px;width:${s}px;height:${s}px;background:${pick(colors)};` +
+        (shape === 'star' ? 'clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)' : shape === 'shard' ? 'clip-path:polygon(0 0,100% 30%,40% 100%)' : 'border-radius:50%');
+      stage.append(p);
+      const dx = Math.cos(a) * v, dy = Math.sin(a) * v - 80;
+      p.animate([{ transform: 'translate(-50%,-50%) rotate(0)', opacity: 1 }, { transform: `translate(calc(-50% + ${dx}px),calc(-50% + ${dy + 160}px)) rotate(${rand(-300, 300)}deg)`, opacity: 0 }],
+        { duration: rand(600, 900), easing: 'cubic-bezier(.2,.6,.4,1)' }).finished.then(() => p.remove());
+    }
+  }
+  const center = el => { const b = el.getBoundingClientRect(); return [b.left + b.width / 2, b.top + b.height / 2]; };
+  // 點下去先停一下（hit-stop），再彈開
+  const hitStop = el => el.animate([{ scale: '1' }, { scale: '1.16', offset: .35 }, { scale: '1.16', offset: .7 }, { scale: '1' }], { duration: 220, easing: 'linear' }).finished;   // 用 scale 屬性，不蓋掉位置 transform
+  const wrong = el => { Dino.sfx('wrong', .45); el.animate([{ rotate: '0deg' }, { rotate: '-9deg' }, { rotate: '8deg' }, { rotate: '-5deg' }, { rotate: '0deg' }], { duration: 380, easing: 'ease-in-out' }); };
+
+  // ───────── ① 恐龍蛋
+  const EGG = 'M50 3C78 3 97 48 97 80c0 30-21 47-47 47S3 110 3 80C3 48 22 3 50 3z';
+  const ZIG = '0,62 12,54 24,64 36,52 48,63 60,51 72,62 84,52 100,60';
+  let eggN = 0;
+  function eggSvg(part) {
+    const i = ++eggN, clip = part === 'top' ? `0,0 100,0 ${ZIG.split(' ').reverse().join(' ')}` : `${ZIG} 100,130 0,130`;
+    return `<svg class="${part}" viewBox="0 0 100 130" aria-hidden="true"><defs><radialGradient id="eg${i}" cx=".36" cy=".3" r=".8"><stop offset="0" stop-color="#fffef4"/><stop offset=".55" stop-color="#f6ebcf"/><stop offset="1" stop-color="#d9c39a"/></radialGradient><clipPath id="ec${i}"><polygon points="${clip}"/></clipPath></defs>`
+      + `<g clip-path="url(#ec${i})"><path d="${EGG}" fill="url(#eg${i})" stroke="#c7ad7d" stroke-width="2"/>`
+      + `<g fill="#7fbf6a" opacity=".75"><ellipse cx="30" cy="34" rx="6" ry="4.5"/><ellipse cx="66" cy="26" rx="4" ry="3"/><ellipse cx="72" cy="58" rx="7" ry="5"/><ellipse cx="26" cy="86" rx="5" ry="4"/><ellipse cx="62" cy="100" rx="8" ry="5.5"/><ellipse cx="44" cy="70" rx="3.5" ry="2.6"/></g>`
+      + `<ellipse cx="33" cy="30" rx="9" ry="14" fill="#fff" opacity=".55" transform="rotate(-20 33 30)"/></g>`
+      + (part === 'top' ? `<polyline points="${ZIG}" fill="none" stroke="#b8996a" stroke-width="2" stroke-linejoin="round"/>` : '') + '</svg>';
+  }
+  const STRAW = '<svg class="straw" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true"><path d="M2 14c18 10 98 10 116 0l-4 18c-20 10-88 10-108 0z" fill="#c9974f"/><g fill="none" stroke-linecap="round" stroke-width="2.4"><path d="M6 18c30 9 78 9 108 0" stroke="#e8bf72"/><path d="M10 25c28 8 72 8 100 0" stroke="#a8742f"/><path d="M14 31c26 6 66 6 92 0" stroke="#e0b266"/><path d="M4 16l10 6M30 26l12-6M64 28l14-7M96 22l14 4M20 30l14-4M78 31l12-5" stroke="#f2d08c"/></g></svg>';
+  function buildEggs() {
+    $('eggs').innerHTML = '';
+    return [0, 1, 2].map(i => {
+      const n = document.createElement('div'); n.className = 'nest';
+      n.innerHTML = `<span class="back"></span><div class="egg">${eggSvg('bot')}${eggSvg('top')}<img class="baby" alt=""></div>${STRAW}`;
+      $('eggs').append(n);
+      const egg = n.querySelector('.egg'), e = { egg, top: egg.querySelector('.top'), baby: egg.querySelector('.baby'), w: null, open: false, idle: null };
+      e.idle = egg.animate([{ rotate: '0deg' }, { rotate: '1.4deg' }, { rotate: '-1.2deg' }, { rotate: '0deg' }], { duration: 2600 + i * 300, iterations: Infinity, easing: 'ease-in-out' });
+      egg.addEventListener('pointerdown', ev => { ev.preventDefault(); tapEgg(e); });
+      return e;
+    });
+  }
+  let eggs = [];
+  async function openEgg(e, w, my) {
+    e.egg.querySelector('.card')?.remove();
+    const c = card(w); e.egg.append(c); e.w = w;
+    // 預告：越搖越大
+    await e.egg.animate([{ rotate: '0deg' }, { rotate: '-7deg' }, { rotate: '7deg' }, { rotate: '-9deg' }, { rotate: '9deg' }, { rotate: '0deg' }], { duration: 560, easing: 'ease-in-out' }).finished;
+    if (my !== gen) return;
+    Dino.sfx('pop', .4);
+    e.open = true;
+    e.topAnim = e.top.animate([{ transform: 'none' }, { transform: 'translate(-6%,-30%) rotate(-24deg)' }], { duration: 380, easing: ease.back, fill: 'forwards' });
+    e.cardAnim = c.animate([{ transform: 'translateY(40%) scale(.5)', opacity: 0 }, { transform: 'translateY(-92%) scale(1)', opacity: 1 }], { duration: 460, easing: ease.back, fill: 'forwards' });
+    e.egg.animate([{ scale: '1 1' }, { scale: '1.06 .92' }, { scale: '1 1' }], { duration: 260 });
+  }
+  function closeEgg(e) {
+    if (!e.open) return; e.open = false;
+    e.topAnim?.reverse(); e.cardAnim?.reverse();
+    e.egg.animate([{ scale: '1 1' }, { scale: '1.04 .95' }, { scale: '1 1' }], { duration: 240, delay: 300 });
+  }
+  async function tapEgg(e) {
+    if (!e.open) return;
+    if (e.w !== answer) return wrong(e.egg);
+    answer = null; e.open = false; const my = gen;
+    const c = e.egg.querySelector('.card');
+    Dino.sfx('correct', .8); score();
+    await hitStop(c);
+    // 殼炸開：上殼飛走、碎片噴出、小恐龍跳出來抱著圖
+    const [x, y] = center(e.top);
+    burst(x, y, { n: 14, colors: ['#fffef4', '#f6ebcf', '#d9c39a', '#7fbf6a'], size: 20, shape: 'shard' });
+    burst(x, y - 40, { n: 10, size: 16 });
+    e.top.animate([{ transform: 'translate(-6%,-30%) rotate(-24deg)' }, { transform: 'translate(-60%,-160%) rotate(-140deg)', opacity: 0 }], { duration: 620, easing: ease.out, fill: 'forwards' });
+    e.baby.src = cast(pick(CAST), 'cheer');
+    e.baby.animate([{ opacity: 0, transform: 'translateY(30%) scale(.4)' }, { opacity: 1, transform: 'translateY(-18%) scale(1.05)' }, { opacity: 1, transform: 'translateY(0) scale(1)' }], { duration: 560, easing: ease.back, fill: 'forwards' });
+    c.animate([{ transform: 'translateY(-92%) scale(1)' }, { transform: 'translate(70%,-95%) scale(.85) rotate(12deg)' }], { duration: 520, easing: ease.back, fill: 'forwards' });
+    await Promise.race([Dino.voice(Dino.audioPath(e.w)), wait(2500)]);
+    await wait(500);
+    if (my !== gen) return;
+    // 換一顆新蛋從窩裡長出來
+    e.baby.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 250, fill: 'forwards' });
+    c.remove(); e.top.getAnimations().forEach(a => a.cancel()); e.topAnim = e.cardAnim = null;
+    e.egg.animate([{ transform: 'scale(.3)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], { duration: 420, easing: ease.back });
+  }
+  async function eggRound(my) {
+    const ws = roundWords(3), ans = pick(ws);
+    answer = ans; await say(ans); if (my !== gen) return;
+    // 答案固定第 1 或第 2 顆打開，彼此錯開
+    const others = ws.filter(w => w !== ans), order = Math.random() < .5 ? [ans, ...others] : [others[0], ans, others[1]];
+    const slots = Dino.shuffle([0, 1, 2]);
+    let t = rand(300, 900);
+    order.forEach((w, i) => setTimeout(() => my === gen && openEgg(eggs[slots[i]], w, my), t + i * rand(450, 750)));
+    await wait(t + 1500 + 3200);
+    if (my !== gen) return;
+    eggs.forEach(closeEgg); answer = null;
+    await wait(1100);
+  }
+
+  // ───────── ② 泡泡
+  let bubbles = [];
+  function spawnBubble(w, lane, my) {
+    const sc = stage.querySelector('.s-bub'), b = document.createElement('div'); b.className = 'bubble';
+    b.append(card(w)); sc.append(b);
+    const W = stage.clientWidth, H = stage.clientHeight, s = b.offsetWidth;
+    const o = { el: b, w, x0: W * .2 + (lane + .5) * W * .78 / 3 - s / 2, y: H * .78, t: 0, sp: H / 5.6, ph: rand(0, 6), alive: true, my };
+    b.addEventListener('pointerdown', ev => { ev.preventDefault(); tapBubble(o); });
+    b.style.transform = `translate(${o.x0}px,${o.y - 20}px)`;
+    b.animate([{ transform: `translate(${o.x0}px,${o.y}px) scale(.2)` }, { transform: `translate(${o.x0}px,${o.y - 20}px) scale(1)` }], { duration: 420, easing: ease.back });
+    bubbles.push(o); Dino.sfx('pop', .25);
+  }
+  function stepBubbles(dt) {
+    bubbles.forEach(o => {
+      if (!o.alive || o.freeze) return;
+      o.t += dt; o.y -= o.sp * dt;
+      const x = o.x0 + Math.sin(o.t * 1.6 + o.ph) * 18, wob = 1 + Math.sin(o.t * 5 + o.ph) * .035;
+      if (o.t > .42) o.el.style.transform = `translate(${x}px,${o.y}px) scale(${wob},${2 - wob})`;
+      if (o.y < -o.el.offsetWidth) { o.alive = false; o.el.remove(); }
+    });
+    bubbles = bubbles.filter(o => o.alive);
+  }
+  async function tapBubble(o) {
+    if (!o.alive) return;
+    if (o.w !== answer) { o.freeze = true; await o.el.animate([{ scale: '1 1' }, { scale: '1.15 .85' }, { scale: '.92 1.08' }, { scale: '1 1' }], { duration: 360 }).finished; o.freeze = false; return wrong(o.el.querySelector('.card')); }
+    answer = null; o.freeze = true;
+    Dino.sfx('correct', .8); score();
+    const c = o.el.querySelector('.card');
+    await hitStop(o.el);
+    const [x, y] = center(o.el), sr = stage.getBoundingClientRect();
+    // 啵：外圈擴散＋水珠
+    const ring = document.createElement('div'); ring.className = 'fx';
+    ring.style.cssText = `left:${x - sr.left}px;top:${y - sr.top}px;width:${o.el.offsetWidth}px;height:${o.el.offsetWidth}px;border-radius:50%;border:6px solid #ffffffcc;translate:-50% -50%`;
+    stage.append(ring); ring.animate([{ scale: 1, opacity: 1 }, { scale: 1.5, opacity: 0 }], { duration: 380, easing: ease.out }).finished.then(() => ring.remove());
+    burst(x, y, { n: 14, colors: ['#ffffff', '#d8f4ff', '#9fd8f0'], size: 14, shape: 'dot' });
+    // 圖卡掉進岸邊恐龍懷裡
+    const shore = $('shore'), [sx, sy] = center(shore);
+    const fly = c.cloneNode(true); fly.classList.add('fx'); fly.style.cssText = `left:${x - sr.left}px;top:${y - sr.top}px;width:${c.offsetWidth}px;translate:-50% -50%;z-index:32`;
+    stage.append(fly); o.el.remove(); o.alive = false;
+    shore.src = cast(shore.dataset.who, 'cheer');
+    await fly.animate([{ transform: 'translate(0,0) scale(1) rotate(0)' }, { transform: `translate(${(sx - x) * .5}px,${(sy - y) * .5 - 140}px) scale(1.1) rotate(-10deg)`, offset: .45 }, { transform: `translate(${sx - x}px,${sy - y}px) scale(.6) rotate(8deg)` }], { duration: 760, easing: 'cubic-bezier(.3,.1,.5,1)' }).finished;
+    shore.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-14%)' }, { transform: 'translateY(0)' }], { duration: 420, easing: ease.out });
+    burst(sx, sy - 40, { n: 10 });
+    fly.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 900, delay: 600, fill: 'forwards' }).finished.then(() => fly.remove());
+    await Promise.race([Dino.voice(Dino.audioPath(o.w)), wait(2500)]);
+    shore.src = cast(shore.dataset.who, 'hello');
+  }
+  async function bubRound(my) {
+    const ws = roundWords(3), ans = pick(ws);
+    answer = ans; await say(ans); if (my !== gen) return;
+    const others = ws.filter(w => w !== ans), order = Math.random() < .5 ? [ans, ...others] : [others[0], ans, others[1]];
+    const lanes = Dino.shuffle([0, 1, 2]);
+    let t = rand(300, 900);
+    order.forEach((w, i) => setTimeout(() => my === gen && spawnBubble(w, lanes[i], my), t + i * rand(500, 800)));
+    await wait(t + 1600 + 5600);
+    if (my !== gen) return;
+    answer = null; await wait(600);
+  }
+
+  // ───────── ③ 小火車
+  const COLORS = [['#f0908a', '#b8483f'], ['#73b9e6', '#2f78ad'], ['#f5cf55', '#b48a17'], ['#a5d77c', '#5b9a3c']];
+  const LOCO = '<svg viewBox="0 0 110 100" aria-hidden="true"><rect x="4" y="22" width="44" height="50" rx="8" fill="#e0473a"/><rect x="10" y="28" width="32" height="24" rx="6" fill="#bfe6ff" stroke="#8e2620" stroke-width="3"/><rect x="0" y="16" width="52" height="10" rx="5" fill="#8e2620"/><rect x="44" y="44" width="62" height="28" rx="12" fill="#e0473a"/><rect x="44" y="44" width="62" height="8" rx="4" fill="#ff8a6e"/><rect x="78" y="22" width="14" height="24" rx="4" fill="#3b3f45"/><rect x="74" y="18" width="22" height="8" rx="4" fill="#22262b"/><circle cx="104" cy="60" r="5" fill="#ffd34d"/><rect x="2" y="70" width="106" height="8" rx="4" fill="#8e2620"/></svg>';
+  let trainEl = null, train = null;
+  function buildTrain(ws, my) {
+    trainEl?.remove();
+    const sc = stage.querySelector('.s-train');
+    trainEl = document.createElement('div'); trainEl.className = 'train';
+    // 車頭在右（往右開），車廂在左
+    const wagons = ws.map((w, i) => {
+      const el = document.createElement('div'); el.className = 'wagon';
+      const [c, e] = COLORS[i % COLORS.length]; el.style.setProperty('--c', c); el.style.setProperty('--e', e); el.style.setProperty('--tilt', `${rand(-6, 6).toFixed(1)}deg`);
+      el.innerHTML = '<span class="body"></span><span class="wheel w1"></span><span class="wheel w2"></span>';
+      el.append(card(w));
+      const o = { el, w, done: false };
+      el.addEventListener('pointerdown', ev => { ev.preventDefault(); tapWagon(o); });
+      return o;
+    });
+    wagons.forEach(o => trainEl.append(o.el));
+    const loco = document.createElement('div'); loco.className = 'loco';
+    loco.innerHTML = `${LOCO}<img class="driver" alt="" src="${cast(pick(CAST), 'hello')}"><span class="wheel" style="left:52%"></span><span class="wheel" style="left:78%"></span>`;
+    trainEl.append(loco); sc.append(trainEl);
+    const W = stage.clientWidth;
+    train = { x: -trainEl.offsetWidth, speed: (W + trainEl.offsetWidth) / 8.5, loco, smokeT: 0, my, slow: 0 };
+  }
+  function stepTrain(dt) {
+    if (!train) return;
+    const k = train.slow > 0 ? .25 : 1; train.slow -= dt;
+    train.x += train.speed * dt * k;
+    trainEl.style.transform = `translate(${train.x}px,-100%) translateY(${Math.sin(train.x / 18) * 1.5}px)`;
+    train.smokeT += dt;
+    if (train.smokeT > .28) {
+      train.smokeT = 0;
+      const [cx, cy] = center(train.loco), sr = stage.getBoundingClientRect(), s = document.createElement('div');
+      s.className = 'smoke'; s.style.left = `${cx - sr.left + train.loco.offsetWidth * .3}px`; s.style.top = `${cy - sr.top - train.loco.offsetHeight * .55}px`;
+      stage.append(s);
+      s.animate([{ transform: 'translate(-50%,-50%) scale(.4)', opacity: .9 }, { transform: `translate(calc(-50% - ${rand(30, 70)}px),calc(-50% - ${rand(60, 110)}px)) scale(1.8)`, opacity: 0 }], { duration: 1400, easing: ease.out }).finished.then(() => s.remove());
+    }
+  }
+  async function tapWagon(o) {
+    if (o.done) return;
+    if (o.w !== answer) return wrong(o.el.querySelector('.card'));
+    answer = null; o.done = true; train.slow = 1.2;
+    Dino.sfx('correct', .8); score();
+    const c = o.el.querySelector('.card');
+    await hitStop(c);
+    c.animate([{ transform: 'translateY(0) rotate(0)' }, { transform: 'translateY(-70%) rotate(-8deg) scale(1.15)', offset: .5 }, { transform: 'translateY(0) rotate(0)' }], { duration: 620, easing: ease.out });
+    const [x, y] = center(c); burst(x, y - 30, { n: 14 });
+    // 蓋一個綠色 OK 章
+    const st = document.createElement('div'); st.className = 'stamp';
+    st.innerHTML = '<svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    st.style.cssText = 'right:-6%;top:-6%'; c.append(st);
+    st.animate([{ transform: 'scale(2.4) rotate(-30deg)', opacity: 0 }, { transform: 'scale(1) rotate(-12deg)', opacity: 1 }], { duration: 300, easing: ease.in, fill: 'forwards' });
+    setTimeout(() => Dino.sfx('stamp', .6), 260);
+    await Promise.race([Dino.voice(Dino.audioPath(o.w)), wait(2500)]);
+  }
+  async function trainRound(my) {
+    const ws = roundWords(3), ans = pick(ws);
+    answer = ans; buildTrain(Dino.shuffle(ws), my);
+    await say(ans); if (my !== gen) return;
+    while (my === gen && train.x < stage.clientWidth) await wait(100);
+    if (my !== gen) return;
+    answer = null; await wait(500);
+  }
+
+  // ───────── 迴圈
+  let last = performance.now();
+  (function frame(now) { const dt = Math.min(.05, (now - last) / 1000); last = now; if (tab === 'bub') stepBubbles(dt); if (tab === 'train') stepTrain(dt); requestAnimationFrame(frame); })(last);
+  async function loop() {
+    const my = ++gen;
+    while (my === gen) {
+      if (tab === 'egg') await eggRound(my);
+      else if (tab === 'bub') await bubRound(my);
+      else await trainRound(my);
+    }
+  }
+  function show(t) {
+    tab = t; gen++; answer = null; Dino.voice.stop();
+    document.querySelectorAll('[data-tab]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.tab === t)));
+    document.querySelectorAll('[data-scene]').forEach(s => { s.hidden = s.dataset.scene !== t; });
+    bubbles.forEach(o => o.el.remove()); bubbles = [];
+    trainEl?.remove(); train = null;
+    if (t === 'egg') eggs = buildEggs();
+    if (t === 'bub') { const s = $('shore'); s.dataset.who = pick(CAST); s.src = cast(s.dataset.who, 'hello'); }
+    try { localStorage.setItem('dinopost-mole-samples-tab', t); } catch { /* ok */ }
+    if (!$('start').hidden) return;
+    loop();
+  }
+  document.querySelectorAll('[data-tab]').forEach(b => b.addEventListener('click', () => { Dino.sfx('tap', .5); show(b.dataset.tab); }));
+  $('say').addEventListener('click', () => { const w = answer; if (w) say(w); });
+  $('start').addEventListener('click', () => { $('start').hidden = true; Dino.sfx('tap', .5); show(tab); });
+
+  fetch('data.json').then(r => r.json()).then(d => {
+    words = d.filter(w => w.image && !Dino.isDino(w) && !Dino.isNumber(w) && Dino.visualGroup(w) === 'regular-image');
+    try { const s = localStorage.getItem('dinopost-mole-samples-tab'); if (['egg', 'bub', 'train'].includes(s)) tab = s; } catch { /* ok */ }
+    show(tab);
+  });
+})();
+</script>
+</body>
+</html>
