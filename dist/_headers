@@ -109,3 +109,5 @@
   Cache-Control: no-cache
 /mole.css
   Cache-Control: no-cache
+/egg-sample.html
+  Cache-Control: no-cache
