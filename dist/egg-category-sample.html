@@ -59,6 +59,15 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
 .layer img.cheer{height:min(34vh,260px);filter:drop-shadow(0 8px 6px #0006)}
 .layer .got{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:90vw}
 .layer .got .card{--s:110px}
+/* 出題動畫：Let's hit… ＋分類名＋示意圖，點一下才開始 */
+.intro{gap:14px;cursor:pointer}
+.intro .lets{font-size:clamp(30px,6vw,52px);font-weight:1000;color:#fffdf2;font-family:ui-rounded,"Arial Rounded MT Bold",system-ui,sans-serif;text-shadow:0 4px 0 #0a2a1c}
+.intro .name{display:flex;flex-direction:column;align-items:center;gap:4px;padding:14px 40px;border:6px solid var(--gold);border-radius:34px;background:var(--cream);box-shadow:0 8px 0 #c89c52}
+.intro .name .e{font-size:clamp(34px,7vw,64px);font-weight:1000;color:#d0601a;font-family:ui-rounded,"Arial Rounded MT Bold",system-ui,sans-serif;line-height:1.05}
+.intro .name .z{display:inline-flex;font-size:clamp(28px,5vw,44px);font-weight:1000;color:var(--ink)}
+.intro .pics{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;max-width:94vw}
+.intro .pics .card{--s:clamp(86px,17vw,150px)}
+.intro .go{margin-top:6px;padding:12px 40px;border:6px solid var(--gold);border-radius:999px;background:linear-gradient(#ffca58,#f6ac34);color:#573e1d;font-size:30px;font-weight:1000;box-shadow:0 7px 0 #b9792b}
 @keyframes breathe{to{transform:scale(1.07)}}
 @media(prefers-reduced-motion:reduce){*{animation-duration:0s!important}}
 .ask{display:flex;align-items:center;gap:12px;padding:4px 14px;border:0;border-radius:20px;background:transparent;font-size:40px;font-weight:1000;color:var(--ink)}
@@ -85,6 +94,7 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
   <main class="stage" id="stage"></main>
 </div>
 <div class="layer" id="start"><button class="big" type="button">點一下開始</button></div>
+<div class="layer intro" id="intro" hidden><div class="lets" id="lets">Let's hit…</div><div class="name"><span class="e" id="introEn"></span><span class="z" id="introZh"></span></div><div class="pics" id="introPics"></div><button class="go" type="button" id="introGo">開始</button></div>
 <div class="layer" id="done" hidden><img class="cheer" alt="" src="assets/cast/iggy__cheer.webp"><div class="got" id="got"></div><button class="big" type="button">再玩一次</button></div>
 <script>
 (() => {
@@ -102,14 +112,14 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
   const GAP = { 2: .32, 3: .3 };
   // 分類題目：topic 前綴或指定 id；干擾題只從「不同大類」挑（導演 2026-10-26 選 A：差很多的分類）
   const CATS = [
-    { zh: '蔬菜', r: ['ㄕㄨ', 'ㄘㄞˋ'], topic: 'food.veg' },
-    { zh: '水果', r: ['ㄕㄨㄟˇ', 'ㄍㄨㄛˇ'], topic: 'food.fruit' },
-    { zh: '樂器', r: ['ㄩㄝˋ', 'ㄑㄧˋ'], topic: 'music' },
-    { zh: '天氣', r: ['ㄊㄧㄢ', 'ㄑㄧˋ'], ids: ['kidapp-sun', 'kidapp-cloud', 'kidapp-rain', 'kidapp-snow', 'kidapp-lightning', 'kidapp-rainbow', 'kidapp-tornado', 'kidapp-wind'] },
-    { zh: '交通工具', r: ['ㄐㄧㄠ', 'ㄊㄨㄥ', 'ㄍㄨㄥ', 'ㄐㄩˋ'], topic: 'vehicle' },
-    { zh: '海裡的動物', r: ['ㄏㄞˇ', 'ㄌㄧˇ', 'ㄉㄜ˙', 'ㄉㄨㄥˋ', 'ㄨˋ'], topic: 'animal.water' },
-    { zh: '農場動物', r: ['ㄋㄨㄥˊ', 'ㄔㄤˇ', 'ㄉㄨㄥˋ', 'ㄨˋ'], topic: 'animal.farm' },
-    { zh: '恐龍', r: ['ㄎㄨㄥˇ', 'ㄌㄨㄥˊ'], topic: 'dino.dinosaur' }
+    { zh: '蔬菜', en: 'vegetables', r: ['ㄕㄨ', 'ㄘㄞˋ'], topic: 'food.veg' },
+    { zh: '水果', en: 'fruits', r: ['ㄕㄨㄟˇ', 'ㄍㄨㄛˇ'], topic: 'food.fruit' },
+    { zh: '樂器', en: 'musical instruments', r: ['ㄩㄝˋ', 'ㄑㄧˋ'], topic: 'music' },
+    { zh: '天氣', en: 'weather', r: ['ㄊㄧㄢ', 'ㄑㄧˋ'], ids: ['kidapp-sun', 'kidapp-cloud', 'kidapp-rain', 'kidapp-snow', 'kidapp-lightning', 'kidapp-rainbow', 'kidapp-tornado', 'kidapp-wind'] },
+    { zh: '交通工具', en: 'vehicles', r: ['ㄐㄧㄠ', 'ㄊㄨㄥ', 'ㄍㄨㄥ', 'ㄐㄩˋ'], topic: 'vehicle' },
+    { zh: '海裡的動物', en: 'sea animals', r: ['ㄏㄞˇ', 'ㄌㄧˇ', 'ㄉㄜ˙', 'ㄉㄨㄥˋ', 'ㄨˋ'], topic: 'animal.water' },
+    { zh: '農場動物', en: 'farm animals', r: ['ㄋㄨㄥˊ', 'ㄔㄤˇ', 'ㄉㄨㄥˋ', 'ㄨˋ'], topic: 'animal.farm' },
+    { zh: '恐龍', en: 'dinosaurs', r: ['ㄎㄨㄥˇ', 'ㄌㄨㄥˊ'], topic: 'dino.dinosaur' }
   ];
   const setKidText = Dino.kidText({ '請打': ['ㄑㄧㄥˇ', 'ㄉㄚˇ'] });
   const group = t => t.split('.')[0];
@@ -195,12 +205,35 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
     $('eg').innerHTML = Dino.shuffle(yes.slice()).slice(0, N_EG).map(w => `<img alt="" src="${w.image}">`).join('');
     $('dots').innerHTML = Array.from({ length: GOAL }, (_, i) => `<i class="${i < found.length ? 'on' : ''}"></i>`).join('');
   }
-  // 題目示意：伊奇跳一下、題目欄呼吸（還沒有「請打蔬菜」語音）
+  // 出題動畫（導演 2026-10-26）：彈出 Let's hit… → 分類名（英文＋中文注音）→ 示意圖一張張跳出；英文語音先用裝置內建 TTS 暫代；點一下才開始
+  function speak(text) {
+    try {
+      speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text); u.lang = 'en-US'; u.rate = .85; u.pitch = 1.15;
+      speechSynthesis.speak(u);
+    } catch { /* 沒有 TTS 也照樣能玩 */ }
+  }
+  const sayCat = () => speak(`Let's hit... ${cat.en}!`);
   async function announce(my) {
     hatching = false;
+    const L = $('intro'); L.hidden = false;
+    $('introEn').textContent = cat.en[0].toUpperCase() + cat.en.slice(1);
+    setKidText($('introZh'), cat.zh, cat.r);
+    $('introPics').innerHTML = '';
+    const pics = Dino.shuffle(yes.slice()).slice(0, 4).map(w => { const c = card(w); c.style.opacity = 0; $('introPics').append(c); return c; });
+    sayCat();
+    $('lets').animate([{ transform: 'translateY(-40px) scale(.6)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 420, easing: ease.back });
+    L.querySelector('.name').animate([{ transform: 'scale(.3) rotate(-8deg)', opacity: 0 }, { transform: 'scale(.3)', opacity: 0, offset: .45 }, { transform: 'none', opacity: 1 }], { duration: 900, easing: ease.back });
+    pics.forEach((c, i) => c.animate([{ transform: 'translateY(60px) scale(.4)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 460, delay: 1100 + i * 220, easing: ease.back, fill: 'forwards' }));
+    $('introGo').animate([{ opacity: 0 }, { opacity: 0, offset: .7 }, { opacity: 1 }], { duration: 2400 });
+    await new Promise(r => { L.onclick = () => { L.onclick = null; r(); }; });
+    if (my !== gen) return;
+    Dino.sfx('tap', .5);
+    try { speechSynthesis.cancel(); } catch { /* ok */ }
+    L.hidden = true;
     const a = $('ask'); a.classList.add('is-on');
     $('buddy').animate([{ transform: 'none' }, { transform: 'translateY(-14px)' }, { transform: 'none' }], { duration: 420, easing: ease.back });
-    await wait(1400);
+    await wait(900);
     a.classList.remove('is-on');
     if (my !== gen) return;
     hatching = true;
@@ -287,7 +320,7 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
     if (!$('start').hidden) return;
     announce(gen);
   }
-  $('ask').addEventListener('click', () => announce(gen));
+  $('ask').addEventListener('click', sayCat);
   $('start').addEventListener('click', () => { $('start').hidden = true; Dino.sfx('tap', .5); start(false); });
   $('done').querySelector('button').addEventListener('click', () => { $('done').hidden = true; Dino.sfx('tap', .5); start(true); });
   let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => start(false), 300); });
