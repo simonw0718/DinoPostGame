@@ -43,7 +43,7 @@
   const ROUND_NAMES = [null, '第二關', '第三關', '第四關', '最後一關'];
   // 中速約 3 秒落地；每關再乘 RAMP，最後一關約快 1.6 倍
   const SPEED = { slow: .024, mid: .034, fast: .046 };   // 每毫秒下降幾 % 天空高度
-  const GAP = { slow: 1220, mid: 910, fast: 710 };        // 幾毫秒掉一個（導演 2026-10-22：密度再降約 10%）
+  const GAP = { slow: 1520, mid: 1140, fast: 890 };       // 幾毫秒掉一個（導演 2026-10-22 降 10%；2026-10-27 太密閃不掉，再降約 20%）
   const RAMP = [1, 1.12, 1.25, 1.4, 1.6];
   const TARGET_RATE = .38;   // 要接的比例
   const JUNK_RATE = [.18, .28, .3, .32, .32];   // 奇怪物品比例（推車變大，靠它們補難度）
@@ -137,6 +137,10 @@
     const L = { el: n, kind, h, x: Math.random() * (W - LW), y: -LW * 1.1, tilt: (Math.random() - .5) * (junk ? 60 : 30), spin: junk ? (Math.random() - .5) * .12 : 0, sway: Math.random() * Math.PI * 2,
       amp: wiggly ? Math.min(W * .14, 70) : 14, swaySpeed: wiggly ? 300 : 600, sparkIn: 0, done: false };
     if (wiggly) L.x = LW + Math.random() * Math.max(0, W - LW * 3);
+    // 導演 2026-10-27：閃不掉 → 新掉的東西避開上半空中還在的東西，左右至少隔 1.5 個寬，留出閃躲空隙
+    const near = G.letters.filter(o => !o.done && o.y < H * .45);
+    for (let i = 0; i < 8 && near.some(o => Math.abs(o.x - L.x) < LW * 1.5); i++)
+      L.x = wiggly ? LW + Math.random() * Math.max(0, W - LW * 3) : Math.random() * (W - LW);
     sky.append(n); G.letters.push(L);
   }
 
