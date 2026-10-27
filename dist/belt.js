@@ -1,5 +1,5 @@
 // 注音輸送帶（導演 2026-10-21 定版 v8，第四款注音類）：看圖聽中文，從輸送帶依序抓對的注音郵票拼出整個詞。
-// 聲調先幫孩子填好，只抓聲母／韻母；抓錯不扣分，郵票會念出自己的音再滑走。
+// 聲調也要抓（導演 2026-10-27）：拼完聲母／韻母最後抓聲調；一聲沒有格子，輕聲格在頭上、二三四聲格在右邊。抓錯不扣分，郵票會念出自己的音再滑走。
 // 開始畫面選速度（預設中）並放選單 BGM；DINO MODE 跟首頁開關。整個詞沒抓錯＝一次答對（寫 DinoProgress 與最近 10 回合紀錄）。
 (() => {
   'use strict';
@@ -29,8 +29,18 @@
     'ㄍ': 'ㄎㄏ', 'ㄎ': 'ㄍㄏ', 'ㄏ': 'ㄈㄎ', 'ㄐ': 'ㄑㄓ', 'ㄑ': 'ㄐㄒ', 'ㄒ': 'ㄑㄙ', 'ㄓ': 'ㄗㄐ', 'ㄔ': 'ㄘㄑ',
     'ㄕ': 'ㄙㄒ', 'ㄖ': 'ㄌ', 'ㄗ': 'ㄓ', 'ㄘ': 'ㄔ', 'ㄙ': 'ㄕ', 'ㄧ': 'ㄩ', 'ㄨ': 'ㄩㄛ', 'ㄩ': 'ㄧㄨ',
     'ㄚ': 'ㄛ', 'ㄛ': 'ㄚㄜ', 'ㄜ': 'ㄛㄝ', 'ㄝ': 'ㄜ', 'ㄞ': 'ㄟ', 'ㄟ': 'ㄞ', 'ㄠ': 'ㄡ', 'ㄡ': 'ㄠ',
-    'ㄢ': 'ㄤㄣ', 'ㄣ': 'ㄥㄢ', 'ㄤ': 'ㄢ', 'ㄥ': 'ㄣ', 'ㄦ': 'ㄜ'
+    'ㄢ': 'ㄤㄣ', 'ㄣ': 'ㄥㄢ', 'ㄤ': 'ㄢ', 'ㄥ': 'ㄣ', 'ㄦ': 'ㄜ',
+    'ˊ': 'ˇˋ˙', 'ˇ': 'ˊˋ˙', 'ˋ': 'ˊˇ˙', '˙': 'ˊˇˋ'
   };
+  const toneMarks = new Set([...'ˊˇˋ˙']);
+  // 聲調用自畫線條：內海字型的聲調符號各自偏上、高低不一，放進格子會跑位
+  const toneSvg = {
+    'ˊ': '<path d="M5 25 L15 5"/>', 'ˇ': '<path d="M4 8 L10 22 L16 8"/>', 'ˋ': '<path d="M5 5 L15 25"/>',
+    '˙': '<circle cx="10" cy="15" r="5" fill="currentColor" stroke="none"/>'
+  };
+  const symHtml = sym => toneMarks.has(sym)
+    ? `<svg class="zb-tonemark" viewBox="0 0 20 30" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">${toneSvg[sym]}</svg>`
+    : sym;
   const consonants = new Set([...'ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ']);
   const speeds = [{ name: '慢', k: .55 }, { name: '中', k: .9 }, { name: '快', k: 1.3 }];   // 每秒走幾張郵票寬
   const couriers = ['chick_abao', 'feifei', 'iggy', 'xiaokong', 'pairo'];
@@ -107,9 +117,11 @@
         stack.append(box);
         state.slots.push({ sym, el: box, char: wrap });
       });
-      if (tone) {
-        const mark = document.createElement('span'); mark.className = `zb-tone${tone === '˙' ? ' dot' : ''}`; mark.innerHTML = `<i>${tone}</i>`;
-        col.append(mark); if (tone === '˙') wrap.classList.add('has-dot');
+      if (tone) {   // 聲調格：最後抓；輕聲在頭上，二三四聲在右邊
+        const box = document.createElement('button'); box.type = 'button'; box.className = `zb-box zb-tonebox${tone === '˙' ? ' dot' : ''}`;
+        box.setAttribute('aria-label', '聲調格');
+        col.append(box); if (tone === '˙') wrap.classList.add('has-dot');
+        state.slots.push({ sym: tone, el: box, char: wrap });
       }
       wrap.append(hanzi, col);
       return wrap;
@@ -145,9 +157,9 @@
   function spawn(x) {
     const sym = nextSymbol();
     const el = document.createElement('button'); el.type = 'button';
-    el.className = `zb-tile${consonants.has(sym) ? '' : ' vowel'}`;
-    el.setAttribute('aria-label', `注音 ${sym}`);
-    const stamp = document.createElement('span'); stamp.className = 'zb-stamp'; stamp.textContent = sym;
+    el.className = `zb-tile${toneMarks.has(sym) ? ' tone' : consonants.has(sym) ? '' : ' vowel'}`;
+    el.setAttribute('aria-label', toneMarks.has(sym) ? `聲調 ${sym}` : `注音 ${sym}`);
+    const stamp = document.createElement('span'); stamp.className = 'zb-stamp'; stamp.innerHTML = symHtml(sym);
     el.append(stamp);
     const tile = { el, sym, x, taken: false };
     el.addEventListener('pointerdown', event => { event.preventDefault(); grab(tile); });
@@ -195,7 +207,7 @@
     // 郵票飛進格子
     const from = tile.el.getBoundingClientRect(), to = slot.el.getBoundingClientRect();
     tile.el.classList.add('is-taken');
-    const flyer = document.createElement('span'); flyer.className = 'zb-flyer'; flyer.textContent = tile.sym;
+    const flyer = document.createElement('span'); flyer.className = `zb-flyer${toneMarks.has(tile.sym) ? ' tone' : ''}`; flyer.innerHTML = symHtml(tile.sym);
     Object.assign(flyer.style, { left: `${from.left}px`, top: `${from.top}px`, width: `${from.width}px`, height: `${from.height}px`, fontSize: `${from.height * .58}px` });
     document.body.append(flyer);
     const advance = state.target + 1 < state.slots.length;
@@ -207,7 +219,7 @@
       { transform: `translate(${to.left - from.left}px,${to.top - from.top}px) scale(${to.width / from.width})` }
     ], { duration: 420, easing: 'cubic-bezier(.3,.7,.4,1)', fill: 'forwards' }), 600);
     flyer.remove();
-    slot.el.textContent = slot.sym; slot.el.classList.add('is-filled');
+    slot.el.innerHTML = symHtml(slot.sym); slot.el.classList.add('is-filled');
     const charDone = state.slots.filter(s => s.char === slot.char).every(s => s.el.classList.contains('is-filled'));
     if (charDone) { slot.char.classList.add('is-done'); shakeScreen(); }   // 拼好一個字（如ㄉㄤ）：變綠＋畫面震一下（導演 2026-10-22）
     if (!advance) await wordDone();

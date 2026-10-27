@@ -129,3 +129,15 @@ html.dino-mode .zb-shell::before{--bg:url('assets/dino-valley.jpg')}
 .zb-char.has-dot{margin-top:0}
 .zb-char.has-dot .zb-col{margin-top:calc(var(--box) * .55)}
 .zb-tone.dot{top:calc(var(--box) * -.78)}
+/* v9（導演 2026-10-27）：聲調也放上輸送帶讓孩子抓；聲調格位置照標準寫法：一聲沒有格、輕聲格在頭上、二三四聲格在右邊 */
+.zb-box.zb-tonebox{width:calc(var(--box) * .5);height:calc(var(--box) * .7);border-radius:10px;color:#e0473a}
+.zb-box.zb-tonebox.dot{position:absolute;left:calc(var(--box) / 2);top:calc(var(--box) * -.62);transform:translateX(-50%);width:calc(var(--box) * .55);height:calc(var(--box) * .5)}
+.zb-box.zb-tonebox.is-now{animation:none}
+.zb-char .zb-box.zb-tonebox.dot.is-filled{animation:none}
+.zb-char.has-dot .zb-col{margin-top:calc(var(--box) * .6)}
+.zb-tile.tone .zb-stamp,.zb-flyer.tone{color:#e0473a}
+.zb-tile.tone .zb-stamp{box-shadow:inset 0 0 0 5px #fffdf2,inset 0 0 0 8px #e0473a55}
+/* 聲調是 SVG 線條（belt.js toneSvg），大小跟著格子走 */
+.zb-tonemark{display:block;height:62%;width:auto;overflow:visible}
+.zb-box.zb-tonebox.dot .zb-tonemark{height:80%}
+.zb-flyer.tone .zb-tonemark{height:55%}
