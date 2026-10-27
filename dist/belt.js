@@ -151,7 +151,10 @@
     if (state.since >= 3 || (onBelt < 2 && Math.random() < .3)) { state.since = 0; return slot.sym; }
     state.since++;
     const near = [...(confusables[slot.sym] || '')];
-    const pool = Math.random() < .55 && near.length ? near : Object.keys(confusables).filter(s => s !== slot.sym);
+    const others = Object.keys(confusables).filter(s => s !== slot.sym);
+    // 聲調郵票一開始就固定混在帶上（約四張一張），不是輪到聲調才出現（導演 2026-10-27）
+    const pool = Math.random() < .25 ? [...toneMarks].filter(s => s !== slot.sym)
+      : Math.random() < .55 && near.length ? near : others.filter(s => !toneMarks.has(s));
     return Dino.shuffle(pool)[0];
   }
   function spawn(x) {
