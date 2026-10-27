@@ -43,3 +43,18 @@ body[data-page="select"] .game-choices.paged::-webkit-scrollbar{display:none}
 @keyframes pvTapEgg{0%,26%{opacity:0;transform:scale(1.4)}32%{opacity:1;transform:scale(.8)}40%,100%{opacity:0;transform:scale(.8)}}
 .game-choice.is-egg .pv{background-color:#fff0e4}
 @media(prefers-reduced-motion:reduce){.pv-egg .c1{opacity:1;transform:translateY(-8px)}.pv-egg .g1{opacity:0}.new-tag{animation:none}}
+/* 第 8 張：包裹拼拼樂（草綠＋牛皮紙） */
+.game-choice.is-pack{position:relative;border-color:#d8b97e;background:#f8efd9;box-shadow:0 6px 0 #c09a5c;color:#6b4a1c}
+.game-choice.is-pack .game-choice-copy small{color:#9a7a4c}
+.game-choice.is-pack:active{box-shadow:0 2px 0 #c09a5c}
+.pv-pack{background:#cfe9b4}
+.pv-pack .lawn{position:absolute;left:20px;top:16px;display:grid;grid-template-columns:repeat(3,28px);grid-template-rows:repeat(2,28px);gap:2px}
+.pv-pack .lawn i{border-radius:6px;background:#8fcf6e;box-shadow:inset 0 -4px 0 #5ea956}
+.pv-pack .dino{position:absolute;left:18px;top:6px;height:36px;z-index:2;filter:drop-shadow(0 2px 0 #0003)}
+.pv-pack .pbox{position:absolute;width:26px;height:26px;z-index:3;border-radius:5px;background:linear-gradient(#e9c58a,#cf9f5c);box-shadow:inset 0 -4px 0 #b07f3f,0 2px 2px #0003}
+.pv-pack .pbox::after{content:"";position:absolute;left:10px;top:0;bottom:0;width:6px;background:#ffeec1cc}
+.pv-pack .pbox .env{position:absolute;left:4px;top:7px;z-index:1;width:18px;height:12px;border-radius:2px;background:#fffaf0;box-shadow:0 1px 0 #0003}
+.pv-pack .b1{left:51px;top:17px;animation:pvBox1 3.2s infinite}
+.pv-pack .b2{left:81px;top:47px;animation:pvBox2 3.2s infinite}
+@keyframes pvBox1{0%,8%{transform:translate(52px,-30px) rotate(12deg);opacity:0}14%{opacity:1}30%,100%{transform:none;opacity:1}}
+@keyframes pvBox2{0%,30%{transform:translate(30px,40px) rotate(-12deg);opacity:0}36%{opacity:1}52%,100%{transform:none;opacity:1}}

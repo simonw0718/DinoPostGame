@@ -2,9 +2,13 @@
 (() => {
   'use strict';
   Dino.previews['egg-category-sample.html'] = `<div class="pv pv-egg" aria-hidden="true"><i class="nest n1"></i><i class="nest n2"></i><div class="card c1"><img src="assets/rebuilt/emoji-6x8-v1/food-broccoli.png" alt=""></div><div class="card c2"><img src="assets/rebuilt/emoji-6x8-v1/kidapp-sock.png" alt=""></div><i class="egg g1"></i><i class="egg g2"></i><i class="rim n1"></i><i class="rim n2"></i><b class="x">✕</b><i class="tap"></i><span class="seal">OK</span></div>`;
+  // 包裹拼拼樂：草地 3×2 空格，恐龍站一格，兩個紙箱輪流滑進來補滿，最後蓋 OK 章
+  Dino.previews['pack.html'] = `<div class="pv pv-pack" aria-hidden="true"><div class="lawn"><i></i><i></i><i></i><i></i><i></i><i></i></div><img class="dino" src="assets/cast/iggy__hello.webp" alt=""><i class="pbox b1"><i class="env"></i></i><i class="pbox b2"></i><span class="seal">OK</span></div>`;
   const PER = 6;
   document.addEventListener('DOMContentLoaded', () => {
-    Dino.kidText({ '恐龍蛋快打': ['ㄎㄨㄥˇ', 'ㄌㄨㄥˊ', 'ㄉㄢˋ', 'ㄎㄨㄞˋ', 'ㄉㄚˇ'] })(document.querySelector('.is-egg strong'), '恐龍蛋快打');
+    const kid = Dino.kidText({ '恐龍蛋快打': ['ㄎㄨㄥˇ', 'ㄌㄨㄥˊ', 'ㄉㄢˋ', 'ㄎㄨㄞˋ', 'ㄉㄚˇ'], '包裹拼拼樂': ['ㄅㄠ', 'ㄍㄨㄛˇ', 'ㄆㄧㄣ', 'ㄆㄧㄣ', 'ㄌㄜˋ'] });
+    kid(document.querySelector('.is-egg strong'), '恐龍蛋快打');
+    kid(document.querySelector('.is-pack strong'), '包裹拼拼樂');
     const nav = document.querySelector('.game-choices');
     const cards = [...nav.querySelectorAll('.game-choice')];
     if (cards.length <= PER) return;
