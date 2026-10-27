@@ -10,8 +10,11 @@
   const ease = { out: 'cubic-bezier(.16,1,.3,1)', back: 'cubic-bezier(.34,1.56,.64,1)' };
   const GOAL = 5, PENALTY = 2, REC_KEY = 'dinopost-egg-category-records-v1', OPEN_MS = 2600, N_EG = 3;
   const MAX_OPEN = 2, HIT_RATE = .5;
-  const LAYOUT = [[2, .52, .74], [3, .84, 1]];
-  const GAP = { 2: .32, 3: .3 };
+  // 巢分布（導演 2026-10-27 選 egg-layout-sample B 微笑弧線）：[x, y]＝巢底位置比例；越下面越近越大
+  const LAYOUT = {
+    land: [[.12, .58], [.3, .75], [.5, .88], [.7, .75], [.88, .58]],
+    port: [[.27, .5], [.73, .5], [.24, .7], [.76, .7], [.5, .9]],
+  };
   // 分類名單唯一來源：whack_categories.json（yes＝答案、group＝干擾題排除的大類、avoid＝也不拿來當干擾題）
   let CATS = [];
   const setKidText = Dino.kidText({ '請打': ['ㄑㄧㄥˇ', 'ㄉㄚˇ'], '恐龍蛋快打': ['ㄎㄨㄥˇ', 'ㄌㄨㄥˊ', 'ㄉㄢˋ', 'ㄎㄨㄞˋ', 'ㄉㄚˇ'] });
@@ -37,20 +40,20 @@
   function buildField() {
     stage.querySelectorAll('.spot').forEach(n => n.remove());
     const W = stage.clientWidth, H = stage.clientHeight;
-    const s = Math.min(W * .24, H * .27, 190);
+    const pts = LAYOUT[W > H ? 'land' : 'port'], base = Math.min(W * (W > H ? .19 : .27), H * .36, 240);
+    const ys = pts.map(p => p[1]), y0 = Math.min(...ys), y1 = Math.max(...ys);
     spots = [];
-    LAYOUT.forEach(([count, y, k], row) => {
-      for (let i = 0; i < count; i++) {
-        const el = document.createElement('div'); el.className = 'spot';
-        el.style.cssText = `left:${(.5 + (i - (count - 1) / 2) * GAP[count] * k) * 100}%;top:${y * 100}%;--s:${s * k}px;z-index:${10 + row * 10}`;
-        el.innerHTML = `<span class="nest"></span><div class="egg">${eggSvg('bot')}${eggSvg('top')}</div><span class="rim"></span>`;
-        stage.append(el);
-        const egg = el.querySelector('.egg');
-        const o = { el, egg, top: egg.querySelector('.top'), z: 10 + row * 10, state: 'closed', w: null, until: 0 };
-        egg.animate([{ rotate: '0deg' }, { rotate: '1.4deg' }, { rotate: '-1.2deg' }, { rotate: '0deg' }], { duration: rand(2300, 3200), iterations: Infinity, easing: 'ease-in-out' });
-        el.addEventListener('pointerdown', ev => { ev.preventDefault(); tap(o); });
-        spots.push(o);
-      }
+    pts.forEach(([x, y]) => {
+      const z = 10 + Math.round(y * 100), k = .68 + .42 * (y - y0) / (y1 - y0);
+      const el = document.createElement('div'); el.className = 'spot';
+      el.style.cssText = `left:${x * 100}%;top:${y * 100}%;--s:${base * k}px;z-index:${z}`;
+      el.innerHTML = `<span class="nest"></span><div class="egg">${eggSvg('bot')}${eggSvg('top')}</div><span class="rim"></span>`;
+      stage.append(el);
+      const egg = el.querySelector('.egg');
+      const o = { el, egg, top: egg.querySelector('.top'), z, state: 'closed', w: null, until: 0 };
+      egg.animate([{ rotate: '0deg' }, { rotate: '1.4deg' }, { rotate: '-1.2deg' }, { rotate: '0deg' }], { duration: rand(2300, 3200), iterations: Infinity, easing: 'ease-in-out' });
+      el.addEventListener('pointerdown', ev => { ev.preventDefault(); tap(o); });
+      spots.push(o);
     });
   }
 

@@ -26,7 +26,7 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
 .dots i{width:22px;height:22px;border-radius:50%;background:#e6d6b2;box-shadow:inset 0 3px 0 #0001}
 .dots i.on{background:radial-gradient(circle at 35% 30%,#ffe28a,#f6ac34 70%);box-shadow:0 3px 0 #b9792b}
 /* 2.5D 草地：天空、遠山、梯形草坪（近大遠小） */
-.stage{position:relative;flex:1;min-height:0;overflow:hidden;border:5px solid var(--cream);border-radius:28px;box-shadow:0 10px 26px #0a2a1c66;background:#c5e59a url(assets/egg/meadow.webp) 50% 100%/cover no-repeat}
+.stage{position:relative;isolation:isolate;flex:1;min-height:0;overflow:hidden;border:5px solid var(--cream);border-radius:28px;box-shadow:0 10px 26px #0a2a1c66;background:#c5e59a url(assets/egg/meadow.webp) 50% 100%/cover no-repeat}
 .spot{position:absolute;width:var(--s);height:calc(var(--s)*1.3);translate:-50% -100%;touch-action:manipulation;cursor:pointer}
 .spot .nest{position:absolute;left:-28%;right:-28%;bottom:calc(var(--s)*-.25);height:calc(var(--s)*1.24);background:url(assets/egg/nest.webp) center/100% 100% no-repeat;filter:drop-shadow(0 calc(var(--s)*.04) calc(var(--s)*.03) #2a4a1a55)}
 .spot .rim{position:absolute;left:-28%;right:-28%;bottom:calc(var(--s)*-.25);height:calc(var(--s)*1.24);z-index:4;pointer-events:none;background:url(assets/egg/nest_front.webp) center/100% 100% no-repeat}
