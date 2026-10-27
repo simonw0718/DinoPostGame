@@ -55,7 +55,7 @@
   prefs.dino = Dino.dinoMode();
   const savePrefs = () => { try { localStorage.setItem(prefsKey, JSON.stringify({ speed: prefs.speed })); } catch { /* 只影響本頁 */ } };
 
-  const state = { words: [], symbolAudio: {}, round: [], index: 0, slots: [], target: 0, tiles: [], since: 0, misses: 0,
+  const state = { words: [], symbolAudio: {}, round: [], index: 0, slots: [], target: 0, tiles: [], misses: 0,
     playing: false, started: false, courier: null, audio: null, T: 100,
     disabledIds: new Set(), wordMisses: 0, results: [] };
 
@@ -127,6 +127,7 @@
       return wrap;
     });
     $('slots').replaceChildren(...chars);
+    fitQuestion();
     markTarget();
     renderProgress();
     say('抓住對的注音');
@@ -134,7 +135,6 @@
   }
   function markTarget() {
     state.slots.forEach((s, i) => s.el.classList.toggle('is-now', i === state.target));
-    state.since = 9;   // 換新目標：下一張馬上送出它
   }
   function renderProgress() {
     $('progress').replaceChildren(...state.round.map((_, i) => {
@@ -145,20 +145,26 @@
   }
 
   // ---------- 輸送帶 ----------
+  // 出郵票（導演 2026-10-27 改）：帶上一定有「這一格」和「下一格」的郵票，換格時通常已經在帶上，
+  // 不再「輪到才從最右邊出現、點最新那張就對」；其餘三成是這個詞的注音、其他是聲調與長得像的干擾。
   function nextSymbol() {
     const slot = currentSlot(); if (!slot) return Dino.shuffle(Object.keys(confusables))[0];
-    const onBelt = state.tiles.filter(t => t.sym === slot.sym && !t.taken).length;
-    if (state.since >= 3 || (onBelt < 2 && Math.random() < .3)) { state.since = 0; return slot.sym; }
-    state.since++;
-    const near = [...(confusables[slot.sym] || '')];
-    const others = Object.keys(confusables).filter(s => s !== slot.sym);
-    // 聲調郵票一開始就固定混在帶上（約四張一張），不是輪到聲調才出現（導演 2026-10-27）
-    const pool = Math.random() < .25 ? [...toneMarks].filter(s => s !== slot.sym)
-      : Math.random() < .55 && near.length ? near : others.filter(s => !toneMarks.has(s));
-    return Dino.shuffle(pool)[0];
+    const onBelt = sym => state.tiles.filter(t => t.sym === sym && !t.taken && t.x > -state.T / 2).length;
+    if (!onBelt(slot.sym)) return slot.sym;
+    const after = state.slots[state.target + 1]?.sym;   // 下一格先放上帶，換格時已經看得到
+    if (after && !onBelt(after)) return after;
+    const r = Math.random();
+    if (r < .3) {   // 這個詞還沒抓的注音／聲調，帶上越少的越容易出
+      const todo = state.slots.slice(state.target).map(x => x.sym);
+      const least = Math.min(...todo.map(onBelt));
+      return Dino.shuffle(todo.filter(sym => onBelt(sym) === least))[0];
+    }
+    if (r < .45) return Dino.shuffle([...toneMarks].filter(t => t !== slot.sym))[0];   // 聲調干擾
+    const near = [...(confusables[slot.sym] || '')].filter(t => !toneMarks.has(t));
+    const others = Object.keys(confusables).filter(t => t !== slot.sym && !toneMarks.has(t));
+    return Dino.shuffle(r < .8 && near.length ? near : others)[0];
   }
-  function spawn(x) {
-    const sym = nextSymbol();
+  function spawn(x, sym = nextSymbol()) {
     const el = document.createElement('button'); el.type = 'button';
     el.className = `zb-tile${toneMarks.has(sym) ? ' tone' : consonants.has(sym) ? '' : ' vowel'}`;
     el.setAttribute('aria-label', toneMarks.has(sym) ? `聲調 ${sym}` : `注音 ${sym}`);
@@ -169,15 +175,28 @@
     $('beltTrack').append(el); state.tiles.push(tile);
     el.style.transform = `translateX(${x}px)`;
   }
+  // 三個注音的字（如火ㄏㄨㄛˇ）在手機直式會超出題目框：先縮圖片（最小 110px），再縮注音格，直到放得下
+  function fitQuestion() {
+    const q = document.querySelector('.zb-question'), pic = $('picture').parentElement;
+    q.style.removeProperty('--box'); pic.style.removeProperty('width');
+    const fits = () => q.scrollHeight <= q.clientHeight + 1 && q.scrollWidth <= q.clientWidth + 1;
+    let w = parseFloat(getComputedStyle(pic).width);
+    while (!fits() && w > 110) { w -= 8; pic.style.width = `${w}px`; }
+    let box = parseFloat(getComputedStyle(q.querySelector('.zb-box') || q).width) || 76;   // 用算好的寬，不受彈入動畫縮放影響
+    while (!fits() && box > 34) { box -= 3; q.style.setProperty('--box', `${box}px`); }
+  }
   function measure() {
     const belt = $('belt');
     state.T = Math.round(Math.min((belt.clientHeight - 22) * .74, 120));
     belt.style.setProperty('--tile', `${state.T}px`);
   }
-  function fillBelt() {
+  function fillBelt() {   // 新詞換一整條帶：照出郵票規則出好，再打亂順序，第一格不會固定在最前面
     $('beltTrack').replaceChildren(); state.tiles = [];
-    const W = $('belt').clientWidth, step = state.T * 1.5;
-    for (let x = W * .25; x < W; x += step) spawn(x);
+    const W = $('belt').clientWidth, step = state.T * 1.5, xs = [];
+    for (let x = W * .25; x < W; x += step) { xs.push(x); spawn(x); }
+    const syms = Dino.shuffle(state.tiles.map(t => t.sym));
+    $('beltTrack').replaceChildren(); state.tiles = [];
+    xs.forEach((x, i) => spawn(x, syms[i]));
   }
   let last = performance.now(), roll = 0;
   function frame(now) {
@@ -244,7 +263,7 @@
     await wait(500);
     state.index++;
     if (state.index >= state.round.length) return finish();
-    renderWord(); state.playing = true;
+    renderWord(); fillBelt(); state.playing = true;
   }
 
   function saveRound() {
@@ -301,7 +320,7 @@
       $('readyOverlay').hidden = true; state.started = true; state.playing = true; Dino.bgm.stop();
       play(state.round[state.index].zhAudio);
     });
-    let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { measure(); fillBelt(); }, 150); });
+    let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { measure(); fitQuestion(); fillBelt(); }, 150); });
     requestAnimationFrame(frame);
   }
   init();
