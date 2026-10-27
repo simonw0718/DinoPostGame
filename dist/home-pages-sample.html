@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#164d39">
+  <meta name="apple-mobile-web-app-title" content="DINO單字任務">
+  <title>首頁分頁・sample</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="game-homes.css"><link rel="stylesheet" href="home.css"><link rel="stylesheet" href="preview.css"><link rel="stylesheet" href="dino-mode.css"><link rel="stylesheet" href="dino-anim.css"><link rel="stylesheet" href="home-pages-sample.css">
+  <script src="shared.js" defer></script><script src="home-pages-sample.js" defer></script><script src="progress.js" defer></script><script src="stamps-ui.js" defer></script><script src="game-homes.js" defer></script><script src="home-intro.js" defer></script><script src="home-cast.js" defer></script><script src="dino-anim.js" defer></script>
+</head>
+<body data-page="select">
+  <!-- 首頁分頁 sample（導演 2026-10-27）：入口超過 6 個改成左右分頁滑動，一頁最多 6 張；第 7 張恐龍蛋快打；進場後自動往右偷看一下提示還有下一頁 -->
+  <div class="ambient ambient-a" aria-hidden="true"></div><div class="ambient ambient-b" aria-hidden="true"></div>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-seal" aria-hidden="true"><img src="assets/dinopost-workmark-master.jpg" alt=""></span><span class="brand-copy"><strong>恐龍郵局</strong><small>WORD MISSION</small></span></div>
+      <button id="dinoModeSwitch" class="dino-switch" type="button" role="switch" aria-checked="false" aria-label="DINO MODE"><span class="dino-switch-track" aria-hidden="true"><span class="dino-switch-knob">🦖</span></span><span>DINO MODE</span></button>
+      <a class="settings-button" href="match.html?settings=bank" aria-label="開啟題庫管理"><span aria-hidden="true">⚙</span><span>設定</span></a>
+    </header>
+    <section class="screen start-screen game-selector" aria-labelledby="selectTitle">
+      <div class="start-world" aria-hidden="true"></div><div class="start-sun" aria-hidden="true"></div>
+      <div class="start-sticker" aria-hidden="true"><div id="startActorA" class="spotlight-actor"></div></div>
+      <div class="start-feifei cast-stamp" aria-hidden="true"><div id="startActorB" class="spotlight-actor"></div></div>
+      <div class="start-abao cast-stamp" aria-hidden="true"><div id="startActorC" class="spotlight-actor"></div></div>
+      <div class="selector-letter start-letter">
+        <div class="letter-edge" aria-hidden="true"></div><div class="letter-postmark" aria-hidden="true"><img src="assets/dinopost-workmark-master.jpg" alt=""></div>
+        <p class="eyebrow">郵局夥伴送來七封遊戲邀請</p>
+        <h1 id="selectTitle" class="selector-title">選遊戲！</h1>
+        <p class="start-description">選一個遊戲，再挑選任務。</p>
+        <nav class="game-choices" aria-label="選擇遊戲">
+          <a class="game-choice" href="match.html"><span class="game-choice-icon" aria-hidden="true">▧</span><span class="game-choice-copy"><strong data-reading="找圖片">找圖片</strong><small>聽英文，從四張圖片找答案</small></span><span class="game-choice-arrow" aria-hidden="true">➜</span></a>
+          <a class="game-choice" href="mail.html"><span class="game-choice-icon" aria-hidden="true">✉</span><span class="game-choice-copy"><strong data-reading="注音送信">注音送信</strong><small>看注音，把信送到圖片郵箱</small></span><span class="game-choice-arrow" aria-hidden="true">➜</span></a>
+          <a class="game-choice" href="flip.html"><span class="game-choice-icon" aria-hidden="true">🂠</span><span class="game-choice-copy"><strong data-reading="郵差翻翻樂">郵差翻翻樂</strong><small>翻信封，聲音配圖片</small></span><span class="game-choice-arrow" aria-hidden="true">➜</span></a>
+          <a class="game-choice" href="belt.html"><span class="game-choice-icon" aria-hidden="true">ㄅ</span><span class="game-choice-copy"><strong data-reading="注音輸送帶">注音輸送帶</strong><small>聽中文，抓注音拼出來</small></span><span class="game-choice-arrow" aria-hidden="true">➜</span></a>
+          <a class="game-choice" href="path.html"><span class="game-choice-icon" aria-hidden="true">⋯</span><span class="game-choice-copy"><strong data-reading="郵差走小路">郵差走小路</strong><small>照著星星，把郵差帶到郵筒</small></span><span class="game-choice-arrow" aria-hidden="true">➜</span></a>
+          <a class="game-choice" href="catch.html"><span class="game-choice-icon" aria-hidden="true">▾</span><span class="game-choice-copy"><strong data-reading="接信大郵袋">接信大郵袋</strong><small>移動推車，接住對的東西</small></span><span class="game-choice-arrow" aria-hidden="true">➜</span></a>
+          <a class="game-choice is-egg" href="egg-category-sample.html"><span class="game-choice-icon" aria-hidden="true">🥚</span><span class="game-choice-copy"><strong data-reading="恐龍蛋快打">恐龍蛋快打</strong><small>看分類，打對的圖卡</small></span><span class="game-choice-arrow" aria-hidden="true">➜</span><b class="new-tag" aria-hidden="true">NEW</b></a>
+        </nav>
+      </div><div class="start-ground" aria-hidden="true"></div>
+    </section>
+  </main>
+</body>
+</html>
