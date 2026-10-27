@@ -87,3 +87,38 @@
 .pv-catch .car{position:absolute;left:0;bottom:0;width:50px}
 @keyframes pvFall{0%{transform:translateY(0);opacity:1}55%{transform:translateY(66px);opacity:1}62%,100%{transform:translateY(70px);opacity:0}}
 @keyframes pvJunk{0%{transform:translateY(0) rotate(0)}70%,100%{transform:translateY(120px) rotate(160deg)}}
+
+/* 預覽：草地上一顆蛋搖一搖 → 蹦出蔬菜卡、殼碎、蓋 OK 章；旁邊干擾蛋孵出襪子打叉 */
+.pv-egg{background:url(assets/egg/meadow.webp) 50% 100%/cover}
+.pv-egg .nest{position:absolute;bottom:6px;width:54px;height:30px;background:url(assets/egg/nest.webp) center/100% 100% no-repeat}
+.pv-egg .rim{position:absolute;bottom:6px;width:54px;height:30px;z-index:3;background:url(assets/egg/nest_front.webp) center/100% 100% no-repeat}
+.pv-egg .n1{left:6px}.pv-egg .n2{left:64px}
+.pv-egg .egg{position:absolute;bottom:14px;width:30px;height:38px;z-index:2;background:url(assets/egg/egg.webp) center bottom/contain no-repeat;transform-origin:50% 95%}
+.pv-egg .g1{left:18px;animation:pvEggHatch 3.2s infinite}
+.pv-egg .g2{left:76px;animation:pvEggWobble 3.2s infinite}
+.pv-egg .card{position:absolute;bottom:26px;width:34px;height:34px;z-index:1;display:grid;place-items:center;border:2px solid #ead9b2;border-radius:8px;background:#fffef8;box-shadow:0 2px 0 #c9ad78;opacity:0}
+.pv-egg .card img{width:84%;height:84%;object-fit:contain}
+.pv-egg .c1{left:16px;animation:pvCardUp 3.2s infinite}
+.pv-egg .c2{left:74px;animation:pvCardPeek 3.2s infinite}
+.pv-egg .x{position:absolute;left:84px;bottom:46px;z-index:4;color:#d32f2f;font:1000 18px/1 "Naikai",ui-rounded,system-ui,sans-serif;opacity:0;animation:pvX 3.2s infinite}
+.pv-egg .tap{position:absolute;left:30px;top:34px;z-index:5;width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.85);box-shadow:0 0 0 3px rgba(232,87,74,.6);opacity:0;animation:pvTapEgg 3.2s infinite}
+@keyframes pvEggHatch{0%,8%{transform:none;opacity:1}12%{transform:rotate(-12deg)}16%{transform:rotate(12deg)}20%{transform:rotate(-8deg)}24%{transform:translateY(-4px) scale(1.08,.9);opacity:1}30%,100%{transform:translateY(6px) scale(.4);opacity:0}}
+@keyframes pvCardUp{0%,24%{opacity:0;transform:translateY(16px) scale(.5)}34%{opacity:1;transform:translateY(-12px) scale(1.1)}40%,62%{opacity:1;transform:translateY(-8px) scale(1)}70%,100%{opacity:0;transform:translateY(-36px) scale(.5)}}
+@keyframes pvEggWobble{0%,40%{transform:none}44%{transform:rotate(-10deg)}48%{transform:rotate(10deg)}52%{transform:none}}
+@keyframes pvCardPeek{0%,52%{opacity:0;transform:translateY(16px) scale(.5)}60%,80%{opacity:1;transform:translateY(-8px) scale(1)}88%,100%{opacity:0;transform:translateY(16px) scale(.5)}}
+@keyframes pvX{0%,64%{opacity:0;transform:scale(.4)}70%,82%{opacity:1;transform:scale(1.2)}90%,100%{opacity:0}}
+@keyframes pvTapEgg{0%,26%{opacity:0;transform:scale(1.4)}32%{opacity:1;transform:scale(.8)}40%,100%{opacity:0;transform:scale(.8)}}
+.game-choice.is-egg .pv{background-color:#fff0e4}
+@media(prefers-reduced-motion:reduce){.pv-egg .c1{opacity:1;transform:translateY(-8px)}.pv-egg .g1{opacity:0}.new-tag{animation:none}}
+/* 包裹拼拼樂預覽：草地 3×2 空格，恐龍站一格，兩個紙箱輪流滑進來補滿 */
+.pv-pack{background:#cfe9b4}
+.pv-pack .lawn{position:absolute;left:20px;top:16px;display:grid;grid-template-columns:repeat(3,28px);grid-template-rows:repeat(2,28px);gap:2px}
+.pv-pack .lawn i{border-radius:6px;background:#8fcf6e;box-shadow:inset 0 -4px 0 #5ea956}
+.pv-pack .dino{position:absolute;left:18px;top:6px;height:36px;z-index:2;filter:drop-shadow(0 2px 0 #0003)}
+.pv-pack .pbox{position:absolute;width:26px;height:26px;z-index:3;border-radius:5px;background:linear-gradient(#e9c58a,#cf9f5c);box-shadow:inset 0 -4px 0 #b07f3f,0 2px 2px #0003}
+.pv-pack .pbox::after{content:"";position:absolute;left:10px;top:0;bottom:0;width:6px;background:#ffeec1cc}
+.pv-pack .pbox .env{position:absolute;left:4px;top:7px;z-index:1;width:18px;height:12px;border-radius:2px;background:#fffaf0;box-shadow:0 1px 0 #0003}
+.pv-pack .b1{left:51px;top:17px;animation:pvBox1 3.2s infinite}
+.pv-pack .b2{left:81px;top:47px;animation:pvBox2 3.2s infinite}
+@keyframes pvBox1{0%,8%{transform:translate(52px,-30px) rotate(12deg);opacity:0}14%{opacity:1}30%,100%{transform:none;opacity:1}}
+@keyframes pvBox2{0%,30%{transform:translate(30px,40px) rotate(-12deg);opacity:0}36%{opacity:1}52%,100%{transform:none;opacity:1}}

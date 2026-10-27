@@ -8,7 +8,7 @@
   <title>選遊戲・恐龍郵局</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="game-homes.css"><link rel="stylesheet" href="home.css"><link rel="stylesheet" href="preview.css"><link rel="stylesheet" href="dino-mode.css"><link rel="stylesheet" href="dino-anim.css">
-  <script src="shared.js" defer></script><script src="progress.js" defer></script><script src="stamps-ui.js" defer></script><script src="game-homes.js" defer></script><script src="home-intro.js" defer></script><script src="home-cast.js" defer></script><script src="dino-anim.js" defer></script>
+  <script src="shared.js" defer></script><script src="progress.js" defer></script><script src="stamps-ui.js" defer></script><script src="game-homes.js" defer></script><script src="home-pages.js" defer></script><script src="home-intro.js" defer></script><script src="home-cast.js" defer></script><script src="dino-anim.js" defer></script>
 </head>
 <body data-page="select">
   <div class="ambient ambient-a" aria-hidden="true"></div><div class="ambient ambient-b" aria-hidden="true"></div>
@@ -25,7 +25,7 @@
       <div class="start-abao cast-stamp" aria-hidden="true"><div id="startActorC" class="spotlight-actor"></div></div>
       <div class="selector-letter start-letter">
         <div class="letter-edge" aria-hidden="true"></div><div class="letter-postmark" aria-hidden="true"><img src="assets/dinopost-workmark-master.jpg" alt=""></div>
-        <p class="eyebrow">郵局夥伴送來六封遊戲邀請</p>
+        <p class="eyebrow">郵局夥伴送來八封遊戲邀請</p>
         <h1 id="selectTitle" class="selector-title">選遊戲！</h1>
         <p class="start-description">選一個遊戲，再挑選任務。</p>
         <nav class="game-choices" aria-label="選擇遊戲">
@@ -35,6 +35,8 @@
           <a class="game-choice" href="belt.html"><span class="game-choice-icon" aria-hidden="true">ㄅ</span><span class="game-choice-copy"><strong data-reading="注音輸送帶">注音輸送帶</strong><small>聽中文，抓注音拼出來</small></span><span class="game-choice-arrow" aria-hidden="true">➜</span></a>
           <a class="game-choice" href="path.html"><span class="game-choice-icon" aria-hidden="true">⋯</span><span class="game-choice-copy"><strong data-reading="郵差走小路">郵差走小路</strong><small>照著星星，把郵差帶到郵筒</small></span><span class="game-choice-arrow" aria-hidden="true">➜</span></a>
           <a class="game-choice" href="catch.html"><span class="game-choice-icon" aria-hidden="true">▾</span><span class="game-choice-copy"><strong data-reading="接信大郵袋">接信大郵袋</strong><small>移動推車，接住對的東西</small></span><span class="game-choice-arrow" aria-hidden="true">➜</span></a>
+          <a class="game-choice is-egg" href="mole.html"><span class="game-choice-icon" aria-hidden="true">🥚</span><span class="game-choice-copy"><strong data-reading="恐龍蛋快打">恐龍蛋快打</strong><small>看分類，打對的圖卡</small></span><span class="game-choice-arrow" aria-hidden="true">➜</span><b class="new-tag" aria-hidden="true">NEW</b></a>
+          <a class="game-choice is-pack" href="pack.html"><span class="game-choice-icon" aria-hidden="true">📦</span><span class="game-choice-copy"><strong data-reading="包裹拼拼樂">包裹拼拼樂</strong><small>把包裹塞滿空地</small></span><span class="game-choice-arrow" aria-hidden="true">➜</span><b class="new-tag" aria-hidden="true">NEW</b></a>
         </nav>
       </div><div class="start-ground" aria-hidden="true"></div>
     </section>

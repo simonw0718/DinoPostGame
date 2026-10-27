@@ -73,7 +73,35 @@
   body[data-page="select"] .game-choice.has-preview .game-choice-copy strong.kid-text{justify-content:center}
   body[data-page="select"] .game-choice-copy small{display:none}
 }
-@media(max-width:680px){body[data-page="select"] .start-description{display:none}body[data-page="select"] .game-choice-copy strong.kid-text{flex-wrap:nowrap;font-size:clamp(14px,4.3vw,20px)}
+@media(max-width:680px){body[data-page="select"] .start-description{display:none}body[data-page="select"] .game-choice-copy strong.kid-text{flex-wrap:nowrap;font-size:clamp(14px,4.3vw,20px)}}
 /* 手機：遊戲名依卡片寬度縮放，五字＋注音也不超出框 */
 @media(max-width:680px){.game-choice.has-preview{container-type:inline-size}body[data-page="select"] .game-choice.has-preview .game-choice-copy strong.kid-text{font-size:min(20px,4.3vw,11cqi)}}
 @media(max-width:680px) and (max-height:700px){.pv{transform:scale(.72);margin:-12px -15px}body[data-page="select"] .selector-letter .eyebrow{display:none}}
+
+/* 首頁分頁（導演 2026-10-27）：入口超過 6 個時（home-pages.js）.game-choices 變成左右滑的捲軸，每頁 .choice-page 最多 6 張（橫式 3×2、直式 2×3） */
+body[data-page="select"] .game-choices.paged{display:flex;gap:0;overflow-x:auto;overflow-y:visible;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;overscroll-behavior-x:contain;margin:-8px -8px 0;padding:12px 0 10px;-webkit-overflow-scrolling:touch}
+body[data-page="select"] .game-choices.paged::-webkit-scrollbar{display:none}
+.choice-page{flex:0 0 100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:14px;padding:0 8px;scroll-snap-align:start;align-content:start}
+@media(orientation:portrait),(max-width:680px){.choice-page{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:9px}}
+@media(min-width:681px) and (orientation:landscape) and (max-height:760px){.choice-page{gap:10px}}
+/* 分頁點＋左右箭頭 */
+.pager{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:2px}
+.pager button{display:grid;place-items:center;width:44px;height:44px;padding:0;border:3px solid #bbd6b8;border-radius:50%;background:#f3f8e8;color:#195d42;font:1000 22px/1 "Naikai",ui-rounded,system-ui,sans-serif;box-shadow:0 4px 0 #9fc7a2;cursor:pointer;touch-action:manipulation;transition:opacity .2s,transform .2s}
+.pager button:disabled{opacity:.25;box-shadow:none;cursor:default}
+.pager button:not(:disabled):active{transform:translateY(3px);box-shadow:0 1px 0 #9fc7a2}
+.pager .dots{display:flex;gap:9px}
+.pager .dots i{position:relative;width:13px;height:13px;border-radius:50%;background:#d9e6d2;transition:background .25s,width .25s}
+.pager .dots i.on{width:30px;border-radius:8px;background:#2f9d5a}
+.pager .dots i.has-new::after{content:"";position:absolute;right:-4px;top:-4px;width:8px;height:8px;border-radius:50%;background:#e8574a;box-shadow:0 0 0 2px #fffdf6}
+.pager button.hint{animation:pagerNudge .7s ease-in-out 3}
+@keyframes pagerNudge{50%{transform:translateX(6px) scale(1.12)}}
+/* 第 7 張：恐龍蛋快打（蜜桃色）＋NEW */
+.game-choice.is-egg{position:relative;border-color:#f0b08a;background:#fff0e4;box-shadow:0 6px 0 #d9926a;color:#8a4420}
+.game-choice.is-egg .game-choice-copy small{color:#a8714f}
+.game-choice.is-egg:active{box-shadow:0 2px 0 #d9926a}
+.new-tag{position:absolute;right:-5px;top:-9px;z-index:2;padding:3px 9px;border-radius:999px;background:#e8574a;color:#fff;font:1000 13px/1.2 "Naikai",ui-rounded,system-ui,sans-serif;letter-spacing:.04em;box-shadow:0 3px 0 #9b3229;transform:rotate(8deg);animation:newPop 1.6s ease-in-out infinite}
+@keyframes newPop{50%{transform:rotate(8deg) scale(1.12)}}
+/* 第 8 張：包裹拼拼樂（草綠＋牛皮紙） */
+.game-choice.is-pack{position:relative;border-color:#d8b97e;background:#f8efd9;box-shadow:0 6px 0 #c09a5c;color:#6b4a1c}
+.game-choice.is-pack .game-choice-copy small{color:#9a7a4c}
+.game-choice.is-pack:active{box-shadow:0 2px 0 #c09a5c}
