@@ -277,17 +277,17 @@
   }
 
   function onDown(e) {
-    if (S.done || S.back) return;   // 退回動畫中不能抓，否則跟退回互搶會卡住
+    if (S.done || S.back || S.drag) return;   // 退回動畫中不能抓，否則跟退回互搶會卡住；拖曳中別的手指／手掌不算
     clearTimeout(S.idleT);
     const p = toSvg(e), [x, y] = S.samples[S.i];
     if (dist(p, [x, y - 40]) > 130) { say(prompt()); return; }
-    S.drag = true; S.lastP = p; S.grab = [p[0] - x, p[1] - y]; S.el.courier.classList.add('is-drag'); $('stage').classList.add('is-dragging'); $('svg').setPointerCapture(e.pointerId);
+    S.drag = true; S.pid = e.pointerId; S.lastP = p; S.grab = [p[0] - x, p[1] - y]; S.el.courier.classList.add('is-drag'); $('stage').classList.add('is-dragging'); $('svg').setPointerCapture(e.pointerId);
     stopHint(); Dino.sfx('tap', .4);
   }
   // 手指移動：一個畫面只算一次（手機一次送很多點時不會塞車），跳很遠的一下切成小段逐段走，中間經過路外也算得到
   let rawNext = null, rawRaf = 0;
   function onMove(e) {
-    if (!S.drag || S.done) return;
+    if (!S.drag || S.done || e.pointerId !== S.pid) return;   // 只跟抓郵差的那根手指：另一指碰到前面的路不會讓郵差跳過去、路變綠
     rawNext = toSvg(e);
     if (!rawRaf) rawRaf = requestAnimationFrame(flushMove);
   }
@@ -352,7 +352,8 @@
     };
     tick();
   }
-  function onUp() {
+  function onUp(e) {
+    if (S.drag && e.pointerId !== S.pid) return;
     if (rawRaf) { cancelAnimationFrame(rawRaf); flushMove(); }
     $('stage').classList.remove('is-dragging');
     if (S.drag && !S.done && nearEnd()) return magnet();
