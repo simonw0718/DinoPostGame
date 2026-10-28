@@ -281,7 +281,7 @@
     clearTimeout(S.idleT);
     const p = toSvg(e), [x, y] = S.samples[S.i];
     if (dist(p, [x, y - 40]) > 130) { say(prompt()); return; }
-    S.drag = true; S.pid = e.pointerId; S.lastP = p; S.grab = [p[0] - x, p[1] - y]; S.el.courier.classList.add('is-drag'); $('stage').classList.add('is-dragging'); $('svg').setPointerCapture(e.pointerId);
+    S.drag = true; S.pid = e.pointerId; S.lastP = [x, y]; S.grab = [p[0] - x, p[1] - y];   // lastP 用郵差腳下（扣掉抓的位置），第一步才不會從手指按的頭頂掃過來被當成走出路 S.el.courier.classList.add('is-drag'); $('stage').classList.add('is-dragging'); $('svg').setPointerCapture(e.pointerId);
     stopHint(); Dino.sfx('tap', .4);
   }
   // 手指移動：一個畫面只算一次（手機一次送很多點時不會塞車），跳很遠的一下切成小段逐段走，中間經過路外也算得到
