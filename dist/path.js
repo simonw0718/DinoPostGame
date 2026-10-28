@@ -298,20 +298,21 @@
     for (let k = 1; k <= n && S.drag && !S.done; k++) step([from[0] + (p[0] - from[0]) * k / n, from[1] + (p[1] - from[1]) * k / n]);
     if (S.drag || S.done) place();
   }
-  // 沿著路往手指滑：只要下一點離手指更近（容許一點抖動）就繼續走，停在最近的地方
-  // 切彎落後時一路追得回來；U 型彎、尖角對面的路要先「離手指更遠」才到得了，所以跳不過去，下一段路不會突然變綠
+  // 往手指找：只看前方（或後方）一個路寬弧長內離手指最近的點（導演 2026-10-28）
+  // 不要求一路越走越近：手指沿內側切過轉角、尖角時還在路上，郵差跟得過去；U 型彎、尖角對面的路超過一個路寬，跳不過去
   function slide(p, dir) {
-    const N = S.samples.length; let k = S.i, best = S.i, bd = dist(p, S.samples[S.i]);
-    while (k + dir >= 0 && k + dir < N && Math.abs(k - S.i) < 120) {
-      k += dir; const dd = dist(p, S.samples[k]);
-      if (dd < bd) { bd = dd; best = k; } else if (dd > bd + 10) break;
+    const N = S.samples.length, W = Math.ceil(MODES[mode].road / STEP);
+    let best = S.i, bd = dist(p, S.samples[S.i]);
+    for (let j = 1; j <= W; j++) {
+      const k = S.i + dir * j; if (k < 0 || k >= N) break;
+      const dd = dist(p, S.samples[k]); if (dd < bd - .5) { bd = dd; best = k; }
     }
     return [best, bd];
   }
   function step(p) {
     const M = MODES[mode];
     let [best, bd] = slide(p, 1);
-    if (M.fence && best === S.i) [best, bd] = slide(p, -1);   // 新手：往前沒有更近就試著往回走
+    if (M.fence && best === S.i && bd > M.road / 2) [best, bd] = slide(p, -1);   // 新手：手指不在前方路上才往回走（尖角兩邊路很近時，不會被拉回前一段而卡住）
     if (M.fence && bd > M.road / 2) {   // 新手：郵差被框在路裡，最多走到路邊
       const c = S.samples[best], k = (M.road / 2) / bd; p[0] = c[0] + (p[0] - c[0]) * k; p[1] = c[1] + (p[1] - c[1]) * k; bd = M.road / 2;
     }
