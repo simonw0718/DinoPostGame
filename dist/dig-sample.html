@@ -57,15 +57,37 @@
     { ch: 'ㄏ', strokes: [[[26, 24], [78, 24]], [[33, 24], [32, 56], [27, 72], [17, 84]]] },
   ];
   const VOICE = { 'ㄇ': 'assets/audio/zhuyin/zy-03.mp3', 'ㄈ': 'assets/audio/zhuyin/zy-04.mp3', 'ㄏ': 'assets/audio/zhuyin/zy-11.mp3' };
-  const K = .6;          // 頂面壓扁比例（微 2.5D 的俯角）
+  const K = .86;         // 頂面壓扁比例（微 2.5D：只微斜，字形不變形；導演 10-29 嫌 .6 太斜）
   const W = 13;          // 溝寬（地面單位）
-  const DEPTH = 6;       // 溝底往下錯開，露出遠側土牆
-  const TOL = 12;        // 手指離筆畫多遠還算在挖
+  const DEPTH = 4.5;      // 溝底往下錯開，露出遠側土牆
+  const TOL = W / 2 + 3;  // 手指在空心字框內（加一點寬容）就算在挖
   const STEP = 9;        // 一次最多往前挖多少（手指甩太快時鏟子追上去，不跳格）
-  const START_R = 13;    // 按下時離起點多近才挖得下去
+  const START_R = W / 2 + 4;  // 按下時離挖到的地方多近才挖得下去
   const NS = 'http://www.w3.org/2000/svg';
   const $ = id => document.getElementById(id);
   const svg = $('svg'), bubble = $('bubble'), stage = $('stage');
+  // 聲音（導演 10-29：不要滑鼠點擊聲）：本機合成，挖土＝短促沙沙土聲、硬土＝低悶「咚」
+  let ac = null, noise = null;
+  function audio() {
+    if (!ac) { try { ac = new (window.AudioContext || window.webkitAudioContext)(); } catch { return null; } const n = ac.sampleRate * .5; noise = ac.createBuffer(1, n, ac.sampleRate); const ch = noise.getChannelData(0); let b = 0; for (let i = 0; i < n; i++) { b = (b + .045 * (Math.random() * 2 - 1)) / 1.045; ch[i] = b * 3.2; } }
+    if (ac.state !== 'running') ac.resume().catch(() => {});
+    return ac;
+  }
+  let lastCrunch = 0;
+  function crunch() {
+    const c = audio(), now = performance.now(); if (!c || now - lastCrunch < 75) return; lastCrunch = now;
+    const src = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain(), t = c.currentTime;
+    src.buffer = noise; f.type = 'bandpass'; f.frequency.value = 700 + Math.random() * 900; f.Q.value = .9;
+    g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.55, t + .012); g.gain.exponentialRampToValueAtTime(.001, t + .11 + Math.random() * .05);
+    src.connect(f).connect(g).connect(c.destination); src.start(t, Math.random() * .3, .2);
+  }
+  function thud() {
+    const c = audio(); if (!c) return;
+    const o = c.createOscillator(), g = c.createGain(), t = c.currentTime;
+    o.type = 'sine'; o.frequency.setValueAtTime(150, t); o.frequency.exponentialRampToValueAtTime(70, t + .15);
+    g.gain.setValueAtTime(.5, t); g.gain.exponentialRampToValueAtTime(.001, t + .2);
+    o.connect(g).connect(c.destination); o.start(t); o.stop(t + .22);
+  }
   let level = (() => { try { return localStorage.getItem('dinopost-dig-level') || 'novice'; } catch { return 'novice'; } })();
   let idx = 0, sym, strokeI, dug, wobble, digging = false, done = false, layers = {}, S = 1, ox = 0, oy = 0, slabT = 0;
 
@@ -163,13 +185,22 @@
     const g = layers.guide, f = layers.flag; g.textContent = ''; f.textContent = '';
     if (done) return;
     const cur = sym.strokes[strokeI];
-    if (level === 'novice') sym.strokes.forEach((pts, i) => { if (i > strokeI) el('path', { d: d(pts), fill: 'none', stroke: '#a86d3f', 'stroke-width': W * .7, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .35 }, g); });
+    // 空心字框（導演 10-29：像走小路一樣是封閉空心字）：先畫全部外框、再畫全部內面，交接處自然連成一個字
     if (level !== 'hard') {
-      el('path', { d: d(cur), fill: 'none', stroke: '#fff7e6', 'stroke-width': 2.2, 'stroke-dasharray': '3 4', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .9 }, g);
-      if (level === 'novice') {   // 箭頭：每段中間放一個，標出往哪挖
-        for (let i = 1; i < cur.length; i++) {
-          const a = cur[i - 1], b = cur[i], m = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2], ang = Math.atan2(b[1] - a[1], b[0] - a[0]) * 180 / Math.PI;
-          if (segLen(a, b) > 12) el('path', { d: 'M-3 -3L2 0L-3 3', fill: 'none', stroke: '#fff7e6', 'stroke-width': 1.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', transform: `translate(${m[0]} ${m[1]}) rotate(${ang})` }, g);
+      const lc = { fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' };
+      sym.strokes.forEach(pts => el('path', { d: d(pts), stroke: '#fff6e0', 'stroke-width': W + 2.6, ...lc }, g));
+      sym.strokes.forEach(pts => el('path', { d: d(pts), stroke: '#e6b981', 'stroke-width': W, ...lc }, g));
+    }
+    if (level === 'novice') {   // 箭頭＋筆畫編號：只標正在挖的這一筆
+      sym.strokes.forEach((pts, i) => { if (i <= strokeI) return;   // 還沒輪到的筆畫：起點標小號碼
+        const [x, y] = pts[0], dx = pts[1][0] - x, dy = pts[1][1] - y, L = Math.hypot(dx, dy) || 1, q = [x + dx / L * 5, y + dy / L * 5];
+        const n = el('g', { transform: `translate(${q[0]} ${q[1]}) scale(1 ${1 / K})` }, g);
+        el('circle', { r: 3.4, fill: '#b5763f' }, n); const t = el('text', { y: 1.6, 'font-size': 4.6, 'text-anchor': 'middle', fill: '#fff' }, n); t.textContent = i + 1; });
+      for (let i = 1; i < cur.length; i++) {
+        const a = cur[i - 1], b = cur[i], ang = Math.atan2(b[1] - a[1], b[0] - a[0]) * 180 / Math.PI, L = segLen(a, b);
+        for (let k = 1, n = Math.max(1, Math.floor(L / 16)); k <= n; k++) {
+          const r = k / (n + 1), m = [a[0] + (b[0] - a[0]) * r, a[1] + (b[1] - a[1]) * r];
+          el('path', { d: 'M-2.6 -3.2L1.8 0L-2.6 3.2', fill: 'none', stroke: '#b5763f', 'stroke-width': 1.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', transform: `translate(${m[0]} ${m[1]}) rotate(${ang})` }, g);
         }
       }
     }
@@ -213,33 +244,34 @@
   let hardCool = 0;
   function hardSoil(sx, sy, msg) {
     const now = performance.now(); if (now - hardCool < 450) return; hardCool = now;
-    Dino.sfx('tap', .5); wobble++;
+    thud(); wobble++;
     burst(sx, sy, 3, '#9aa4aa');
     const b = layers.shovel.querySelector('#shovelBody'); b.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-10px)' }, { transform: 'translateY(0)' }], { duration: 220 });
     say(msg);
   }
 
-  let pid = null;
+  let pid = null, paused = false;
   svg.addEventListener('pointerdown', ev => {
     if (done || pid !== null) return;
     const { sx, sy, u } = toGround(ev), cur = sym.strokes[strokeI];
-    const p = pointAt(cur, dug);
     shovelAt(sx, sy, false);
-    if (Math.hypot(u[0] - p[0], u[1] - p[1]) > START_R) { hardSoil(sx, sy, dug ? '這裡土好硬！從小旗子接著挖' : '這裡土好硬！從小旗子開始挖'); return; }
-    pid = ev.pointerId; try { svg.setPointerCapture(pid); } catch { /* ok */ } digging = true;
-    Dino.sfx('swoosh', .4); say('挖呀挖～');
+    const [, near] = project(partial(cur, Math.min(strokeLen(cur), dug + 6)), u);   // 按在已挖的溝裡或小旗子附近都可以接著挖
+    if (near > START_R) { hardSoil(sx, sy, dug ? '這裡土好硬！從小旗子接著挖' : '這裡土好硬！從小旗子開始挖'); return; }
+    paused = false; pid = ev.pointerId; try { svg.setPointerCapture(pid); } catch { /* ok */ } digging = true;
+    crunch(); say('挖呀挖～');
   });
   svg.addEventListener('pointermove', ev => {
     if (ev.pointerId !== pid || !digging) return;
     const { sx, sy, u } = toGround(ev), cur = sym.strokes[strokeI], L = strokeLen(cur);
     // 只看前面一小段（不會跳到同一筆後面、也不會往回挖）
     const ahead = partial(cur, Math.min(L, dug + 28)), [s, dist] = project(ahead, u);
-    if (dist > TOL) { shovelAt(sx, sy, false); hardSoil(sx, sy, '鏟子離開溝了，回到小旗子繼續挖'); digging = false; drawGuide(); return; }
+    if (dist > TOL || s < dug - START_R) { shovelAt(sx, sy, false); if (!paused) { paused = true; say('回到溝裡，接著挖！'); } return; }
+    if (paused) { paused = false; say('挖呀挖～'); }
     shovelAt(sx, sy, true);
     if (s > dug) {
       const next = Math.min(L, dug + STEP, s);
       for (let t = dug; t < next; t += 1.5) addMound(cur, t);
-      dug = next;
+      dug = next; crunch();
       if (Math.random() < .35) { const q = pointAt(cur, dug); const sp = layers.g.getCTM(); burst(sp.a * q[0] + sp.e, sp.d * q[1] + sp.f); }
       redraw();
       if (dug >= L - .5) finishStroke();
@@ -297,7 +329,7 @@
   function load() {
     sym = SYMBOLS[idx]; strokeI = 0; dug = 0; done = false; lastMound = 0;
     build();
-    say(level === 'hard' ? '從小旗子開始，照筆順挖！' : '從小旗子開始，沿著虛線挖！');
+    say(level === 'hard' ? '從小旗子開始，照筆順挖！' : '從小旗子開始，在字框裡照箭頭挖！');
   }
   function start() {
     idx = 0; wobble = 0;
