@@ -111,3 +111,7 @@
   Cache-Control: no-cache
 /egg-sample.html
   Cache-Control: no-cache
+/dig-sample
+  Cache-Control: no-cache
+/dig-sample.html
+  Cache-Control: no-cache

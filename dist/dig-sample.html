@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#7cc4e8">
+  <title>挖化石 sample・恐龍郵局</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="fonts.css">
+  <script src="shared.js"></script>
+  <style>
+    /* 挖化石 sample（導演 2026-10-29）：照筆順挖土才挖得下去；微 2.5D 土塊（頂面壓扁＋前側土層＋溝內遠牆） */
+    :root { --sky: #9fd8f2; --sky2: #e6f6fc; --ink: #4a2f1c; --soil: #c98f55; --soil-dark: #8a5530; --wall: #a8693a; --floor: #6e4024; --bone: #f6ead2; --bone-line: #b99a6c; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; overflow: hidden; background: linear-gradient(var(--sky), var(--sky2) 70%); font-family: "Naikai", system-ui, sans-serif; color: var(--ink); -webkit-user-select: none; user-select: none; touch-action: none; }
+    .shell { position: fixed; inset: 0; display: flex; flex-direction: column; padding: env(safe-area-inset-top) 12px env(safe-area-inset-bottom); }
+    .top { display: flex; align-items: center; gap: 10px; padding: 10px 4px 6px; }
+    .top h1 { margin: 0; font-size: clamp(22px, 4vw, 32px); }
+    .book { margin-left: auto; display: flex; gap: 8px; }
+    .book span { width: clamp(40px, 7vw, 56px); aspect-ratio: 1; border-radius: 12px; display: grid; place-items: center; font-size: clamp(24px, 4.5vw, 36px); background: #fff8; border: 3px dashed #8a553066; color: transparent; transition: .3s; }
+    .book span.got { background: var(--bone); border: 3px solid var(--bone-line); color: var(--ink); transform: scale(1.08); }
+    .levels { display: flex; gap: 6px; }
+    .levels button { font: inherit; font-size: clamp(14px, 2.4vw, 18px); padding: 6px 12px; border-radius: 999px; border: 2px solid var(--soil-dark); background: #fff; color: var(--ink); }
+    .levels button[aria-pressed="true"] { background: var(--soil-dark); color: #fff; }
+    .bubble { min-height: 1.6em; margin: 2px 4px; font-size: clamp(18px, 3.2vw, 26px); text-align: center; }
+    main { position: relative; flex: 1; min-height: 0; }
+    svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .fossil-card { position: absolute; left: 50%; top: 8%; transform: translate(-50%, 0) scale(.4); opacity: 0; pointer-events: none; font-size: clamp(90px, 18vw, 150px); line-height: 1; padding: 10px 34px 18px; border-radius: 28px; background: var(--bone); border: 6px solid var(--bone-line); box-shadow: 0 10px 0 #0002; transition: transform .45s cubic-bezier(.3,1.6,.5,1), opacity .25s; }
+    .fossil-card.show { transform: translate(-50%, 0) scale(1); opacity: 1; }
+    .overlay { position: fixed; inset: 0; display: grid; place-items: center; background: #0006; }
+    .overlay[hidden] { display: none; }
+    .card { background: #fffaf0; border-radius: 28px; padding: 24px 34px; text-align: center; font-size: 24px; }
+    .card img { height: 160px; }
+    .card button { font: inherit; font-size: 22px; padding: 10px 26px; border-radius: 999px; border: 0; background: var(--soil-dark); color: #fff; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="top">
+      <h1>挖化石</h1>
+      <div class="levels" role="group" aria-label="難度">
+        <button type="button" data-lv="novice">新手</button><button type="button" data-lv="easy">簡單</button><button type="button" data-lv="hard">困難</button>
+      </div>
+      <div class="book" id="book" aria-label="化石圖鑑"></div>
+    </div>
+    <p class="bubble" id="bubble" role="status" aria-live="polite"></p>
+    <main id="stage"><svg id="svg" aria-label="土堆"></svg><div class="fossil-card" id="fossilCard"></div></main>
+  </div>
+  <div class="overlay" id="finish" hidden><div class="card"><img id="finishImg" alt=""><p id="finishText">化石都挖出來了！</p><button type="button" id="again">再挖一次</button></div></div>
+
+<script>
+(() => {
+  // 筆畫資料：地面座標 0–100（u 向右、v 向前），每筆一條折線，依教育部筆順（sample 先放 ㄇ ㄈ ㄏ；正式版要逐字對照教育部筆順再量）
+  const SYMBOLS = [
+    { ch: 'ㄇ', strokes: [[[30, 20], [28, 82]], [[30, 20], [72, 20], [72, 76], [63, 82]]] },
+    { ch: 'ㄈ', strokes: [[[26, 22], [76, 22]], [[28, 22], [28, 80], [78, 80]]] },
+    { ch: 'ㄏ', strokes: [[[26, 24], [78, 24]], [[33, 24], [32, 56], [27, 72], [17, 84]]] },
+  ];
+  const VOICE = { 'ㄇ': 'assets/audio/zhuyin/zy-03.mp3', 'ㄈ': 'assets/audio/zhuyin/zy-04.mp3', 'ㄏ': 'assets/audio/zhuyin/zy-11.mp3' };
+  const K = .6;          // 頂面壓扁比例（微 2.5D 的俯角）
+  const W = 13;          // 溝寬（地面單位）
+  const DEPTH = 6;       // 溝底往下錯開，露出遠側土牆
+  const TOL = 12;        // 手指離筆畫多遠還算在挖
+  const STEP = 9;        // 一次最多往前挖多少（手指甩太快時鏟子追上去，不跳格）
+  const START_R = 13;    // 按下時離起點多近才挖得下去
+  const NS = 'http://www.w3.org/2000/svg';
+  const $ = id => document.getElementById(id);
+  const svg = $('svg'), bubble = $('bubble'), stage = $('stage');
+  let level = (() => { try { return localStorage.getItem('dinopost-dig-level') || 'novice'; } catch { return 'novice'; } })();
+  let idx = 0, sym, strokeI, dug, wobble, digging = false, done = false, layers = {}, S = 1, ox = 0, oy = 0, slabT = 0;
+
+  const el = (tag, attrs = {}, parent) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (parent) parent.appendChild(n); return n; };
+  const say = t => { bubble.textContent = t; };
+  const segLen = (a, b) => Math.hypot(b[0] - a[0], b[1] - a[1]);
+  const strokeLen = pts => pts.slice(1).reduce((s, p, i) => s + segLen(pts[i], p), 0);
+  function pointAt(pts, t) {   // 沿折線走 t 單位的位置
+    for (let i = 1; i < pts.length; i++) {
+      const L = segLen(pts[i - 1], pts[i]);
+      if (t <= L || i === pts.length - 1) { const r = L ? Math.min(1, t / L) : 0; return [pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * r, pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * r, i - 1]; }
+      t -= L;
+    }
+    return [...pts[0], 0];
+  }
+  function partial(pts, t) {   // 已挖到 t 的那一段折線
+    const out = [pts[0]]; let acc = 0;
+    for (let i = 1; i < pts.length; i++) {
+      const L = segLen(pts[i - 1], pts[i]);
+      if (acc + L <= t) { out.push(pts[i]); acc += L; continue; }
+      const r = (t - acc) / L; out.push([pts[i - 1][0] + (pts[i][0] - pts[i - 1][0]) * r, pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * r]); break;
+    }
+    return out;
+  }
+  function project(pts, p) {   // 手指投影到折線：回傳 [沿線距離, 離線距離]
+    let best = [0, Infinity], acc = 0;
+    for (let i = 1; i < pts.length; i++) {
+      const a = pts[i - 1], b = pts[i], L = segLen(a, b);
+      const r = L ? Math.max(0, Math.min(1, ((p[0] - a[0]) * (b[0] - a[0]) + (p[1] - a[1]) * (b[1] - a[1])) / (L * L))) : 0;
+      const q = [a[0] + (b[0] - a[0]) * r, a[1] + (b[1] - a[1]) * r], d = Math.hypot(p[0] - q[0], p[1] - q[1]);
+      if (d < best[1]) best = [acc + r * L, d];
+      acc += L;
+    }
+    return best;
+  }
+  const d = pts => 'M' + pts.map(p => p[0].toFixed(2) + ' ' + p[1].toFixed(2)).join('L');
+
+  function layout() {
+    const r = stage.getBoundingClientRect();
+    svg.setAttribute('viewBox', `0 0 ${r.width} ${r.height}`);
+    S = Math.min(r.width * (r.width > r.height ? .7 : .86) / 100, r.height * .82 / (100 * K + 22));
+    slabT = 18 * S;
+    ox = (r.width - 100 * S) / 2 + (r.width > r.height * 1.1 ? r.width * .06 : 0);
+    oy = (r.height - 100 * S * K - slabT) / 2 + 6;
+  }
+
+  function build() {
+    svg.textContent = '';
+    layout();
+    const defs = el('defs', {}, svg);
+    defs.innerHTML = `
+      <linearGradient id="gTop" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9a468"/><stop offset="1" stop-color="#c38550"/></linearGradient>
+      <linearGradient id="gWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7a4527"/><stop offset="1" stop-color="#b2763f"/></linearGradient>
+      <linearGradient id="gBone" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fffaf0"/><stop offset="1" stop-color="#e9d6b0"/></linearGradient>
+      <mask id="hole" maskUnits="userSpaceOnUse" x="-20" y="-20" width="140" height="140"><g id="holeMask" fill="none" stroke="#fff" stroke-width="${W}" stroke-linecap="round" stroke-linejoin="round"></g></mask>`;
+    const w = 100 * S, h = 100 * S * K, R = 18;
+    // 土塊前側（土層條紋）：畫在頂面之下，看起來像一整塊切開的土
+    const side = el('g', {}, svg);
+    el('path', { d: `M${ox} ${oy + h - R}V${oy + h + slabT - R}Q${ox} ${oy + h + slabT} ${ox + R} ${oy + h + slabT}H${ox + w - R}Q${ox + w} ${oy + h + slabT} ${ox + w} ${oy + h + slabT - R}V${oy + h - R}Z`, fill: '#9b5f34' }, side);
+    [.35, .7].forEach((f, i) => el('path', { d: `M${ox + 2} ${oy + h + slabT * f}H${ox + w - 2}`, stroke: i ? '#7c4626' : '#b07040', 'stroke-width': slabT * .14, 'stroke-dasharray': `${S * 9} ${S * 4}`, opacity: .8 }, side));
+    el('ellipse', { cx: ox + w / 2, cy: oy + h + slabT + 8, rx: w * .52, ry: 10, fill: '#0002' }, svg);
+    // 頂面（地面座標群組：scale(S, S·K) 讓溝寬、土堆都自動壓扁）
+    const g = el('g', { transform: `translate(${ox} ${oy}) scale(${S} ${S * K})` }, svg);
+    el('rect', { x: 0, y: 0, width: 100, height: 100, rx: R / S, ry: R / S / K, fill: 'url(#gTop)' }, g);
+    for (let i = 0; i < 70; i++) el('circle', { cx: 4 + Math.random() * 92, cy: 4 + Math.random() * 92, r: .5 + Math.random() * 1.1, fill: Math.random() < .5 ? '#b77745' : '#e8b97f', opacity: .7 }, g);
+    for (let i = 0; i < 14; i++) { const x = 5 + i * 6.7 + Math.random() * 2; el('path', { d: `M${x} 1.5l-1.5 -4M${x + 1} 1.5l0 -5M${x + 2} 1.5l1.6 -4`, stroke: '#5c9a3c', 'stroke-width': 1.1, 'stroke-linecap': 'round' }, g); }
+    layers.guide = el('g', {}, g);
+    layers.rim = el('g', { fill: 'none', stroke: '#6b3d20', 'stroke-width': W + 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .55 }, g);
+    const hole = el('g', { mask: 'url(#hole)' }, g);
+    el('rect', { x: -20, y: -20, width: 140, height: 140, fill: 'url(#gWall)' }, hole);
+    layers.floor = el('g', { transform: `translate(0 ${DEPTH})`, fill: 'none', stroke: '#6e4024', 'stroke-width': W, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, hole);
+    layers.fossil = el('g', { transform: `translate(0 ${DEPTH})`, opacity: 0 }, hole);
+    layers.holeMask = svg.querySelector('#holeMask');
+    layers.mounds = el('g', {}, g);
+    layers.flag = el('g', {}, g);
+    layers.g = g;
+    layers.fx = el('g', {}, svg);
+    layers.shovel = el('g', { opacity: 0, 'pointer-events': 'none' }, svg);
+    layers.shovel.innerHTML = `<g id="shovelBody"><rect x="-3" y="-78" width="6" height="58" rx="3" fill="#b8793e" stroke="#6e4024" stroke-width="2"/><rect x="-11" y="-84" width="22" height="8" rx="4" fill="#b8793e" stroke="#6e4024" stroke-width="2"/><path d="M-13 -22H13L11 -4Q0 8 -11 -4Z" fill="#cfd8de" stroke="#5b6870" stroke-width="2.5"/><path d="M-7 -18H5" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></g>`;
+    const A = 100 * S * .42;   // 小恐龍站在土塊右前角旁看
+    layers.actor = el('image', { href: 'assets/cast/xiaokong__busy_look.webp', height: A, width: A, x: ox + w - A * .5, y: oy + h + slabT - A * .92, preserveAspectRatio: 'xMidYMax meet' }, svg);
+    redraw();
+  }
+
+  function redraw() {
+    const paths = sym.strokes.map((pts, i) => i < strokeI ? pts : i === strokeI && dug > 0 ? partial(pts, dug) : null).filter(p => p && p.length > 1);
+    for (const key of ['rim', 'floor', 'holeMask']) {
+      const g = layers[key]; g.textContent = '';
+      paths.forEach(p => el('path', { d: d(p) }, g));
+    }
+    drawGuide();
+  }
+
+  function drawGuide() {
+    const g = layers.guide, f = layers.flag; g.textContent = ''; f.textContent = '';
+    if (done) return;
+    const cur = sym.strokes[strokeI];
+    if (level === 'novice') sym.strokes.forEach((pts, i) => { if (i > strokeI) el('path', { d: d(pts), fill: 'none', stroke: '#a86d3f', 'stroke-width': W * .7, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .35 }, g); });
+    if (level !== 'hard') {
+      el('path', { d: d(cur), fill: 'none', stroke: '#fff7e6', 'stroke-width': 2.2, 'stroke-dasharray': '3 4', 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: .9 }, g);
+      if (level === 'novice') {   // 箭頭：每段中間放一個，標出往哪挖
+        for (let i = 1; i < cur.length; i++) {
+          const a = cur[i - 1], b = cur[i], m = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2], ang = Math.atan2(b[1] - a[1], b[0] - a[0]) * 180 / Math.PI;
+          if (segLen(a, b) > 12) el('path', { d: 'M-3 -3L2 0L-3 3', fill: 'none', stroke: '#fff7e6', 'stroke-width': 1.6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', transform: `translate(${m[0]} ${m[1]}) rotate(${ang})` }, g);
+        }
+      }
+    }
+    // 起點小旗子（挖到一半放手：旗子插在挖到的地方）
+    const p = pointAt(cur, dug);
+    const fg = el('g', { transform: `translate(${p[0]} ${p[1]}) scale(1 ${1 / K})` }, f);
+    el('ellipse', { cx: 0, cy: 0, rx: 3, ry: 1.4, fill: '#0003' }, fg);
+    el('path', { d: 'M0 0V-15', stroke: '#5b3a1e', 'stroke-width': 1.2 }, fg);
+    el('path', { d: 'M0 -15L9 -12L0 -9Z', fill: '#e2483b' }, fg);
+    const t = el('text', { x: 3.6, y: -10.6, 'font-size': 4.6, 'text-anchor': 'middle', fill: '#fff', 'font-weight': 700 }, fg); t.textContent = strokeI + 1;
+    if (!dug) fg.innerHTML += `<circle r="4" fill="none" stroke="#fff" stroke-width="1"><animate attributeName="r" values="3;8" dur="1.1s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="1.1s" repeatCount="indefinite"/></circle>`;
+  }
+
+  // 挖出來的土：沿溝兩側堆小土堆
+  let lastMound = 0;
+  function addMound(pts, t) {
+    if (t - lastMound < 5) return; lastMound = t;
+    const [x, y, i] = pointAt(pts, t), a = pts[i], b = pts[i + 1] || a, L = segLen(a, b) || 1;
+    const side = Math.random() < .5 ? -1 : 1, nx = -(b[1] - a[1]) / L * side, ny = (b[0] - a[0]) / L * side, off = W / 2 + 2.5 + Math.random() * 2;
+    const m = el('g', { transform: `translate(${x + nx * off} ${y + ny * off})` }, layers.mounds);
+    const r = 2.4 + Math.random() * 1.6;
+    m.innerHTML = `<g><ellipse rx="${r}" ry="${r * .8}" fill="#9a5d32"/><ellipse cx="${-r * .25}" cy="${-r * .3}" rx="${r * .55}" ry="${r * .4}" fill="#c98a52"/><animateTransform attributeName="transform" type="scale" from="0.1" to="1" dur=".25s" fill="freeze"/></g>`;
+  }
+  function burst(x, y, n = 4, color = '#8a5530') {
+    for (let i = 0; i < n; i++) {
+      const c = el('circle', { cx: x, cy: y, r: 2 + Math.random() * 3, fill: color }, layers.fx);
+      let vx = (Math.random() - .5) * 6, vy = -4 - Math.random() * 4, px = x, py = y, life = 0;
+      const step = () => { life++; vy += .55; px += vx; py += vy; c.setAttribute('cx', px); c.setAttribute('cy', py); c.setAttribute('opacity', 1 - life / 26); if (life < 26) requestAnimationFrame(step); else c.remove(); };
+      requestAnimationFrame(step);
+    }
+  }
+  function toGround(ev) {
+    const pt = svg.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY;
+    const s = pt.matrixTransform(svg.getScreenCTM().inverse()), gnd = s.matrixTransform(layers.g.getCTM().inverse());
+    return { sx: s.x, sy: s.y, u: [gnd.x, gnd.y] };
+  }
+  function shovelAt(sx, sy, plunge) {
+    layers.shovel.setAttribute('opacity', 1);
+    layers.shovel.setAttribute('transform', `translate(${sx + 6} ${sy + (plunge ? 4 : -6)}) rotate(${plunge ? 18 : 28}) scale(${S / 5.2})`);
+  }
+  let hardCool = 0;
+  function hardSoil(sx, sy, msg) {
+    const now = performance.now(); if (now - hardCool < 450) return; hardCool = now;
+    Dino.sfx('tap', .5); wobble++;
+    burst(sx, sy, 3, '#9aa4aa');
+    const b = layers.shovel.querySelector('#shovelBody'); b.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-10px)' }, { transform: 'translateY(0)' }], { duration: 220 });
+    say(msg);
+  }
+
+  let pid = null;
+  svg.addEventListener('pointerdown', ev => {
+    if (done || pid !== null) return;
+    const { sx, sy, u } = toGround(ev), cur = sym.strokes[strokeI];
+    const p = pointAt(cur, dug);
+    shovelAt(sx, sy, false);
+    if (Math.hypot(u[0] - p[0], u[1] - p[1]) > START_R) { hardSoil(sx, sy, dug ? '這裡土好硬！從小旗子接著挖' : '這裡土好硬！從小旗子開始挖'); return; }
+    pid = ev.pointerId; try { svg.setPointerCapture(pid); } catch { /* ok */ } digging = true;
+    Dino.sfx('swoosh', .4); say('挖呀挖～');
+  });
+  svg.addEventListener('pointermove', ev => {
+    if (ev.pointerId !== pid || !digging) return;
+    const { sx, sy, u } = toGround(ev), cur = sym.strokes[strokeI], L = strokeLen(cur);
+    // 只看前面一小段（不會跳到同一筆後面、也不會往回挖）
+    const ahead = partial(cur, Math.min(L, dug + 28)), [s, dist] = project(ahead, u);
+    if (dist > TOL) { shovelAt(sx, sy, false); hardSoil(sx, sy, '鏟子離開溝了，回到小旗子繼續挖'); digging = false; drawGuide(); return; }
+    shovelAt(sx, sy, true);
+    if (s > dug) {
+      const next = Math.min(L, dug + STEP, s);
+      for (let t = dug; t < next; t += 1.5) addMound(cur, t);
+      dug = next;
+      if (Math.random() < .35) { const q = pointAt(cur, dug); const sp = layers.g.getCTM(); burst(sp.a * q[0] + sp.e, sp.d * q[1] + sp.f); }
+      redraw();
+      if (dug >= L - .5) finishStroke();
+    }
+  });
+  const release = ev => {
+    if (ev.pointerId !== pid) return;
+    pid = null; digging = false; layers.shovel.setAttribute('opacity', 0);
+    if (!done) drawGuide();
+  };
+  svg.addEventListener('pointerup', release); svg.addEventListener('pointercancel', release);
+
+  function finishStroke() {
+    digging = false; pid = null; layers.shovel.setAttribute('opacity', 0);
+    Dino.sfx('pop', .7);
+    strokeI++; dug = 0; lastMound = 0;
+    if (strokeI < sym.strokes.length) { say(`第 ${strokeI} 筆挖好了！換第 ${strokeI + 1} 筆`); redraw(); return; }
+    done = true; redraw(); reveal();
+  }
+
+  function reveal() {
+    say('咦？土裡有東西……');
+    // 溝底變成骨頭化石：米白骨身＋兩端骨節
+    const f = layers.fossil; f.textContent = '';
+    sym.strokes.forEach(pts => {
+      el('path', { d: d(pts), fill: 'none', stroke: '#b99a6c', 'stroke-width': W * .78, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, f);
+      el('path', { d: d(pts), fill: 'none', stroke: 'url(#gBone)', 'stroke-width': W * .6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, f);
+      [pts[0], pts[pts.length - 1]].forEach(p => { [-1, 1].forEach(s => el('ellipse', { cx: p[0] + s * 1.6, cy: p[1] - 1.2, rx: 3.4, ry: 3.2, fill: '#f6ead2', stroke: '#b99a6c', 'stroke-width': .8 }, f)); });
+    });
+    f.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 700, fill: 'forwards' });
+    Dino.sfx('stamp', .6);
+    setTimeout(() => {
+      layers.actor.setAttribute('href', 'assets/cast/xiaokong__cheer.webp');
+      const card = $('fossilCard'); card.textContent = sym.ch; card.classList.add('show');
+      Dino.sfx('correct', .7);
+      Dino.voice(VOICE[sym.ch]).then(() => setTimeout(() => Dino.voice(VOICE[sym.ch]), 250));
+      say(`挖到「${sym.ch}」的化石了！`);
+      $('book').children[idx].classList.add('got');
+      $('book').children[idx].textContent = sym.ch;
+      setTimeout(() => { card.classList.remove('show'); next(); }, 2600);
+    }, 900);
+  }
+
+  function next() {
+    idx++;
+    if (idx >= SYMBOLS.length) {
+      Dino.sfx('finish', .8);
+      $('finishImg').src = 'assets/cast/xiaokong__cheer.webp';
+      $('finishText').textContent = wobble <= 2 ? '★★★ 化石全部挖出來了！' : wobble <= 6 ? '★★ 化石挖出來了！' : '★ 挖到化石了，再練習一次！';
+      $('finish').hidden = false; return;
+    }
+    load();
+  }
+
+  function load() {
+    sym = SYMBOLS[idx]; strokeI = 0; dug = 0; done = false; lastMound = 0;
+    build();
+    say(level === 'hard' ? '從小旗子開始，照筆順挖！' : '從小旗子開始，沿著虛線挖！');
+  }
+  function start() {
+    idx = 0; wobble = 0;
+    $('book').innerHTML = SYMBOLS.map(() => '<span></span>').join('');
+    $('finish').hidden = true;
+    load();
+  }
+  document.querySelectorAll('.levels button').forEach(b => {
+    b.setAttribute('aria-pressed', b.dataset.lv === level);
+    b.addEventListener('click', () => {
+      level = b.dataset.lv; try { localStorage.setItem('dinopost-dig-level', level); } catch { /* ok */ }
+      document.querySelectorAll('.levels button').forEach(x => x.setAttribute('aria-pressed', x === b));
+      Dino.sfx('tap', .5); start();
+    });
+  });
+  $('again').addEventListener('click', start);
+  addEventListener('resize', () => { if (sym) build(); });
+  Dino.preload?.(Object.values(VOICE));
+  start();
+})();
+</script>
+</body>
+</html>
