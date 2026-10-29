@@ -111,9 +111,9 @@
   Cache-Control: no-cache
 /egg-sample.html
   Cache-Control: no-cache
-/dig-sample
+/dig
   Cache-Control: no-cache
-/dig-sample.html
+/dig.html
   Cache-Control: no-cache
 /zhuyin-strokes-review
   Cache-Control: no-cache
