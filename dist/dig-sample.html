@@ -15,18 +15,26 @@
     :root { --ink: #4a2f1c; --cream: #fffdf2; --gold: #e3bd70; --bone: #f6ead2; --bone-line: #b99a6c; font-family: "Naikai", ui-rounded, "Noto Sans TC", system-ui, sans-serif; color: var(--ink); }
     * { box-sizing: border-box; }
     html, body { height: 100%; margin: 0; }
-    body { overflow: hidden; background: linear-gradient(#9fd8f2, #e6f6fc 70%); -webkit-user-select: none; user-select: none; }
+    /* 場景：恐龍蛋快打同一片草原（assets/egg/meadow.webp），土塊放在草地上 */
+    body { overflow: hidden; background: #c3e6a0 url('assets/egg/meadow.webp') center bottom / cover no-repeat; -webkit-user-select: none; user-select: none; }
+    ::selection { background: #f2c98a; }
     button { font: inherit; color: inherit; cursor: pointer; }
     .dg-shell { position: relative; display: flex; flex-direction: column; height: 100svh; max-width: 1200px; margin: 0 auto; padding: max(10px, env(safe-area-inset-top)) 14px max(10px, env(safe-area-inset-bottom)); gap: 10px; }
     .dg-info { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex: none; }
     .dg-bubble { margin: 0; padding: 8px 16px; border: 3px solid var(--gold); border-radius: 20px; background: var(--cream); font-size: clamp(18px, 4.4vw, 26px); font-weight: 1000; box-shadow: 0 4px 0 #c89c52; min-height: 1.6em; }
     .book { display: flex; gap: 8px; }
-    .book span { width: clamp(40px, 7vw, 56px); aspect-ratio: 1; border-radius: 12px; display: grid; place-items: center; font-size: clamp(24px, 4.5vw, 36px); background: #fff8; border: 3px dashed #8a553066; color: transparent; transition: .3s; }
-    .book span.got { background: var(--bone); border: 3px solid var(--bone-line); color: var(--ink); transform: scale(1.08); }
+    /* 化石圖鑑：空格是淡淡的骨頭影子，挖到後換成骨頭色＋注音，彈一下 */
+    .book span { width: clamp(44px, 7.4vw, 60px); aspect-ratio: 1; border-radius: 14px; display: grid; place-items: center; font-size: clamp(24px, 4.5vw, 36px); background: #fffdf2cc url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg fill='%23c9a97a' opacity='.45'%3E%3Crect x='11' y='17' width='18' height='6' rx='3'/%3E%3Ccircle cx='10' cy='16' r='4'/%3E%3Ccircle cx='10' cy='24' r='4'/%3E%3Ccircle cx='30' cy='16' r='4'/%3E%3Ccircle cx='30' cy='24' r='4'/%3E%3C/g%3E%3C/svg%3E") center / 70% no-repeat; border: 3px dashed #b99a6c; color: transparent; box-shadow: 0 3px 6px #5a3a1a22; }
+    .book span.got { background: linear-gradient(145deg, #fffaf0, #ecdcb8); border: 3px solid var(--bone-line); color: var(--ink); box-shadow: 0 4px 8px #5a3a1a33, inset 0 -3px 0 #d8c39a; }
+    .book span.got.pop { animation: slotPop .5s cubic-bezier(.3, 1.7, .5, 1); }
+    @keyframes slotPop { from { transform: scale(.4); } }
     .dg-stage { position: relative; flex: 1; min-height: 0; touch-action: none; }
     .dg-stage svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; touch-action: none; }
-    .fossil-card { position: absolute; left: 50%; top: 8%; transform: translate(-50%, 0) scale(.4); opacity: 0; pointer-events: none; font-size: clamp(90px, 18vw, 150px); line-height: 1; padding: 10px 34px 18px; border-radius: 28px; background: var(--bone); border: 6px solid var(--bone-line); box-shadow: 0 10px 0 #0002; transition: transform .45s cubic-bezier(.3,1.6,.5,1), opacity .25s; }
-    .fossil-card.show { transform: translate(-50%, 0) scale(1); opacity: 1; }
+    /* 化石卡：從化石出土的位置冒出來，再飛進右上圖鑑（位置由 JS 算） */
+    .fossil-card { position: fixed; left: 0; top: 0; z-index: 40; display: grid; place-items: center; opacity: 0; pointer-events: none; font-size: clamp(80px, 16vw, 140px); line-height: 1; padding: 12px 34px 20px; border-radius: 28px; background: linear-gradient(145deg, #fffaf0, #ecdcb8); border: 6px solid var(--bone-line); color: var(--ink); box-shadow: 0 14px 28px #3a240f44, inset 0 -6px 0 #d8c39a; }
+    .haul { display: flex; gap: 8px; justify-content: center; }
+    .haul span { width: 52px; aspect-ratio: 1; display: grid; place-items: center; font-size: 32px; border-radius: 14px; background: linear-gradient(145deg, #fffaf0, #ecdcb8); border: 3px solid var(--bone-line); }
+    @media (prefers-reduced-motion: reduce) { .book span.got.pop { animation: none; } }
     /* 開始選單／完成卡：同走小路 */
     .overlay { position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; padding: 16px; background: #0e3a28aa; }
     .overlay[hidden] { display: none; }
@@ -37,7 +45,7 @@
     .label { white-space: nowrap; padding: 10px 20px; border: 4px solid var(--gold); border-radius: 999px; background: var(--cream); font-size: clamp(18px, 5.2vw, 28px); font-weight: 1000; box-shadow: 0 5px 0 #c89c52; }
     .card { display: grid; justify-items: center; gap: 10px; width: min(92vw, 400px); padding: 22px; border: 6px solid var(--gold); border-radius: 28px; background: var(--cream); text-align: center; box-shadow: 0 12px 0 #c89c52; }
     .card img { height: 130px; }
-    .card h2 { margin: 0; font-size: clamp(24px, 6.4vw, 38px); }
+    .card h2 { margin: 0; font-size: clamp(22px, 5.6vw, 34px); white-space: nowrap; display: flex; justify-content: center; }
     .stars { margin: 0; color: #f2b945; font-size: 44px; letter-spacing: .08em; }
     .actions { display: flex; gap: 12px; width: 100%; }
     .actions button, .actions a { flex: 1; min-height: 54px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 16px; font-size: clamp(17px, 4.8vw, 22px); font-weight: 1000; text-decoration: none; color: #17593f; }
@@ -78,6 +86,7 @@
     <div class="card">
       <img id="finishImg" alt="">
       <h2 id="finishTitle">化石都挖出來了！</h2>
+      <div id="haul" class="haul" aria-label="這回合挖到的化石"></div>
       <p id="finishStars" class="stars"></p>
       <div class="actions"><button id="again" type="button">再挖一次</button><a href="index.html">回首頁</a></div>
     </div>
@@ -98,6 +107,8 @@
   const NS = 'http://www.w3.org/2000/svg';
   const $ = id => document.getElementById(id);
   const svg = $('svg'), bubble = $('bubble'), stage = $('stage');
+  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const wait = ms => new Promise(r => setTimeout(r, ms));
   // 聲音（導演 10-29：不要滑鼠點擊聲）：本機合成，挖土＝短促沙沙土聲、硬土＝低悶「咚」
   let ac = null, noise = null;
   function audio() {
@@ -177,12 +188,13 @@
       <mask id="hole" maskUnits="userSpaceOnUse" x="-20" y="-20" width="140" height="140"><g id="holeMask" fill="none" stroke="#fff" stroke-width="${W}" stroke-linecap="round" stroke-linejoin="round"></g></mask>`;
     const w = 100 * S, h = 100 * S * K, R = 18;
     // 土塊前側（土層條紋）：畫在頂面之下，看起來像一整塊切開的土
-    const side = el('g', {}, svg);
+    layers.slab = el('g', {}, svg);   // 整塊土（出土時晃一下）
+    const side = el('g', {}, layers.slab);
     el('path', { d: `M${ox} ${oy + h - R}V${oy + h + slabT - R}Q${ox} ${oy + h + slabT} ${ox + R} ${oy + h + slabT}H${ox + w - R}Q${ox + w} ${oy + h + slabT} ${ox + w} ${oy + h + slabT - R}V${oy + h - R}Z`, fill: '#9b5f34' }, side);
     [.35, .7].forEach((f, i) => el('path', { d: `M${ox + 2} ${oy + h + slabT * f}H${ox + w - 2}`, stroke: i ? '#7c4626' : '#b07040', 'stroke-width': slabT * .14, 'stroke-dasharray': `${S * 9} ${S * 4}`, opacity: .8 }, side));
-    el('ellipse', { cx: ox + w / 2, cy: oy + h + slabT + 8, rx: w * .52, ry: 10, fill: '#0002' }, svg);
+    svg.insertBefore(el('ellipse', { cx: ox + w / 2, cy: oy + h + slabT + 6, rx: w * .54, ry: 14, fill: '#2d4a1a33' }), layers.slab);
     // 頂面（地面座標群組：scale(S, S·K) 讓溝寬、土堆都自動壓扁）
-    const g = el('g', { transform: `translate(${ox} ${oy}) scale(${S} ${S * K})` }, svg);
+    const g = el('g', { transform: `translate(${ox} ${oy}) scale(${S} ${S * K})` }, layers.slab);
     el('rect', { x: 0, y: 0, width: 100, height: 100, rx: R / S, ry: R / S / K, fill: 'url(#gTop)' }, g);
     for (let i = 0; i < 70; i++) el('circle', { cx: 4 + Math.random() * 92, cy: 4 + Math.random() * 92, r: .5 + Math.random() * 1.1, fill: Math.random() < .5 ? '#b77745' : '#e8b97f', opacity: .7 }, g);
     for (let i = 0; i < 14; i++) { const x = 5 + i * 6.7 + Math.random() * 2; el('path', { d: `M${x} 1.5l-1.5 -4M${x + 1} 1.5l0 -5M${x + 2} 1.5l1.6 -4`, stroke: '#5c9a3c', 'stroke-width': 1.1, 'stroke-linecap': 'round' }, g); }
@@ -191,16 +203,19 @@
     const hole = el('g', { mask: 'url(#hole)' }, g);
     el('rect', { x: -20, y: -20, width: 140, height: 140, fill: 'url(#gWall)' }, hole);
     layers.floor = el('g', { transform: `translate(0 ${DEPTH})`, fill: 'none', stroke: '#6e4024', 'stroke-width': W, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, hole);
+    layers.glint = el('g', { transform: `translate(0 ${DEPTH})` }, hole);   // 挖的時候溝底偶爾露出一小塊骨頭（預告有化石）
     layers.fossil = el('g', { transform: `translate(0 ${DEPTH})`, opacity: 0 }, hole);
     layers.holeMask = svg.querySelector('#holeMask');
     layers.mounds = el('g', {}, g);
+    layers.rise = el('g', {}, g);    // 出土：化石從溝底升到地面上
     layers.flag = el('g', {}, g);
     layers.g = g;
     layers.fx = el('g', {}, svg);
+    layers.actorBox = { x: ox + w, y: oy + h + slabT };
     layers.shovel = el('g', { opacity: 0, 'pointer-events': 'none' }, svg);
     layers.shovel.innerHTML = `<g id="shovelBody"><rect x="-3" y="-78" width="6" height="58" rx="3" fill="#b8793e" stroke="#6e4024" stroke-width="2"/><rect x="-11" y="-84" width="22" height="8" rx="4" fill="#b8793e" stroke="#6e4024" stroke-width="2"/><path d="M-13 -22H13L11 -4Q0 8 -11 -4Z" fill="#cfd8de" stroke="#5b6870" stroke-width="2.5"/><path d="M-7 -18H5" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></g>`;
     const A = 100 * S * .42;   // 小恐龍站在土塊右前角旁看
-    layers.actor = el('image', { href: 'assets/cast/xiaokong__busy_look.webp', height: A, width: A, x: ox + w - A * .5, y: oy + h + slabT - A * .92, preserveAspectRatio: 'xMidYMax meet' }, svg);
+    layers.actor = el('image', { href: `assets/cast/xiaokong__${pose}.webp`, height: A, width: A, x: ox + w - A * .5, y: oy + h + slabT - A * .92, preserveAspectRatio: 'xMidYMax meet', style: 'transform-box: fill-box; transform-origin: 50% 100%' }, svg);
     redraw();
   }
 
@@ -238,7 +253,8 @@
     }
     // 起點小旗子（挖到一半放手：旗子插在挖到的地方）
     const p = pointAt(cur, dug);
-    const fg = el('g', { transform: `translate(${p[0]} ${p[1]}) scale(1 ${1 / K})` }, f);
+    const fg0 = el('g', { transform: `translate(${p[0]} ${p[1]}) scale(1 ${1 / K})` }, f), fg = el('g', {}, fg0);
+    if (flagFresh && !calm) { flagFresh = false; fg.innerHTML = '<animateTransform attributeName="transform" type="scale" values="0 0;1.25 1.25;1 1" keyTimes="0;.6;1" dur=".45s" fill="freeze"/>'; }
     el('ellipse', { cx: 0, cy: 0, rx: 3, ry: 1.4, fill: '#0003' }, fg);
     el('path', { d: 'M0 0V-15', stroke: '#5b3a1e', 'stroke-width': 1.2 }, fg);
     el('path', { d: 'M0 -15L9 -12L0 -9Z', fill: '#e2483b' }, fg);
@@ -273,6 +289,25 @@
     layers.shovel.setAttribute('opacity', 1);
     layers.shovel.setAttribute('transform', `translate(${sx + 6} ${sy + (plunge ? 4 : -6)}) rotate(${plunge ? 18 : 28}) scale(${S / 5.2})`);
   }
+  // 小恐龍陪挖：姿勢＝busy_look 平常、point 指旗子、cheer／leap_r 出土；hop＝跳一下
+  let pose = 'busy_look', poseTimer = 0;
+  function setPose(name, ms) {
+    clearTimeout(poseTimer); pose = name; layers.actor?.setAttribute('href', `assets/cast/xiaokong__${name}.webp`);
+    if (ms) poseTimer = setTimeout(() => setPose('busy_look'), ms);
+  }
+  function hop(h = 18, n = 1) {
+    if (calm || !layers.actor) return;
+    const k = []; for (let i = 0; i < n; i++) k.push({ transform: 'translateY(0) scale(1,1)' }, { transform: 'translateY(2px) scale(1.06,.92)' }, { transform: `translateY(-${h}px) scale(.96,1.05)` });
+    k.push({ transform: 'translateY(0) scale(1,1)' });
+    layers.actor.animate(k, { duration: 380 * n, easing: 'cubic-bezier(.3,.7,.4,1)' });
+  }
+  let lastGlint = 0;
+  function glint(pts, t) {   // 溝底露出一小截骨頭：白色小骨片＋一閃
+    if (t - lastGlint < 14 || Math.random() < .5) return; lastGlint = t;
+    const [x, y] = pointAt(pts, t), a = Math.random() * 180;
+    const b = el('g', { transform: `translate(${x} ${y}) rotate(${a})` }, layers.glint);
+    b.innerHTML = `<rect x="-2.4" y="-.7" width="4.8" height="1.4" rx=".7" fill="#f3e6c8"/><circle cx="-2.4" cy="-.6" r=".9" fill="#f3e6c8"/><circle cx="-2.4" cy=".6" r=".9" fill="#f3e6c8"/><path d="M2.6 -2.6l.5 1.2 1.2.5-1.2.5-.5 1.2-.5-1.2-1.2-.5 1.2-.5z" fill="#fff"><animate attributeName="opacity" values="0;1;0" dur=".7s" fill="freeze"/></path>`;
+  }
   let hardCool = 0;
   function hardSoil(sx, sy, msg) {
     const now = performance.now(); if (now - hardCool < 450) return; hardCool = now;
@@ -280,9 +315,10 @@
     burst(sx, sy, 3, '#9aa4aa');
     const b = layers.shovel.querySelector('#shovelBody'); b.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-10px)' }, { transform: 'translateY(0)' }], { duration: 220 });
     say(msg);
+    setPose('point', 1400);   // 小恐龍指一下：去那裡挖
   }
 
-  let pid = null, paused = false;
+  let pid = null, paused = false, flagFresh = false;
   svg.addEventListener('pointerdown', ev => {
     if (done || pid !== null) return;
     const { sx, sy, u } = toGround(ev), cur = sym.strokes[strokeI];
@@ -302,7 +338,7 @@
     shovelAt(sx, sy, true);
     if (s > dug) {
       const next = Math.min(L, dug + STEP, s);
-      for (let t = dug; t < next; t += 1.5) addMound(cur, t);
+      for (let t = dug; t < next; t += 1.5) { addMound(cur, t); glint(cur, t); }
       dug = next; crunch();
       if (Math.random() < .35) { const q = pointAt(cur, dug); const sp = layers.g.getCTM(); burst(sp.a * q[0] + sp.e, sp.d * q[1] + sp.f); }
       redraw();
@@ -320,31 +356,69 @@
     digging = false; pid = null; layers.shovel.setAttribute('opacity', 0);
     Dino.sfx('pop', .7);
     strokeI++; dug = 0; lastMound = 0;
-    if (strokeI < sym.strokes.length) { say(`第 ${strokeI} 筆挖好了！換第 ${strokeI + 1} 筆`); redraw(); return; }
+    if (strokeI < sym.strokes.length) { say(`第 ${strokeI} 筆挖好了！換第 ${strokeI + 1} 筆`); flagFresh = true; redraw(); hop(14); setPose('point', 1100); return; }
     done = true; redraw(); reveal();
   }
 
-  function reveal() {
-    say('咦？土裡有東西……');
-    // 溝底變成骨頭化石：米白骨身＋兩端骨節
-    const f = layers.fossil; f.textContent = '';
+  // 出土（一個字最大的時刻）：土塊晃一下＋塵土 → 化石從溝底升上來、光一掃、星星 → 小恐龍跳起來 → 化石卡冒出來、念音 → 飛進圖鑑
+  function bone(parent, lift) {
     sym.strokes.forEach(pts => {
-      el('path', { d: d(pts), fill: 'none', stroke: '#b99a6c', 'stroke-width': W * .78, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, f);
-      el('path', { d: d(pts), fill: 'none', stroke: 'url(#gBone)', 'stroke-width': W * .6, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, f);
-      [pts[0], pts[pts.length - 1]].forEach(p => { [-1, 1].forEach(s => el('ellipse', { cx: p[0] + s * 1.6, cy: p[1] - 1.2, rx: 3.4, ry: 3.2, fill: '#f6ead2', stroke: '#b99a6c', 'stroke-width': .8 }, f)); });
+      const lc = { fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' };
+      el('path', { d: d(pts), stroke: '#b99a6c', 'stroke-width': W * .8, ...lc }, parent);
+      el('path', { d: d(pts), stroke: 'url(#gBone)', 'stroke-width': W * .6, ...lc }, parent);
+      if (lift) el('path', { d: d(pts), stroke: 'url(#gShine)', 'stroke-width': W * .6, ...lc }, parent);
+      [pts[0], pts[pts.length - 1]].forEach(p => [-1, 1].forEach(s => el('ellipse', { cx: p[0] + s * 1.5, cy: p[1] - 1.1, rx: 3, ry: 2.8, fill: '#f6ead2', stroke: '#b99a6c', 'stroke-width': .8 }, parent)));
     });
-    f.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 700, fill: 'forwards' });
-    Dino.sfx('stamp', .6);
-    setTimeout(() => {
-      layers.actor.setAttribute('href', 'assets/cast/xiaokong__cheer.webp');
-      const card = $('fossilCard'); card.textContent = sym.ch; card.classList.add('show');
-      Dino.sfx('correct', .7);
-      Dino.voice(VOICE[sym.ch]).then(() => setTimeout(() => Dino.voice(VOICE[sym.ch]), 250));
-      say(`挖到「${sym.ch}」的化石了！`);
-      $('book').children[idx].classList.add('got');
-      $('book').children[idx].textContent = sym.ch;
-      setTimeout(() => { card.classList.remove('show'); next(); }, 2600);
-    }, 900);
+  }
+  function screenOf(u, v) { const m = layers.g.getCTM(); return [m.a * u + m.e, m.d * v + m.f]; }
+  async function reveal() {
+    say('咦？土裡有東西……');
+    const g = layers.g, xs = sym.strokes.flat(), cu = (Math.min(...xs.map(p => p[0])) + Math.max(...xs.map(p => p[0]))) / 2, cv = (Math.min(...xs.map(p => p[1])) + Math.max(...xs.map(p => p[1]))) / 2;
+    bone(layers.fossil); layers.fossil.setAttribute('opacity', 1);
+    thud();
+    if (!calm) layers.slab.animate([{ transform: 'translate(0,0)' }, { transform: 'translate(-5px,1px)' }, { transform: 'translate(5px,-1px)' }, { transform: 'translate(-3px,0)' }, { transform: 'translate(0,0)' }], { duration: 420 });
+    const [cx, cy] = screenOf(cu, cv);
+    burst(cx, cy, 10, '#c79763');
+    setPose('busy_look');
+    await wait(calm ? 200 : 650);
+    // 升上來：地面上一份化石＋影子，從溝底位置往上浮
+    const defs = svg.querySelector('defs');
+    defs.insertAdjacentHTML('beforeend', `<linearGradient id="gShine" gradientUnits="userSpaceOnUse" x1="-40" y1="0" x2="-10" y2="30"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".95"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>${calm ? '' : '<animate attributeName="x1" values="-40;110" dur=".9s" begin="indefinite" fill="freeze"/><animate attributeName="x2" values="-10;140" dur=".9s" begin="indefinite" fill="freeze"/>'}</linearGradient>`);
+    const shadow = el('g', { opacity: .35, transform: `translate(0 ${DEPTH})` }, layers.rise);
+    sym.strokes.forEach(pts => el('path', { d: d(pts), fill: 'none', stroke: '#3a2412', 'stroke-width': W * .7, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, shadow));
+    const up = el('g', { transform: `translate(0 ${DEPTH})` }, layers.rise); bone(up, true);
+    const steps = calm ? 1 : 24;
+    for (let i = 1; i <= steps; i++) { const e = 1 - Math.pow(1 - i / steps, 3); up.setAttribute('transform', `translate(0 ${DEPTH - e * (DEPTH + 5)})`); shadow.setAttribute('opacity', .35 - e * .12); await wait(16); }
+    defs.querySelectorAll('#gShine animate').forEach(a => a.beginElement());
+    Dino.sfx('correct', .7); hop(30, 2); setPose('leap_r', 900); setTimeout(() => setPose('cheer', 2600), 900);
+    sparkle(cu, cv);
+    await wait(calm ? 200 : 700);
+    // 化石卡：在化石上方冒出來、念音，再飛進圖鑑那一格
+    const card = $('fossilCard'), r = svg.getBoundingClientRect(), [fx, fy] = screenOf(cu, cv);
+    card.textContent = sym.ch;
+    const cw = card.offsetWidth, ch = card.offsetHeight;
+    const sx = r.left + fx, sy = Math.max(r.top + ch / 2 + 4, r.top + oy - ch * .15);   // 卡片浮在土塊上緣，不擋住出土的化石
+    card.style.transform = `translate(${sx - cw / 2}px, ${sy - ch / 2}px)`;
+    card.animate([{ opacity: 0, transform: `translate(${sx - cw / 2}px, ${sy - ch / 2 + 40}px) scale(.3)` }, { opacity: 1, transform: `translate(${sx - cw / 2}px, ${sy - ch / 2}px) scale(1)` }], { duration: calm ? 1 : 420, easing: 'cubic-bezier(.3,1.6,.5,1)', fill: 'forwards' });
+    say(`挖到「${sym.ch}」的化石了！`);
+    // 念兩次；音訊被鎖或音檔慢到時最多等 2 秒，不讓遊戲卡住
+    const speak = () => Promise.race([Dino.voice(VOICE[sym.ch]), wait(2000)]);
+    await speak(); await wait(200); speak();   // 第二次念的同時飛進圖鑑（不讓孩子等太久）
+    const slot = $('book').children[idx], t = slot.getBoundingClientRect(), k = t.width / cw;
+    const fly = card.animate([{ opacity: 1, transform: `translate(${sx - cw / 2}px, ${sy - ch / 2}px) scale(1)` }, { opacity: 1, transform: `translate(${t.left + t.width / 2 - cw / 2}px, ${t.top + t.height / 2 - ch / 2}px) scale(${k})` }], { duration: calm ? 1 : 650, easing: 'cubic-bezier(.5,0,.3,1)', fill: 'forwards' });
+    await Promise.race([fly.finished, wait(950)]);   // 分頁在背景時動畫不走，最多等一下就往下
+    card.getAnimations().forEach(a => a.cancel()); card.style.opacity = 0;
+    slot.textContent = sym.ch; slot.classList.add('got', 'pop'); Dino.sfx('pop', .6);
+    await wait(700);
+    next();
+  }
+  function sparkle(u, v) {   // 出土星星：化石四周幾顆四角星一閃
+    if (calm) return;
+    for (let i = 0; i < 7; i++) {
+      const a = i / 7 * Math.PI * 2, rr = 34 + Math.random() * 10, [x, y] = [u + Math.cos(a) * rr, v + Math.sin(a) * rr * .8];
+      const st = el('g', { transform: `translate(${x} ${y}) scale(1 ${1 / K})` }, layers.rise);
+      st.innerHTML = `<path d="M0 -4.5L1.2 -1.2 4.5 0 1.2 1.2 0 4.5 -1.2 1.2 -4.5 0 -1.2 -1.2Z" fill="#fff6c8" stroke="#e8b84a" stroke-width=".5"><animateTransform attributeName="transform" type="scale" values="0;1.3;0" dur=".9s" begin="${i * .06}s" fill="freeze"/></path>`;
+    }
   }
 
   function next() {
@@ -354,13 +428,14 @@
       $('finishImg').src = 'assets/cast/xiaokong__cheer.webp';
       const n = wobble <= 2 ? 3 : wobble <= 6 ? 2 : 1;
       $('finishStars').textContent = '★'.repeat(n) + '☆'.repeat(3 - n);
+      $('haul').innerHTML = SYMBOLS.map(x => `<span>${x.ch}</span>`).join('');
       $('finish').hidden = false; Dino.bgm.start(); return;
     }
     load();
   }
 
   function load() {
-    sym = SYMBOLS[idx]; strokeI = 0; dug = 0; done = false; lastMound = 0;
+    sym = SYMBOLS[idx]; strokeI = 0; dug = 0; done = false; lastMound = 0; lastGlint = 0; pose = 'busy_look';
     Dino.preload?.([VOICE[sym.ch]]);
     build();
     say(level === 'hard' ? '從小旗子開始，照筆順挖！' : '從小旗子開始，在字框裡照箭頭挖！');
