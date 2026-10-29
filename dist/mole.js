@@ -8,7 +8,8 @@
   const wait = ms => new Promise(r => setTimeout(r, ms));
   const done = (a, ms) => Promise.race([a.finished, wait(ms + 80)]);
   const ease = { out: 'cubic-bezier(.16,1,.3,1)', back: 'cubic-bezier(.34,1.56,.64,1)' };
-  const GOAL = 5, PENALTY = 2, REC_KEY = 'dinopost-egg-category-records-v1', OPEN_MS = 2600, N_EG = 3;
+  // 計分制（導演 2026-10-29）：每輪 15 秒比打中幾個、3 輪各換一個分類、打錯扣 1 分（最低 0）；紀錄＝3 輪總分前 5 名
+  const ROUNDS = 3, ROUND_SEC = 15, REC_KEY = 'dinopost-egg-score-records-v1', OPEN_MS = 2600, N_EG = 3;
   const MAX_OPEN = 2, HIT_RATE = .5;
   // 巢分布（導演 2026-10-27 選 egg-layout-sample B 微笑弧線）：[x, y]＝巢底位置比例；越下面越近越大
   const LAYOUT = {
@@ -21,7 +22,7 @@
     '聽題目，打對的蛋': ['ㄊㄧㄥ', 'ㄊㄧˊ', 'ㄇㄨˋ', '', 'ㄉㄚˇ', 'ㄉㄨㄟˋ', 'ㄉㄜ˙', 'ㄉㄢˋ'], '知道了': ['ㄓ', 'ㄉㄠˋ', 'ㄌㄜ˙'] });
   const group = t => t.split('.')[0];
 
-  let lastTime = 0, t0 = 0, penalty = 0, timing = false, all = [], cat = null, lastCat = null, yes = [], no = [], spots = [], found = [], gen = 0, hatching = false, nextHatch = 0, sinceHit = 0;
+  let allFound = [], round = 0, results = [], score = 0, t0 = 0, timing = false, all = [], cat = null, lastCat = null, yes = [], no = [], spots = [], found = [], gen = 0, hatching = false, nextHatch = 0, sinceHit = 0;
   const inCat = w => cat.yes.includes(w.id);
   const shown = () => spots.filter(s => s.w && (s.state === 'opening' || s.state === 'open')).map(s => s.w);
   // 單張圖或拼圖表（5×2 格）的常見字都能用
@@ -100,10 +101,11 @@
 
   function renderBar() {
     setKidText($('askQ'), '請打');
-    setKidText($('askCat'), cat.zh, cat.r);
+    setKidText($('askCat'), cat.zh, cat.zhuyin);
     $('eg').innerHTML = Dino.shuffle(yes.slice()).slice(0, N_EG).map(w => `<span class="mini">${art(w)}</span>`).join('');
     showTime();
-    $('dots').innerHTML = Array.from({ length: GOAL }, (_, i) => `<i class="${i < found.length ? 'on' : ''}"></i>`).join('');
+    $('dots').innerHTML = Array.from({ length: ROUNDS }, (_, i) => `<i class="${i < round ? 'on' : i === round ? 'now' : ''}"></i>`).join('');
+    $('score').textContent = score;
   }
   // 出題動畫（導演 2026-10-26）：彈出 Let's hit… → 分類名（英文＋中文注音）→ 示意圖一張張跳出；英文語音 Gemini 生成；點一下才開始
   // 出題語音：Gemini 生成 assets/audio/whack/<分類 id>.mp3（tools/gemini_tts_batch.py whack）
@@ -112,7 +114,7 @@
     hatching = false;
     const L = $('intro'); L.hidden = false;
     $('introEn').textContent = cat.en[0].toUpperCase() + cat.en.slice(1);
-    setKidText($('introZh'), cat.zh, cat.r);
+    setKidText($('introZh'), cat.zh, cat.zhuyin);
     $('introPics').innerHTML = '';
     const pics = Dino.shuffle(yes.slice()).slice(0, 4).map(w => { const c = card(w); c.style.opacity = 0; $('introPics').append(c); return c; });
     sayCat();
@@ -130,7 +132,7 @@
     await wait(900);
     a.classList.remove('is-on');
     if (my !== gen) return;
-    t0 = performance.now(); penalty = 0; timing = true;
+    t0 = performance.now(); timing = true;
     hatching = true;
   }
 
@@ -139,26 +141,26 @@
     const w = o.w;
     if (!inCat(w)) {
       Dino.sfx('wrong', .45);
-      if (timing) { penalty += PENALTY; plus(o); }
+      if (timing && score > 0) { score--; minus(o); $('score').textContent = score; }
       Promise.race([Dino.voice(en(w)), wait(2000)]);
       o.egg.animate([{ rotate: '0deg' }, { rotate: '-9deg' }, { rotate: '8deg' }, { rotate: '-5deg' }, { rotate: '0deg' }], { duration: 360, easing: 'ease-in-out' });
       return close(o, true);
     }
     const my = gen, c = o.egg.querySelector('.card');
-    found.push(w); o.state = 'hatched';
+    found.push(w); allFound.push(w); o.state = 'hatched';
     Dino.sfx('correct', .8);
     await done(c.animate([{ scale: '1' }, { scale: '1.16', offset: .35 }, { scale: '1.16', offset: .7 }, { scale: '1' }], { duration: 220 }), 220);
     const tb = o.top.getBoundingClientRect();
     burst(tb.left + tb.width / 2, tb.top + tb.height / 2, { n: 14, colors: ['#fffef4', '#f6ebcf', '#d9c39a', '#7fbf6a'], size: 18, shape: 'shard' });
     o.top.animate([{ transform: 'translate(-34%,-22%) rotate(-48deg)' }, { transform: 'translate(-60%,-160%) rotate(-140deg)', opacity: 0 }], { duration: 600, easing: ease.out, fill: 'forwards' });
     // 圖卡飛向進度點
-    const dot = document.querySelectorAll('#dots i')[found.length - 1];
+    const dot = $('scoreBox'); score++;
     const from = c.getBoundingClientRect(), to = dot.getBoundingClientRect();
     const f = card(w); f.classList.add('fly'); f.style.cssText = `--s:${from.width / .74}px;left:${from.left}px;top:${from.top}px`;
     document.body.append(f); c.style.visibility = 'hidden';
     const dx = to.left + to.width / 2 - (from.left + from.width / 2), dy = to.top + to.height / 2 - (from.top + from.height / 2), k = to.width / from.width;
     done(f.animate([{ transform: 'none' }, { transform: `translate(${dx * .5}px,${dy * .5 - 80}px) scale(.9) rotate(-10deg)`, offset: .5 }, { transform: `translate(${dx}px,${dy}px) scale(${k})`, opacity: .3 }], { duration: 650, easing: 'ease-in-out' }), 650).then(() => {
-      f.remove(); dot.classList.add('on');
+      f.remove(); $('score').textContent = score;
       dot.animate([{ scale: '1.6' }, { scale: '1' }], { duration: 380, easing: ease.back });
       const r = dot.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, { n: 8, size: 12 });
     });
@@ -170,13 +172,6 @@
       o.egg.animate([{ transform: 'scale(.3)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], { duration: 420, easing: ease.back });
       o.state = 'closed'; o.w = null; o.el.style.zIndex = o.z; o.until = performance.now() + 900;
     }, 1300);
-    if (found.length >= GOAL) {
-      hatching = false; timing = false; lastTime = elapsed();
-      await wait(900); if (my !== gen) return;
-      spots.forEach(s => close(s));
-      await wait(700); if (my !== gen) return;
-      finish();
-    }
   }
   function cheer() {
     const b = $('buddy'); b.src = 'assets/cast/iggy__cheer.webp';
@@ -195,56 +190,70 @@
         { duration: rand(600, 900), easing: 'cubic-bezier(.2,.6,.4,1)' }).finished.then(() => p.remove());
     }
   }
+  // 一輪時間到：收蛋 → 下一輪換分類出題；3 輪後結算
+  async function endRound(my) {
+    hatching = false; timing = false; showTime();
+    results.push({ cat, score });
+    Dino.sfx('finish', .5);
+    spots.forEach(s => close(s));
+    await wait(1200); if (my !== gen) return;
+    round++;
+    if (round >= ROUNDS) return finish();
+    score = 0; found = []; sinceHit = 0; pickCat(); buildField(); renderBar(); announce(gen);
+  }
   function finish() {
     Dino.sfx('finish', .8);
-    let rec = {}; try { rec = JSON.parse(localStorage.getItem(REC_KEY)) || {}; } catch { /* ok */ }
-    const list = (rec[cat.id] || []), best = list.length ? list[0] : Infinity, now = Math.round(lastTime * 10) / 10;
-    const top = [...list, now].sort((x, y) => x - y).slice(0, 5); rec[cat.id] = top;
-    try { localStorage.setItem(REC_KEY, JSON.stringify(rec)); } catch { /* ok */ }
-    // 結束畫面：打到的圖卡縮圖＋英文（不重複），點一下再念
+    const total = results.reduce((s, r) => s + r.score, 0);
+    let rec = []; try { rec = JSON.parse(localStorage.getItem(REC_KEY)) || []; } catch { /* ok */ }
+    if (!Array.isArray(rec)) rec = [];
+    const best = rec.length ? rec[0] : -1, top = [...rec, total].sort((x, y) => y - x).slice(0, 5);
+    try { localStorage.setItem(REC_KEY, JSON.stringify(top)); } catch { /* ok */ }
+    // 結束畫面：總分、三輪各打中幾個、前 5 名、打到的圖卡縮圖＋英文（不重複），點一下再念
     $('got').innerHTML = '';
-    found.filter((w, i) => found.findIndex(x => x.id === w.id) === i).forEach(w => {
+    allFound.filter((w, i) => allFound.findIndex(x => x.id === w.id) === i).forEach(w => {
       const b = document.createElement('button'); b.type = 'button'; b.className = 'word';
       b.append(card(w)); b.insertAdjacentHTML('beforeend', `<span>${w.en}</span>`);
       b.addEventListener('click', () => Dino.voice(en(w)));
       $('got').append(b);
     });
-    $('doneTime').textContent = `${now.toFixed(1)} 秒` + (penalty ? `（含打錯 +${penalty}）` : '');
+    $('doneTime').textContent = `共打中 ${total} 個`;
+    $('doneRounds').innerHTML = '';
+    results.forEach(r => { const li = document.createElement('li'); const n = document.createElement('span'); setKidText(n, r.cat.zh, r.cat.zhuyin); li.append(n); li.insertAdjacentHTML('beforeend', `<b>${r.score}</b>`); $('doneRounds').append(li); });
     let marked = false;
-    $('doneRec').innerHTML = top.map((t, i) => { const me = !marked && t === now; if (me) marked = true; return `<li class="${me ? 'me' : ''}"><b>${i + 1}</b>${t.toFixed(1)} 秒</li>`; }).join('');
-    $('doneNew').hidden = !(now < best);
+    $('doneRec').innerHTML = top.map((t, i) => { const me = !marked && t === total; if (me) marked = true; return `<li class="${me ? 'me' : ''}"><b>${i + 1}</b>${t} 個</li>`; }).join('');
+    $('doneNew').hidden = !(total > best && total > 0);
     $('done').hidden = false; Dino.bgm.start();
-    if (now < best) { const r = $('doneTime').getBoundingClientRect(); for (let i = 0; i < 4; i++) setTimeout(() => burst(r.left + rand(0, r.width), r.top + rand(-20, 20), { n: 16, size: 16 }), i * 260); }
+    if (total > best && total > 0) { const r = $('doneTime').getBoundingClientRect(); for (let i = 0; i < 4; i++) setTimeout(() => burst(r.left + rand(0, r.width), r.top + rand(-20, 20), { n: 16, size: 16 }), i * 260); }
   }
-  const elapsed = () => (performance.now() - t0) / 1000 + penalty;
-  function showTime() { $('time').textContent = (timing ? elapsed() : 0).toFixed(1); }
-  setInterval(() => { if (timing) showTime(); }, 100);
-  function plus(o) {
+  const left = () => Math.max(0, ROUND_SEC - (performance.now() - t0) / 1000);
+  function showTime() { $('time').textContent = Math.ceil(timing ? left() : ROUND_SEC); $('clockBox').classList.toggle('hurry', timing && left() <= 5); }
+  setInterval(() => { if (!timing) return; showTime(); if (left() <= 0) endRound(gen); }, 100);
+  function minus(o) {
     const r = o.el.getBoundingClientRect(), p = document.createElement('div');
-    p.className = 'fx plus'; p.textContent = `+${PENALTY}`; p.style.cssText = `position:fixed;left:${r.left + r.width / 2}px;top:${r.top}px`;
+    p.className = 'fx plus'; p.textContent = '-1'; p.style.cssText = `position:fixed;left:${r.left + r.width / 2}px;top:${r.top}px`;
     document.body.append(p);
     p.animate([{ transform: 'translate(-50%,0) scale(.6)', opacity: 0 }, { transform: 'translate(-50%,-30px) scale(1.2)', opacity: 1, offset: .3 }, { transform: 'translate(-50%,-70px)', opacity: 0 }], { duration: 1000, easing: 'ease-out' }).finished.then(() => p.remove());
-    $('time').animate([{ color: '#d32f2f', scale: '1.3' }, { color: '', scale: '1' }], { duration: 600 });
+    $('score').animate([{ color: '#d32f2f', scale: '1.3' }, { color: '', scale: '1' }], { duration: 600 });
   }
 
   // 每回合隨機換分類（不連續同一個）
   function pickCat() {
-    cat = pick(CATS.filter(c => c !== lastCat)); lastCat = cat;
+    const used = results.map(r => r.cat);   // 同一局 3 輪不重複分類
+    cat = pick(CATS.filter(c => c !== lastCat && !used.includes(c))); lastCat = cat;
     yes = all.filter(inCat);
     no = all.filter(w => group(w.topic) !== cat.group && !cat.avoid.includes(w.id) && !Dino.isDino(w) && !/^(number|color|shape)$/.test(w.topic));
   }
-  function start(newCat) {
-    gen++; hatching = false; timing = false; penalty = 0; found = []; sinceHit = 0; Dino.voice.stop();
+  function start() {
+    gen++; hatching = false; timing = false; round = 0; results = []; score = 0; found = []; allFound = []; sinceHit = 0; lastCat = null; Dino.voice.stop();
     document.querySelectorAll('.fly').forEach(n => n.remove());
-    if (newCat || !cat) pickCat();
-    buildField(); renderBar();
+    pickCat(); buildField(); renderBar();
     if (!$('start').hidden) return;
     announce(gen);
   }
   $('ask').addEventListener('click', sayCat);
-  $('start').addEventListener('click', () => { $('start').hidden = true; Dino.bgm.stop(); Dino.sfx('tap', .5); start(false); });
-  $('done').querySelector('button').addEventListener('click', () => { $('done').hidden = true; Dino.bgm.stop(); Dino.sfx('tap', .5); start(true); });
-  let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => start(false), 300); });
+  $('start').addEventListener('click', () => { $('start').hidden = true; Dino.bgm.stop(); Dino.sfx('tap', .5); start(); });
+  $('done').querySelector('button').addEventListener('click', () => { $('done').hidden = true; Dino.bgm.stop(); Dino.sfx('tap', .5); start(); });
+  let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (!timing) buildField(); }, 300); });
 
   setKidText($('title'), '恐龍蛋快打');
   // 標題列統一（導演 2026-10-29）：? 玩法框、⚙ 回開始畫面（停掉這回合，按開始重來同一分類）
@@ -259,5 +268,5 @@
   fetch('data.json').then(r => r.json()).then(d => {
     all = d.filter(w => w.image || (w.sheet && Number.isInteger(w.cell)));
     return fetch('whack_categories.json').then(r => r.json());
-  }).then(c => { CATS = c.categories; start(true); });
+  }).then(c => { CATS = c.categories; start(); });
 })();

@@ -236,6 +236,116 @@
     "new-chameleon",
     "animal-snake"
    ]
+  },
+  {
+   "id": "wild",
+   "zh": "野生動物",
+   "zhuyin": [
+    "ㄧㄝˇ",
+    "ㄕㄥ",
+    "ㄉㄨㄥˋ",
+    "ㄨˋ"
+   ],
+   "en": "wild animals",
+   "group": "animal",
+   "yes": [
+    "animal-elephant",
+    "animal-lion",
+    "animal-bear",
+    "animal-monkey",
+    "animal-giraffe",
+    "animal-zebra",
+    "animal-panda",
+    "animal-fox",
+    "animal-tiger",
+    "kidapp-koala",
+    "kidapp-bat",
+    "kidapp-hedgehog",
+    "kidapp-kangaroo",
+    "kidapp-squirrel",
+    "new-deer",
+    "new-raccoon",
+    "new-otter",
+    "new-beaver",
+    "new-moose",
+    "new-armadillo",
+    "new-porcupine",
+    "new-lemur"
+   ],
+   "avoid": []
+  },
+  {
+   "id": "snack",
+   "zh": "點心",
+   "zhuyin": [
+    "ㄉㄧㄢˇ",
+    "ㄒㄧㄣ"
+   ],
+   "en": "snacks",
+   "group": "food",
+   "yes": [
+    "food-cake",
+    "food-cookie",
+    "food-ice-cream",
+    "food-donut",
+    "kidapp-candy",
+    "kidapp-chocolate",
+    "kidapp-popcorn"
+   ],
+   "avoid": [
+    "food-milk",
+    "kidapp-honey",
+    "new-butter",
+    "new-jam",
+    "new-juice",
+    "new-yogurt"
+   ]
+  },
+  {
+   "id": "clothes",
+   "zh": "衣服",
+   "zhuyin": [
+    "ㄧ",
+    "ㄈㄨˊ"
+   ],
+   "en": "clothes",
+   "group": "clothes",
+   "yes": [
+    "object-shoe",
+    "object-hat",
+    "kidapp-sock",
+    "kidapp-shirt",
+    "kidapp-pants",
+    "kidapp-dress"
+   ],
+   "avoid": [
+    "object-backpack",
+    "object-umbrella",
+    "kidapp-bag",
+    "new-suitcase",
+    "new-wallet",
+    "new-zipper"
+   ]
+  },
+  {
+   "id": "bug",
+   "zh": "蟲蟲",
+   "zhuyin": [
+    "ㄔㄨㄥˊ",
+    "ㄔㄨㄥˊ"
+   ],
+   "en": "bugs",
+   "group": "animal",
+   "yes": [
+    "animal-butterfly",
+    "animal-bee",
+    "kidapp-ant",
+    "kidapp-ladybug",
+    "kidapp-snail",
+    "kidapp-spider",
+    "new-worm"
+   ],
+   "avoid": []
   }
  ]
 }

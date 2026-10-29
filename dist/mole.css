@@ -90,3 +90,18 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
 .bpm-tone{position:absolute;right:-.55em;top:85%;transform:translateY(-50%) scale(1.5,1.8);font-size:1.2em;font-weight:900;color:#d32f2f;line-height:1}
 .bpm-tone-dot{position:absolute;right:0;top:-.6em;font-size:1.4em;font-weight:900;color:#d32f2f;line-height:1}
 @media(max-width:900px){.clock{font-size:26px;padding:2px 8px}.mini{width:38px;height:38px;padding:2px}.bar{gap:8px}.ask{font-size:30px;gap:6px;padding:4px 6px}.dots{max-width:90px;gap:5px}.dots i{width:14px;height:14px}.buddy{height:84px}}
+/* 計分制（導演 2026-10-29）：倒數秒數、本輪分數、3 輪進度點 */
+.score{display:flex;align-items:center;gap:4px;padding:4px 12px;border-radius:16px;background:#ffca58;color:#573e1d;box-shadow:0 3px 0 #c9902e;font:1000 34px "Naikai",ui-rounded,system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.score span{font-size:.7em;color:#d0601a}
+.score b{display:inline-block;min-width:1.2em;text-align:center}
+.clock.hurry{background:#d32f2f;animation:breathe .45s ease-in-out infinite alternate}
+.dots i.now{background:#fff;box-shadow:0 0 0 3px #f6ac34}
+.layer .rounds{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:0;padding:0;list-style:none}
+.layer .rounds li{display:flex;align-items:center;gap:10px;padding:6px 14px;border-radius:16px;background:#fffdf2;color:#573e1d;font:1000 24px "Naikai",ui-rounded,system-ui,sans-serif}
+.layer .rounds li b{display:grid;place-items:center;min-width:38px;height:38px;border-radius:50%;background:#ffca58;color:#573e1d;font-size:22px}
+@media(max-width:900px){.score{font-size:26px;padding:2px 8px}.layer .rounds li{font-size:18px;padding:4px 10px}}
+/* 直式窄螢幕：計分制多了分數框，資訊列可換行、示意小圖收起（2026-10-29） */
+@media(max-width:700px){.bar{flex-wrap:wrap;row-gap:4px;padding-right:10px}.eg{display:none}.ask{font-size:26px}.buddy{height:70px;margin:-14px 0 -8px}.clock,.score{font-size:22px}}
+/* 結算畫面圖卡變多（3 輪）：內容超出時可捲動，上緣不被切掉 */
+#done{align-content:safe center;overflow-y:auto;padding:24px 12px}
+#done .cheer{flex:none}
