@@ -42,7 +42,7 @@ python3 -m http.server 4173 -d dist
 
 正式網址（導演 2026-10-29 改用 Pages）：[開啟遊戲](https://simi-dinopostgame.pages.dev/)。Cloudflare Pages 專案 `simi-dinopostgame` 連接此 GitHub 倉庫，production branch `main`，Build command 留空，輸出目錄 `dist`；推 `main` 即自動部署，`dist/_headers` 照常生效。
 
-舊網址 `dinopostgame.simonw0718.workers.dev`（Worker Static Assets，Deploy command `npx wrangler deploy`）仍同時部署，等導演確認新網址後再決定是否停用。
+舊網址 `dinopostgame.simonw0718.workers.dev`（Worker Static Assets）已於 2026-10-29 停用 workers.dev 網址（導演決定）；正式只用 Pages。
 
 ## 題庫維護
 
