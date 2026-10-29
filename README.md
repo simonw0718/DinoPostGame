@@ -68,6 +68,8 @@ python3 tools/check_data.py
 
 介面與各批插畫為本專案衍生素材；部分早期詞彙與錄音整理自專案作者的 [kidsapp](https://github.com/simonw0718/kidsapp)。現行題庫不再引用匯入的 kidsapp 圖片；舊檔移到 `art-source/kidsapp/`（不部署），供來源追溯與回退。新插畫仍屬候選，需要日後逐張美術與科學辨識審核。此倉庫未宣告開源授權；使用素材前請另行確認權利。
 
+音效 `dist/assets/audio/effects/` 全部（correct、wrong、stamp、finish、tap、swoosh、pop、dino-chirp、dino-roar）來自 Pixabay，Pixabay Content License，剪裁並調整音量後使用（導演 2026-10-29 確認）；作品頁網址未記錄。選單配樂 `dist/assets/audio/bgm/` 來源待確認。
+
 本機 Obsidian vault 留在工作專案內，不包含在公開倉庫中。
 
 ## 英文單字音檔
