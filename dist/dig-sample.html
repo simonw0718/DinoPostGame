@@ -8,45 +8,80 @@
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="fonts.css">
   <script src="shared.js"></script>
+  <link rel="stylesheet" href="dino-mode.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css"><link rel="stylesheet" href="howto.css">
   <style>
-    /* 挖化石 sample（導演 2026-10-29）：照筆順挖土才挖得下去；微 2.5D 土塊（頂面壓扁＋前側土層＋溝內遠牆） */
-    :root { --sky: #9fd8f2; --sky2: #e6f6fc; --ink: #4a2f1c; --soil: #c98f55; --soil-dark: #8a5530; --wall: #a8693a; --floor: #6e4024; --bone: #f6ead2; --bone-line: #b99a6c; }
+    /* 挖化石 sample（導演 2026-10-29）：照筆順挖土才挖得下去；微 2.5D 土塊（頂面微斜＋前側土層＋溝內遠牆）。
+       版面照走小路：標題列 .gh（房子／注音標題／? 玩法／⚙ 難度選單）、下一列說明泡泡＋化石圖鑑、開始選單兼難度。 */
+    :root { --ink: #4a2f1c; --cream: #fffdf2; --gold: #e3bd70; --bone: #f6ead2; --bone-line: #b99a6c; font-family: "Naikai", ui-rounded, "Noto Sans TC", system-ui, sans-serif; color: var(--ink); }
     * { box-sizing: border-box; }
-    html, body { margin: 0; height: 100%; overflow: hidden; background: linear-gradient(var(--sky), var(--sky2) 70%); font-family: "Naikai", system-ui, sans-serif; color: var(--ink); -webkit-user-select: none; user-select: none; touch-action: none; }
-    .shell { position: fixed; inset: 0; display: flex; flex-direction: column; padding: env(safe-area-inset-top) 12px env(safe-area-inset-bottom); }
-    .top { display: flex; align-items: center; gap: 10px; padding: 10px 4px 6px; }
-    .top h1 { margin: 0; font-size: clamp(22px, 4vw, 32px); }
-    .book { margin-left: auto; display: flex; gap: 8px; }
+    html, body { height: 100%; margin: 0; }
+    body { overflow: hidden; background: linear-gradient(#9fd8f2, #e6f6fc 70%); -webkit-user-select: none; user-select: none; }
+    button { font: inherit; color: inherit; cursor: pointer; }
+    .dg-shell { position: relative; display: flex; flex-direction: column; height: 100svh; max-width: 1200px; margin: 0 auto; padding: max(10px, env(safe-area-inset-top)) 14px max(10px, env(safe-area-inset-bottom)); gap: 10px; }
+    .dg-info { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex: none; }
+    .dg-bubble { margin: 0; padding: 8px 16px; border: 3px solid var(--gold); border-radius: 20px; background: var(--cream); font-size: clamp(18px, 4.4vw, 26px); font-weight: 1000; box-shadow: 0 4px 0 #c89c52; min-height: 1.6em; }
+    .book { display: flex; gap: 8px; }
     .book span { width: clamp(40px, 7vw, 56px); aspect-ratio: 1; border-radius: 12px; display: grid; place-items: center; font-size: clamp(24px, 4.5vw, 36px); background: #fff8; border: 3px dashed #8a553066; color: transparent; transition: .3s; }
     .book span.got { background: var(--bone); border: 3px solid var(--bone-line); color: var(--ink); transform: scale(1.08); }
-    .levels { display: flex; gap: 6px; }
-    .levels button { font: inherit; font-size: clamp(14px, 2.4vw, 18px); padding: 6px 12px; border-radius: 999px; border: 2px solid var(--soil-dark); background: #fff; color: var(--ink); }
-    .levels button[aria-pressed="true"] { background: var(--soil-dark); color: #fff; }
-    .bubble { min-height: 1.6em; margin: 2px 4px; font-size: clamp(18px, 3.2vw, 26px); text-align: center; }
-    main { position: relative; flex: 1; min-height: 0; }
-    svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .dg-stage { position: relative; flex: 1; min-height: 0; touch-action: none; }
+    .dg-stage svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; touch-action: none; }
     .fossil-card { position: absolute; left: 50%; top: 8%; transform: translate(-50%, 0) scale(.4); opacity: 0; pointer-events: none; font-size: clamp(90px, 18vw, 150px); line-height: 1; padding: 10px 34px 18px; border-radius: 28px; background: var(--bone); border: 6px solid var(--bone-line); box-shadow: 0 10px 0 #0002; transition: transform .45s cubic-bezier(.3,1.6,.5,1), opacity .25s; }
     .fossil-card.show { transform: translate(-50%, 0) scale(1); opacity: 1; }
-    .overlay { position: fixed; inset: 0; display: grid; place-items: center; background: #0006; }
+    /* 開始選單／完成卡：同走小路 */
+    .overlay { position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; padding: 16px; background: #0e3a28aa; }
     .overlay[hidden] { display: none; }
-    .card { background: #fffaf0; border-radius: 28px; padding: 24px 34px; text-align: center; font-size: 24px; }
-    .card img { height: 160px; }
-    .card button { font: inherit; font-size: 22px; padding: 10px 26px; border-radius: 999px; border: 0; background: var(--soil-dark); color: #fff; margin-top: 10px; }
+    .pick { display: flex; align-items: center; gap: 8px; padding: 8px 14px; border: 4px solid var(--gold); border-radius: 999px; background: var(--cream); font-size: clamp(18px, 5vw, 24px); font-weight: 1000; box-shadow: 0 5px 0 #c89c52; }
+    .pick button { min-width: 84px; min-height: 52px; padding: 4px 12px; border: 3px solid #cfe0c8; border-radius: 16px; background: #f1f7ea; }
+    .pick button[aria-pressed="true"] { background: linear-gradient(#ffca58, #f6ac34); border-color: #b9792b; color: #573e1d; box-shadow: 0 3px 0 #b9792b; }
+    .go { display: grid; place-items: center; width: 128px; height: 128px; padding-left: 10px; border: 7px solid var(--cream); border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ff8a6e, #e0473a 60%, #b8322a); color: var(--cream); font-size: 56px; box-shadow: 0 8px 0 #8e2620; }
+    .label { white-space: nowrap; padding: 10px 20px; border: 4px solid var(--gold); border-radius: 999px; background: var(--cream); font-size: clamp(18px, 5.2vw, 28px); font-weight: 1000; box-shadow: 0 5px 0 #c89c52; }
+    .card { display: grid; justify-items: center; gap: 10px; width: min(92vw, 400px); padding: 22px; border: 6px solid var(--gold); border-radius: 28px; background: var(--cream); text-align: center; box-shadow: 0 12px 0 #c89c52; }
+    .card img { height: 130px; }
+    .card h2 { margin: 0; font-size: clamp(24px, 6.4vw, 38px); }
+    .stars { margin: 0; color: #f2b945; font-size: 44px; letter-spacing: .08em; }
+    .actions { display: flex; gap: 12px; width: 100%; }
+    .actions button, .actions a { flex: 1; min-height: 54px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 16px; font-size: clamp(17px, 4.8vw, 22px); font-weight: 1000; text-decoration: none; color: #17593f; }
+    .actions button { background: linear-gradient(#ffca58, #f6ac34); box-shadow: 0 5px 0 #b9792b; }
+    .actions a { background: #e5f2df; box-shadow: 0 5px 0 #a9c8a2; }
+    .bpm-word { display: inline-flex; align-items: center; justify-content: center; flex: none; padding-right: .26em; white-space: nowrap; }
+    .bpm-main-char { display: inline-block; flex: none; font-size: 1em; line-height: 1.04; }
+    .bpm-column { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; flex: none; margin-left: .05em; font-size: .4em; font-weight: 850; line-height: 1; }
+    .bpm-onset, .bpm-rime { display: block; line-height: 1.03; }
+    .bpm-tone { position: absolute; right: -.55em; top: 85%; transform: translateY(-50%) scale(1.5, 1.8); font-size: 1.2em; font-weight: 900; color: #d32f2f; line-height: 1; }
+    .bpm-tone-dot { position: absolute; right: 0; top: -.6em; font-size: 1.4em; font-weight: 900; color: #d32f2f; line-height: 1; }
+    @media (max-width: 680px) { .dg-info { flex-wrap: wrap; } .dg-bubble { order: 2; flex: 1 1 100%; text-align: center; } .book { order: 1; margin-left: auto; } }
+    @media (max-width: 430px) { .pick { gap: 5px; padding: 6px 8px; font-size: 18px; } .pick button { min-width: 0; padding: 4px 8px; } }
   </style>
 </head>
 <body>
-  <div class="shell">
-    <div class="top">
-      <h1>挖化石</h1>
-      <div class="levels" role="group" aria-label="難度">
-        <button type="button" data-lv="novice">新手</button><button type="button" data-lv="easy">簡單</button><button type="button" data-lv="hard">困難</button>
-      </div>
+  <div class="dg-shell">
+    <header class="gh gh-light">
+      <a class="dino-home" href="index.html" aria-label="回選遊戲首頁"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.6 1.6 11.4a1 1 0 0 0 1.3 1.5L4.5 11.6V20a1.5 1.5 0 0 0 1.5 1.5h3.8v-5.8a.7.7 0 0 1 .7-.7h3a.7.7 0 0 1 .7.7v5.8H18a1.5 1.5 0 0 0 1.5-1.5v-8.4l1.6 1.3a1 1 0 0 0 1.3-1.5Z"/></svg></a>
+      <h1 id="title" class="gh-title">挖化石</h1>
+      <div class="gh-tools"><button id="help" class="gh-btn" type="button" aria-label="玩法">?</button><button id="menuBtn" class="gh-btn" type="button" aria-label="難度選單"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96a7 7 0 0 0-1.62-.94l-.36-2.54a.48.48 0 0 0-.48-.41h-3.84a.47.47 0 0 0-.47.41l-.36 2.54a7.4 7.4 0 0 0-1.62.94l-2.39-.96a.48.48 0 0 0-.59.22L2.74 8.87a.47.47 0 0 0 .12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54a7 7 0 0 0 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.47.47 0 0 0-.12-.61zM12 15.6a3.6 3.6 0 1 1 0-7.2 3.6 3.6 0 0 1 0 7.2z"/></svg></button></div>
+    </header>
+    <div class="dg-info">
+      <p id="bubble" class="dg-bubble" role="status" aria-live="polite"></p>
       <div class="book" id="book" aria-label="化石圖鑑"></div>
     </div>
-    <p class="bubble" id="bubble" role="status" aria-live="polite"></p>
-    <main id="stage"><svg id="svg" aria-label="土堆"></svg><div class="fossil-card" id="fossilCard"></div></main>
+    <main id="stage" class="dg-stage"><svg id="svg" aria-label="土堆"></svg><div class="fossil-card" id="fossilCard"></div></main>
   </div>
-  <div class="overlay" id="finish" hidden><div class="card"><img id="finishImg" alt=""><p id="finishText">化石都挖出來了！</p><button type="button" id="again">再挖一次</button></div></div>
+
+  <div id="ready" class="overlay">
+    <div class="pick" role="group" aria-label="難度"><button type="button" data-lv="novice">新手</button><button type="button" data-lv="easy">簡單</button><button type="button" data-lv="hard">困難</button></div>
+    <button id="start" type="button" style="display:flex;flex-direction:column;align-items:center;gap:18px;border:0;background:none">
+      <span class="go" aria-hidden="true">▶</span><span id="startLabel" class="label">點一下，開始挖化石！</span>
+    </button>
+  </div>
+
+  <div id="finish" class="overlay" hidden>
+    <div class="card">
+      <img id="finishImg" alt="">
+      <h2 id="finishTitle">化石都挖出來了！</h2>
+      <p id="finishStars" class="stars"></p>
+      <div class="actions"><button id="again" type="button">再挖一次</button><a href="index.html">回首頁</a></div>
+    </div>
+  </div>
 
 <script>
 (() => {
@@ -320,8 +355,9 @@
     if (idx >= SYMBOLS.length) {
       Dino.sfx('finish', .8);
       $('finishImg').src = 'assets/cast/xiaokong__cheer.webp';
-      $('finishText').textContent = wobble <= 2 ? '★★★ 化石全部挖出來了！' : wobble <= 6 ? '★★ 化石挖出來了！' : '★ 挖到化石了，再練習一次！';
-      $('finish').hidden = false; return;
+      const n = wobble <= 2 ? 3 : wobble <= 6 ? 2 : 1;
+      $('finishStars').textContent = '★'.repeat(n) + '☆'.repeat(3 - n);
+      $('finish').hidden = false; Dino.bgm.start(); return;
     }
     load();
   }
@@ -337,15 +373,32 @@
     $('finish').hidden = true;
     load();
   }
-  document.querySelectorAll('.levels button').forEach(b => {
-    b.setAttribute('aria-pressed', b.dataset.lv === level);
-    b.addEventListener('click', () => {
-      level = b.dataset.lv; try { localStorage.setItem('dinopost-dig-level', level); } catch { /* ok */ }
-      document.querySelectorAll('.levels button').forEach(x => x.setAttribute('aria-pressed', x === b));
-      Dino.sfx('tap', .5); start();
-    });
+  // 標題列與選單照走小路：? 玩法框、⚙ 回開始選單（兼難度）、房子回首頁
+  const setKidText = Dino.kidText({
+    '挖化石': ['ㄨㄚ', 'ㄏㄨㄚˋ', 'ㄕˊ'],
+    '點一下，開始挖化石！': ['ㄉㄧㄢˇ', 'ㄧ', 'ㄒㄧㄚˋ', '', 'ㄎㄞ', 'ㄕˇ', 'ㄨㄚ', 'ㄏㄨㄚˋ', 'ㄕˊ', ''],
+    '從小旗子開始，照筆順挖': ['ㄘㄨㄥˊ', 'ㄒㄧㄠˇ', 'ㄑㄧˊ', 'ㄗ˙', 'ㄎㄞ', 'ㄕˇ', '', 'ㄓㄠˋ', 'ㄅㄧˇ', 'ㄕㄨㄣˋ', 'ㄨㄚ'],
+    '化石都挖出來了！': ['ㄏㄨㄚˋ', 'ㄕˊ', 'ㄉㄡ', 'ㄨㄚ', 'ㄔㄨ', 'ㄌㄞˊ', 'ㄌㄜ˙', ''],
+    '知道了': ['ㄓ', 'ㄉㄠˋ', 'ㄌㄜ˙'],
   });
-  $('again').addEventListener('click', start);
+  setKidText($('title'), '挖化石'); setKidText($('startLabel'), '點一下，開始挖化石！'); setKidText($('finishTitle'), '化石都挖出來了！');
+  const HOWTO_PV = `<svg viewBox="0 0 120 100" style="display:block;width:100%;max-height:220px"><rect x="6" y="8" width="108" height="80" rx="14" fill="#d9a468"/><rect x="6" y="80" width="108" height="14" rx="6" fill="#9b5f34"/>
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M40 22L39 74M40 22H80V70L72 75" stroke="#fff6e0" stroke-width="16"/><path d="M40 22L39 74M40 22H80V70L72 75" stroke="#e6b981" stroke-width="12"/><path d="M40 22L39.5 50" stroke="#6e4024" stroke-width="12"/></g>
+    <path d="M39 52V36" stroke="#5b3a1e" stroke-width="1.5"/><path d="M39 36l9 3-9 3z" fill="#e2483b"/><path d="M36 60l3 4 3-4" fill="none" stroke="#b5763f" stroke-width="2" stroke-linecap="round"/></svg>`;
+  const HW = Dino.howto({ preview: HOWTO_PV, text: '從小旗子開始，照筆順挖', kid: setKidText });
+  let howtoSeen = false;
+  const syncPick = () => document.querySelectorAll('[data-lv]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lv === level)));
+  document.querySelectorAll('[data-lv]').forEach(b => b.addEventListener('click', () => {
+    if (b.dataset.lv === level) return;
+    level = b.dataset.lv; try { localStorage.setItem('dinopost-dig-level', level); } catch { /* ok */ }
+    syncPick(); start();
+  }));
+  syncPick();
+  Dino.bgm.start(); Dino.menuTaps($('ready')); Dino.menuTaps($('finish'));
+  $('start').addEventListener('click', () => { $('ready').hidden = true; Dino.bgm.stop(); audio(); if (!howtoSeen) { howtoSeen = true; HW.show(); } });
+  $('help').addEventListener('click', () => { Dino.sfx('tap', .5); HW.show(); });
+  $('menuBtn').addEventListener('click', () => { pid = null; digging = false; Dino.sfx('tap', .5); $('ready').hidden = false; Dino.bgm.start(); });
+  $('again').addEventListener('click', () => { Dino.bgm.stop(); start(); });
   addEventListener('resize', () => { if (sym) build(); });
   Dino.preload?.(Object.values(VOICE));
   start();

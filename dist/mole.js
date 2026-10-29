@@ -17,7 +17,8 @@
   };
   // 分類名單唯一來源：whack_categories.json（yes＝答案、group＝干擾題排除的大類、avoid＝也不拿來當干擾題）
   let CATS = [];
-  const setKidText = Dino.kidText({ '請打': ['ㄑㄧㄥˇ', 'ㄉㄚˇ'], '恐龍蛋快打': ['ㄎㄨㄥˇ', 'ㄌㄨㄥˊ', 'ㄉㄢˋ', 'ㄎㄨㄞˋ', 'ㄉㄚˇ'] });
+  const setKidText = Dino.kidText({ '請打': ['ㄑㄧㄥˇ', 'ㄉㄚˇ'], '恐龍蛋快打': ['ㄎㄨㄥˇ', 'ㄌㄨㄥˊ', 'ㄉㄢˋ', 'ㄎㄨㄞˋ', 'ㄉㄚˇ'],
+    '聽題目，打對的蛋': ['ㄊㄧㄥ', 'ㄊㄧˊ', 'ㄇㄨˋ', '', 'ㄉㄚˇ', 'ㄉㄨㄟˋ', 'ㄉㄜ˙', 'ㄉㄢˋ'], '知道了': ['ㄓ', 'ㄉㄠˋ', 'ㄌㄜ˙'] });
   const group = t => t.split('.')[0];
 
   let lastTime = 0, t0 = 0, penalty = 0, timing = false, all = [], cat = null, lastCat = null, yes = [], no = [], spots = [], found = [], gen = 0, hatching = false, nextHatch = 0, sinceHit = 0;
@@ -246,6 +247,14 @@
   let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => start(false), 300); });
 
   setKidText($('title'), '恐龍蛋快打');
+  // 標題列統一（導演 2026-10-29）：? 玩法框、⚙ 回開始畫面（停掉這回合，按開始重來同一分類）
+  const HW = Dino.howto({ preview: 'mole.html', text: '聽題目，打對的蛋', kid: setKidText });
+  $('help').addEventListener('click', () => { Dino.sfx('tap', .5); HW.show(); });
+  $('menuBtn').addEventListener('click', () => {
+    if (!$('start').hidden) return;
+    gen++; timing = false; Dino.voice.stop(); $('intro').hidden = true; $('done').hidden = true;
+    Dino.sfx('tap', .5); $('start').hidden = false; Dino.bgm.start();
+  });
   Dino.bgm.start();
   fetch('data.json').then(r => r.json()).then(d => {
     all = d.filter(w => w.image || (w.sheet && Number.isInteger(w.cell)));
