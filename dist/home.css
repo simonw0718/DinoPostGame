@@ -101,3 +101,9 @@ body[data-page="select"] .game-choices.paged::-webkit-scrollbar{display:none}
 .game-choice.is-pack{position:relative;border-color:#d8b97e;background:#f8efd9;box-shadow:0 6px 0 #c09a5c;color:#6b4a1c}
 .game-choice.is-pack .game-choice-copy small{color:#9a7a4c}
 .game-choice.is-pack:active{box-shadow:0 2px 0 #c09a5c}
+.game-choice.is-dig{position:relative}
+/* 開場前先藏（index.html head 設 data-intro=pending，home-intro.js 接手後拿掉；2026-10-29 導演回報 iPhone 先閃主畫面） */
+html[data-intro="pending"] .selector-letter,html[data-intro="pending"] .start-sticker,html[data-intro="pending"] .start-feifei,html[data-intro="pending"] .start-abao{opacity:0}
+/* 分頁鈕平分寬度不超出信紙（2026-10-29 導演回報 iPhone 超框） */
+.pager .tab{flex:1 1 0;min-width:0;justify-content:center}
+@media(max-width:480px){.pager{gap:5px}.pager .tab{gap:2px;padding:3px 4px;font-size:13px;border-width:2px}.pager .tab .tab-icon{display:none}}

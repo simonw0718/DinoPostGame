@@ -13,7 +13,8 @@
   const letter = document.querySelector('.selector-letter');
   const choices = [...document.querySelectorAll('.game-choice')];
   const stickers = [...document.querySelectorAll('.start-sticker,.start-feifei,.start-abao')];
-  const done = () => { if (screen?.dataset.intro === 'done') return; if (screen) screen.dataset.intro = 'done'; document.dispatchEvent(new Event('intro:done')); };
+  const unhide = () => { delete document.documentElement.dataset.intro; };
+  const done = () => { unhide(); if (screen?.dataset.intro === 'done') return; if (screen) screen.dataset.intro = 'done'; document.dispatchEvent(new Event('intro:done')); };
   let seen = false; try { seen = sessionStorage.getItem('dino-intro') === '1'; sessionStorage.setItem('dino-intro', '1'); } catch {}
   if (!screen || !letter || matchMedia('(prefers-reduced-motion: reduce)').matches) { done(); return; }
   // 切換 DINO MODE 時重播（dino-anim.js 發 intro:replay）
@@ -55,6 +56,7 @@
     { opacity: 1, transform: 'translateY(0) rotate(1deg)' },
   ], { delay: 2900, duration: 650, easing: ease.out });
   stickers.forEach(s => anim(s, [{ opacity: 0 }, { opacity: 0 }], { duration: 3400 }));
+  unhide();   // 動畫已接手藏住信紙／角色
   choices.forEach(c => anim(c, [{ opacity: 0 }, { opacity: 0 }], { duration: 3400 }));
   choices.forEach((c, i) => anim(c, [{ opacity: 0, transform: 'translateY(18px) scale(.92)' }, { opacity: 1, transform: 'none' }], { delay: 3400 + i * 120, duration: 420, easing: ease.back }));
   stickers.forEach((s, i) => anim(s, [{ opacity: 0, transform: 'scale(.6) rotate(-12deg)' }, { opacity: 1, transform: 'none' }], { delay: 3500 + i * 90, duration: 380, easing: ease.back, composite: 'add' }));
