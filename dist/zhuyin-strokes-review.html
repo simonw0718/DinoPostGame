@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>注音筆順總覽・恐龍郵局</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="fonts.css">
+  <style>
+    /* 導演核對用：37 注音的筆畫中線（data/zhuyin_strokes.json）。①②③＝筆順、箭頭＝方向；點一格可直接試挖那個字 */
+    :root { --ink: #4a2f1c; font-family: "Naikai", ui-rounded, system-ui, sans-serif; color: var(--ink); }
+    body { margin: 0; padding: 16px; background: #fbf4e6; }
+    h1 { margin: 0 0 4px; font-size: 26px; }
+    p.lead { margin: 0 0 14px; font-size: 16px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+    a.cell { display: grid; gap: 4px; padding: 8px; border-radius: 16px; background: #fff; border: 3px solid #e3bd70; text-decoration: none; color: inherit; }
+    a.cell:active { transform: scale(.97); }
+    .head { display: flex; justify-content: space-between; align-items: baseline; font-size: 22px; font-weight: 1000; }
+    .head small { font-size: 14px; color: #8a5530; }
+    svg { width: 100%; aspect-ratio: 1; background: #d9a468; border-radius: 10px; }
+    .note { min-height: 2.4em; font-size: 13px; color: #8a5530; }
+  </style>
+</head>
+<body>
+  <h1>注音筆順總覽</h1>
+  <p class="lead">依教育部《國字標準字體筆順學習網》。數字＝第幾筆、箭頭＝往哪寫；點一格可以直接試挖那個字。</p>
+  <div class="grid" id="grid"></div>
+<script>
+fetch('data/zhuyin_strokes.json').then(r => r.json()).then(data => {
+  const COLORS = ['#e2483b', '#2f86c4', '#3c9a52', '#9a4fc0'];
+  const html = Object.entries(data.symbols).map(([ch, v]) => {
+    const d = pts => 'M' + pts.map(p => p.join(' ')).join('L');
+    const lc = 'fill="none" stroke-linecap="round" stroke-linejoin="round"';
+    const frame = v.strokes.map(s => `<path d="${d(s)}" stroke="#fff6e0" stroke-width="13.6" ${lc}/>`).join('') + v.strokes.map(s => `<path d="${d(s)}" stroke="#e6b981" stroke-width="11" ${lc}/>`).join('');
+    const lines = v.strokes.map((s, i) => {
+      const c = COLORS[i % 4], a = s[s.length - 2], b = s[s.length - 1], ang = Math.atan2(b[1] - a[1], b[0] - a[0]) * 180 / Math.PI;
+      return `<path d="${d(s)}" stroke="${c}" stroke-width="2.4" ${lc}/><path d="M-4 -3.5L1 0L-4 3.5" stroke="${c}" stroke-width="2.4" ${lc} transform="translate(${b[0]} ${b[1]}) rotate(${ang})"/>`
+        + `<circle cx="${s[0][0]}" cy="${s[0][1]}" r="5" fill="${c}"/><text x="${s[0][0]}" y="${s[0][1] + 2.4}" font-size="7" text-anchor="middle" fill="#fff" font-weight="700">${i + 1}</text>`;
+    }).join('');
+    return `<a class="cell" href="dig-sample.html?ch=${encodeURIComponent(ch)}"><div class="head">${ch}<small>${v.strokes.length} 筆</small></div><svg viewBox="0 0 100 100">${frame}${lines}</svg><div class="note">${v.note || ''}</div></a>`;
+  }).join('');
+  document.getElementById('grid').innerHTML = html;
+});
+</script>
+</body>
+</html>

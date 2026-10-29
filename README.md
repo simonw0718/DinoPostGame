@@ -58,6 +58,8 @@ python3 tools/word_audio.py status                    # 缺哪些英文／中文
 python3 tools/check_data.py
 ```
 
+注音筆順（挖化石）唯一來源 `dist/data/zhuyin_strokes.json`：`python3 tools/zhuyin_strokes.py fetch` 下載教育部《國字標準字體筆順學習網》37 頁到 `reference/raw/moe_zhuyin/`（不進 Git；網站 CC BY-NC-ND 3.0 TW），`build` 只取筆畫數、順序、方向與轉折點（0–100 格、整數、簡化），不複製字形外框；核對頁 `dist/zhuyin-strokes-review.html`。
+
 分級依據是官方字表：國教院「臺灣華語文能力基準」漢字表與詞語表、劍橋兒童英檢 Starters／Movers／Flyers 字表。原始檔放 `reference/raw/`（不進 Git），來源網址與 SHA 在 `reference/sources.json`；`python3 tools/build_reference_lists.py` 轉成 `reference/*.tsv`。
 
 `check_data.py` 是唯一的題庫檢查程式（沒有 Node 也能跑；舊的 `validate-data.mjs` 已移除），除了基本檢查，還會列出多餘的音檔、送信遊戲不會出到的詞，以及缺少的角色圖。`tools/check_flow.cjs` 是手機版操作的冒煙測試（需要 Node 和 playwright），目前裡面的按鈕文字還沒跟上現在的介面。

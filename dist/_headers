@@ -115,3 +115,9 @@
   Cache-Control: no-cache
 /dig-sample.html
   Cache-Control: no-cache
+/zhuyin-strokes-review
+  Cache-Control: no-cache
+/zhuyin-strokes-review.html
+  Cache-Control: no-cache
+/data/zhuyin_strokes.json
+  Cache-Control: no-cache
