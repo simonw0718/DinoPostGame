@@ -122,3 +122,28 @@
 .pv-pack .b2{left:81px;top:47px;animation:pvBox2 3.2s infinite}
 @keyframes pvBox1{0%,8%{transform:translate(52px,-30px) rotate(12deg);opacity:0}14%{opacity:1}30%,100%{transform:none;opacity:1}}
 @keyframes pvBox2{0%,30%{transform:translate(30px,40px) rotate(-12deg);opacity:0}36%{opacity:1}52%,100%{transform:none;opacity:1}}
+
+/* 預覽：草地土塊上 ㄇ 溝，手指照筆順挖（挖過變深）→ 化石出土 → 化石卡冒出、小恐龍跳；3.2s 循環 */
+.pv-dig{background:url(assets/egg/meadow.webp) 50% 100%/cover}
+.pv-dig svg{display:block;width:100%;height:100%}
+.pv-dig .soil{fill:#d9a468}.pv-dig .grass{fill:#7cb35a}
+.pv-dig path{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.pv-dig .groove path{stroke:#fff6e0;stroke-width:13}.pv-dig .groove-in path{stroke:#e6b981;stroke-width:10}
+.pv-dig .dug{stroke:#6e4024;stroke-width:10;stroke-dasharray:100;stroke-dashoffset:100}
+.pv-dig .d1{animation:pvDig1 3.2s linear infinite}.pv-dig .d2{animation:pvDig2 3.2s linear infinite}
+.pv-dig .bone{opacity:0;animation:pvDigBone 3.2s infinite}
+.pv-dig .bo{stroke:#b99a6c;stroke-width:8}.pv-dig .bi{stroke:#f6ead2;stroke-width:5}
+.pv-dig .flag path{stroke:#9b5f34;stroke-width:1.6}.pv-dig .flag .cloth{fill:#e8574a;stroke:none}.pv-dig .flag{animation:pvDigFlag 3.2s infinite}
+.pv-dig .tap{fill:rgba(255,255,255,.85);stroke:rgba(232,87,74,.7);stroke-width:3;opacity:0;animation:pvDigTap 3.2s infinite}
+.pv-dig .kong{transform-box:fill-box;transform-origin:50% 100%;animation:pvDigHop 3.2s infinite}
+.pv-dig .fcard{transform:translate(104px,30px) scale(0);animation:pvDigCard 3.2s infinite}
+.pv-dig .fcard rect{fill:#fffaf0;stroke:#b99a6c;stroke-width:2.5}
+.pv-dig .fcard text{text-anchor:middle;fill:#3d2a14;font:900 19px/1 "Naikai",ui-rounded,system-ui,sans-serif}
+@keyframes pvDig1{0%,4%{stroke-dashoffset:100}26%,90%{stroke-dashoffset:0}96%,100%{stroke-dashoffset:100}}
+@keyframes pvDig2{0%,30%{stroke-dashoffset:100}56%,90%{stroke-dashoffset:0}96%,100%{stroke-dashoffset:100}}
+@keyframes pvDigTap{0%{opacity:0;transform:translate(30px,44px)}4%{opacity:1;transform:translate(30px,44px)}26%{opacity:1;transform:translate(30px,80px)}28%{opacity:0;transform:translate(30px,80px)}29%{opacity:0;transform:translate(30px,44px)}30%{opacity:1;transform:translate(30px,44px)}42%{transform:translate(66px,44px)}54%{opacity:1;transform:translate(66px,78px)}58%,100%{opacity:0;transform:translate(60px,82px)}}
+@keyframes pvDigFlag{0%,26%{opacity:1}27%,100%{opacity:0}}
+@keyframes pvDigBone{0%,58%{opacity:0}66%,90%{opacity:1}96%,100%{opacity:0}}
+@keyframes pvDigCard{0%,62%{transform:translate(104px,30px) scale(0)}70%{transform:translate(104px,24px) scale(1.15)}75%,90%{transform:translate(104px,26px) scale(1)}96%,100%{transform:translate(104px,30px) scale(0)}}
+@keyframes pvDigHop{0%,62%,78%,100%{transform:none}68%{transform:translateY(-8px) scale(1.04,.96)}}
+@media(prefers-reduced-motion:reduce){.pv-dig .dug{stroke-dashoffset:0}.pv-dig .bone{opacity:1}.pv-dig .fcard{transform:translate(104px,26px)}}
