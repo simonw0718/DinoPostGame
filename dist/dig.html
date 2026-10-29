@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#7cc4e8">
-  <title>挖化石 sample・恐龍郵局</title>
+  <title>挖化石・恐龍郵局</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="fonts.css">
   <script src="shared.js"></script>
-  <link rel="stylesheet" href="dino-mode.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css"><link rel="stylesheet" href="howto.css">
+  <link rel="stylesheet" href="dino-mode.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css"><link rel="stylesheet" href="howto.css"><link rel="stylesheet" href="preview.css">
   <style>
     /* 挖化石 sample（導演 2026-10-29）：照筆順挖土才挖得下去；微 2.5D 土塊（頂面微斜＋前側土層＋溝內遠牆）。
        版面照走小路：標題列 .gh（房子／注音標題／? 玩法／⚙ 難度選單）、下一列說明泡泡＋化石圖鑑、開始選單兼難度。 */
@@ -28,6 +28,16 @@
     .book span.got { background: linear-gradient(145deg, #fffaf0, #ecdcb8); border: 3px solid var(--bone-line); color: var(--ink); box-shadow: 0 4px 8px #5a3a1a33, inset 0 -3px 0 #d8c39a; }
     .book span.got.pop { animation: slotPop .5s cubic-bezier(.3, 1.7, .5, 1); }
     @keyframes slotPop { from { transform: scale(.4); } }
+    /* 例詞（導演 2026-10-29）：這回合的注音出現在哪兩個詞，注音裡那個符號用黃底藍字標出；點一下念中文 */
+    .examples { display: flex; justify-content: center; gap: clamp(10px, 3vw, 24px); flex: none; margin-top: 10px; min-height: 0; }
+    .examples:empty { display: none; }
+    .ex { display: flex; align-items: center; gap: 8px; padding: 6px 14px 6px 8px; border: 3px solid var(--gold); border-radius: 18px; background: var(--cream); box-shadow: 0 4px 0 #0000001a; font-size: clamp(28px, 6vw, 40px); font-weight: 1000; color: var(--ink); }
+    .ex:active { transform: translateY(2px); box-shadow: 0 2px 0 #0000001a; }
+    .ex-art { width: clamp(44px, 9vw, 60px); height: clamp(44px, 9vw, 60px); display: grid; place-items: center; flex: none; object-fit: contain; font-size: .9em; line-height: 1; }
+    .ex-art.sheet { width: auto; aspect-ratio: 1; background-repeat: no-repeat; background-size: 500% 200%; }
+    .ex-art.sheet.animals { aspect-ratio: 4/5; }
+    .ex .bpm-column { font-size: .5em; }
+    .ex .hit { margin: .04em 0; padding: 0 .12em; border-radius: .25em; background: #ffd84d; color: #1e5fc4; font-weight: 1000; }
     .dg-stage { position: relative; flex: 1; min-height: 0; touch-action: none; }
     .dg-stage svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; touch-action: none; }
     /* 化石卡：從化石出土的位置冒出來，再飛進右上圖鑑（位置由 JS 算） */
@@ -72,6 +82,7 @@
       <p id="bubble" class="dg-bubble" role="status" aria-live="polite"></p>
       <div class="book" id="book" aria-label="化石圖鑑"></div>
     </div>
+    <div class="examples" id="examples" aria-label="有這個注音的詞"></div>
     <main id="stage" class="dg-stage"><svg id="svg" aria-label="土堆"></svg><div class="fossil-card" id="fossilCard"></div></main>
   </div>
 
@@ -97,7 +108,7 @@
   // 筆畫資料唯一來源：data/zhuyin_strokes.json（tools/zhuyin_strokes.py 由教育部筆順學習網的筆畫數／順序／方向產生，0–100 格）
   // 每回合隨機挑 ROUND 個注音；念音沿用 assets/audio/symbols.json（已核准的 37 注音音檔）
   const ROUND = 3;
-  let ALL = [], VOICE = {}, SYMBOLS = [];
+  let ALL = [], VOICE = {}, SYMBOLS = [], WORDS = [];
   const K = .86;         // 頂面壓扁比例（微 2.5D：只微斜，字形不變形；導演 10-29 嫌 .6 太斜）
   const W = 11;          // 溝寬（地面單位；筆畫多的 ㄓ ㄖ 也分得開）
   const DEPTH = 4.5;      // 溝底往下錯開，露出遠側土牆
@@ -437,8 +448,27 @@
   function load() {
     sym = SYMBOLS[idx]; strokeI = 0; dug = 0; done = false; lastMound = 0; lastGlint = 0; pose = 'busy_look';
     Dino.preload?.([VOICE[sym.ch]]);
-    build();
+    build(); showExamples();
     say(level === 'hard' ? '從小旗子開始，照筆順挖！' : '從小旗子開始，在字框裡照箭頭挖！');
+  }
+  // 例詞：題庫裡有圖、注音含這個符號的詞，先挑注音等級低、字少的前 8 個再隨機取 2 個
+  function showExamples() {
+    const box = $('examples'); box.replaceChildren();
+    const pool = WORDS.filter(w => w.pack !== 'dino' && (w.image || w.sheet) && [...w.zh].length === w.zhuyin.length && w.zhuyin.some(z => z.includes(sym.ch)))
+      .sort((a, b) => a.level.zhuyin - b.level.zhuyin || a.zh.length - b.zh.length).slice(0, 8);
+    Dino.shuffle(pool).slice(0, 2).forEach(w => {
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'ex'; b.setAttribute('aria-label', w.zh);
+      let art;
+      if (w.image) { art = document.createElement('img'); art.src = w.image; art.alt = ''; }
+      else { art = document.createElement('span'); art.classList.add('sheet', w.sheet); art.style.backgroundImage = `url('assets/${w.sheet}-grid-v1.jpg')`; art.style.backgroundPosition = `${(w.cell % 5) * 25}% ${w.cell < 5 ? 0 : 100}%`; }
+      art.classList.add('ex-art');
+      const word = document.createElement('span'); setKidText(word, w.zh, w.zhuyin);
+      word.querySelectorAll('.bpm-onset, .bpm-rime').forEach(s => { if (s.textContent === sym.ch) s.classList.add('hit'); });
+      b.append(art, word);
+      b.addEventListener('pointerdown', e => e.stopPropagation());
+      b.addEventListener('click', () => { if (w.zhAudio) Dino.voice(w.zhAudio); });
+      box.append(b);
+    });
   }
   function start() {
     idx = 0; wobble = 0;
@@ -457,10 +487,7 @@
     '知道了': ['ㄓ', 'ㄉㄠˋ', 'ㄌㄜ˙'],
   });
   setKidText($('title'), '挖化石'); setKidText($('startLabel'), '點一下，開始挖化石！'); setKidText($('finishTitle'), '化石都挖出來了！');
-  const HOWTO_PV = `<svg viewBox="0 0 120 100" style="display:block;width:100%;max-height:220px"><rect x="6" y="8" width="108" height="80" rx="14" fill="#d9a468"/><rect x="6" y="80" width="108" height="14" rx="6" fill="#9b5f34"/>
-    <g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M40 22L39 74M40 22H80V70L72 75" stroke="#fff6e0" stroke-width="16"/><path d="M40 22L39 74M40 22H80V70L72 75" stroke="#e6b981" stroke-width="12"/><path d="M40 22L39.5 50" stroke="#6e4024" stroke-width="12"/></g>
-    <path d="M39 52V36" stroke="#5b3a1e" stroke-width="1.5"/><path d="M39 36l9 3-9 3z" fill="#e2483b"/><path d="M36 60l3 4 3-4" fill="none" stroke="#b5763f" stroke-width="2" stroke-linecap="round"/></svg>`;
-  const HW = Dino.howto({ preview: HOWTO_PV, text: '從小旗子開始，照筆順挖', kid: setKidText });
+  const HW = Dino.howto({ preview: 'dig.html', text: '從小旗子開始，照筆順挖', kid: setKidText });
   let howtoSeen = false;
   const syncPick = () => document.querySelectorAll('[data-lv]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lv === level)));
   document.querySelectorAll('[data-lv]').forEach(b => b.addEventListener('click', () => {
@@ -475,7 +502,8 @@
   $('menuBtn').addEventListener('click', () => { pid = null; digging = false; Dino.sfx('tap', .5); $('ready').hidden = false; Dino.bgm.start(); });
   $('again').addEventListener('click', () => { Dino.bgm.stop(); start(); });
   addEventListener('resize', () => { if (sym) build(); });
-  Promise.all([fetch('data/zhuyin_strokes.json').then(r => r.json()), fetch('assets/audio/symbols.json').then(r => r.json())]).then(([st, au]) => {
+  Promise.all([fetch('data/zhuyin_strokes.json').then(r => r.json()), fetch('assets/audio/symbols.json').then(r => r.json()), fetch('data.json').then(r => r.json()).catch(() => [])]).then(([st, au, words]) => {
+    WORDS = words;
     ALL = Object.entries(st.symbols).map(([ch, v]) => ({ ch, strokes: v.strokes }));
     VOICE = au.zhuyin;
     start();
