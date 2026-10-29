@@ -40,9 +40,9 @@ python3 -m http.server 4173 -d dist
 
 ## Cloudflare 靜態託管
 
-目前網站由 **Cloudflare Worker Static Assets** 提供：[開啟遊戲](https://dinopostgame.simonw0718.workers.dev/)。這個 Worker 只提供 `dist/` 的靜態檔案，沒有執行伺服器程式。Cloudflare 已連接此 GitHub 倉庫，production branch 為 `main`，Build command 留空，Deploy command 為 `npx wrangler deploy`，根目錄為倉庫根目錄。Cloudflare 建置紀錄顯示自動偵測為 `Static`，輸出目錄為 `dist`。
+正式網址（導演 2026-10-29 改用 Pages）：[開啟遊戲](https://simi-dinopostgame.pages.dev/)。Cloudflare Pages 專案 `simi-dinopostgame` 連接此 GitHub 倉庫，production branch `main`，Build command 留空，輸出目錄 `dist`；推 `main` 即自動部署，`dist/_headers` 照常生效。
 
-因此現有的 Worker 已符合靜態網站託管需求。若未來需要 Pages 專屬流程，可以另建 Pages 專案；目前不需要為了顯示這個網站而遷移。
+舊網址 `dinopostgame.simonw0718.workers.dev`（Worker Static Assets，Deploy command `npx wrangler deploy`）仍同時部署，等導演確認新網址後再決定是否停用。
 
 ## 題庫維護
 
