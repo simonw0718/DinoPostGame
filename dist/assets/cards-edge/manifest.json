@@ -1,0 +1,1097 @@
+{
+ "animal-cat": {
+  "sheet": "animals",
+  "cell": 0
+ },
+ "food-egg": {
+  "sheet": "food",
+  "cell": 6
+ },
+ "food-rice": {
+  "image": "assets/rebuilt/emoji-6x8-v1/food-rice.png"
+ },
+ "food-milk": {
+  "image": "assets/rebuilt/emoji-6x8-v1/food-milk.png"
+ },
+ "kidapp-spider": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-spider.png"
+ },
+ "kidapp-cloud": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-cloud.png"
+ },
+ "kidapp-snow": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-snow.png"
+ },
+ "kidapp-sock": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-sock.png"
+ },
+ "kidapp-paper": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-paper.png"
+ },
+ "kidapp-purple": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-purple.png"
+ },
+ "kidapp-ocean": {
+  "image": "assets/rebuilt/kidapp-ocean.png"
+ },
+ "kidapp-rainbow": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-rainbow.png"
+ },
+ "kidapp-magnet": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-magnet.png"
+ },
+ "kidapp-zoo": {
+  "image": "assets/rebuilt/kidapp-zoo.png"
+ },
+ "new-sand": {
+  "image": "assets/rebuilt/new100/new-sand.png"
+ },
+ "new-pond": {
+  "image": "assets/rebuilt/new100/new-pond.png"
+ },
+ "new-cave": {
+  "image": "assets/rebuilt/new100/new-cave.png"
+ },
+ "new-swamp": {
+  "image": "assets/rebuilt/new100/new-swamp.png"
+ },
+ "animal-dog": {
+  "sheet": "animals",
+  "cell": 1
+ },
+ "animal-cow": {
+  "sheet": "animals",
+  "cell": 2
+ },
+ "animal-pig": {
+  "sheet": "animals",
+  "cell": 3
+ },
+ "animal-horse": {
+  "sheet": "animals",
+  "cell": 4
+ },
+ "animal-rabbit": {
+  "sheet": "animals",
+  "cell": 5
+ },
+ "animal-elephant": {
+  "sheet": "animals",
+  "cell": 6
+ },
+ "animal-lion": {
+  "sheet": "animals",
+  "cell": 7
+ },
+ "animal-bear": {
+  "sheet": "animals",
+  "cell": 8
+ },
+ "animal-frog": {
+  "sheet": "animals",
+  "cell": 9
+ },
+ "food-apple": {
+  "sheet": "food",
+  "cell": 0
+ },
+ "food-banana": {
+  "sheet": "food",
+  "cell": 1
+ },
+ "food-strawberry": {
+  "sheet": "food",
+  "cell": 2
+ },
+ "food-watermelon": {
+  "sheet": "food",
+  "cell": 3
+ },
+ "food-carrot": {
+  "sheet": "food",
+  "cell": 4
+ },
+ "food-bread": {
+  "sheet": "food",
+  "cell": 5
+ },
+ "food-cheese": {
+  "sheet": "food",
+  "cell": 7
+ },
+ "food-pizza": {
+  "sheet": "food",
+  "cell": 8
+ },
+ "food-cake": {
+  "sheet": "food",
+  "cell": 9
+ },
+ "object-ball": {
+  "sheet": "objects",
+  "cell": 0
+ },
+ "object-book": {
+  "sheet": "objects",
+  "cell": 1
+ },
+ "object-pencil": {
+  "sheet": "objects",
+  "cell": 2
+ },
+ "object-chair": {
+  "sheet": "objects",
+  "cell": 3
+ },
+ "object-cup": {
+  "sheet": "objects",
+  "cell": 4
+ },
+ "object-toothbrush": {
+  "sheet": "objects",
+  "cell": 5
+ },
+ "object-shoe": {
+  "sheet": "objects",
+  "cell": 6
+ },
+ "object-hat": {
+  "sheet": "objects",
+  "cell": 7
+ },
+ "object-backpack": {
+  "sheet": "objects",
+  "cell": 8
+ },
+ "object-umbrella": {
+  "sheet": "objects",
+  "cell": 9
+ },
+ "animal-duck": {
+  "image": "assets/rebuilt/emoji-6x8-v1/animal-duck.png"
+ },
+ "animal-sheep": {
+  "image": "assets/rebuilt/emoji-6x8-v1/animal-sheep.png"
+ },
+ "animal-monkey": {
+  "image": "assets/rebuilt/emoji-6x8-v1/animal-monkey.png"
+ },
+ "animal-giraffe": {
+  "image": "assets/rebuilt/emoji-6x8-v1/animal-giraffe.png"
+ },
+ "animal-zebra": {
+  "image": "assets/rebuilt/emoji-6x8-v1/animal-zebra.png"
+ },
+ "animal-panda": {
+  "image": "assets/rebuilt/emoji-6x8-v1/animal-panda.png"
+ },
+ "animal-turtle": {
+  "image": "assets/rebuilt/emoji-6x8-v1/animal-turtle.png"
+ },
+ "animal-fish": {
+  "image": "assets/rebuilt/emoji-6x8-v1/animal-fish.png"
+ },
+ "animal-crab": {
+  "image": "assets/rebuilt/emoji-6x8-v1/animal-crab.png"
+ },
+ "animal-butterfly": {
+  "image": "assets/rebuilt/emoji-6x8-v1/animal-butterfly.png"
+ },
+ "animal-bee": {
+  "image": "assets/rebuilt/emoji-6x8-v1/animal-bee.png"
+ },
+ "animal-snake": {
+  "image": "assets/rebuilt/emoji-6x8-v1/animal-snake.png"
+ },
+ "animal-mouse": {
+  "image": "assets/rebuilt/emoji-6x8-v1/animal-mouse.png"
+ },
+ "animal-fox": {
+  "image": "assets/rebuilt/emoji-6x8-v1/animal-fox.png"
+ },
+ "animal-tiger": {
+  "image": "assets/rebuilt/emoji-6x8-v1/animal-tiger.png"
+ },
+ "animal-penguin": {
+  "image": "assets/rebuilt/emoji-6x8-v1/animal-penguin.png"
+ },
+ "animal-bird": {
+  "image": "assets/rebuilt/emoji-6x8-v1/animal-bird.png"
+ },
+ "animal-octopus": {
+  "image": "assets/rebuilt/emoji-6x8-v1/animal-octopus.png"
+ },
+ "food-orange": {
+  "image": "assets/rebuilt/emoji-6x8-v1/food-orange.png"
+ },
+ "food-grape": {
+  "image": "assets/rebuilt/emoji-6x8-v1/food-grape.png"
+ },
+ "food-lemon": {
+  "image": "assets/rebuilt/emoji-6x8-v1/food-lemon.png"
+ },
+ "food-peach": {
+  "image": "assets/rebuilt/emoji-6x8-v1/food-peach.png"
+ },
+ "food-cherry": {
+  "image": "assets/rebuilt/emoji-6x8-v1/food-cherry.png"
+ },
+ "food-pineapple": {
+  "image": "assets/rebuilt/emoji-6x8-v1/food-pineapple.png"
+ },
+ "food-corn": {
+  "image": "assets/rebuilt/emoji-6x8-v1/food-corn.png"
+ },
+ "food-tomato": {
+  "image": "assets/rebuilt/emoji-6x8-v1/food-tomato.png"
+ },
+ "food-potato": {
+  "image": "assets/rebuilt/emoji-6x8-v1/food-potato.png"
+ },
+ "food-broccoli": {
+  "image": "assets/rebuilt/emoji-6x8-v1/food-broccoli.png"
+ },
+ "food-cookie": {
+  "image": "assets/rebuilt/emoji-6x8-v1/food-cookie.png"
+ },
+ "food-ice-cream": {
+  "image": "assets/rebuilt/emoji-6x8-v1/food-ice-cream.png"
+ },
+ "food-donut": {
+  "image": "assets/rebuilt/emoji-6x8-v1/food-donut.png"
+ },
+ "food-hamburger": {
+  "image": "assets/rebuilt/emoji-6x8-v1/food-hamburger.png"
+ },
+ "object-clock": {
+  "image": "assets/rebuilt/emoji-6x8-v1/object-clock.png"
+ },
+ "object-phone": {
+  "image": "assets/rebuilt/emoji-6x8-v1/object-phone.png"
+ },
+ "object-key": {
+  "image": "assets/rebuilt/emoji-6x8-v1/object-key.png"
+ },
+ "object-car": {
+  "image": "assets/rebuilt/emoji-6x8-v1/object-car.png"
+ },
+ "object-bus": {
+  "image": "assets/rebuilt/emoji-6x8-v1/object-bus.png"
+ },
+ "object-train": {
+  "image": "assets/rebuilt/emoji-6x8-v1/object-train.png"
+ },
+ "object-bicycle": {
+  "image": "assets/rebuilt/emoji-6x8-v1/object-bicycle.png"
+ },
+ "object-boat": {
+  "image": "assets/rebuilt/emoji-6x8-v1/object-boat.png"
+ },
+ "object-airplane": {
+  "image": "assets/rebuilt/emoji-6x8-v1/object-airplane.png"
+ },
+ "object-camera": {
+  "image": "assets/rebuilt/emoji-6x8-v1/object-camera.png"
+ },
+ "object-scissors": {
+  "image": "assets/rebuilt/emoji-6x8-v1/object-scissors.png"
+ },
+ "object-crayon": {
+  "image": "assets/rebuilt/emoji-6x8-v1/object-crayon.png"
+ },
+ "object-light": {
+  "image": "assets/rebuilt/emoji-6x8-v1/object-light.png"
+ },
+ "object-spoon": {
+  "image": "assets/rebuilt/emoji-6x8-v1/object-spoon.png"
+ },
+ "object-fork": {
+  "image": "assets/rebuilt/emoji-6x8-v1/object-fork.png"
+ },
+ "object-balloon": {
+  "image": "assets/rebuilt/emoji-6x8-v1/object-balloon.png"
+ },
+ "kidapp-ant": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-ant.png"
+ },
+ "kidapp-moon": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-moon.png"
+ },
+ "kidapp-sun": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-sun.png"
+ },
+ "kidapp-tree": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-tree.png"
+ },
+ "kidapp-dolphin": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-dolphin.png"
+ },
+ "kidapp-koala": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-koala.png"
+ },
+ "kidapp-ladybug": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-ladybug.png"
+ },
+ "kidapp-owl": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-owl.png"
+ },
+ "kidapp-shark": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-shark.png"
+ },
+ "kidapp-snail": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-snail.png"
+ },
+ "kidapp-whale": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-whale.png"
+ },
+ "kidapp-blue": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-blue.png"
+ },
+ "kidapp-green": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-green.png"
+ },
+ "kidapp-red": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-red.png"
+ },
+ "kidapp-candy": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-candy.png"
+ },
+ "kidapp-chicken": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-chicken.png"
+ },
+ "kidapp-coconut": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-coconut.png"
+ },
+ "kidapp-kiwi": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-kiwi.png"
+ },
+ "kidapp-meat": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-meat.png"
+ },
+ "kidapp-mushroom": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-mushroom.png"
+ },
+ "kidapp-noodle": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-noodle.png"
+ },
+ "kidapp-pear": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-pear.png"
+ },
+ "kidapp-soup": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-soup.png"
+ },
+ "kidapp-fire": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-fire.png"
+ },
+ "kidapp-rain": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-rain.png"
+ },
+ "kidapp-star": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-star.png"
+ },
+ "kidapp-water": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-water.png"
+ },
+ "kidapp-bed": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-bed.png"
+ },
+ "kidapp-bowl": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-bowl.png"
+ },
+ "kidapp-desk": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-desk.png"
+ },
+ "kidapp-door": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-door.png"
+ },
+ "kidapp-house": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-house.png"
+ },
+ "kidapp-knife": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-knife.png"
+ },
+ "kidapp-plate": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-plate.png"
+ },
+ "kidapp-table": {
+  "image": "assets/rebuilt/kidapp-table.png"
+ },
+ "kidapp-window": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-window.png"
+ },
+ "kidapp-eye": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-eye.png"
+ },
+ "kidapp-ear": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-ear.png"
+ },
+ "kidapp-nose": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-nose.png"
+ },
+ "kidapp-mouth": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-mouth.png"
+ },
+ "kidapp-hand": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hand.png"
+ },
+ "kidapp-foot": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-foot.png"
+ },
+ "kidapp-shirt": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-shirt.png"
+ },
+ "kidapp-pants": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-pants.png"
+ },
+ "kidapp-dress": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-dress.png"
+ },
+ "kidapp-lamp": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-lamp.png"
+ },
+ "kidapp-tv": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-tv.png"
+ },
+ "kidapp-sofa": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-sofa.png"
+ },
+ "kidapp-pen": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-pen.png"
+ },
+ "kidapp-bag": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-bag.png"
+ },
+ "kidapp-truck": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-truck.png"
+ },
+ "kidapp-taxi": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-taxi.png"
+ },
+ "kidapp-grass": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-grass.png"
+ },
+ "kidapp-leaf": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-leaf.png"
+ },
+ "kidapp-rock": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-rock.png"
+ },
+ "kidapp-doll": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-doll.png"
+ },
+ "kidapp-robot": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-robot.png"
+ },
+ "kidapp-bat": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-bat.png"
+ },
+ "kidapp-crocodile": {
+  "image": "assets/rebuilt/kidapp-crocodile.png"
+ },
+ "kidapp-flamingo": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-flamingo.png"
+ },
+ "kidapp-hedgehog": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hedgehog.png"
+ },
+ "kidapp-kangaroo": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-kangaroo.png"
+ },
+ "kidapp-lizard": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-lizard.png"
+ },
+ "kidapp-peacock": {
+  "image": "assets/rebuilt/kidapp-peacock.png"
+ },
+ "kidapp-squirrel": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-squirrel.png"
+ },
+ "kidapp-black": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-black.png"
+ },
+ "kidapp-brown": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-brown.png"
+ },
+ "kidapp-gray": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-gray.png"
+ },
+ "kidapp-pink": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-pink.png"
+ },
+ "kidapp-white": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-white.png"
+ },
+ "kidapp-yellow": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-yellow.png"
+ },
+ "kidapp-avocado": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-avocado.png"
+ },
+ "kidapp-blueberry": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-blueberry.png"
+ },
+ "kidapp-chocolate": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-chocolate.png"
+ },
+ "kidapp-cucumber": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-cucumber.png"
+ },
+ "kidapp-eggplant": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-eggplant.png"
+ },
+ "kidapp-honey": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-honey.png"
+ },
+ "kidapp-hotdog": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hotdog.png"
+ },
+ "kidapp-mango": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-mango.png"
+ },
+ "kidapp-onion": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-onion.png"
+ },
+ "kidapp-popcorn": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-popcorn.png"
+ },
+ "kidapp-pumpkin": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-pumpkin.png"
+ },
+ "kidapp-sandwich": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-sandwich.png"
+ },
+ "kidapp-cactus": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-cactus.png"
+ },
+ "kidapp-flower": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-flower.png"
+ },
+ "kidapp-lightning": {
+  "image": "assets/rebuilt/kidapp-lightning.png"
+ },
+ "kidapp-mountain": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-mountain.png"
+ },
+ "kidapp-rose": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-rose.png"
+ },
+ "kidapp-sunflower": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-sunflower.png"
+ },
+ "kidapp-tornado": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-tornado.png"
+ },
+ "kidapp-tulip": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-tulip.png"
+ },
+ "kidapp-volcano": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-volcano.png"
+ },
+ "kidapp-telescope": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-telescope.png"
+ },
+ "kidapp-microscope": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-microscope.png"
+ },
+ "kidapp-satellite": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-satellite.png"
+ },
+ "kidapp-parachute": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-parachute.png"
+ },
+ "kidapp-boomerang": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-boomerang.png"
+ },
+ "kidapp-harmonica": {
+  "image": "assets/rebuilt/kidapp-harmonica.png"
+ },
+ "kidapp-xylophone": {
+  "image": "assets/rebuilt/kidapp-xylophone.png"
+ },
+ "kidapp-lighthouse": {
+  "image": "assets/rebuilt/kidapp-lighthouse.png"
+ },
+ "kidapp-windmill": {
+  "image": "assets/rebuilt/kidapp-windmill.png"
+ },
+ "kidapp-pyramid": {
+  "image": "assets/rebuilt/kidapp-pyramid.png"
+ },
+ "kidapp-compass": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-compass.png"
+ },
+ "kidapp-hourglass": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hourglass.png"
+ },
+ "kidapp-abacus": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-abacus.png"
+ },
+ "kidapp-doctor": {
+  "image": "assets/rebuilt/kidapp-doctor.png"
+ },
+ "kidapp-nurse": {
+  "image": "assets/rebuilt/kidapp-nurse.png"
+ },
+ "kidapp-police": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-police.png"
+ },
+ "kidapp-teacher": {
+  "image": "assets/rebuilt/kidapp-teacher.png"
+ },
+ "kidapp-chef": {
+  "image": "assets/rebuilt/kidapp-chef.png"
+ },
+ "kidapp-farmer": {
+  "image": "assets/rebuilt/kidapp-farmer.png"
+ },
+ "kidapp-school": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-school.png"
+ },
+ "kidapp-park": {
+  "image": "assets/rebuilt/kidapp-park.png"
+ },
+ "kidapp-beach": {
+  "image": "assets/rebuilt/kidapp-beach.png"
+ },
+ "kidapp-hospital": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hospital.png"
+ },
+ "kidapp-piano": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-piano.png"
+ },
+ "kidapp-drum": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-drum.png"
+ },
+ "kidapp-violin": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-violin.png"
+ },
+ "kidapp-bell": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-bell.png"
+ },
+ "kidapp-hammer": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-hammer.png"
+ },
+ "kidapp-helicopter": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-helicopter.png"
+ },
+ "kidapp-ambulance": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-ambulance.png"
+ },
+ "kidapp-firetruck": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-firetruck.png"
+ },
+ "kidapp-motorcycle": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-motorcycle.png"
+ },
+ "kidapp-rocket": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-rocket.png"
+ },
+ "kidapp-planet": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-planet.png"
+ },
+ "kidapp-earth": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-earth.png"
+ },
+ "kidapp-king": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-king.png"
+ },
+ "kidapp-wind": {
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-wind.png"
+ },
+ "kidapp-river": {
+  "image": "assets/rebuilt/kidapp-river.png"
+ },
+ "kidapp-forest": {
+  "image": "assets/rebuilt/kidapp-forest.png"
+ },
+ "kidapp-bridge": {
+  "image": "assets/rebuilt/kidapp-bridge.png"
+ },
+ "kidapp-allosaurus": {
+  "image": "assets/rebuilt/kidapp-allosaurus.png"
+ },
+ "kidapp-ankylosaurus": {
+  "image": "assets/rebuilt/kidapp-ankylosaurus.png"
+ },
+ "kidapp-archaeopteryx": {
+  "image": "assets/rebuilt/kidapp-archaeopteryx.png"
+ },
+ "kidapp-brachiosaurus": {
+  "image": "assets/rebuilt/kidapp-brachiosaurus.png"
+ },
+ "kidapp-carnotaurus": {
+  "image": "assets/rebuilt/kidapp-carnotaurus.png"
+ },
+ "kidapp-compsognathus": {
+  "image": "assets/rebuilt/kidapp-compsognathus.png"
+ },
+ "kidapp-corythosaurus": {
+  "image": "assets/rebuilt/kidapp-corythosaurus.png"
+ },
+ "kidapp-dilophosaurus": {
+  "image": "assets/rebuilt/kidapp-dilophosaurus.png"
+ },
+ "kidapp-diplodocus": {
+  "image": "assets/rebuilt/kidapp-diplodocus.png"
+ },
+ "kidapp-giganotosaurus": {
+  "image": "assets/rebuilt/kidapp-giganotosaurus.png"
+ },
+ "kidapp-ichthyosaurus": {
+  "image": "assets/rebuilt/kidapp-ichthyosaurus.png"
+ },
+ "kidapp-iguanodon": {
+  "image": "assets/rebuilt/kidapp-iguanodon.png"
+ },
+ "kidapp-mamenchisaurus": {
+  "image": "assets/rebuilt/kidapp-mamenchisaurus.png"
+ },
+ "kidapp-microraptor": {
+  "image": "assets/rebuilt/kidapp-microraptor.png"
+ },
+ "kidapp-mosasaurus": {
+  "image": "assets/rebuilt/kidapp-mosasaurus.png"
+ },
+ "kidapp-oviraptor": {
+  "image": "assets/rebuilt/kidapp-oviraptor.png"
+ },
+ "kidapp-pachycephalosaurus": {
+  "image": "assets/rebuilt/kidapp-pachycephalosaurus.png"
+ },
+ "kidapp-parasaurolophus": {
+  "image": "assets/rebuilt/kidapp-parasaurolophus.png"
+ },
+ "kidapp-plesiosaurus": {
+  "image": "assets/rebuilt/kidapp-plesiosaurus.png"
+ },
+ "kidapp-protoceratops": {
+  "image": "assets/rebuilt/kidapp-protoceratops.png"
+ },
+ "kidapp-pteranodon": {
+  "image": "assets/rebuilt/kidapp-pteranodon.png"
+ },
+ "kidapp-spinosaurus": {
+  "image": "assets/rebuilt/kidapp-spinosaurus.png"
+ },
+ "kidapp-stegosaurus": {
+  "image": "assets/rebuilt/kidapp-stegosaurus.png"
+ },
+ "kidapp-therizinosaurus": {
+  "image": "assets/rebuilt/kidapp-therizinosaurus.png"
+ },
+ "kidapp-triceratops": {
+  "image": "assets/rebuilt/kidapp-triceratops.png"
+ },
+ "kidapp-tyrannosaurus": {
+  "image": "assets/rebuilt/kidapp-tyrannosaurus.png"
+ },
+ "kidapp-velociraptor": {
+  "image": "assets/rebuilt/kidapp-velociraptor.png"
+ },
+ "kidapp-quetzalcoatlus": {
+  "image": "assets/rebuilt/kidapp-quetzalcoatlus.png"
+ },
+ "kidapp-hatzegopteryx": {
+  "image": "assets/rebuilt/kidapp-hatzegopteryx.png"
+ },
+ "kidapp-mammoth": {
+  "image": "assets/rebuilt/kidapp-mammoth.png"
+ },
+ "kidapp-smilodon": {
+  "image": "assets/rebuilt/kidapp-smilodon.png"
+ },
+ "kidapp-deinonychus": {
+  "image": "assets/rebuilt/kidapp-deinonychus.png"
+ },
+ "kidapp-troodon": {
+  "image": "assets/rebuilt/kidapp-troodon.png"
+ },
+ "kidapp-edmontosaurus": {
+  "image": "assets/rebuilt/kidapp-edmontosaurus.png"
+ },
+ "kidapp-maiasaura": {
+  "image": "assets/rebuilt/kidapp-maiasaura.png"
+ },
+ "new-goat": {
+  "image": "assets/rebuilt/new100/new-goat.png"
+ },
+ "new-deer": {
+  "image": "assets/rebuilt/new100/new-deer.png"
+ },
+ "new-goose": {
+  "image": "assets/rebuilt/new100/new-goose.png"
+ },
+ "new-hen": {
+  "image": "assets/rebuilt/new100/new-hen.png"
+ },
+ "new-donkey": {
+  "image": "assets/rebuilt/new100/new-donkey.png"
+ },
+ "new-camel": {
+  "image": "assets/rebuilt/new100/new-camel.png"
+ },
+ "new-seal": {
+  "image": "assets/rebuilt/new100/new-seal.png"
+ },
+ "new-worm": {
+  "image": "assets/rebuilt/new100/new-worm.png"
+ },
+ "new-bean": {
+  "image": "assets/rebuilt/new100/new-bean.png"
+ },
+ "new-butter": {
+  "image": "assets/rebuilt/new100/new-butter.png"
+ },
+ "new-jam": {
+  "image": "assets/rebuilt/new100/new-jam.png"
+ },
+ "new-juice": {
+  "image": "assets/rebuilt/new100/new-juice.png"
+ },
+ "new-lettuce": {
+  "image": "assets/rebuilt/new100/new-lettuce.png"
+ },
+ "new-plum": {
+  "image": "assets/rebuilt/new100/new-plum.png"
+ },
+ "new-melon": {
+  "image": "assets/rebuilt/new100/new-melon.png"
+ },
+ "new-brush": {
+  "image": "assets/rebuilt/new100/new-brush.png"
+ },
+ "new-comb": {
+  "image": "assets/rebuilt/new100/new-comb.png"
+ },
+ "new-mirror": {
+  "image": "assets/rebuilt/new100/new-mirror.png"
+ },
+ "new-pillow": {
+  "image": "assets/rebuilt/new100/new-pillow.png"
+ },
+ "new-blanket": {
+  "image": "assets/rebuilt/new100/new-blanket.png"
+ },
+ "new-box": {
+  "image": "assets/rebuilt/new100/new-box.png"
+ },
+ "new-bottle": {
+  "image": "assets/rebuilt/new100/new-bottle.png"
+ },
+ "new-basket": {
+  "image": "assets/rebuilt/new100/new-basket.png"
+ },
+ "new-sky": {
+  "image": "assets/rebuilt/new100/new-sky.png"
+ },
+ "new-raccoon": {
+  "image": "assets/rebuilt/new100/new-raccoon.png"
+ },
+ "new-otter": {
+  "image": "assets/rebuilt/new100/new-otter.png"
+ },
+ "new-beaver": {
+  "image": "assets/rebuilt/new100/new-beaver.png"
+ },
+ "new-moose": {
+  "image": "assets/rebuilt/new100/new-moose.png"
+ },
+ "new-parrot": {
+  "image": "assets/rebuilt/new100/new-parrot.png"
+ },
+ "new-seahorse": {
+  "image": "assets/rebuilt/new100/new-seahorse.png"
+ },
+ "new-jellyfish": {
+  "image": "assets/rebuilt/new100/new-jellyfish.png"
+ },
+ "new-yogurt": {
+  "image": "assets/rebuilt/new100/new-yogurt.png"
+ },
+ "new-cereal": {
+  "image": "assets/rebuilt/new100/new-cereal.png"
+ },
+ "new-pancake": {
+  "image": "assets/rebuilt/new100/new-pancake.png"
+ },
+ "new-waffle": {
+  "image": "assets/rebuilt/new100/new-waffle.png"
+ },
+ "new-sausage": {
+  "image": "assets/rebuilt/new100/new-sausage.png"
+ },
+ "new-shrimp": {
+  "image": "assets/rebuilt/new100/new-shrimp.png"
+ },
+ "new-spinach": {
+  "image": "assets/rebuilt/new100/new-spinach.png"
+ },
+ "new-cabbage": {
+  "image": "assets/rebuilt/new100/new-cabbage.png"
+ },
+ "new-suitcase": {
+  "image": "assets/rebuilt/new100/new-suitcase.png"
+ },
+ "new-wallet": {
+  "image": "assets/rebuilt/new100/new-wallet.png"
+ },
+ "new-zipper": {
+  "image": "assets/rebuilt/new100/new-zipper.png"
+ },
+ "new-ladder": {
+  "image": "assets/rebuilt/new100/new-ladder.png"
+ },
+ "new-bucket": {
+  "image": "assets/rebuilt/new100/new-bucket.png"
+ },
+ "new-shovel": {
+  "image": "assets/rebuilt/new100/new-shovel.png"
+ },
+ "new-broom": {
+  "image": "assets/rebuilt/new100/new-broom.png"
+ },
+ "new-mop": {
+  "image": "assets/rebuilt/new100/new-mop.png"
+ },
+ "new-towel": {
+  "image": "assets/rebuilt/new100/new-towel.png"
+ },
+ "new-bathtub": {
+  "image": "assets/rebuilt/new100/new-bathtub.png"
+ },
+ "new-kettle": {
+  "image": "assets/rebuilt/new100/new-kettle.png"
+ },
+ "new-oven": {
+  "image": "assets/rebuilt/new100/new-oven.png"
+ },
+ "new-fridge": {
+  "image": "assets/rebuilt/new100/new-fridge.png"
+ },
+ "new-toaster": {
+  "image": "assets/rebuilt/new100/new-toaster.png"
+ },
+ "new-island": {
+  "image": "assets/rebuilt/new100/new-island.png"
+ },
+ "new-desert": {
+  "image": "assets/rebuilt/new100/new-desert.png"
+ },
+ "new-waterfall": {
+  "image": "assets/rebuilt/new100/new-waterfall.png"
+ },
+ "new-hill": {
+  "image": "assets/rebuilt/new100/new-hill.png"
+ },
+ "new-lake": {
+  "image": "assets/rebuilt/new100/new-lake.png"
+ },
+ "new-guitar": {
+  "image": "assets/rebuilt/new100/new-guitar.png"
+ },
+ "new-trumpet": {
+  "image": "assets/rebuilt/new100/new-trumpet.png"
+ },
+ "new-flute": {
+  "image": "assets/rebuilt/new100/new-flute.png"
+ },
+ "new-chameleon": {
+  "image": "assets/rebuilt/new100/new-chameleon.png"
+ },
+ "new-armadillo": {
+  "image": "assets/rebuilt/new100/new-armadillo.png"
+ },
+ "new-porcupine": {
+  "image": "assets/rebuilt/new100/new-porcupine.png"
+ },
+ "new-lemur": {
+  "image": "assets/rebuilt/new100/new-lemur.png"
+ },
+ "new-narwhal": {
+  "image": "assets/rebuilt/new100/new-narwhal.png"
+ },
+ "new-asparagus": {
+  "image": "assets/rebuilt/new100/new-asparagus.png"
+ },
+ "new-pomegranate": {
+  "image": "assets/rebuilt/new100/new-pomegranate.png"
+ },
+ "new-papaya": {
+  "image": "assets/rebuilt/new100/new-papaya.png"
+ },
+ "new-dumpling": {
+  "image": "assets/rebuilt/new100/new-dumpling.png"
+ },
+ "new-flashlight": {
+  "image": "assets/rebuilt/new100/new-flashlight.png"
+ },
+ "new-thermometer": {
+  "image": "assets/rebuilt/new100/new-thermometer.png"
+ },
+ "new-stapler": {
+  "image": "assets/rebuilt/new100/new-stapler.png"
+ },
+ "new-calculator": {
+  "image": "assets/rebuilt/new100/new-calculator.png"
+ },
+ "new-skateboard": {
+  "image": "assets/rebuilt/new100/new-skateboard.png"
+ },
+ "new-vacuum": {
+  "image": "assets/rebuilt/new100/new-vacuum.png"
+ },
+ "new-mailbox": {
+  "image": "assets/rebuilt/new100/new-mailbox.png"
+ },
+ "new-wheelbarrow": {
+  "image": "assets/rebuilt/new100/new-wheelbarrow.png"
+ },
+ "new-projector": {
+  "image": "assets/rebuilt/new100/new-projector.png"
+ },
+ "new-glacier": {
+  "image": "assets/rebuilt/new100/new-glacier.png"
+ },
+ "new-geyser": {
+  "image": "assets/rebuilt/new100/new-geyser.png"
+ },
+ "new-canyon": {
+  "image": "assets/rebuilt/new100/new-canyon.png"
+ },
+ "new-cliff": {
+  "image": "assets/rebuilt/new100/new-cliff.png"
+ },
+ "new-castle": {
+  "image": "assets/rebuilt/new100/new-castle.png"
+ },
+ "new-museum": {
+  "image": "assets/rebuilt/new100/new-museum.png"
+ },
+ "new-library": {
+  "image": "assets/rebuilt/new100/new-library.png"
+ },
+ "new-bakery": {
+  "image": "assets/rebuilt/new100/new-bakery.png"
+ },
+ "new-airport": {
+  "image": "assets/rebuilt/new100/new-airport.png"
+ },
+ "shape-circle": {
+  "image": "assets/rebuilt/shapes-v1/kidapp-circle.png"
+ },
+ "shape-square": {
+  "image": "assets/rebuilt/shapes-v1/kidapp-square.png"
+ },
+ "shape-rectangle": {
+  "image": "assets/rebuilt/shapes-v1/kidapp-rectangle.png"
+ },
+ "shape-triangle": {
+  "image": "assets/rebuilt/shapes-v1/kidapp-triangle.png"
+ },
+ "shape-diamond": {
+  "image": "assets/rebuilt/shapes-v1/kidapp-diamond.png"
+ },
+ "shape-heart": {
+  "image": "assets/rebuilt/shapes-v1/kidapp-heart.png"
+ }
+}

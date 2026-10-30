@@ -14,7 +14,7 @@ NUMBER_EMOJI = {'one': '1️⃣', 'two': '2️⃣', 'three': '3️⃣', 'four': 
                 'six': '6️⃣', 'seven': '7️⃣', 'eight': '8️⃣', 'nine': '9️⃣', 'ten': '🔟'}
 ZHUYIN_OK = re.compile(r'^[ㄅ-ㄩˊˇˋ˙]+$')
 ART_STATUS = ('emoji', 'candidate', 'approved')
-IMAGE_PATH = re.compile(r'^assets/(kidsapp|rebuilt)/[^/]+(/[^/]+)*\.(png|svg)$')
+IMAGE_PATH = re.compile(r'^assets/(kidsapp|rebuilt|cards-edge)/[^/]+(/[^/]+)*\.(png|svg|webp)$')
 
 
 TOPICS = json.loads((DIST.parent / 'reference/topics.json').read_text(encoding='utf-8'))['topics']
