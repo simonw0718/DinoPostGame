@@ -353,13 +353,21 @@
       dug = next; crunch();
       if (Math.random() < .35) { const q = pointAt(cur, dug); const sp = layers.g.getCTM(); burst(sp.a * q[0] + sp.e, sp.d * q[1] + sp.f); }
       redraw();
-      if (dug >= L - .5) finishStroke();
+      if (dug >= L - 2) finishStroke();
     }
   });
+  // 放手時只差一點點沒挖到底（小朋友常以為挖完了而卡住）：自動補完這一筆（導演 2026-10-31）
+  const SNAP = W + 5;
+  function snapFinish() {
+    const cur = sym.strokes[strokeI], L = strokeLen(cur);
+    if (dug <= 0 || L - dug > Math.min(SNAP, L * .35)) return false;
+    for (let t = dug; t < L; t += 1.5) { addMound(cur, t); glint(cur, t); }
+    dug = L; crunch(); redraw(); finishStroke(); return true;
+  }
   const release = ev => {
     if (ev.pointerId !== pid) return;
     pid = null; digging = false; layers.shovel.setAttribute('opacity', 0);
-    if (!done) drawGuide();
+    if (!done && !snapFinish()) drawGuide();
   };
   svg.addEventListener('pointerup', release); svg.addEventListener('pointercancel', release);
 
