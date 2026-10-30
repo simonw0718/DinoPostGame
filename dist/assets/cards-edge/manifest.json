@@ -411,7 +411,8 @@
   "image": "assets/rebuilt/emoji-6x8-v1/kidapp-knife.png"
  },
  "kidapp-plate": {
-  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-plate.png"
+  "image": "assets/rebuilt/emoji-6x8-v1/kidapp-plate.png",
+  "fill_holes": true
  },
  "kidapp-table": {
   "image": "assets/rebuilt/kidapp-table.png"

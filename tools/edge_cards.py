@@ -17,7 +17,9 @@ import sys
 import tempfile
 from pathlib import Path
 
+import numpy as np
 from PIL import Image
+from scipy import ndimage
 
 ROOT = Path(__file__).resolve().parent.parent
 DIST = ROOT / 'dist'
@@ -108,7 +110,14 @@ def run(args):
                 raise SystemExit('toonout failed:\n' + (r.stderr or r.stdout)[-2000:])
             print(f'cut {min(k + 80, len(pairs)) // 2}/{len(todo)}', flush=True)
         for i in todo:
-            finish(Image.open(f'{tmp}/{i}_cut.png')).save(OUT / f'{i}.webp', quality=88, method=6)
+            cut = Image.open(f'{tmp}/{i}_cut.png')
+            if manifest[i].get('fill_holes'):  # light centre (plate) read as background: fill enclosed holes from the source
+                a = np.asarray(cut.getchannel('A'))
+                hole = ndimage.binary_fill_holes(a > 128) & (a <= 128)
+                src = Image.open(f'{tmp}/{i}.png').convert('RGBA')
+                src.putalpha(Image.fromarray(np.where(hole, 255, a).astype('uint8')))
+                cut = Image.composite(src, cut, Image.fromarray((hole * 255).astype('uint8')))
+            finish(cut).save(OUT / f'{i}.webp', quality=88, method=6)
     MANIFEST.write_text(json.dumps(manifest, ensure_ascii=False, indent=1) + '\n', encoding='utf-8')
     for w in words:
         if w['id'] in manifest and (OUT / f"{w['id']}.webp").exists():
