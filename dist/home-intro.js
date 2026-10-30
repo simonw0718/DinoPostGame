@@ -7,6 +7,13 @@
     a.classList.add('has-preview');
     a.insertAdjacentHTML('afterbegin', html);
   });
+  // 玩法小動畫只在看得到時才動（另外兩頁、開場中都暫停）：iPhone 上 8 組無限動畫同時跑會讓開場與捲動卡頓（2026-10-30）
+  const pvs = [...document.querySelectorAll('.game-choice .pv')];
+  const pvPause = (pv, off) => { pv.classList.toggle('pv-off', off); pv.querySelectorAll('svg').forEach(svg => off ? svg.pauseAnimations?.() : svg.unpauseAnimations?.()); };
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(entries => entries.forEach(e => pvPause(e.target, !e.isIntersecting)), { threshold: .2 });
+    pvs.forEach(pv => io.observe(pv));
+  }
 
 
   const screen = document.querySelector('.game-selector');
@@ -21,7 +28,13 @@
   let stop = null;
   document.addEventListener('intro:replay', () => { stop?.(); screen.dataset.intro = 'replay'; play(); });
   if (seen) { done(); return; }
-  play();
+
+  // 等字型與開場圖解碼好才開始，避免動畫途中換字型、解圖造成掉格（最多等 1.5 秒）
+  function ready() {
+    const pics = ['assets/dinopost-workmark-master.jpg', 'assets/postoffice-master.jpg'].map(src => { const img = new Image(); img.src = src; return img.decode().catch(() => {}); });
+    return Promise.race([Promise.all([document.fonts?.ready, ...pics]), new Promise(r => setTimeout(r, 1500))]);
+  }
+  ready().then(play);
 
   function play() {
 

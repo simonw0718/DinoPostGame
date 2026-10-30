@@ -277,6 +277,15 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
         playing = { track: name, src, gain, startedAt: c.currentTime, offset, duration: buffer.duration };
       } catch { /* 載入失敗就安靜 */ } finally { starting = false; }
     }
+    // 先下載解碼 BGM，但讓開進頁的動畫先跑完：解一首 mp3 很吃 iPhone CPU（2026-10-30 開場卡頓）；首頁開場中就等 intro:done
+    let preloaded = false;
+    function preloadLater() {
+      if (preloaded) return; preloaded = true;
+      const go = () => setTimeout(() => { if (!muted) loadBuffer(`assets/audio/bgm/${track()}.mp3`).catch(() => {}); }, 600);
+      if (document.documentElement.dataset.intro === 'pending') document.addEventListener('intro:done', go, { once: true });
+      else if (document.readyState === 'complete') go();
+      else addEventListener('load', go, { once: true });
+    }
     const sync = () => { if (!button) return; const on = musicOn(); button.setAttribute('aria-pressed', String(on)); button.textContent = on ? '♫' : '♫̸'; button.classList.toggle('off', !on); };
     function ensureButton() {
       if (button) return;
@@ -301,7 +310,7 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
     // 從上一頁「返回」時（bfcache）頁面不重載，要重新接上
     addEventListener('pageshow', event => { if (event.persisted && wanted) tryPlay(); });
     return {
-      start() { wanted = true; ensureButton(); button.hidden = false; loadBuffer(`assets/audio/bgm/${track()}.mp3`).catch(() => {}); tryPlay(); },
+      start() { wanted = true; ensureButton(); button.hidden = false; preloadLater(); if (ctx?.state === 'running') tryPlay(); },   // 剛進頁還沒點過：等第一下點擊（下方監聽）再播，不在載入時就解碼
       stop() { wanted = false; halt(); if (button) button.hidden = true; },
       refresh() { if (playing && playing.track !== track()) halt(); tryPlay(); }
     };

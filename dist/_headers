@@ -121,3 +121,12 @@
   Cache-Control: no-cache
 /data/zhuyin_strokes.json
   Cache-Control: no-cache
+# 圖片與字型：1 小時內直接用快取不再逐張詢問（iPhone 進遊戲頁時上百張圖逐一確認很慢；2026-10-30）。改圖後最慢 1 小時生效；json 仍每次確認
+/assets/*.webp
+  Cache-Control: public, max-age=3600
+/assets/*.png
+  Cache-Control: public, max-age=3600
+/assets/*.jpg
+  Cache-Control: public, max-age=3600
+/assets/fonts/*.woff2
+  Cache-Control: public, max-age=3600

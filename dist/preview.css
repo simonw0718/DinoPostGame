@@ -147,3 +147,6 @@
 @keyframes pvDigCard{0%,62%{transform:translate(104px,30px) scale(0)}70%{transform:translate(104px,24px) scale(1.15)}75%,90%{transform:translate(104px,26px) scale(1)}96%,100%{transform:translate(104px,30px) scale(0)}}
 @keyframes pvDigHop{0%,62%,78%,100%{transform:none}68%{transform:translateY(-8px) scale(1.04,.96)}}
 @media(prefers-reduced-motion:reduce){.pv-dig .dug{stroke-dashoffset:0}.pv-dig .bone{opacity:1}.pv-dig .fcard{transform:translate(104px,26px)}}
+
+/* 看不到時暫停（home-intro.js 用 IntersectionObserver 加 .pv-off；開場中 .game-selector 尚未 data-intro=done 也暫停） */
+.pv.pv-off,.pv.pv-off *,.game-selector:not([data-intro="done"]) .pv,.game-selector:not([data-intro="done"]) .pv *{animation-play-state:paused!important}
