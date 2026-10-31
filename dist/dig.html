@@ -40,6 +40,8 @@
     .ex .hit { margin: .04em 0; padding: 0 .12em; border-radius: .25em; background: #ffd84d; color: #1e5fc4; font-weight: 1000; }
     .dg-stage { position: relative; flex: 1; min-height: 0; touch-action: none; }
     .dg-stage svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; touch-action: none; }
+    /* 按下的目標永遠是 svg 本身（導演 2026-10-31 iPhone 點不動）：挖的時候旗子、虛線會重畫，iOS 觸控目標被移掉就收不到後續事件 */
+    .dg-stage svg * { pointer-events: none; }
     /* 化石卡：從化石出土的位置冒出來，再飛進右上圖鑑（位置由 JS 算） */
     .fossil-card { position: fixed; left: 0; top: 0; z-index: 40; display: grid; place-items: center; opacity: 0; pointer-events: none; font-size: clamp(80px, 16vw, 140px); line-height: 1; padding: 12px 34px 20px; border-radius: 28px; background: linear-gradient(145deg, #fffaf0, #ecdcb8); border: 6px solid var(--bone-line); color: var(--ink); box-shadow: 0 14px 28px #3a240f44, inset 0 -6px 0 #d8c39a; }
     .haul { display: flex; gap: 8px; justify-content: center; }
@@ -260,21 +262,26 @@
       }
     }
     // 這一筆要挖去哪（導演 2026-10-31）：剩下的路畫成往終點流動的虛線，終點放一個會閃的圈圈（困難也顯示）
-    const p = pointAt(cur, dug), rest = [[p[0], p[1]], ...cur.slice(p[2] + 1)];
+    // 旗子插在字框外（導演 2026-10-31）：從挖點往筆畫反方向退一個半溝寬，虛線從旗子腳下接到挖點再到終點
+    const p = pointAt(cur, dug), a0 = cur[p[2]], b0 = cur[p[2] + 1] || a0, sl = segLen(a0, b0) || 1;
+    const fpt = [p[0] - (b0[0] - a0[0]) / sl * W * 1.5, p[1] - (b0[1] - a0[1]) / sl * W * 1.5];
+    const rest = [fpt, [p[0], p[1]], ...cur.slice(p[2] + 1)];
     const way = el('path', { d: d(rest), fill: 'none', stroke: '#c0392b', 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-dasharray': '3 4', opacity: .85 }, g);
     if (!calm) way.innerHTML = '<animate attributeName="stroke-dashoffset" from="14" to="0" dur=".7s" repeatCount="indefinite"/>';
     const [ex, ey] = cur.at(-1), goal = el('g', { transform: `translate(${ex} ${ey}) scale(1 ${1 / K})` }, g);
     el('circle', { r: 4.2, fill: '#fff', stroke: '#c0392b', 'stroke-width': 1.6 }, goal);
     el('circle', { r: 1.6, fill: '#c0392b' }, goal);
     if (!calm) goal.innerHTML += '<circle r="4.2" fill="none" stroke="#c0392b" stroke-width="1"><animate attributeName="r" values="4;9" dur="1.1s" repeatCount="indefinite"/><animate attributeName="opacity" values=".8;0" dur="1.1s" repeatCount="indefinite"/></circle>';
-    // 起點小旗子（挖到一半放手：旗子插在挖到的地方）
-    const fg0 = el('g', { transform: `translate(${p[0]} ${p[1]}) scale(1 ${1 / K})` }, f), fg = el('g', {}, fg0);
+    // 起點小旗子（插在字框外、挖點後方）；挖點本身只放一個會閃的圈圈
+    const fg0 = el('g', { transform: `translate(${fpt[0]} ${fpt[1]}) scale(1 ${1 / K})` }, f), fg = el('g', {}, fg0);
     if (flagFresh && !calm) { flagFresh = false; fg.innerHTML = '<animateTransform attributeName="transform" type="scale" values="0 0;1.25 1.25;1 1" keyTimes="0;.6;1" dur=".45s" fill="freeze"/>'; }
     el('ellipse', { cx: 0, cy: 0, rx: 3, ry: 1.4, fill: '#0003' }, fg);
     el('path', { d: 'M0 0V-15', stroke: '#5b3a1e', 'stroke-width': 1.2 }, fg);
     el('path', { d: 'M0 -15L9 -12L0 -9Z', fill: '#e2483b' }, fg);
     const t = el('text', { x: 3.6, y: -10.6, 'font-size': 4.6, 'text-anchor': 'middle', fill: '#fff', 'font-weight': 700 }, fg); t.textContent = strokeI + 1;
-    if (!dug) fg.innerHTML += `<circle r="4" fill="none" stroke="#fff" stroke-width="1"><animate attributeName="r" values="3;8" dur="1.1s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="1.1s" repeatCount="indefinite"/></circle>`;
+    const ring = el('g', { transform: `translate(${p[0]} ${p[1]}) scale(1 ${1 / K})` }, f);
+    el('circle', { r: 2.2, fill: '#fff', stroke: '#c0392b', 'stroke-width': 1 }, ring);
+    if (!calm) ring.innerHTML += `<circle r="4" fill="none" stroke="#fff" stroke-width="1.2"><animate attributeName="r" values="3;9" dur="1.1s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;0" dur="1.1s" repeatCount="indefinite"/></circle>`;
   }
 
   // 挖出來的土：沿溝兩側堆小土堆
@@ -297,7 +304,8 @@
   }
   function toGround(ev) {
     const pt = svg.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY;
-    const s = pt.matrixTransform(svg.getScreenCTM().inverse()), gnd = s.matrixTransform(layers.g.getCTM().inverse());
+    // 地面座標直接用 getScreenCTM 反推（getCTM 會多算 viewBox 縮放：手機上例詞列晚載入把舞台擠小，手指和溝差了約 40px，導演 2026-10-31 iPhone 點不動）
+    const s = pt.matrixTransform(svg.getScreenCTM().inverse()), gnd = pt.matrixTransform(layers.g.getScreenCTM().inverse());
     return { sx: s.x, sy: s.y, u: [gnd.x, gnd.y] };
   }
   function shovelAt(sx, sy, plunge) {
@@ -330,6 +338,7 @@
   let pid = null, flagFresh = false, lastU = null, idle = 0;
   svg.addEventListener('pointerdown', ev => {
     if (done || pid !== null) return;
+    fitStage();   // 按下前先確認畫面和舞台一樣大（手機上例詞列晚載入會把舞台擠小）
     const { sx, sy, u } = toGround(ev);
     if (snapFinish()) return;   // 只剩一點點沒挖：點一下就補完
     pid = ev.pointerId; try { svg.setPointerCapture(pid); } catch { /* ok */ } digging = true; lastU = u; idle = 0;
@@ -460,7 +469,7 @@
   function load() {
     sym = SYMBOLS[idx]; strokeI = 0; dug = 0; done = false; lastMound = 0; lastGlint = 0; pose = 'busy_look';
     Dino.preload?.([VOICE[sym.ch]]);
-    build(); showExamples();
+    showExamples(); build();   // 先放例詞再排土塊：例詞列會改變舞台高度
     say(level === 'hard' ? '從小旗子開始，照筆順挖！' : '從小旗子開始，在字框裡照箭頭挖！');
   }
   // 例詞：題庫裡有圖、注音含這個符號的詞，先挑注音等級低、字少的前 8 個再隨機取 2 個
@@ -514,6 +523,10 @@
   $('menuBtn').addEventListener('click', () => { pid = null; digging = false; Dino.sfx('tap', .5); $('ready').hidden = false; Dino.bgm.start(); });
   $('again').addEventListener('click', () => { Dino.bgm.stop(); start(); });
   addEventListener('resize', () => { if (sym) build(); });
+  // 舞台大小變了（例詞列晚載入、轉向）就重排，讓 viewBox 永遠等於實際大小；挖到一半或出土中先不動，放手後再補
+  const fitStage = () => { const r = stage.getBoundingClientRect(), vb = svg.viewBox.baseVal; if (sym && !done && pid === null && vb && (Math.abs(vb.width - r.width) > 1 || Math.abs(vb.height - r.height) > 1)) build(); };
+  new ResizeObserver(fitStage).observe(stage);
+  svg.addEventListener('pointerup', () => setTimeout(fitStage, 0));
   Promise.all([fetch('data/zhuyin_strokes.json').then(r => r.json()), fetch('assets/audio/symbols.json').then(r => r.json()), fetch('data.json').then(r => r.json()).catch(() => [])]).then(([st, au, words]) => {
     WORDS = words;
     ALL = Object.entries(st.symbols).map(([ch, v]) => ({ ch, strokes: v.strokes }));
