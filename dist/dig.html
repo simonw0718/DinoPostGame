@@ -336,20 +336,23 @@
     setPose('point', 1400);   // 小恐龍指一下：去那裡挖
   }
 
-  let pid = null, paused = false, flagFresh = false;
+  let pid = null, paused = false, flagFresh = false, grabOff = [0, 0];
   svg.addEventListener('pointerdown', ev => {
     if (done || pid !== null) return;
     const { sx, sy, u } = toGround(ev), cur = sym.strokes[strokeI];
     shovelAt(sx, sy, false);
     const [, near] = project(partial(cur, Math.min(strokeLen(cur), dug + 14)), u);   // 按在已挖的溝裡或小旗子附近都可以接著挖
     if (snapFinish()) return;   // 只剩一點點沒挖：點一下就補完
-    if (near > START_R) { hardSoil(sx, sy, dug ? '這裡土好硬！從小旗子接著挖' : '這裡土好硬！從小旗子開始挖'); return; }
+    // 按在小旗子（旗面／旗桿）上也算：小朋友常直接按旗子，旗面在挖點上方約 12 單位（導演 2026-10-31 ㄊ 第 1 筆下不了手）
+    const fp = pointAt(cur, dug), onFlag = Math.hypot(u[0] - fp[0] - 3, u[1] - fp[1] + 10 / K) < 11;
+    if (near > START_R && !onFlag) { hardSoil(sx, sy, dug ? '這裡土好硬！從小旗子接著挖' : '這裡土好硬！從小旗子開始挖'); return; }
+    grabOff = near > START_R ? [u[0] - fp[0], u[1] - fp[1]] : [0, 0];   // 從旗面按下：之後手指位置扣掉這段，挖的是旗子腳下
     paused = false; pid = ev.pointerId; try { svg.setPointerCapture(pid); } catch { /* ok */ } digging = true;
     crunch(); say('挖呀挖～');
   });
   svg.addEventListener('pointermove', ev => {
     if (ev.pointerId !== pid || !digging) return;
-    const { sx, sy, u } = toGround(ev), cur = sym.strokes[strokeI], L = strokeLen(cur);
+    const { sx, sy, u: raw } = toGround(ev), cur = sym.strokes[strokeI], L = strokeLen(cur), u = [raw[0] - grabOff[0], raw[1] - grabOff[1]];
     // 只看前面一小段（不會跳到同一筆後面、也不會往回挖）
     const ahead = partial(cur, Math.min(L, dug + 34)), [s, dist] = project(ahead, u);
     if (dist > TOL || s < dug - START_R) { shovelAt(sx, sy, false); if (!paused) { paused = true; say('回到溝裡，接著挖！'); } return; }
