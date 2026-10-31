@@ -112,9 +112,9 @@
   const K = .86;         // 頂面壓扁比例（微 2.5D：只微斜，字形不變形；導演 10-29 嫌 .6 太斜）
   const W = 11;          // 溝寬（地面單位；筆畫多的 ㄓ ㄖ 也分得開）
   const DEPTH = 4.5;      // 溝底往下錯開，露出遠側土牆
-  const TOL = W / 2 + 3;  // 手指在空心字框內（加一點寬容）就算在挖
+  const TOL = W / 2 + 6;  // 手指在空心字框內（加寬容；導演 2026-10-31 嫌太嚴）就算在挖
   const STEP = 9;        // 一次最多往前挖多少（手指甩太快時鏟子追上去，不跳格）
-  const START_R = W / 2 + 4;  // 按下時離挖到的地方多近才挖得下去
+  const START_R = W / 2 + 9;  // 按下時離挖到的地方多近才挖得下去（導演 2026-10-31 放寬：ㄐ 第一筆後點不下去）
   const NS = 'http://www.w3.org/2000/svg';
   const $ = id => document.getElementById(id);
   const svg = $('svg'), bubble = $('bubble'), stage = $('stage');
@@ -262,8 +262,15 @@
         }
       }
     }
+    // 這一筆要挖去哪（導演 2026-10-31）：剩下的路畫成往終點流動的虛線，終點放一個會閃的圈圈（困難也顯示）
+    const p = pointAt(cur, dug), rest = [[p[0], p[1]], ...cur.slice(p[2] + 1)];
+    const way = el('path', { d: d(rest), fill: 'none', stroke: '#c0392b', 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-dasharray': '3 4', opacity: .85 }, g);
+    if (!calm) way.innerHTML = '<animate attributeName="stroke-dashoffset" from="14" to="0" dur=".7s" repeatCount="indefinite"/>';
+    const [ex, ey] = cur.at(-1), goal = el('g', { transform: `translate(${ex} ${ey}) scale(1 ${1 / K})` }, g);
+    el('circle', { r: 4.2, fill: '#fff', stroke: '#c0392b', 'stroke-width': 1.6 }, goal);
+    el('circle', { r: 1.6, fill: '#c0392b' }, goal);
+    if (!calm) goal.innerHTML += '<circle r="4.2" fill="none" stroke="#c0392b" stroke-width="1"><animate attributeName="r" values="4;9" dur="1.1s" repeatCount="indefinite"/><animate attributeName="opacity" values=".8;0" dur="1.1s" repeatCount="indefinite"/></circle>';
     // 起點小旗子（挖到一半放手：旗子插在挖到的地方）
-    const p = pointAt(cur, dug);
     const fg0 = el('g', { transform: `translate(${p[0]} ${p[1]}) scale(1 ${1 / K})` }, f), fg = el('g', {}, fg0);
     if (flagFresh && !calm) { flagFresh = false; fg.innerHTML = '<animateTransform attributeName="transform" type="scale" values="0 0;1.25 1.25;1 1" keyTimes="0;.6;1" dur=".45s" fill="freeze"/>'; }
     el('ellipse', { cx: 0, cy: 0, rx: 3, ry: 1.4, fill: '#0003' }, fg);
@@ -334,7 +341,8 @@
     if (done || pid !== null) return;
     const { sx, sy, u } = toGround(ev), cur = sym.strokes[strokeI];
     shovelAt(sx, sy, false);
-    const [, near] = project(partial(cur, Math.min(strokeLen(cur), dug + 6)), u);   // 按在已挖的溝裡或小旗子附近都可以接著挖
+    const [, near] = project(partial(cur, Math.min(strokeLen(cur), dug + 14)), u);   // 按在已挖的溝裡或小旗子附近都可以接著挖
+    if (snapFinish()) return;   // 只剩一點點沒挖：點一下就補完
     if (near > START_R) { hardSoil(sx, sy, dug ? '這裡土好硬！從小旗子接著挖' : '這裡土好硬！從小旗子開始挖'); return; }
     paused = false; pid = ev.pointerId; try { svg.setPointerCapture(pid); } catch { /* ok */ } digging = true;
     crunch(); say('挖呀挖～');
@@ -343,7 +351,7 @@
     if (ev.pointerId !== pid || !digging) return;
     const { sx, sy, u } = toGround(ev), cur = sym.strokes[strokeI], L = strokeLen(cur);
     // 只看前面一小段（不會跳到同一筆後面、也不會往回挖）
-    const ahead = partial(cur, Math.min(L, dug + 28)), [s, dist] = project(ahead, u);
+    const ahead = partial(cur, Math.min(L, dug + 34)), [s, dist] = project(ahead, u);
     if (dist > TOL || s < dug - START_R) { shovelAt(sx, sy, false); if (!paused) { paused = true; say('回到溝裡，接著挖！'); } return; }
     if (paused) { paused = false; say('挖呀挖～'); }
     shovelAt(sx, sy, true);
@@ -357,10 +365,10 @@
     }
   });
   // 放手時只差一點點沒挖到底（小朋友常以為挖完了而卡住）：自動補完這一筆（導演 2026-10-31）
-  const SNAP = W + 5;
+  const SNAP = W + 12;   // 放寬（導演 2026-10-31）
   function snapFinish() {
     const cur = sym.strokes[strokeI], L = strokeLen(cur);
-    if (dug <= 0 || L - dug > Math.min(SNAP, L * .35)) return false;
+    if (dug <= 0 || L - dug > Math.min(SNAP, L * .4)) return false;
     for (let t = dug; t < L; t += 1.5) { addMound(cur, t); glint(cur, t); }
     dug = L; crunch(); redraw(); finishStroke(); return true;
   }

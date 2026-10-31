@@ -347,10 +347,10 @@
     S.max = S.i;
     const reached = S.checkpoints.findIndex((idx, n) => n > S.cp && S.i >= idx);
     if (reached > 0) { S.cp = reached; S.inkAt[reached] = S.ink.length; Dino.sfx('pop', .7); Dino.burst(S.el.stars[reached - 1]); }
-    if (nearEnd() && dist(p, S.samples.at(-1)) < 160) magnet();
+    if (nearEnd() && dist(p, S.samples.at(-1)) < MODES[mode].road * .8) magnet();
   }
   // 終點磁吸（導演 2026-10-22）：走到信箱前一小段（約一個路寬）或在那裡放手，郵差自己滑進信箱
-  const MAGNET = 26;   // 取樣點數，×STEP ≈ 130
+  const MAGNET = 10;   // 取樣點數，×STEP ≈ 50（導演 2026-10-31：原 130 太遠）
   const nearEnd = () => S.i >= S.samples.length - 1 - MAGNET;
   function magnet() {
     if (S.done || S.back) return;
