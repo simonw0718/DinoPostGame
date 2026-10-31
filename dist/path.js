@@ -83,7 +83,10 @@
   try { const m = localStorage.getItem('dinopost-path-mode'); if (MODES[m]) mode = m; } catch { /* ok */ }
 
   const S = { level: 0, back: false, idleT: 0, round: [], offs: 0, samples: [], i: 0, status: [], checkpoints: [], cp: 0, drag: false, done: false, hinting: false,
-    offset: [0, 0], offNow: false, offTravel: 0, lastP: null, lastMark: null, courier: null, friend: null, results: [], trails: [], el: {} };
+    pos: [0, 0], face: 1, ink: [], inkAt: [0], b0: 0, offNow: false, offTravel: 0, lastP: null, lastMark: null, courier: null, friend: null, results: [], inks: [], el: {} };
+  // 引擎（導演 2026-10-31 換機制）：郵差就在手指下、綠線＝郵差真的走過的軌跡；進度只靠「依序經過路上的關卡點」，
+  // 不再把手指投影到路上推進度——沒走過的路永遠不會自己變綠。
+  const GATE = 4;   // 關卡點間距（取樣點數，×STEP ≈ 20）
 
   const say = text => { const b = $('bubble'); setKidText(b, text); b.classList.remove('is-pop'); void b.offsetWidth; b.classList.add('is-pop'); };
   const el = (tag, attrs = {}, parent) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); parent?.append(n); return n; };
@@ -112,7 +115,7 @@
     el('path', { d, class: 'road', 'stroke-width': width, ...lc }, svg);
     el('path', { d, class: 'road-mid', style: `stroke-linecap:${cap};stroke-dashoffset:${dash}` }, svg);
   }
-  const drawTrail = (svg, list, width) => el('path', { d: polyD(list), class: 'trail', 'stroke-width': width * .42 }, svg);
+  const drawTrail = (svg, width) => el('path', { d: 'M0 0', class: 'trail', 'stroke-width': width * .5 }, svg);
 
   function build() {
     stopHint();
@@ -147,17 +150,21 @@
       while (b0 > 0 && over(b0)) b0--;
       while (b1 < N - 1 && over(b1)) b1++;
       b0 = Math.max(0, b0 - 2); b1 = Math.min(N - 1, b1 + 2);
-      S.trails = [{ a: 0, el: drawTrail(svg, S.samples.slice(0, b0 + 1), width) }];
+      S.inks = [drawTrail(svg, width)];
       drawRoad(svg, S.samples.slice(b0, b1 + 1), width, 'butt', b0 * STEP);
-      S.trails.push({ a: b0, el: drawTrail(svg, S.samples.slice(b0), width) });
-    } else S.trails = [{ a: 0, el: drawTrail(svg, S.samples, width) }];
+      S.inks.push(drawTrail(svg, width));
+    } else S.inks = [drawTrail(svg, width)];
+    S.b0 = b0;
+    // 綠線只畫在路面上（手指在路邊時線不會溢出路外）
+    const m = el('mask', { id: 'roadMask', maskUnits: 'userSpaceOnUse', x: X0 - 2000, y: Y0 - 2000, width: W + 4000, height: H + 4000 }, el('defs', {}, svg));
+    el('path', { d: polyD(S.samples), fill: 'none', stroke: '#fff', 'stroke-width': width, style: 'stroke-linecap:round;stroke-linejoin:round' }, m);
+    S.inks.forEach(p => p.setAttribute('mask', 'url(#roadMask)'));
     // 方向箭頭：交叉口附近不放（會疊到橋上）
     for (let k = 20; k < N - 14; k += 34) {
       if (L.cross && near(k, width * 1.2)) continue;
       const [x, y] = S.samples[k], [ax, ay] = S.samples[k + 3];
       el('path', { class: 'arrow', d: 'M-9 -13 L7 0 L-9 13', transform: `translate(${x} ${y}) rotate(${Math.atan2(ay - y, ax - x) * 180 / Math.PI}) scale(${width / 110})` }, svg);
     }
-    S.trails.forEach(t => { t.len = t.el.getTotalLength(); });
     S.el.marks = el('g', {}, svg);   // 走出路外的橘色腳印
     // 三分之一、三分之二各一顆星＝存檔點，標 1、2 告訴孩子先去哪
     S.checkpoints = [0, Math.floor(N / 3), Math.floor(N * 2 / 3)].map(idx => {
@@ -211,18 +218,23 @@
   }
 
   function resetWalk() {
-    S.i = 0; S.max = 0; S.cp = 0; S.offs = 0; S.done = false; S.status = []; S.offset = [0, 0]; S.offNow = false; S.offTravel = 0;
+    S.i = 0; S.max = 0; S.cp = 0; S.offs = 0; S.done = false; S.status = []; S.offNow = false; S.offTravel = 0;
+    S.pos = [...S.samples[0]]; S.face = 1; S.ink = []; S.inkAt = [0];
     S.el.marks.replaceChildren(); place();
   }
 
-  // 郵差＝路上進度點＋手指離路的偏移：走在路上、走出路外都同一條公式，不會跳格
+  // 郵差畫在 S.pos（手指下的腳底）；綠線＝S.ink 走過的點（null＝斷開），交叉關分橋下／橋上兩層
   function place() {
-    const [sx, sy] = S.samples[S.i];
-    const x = sx + S.offset[0], y = sy + S.offset[1] + 30;
-    const ahead = S.samples[Math.min(S.samples.length - 1, S.i + 6)], back = S.samples[Math.max(0, S.i - 6)];
-    S.el.courier.style.transform = `translate(${x}px,${y}px)`;
-    S.el.img.setAttribute('transform', ahead[0] < back[0] - 2 ? 'scale(-1 1)' : '');
-    S.trails.forEach(t => { const v = Math.min(t.len, Math.max(0, (S.max - t.a) * STEP)); t.el.style.strokeDasharray = `${v} ${t.len + 10}`; t.el.style.opacity = v > 0 ? '' : 0; });   // 長度 0 時圓頭會留一顆綠點，藏起來
+    const [x, y] = S.pos;
+    S.el.courier.style.transform = `translate(${x}px,${y + 30}px)`;
+    S.el.img.setAttribute('transform', S.face < 0 ? 'scale(-1 1)' : '');
+    const d = S.inks.map(() => ''), pen = S.inks.map(() => false);
+    for (const q of S.ink) {
+      if (!q) { pen.fill(false); continue; }
+      d[q[2]] += `${pen[q[2]] ? 'L' : 'M'}${q[0].toFixed(1)} ${q[1].toFixed(1)}`; pen[q[2]] = true;
+    }
+    S.inks.forEach((p, n) => p.setAttribute('d', d[n] || 'M0 0'));
+    S.inks.forEach((p, n) => { p.style.opacity = d[n] ? '' : 0; });
     S.el.stars.forEach((st, n) => { st.classList.toggle('is-got', n < S.cp); st.classList.toggle('is-next', n === S.cp); });
   }
   const handAt = ([x, y], press = false) => S.el.hand.setAttribute('transform', `translate(${x + 16} ${y - 50}) scale(${press ? .85 : 1})`);
@@ -279,9 +291,9 @@
   function onDown(e) {
     if (S.done || S.back || S.drag) return;   // 退回動畫中不能抓，否則跟退回互搶會卡住；拖曳中別的手指／手掌不算
     clearTimeout(S.idleT);
-    const p = toSvg(e), [x, y] = S.samples[S.i];
+    const p = toSvg(e), [x, y] = S.pos;
     if (dist(p, [x, y - 40]) > 130) { say(prompt()); return; }
-    S.drag = true; S.pid = e.pointerId; S.lastP = [x, y]; S.grab = [p[0] - x, p[1] - y];   // lastP 用郵差腳下（扣掉抓的位置），第一步才不會從手指按的頭頂掃過來被當成走出路 S.el.courier.classList.add('is-drag'); $('stage').classList.add('is-dragging'); $('svg').setPointerCapture(e.pointerId);
+    S.drag = true; S.pid = e.pointerId; S.lastP = [x, y]; S.grab = [p[0] - x, p[1] - y]; S.ink.push(null);   // lastP 用郵差腳下（扣掉抓的位置），第一步才不會從手指按的頭頂掃過來被當成走出路 S.el.courier.classList.add('is-drag'); $('stage').classList.add('is-dragging'); $('svg').setPointerCapture(e.pointerId);
     stopHint(); Dino.sfx('tap', .4);
   }
   // 手指移動：一個畫面只算一次（手機一次送很多點時不會塞車），跳很遠的一下切成小段逐段走，中間經過路外也算得到
@@ -298,43 +310,43 @@
     for (let k = 1; k <= n && S.drag && !S.done; k++) step([from[0] + (p[0] - from[0]) * k / n, from[1] + (p[1] - from[1]) * k / n]);
     if (S.drag || S.done) place();
   }
-  // 往手指找：只看前方（或後方）一個路寬弧長內離手指最近的點（導演 2026-10-28）
-  // 不要求一路越走越近：手指沿內側切過轉角、尖角時還在路上，郵差跟得過去；U 型彎、尖角對面的路超過一個路寬，跳不過去
-  function slide(p, dir) {
-    const N = S.samples.length, W = Math.ceil(MODES[mode].road / STEP);
-    let best = S.i, bd = dist(p, S.samples[S.i]);
-    for (let j = 1; j <= W; j++) {
-      const k = S.i + dir * j; if (k < 0 || k >= N) break;
-      const dd = dist(p, S.samples[k]); if (dd < bd - .5) { bd = dd; best = k; }
-    }
+  // 離路多遠：只看目前進度前後兩個路寬弧長內的路（另一段剛好靠近的路不算「在路上」，也不會被拿來推進度）
+  function nearRoad(p) {
+    const N = S.samples.length, W = Math.ceil(MODES[mode].road * 2 / STEP);
+    let best = S.i, bd = 1e9;
+    for (let k = Math.max(0, S.i - W); k <= Math.min(N - 1, S.i + W); k++) { const dd = dist(p, S.samples[k]); if (dd < bd) { bd = dd; best = k; } }
     return [best, bd];
   }
   function step(p) {
-    const M = MODES[mode];
-    let [best, bd] = slide(p, 1);
-    if (M.fence && best === S.i && bd > M.road / 2) [best, bd] = slide(p, -1);   // 新手：手指不在前方路上才往回走（尖角兩邊路很近時，不會被拉回前一段而卡住）
+    const M = MODES[mode], N = S.samples.length;
+    let [near, bd] = nearRoad(p);
     if (M.fence && bd > M.road / 2) {   // 新手：郵差被框在路裡，最多走到路邊
-      const c = S.samples[best], k = (M.road / 2) / bd; p[0] = c[0] + (p[0] - c[0]) * k; p[1] = c[1] + (p[1] - c[1]) * k; bd = M.road / 2;
+      const c = S.samples[near], k = (M.road / 2) / bd; p = [c[0] + (p[0] - c[0]) * k, c[1] + (p[1] - c[1]) * k]; bd = M.road / 2;
     }
     if (bd > onTol() + M.grace) return goOff();
     const on = bd <= onTol();
     if (on) {
-      if (S.offNow) { S.offNow = false; S.offTravel = 0; say(prompt()); }
+      if (S.offNow) { S.offNow = false; S.offTravel = 0; S.ink.push(null); say(prompt()); }
     } else {
       if (!S.offNow) { S.offNow = true; Dino.sfx('wrong', .18); say('回到路上'); }
       S.offTravel += dist(p, S.lastP || p);
       dropMark(p);
       if (S.offTravel > M.travel) return goOff();
     }
-    S.lastP = p;
-    if (best > S.max) for (let k = S.max + 1; k <= best; k++) S.status[k] = on ? 1 : 0;
-    if (best > S.i || M.fence) S.i = best;   // 新手可以沿路往回走（還是框在路裡）；其他難度只往前
-    S.max = Math.max(S.max, S.i);
-    const [sx, sy] = S.samples[S.i];
-    S.offset = [p[0] - sx, p[1] - sy];
-    if (M.fence) { const o = Math.hypot(...S.offset), lim = M.road / 2; if (o > lim) S.offset = S.offset.map(v => v * lim / o); }
+    if (Math.abs(p[0] - S.pos[0]) > 3) S.face = p[0] < S.pos[0] ? -1 : 1;
+    S.lastP = p; S.pos = p;
+    if (on) S.ink.push([p[0], p[1], S.i < S.b0 ? 0 : 1]);
+    // 依序過關卡：只認「下一個」關卡點，手指要真的到它附近（0.75 個路寬）才算——跳不過去、切不過去
+    const R = Math.max(onTol(), M.road * .75);
+    while (S.i < N - 1) {
+      const k = Math.min(N - 1, S.i + GATE);
+      if (dist(p, S.samples[k]) > R) break;
+      for (let j = S.i + 1; j <= k; j++) S.status[j] = on ? 1 : 0;
+      S.i = k;
+    }
+    S.max = S.i;
     const reached = S.checkpoints.findIndex((idx, n) => n > S.cp && S.i >= idx);
-    if (reached > 0) { S.cp = reached; Dino.sfx('pop', .7); Dino.burst(S.el.stars[reached - 1]); }
+    if (reached > 0) { S.cp = reached; S.inkAt[reached] = S.ink.length; Dino.sfx('pop', .7); Dino.burst(S.el.stars[reached - 1]); }
     if (nearEnd() && dist(p, S.samples.at(-1)) < 160) magnet();
   }
   // 終點磁吸（導演 2026-10-22）：走到信箱前一小段（約一個路寬）或在那裡放手，郵差自己滑進信箱
@@ -342,13 +354,18 @@
   const nearEnd = () => S.i >= S.samples.length - 1 - MAGNET;
   function magnet() {
     if (S.done || S.back) return;
-    S.drag = false; S.done = true; S.offset = [0, 0]; S.offNow = false;
+    S.drag = false; S.done = true; S.offNow = false;
     S.el.courier.classList.remove('is-drag'); $('stage').classList.remove('is-dragging');
-    const N = S.samples.length;
-    const tick = () => {
-      const next = Math.min(N - 1, S.i + 3);
-      for (let k = S.max + 1; k <= next; k++) S.status[k] = 1;
-      S.i = S.max = next; place();
+    const N = S.samples.length, part = S.inks.length - 1;
+    const tick = () => {   // 先走回進度點，再沿路滑到信箱，綠線跟著畫
+      const b = S.samples[S.i], d = dist(S.pos, b);
+      if (d > 24) S.pos = [S.pos[0] + (b[0] - S.pos[0]) * 24 / d, S.pos[1] + (b[1] - S.pos[1]) * 24 / d];
+      else {
+        const next = Math.min(N - 1, S.i + 3);
+        for (let k = S.max + 1; k <= next; k++) S.status[k] = 1;
+        S.i = S.max = next; S.pos = [...S.samples[next]];
+      }
+      S.ink.push([S.pos[0], S.pos[1], part]); place();
       if (S.i < N - 1) setTimeout(tick, 16); else { S.done = false; arrive(); }
     };
     tick();
@@ -358,21 +375,30 @@
     if (rawRaf) { cancelAnimationFrame(rawRaf); flushMove(); }
     $('stage').classList.remove('is-dragging');
     if (S.drag && !S.done && nearEnd()) return magnet();
-    const was = S.drag; S.drag = false; S.el.courier?.classList.remove('is-drag'); S.offset = [0, 0]; S.offNow = false; S.offTravel = 0; if (S.samples.length) place();
+    const was = S.drag; S.drag = false; S.el.courier?.classList.remove('is-drag');
+    if (S.offNow && S.samples.length) S.pos = [...S.samples[nearRoad(S.pos)[0]]];   // 在路邊放手：郵差站回路上
+    S.offNow = false; S.offTravel = 0; if (S.samples.length) place();
     if (was && MODES[mode].fence && !S.done) { clearTimeout(S.idleT); S.idleT = setTimeout(() => { if (inGame() && !S.drag && !S.done) startHint(); }, 3000); }
   }
 
   function goOff() {
     S.drag = false; S.el.courier.classList.remove('is-drag'); $('stage').classList.remove('is-dragging'); S.offs++;
-    S.offset = [0, 0]; S.offNow = false; S.offTravel = 0; S.lastMark = null;
+    S.offNow = false; S.offTravel = 0; S.lastMark = null;
     Dino.sfx('wrong', .35); say('沿著路走喔');
     $('stage').classList.remove('is-off'); void $('stage').offsetWidth; $('stage').classList.add('is-off');
-    // 慢慢退回上一顆星，退回的那段重新算
-    const target = S.checkpoints[S.cp];
-    S.status.length = target + 1;
+    // 沿著自己畫的綠線慢慢退回上一顆星（綠線一路收回），退回的那段重新算
+    const target = S.checkpoints[S.cp], keep = S.inkAt[S.cp] || 0;
+    S.i = S.max = target; S.status.length = target + 1;
     setTimeout(() => S.el.marks.replaceChildren(), 500);
     S.back = true; S.lastP = null;
-    const tick = () => { S.i = Math.max(target, S.i - 6); S.max = S.i; place(); if (S.i > target) setTimeout(tick, 16); else S.back = false; };
+    const tick = () => {
+      for (let n = 0; n < 3 && S.ink.length > keep; n++) S.ink.pop();
+      const last = S.ink.slice(keep).reverse().find(Boolean);
+      if (S.ink.length > keep && last) S.pos = [last[0], last[1]];
+      else { const b = S.samples[target], d = dist(S.pos, b); S.pos = d < 24 ? [...b] : [S.pos[0] + (b[0] - S.pos[0]) * 24 / d, S.pos[1] + (b[1] - S.pos[1]) * 24 / d]; }
+      place();
+      if (S.ink.length > keep || dist(S.pos, S.samples[target]) > 1) setTimeout(tick, 16); else S.back = false;
+    };
     tick();
   }
 
@@ -385,7 +411,7 @@
   const starHtml = n => [0, 1, 2].map(i => `<span class="${i < n ? '' : 'off'}">★</span>`).join('');
 
   function arrive() {
-    S.done = true; S.drag = false; S.offset = [0, 0]; S.cp = 3; place();
+    S.done = true; S.drag = false; S.cp = 3; place();
     Dino.sfx('stamp', .8); setTimeout(() => Dino.sfx('correct', .8), 250);
     Dino.burst(S.el.courier); say('送到了！');
     S.el.img.setAttribute('href', `assets/cast/${S.courier[0]}__cheer.webp`); S.el.img.removeAttribute('transform');
@@ -445,7 +471,12 @@
   const svg = $('svg');
   svg.addEventListener('pointerdown', onDown); svg.addEventListener('pointermove', onMove);
   svg.addEventListener('pointerup', onUp); svg.addEventListener('pointercancel', onUp);
-  let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { if (S.done) return; const i = S.i, mx = S.max, cp = S.cp, st = S.status, offs = S.offs; build(); S.i = Math.min(i, S.samples.length - 1); S.max = Math.min(mx, S.samples.length - 1); S.cp = cp; S.status = st; S.offs = offs; place(); if (inGame() && !HW.isOpen()) startHint(); }, 150); });
+  // 轉向／縮放：重建畫面後綠線改用路的中線補到目前進度
+  let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => {
+    if (S.done) return; const i = S.i, cp = S.cp, st = S.status, offs = S.offs;
+    build(); S.i = S.max = Math.min(i, S.samples.length - 1); S.cp = cp; S.status = st; S.offs = offs; S.pos = [...S.samples[S.i]];
+    S.ink = S.samples.slice(0, S.i + 1).map((p, k) => [p[0], p[1], k < S.b0 ? 0 : 1]); S.inkAt = S.checkpoints.map(idx => Math.min(idx + 1, S.ink.length));
+    place(); if (inGame() && !HW.isOpen()) startHint(); }, 150); });
   newGame();
   HW = Dino.howto({ preview: buildHowto, text: '按住郵差，照星星走到郵筒', kid: setKidText, voice: 'path', onClose: () => { if (inGame() && !S.drag && !S.done) startHint(); } });
   window.__path = S;
