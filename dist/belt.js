@@ -314,11 +314,11 @@
     // 標題列（2026-10-22 統一）：房子回選遊戲首頁；⚙ 回開始畫面（暫停，可改速度）；? 玩法框
     document.querySelector('.gh .dino-home').addEventListener('click', e => { e.preventDefault(); Dino.goTo('index.html'); });
     $('menuBtn').addEventListener('click', () => { if (!$('readyOverlay').hidden) return; Dino.sfx('tap', .5); state.started = false; state.playing = false; $('readyOverlay').hidden = false; Dino.bgm.start(); });
-    const howto = Dino.howto({ preview: 'belt.html', text: '抓住對的注音', kid: setKidText });
+    const howto = Dino.howto({ preview: 'belt.html', text: '抓住對的注音', kid: setKidText, voice: 'belt' });
     $('helpButton').addEventListener('click', () => { Dino.sfx('tap', .5); howto.show(); });
     $('readyStart').addEventListener('click', () => {
-      $('readyOverlay').hidden = true; state.started = true; state.playing = true; Dino.bgm.stop();
-      play(state.round[state.index].zhAudio);
+      $('readyOverlay').hidden = true; Dino.bgm.stop();
+      howto.first().then(() => { state.started = true; state.playing = true; play(state.round[state.index].zhAudio); });   // 第一次玩先看玩法＋伊奇念
     });
     let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { measure(); fitQuestion(); fillBelt(); }, 150); });
     requestAnimationFrame(frame);

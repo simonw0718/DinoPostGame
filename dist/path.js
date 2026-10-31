@@ -447,6 +447,6 @@
   svg.addEventListener('pointerup', onUp); svg.addEventListener('pointercancel', onUp);
   let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { if (S.done) return; const i = S.i, mx = S.max, cp = S.cp, st = S.status, offs = S.offs; build(); S.i = Math.min(i, S.samples.length - 1); S.max = Math.min(mx, S.samples.length - 1); S.cp = cp; S.status = st; S.offs = offs; place(); if (inGame() && !HW.isOpen()) startHint(); }, 150); });
   newGame();
-  HW = Dino.howto({ preview: buildHowto, text: '按住郵差，照星星走到郵筒', kid: setKidText, onClose: () => { if (inGame() && !S.drag && !S.done) startHint(); } });
+  HW = Dino.howto({ preview: buildHowto, text: '按住郵差，照星星走到郵筒', kid: setKidText, voice: 'path', onClose: () => { if (inGame() && !S.drag && !S.done) startHint(); } });
   window.__path = S;
 })();

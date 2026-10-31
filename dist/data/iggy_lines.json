@@ -1,0 +1,201 @@
+{
+ "_note": "伊奇語音台詞（導演 2026-10-31 核准）。howto＝各遊戲第一次玩時念的玩法（中文）；catch＝接信大郵袋每局題目（英文）。生成：python3 tools/gemini_tts_batch.py iggy howto|catch",
+ "voice": {
+  "source": "恐龍郵局 voices/character_voice_routes.json 伊奇 R27",
+  "model": "gemini-3.8-flash-tts",
+  "voice_id": "voice_l61ydzkp79d1",
+  "api_key_file": "/Users/simon/.config/dinopost/gemini-key-DINOB"
+ },
+ "style": {
+  "howto": "自然台灣華語，伊奇是好奇、認真的人類新人郵差，正在邀請小朋友一起玩遊戲；語氣親切、帶一點好奇和興奮，中速清楚，每句之間停頓要長。不說教、不裝幼兒、不作主播腔。",
+  "catch": "Iggy, a friendly young mail carrier, cheerfully telling young children which letters to catch in a game; clear, warm and excited, moderate pace, a long pause between phrases."
+ },
+ "howto": [
+  {
+   "id": "match",
+   "text": "咦？我聽到一個英文字……是哪一張圖呢？聽仔細，點對的那張！"
+  },
+  {
+   "id": "mail",
+   "text": "這封信上面寫著注音耶！你幫我讀讀看，要送到哪個郵箱？"
+  },
+  {
+   "id": "flip",
+   "text": "藍色信封會說話喔！先聽它說什麼，再去米色信封裡找圖片。"
+  },
+  {
+   "id": "belt",
+   "text": "哇，注音在輸送帶上跑來跑去！看準對的那個，抓住它！"
+  },
+  {
+   "id": "dig",
+   "text": "土裡好像藏著化石……從小旗子開始，照著筆順挖挖看！"
+  },
+  {
+   "id": "path",
+   "text": "按住我，跟著星星走，帶我去郵筒！走歪一點點也沒關係喔。"
+  },
+  {
+   "id": "pack",
+   "text": "包裹要把空地塞滿滿！還有……恐龍旁邊要放一封信，牠們在等信呢！"
+  }
+ ],
+ "catch": [
+  {
+   "id": "red",
+   "text": "Catch the red ones!"
+  },
+  {
+   "id": "blue",
+   "text": "Catch the blue ones!"
+  },
+  {
+   "id": "yellow",
+   "text": "Catch the yellow ones!"
+  },
+  {
+   "id": "green",
+   "text": "Catch the green ones!"
+  },
+  {
+   "id": "circle",
+   "text": "Catch the circles!"
+  },
+  {
+   "id": "square",
+   "text": "Catch the squares!"
+  },
+  {
+   "id": "rectangle",
+   "text": "Catch the rectangles!"
+  },
+  {
+   "id": "triangle",
+   "text": "Catch the triangles!"
+  },
+  {
+   "id": "diamond",
+   "text": "Catch the diamonds!"
+  },
+  {
+   "id": "heart",
+   "text": "Catch the hearts!"
+  },
+  {
+   "id": "star",
+   "text": "Catch the stars!"
+  },
+  {
+   "id": "red-circle",
+   "text": "Catch the red circles!"
+  },
+  {
+   "id": "red-square",
+   "text": "Catch the red squares!"
+  },
+  {
+   "id": "red-rectangle",
+   "text": "Catch the red rectangles!"
+  },
+  {
+   "id": "red-triangle",
+   "text": "Catch the red triangles!"
+  },
+  {
+   "id": "red-diamond",
+   "text": "Catch the red diamonds!"
+  },
+  {
+   "id": "red-heart",
+   "text": "Catch the red hearts!"
+  },
+  {
+   "id": "red-star",
+   "text": "Catch the red stars!"
+  },
+  {
+   "id": "blue-circle",
+   "text": "Catch the blue circles!"
+  },
+  {
+   "id": "blue-square",
+   "text": "Catch the blue squares!"
+  },
+  {
+   "id": "blue-rectangle",
+   "text": "Catch the blue rectangles!"
+  },
+  {
+   "id": "blue-triangle",
+   "text": "Catch the blue triangles!"
+  },
+  {
+   "id": "blue-diamond",
+   "text": "Catch the blue diamonds!"
+  },
+  {
+   "id": "blue-heart",
+   "text": "Catch the blue hearts!"
+  },
+  {
+   "id": "blue-star",
+   "text": "Catch the blue stars!"
+  },
+  {
+   "id": "yellow-circle",
+   "text": "Catch the yellow circles!"
+  },
+  {
+   "id": "yellow-square",
+   "text": "Catch the yellow squares!"
+  },
+  {
+   "id": "yellow-rectangle",
+   "text": "Catch the yellow rectangles!"
+  },
+  {
+   "id": "yellow-triangle",
+   "text": "Catch the yellow triangles!"
+  },
+  {
+   "id": "yellow-diamond",
+   "text": "Catch the yellow diamonds!"
+  },
+  {
+   "id": "yellow-heart",
+   "text": "Catch the yellow hearts!"
+  },
+  {
+   "id": "yellow-star",
+   "text": "Catch the yellow stars!"
+  },
+  {
+   "id": "green-circle",
+   "text": "Catch the green circles!"
+  },
+  {
+   "id": "green-square",
+   "text": "Catch the green squares!"
+  },
+  {
+   "id": "green-rectangle",
+   "text": "Catch the green rectangles!"
+  },
+  {
+   "id": "green-triangle",
+   "text": "Catch the green triangles!"
+  },
+  {
+   "id": "green-diamond",
+   "text": "Catch the green diamonds!"
+  },
+  {
+   "id": "green-heart",
+   "text": "Catch the green hearts!"
+  },
+  {
+   "id": "green-star",
+   "text": "Catch the green stars!"
+  }
+ ]
+}

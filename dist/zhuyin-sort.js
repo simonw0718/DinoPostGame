@@ -548,7 +548,7 @@
     document.querySelector('.gh .dino-home').addEventListener('click', event => { event.preventDefault(); Dino.goTo('index.html'); });
     $('settingsButton').addEventListener('click', () => { Dino.sfx('tap', .5); Dino.goTo('mail.html'); });
     setKidText($('gameTitle'), '注音送信');
-    const howto = Dino.howto({ preview: 'mail.html', text: '讀注音，選郵箱。', kid: setKidText });
+    const howto = Dino.howto({ preview: 'mail.html', text: '讀注音，選郵箱。', kid: setKidText, voice: 'mail' });
     $('helpButton').addEventListener('click', () => { Dino.sfx('tap', .5); howto.show(); });
     if (new URLSearchParams(location.search).has('settings')) $('settingsDialog').showModal();
     $('closeSettings').addEventListener('click', () => $('settingsDialog').close());
@@ -565,7 +565,7 @@
     $('playAgainButton').addEventListener('click', startRound);
     $('readyOverlay').addEventListener('click', () => {
       $('readyOverlay').hidden = true; Dino.sfx('pop', .6);
-      if (state.phase === 'question') playPrompt();
+      howto.first().then(() => { if (state.phase === 'question') playPrompt(); });   // 第一次玩先看玩法＋伊奇念
     });
     initDrag();
     addEventListener('resize', layout);

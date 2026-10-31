@@ -495,7 +495,7 @@
     '知道了': ['ㄓ', 'ㄉㄠˋ', 'ㄌㄜ˙'],
   });
   setKidText($('title'), '挖化石'); setKidText($('startLabel'), '點一下，開始挖化石！'); setKidText($('finishTitle'), '化石都挖出來了！');
-  const HW = Dino.howto({ preview: 'dig.html', text: '從小旗子開始，照筆順挖', kid: setKidText });
+  const HW = Dino.howto({ preview: 'dig.html', text: '從小旗子開始，照筆順挖', kid: setKidText, voice: 'dig' });
   let howtoSeen = false;
   const syncPick = () => document.querySelectorAll('[data-lv]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lv === level)));
   document.querySelectorAll('[data-lv]').forEach(b => b.addEventListener('click', () => {

@@ -341,7 +341,11 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
   };
 
   // 玩法小框框（樣式 howto.css）：preview＝previews 的 key／html 字串／(stage)=>void 自畫；text 用 kid（頁面的 setKidText）加注音。點哪裡都關
-  function howto({ preview, text, kid, onClose } = {}) {
+  // voice：伊奇念玩法（assets/audio/howto/<voice>.mp3，導演 2026-10-31）——只在這款遊戲「第一次」打開玩法框時念；first()＝第一次玩才跳出（關掉後 resolve）
+  function howto({ preview, text, kid, onClose, voice: voiceId } = {}) {
+    const heardKey = `dino-howto-heard-${voiceId}`;
+    const heard = () => { try { return localStorage.getItem(heardKey) === '1'; } catch { return true; } };
+    let speaking = false, closed = null;
     const root = document.createElement('div'); root.className = 'howto'; root.hidden = true;
     root.innerHTML = '<div class="howto-card" role="dialog" aria-label="玩法"><button class="howto-x" type="button" aria-label="關掉">✕</button><div class="howto-stage"></div><p class="howto-text"></p><button class="howto-ok" type="button">知道了</button></div>';
     document.body.append(root);
@@ -350,10 +354,18 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
     if (typeof preview === 'function') { stage.classList.add('is-free'); preview(stage); }
     else { stage.innerHTML = previews[preview] || preview || ''; }
     const fit = () => { const pv = stage.querySelector('.pv'); if (pv && stage.clientWidth) pv.style.transform = `scale(${stage.clientWidth / pv.offsetWidth})`; };
-    const hide = () => { if (root.hidden) return; root.hidden = true; sfx('tap', .4); onClose?.(); };
+    const hide = () => { if (root.hidden) return; root.hidden = true; sfx('tap', .4); if (speaking) { speaking = false; voice.stop(); } onClose?.(); closed?.(); closed = null; };
     root.addEventListener('click', hide);
     addEventListener('resize', fit);
-    return { el: root, isOpen: () => !root.hidden, hide, show() { root.hidden = false; fit(); } };
+    function show() {
+      root.hidden = false; fit();
+      if (voiceId && !heard()) {
+        try { localStorage.setItem(heardKey, '1'); } catch { /* ok */ }
+        speaking = true; voice(`assets/audio/howto/${voiceId}.mp3`).then(() => { speaking = false; });
+      }
+    }
+    const first = () => voiceId && !heard() ? new Promise(r => { closed = r; show(); }) : Promise.resolve();
+    return { el: root, isOpen: () => !root.hidden, hide, show, first };
   }
 
   return { voice, characters, storageKeys, shuffle, loadQueue, fitActor, parseZhuyin, makeBpmUnit, kidText,

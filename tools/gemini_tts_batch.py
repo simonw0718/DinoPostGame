@@ -5,6 +5,7 @@ Usage: python3 tools/gemini_tts_batch.py 1|2|3
        python3 tools/gemini_tts_batch.py tempo NAME FACTOR       slow/speed cut clips locally (0.9 = 10% slower)
        python3 tools/gemini_tts_batch.py apply NAME              after listening: back up old MP3, replace
        python3 tools/gemini_tts_batch.py whack [ID ...]          分類快打出題句 "Let's hit... X!"（全部一次請求再裁切）→ dist/assets/audio/whack/
+       python3 tools/gemini_tts_batch.py iggy howto|catch [ID ...] 伊奇（R27）玩法語音／接信題目，台詞在 dist/data/iggy_lines.json → dist/assets/audio/<kind>/
 The key stays in ~/.config/dinopost/gemini-key-DINOZ. Never prints or saves it.
 Already generated batches are never sent again by this script.
 """
@@ -82,9 +83,9 @@ def speech_intervals(wav, expected):
     raise RuntimeError(f'Expected {expected} speech intervals; counts: {[a["speech_count"] for a in attempts]}')
 
 
-def request_tts(request_body, folder, wav, message):
+def request_tts(request_body, folder, wav, message, key_path=None):
     """Send one TTS request and save the WAV; the key is read here and never printed."""
-    key = KEY_PATH.read_text().strip()
+    key = Path(key_path or KEY_PATH).read_text().strip()
     assert key, 'DINOZ key is empty'
     req = urllib.request.Request('https://generativelanguage.googleapis.com/v1beta/interactions',
         data=json.dumps(request_body).encode(),
@@ -108,7 +109,7 @@ def request_tts(request_body, folder, wav, message):
     assert data[:4] == b'RIFF', 'Expected WAV response'
     wav.write_bytes(data)
     (folder / 'response-summary.json').write_text(json.dumps({
-        'interaction_id': result.get('id'), 'model': MODEL, 'voice': VOICE,
+        'interaction_id': result.get('id'), 'model': request_body['model'], 'voice': request_body['generation_config']['speech_config'][0]['voice'],
         'audio_bytes': len(data), 'audio_blocks': len(blocks)}, indent=2) + '\n')
 
 
@@ -195,7 +196,41 @@ def whack(ids):
         print(f"{c['id']:8s} {b - a:.2f}s  {text}", flush=True)
 
 
+def iggy(kind, ids):
+    """伊奇台詞（導演 2026-10-31 核准）：同一種全部一次請求、本機依最長停頓裁切；已存的 full.wav 不重送。
+    聲音照正式專案 voices/character_voice_routes.json 的伊奇（R27）。"""
+    cfg = json.loads((ROOT / 'dist/data/iggy_lines.json').read_text())
+    role, lines = cfg['voice'], [l for l in cfg[kind] if not ids or l['id'] in ids]
+    folder = ROOT / 'audio-pilot/iggy-lines' / (kind + ('-' + '-'.join(ids) if ids else ''))
+    folder.mkdir(parents=True, exist_ok=True)
+    wav = folder / 'full.wav'
+    body = {'model': role['model'],
+            'input': [{'type': 'user_input', 'content': [{'type': 'text', 'text': ' <long pause> <long pause> <long pause> '.join(l['text'] for l in lines),
+                'annotations': [{'type': 'speech_metadata', 'style': cfg['style'][kind]}]}]}],
+            'response_format': {'type': 'audio'},
+            'generation_config': {'speech_config': [{'voice': role['voice_id']}]}}
+    (folder / 'request.json').write_text(json.dumps(body, ensure_ascii=False, indent=2) + '\n')
+    if not wav.exists():
+        request_tts(body, folder, wav, f'iggy {kind}: sending ONE TTS request for {len(lines)} lines', role['api_key_file'])
+    # 句內也有長停頓（「咦？……」），最長停頓不一定是句界；模型也可能漏念整句。
+    # 所以先用 whisper 聽過，把核對後的切點寫在 cuts.json {"id": [start, end]}，有它就照它切（只切列出的句子）
+    cuts = folder / 'cuts.json'
+    if cuts.exists():
+        known = json.loads(cuts.read_text())
+        lines, spans = [l for l in lines if l['id'] in known], [known[l['id']] for l in lines if l['id'] in known]
+    else:
+        spans, _ = split_by_longest_gaps(wav, len(lines))
+    out = ROOT / 'dist/assets/audio' / kind
+    out.mkdir(parents=True, exist_ok=True)
+    for l, (a, b) in zip(lines, spans):
+        run(['ffmpeg', '-v', 'error', '-y', '-ss', f'{max(0, a - 0.05):.3f}', '-to', f'{b + 0.12:.3f}', '-i', str(wav),
+             '-ac', '1', '-ar', '24000', '-codec:a', 'libmp3lame', '-qscale:a', '4', str(out / f"{l['id']}.mp3")])
+        print(f"{l['id']:16s} {b - a:5.2f}s  {l['text']}", flush=True)
+
+
 def main():
+    if sys.argv[1] == 'iggy':
+        return iggy(sys.argv[2], sys.argv[3:])
     if sys.argv[1] == 'whack':
         return whack(sys.argv[2:])
     if sys.argv[1] == 'tempo':

@@ -233,7 +233,7 @@
 
   const HW = Dino.howto({
     preview: `<div class="pv pv-pack" aria-hidden="true"><div class="g"><i></i><i></i><i style="visibility:hidden"></i><i></i><i></i><i></i></div><img class="d" src="assets/cast/iggy__hello.webp" alt=""><div class="p">${envSvg('env')}</div><span class="seal">OK</span></div>`,
-    text: '塞滿空地，恐龍旁邊要有信', kid: setKidText
+    text: '塞滿空地，恐龍旁邊要有信', kid: setKidText, voice: 'pack'
   });
   let howtoSeen = false;
   $('start').addEventListener('click', () => {

@@ -816,7 +816,7 @@ async function init() {
 }
 const albumLink = DinoStampsUI.albumLink();
 $('resultScreen').querySelector('.result-actions').append(albumLink);
-$('startButton').addEventListener('click', startRound);
+$('startButton').addEventListener('click', () => howto.first().then(startRound));   // 第一次玩先看玩法＋伊奇念
 $('againButton').addEventListener('click', startRound);
 $('audioButton').addEventListener('click', () => playWord());
 $('nextButton').addEventListener('click', nextQuestion);
@@ -828,7 +828,7 @@ $('settingsButton').addEventListener('click', () => {
   if ($('startScreen').classList.contains('hidden')) { goHome(); return; }
   showSettingsPage('main'); $('settingsDialog').showModal();
 });
-const howto = Dino.howto({ preview: 'match.html', text: '聽英文，選圖片。', kid: setKidText });
+const howto = Dino.howto({ preview: 'match.html', text: '聽英文，選圖片。', kid: setKidText, voice: 'match' });
 $('helpButton').addEventListener('click', () => { Dino.sfx('tap', .5); howto.show(); });
 setKidText($('gameTitle'), '找圖片');
 $('openWordBank').addEventListener('click', () => showSettingsPage('bank'));

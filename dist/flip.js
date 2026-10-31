@@ -255,9 +255,9 @@
     // 標題列（2026-10-22 統一）：房子回選遊戲首頁；⚙ 回開始畫面（可改對數）；? 玩法框
     document.querySelector('.gh .dino-home').addEventListener('click', e => { e.preventDefault(); Dino.goTo('index.html'); });
     $('menuBtn').addEventListener('click', () => { if (!$('readyOverlay').hidden) return; Dino.sfx('tap', .5); $('readyOverlay').hidden = false; Dino.bgm.start(); });
-    const howto = Dino.howto({ preview: 'flip.html', text: '先聽聲音，再找圖片', kid: setKidText });
+    const howto = Dino.howto({ preview: 'flip.html', text: '先聽聲音，再找圖片', kid: setKidText, voice: 'flip' });
     $('helpButton').addEventListener('click', () => { Dino.sfx('tap', .5); howto.show(); });
-    $('readyStart').addEventListener('click', () => { $('readyOverlay').hidden = true; state.started = true; Dino.bgm.stop(); });
+    $('readyStart').addEventListener('click', () => { $('readyOverlay').hidden = true; Dino.bgm.stop(); howto.first().then(() => { state.started = true; }); });
     $('playAgain').addEventListener('click', () => { Dino.bgm.stop(); startRound(); });
     let t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(layout, 120); });
     window.__flip = state;   // 截圖驗收用

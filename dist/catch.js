@@ -55,12 +55,10 @@
 
   const G = { round: 0, got: 0, wrong: 0, wrongs: [], target: null, pool: [], letters: [], bagX: .5, running: false, paused: false, pending: null, started: false, last: 0, spawnIn: 0 };
   const clipUrl = name => name.startsWith('shape-') ? `assets/audio/${name}.mp3` : `assets/audio/kidapp-${name.replace(/^kidapp-/, '')}.mp3`;
-  // 題目念法：顏色 → "red"；形狀 → "circle"；最後一關 → "red" 念完接著 "circle"
-  let sayN = 0;
+  // 題目念法（導演 2026-10-31）：伊奇念整句 "Catch the red ones!"／"Catch the circles!"／"Catch the red circles!"（assets/audio/catch/，台詞 data/iggy_lines.json）
   function sayOrder() {
-    const t = G.target, n = ++sayN; Dino.voice.stop();
-    const first = t.color ? t.color.id : t.shape.audio;
-    Dino.voice(clipUrl(first)).then(() => { if (t.color && t.shape && n === sayN) setTimeout(() => n === sayN && Dino.voice(clipUrl(t.shape.audio)), 150); });
+    const t = G.target; Dino.voice.stop();
+    Dino.voice(`assets/audio/catch/${[t.color?.id, t.shape?.id].filter(Boolean).join('-')}.mp3`);
   }
 
   let clipN = 0;
@@ -262,7 +260,7 @@
 
   function newGame() {
     G.round = 0; G.wrongs = []; G.target = null; G.started = true; G.paused = false; G.pending = null;
-    Dino.preload([...COLORS.map(c => clipUrl(c.id)), ...SHAPES.map(s => clipUrl(s.audio)), ...NUM.map(clipUrl)]);
+    Dino.preload(NUM.map(clipUrl));   // 題目句每局才載（共 39 句，不一次全解碼）
     G.letters.forEach(L => L.el.remove()); G.letters = [];
     measure(); nextRound();
   }
