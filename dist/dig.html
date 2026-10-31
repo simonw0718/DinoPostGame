@@ -262,10 +262,10 @@
       }
     }
     // 這一筆要挖去哪（導演 2026-10-31）：剩下的路畫成往終點流動的虛線，終點放一個會閃的圈圈（困難也顯示）
-    // 旗子插在字框外（導演 2026-10-31）：從挖點往筆畫反方向退一個半溝寬，虛線從旗子腳下接到挖點再到終點
-    const p = pointAt(cur, dug), a0 = cur[p[2]], b0 = cur[p[2] + 1] || a0, sl = segLen(a0, b0) || 1;
-    const fpt = [p[0] - (b0[0] - a0[0]) / sl * W * 1.5, p[1] - (b0[1] - a0[1]) / sl * W * 1.5];
-    const rest = [fpt, [p[0], p[1]], ...cur.slice(p[2] + 1)];
+    // 旗子固定插在這一筆起點後方（不跟著挖的地方走）；還沒開挖時虛線從旗子接到起點，挖了之後虛線只畫剩下的
+    const p = pointAt(cur, dug), [a0, b0] = cur, sl = segLen(a0, b0) || 1;
+    const fpt = [a0[0] - (b0[0] - a0[0]) / sl * W * 1.5, a0[1] - (b0[1] - a0[1]) / sl * W * 1.5];
+    const rest = [...(dug ? [] : [fpt]), [p[0], p[1]], ...cur.slice(p[2] + 1)];
     const way = el('path', { d: d(rest), fill: 'none', stroke: '#c0392b', 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', 'stroke-dasharray': '3 4', opacity: .85 }, g);
     if (!calm) way.innerHTML = '<animate attributeName="stroke-dashoffset" from="14" to="0" dur=".7s" repeatCount="indefinite"/>';
     const [ex, ey] = cur.at(-1), goal = el('g', { transform: `translate(${ex} ${ey}) scale(1 ${1 / K})` }, g);
