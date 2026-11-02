@@ -16,7 +16,7 @@
   <div class="bar"><img class="buddy" id="buddy" alt="" src="assets/cast/iggy__hello.webp"><button class="ask" id="ask" type="button"><span class="q" id="askQ"></span><span class="cat" id="askCat"></span></button><div class="eg" id="eg"></div><div class="clock" id="clockBox"><span id="time">15</span><small>秒</small></div><div class="score" id="scoreBox"><span aria-hidden="true">★</span><b id="score">0</b></div><div class="dots" id="dots" aria-label="第幾輪"></div></div>
   <main class="stage" id="stage"></main>
 </div>
-<div class="layer" id="start"><button class="big" type="button">點一下開始</button></div>
+<div class="layer" id="start"><div class="pick" id="secPick"><span id="secLabel">每輪秒數</span><button type="button" data-sec="10">10</button><button type="button" data-sec="15">15</button><button type="button" data-sec="20">20</button><button type="button" data-sec="30">30</button></div><button class="big" type="button">點一下開始</button></div>
 <div class="layer intro" id="intro" hidden><div class="lets" id="lets">Let's hit…</div><div class="name"><span class="e" id="introEn"></span><span class="z" id="introZh"></span></div><div class="pics" id="introPics"></div><button class="go" type="button" id="introGo">開始</button></div>
 <div class="layer" id="done" hidden><img class="cheer" alt="" src="assets/cast/iggy__cheer.webp"><div class="newrec" id="doneNew" hidden>新紀錄！</div><div class="big time" id="doneTime"></div><ul class="rounds" id="doneRounds"></ul><ol class="rec" id="doneRec"></ol><div class="got" id="got"></div><button class="big" type="button">再玩一次</button></div>
 <script src="mole.js"></script>

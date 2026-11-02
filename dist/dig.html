@@ -55,9 +55,9 @@
     .pick button[aria-pressed="true"] { background: linear-gradient(#ffca58, #f6ac34); border-color: #b9792b; color: #573e1d; box-shadow: 0 3px 0 #b9792b; }
     .go { display: grid; place-items: center; width: 128px; height: 128px; padding-left: 10px; border: 7px solid var(--cream); border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ff8a6e, #e0473a 60%, #b8322a); color: var(--cream); font-size: 56px; box-shadow: 0 8px 0 #8e2620; }
     .label { white-space: nowrap; padding: 10px 20px; border: 4px solid var(--gold); border-radius: 999px; background: var(--cream); font-size: clamp(18px, 5.2vw, 28px); font-weight: 1000; box-shadow: 0 5px 0 #c89c52; }
-    .card { display: grid; justify-items: center; gap: 10px; width: min(92vw, 400px); padding: 22px; border: 6px solid var(--gold); border-radius: 28px; background: var(--cream); text-align: center; box-shadow: 0 12px 0 #c89c52; }
+    .card { display: grid; justify-items: center; gap: 10px; width: min(94vw, 520px); padding: 22px 18px; border: 6px solid var(--gold); border-radius: 28px; background: var(--cream); text-align: center; box-shadow: 0 12px 0 #c89c52; }
     .card img { height: 130px; }
-    .card h2 { margin: 0; font-size: clamp(22px, 5.6vw, 34px); white-space: nowrap; display: flex; justify-content: center; }
+    .card h2 { margin: 0; max-width: 100%; font-size: clamp(20px, 5vw, 30px); display: flex; flex-wrap: wrap; justify-content: center; }   /* 導演 2026-11-02 結算破圖：注音標題太寬超出卡片，改可換行＋卡片加寬 */
     .stars { margin: 0; color: #f2b945; font-size: 44px; letter-spacing: .08em; }
     .actions { display: flex; gap: 12px; width: 100%; }
     .actions button, .actions a { flex: 1; min-height: 54px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 16px; font-size: clamp(17px, 4.8vw, 22px); font-weight: 1000; text-decoration: none; color: #17593f; }
@@ -188,6 +188,7 @@
   }
 
   function build() {
+    if (stage.getBoundingClientRect().width < 20) return;   // 舞台還沒有大小（畫面隱藏中）：等下次重排，不然比例算成 0
     svg.textContent = '';
     layout();
     const defs = el('defs', {}, svg);
@@ -524,7 +525,7 @@
   $('again').addEventListener('click', () => { Dino.bgm.stop(); start(); });
   addEventListener('resize', () => { if (sym) build(); });
   // 舞台大小變了（例詞列晚載入、轉向）就重排，讓 viewBox 永遠等於實際大小；挖到一半或出土中先不動，放手後再補
-  const fitStage = () => { const r = stage.getBoundingClientRect(), vb = svg.viewBox.baseVal; if (sym && !done && pid === null && vb && (Math.abs(vb.width - r.width) > 1 || Math.abs(vb.height - r.height) > 1)) build(); };
+  const fitStage = () => { const r = stage.getBoundingClientRect(), vb = svg.viewBox.baseVal; if (r.width > 20 && r.height > 20 && sym && !done && pid === null && vb && (Math.abs(vb.width - r.width) > 1 || Math.abs(vb.height - r.height) > 1)) build(); };
   new ResizeObserver(fitStage).observe(stage);
   svg.addEventListener('pointerup', () => setTimeout(fitStage, 0));
   Promise.all([fetch('data/zhuyin_strokes.json').then(r => r.json()), fetch('assets/audio/symbols.json').then(r => r.json()), fetch('data.json').then(r => r.json()).catch(() => [])]).then(([st, au, words]) => {

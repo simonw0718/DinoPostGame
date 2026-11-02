@@ -9,8 +9,13 @@
   const done = (a, ms) => Promise.race([a.finished, wait(ms + 80)]);
   const ease = { out: 'cubic-bezier(.16,1,.3,1)', back: 'cubic-bezier(.34,1.56,.64,1)' };
   // 計分制（導演 2026-10-29）：每輪 15 秒比打中幾個、3 輪各換一個分類、打錯扣 1 分（最低 0）；紀錄＝3 輪總分前 5 名
-  const ROUNDS = 3, ROUND_SEC = 15, REC_KEY = 'dinopost-egg-score-records-v1', OPEN_MS = 2600, N_EG = 3;
+  const ROUNDS = 3, REC_KEY = 'dinopost-egg-score-records-v1', OPEN_MS = 2600, N_EG = 3;
   const MAX_OPEN = 2, HIT_RATE = .5;
+  // 每輪秒數可調（導演 2026-11-02）：開始畫面選 10／15／20／30，記在這台裝置；不同秒數各自一份前 5 名（15 秒沿用舊紀錄）
+  const SECS = [10, 15, 20, 30];
+  let roundSec = 15;
+  try { const v = +localStorage.getItem('dinopost-egg-sec'); if (SECS.includes(v)) roundSec = v; } catch { /* ok */ }
+  const recKey = () => roundSec === 15 ? REC_KEY : `${REC_KEY}-${roundSec}s`;
   // 巢分布（導演 2026-10-27 選 egg-layout-sample B 微笑弧線）：[x, y]＝巢底位置比例；越下面越近越大
   const LAYOUT = {
     land: [[.12, .58], [.3, .75], [.5, .88], [.7, .75], [.88, .58]],
@@ -19,7 +24,7 @@
   // 分類名單唯一來源：whack_categories.json（yes＝答案、group＝干擾題排除的大類、avoid＝也不拿來當干擾題）
   let CATS = [];
   const setKidText = Dino.kidText({ '請打': ['ㄑㄧㄥˇ', 'ㄉㄚˇ'], '恐龍蛋快打': ['ㄎㄨㄥˇ', 'ㄌㄨㄥˊ', 'ㄉㄢˋ', 'ㄎㄨㄞˋ', 'ㄉㄚˇ'],
-    '聽題目，打對的蛋': ['ㄊㄧㄥ', 'ㄊㄧˊ', 'ㄇㄨˋ', '', 'ㄉㄚˇ', 'ㄉㄨㄟˋ', 'ㄉㄜ˙', 'ㄉㄢˋ'], '知道了': ['ㄓ', 'ㄉㄠˋ', 'ㄌㄜ˙'] });
+    '聽題目，打對的蛋': ['ㄊㄧㄥ', 'ㄊㄧˊ', 'ㄇㄨˋ', '', 'ㄉㄚˇ', 'ㄉㄨㄟˋ', 'ㄉㄜ˙', 'ㄉㄢˋ'], '知道了': ['ㄓ', 'ㄉㄠˋ', 'ㄌㄜ˙'], '每輪秒數': ['ㄇㄟˇ', 'ㄌㄨㄣˊ', 'ㄇㄧㄠˇ', 'ㄕㄨˋ'] });
   const group = t => t.split('.')[0];
 
   let allFound = [], round = 0, results = [], score = 0, t0 = 0, timing = false, all = [], cat = null, lastCat = null, yes = [], no = [], spots = [], found = [], gen = 0, hatching = false, nextHatch = 0, sinceHit = 0;
@@ -204,10 +209,10 @@
   function finish() {
     Dino.sfx('finish', .8);
     const total = results.reduce((s, r) => s + r.score, 0);
-    let rec = []; try { rec = JSON.parse(localStorage.getItem(REC_KEY)) || []; } catch { /* ok */ }
+    let rec = []; try { rec = JSON.parse(localStorage.getItem(recKey())) || []; } catch { /* ok */ }
     if (!Array.isArray(rec)) rec = [];
     const best = rec.length ? rec[0] : -1, top = [...rec, total].sort((x, y) => y - x).slice(0, 5);
-    try { localStorage.setItem(REC_KEY, JSON.stringify(top)); } catch { /* ok */ }
+    try { localStorage.setItem(recKey(), JSON.stringify(top)); } catch { /* ok */ }
     // 結束畫面：總分、三輪各打中幾個、前 5 名、打到的圖卡縮圖＋英文（不重複），點一下再念
     $('got').innerHTML = '';
     allFound.filter((w, i) => allFound.findIndex(x => x.id === w.id) === i).forEach(w => {
@@ -225,8 +230,8 @@
     $('done').hidden = false; Dino.bgm.start();
     if (total > best && total > 0) { const r = $('doneTime').getBoundingClientRect(); for (let i = 0; i < 4; i++) setTimeout(() => burst(r.left + rand(0, r.width), r.top + rand(-20, 20), { n: 16, size: 16 }), i * 260); }
   }
-  const left = () => Math.max(0, ROUND_SEC - (performance.now() - t0) / 1000);
-  function showTime() { $('time').textContent = Math.ceil(timing ? left() : ROUND_SEC); $('clockBox').classList.toggle('hurry', timing && left() <= 5); }
+  const left = () => Math.max(0, roundSec - (performance.now() - t0) / 1000);
+  function showTime() { $('time').textContent = Math.ceil(timing ? left() : roundSec); $('clockBox').classList.toggle('hurry', timing && left() <= 5); }
   setInterval(() => { if (!timing) return; showTime(); if (left() <= 0) endRound(gen); }, 100);
   function minus(o) {
     const r = o.el.getBoundingClientRect(), p = document.createElement('div');
@@ -251,7 +256,13 @@
     announce(gen);
   }
   $('ask').addEventListener('click', sayCat);
-  $('start').addEventListener('click', () => { $('start').hidden = true; Dino.bgm.stop(); Dino.sfx('tap', .5); start(); });
+  const syncSec = () => document.querySelectorAll('[data-sec]').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.sec === roundSec)));
+  document.querySelectorAll('[data-sec]').forEach(b => b.addEventListener('click', () => {
+    roundSec = +b.dataset.sec; try { localStorage.setItem('dinopost-egg-sec', roundSec); } catch { /* ok */ }
+    Dino.sfx('tap', .5); syncSec(); showTime();
+  }));
+  syncSec(); setKidText($('secLabel'), '每輪秒數');
+  $('start').addEventListener('click', e => { if (e.target.closest('.pick')) return; $('start').hidden = true; Dino.bgm.stop(); Dino.sfx('tap', .5); start(); });
   $('done').querySelector('button').addEventListener('click', () => { $('done').hidden = true; Dino.bgm.stop(); Dino.sfx('tap', .5); start(); });
   let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (!timing) buildField(); }, 300); });
 
