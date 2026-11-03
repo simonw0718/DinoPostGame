@@ -1,7 +1,11 @@
-// 字母送信（sample，導演 2026-11-03 選模式 B「字母送信」）：看圖聽英文，依序點字母郵票拼出 3 個字母的短字（cat、pig、sun…）。
-// 依教學原則：每放一個字母念它的「聲音」（不是名稱，assets/audio/phonics/）；點錯念出那張的聲音，再念這一格要的聲音；
-// 拼好後慢慢把三個聲音連起來念，再念整個字（示範拼讀）。不限時、沒有輸送帶。
-// 熟練度 0–3 存在本機：一次拼對升一級、拼錯降一級；出題先挑熟練度低的字。
+// 字母送信（導演 2026-11-03 拼字教學設計）：3 個字母的短母音字（cat、pig、sun…），開始畫面選模式：
+//   A 聽聲音：不出字母，依序點格子聽一個個聲音（拆音），最後才露出字母
+//   B 選字母：看圖聽字，依序點字母郵票；點錯念出那張的聲音，再念這一格要的聲音
+//   C 換字母：上一個字已經拼好（cat），聽新字（hat）先點「變了的那一格」，再選新字母
+//   D 聽寫：不給圖，郵票多、格子不給提示；停 6 秒會讓對的郵票發光（算有提示）
+//   自動：依每個字的熟練度 0–3 出 A／B／B／D
+// 每放一個字母念它的「聲音」（assets/audio/phonics/）；拼好後示範拼讀（一格一格念聲音，再念整個字）。不限時。
+// 熟練度存在本機：A 做完至少 1；B／C／D 一次拼對升一級、拼錯或用提示降一級；出題先挑熟練度低的字。
 (() => {
   'use strict';
   const $ = id => document.getElementById(id);
@@ -13,14 +17,24 @@
     '字母送信': ['ㄗˋ', 'ㄇㄨˇ', 'ㄙㄨㄥˋ', 'ㄒㄧㄣˋ'],
     '點一下，開始拼英文！': ['ㄉㄧㄢˇ', 'ㄧ', 'ㄒㄧㄚˋ', '', 'ㄎㄞ', 'ㄕˇ', 'ㄆㄧㄣ', 'ㄧㄥ', 'ㄨㄣˊ', ''],
     '聽聲音，選字母': ['ㄊㄧㄥ', 'ㄕㄥ', 'ㄧㄣ', '', 'ㄒㄩㄢˇ', 'ㄗˋ', 'ㄇㄨˇ'],
+    '點格子，聽聲音': ['ㄉㄧㄢˇ', 'ㄍㄜˊ', 'ㄗ˙', '', 'ㄊㄧㄥ', 'ㄕㄥ', 'ㄧㄣ'],
+    '哪一個聲音變了？': ['ㄋㄚˇ', 'ㄧ', 'ㄍㄜ˙', 'ㄕㄥ', 'ㄧㄣ', 'ㄅㄧㄢˋ', 'ㄌㄜ˙', ''],
+    '這個聲音沒有變': ['ㄓㄜˋ', 'ㄍㄜ˙', 'ㄕㄥ', 'ㄧㄣ', 'ㄇㄟˊ', 'ㄧㄡˇ', 'ㄅㄧㄢˋ'],
+    '換成哪一個？': ['ㄏㄨㄢˋ', 'ㄔㄥˊ', 'ㄋㄚˇ', 'ㄧ', 'ㄍㄜ˙', ''],
+    '聽一聽，拼出來': ['ㄊㄧㄥ', 'ㄧ', 'ㄊㄧㄥ', '', 'ㄆㄧㄣ', 'ㄔㄨ', 'ㄌㄞˊ'],
     '不是這個喔': ['ㄅㄨˊ', 'ㄕˋ', 'ㄓㄜˋ', 'ㄍㄜ˙', 'ㄛ'],
     '對了！': ['ㄉㄨㄟˋ', 'ㄌㄜ˙', ''],
     '拼好了！': ['ㄆㄧㄣ', 'ㄏㄠˇ', 'ㄌㄜ˙', ''],
     '全部拼好了！': ['ㄑㄩㄢˊ', 'ㄅㄨˋ', 'ㄆㄧㄣ', 'ㄏㄠˇ', 'ㄌㄜ˙', ''],
     '再玩一次': ['ㄗㄞˋ', 'ㄨㄢˊ', 'ㄧ', 'ㄘˋ'],
-    '回首頁': ['ㄏㄨㄟˊ', 'ㄕㄡˇ', 'ㄧㄝˋ']
+    '回首頁': ['ㄏㄨㄟˊ', 'ㄕㄡˇ', 'ㄧㄝˋ'],
+    '自動': ['ㄗˋ', 'ㄉㄨㄥˋ'], '聽聲音': ['ㄊㄧㄥ', 'ㄕㄥ', 'ㄧㄣ'], '選字母': ['ㄒㄩㄢˇ', 'ㄗˋ', 'ㄇㄨˇ'],
+    '換字母': ['ㄏㄨㄢˋ', 'ㄗˋ', 'ㄇㄨˇ'], '聽寫': ['ㄊㄧㄥ', 'ㄒㄧㄝˇ']
   };
   const setKidText = Dino.kidText(uiReadings);
+  const MODES = ['auto', 'A', 'B', 'C', 'D'];
+  const AUTO_BY_LEVEL = ['A', 'B', 'B', 'D'];
+  const HINT_MS = 6000;
 
   // 已有聲音檔的字母（x、y、z 尚未生成，含它們的字先不出）
   const HAVE = new Set('abcdefghijklmnopqrstuvw');
@@ -35,16 +49,22 @@
   const poseSrc = (id, pose) => `assets/cast/${id}__${pose}.webp`;
   const ROUND = 6;
 
-  const masteryKey = 'dinopost-spell-v1';
+  const masteryKey = 'dinopost-spell-v1', modeKey = 'dinopost-spell-mode';
   const mastery = (() => { try { return JSON.parse(localStorage.getItem(masteryKey) || '{}'); } catch { return {}; } })();
   const saveMastery = () => { try { localStorage.setItem(masteryKey, JSON.stringify(mastery)); } catch { /* 只影響本頁 */ } };
+  let mode = (() => { try { return MODES.includes(localStorage.getItem(modeKey)) ? localStorage.getItem(modeKey) : 'auto'; } catch { return 'auto'; } })();
 
   const state = { words: [], round: [], index: 0, slots: [], target: 0, misses: 0, wordMisses: 0, results: [],
-    started: false, busy: false, courier: null };
+    started: false, busy: false, courier: null, step: '', hintTimer: 0, roundId: 0 };
+  const item = () => state.round[state.index];
 
   function makeArt(word) {
     const art = document.createElement('img'); art.src = word.image; art.alt = '';
     art.classList.add('zb-art'); art.setAttribute('aria-hidden', 'true');
+    return art;
+  }
+  function mystery() {
+    const art = document.createElement('span'); art.className = 'zb-art sp-mystery'; art.textContent = '?';
     return art;
   }
   function play(src, volume = 1) { Dino.voice.stop(); return Dino.voice(src, volume); }
@@ -57,40 +77,75 @@
     actor.classList.remove('is-cheer'); void actor.offsetWidth; actor.classList.add('is-cheer');
     setTimeout(() => { $('actorImg').src = poseSrc(state.courier, 'hello'); }, 900);
   }
+  function wobble(el) { el.classList.remove('is-wrong'); void el.offsetWidth; el.classList.add('is-wrong'); }
   const currentSlot = () => state.slots[state.target];
 
-  // ---------- 出題：熟練度低的先出，同熟練度隨機 ----------
+  // ---------- 出題 ----------
   function pool() {
     return state.words.filter(w => /^[a-z]{3}$/.test(w.en) && w.image
       && [...w.en].every(l => HAVE.has(l)) && !VOWELS.has(w.en[0]) && VOWELS.has(w.en[1]) && !VOWELS.has(w.en[2]) && !NOT_SHORT.has(w.en[2]));
   }
+  const level = w => mastery[w.id] || 0;
+  const byLevel = words => Dino.shuffle(words).sort((a, b) => level(a) - level(b));
+  const oneApart = (a, b) => [...a.en].filter((l, i) => l !== b.en[i]).length === 1;
+  // 換字母：在只差一個字母的字之間找連續的鏈（cat→hat→bat→bag），每一步是一題；一條鏈走完換下一條
+  function chainRound(words) {
+    const items = [], used = new Set();
+    const starts = byLevel(words);
+    for (const start of starts) {
+      if (items.length >= ROUND || used.has(start.id)) continue;
+      let cur = start; const path = [start];
+      for (;;) {
+        const next = byLevel(words.filter(w => !used.has(w.id) && !path.includes(w) && oneApart(cur, w)))[0];
+        if (!next) break;
+        path.push(next); cur = next;
+      }
+      if (path.length < 2) continue;
+      path.forEach(w => used.add(w.id));
+      for (let i = 1; i < path.length && items.length < ROUND; i++) items.push({ word: path[i], prev: path[i - 1], mode: 'C' });
+    }
+    return items;
+  }
   function pickRound() {
-    return Dino.shuffle(pool()).sort((a, b) => (mastery[a.id] || 0) - (mastery[b.id] || 0)).slice(0, ROUND);
+    const words = pool();
+    if (mode === 'C') { const chain = chainRound(words); if (chain.length) return chain; }
+    return byLevel(words).slice(0, ROUND).map(word => ({ word, mode: mode === 'auto' || mode === 'C' ? AUTO_BY_LEVEL[level(word)] : mode }));
   }
 
-  function renderWord() {
-    const word = state.round[state.index];
-    const pic = $('picture'); pic.replaceChildren(makeArt(word));
+  // ---------- 出一題 ----------
+  function makeBox(letter) {
+    const box = document.createElement('button'); box.type = 'button';
+    box.className = `sp-box${VOWELS.has(letter) ? ' is-vowel' : ''}`;
+    const slot = { letter, el: box };
+    box.addEventListener('click', () => tapSlot(slot));
+    return slot;
+  }
+  function renderItem() {
+    const { word, mode: m, prev } = item();
+    clearTimeout(state.hintTimer);
+    const pic = $('picture'); pic.replaceChildren(m === 'D' ? mystery() : makeArt(word));
     pic.parentElement.classList.remove('is-new'); void pic.offsetWidth; pic.parentElement.classList.add('is-new');
     $('doneMark').hidden = true;
-    state.target = 0; state.wordMisses = 0;
-    state.slots = [...word.en].map(letter => {
-      const box = document.createElement('button'); box.type = 'button';
-      box.className = `sp-box${VOWELS.has(letter) ? ' is-vowel' : ''}`;
-      box.setAttribute('aria-label', '聽這一格的聲音');
-      box.addEventListener('click', () => { if (currentSlot()?.el === box) play(sound(letter)); });   // 卡住時點閃動的格子聽提示
-      return { letter, el: box };
-    });
+    state.wordMisses = 0;
+    state.slots = [...word.en].map(makeBox);
     $('slots').replaceChildren(...state.slots.map(s => s.el));
-    renderTray(word);
-    markTarget(); renderProgress();
-    say('聽聲音，選字母');
+    $('tray').replaceChildren(); $('tray').classList.toggle('is-off', m === 'A' || m === 'C');
+    if (m === 'A') { state.step = 'listen'; state.target = 0; say('點格子，聽聲音'); }
+    if (m === 'B' || m === 'D') { state.step = 'spell'; state.target = 0; renderTray(word, m === 'D' ? 4 : 2); say(m === 'D' ? '聽一聽，拼出來' : '聽聲音，選字母'); }
+    if (m === 'C') {   // 上一個字先拼好放著
+      state.step = 'find'; state.target = -1;
+      state.slots.forEach((s, i) => { s.el.textContent = prev.en[i]; s.el.classList.add('is-filled', 'is-given'); });
+      say('哪一個聲音變了？');
+    }
+    markTarget(); renderProgress(); armHint();
   }
-  function renderTray(word) {
-    const letters = [...word.en];
-    const vowel = letters[1], cons = Dino.shuffle([letters[0], letters[2]])[0];
+  function renderTray(word, extras, only) {
+    const letters = only || [...word.en];
     const pickFrom = s => [...s].filter(l => HAVE.has(l) && !letters.includes(l));
-    const extra = [pickFrom(confusables[vowel] || '')[0], Dino.shuffle(pickFrom(confusables[cons] || ''))[0]].filter(Boolean);
+    const near = Dino.shuffle([...word.en].flatMap(l => pickFrom(confusables[l] || '')));
+    const any = Dino.shuffle(pickFrom([...HAVE].join('')));
+    const extra = [...new Set([...near, ...any])].slice(0, extras);
+    $('tray').classList.remove('is-off');
     $('tray').replaceChildren(...Dino.shuffle([...letters, ...extra]).map(letter => {
       const el = document.createElement('button'); el.type = 'button';
       el.className = `sp-tile${VOWELS.has(letter) ? ' is-vowel' : ''}`;
@@ -110,21 +165,62 @@
       return li;
     }));
   }
+  // 聽寫：停太久就讓這一格對的郵票發光（用了提示，這題不算一次答對）
+  function armHint() {
+    clearTimeout(state.hintTimer);
+    if (item()?.mode !== 'D' || state.step !== 'spell') return;
+    state.hintTimer = setTimeout(() => {
+      const tile = [...$('tray').children].find(el => el.textContent === currentSlot()?.letter && !el.classList.contains('is-taken'));
+      if (!tile || !state.started) return armHint();
+      tile.classList.add('is-hint'); state.wordMisses++;
+    }, HINT_MS);
+  }
 
-  async function grab(tile) {
-    const slot = currentSlot();
-    if (!state.started || state.busy || tile.taken || !slot) return;
-    if (tile.letter !== slot.letter) {   // 錯：念出這張的聲音，再念這一格要的聲音（讓孩子聽出差別）
-      state.misses++; state.wordMisses++; state.busy = true;
-      tile.el.classList.remove('is-wrong'); void tile.el.offsetWidth; tile.el.classList.add('is-wrong');
-      Dino.sfx('wrong', .25); say('不是這個喔');
-      await Promise.race([play(sound(tile.letter)), wait(1200)]);
-      await wait(250);
-      await Promise.race([play(sound(slot.letter)), wait(1200)]);
-      state.busy = false;
+  // ---------- 點格子 ----------
+  async function tapSlot(slot) {
+    if (!state.started || state.busy) return;
+    const { mode: m, prev } = item();
+    const i = state.slots.indexOf(slot);
+    if (m === 'A') {   // 依序點：每點一格念一個聲音，格子亮起來
+      if (i !== state.target) { wobble(currentSlot().el); return; }
+      play(sound(slot.letter)); slot.el.classList.add('is-heard');
+      state.target++; markTarget();
+      if (state.target >= state.slots.length) { state.busy = true; await wait(700); await wordDone(); }
       return;
     }
-    tile.taken = true; state.busy = true;
+    if (m === 'C' && state.step === 'find') {
+      if (slot.letter === prev.en[i]) {   // 這格沒變：念出這格的聲音給孩子比對，再念一次新字
+        state.misses++; state.wordMisses++; state.busy = true;
+        wobble(slot.el); Dino.sfx('wrong', .25); say('這個聲音沒有變');
+        await Promise.race([play(sound(slot.letter)), wait(1200)]);
+        await wait(250);
+        await Promise.race([play(wordAudio(item().word)), wait(1600)]);
+        state.busy = false; return;
+      }
+      Dino.sfx('pop', .5);
+      slot.el.textContent = ''; slot.el.classList.remove('is-filled', 'is-given');
+      state.step = 'spell'; state.target = i; markTarget();
+      renderTray(item().word, 2, [slot.letter, prev.en[i]]);   // 新字母＋原來的字母＋一張干擾
+      say('換成哪一個？');
+      return;
+    }
+    if (m === 'B' && slot === currentSlot()) play(sound(slot.letter));   // 選字母：卡住時點閃動的格子聽提示（聽寫不給）
+  }
+
+  // ---------- 點郵票 ----------
+  async function grab(tile) {
+    const slot = currentSlot();
+    if (!state.started || state.busy || tile.taken || !slot || state.step !== 'spell') return;
+    const m = item().mode;
+    if (tile.letter !== slot.letter) {
+      state.misses++; state.wordMisses++; state.busy = true;
+      wobble(tile.el); Dino.sfx('wrong', .25); say('不是這個喔');
+      await Promise.race([play(sound(tile.letter)), wait(1200)]);
+      if (m !== 'D') { await wait(250); await Promise.race([play(sound(slot.letter)), wait(1200)]); }   // 聽寫不再念答案
+      state.busy = false; armHint();
+      return;
+    }
+    tile.taken = true; state.busy = true; clearTimeout(state.hintTimer);
     Dino.sfx('pop', .5); play(sound(tile.letter));
     const from = tile.el.getBoundingClientRect(), to = slot.el.getBoundingClientRect();
     tile.el.classList.add('is-taken');
@@ -138,70 +234,87 @@
     ], { duration: 420, easing: 'cubic-bezier(.3,.7,.4,1)', fill: 'forwards' }), 600);
     flyer.remove();
     slot.el.textContent = slot.letter; slot.el.classList.add('is-filled');
-    state.target++;
-    if (state.target < state.slots.length) { markTarget(); say('對了！'); state.busy = false; return; }
-    state.slots.forEach(s => s.el.classList.remove('is-now'));
+    state.target = state.slots.findIndex(s => !s.el.classList.contains('is-filled'));
+    if (state.target >= 0) { markTarget(); say('對了！'); state.busy = false; armHint(); return; }
+    markTarget();
     await wordDone();
   }
 
   async function wordDone() {
-    const word = state.round[state.index];
+    const { word, mode: m } = item(), id = state.roundId;
+    const stale = () => id !== state.roundId;   // 中途換模式／重開：舊的這一局不要再往下走
     const first = state.wordMisses === 0;
     state.results[state.index] = first;
-    mastery[word.id] = Math.max(0, Math.min(3, (mastery[word.id] || 0) + (first ? 1 : -1))); saveMastery();
+    mastery[word.id] = m === 'A' ? Math.max(1, level(word)) : Math.max(0, Math.min(3, level(word) + (first ? 1 : -1)));
+    saveMastery();
+    if (m === 'D') $('picture').replaceChildren(makeArt(word));   // 聽寫拼完才看到圖
     await wait(350);
-    for (const s of state.slots) {   // 示範拼讀：一格一格念聲音，再念整個字
+    for (const s of state.slots) {   // 示範拼讀：一格一格念聲音（聽聲音模式這時才露出字母），再念整個字
+      if (m === 'A') { s.el.textContent = s.letter; s.el.classList.add('is-filled'); }
       s.el.classList.add('is-say');
       await Promise.race([play(sound(s.letter)), wait(1300)]);
       s.el.classList.remove('is-say');
       await wait(160);
+      if (stale()) return;
     }
     $('doneMark').hidden = false; Dino.sfx('stamp', .8); Dino.burst($('picture')); cheer(); say('拼好了！');
     await wait(300);
     await Promise.race([play(wordAudio(word)), wait(2400)]);
     await wait(700);
+    if (stale()) return;
     state.index++; state.busy = false;
     if (state.index >= state.round.length) return finish();
-    renderWord();
-    play(wordAudio(state.round[state.index]));
+    renderItem();
+    play(wordAudio(item().word));
   }
 
   function finish() {
     renderProgress();
     try {
       const results = state.round.map((_, i) => state.results[i] === true);
-      Dino.saveHistory?.({ game: 'spell', mode: 'cvc', score: results.filter(Boolean).length, total: state.round.length, ids: state.round.map(w => w.id), results });
+      Dino.saveHistory?.({ game: 'spell', mode, score: results.filter(Boolean).length, total: state.round.length, ids: state.round.map(it => it.word.id), results });
     } catch { /* 沒有儲存空間也照樣能玩 */ }
     Dino.sfx('finish', .8);
     const stars = state.misses <= 1 ? 3 : state.misses <= 4 ? 2 : 1;
     $('finishStars').innerHTML = [0, 1, 2].map(i => `<span class="${i < stars ? '' : 'off'}">★</span>`).join('');
-    $('finishWords').replaceChildren(...state.round.map(w => { const li = document.createElement('li'); li.textContent = w.en; return li; }));
+    $('finishWords').replaceChildren(...state.round.map(it => { const li = document.createElement('li'); li.textContent = it.prev ? `${it.prev.en} → ${it.word.en}` : it.word.en; return li; }));
     $('finishActor').src = poseSrc(state.courier, 'cheer');
     $('finishOverlay').hidden = false;
   }
 
   function startRound() {
-    $('finishOverlay').hidden = true;
+    $('finishOverlay').hidden = true; state.roundId++; Dino.voice.stop();
     state.round = pickRound(); state.index = 0; state.misses = 0; state.results = []; state.busy = false;
-    Dino.preload([...state.round.map(wordAudio), ...[...HAVE].map(sound)]);
+    Dino.preload([...state.round.map(it => wordAudio(it.word)), ...[...HAVE].map(sound)]);
     state.courier = Dino.shuffle(couriers.filter(id => id !== state.courier))[0];
     $('actorImg').src = poseSrc(state.courier, 'hello');
-    renderWord();
+    renderItem();
     window.__spell = state;   // 截圖驗收用
   }
 
   async function init() {
     setKidText($('title'), '字母送信'); setKidText($('readyTitle'), '點一下，開始拼英文！');
     setKidText($('finishTitle'), '全部拼好了！'); setKidText($('playAgain'), '再玩一次'); setKidText($('finishHome'), '回首頁');
+    const picks = [...document.querySelectorAll('[data-mode]')];
+    const syncPick = () => picks.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === mode)));
+    picks.forEach(b => {
+      setKidText(b, b.textContent);
+      b.addEventListener('click', () => {
+        mode = b.dataset.mode; try { localStorage.setItem(modeKey, mode); } catch { /* 只影響本頁 */ }
+        syncPick(); if (state.words.length) startRound();
+      });
+    });
+    syncPick();
     Dino.menuTaps($('readyOverlay')); Dino.menuTaps($('finishOverlay'));
-    $('replay').addEventListener('click', () => play(wordAudio(state.round[state.index])));
-    $('playAgain').addEventListener('click', () => { startRound(); play(wordAudio(state.round[0])); });
+    $('replay').addEventListener('click', () => play(wordAudio(item().word)));
+    $('playAgain').addEventListener('click', () => { Dino.sfx('tap', .5); $('finishOverlay').hidden = true; state.started = false; $('readyOverlay').hidden = false; startRound(); });
     document.querySelector('.gh .dino-home').addEventListener('click', e => { e.preventDefault(); Dino.goTo('index.html'); });
+    $('menuBtn').addEventListener('click', () => { if (!$('readyOverlay').hidden) return; Dino.sfx('tap', .5); state.started = false; clearTimeout(state.hintTimer); $('readyOverlay').hidden = false; });
     state.words = await fetch('data.json').then(r => r.json());
     startRound();
     $('readyStart').addEventListener('click', () => {
-      $('readyOverlay').hidden = true; state.started = true;
-      play(wordAudio(state.round[state.index]));
+      $('readyOverlay').hidden = true; state.started = true; armHint();
+      play(wordAudio(item().word));
     });
   }
   init();
