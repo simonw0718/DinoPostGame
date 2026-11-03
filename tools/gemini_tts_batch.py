@@ -6,6 +6,7 @@ Usage: python3 tools/gemini_tts_batch.py 1|2|3
        python3 tools/gemini_tts_batch.py apply NAME              after listening: back up old MP3, replace
        python3 tools/gemini_tts_batch.py whack [ID ...]          分類快打出題句 "Let's hit... X!"（全部一次請求再裁切）→ dist/assets/audio/whack/
        python3 tools/gemini_tts_batch.py iggy howto|catch [ID ...] 伊奇（R27）玩法語音／接信題目，台詞在 dist/data/iggy_lines.json → dist/assets/audio/<kind>/
+       python3 tools/gemini_tts_batch.py phonics [LETTER ...]     26 個字母「聲音」（不是名稱），拼字遊戲用（全部一次請求再裁切）→ dist/assets/audio/phonics/
 The key stays in ~/.config/dinopost/gemini-key-DINOZ. Never prints or saves it.
 Already generated batches are never sent again by this script.
 """
@@ -19,6 +20,7 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -228,7 +230,66 @@ def iggy(kind, ids):
         print(f"{l['id']:16s} {b - a:5.2f}s  {l['text']}", flush=True)
 
 
+# 字母聲音（導演 2026-11-03 核准用 Gemini 生成、聽過才用）：拼字遊戲每放一個字母念它的聲音。o 用美式 /ɑ/，跟 erinome 單字一致
+PHONICS = {'a': 'æ', 'b': 'b', 'c': 'k', 'd': 'd', 'e': 'ɛ', 'f': 'f', 'g': 'ɡ', 'h': 'h', 'i': 'ɪ', 'j': 'dʒ', 'k': 'k',
+           'l': 'l', 'm': 'm', 'n': 'n', 'o': 'ɑ', 'p': 'p', 'q': 'kw', 'r': 'r', 's': 's', 't': 't', 'u': 'ʌ',
+           'v': 'v', 'w': 'w', 'x': 'ks', 'y': 'j', 'z': 'z'}
+PHONICS_STYLE = ('A friendly phonics teacher showing young children the SOUND each letter makes. Every item is an IPA phoneme '
+                 'between slashes: pronounce only that one speech sound, short and crisp. Never say the letter name, never say '
+                 'the word "slash", and never add an "uh" vowel after a consonant.')
+
+
+def phonics(letters):
+    """4 sounds per request (11-03 實測：一次 26 個只念到 d 就停); a folder whose full.wav exists is never re-sent.
+    cuts.json {"a": [start, end]} overrides the automatic cut; stops after a short request (project rule: 2 failures)."""
+    letters = letters or list(PHONICS)
+    out = ROOT / 'dist/assets/audio/phonics'
+    out.mkdir(parents=True, exist_ok=True)
+    for i in range(0, len(letters), 4):
+        group = letters[i:i + 4]
+        folder = ROOT / 'audio-pilot/phonics-sounds' / ('batch-' + ''.join(group))
+        folder.mkdir(parents=True, exist_ok=True)
+        wav = folder / 'full.wav'
+        body = {'model': MODEL,
+                'input': [{'type': 'user_input', 'content': [{'type': 'text',
+                    'text': ' <long pause> <long pause> <long pause> '.join(f'/{PHONICS[l]}/' for l in group),
+                    'annotations': [{'type': 'speech_metadata', 'style': PHONICS_STYLE}]}]}],
+                'response_format': {'type': 'audio'},
+                'generation_config': {'speech_config': [{'voice': VOICE}]}}
+        (folder / 'request.json').write_text(json.dumps(body, ensure_ascii=False, indent=2) + '\n')
+        if not wav.exists():
+            time.sleep(21)   # 免費額度每分鐘 3 次（11-03 遇 429）
+            request_tts(body, folder, wav, f'phonics {"".join(group)}: sending ONE TTS request')
+        cuts = folder / 'cuts.json'
+        spans = [json.loads(cuts.read_text())[l] for l in group] if cuts.exists() else sound_bursts(wav, len(group))
+        for l, (a, b) in zip(group, spans):
+            run(['ffmpeg', '-v', 'error', '-y', '-ss', f'{max(0, a - 0.04):.3f}', '-to', f'{b + 0.08:.3f}', '-i', str(wav),
+                 '-ac', '1', '-ar', '24000', '-codec:a', 'libmp3lame', '-qscale:a', '4', str(out / f'{l}.mp3')])
+            print(f'{l}  /{PHONICS[l]}/  {b - a:.2f}s', flush=True)
+
+
+def sound_bursts(wav, count):
+    """Speech bursts at -45 dB; bursts closer than 0.3 s merge (a phoneme can dip), clicks under 0.06 s drop."""
+    duration = float(run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration',
+                          '-of', 'default=nokey=1:noprint_wrappers=1', str(wav)]).stdout.strip())
+    err = run(['ffmpeg', '-hide_banner', '-i', str(wav), '-af', 'silencedetect=noise=-45dB:d=0.1', '-f', 'null', '-']).stderr
+    sil = list(zip(map(float, re.findall(r'silence_start: ([\d.]+)', err)), map(float, re.findall(r'silence_end: ([\d.]+)', err))))
+    edges = [0.0] + [x for s in sil for x in s] + [duration]
+    bursts = [(edges[i], edges[i + 1]) for i in range(0, len(edges), 2) if edges[i + 1] - edges[i] > 0.0]
+    merged = []
+    for a, b in bursts:
+        if merged and a - merged[-1][1] < 0.3:
+            merged[-1] = (merged[-1][0], b)
+        else:
+            merged.append((a, b))
+    merged = [(a, b) for a, b in merged if b - a >= 0.06]
+    assert len(merged) == count, f'{wav.parent.name}: heard {len(merged)} sounds, expected {count} (failure; check before retrying)'
+    return merged
+
+
 def main():
+    if sys.argv[1] == 'phonics':
+        return phonics(sys.argv[2:])
     if sys.argv[1] == 'iggy':
         return iggy(sys.argv[2], sys.argv[3:])
     if sys.argv[1] == 'whack':

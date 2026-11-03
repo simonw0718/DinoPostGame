@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#164d39">
+  <meta name="apple-mobile-web-app-title" content="DINO單字任務">
+  <title>字母送信・恐龍郵局</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="belt.css"><link rel="stylesheet" href="spell.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css">
+  <script src="shared.js" defer></script><script src="spell.js" defer></script>
+</head>
+<body>
+  <div class="zb-shell">
+    <header class="gh">
+      <a class="dino-home" href="index.html" aria-label="回選遊戲首頁"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.6 1.6 11.4a1 1 0 0 0 1.3 1.5L4.5 11.6V20a1.5 1.5 0 0 0 1.5 1.5h3.8v-5.8a.7.7 0 0 1 .7-.7h3a.7.7 0 0 1 .7.7v5.8H18a1.5 1.5 0 0 0 1.5-1.5v-8.4l1.6 1.3a1 1 0 0 0 1.3-1.5Z"/></svg></a>
+      <h1 id="title" class="gh-title">字母送信</h1>
+      <div class="gh-tools"></div>
+    </header>
+
+    <section class="zb-host">
+      <div id="actor" class="zb-actor"><img id="actorImg" alt=""></div>
+      <p id="bubble" class="zb-bubble" role="status" aria-live="polite"></p>
+      <ol id="progress" class="zb-progress" aria-label="進度"></ol>
+    </section>
+
+    <main class="zb-question sp-question">
+      <div class="zb-picture">
+        <span id="picture" class="zb-picture-art"></span>
+        <button id="replay" class="zb-replay" type="button" aria-label="再聽一次">♫</button>
+        <span id="doneMark" class="zb-done-mark" hidden><img src="assets/dinopost-workmark-stamp-transparent-v1.png" alt=""></span>
+      </div>
+      <div id="slots" class="sp-slots" aria-label="字母格子"></div>
+    </main>
+
+    <section id="tray" class="sp-tray" aria-label="字母郵票"></section>
+  </div>
+
+  <div id="readyOverlay" class="ready-tap">
+    <button id="readyStart" class="ready-start" type="button" aria-label="點一下，開始拼英文">
+      <span class="ready-go" aria-hidden="true"><span class="ready-ring"></span><span class="ready-ring r2"></span><span class="ready-icon">▶</span></span>
+      <span id="readyTitle" class="ready-label">點一下，開始拼英文！</span>
+    </button>
+  </div>
+
+  <div id="finishOverlay" class="finish-overlay" hidden>
+    <div class="finish-card">
+      <img id="finishActor" class="finish-actor" alt="">
+      <h2 id="finishTitle">全部拼好了！</h2>
+      <p id="finishStars" class="finish-stars"></p>
+      <ol id="finishWords" class="finish-words sp-finish-words"></ol>
+      <div class="finish-actions"><button id="playAgain" type="button">再玩一次</button><a id="finishHome" href="index.html">回首頁</a></div>
+    </div>
+  </div>
+</body>
+</html>
