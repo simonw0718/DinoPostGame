@@ -32,8 +32,9 @@
     '填空': ['ㄊㄧㄢˊ', 'ㄎㄨㄥˋ'], '缺哪一個字母？': ['ㄑㄩㄝ', 'ㄋㄚˇ', 'ㄧˊ', 'ㄍㄜˋ', 'ㄗˋ', 'ㄇㄨˇ'], '聽寫': ['ㄊㄧㄥ', 'ㄒㄧㄝˇ']
   };
   const setKidText = Dino.kidText(uiReadings);
-  const MODES = ['auto', 'A', 'B', 'C', 'D'];
-  const AUTO_BY_LEVEL = ['A', 'C', 'B', 'D'];   // 聽聲音 → 填空 → 選字母 → 聽寫
+  // 導演 2026-11-04：聽聲音（A）、聽寫（D）先拿掉，程式保留之後補回（記在 PRODUCT.md「字母送信」）
+  const MODES = ['auto', 'C', 'B'];
+  const AUTO_BY_LEVEL = ['C', 'B', 'B', 'B'];   // 填空（開頭→結尾→母音都過）→ 選字母
   const HINT_MS = 6000;
 
   // 已有聲音檔的字母（x、y、z 尚未生成，含它們的字先不出）

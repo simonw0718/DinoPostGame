@@ -58,3 +58,7 @@ web
 
 - 觸控目標要大（孩子手指）；iPad 直式與電腦寬版都要能玩。
 - 尊重 `prefers-reduced-motion`。
+
+## Parked Features（暫停、之後補回）
+
+- 字母送信「聽聲音」（mode A：依序點字母聽拆音，👆 指下一格）與「聽寫」（mode D：不給圖、7 張郵票、停 6 秒提示）：導演 2026-11-04 先從選單與自動拿掉，程式仍在 `dist/spell.js`。補回時把 `A`／`D` 加回 `MODES`、`spell.html` 模式按鈕，自動順序原設計為 A → C → B → D。
