@@ -29,11 +29,11 @@
     '再玩一次': ['ㄗㄞˋ', 'ㄨㄢˊ', 'ㄧ', 'ㄘˋ'],
     '回首頁': ['ㄏㄨㄟˊ', 'ㄕㄡˇ', 'ㄧㄝˋ'],
     '自動': ['ㄗˋ', 'ㄉㄨㄥˋ'], '聽聲音': ['ㄊㄧㄥ', 'ㄕㄥ', 'ㄧㄣ'], '選字母': ['ㄒㄩㄢˇ', 'ㄗˋ', 'ㄇㄨˇ'],
-    '換字母': ['ㄏㄨㄢˋ', 'ㄗˋ', 'ㄇㄨˇ'], '聽寫': ['ㄊㄧㄥ', 'ㄒㄧㄝˇ']
+    '填空': ['ㄊㄧㄢˊ', 'ㄎㄨㄥˋ'], '缺哪一個字母？': ['ㄑㄩㄝ', 'ㄋㄚˇ', 'ㄧˊ', 'ㄍㄜˋ', 'ㄗˋ', 'ㄇㄨˇ'], '聽寫': ['ㄊㄧㄥ', 'ㄒㄧㄝˇ']
   };
   const setKidText = Dino.kidText(uiReadings);
   const MODES = ['auto', 'A', 'B', 'C', 'D'];
-  const AUTO_BY_LEVEL = ['A', 'B', 'B', 'D'];
+  const AUTO_BY_LEVEL = ['A', 'C', 'B', 'D'];   // 聽聲音 → 填空 → 選字母 → 聽寫
   const HINT_MS = 6000;
 
   // 已有聲音檔的字母（x、y、z 尚未生成，含它們的字先不出）
@@ -49,9 +49,14 @@
   const poseSrc = (id, pose) => `assets/cast/${id}__${pose}.webp`;
   const ROUND = 6;
 
-  const masteryKey = 'dinopost-spell-v1', modeKey = 'dinopost-spell-mode';
+  const masteryKey = 'dinopost-spell-v1', modeKey = 'dinopost-spell-mode', fillKey = 'dinopost-spell-fill-v1';
   const mastery = (() => { try { return JSON.parse(localStorage.getItem(masteryKey) || '{}'); } catch { return {}; } })();
   const saveMastery = () => { try { localStorage.setItem(masteryKey, JSON.stringify(mastery)); } catch { /* 只影響本頁 */ } };
+  // 填空挖哪一格（導演 2026-11-04 要依研究）：音素覺識先會開頭音、再結尾音、中間短母音最難（Yopp 1988、Stahl & Murray 1994；
+  // Treiman 兒童拼字母音錯最多）。每個字記自己走到哪一階：0 開頭 → 2 結尾 → 1 中間母音，一次答對才往下一階
+  const FILL_ORDER = [0, 2, 1];
+  const fillStage = (() => { try { return JSON.parse(localStorage.getItem(fillKey) || '{}'); } catch { return {}; } })();
+  const saveFill = () => { try { localStorage.setItem(fillKey, JSON.stringify(fillStage)); } catch { /* 只影響本頁 */ } };
   let mode = (() => { try { return MODES.includes(localStorage.getItem(modeKey)) ? localStorage.getItem(modeKey) : 'auto'; } catch { return 'auto'; } })();
 
   const state = { words: [], round: [], index: 0, slots: [], target: 0, misses: 0, wordMisses: 0, results: [],
@@ -87,29 +92,9 @@
   }
   const level = w => mastery[w.id] || 0;
   const byLevel = words => Dino.shuffle(words).sort((a, b) => level(a) - level(b));
-  const oneApart = (a, b) => [...a.en].filter((l, i) => l !== b.en[i]).length === 1;
-  // 換字母：在只差一個字母的字之間找連續的鏈（cat→hat→bat→bag），每一步是一題；一條鏈走完換下一條
-  function chainRound(words) {
-    const items = [], used = new Set();
-    const starts = byLevel(words);
-    for (const start of starts) {
-      if (items.length >= ROUND || used.has(start.id)) continue;
-      let cur = start; const path = [start];
-      for (;;) {
-        const next = byLevel(words.filter(w => !used.has(w.id) && !path.includes(w) && oneApart(cur, w)))[0];
-        if (!next) break;
-        path.push(next); cur = next;
-      }
-      if (path.length < 2) continue;
-      path.forEach(w => used.add(w.id));
-      for (let i = 1; i < path.length && items.length < ROUND; i++) items.push({ word: path[i], prev: path[i - 1], mode: 'C' });
-    }
-    return items;
-  }
   function pickRound() {
     const words = pool();
-    if (mode === 'C') { const chain = chainRound(words); if (chain.length) return chain; }
-    return byLevel(words).slice(0, ROUND).map(word => ({ word, mode: mode === 'auto' || mode === 'C' ? AUTO_BY_LEVEL[level(word)] : mode }));
+    return byLevel(words).slice(0, ROUND).map(word => ({ word, mode: mode === 'auto' ? AUTO_BY_LEVEL[level(word)] : mode }));
   }
 
   // ---------- 出一題 ----------
@@ -121,7 +106,7 @@
     return slot;
   }
   function renderItem() {
-    const { word, mode: m, prev } = item();
+    const { word, mode: m } = item();
     clearTimeout(state.hintTimer);
     const pic = $('picture'); pic.replaceChildren(m === 'D' ? mystery() : makeArt(word));
     pic.parentElement.classList.remove('is-new'); void pic.offsetWidth; pic.parentElement.classList.add('is-new');
@@ -129,7 +114,7 @@
     state.wordMisses = 0;
     state.slots = [...word.en].map(makeBox);
     $('slots').replaceChildren(...state.slots.map(s => s.el));
-    $('tray').replaceChildren(); $('tray').classList.toggle('is-off', m === 'A' || m === 'C');
+    $('tray').replaceChildren(); $('tray').classList.toggle('is-off', m === 'A');
     $('slots').classList.toggle('is-listen', m === 'A');
     if (m === 'A') {   // 字母一開始就露出來，手指指著下一格（導演 2026-11-04：原本空格子難懂）
       state.step = 'listen'; state.target = 0;
@@ -137,17 +122,20 @@
       say('點手指的字母，聽它的聲音');
     }
     if (m === 'B' || m === 'D') { state.step = 'spell'; state.target = 0; renderTray(word, m === 'D' ? 4 : 2); say(m === 'D' ? '聽一聽，拼出來' : '聽聲音，選字母'); }
-    if (m === 'C') {   // 上一個字先拼好放著
-      state.step = 'find'; state.target = -1;
-      state.slots.forEach((s, i) => { s.el.textContent = prev.en[i]; s.el.classList.add('is-filled', 'is-given'); });
-      say('哪一個聲音變了？');
+    if (m === 'C') {   // 填空：其他字母先放好，只挖一格
+      const gap = FILL_ORDER[fillStage[word.id] || 0];
+      state.step = 'spell'; state.target = gap;
+      state.slots.forEach((s, i) => { if (i !== gap) { s.el.textContent = s.letter; s.el.classList.add('is-filled', 'is-given'); } });
+      renderTray(word, 2, [word.en[gap]]);
+      say('缺哪一個字母？');
     }
     markTarget(); renderProgress(); armHint();
   }
   function renderTray(word, extras, only) {
     const letters = only || [...word.en];
     const pickFrom = s => [...s].filter(l => HAVE.has(l) && !letters.includes(l));
-    const near = Dino.shuffle([...word.en].flatMap(l => pickFrom(confusables[l] || '')));
+    const near = Dino.shuffle(letters.flatMap(l => pickFrom(confusables[l] || '')));
+    if (only?.length === 1 && VOWELS.has(only[0])) near.push(...Dino.shuffle(pickFrom('aeiou')));   // 填母音：干擾也放母音
     const any = Dino.shuffle(pickFrom([...HAVE].join('')));
     const extra = [...new Set([...near, ...any])].slice(0, extras);
     $('tray').classList.remove('is-off');
@@ -184,7 +172,7 @@
   // ---------- 點格子 ----------
   async function tapSlot(slot) {
     if (!state.started || state.busy) return;
-    const { mode: m, prev } = item();
+    const { mode: m } = item();
     const i = state.slots.indexOf(slot);
     if (m === 'A') {   // 依序點：每點一格念一個聲音，格子亮起來
       if (i !== state.target) { wobble(currentSlot().el); return; }
@@ -193,23 +181,7 @@
       if (state.target >= state.slots.length) { state.busy = true; await wait(700); await wordDone(); }
       return;
     }
-    if (m === 'C' && state.step === 'find') {
-      if (slot.letter === prev.en[i]) {   // 這格沒變：念出這格的聲音給孩子比對，再念一次新字
-        state.misses++; state.wordMisses++; state.busy = true;
-        wobble(slot.el); Dino.sfx('wrong', .25); say('這個聲音沒有變');
-        await Promise.race([play(sound(slot.letter)), wait(1200)]);
-        await wait(250);
-        await Promise.race([play(wordAudio(item().word)), wait(1600)]);
-        state.busy = false; return;
-      }
-      Dino.sfx('pop', .5);
-      slot.el.textContent = ''; slot.el.classList.remove('is-filled', 'is-given');
-      state.step = 'spell'; state.target = i; markTarget();
-      renderTray(item().word, 2, [slot.letter, prev.en[i]]);   // 新字母＋原來的字母＋一張干擾
-      say('換成哪一個？');
-      return;
-    }
-    if (m === 'B' && slot === currentSlot()) play(sound(slot.letter));   // 選字母：卡住時點閃動的格子聽提示（聽寫不給）
+    if ((m === 'B' || m === 'C') && slot === currentSlot()) play(sound(slot.letter));   // 選字母／填空：卡住時點閃動的格子聽提示（聽寫不給）
   }
 
   // ---------- 點郵票 ----------
@@ -250,7 +222,9 @@
     const stale = () => id !== state.roundId;   // 中途換模式／重開：舊的這一局不要再往下走
     const first = state.wordMisses === 0;
     state.results[state.index] = first;
-    mastery[word.id] = m === 'A' ? Math.max(1, level(word)) : Math.max(0, Math.min(3, level(word) + (first ? 1 : -1)));
+    if (m === 'C' && first && (fillStage[word.id] || 0) < FILL_ORDER.length - 1) {   // 填空還沒挖到母音：只往下一階，熟練度不變
+      fillStage[word.id] = (fillStage[word.id] || 0) + 1; saveFill();
+    } else mastery[word.id] = m === 'A' ? Math.max(1, level(word)) : Math.max(0, Math.min(3, level(word) + (first ? 1 : -1)));
     saveMastery();
     if (m === 'D') $('picture').replaceChildren(makeArt(word));   // 聽寫拼完才看到圖
     await wait(350);
@@ -281,7 +255,7 @@
     Dino.sfx('finish', .8);
     const stars = state.misses <= 1 ? 3 : state.misses <= 4 ? 2 : 1;
     $('finishStars').innerHTML = [0, 1, 2].map(i => `<span class="${i < stars ? '' : 'off'}">★</span>`).join('');
-    $('finishWords').replaceChildren(...state.round.map(it => { const li = document.createElement('li'); li.textContent = it.prev ? `${it.prev.en} → ${it.word.en}` : it.word.en; return li; }));
+    $('finishWords').replaceChildren(...state.round.map(it => { const li = document.createElement('li'); li.textContent = it.word.en; return li; }));
     $('finishActor').src = poseSrc(state.courier, 'cheer');
     $('finishOverlay').hidden = false;
   }
