@@ -237,6 +237,11 @@ PHONICS = {'a': 'æ', 'b': 'b', 'c': 'k', 'd': 'd', 'e': 'ɛ', 'f': 'f', 'g': '�
 PHONICS_STYLE = ('A friendly phonics teacher showing young children the SOUND each letter makes. Every item is an IPA phoneme '
                  'between slashes: pronounce only that one speech sound, short and crisp. Never say the letter name, never say '
                  'the word "slash", and never add an "uh" vowel after a consonant.')
+# x／y／z 用 IPA 兩次漏念（11-03）：導演 11-04 授權重試，改成直接寫念法的文字，單獨一批
+PHONICS_SPOKEN = {'x': 'ks', 'y': 'yuh', 'z': 'zzz'}
+PHONICS_SPOKEN_STYLE = ('A friendly phonics teacher showing young children the SOUND of three letters. Read each item exactly as '
+                        'spelled, short and crisp, as one phonics sound: "ks" is the end of "box", "yuh" is the start of "yes", '
+                        '"zzz" is a buzzing bee. Never say the letter names. Say all three items.')
 
 
 def phonics(letters):
@@ -252,8 +257,8 @@ def phonics(letters):
         wav = folder / 'full.wav'
         body = {'model': MODEL,
                 'input': [{'type': 'user_input', 'content': [{'type': 'text',
-                    'text': ' <long pause> <long pause> <long pause> '.join(f'/{PHONICS[l]}/' for l in group),
-                    'annotations': [{'type': 'speech_metadata', 'style': PHONICS_STYLE}]}]}],
+                    'text': ' <long pause> <long pause> <long pause> '.join(PHONICS_SPOKEN.get(l, f'/{PHONICS[l]}/') for l in group),
+                    'annotations': [{'type': 'speech_metadata', 'style': PHONICS_SPOKEN_STYLE if set(group) <= set(PHONICS_SPOKEN) else PHONICS_STYLE}]}]}],
                 'response_format': {'type': 'audio'},
                 'generation_config': {'speech_config': [{'voice': VOICE}]}}
         (folder / 'request.json').write_text(json.dumps(body, ensure_ascii=False, indent=2) + '\n')

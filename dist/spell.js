@@ -130,7 +130,12 @@
     state.slots = [...word.en].map(makeBox);
     $('slots').replaceChildren(...state.slots.map(s => s.el));
     $('tray').replaceChildren(); $('tray').classList.toggle('is-off', m === 'A' || m === 'C');
-    if (m === 'A') { state.step = 'listen'; state.target = 0; say('點格子，聽聲音'); }
+    $('slots').classList.toggle('is-listen', m === 'A');
+    if (m === 'A') {   // 字母一開始就露出來，手指指著下一格（導演 2026-11-04：原本空格子難懂）
+      state.step = 'listen'; state.target = 0;
+      state.slots.forEach(s => { s.el.textContent = s.letter; s.el.classList.add('is-filled'); });
+      say('點手指的字母，聽它的聲音');
+    }
     if (m === 'B' || m === 'D') { state.step = 'spell'; state.target = 0; renderTray(word, m === 'D' ? 4 : 2); say(m === 'D' ? '聽一聽，拼出來' : '聽聲音，選字母'); }
     if (m === 'C') {   // 上一個字先拼好放著
       state.step = 'find'; state.target = -1;
@@ -249,9 +254,8 @@
     saveMastery();
     if (m === 'D') $('picture').replaceChildren(makeArt(word));   // 聽寫拼完才看到圖
     await wait(350);
-    for (const s of state.slots) {   // 示範拼讀：一格一格念聲音（聽聲音模式這時才露出字母），再念整個字
-      if (m === 'A') { s.el.textContent = s.letter; s.el.classList.add('is-filled'); }
-      s.el.classList.add('is-say');
+    for (const s of state.slots) {   // 示範拼讀：一格一格念聲音，再念整個字
+        s.el.classList.add('is-say');
       await Promise.race([play(sound(s.letter)), wait(1300)]);
       s.el.classList.remove('is-say');
       await wait(160);
