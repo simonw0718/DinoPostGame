@@ -37,7 +37,7 @@
   const HINT_MS = 6000;
 
   // 已有聲音檔的字母（x、y、z 尚未生成，含它們的字先不出）
-  const HAVE = new Set('abcdefghijklmnopqrstuvw');
+  const HAVE = new Set('abcdefghijklmnopqrstuvwxyz');
   const VOWELS = new Set('aeiou');
   const NOT_SHORT = new Set('rwy');   // 結尾 r／w／y 會改變母音（car、cow），不是短母音
   // 干擾郵票：母音挑最容易聽混的；子音挑長得像或聽起來像的（不放同音字母，如 c／k）
