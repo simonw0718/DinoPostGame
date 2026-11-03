@@ -54,8 +54,9 @@
   const mastery = (() => { try { return JSON.parse(localStorage.getItem(masteryKey) || '{}'); } catch { return {}; } })();
   const saveMastery = () => { try { localStorage.setItem(masteryKey, JSON.stringify(mastery)); } catch { /* 只影響本頁 */ } };
   // 填空挖哪一格（導演 2026-11-04 要依研究）：音素覺識先會開頭音、再結尾音、中間短母音最難（Yopp 1988、Stahl & Murray 1994；
-  // Treiman 兒童拼字母音錯最多）。每個字記自己走到哪一階：0 開頭 → 2 結尾 → 1 中間母音，一次答對才往下一階
-  const FILL_ORDER = [0, 2, 1];
+  // Treiman 兒童拼字母音錯最多）。每個字記自己走到哪一階：開頭 → 結尾 → 中間母音，一次答對才往下一階
+  // 4 字再多一階：子音群裡第二個子音最常被漏掉（frog 拼成 fog、hand 拼成 had；Treiman 1991、1993），放最後
+  const fillOrder = en => [...new Set([0, en.length - 1, [...en].findIndex(l => VOWELS.has(l)), ...[...en].keys()])];
   const fillStage = (() => { try { return JSON.parse(localStorage.getItem(fillKey) || '{}'); } catch { return {}; } })();
   const saveFill = () => { try { localStorage.setItem(fillKey, JSON.stringify(fillStage)); } catch { /* 只影響本頁 */ } };
   let mode = (() => { try { return MODES.includes(localStorage.getItem(modeKey)) ? localStorage.getItem(modeKey) : 'auto'; } catch { return 'auto'; } })();
@@ -87,12 +88,18 @@
   const currentSlot = () => state.slots[state.target];
 
   // ---------- 出題 ----------
-  function pool() {
-    return state.words.filter(w => /^[a-z]{3}$/.test(w.en) && w.image
-      && [...w.en].every(l => HAVE.has(l)) && !VOWELS.has(w.en[0]) && VOWELS.has(w.en[1]) && !VOWELS.has(w.en[2]) && !NOT_SHORT.has(w.en[2]));
+  // 一個字母念一個音才能拼：3 字 CVC（cat），4 字加子音群 CCVC／CVCC（frog、hand；導演 2026-11-04 加到 4 字）。
+  // 排除兩字母一個音（sh、ck…）、不發音字母（comb）、長母音尾（kind、cold）、r／w／y 跟在母音後（car、cow）
+  const MULTI = /sh|ch|th|ck|ph|wh|ng|nk|qu|wr|kn|mb|(.)\1|(ind|ild|old|olt|ost|alk)$/;
+  const ALLOW = new Set(['wind']);   // 風：短 i
+  function decodable(en) {
+    const v = [...en].map((l, i) => VOWELS.has(l) || (l === 'y' && i > 0) ? i : -1).filter(i => i >= 0);
+    return /^[a-z]{3,4}$/.test(en) && [...en].every(l => HAVE.has(l)) && v.length === 1 && v[0] >= 1 && v[0] <= en.length - 2
+      && !NOT_SHORT.has(en[v[0] + 1]) && (ALLOW.has(en) || !MULTI.test(en));
   }
+  function pool() { return state.words.filter(w => w.image && decodable(w.en)); }
   const level = w => mastery[w.id] || 0;
-  const byLevel = words => Dino.shuffle(words).sort((a, b) => level(a) - level(b));
+  const byLevel = words => Dino.shuffle(words).sort((a, b) => level(a) - level(b) || a.en.length - b.en.length);   // 同熟練度先出 3 字
   function pickRound() {
     const words = pool();
     return byLevel(words).slice(0, ROUND).map(word => ({ word, mode: mode === 'auto' ? AUTO_BY_LEVEL[level(word)] : mode }));
@@ -115,6 +122,7 @@
     state.wordMisses = 0;
     state.slots = [...word.en].map(makeBox);
     $('slots').replaceChildren(...state.slots.map(s => s.el));
+    $('slots').parentElement.style.setProperty('--n', word.en.length);
     $('tray').replaceChildren(); $('tray').classList.toggle('is-off', m === 'A');
     $('slots').classList.toggle('is-listen', m === 'A');
     if (m === 'A') {   // 字母一開始就露出來，手指指著下一格（導演 2026-11-04：原本空格子難懂）
@@ -124,7 +132,7 @@
     }
     if (m === 'B' || m === 'D') { state.step = 'spell'; state.target = 0; renderTray(word, m === 'D' ? 4 : 2); say(m === 'D' ? '聽一聽，拼出來' : '聽聲音，選字母'); }
     if (m === 'C') {   // 填空：其他字母先放好，只挖一格
-      const gap = FILL_ORDER[fillStage[word.id] || 0];
+      const gap = fillOrder(word.en)[fillStage[word.id] || 0];
       state.step = 'spell'; state.target = gap;
       state.slots.forEach((s, i) => { if (i !== gap) { s.el.textContent = s.letter; s.el.classList.add('is-filled', 'is-given'); } });
       renderTray(word, 2, [word.en[gap]]);
@@ -223,7 +231,7 @@
     const stale = () => id !== state.roundId;   // 中途換模式／重開：舊的這一局不要再往下走
     const first = state.wordMisses === 0;
     state.results[state.index] = first;
-    if (m === 'C' && first && (fillStage[word.id] || 0) < FILL_ORDER.length - 1) {   // 填空還沒挖到母音：只往下一階，熟練度不變
+    if (m === 'C' && first && (fillStage[word.id] || 0) < word.en.length - 1) {   // 填空還沒挖到母音：只往下一階，熟練度不變
       fillStage[word.id] = (fillStage[word.id] || 0) + 1; saveFill();
     } else mastery[word.id] = m === 'A' ? Math.max(1, level(word)) : Math.max(0, Math.min(3, level(word) + (first ? 1 : -1)));
     saveMastery();
