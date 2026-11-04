@@ -163,3 +163,17 @@
 @keyframes pvClimb{0%{transform:translate(4px,58px)}18%{transform:translate(32px,58px)}30%{transform:translate(60px,58px)}42%{transform:translate(90px,58px)}62%{transform:translate(72px,38px)}74%{transform:translate(44px,38px)}86%,100%{transform:translate(16px,38px)}}
 @keyframes pvDie{0%,8%{transform:rotate(-30deg) scale(.7)}14%,100%{transform:none}}
 @media(prefers-reduced-motion:reduce){.pv-climb .runner,.pv-climb .die{animation:none}}
+
+/* 郵票貼字母：航空信封缺一格，c 郵票飛進去（3.2s 循環；2026-11-04 從 spell.css 搬來，首頁入口卡共用） */
+.pv-spell{background:#e6f2dc}
+.pv-spell .pvs-env{position:absolute;left:8px;top:6px;width:108px;height:58px;border:4px solid transparent;border-radius:7px;background:linear-gradient(#fffcf3,#fff8e8) padding-box,repeating-linear-gradient(-45deg,#e0473a 0 5px,#fffdf2 5px 8px,#2f86c4 8px 13px,#fffdf2 13px 16px) border-box}
+.pv-spell .pvs-pic{position:absolute;left:5px;top:6px;width:34px;height:34px;padding:2px;background:#fff;box-shadow:inset 0 0 0 1.5px #e0473a;transform:rotate(-4deg);object-fit:contain}
+.pv-spell .pvs-slot{position:absolute;top:13px;width:18px;height:20px;display:grid;place-items:center;border:1.5px solid #e3bd70;border-radius:4px;background:#fff;color:#17593f;font:1000 13px/1 "Naikai",ui-rounded,system-ui,sans-serif}
+.pv-spell .s1{left:45px;border:1.5px dashed #17593f66;background:#fff3c4;animation:pvsSlot 3.2s infinite}
+.pv-spell .s2{left:66px;color:#2f86c4}.pv-spell .s3{left:87px}
+.pv-spell .pvs-stamp{position:absolute;top:72px;width:20px;height:20px;display:grid;place-items:center;background:#fffdf2;box-shadow:inset 0 0 0 2px #e0473a;color:#17593f;font:1000 13px/1 "Naikai",ui-rounded,system-ui,sans-serif}
+.pv-spell .k{left:30px;transform:rotate(-5deg)}.pv-spell .c{left:52px;animation:pvsFly 3.2s infinite}.pv-spell .o{left:74px;transform:rotate(4deg);box-shadow:inset 0 0 0 2px #2f86c4}
+.pv-spell .tap{left:62px;top:82px;animation:pvsTap 3.2s infinite}
+@keyframes pvsFly{0%,30%{transform:rotate(3deg)}55%,90%{transform:translate(-5px,-53px) scale(.95)}100%{transform:rotate(3deg)}}
+@keyframes pvsSlot{0%,54%{opacity:1}56%,90%{opacity:0}}
+@keyframes pvsTap{0%,15%{opacity:0;transform:scale(1.4)}22%,32%{opacity:1;transform:scale(1)}40%,100%{opacity:0}}

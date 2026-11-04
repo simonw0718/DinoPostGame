@@ -114,3 +114,15 @@ html[data-intro="pending"] .selector-letter,html[data-intro="pending"] .start-st
 .game-choice.is-climb{position:relative}
 /* 四顆分頁鈕時 iPad 直拿（≤900）圖示會把字擠出框，只留字 */
 @media(max-width:900px){.pager .tab .tab-icon{display:none}}
+/* 分類鈕字自動縮放（2026-11-04）：home-pages.js 量寬後設 data-fit＋--tab-fs，蓋過上面依螢幕寬度的規則 */
+.pager[data-fit] .tab{font-size:var(--tab-fs,15px)}
+.pager[data-fit] .tab .tab-icon{display:none}.pager[data-fit="icon"] .tab .tab-icon{display:grid}
+.pager[data-fit] .tab .tab-long{display:inline-flex}.pager[data-fit] .tab .tab-short{display:none}
+/* 放不下時改左右捲軸（導演 11-04）：一排、字完整；右緣淡出提示還有，捲到底就不淡 */
+.pager[data-fit="scroll"]{justify-content:flex-start;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;padding:7px 8px 6px 2px;margin-top:-3px;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 34px),#0000);mask-image:linear-gradient(90deg,#000 calc(100% - 34px),#0000)}
+.pager[data-fit="scroll"]::-webkit-scrollbar{display:none}
+.pager[data-fit="scroll"].at-end{-webkit-mask-image:none;mask-image:none}
+.pager[data-fit="scroll"] .tab{flex:none;scroll-snap-align:center;padding:4px 14px}
+/* 遊戲卡標題放不下時改兩行（home-pages.js 插 .title-br） */
+body[data-page="select"] .game-choice-copy strong.kid-text.two-line{flex-wrap:wrap;justify-content:center;row-gap:2px}
+.game-choice-copy strong .title-br{flex-basis:100%;height:0}
