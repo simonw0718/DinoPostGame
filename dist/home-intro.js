@@ -31,7 +31,7 @@
 
   // 等字型與開場圖解碼好才開始，避免動畫途中換字型、解圖造成掉格（最多等 1.5 秒）
   function ready() {
-    const pics = ['assets/dinopost-workmark-master.jpg', 'assets/postoffice-master.jpg'].map(src => { const img = new Image(); img.src = src; return img.decode().catch(() => {}); });
+    const pics = ['assets/dinopost-workmark-master.jpg', 'assets/postoffice-master.webp'].map(src => { const img = new Image(); img.src = src; return img.decode().catch(() => {}); });
     return Promise.race([Promise.all([document.fonts?.ready, ...pics]), new Promise(r => setTimeout(r, 1500))]);
   }
   ready().then(play);

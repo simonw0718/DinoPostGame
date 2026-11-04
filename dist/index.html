@@ -8,7 +8,7 @@
   <title>選遊戲・恐龍郵局</title>
   <script>/* 開場未播前先藏信紙與角色，避免 defer 腳本載入前閃出主畫面（home-intro.js 接手後移除） */try{if(sessionStorage.getItem('dino-intro')!=='1'&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.dataset.intro='pending'}catch(e){}</script>
   <link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="game-homes.css"><link rel="stylesheet" href="home.css"><link rel="stylesheet" href="preview.css"><link rel="stylesheet" href="dino-mode.css"><link rel="stylesheet" href="dino-anim.css">
+  <link rel="preload" href="assets/fonts/naikai-subset.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="game-homes.css"><link rel="stylesheet" href="home.css"><link rel="stylesheet" href="preview.css"><link rel="stylesheet" href="dino-mode.css"><link rel="stylesheet" href="dino-anim.css">
   <script src="shared.js" defer></script><script src="progress.js" defer></script><script src="stamps-ui.js" defer></script><script src="game-homes.js" defer></script><script src="home-pages.js" defer></script><script src="home-intro.js" defer></script><script src="home-cast.js" defer></script><script src="dino-anim.js" defer></script>
 </head>
 <body data-page="select">

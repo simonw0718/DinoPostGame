@@ -62,7 +62,7 @@
 /* 寬螢幕：信紙往下貼地，上方留出舞台空間 */
 @media(min-width:681px){body[data-page="select"] .game-selector{align-items:flex-end;padding-bottom:30px}}
 /* 手機：郵局圖下方不再露出天空藍，改用圖片底部的草地／小路色延伸 */
-@media(max-width:680px){.start-world{background:linear-gradient(180deg,transparent 0 calc(69% - 36px),#d4d86e calc(69% - 1px),#b9d468 100%),url('assets/postoffice-master.jpg') 46% top/auto 69% no-repeat,#b9d468}}
+@media(max-width:680px){.start-world{background:linear-gradient(180deg,transparent 0 calc(69% - 36px),#d4d86e calc(69% - 1px),#b9d468 100%),url('assets/postoffice-master.webp') 46% top/auto 69% no-repeat,#b9d468}}
 .letter-stage[hidden]{display:none}
 /* 手機與直式平板：六個入口排 2 欄×3 列，預覽在上、遊戲名在下，一頁放得下（iOS 已鎖整頁滑動） */
 @media(orientation:portrait),(max-width:680px){

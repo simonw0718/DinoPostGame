@@ -94,7 +94,7 @@
 .zb-host .zb-progress li{position:relative;flex:1;max-width:52px;height:clamp(22px,3.2svh,30px);border:2px dashed #fffdf280;border-radius:5px;background:#fffdf214;transition:transform .3s cubic-bezier(.2,1.4,.4,1)}
 .zb-host .zb-progress li.is-now{border:3px solid #f2b945;background:var(--flap),#fff8e8;box-shadow:0 4px 0 #b9792b,0 8px 12px #04180f59;transform:translateY(-4px) scale(1.08);animation:letterBob 1s ease-in-out infinite alternate}
 .zb-host .zb-progress li.is-done{border:3px solid transparent;background:var(--flap) padding-box,linear-gradient(#fffcf3,#fff8e8) padding-box,repeating-linear-gradient(-45deg,#e0473a 0 5px,#fffdf2 5px 8px,#2f86c4 8px 13px,#fffdf2 13px 16px) border-box;box-shadow:0 3px 6px #04180f59}
-.zb-host .zb-progress li.is-star::after{content:"";position:absolute;right:-9px;top:-11px;width:26px;height:26px;background:url(assets/dinopost-workmark-stamp-transparent-v1.png) center/contain no-repeat;transform:rotate(14deg);animation:stampDown .4s cubic-bezier(.2,1.4,.4,1)}
+.zb-host .zb-progress li.is-star::after{content:"";position:absolute;right:-9px;top:-11px;width:26px;height:26px;background:url(assets/dinopost-workmark-stamp-transparent-v1.webp) center/contain no-repeat;transform:rotate(14deg);animation:stampDown .4s cubic-bezier(.2,1.4,.4,1)}
 @keyframes letterBob{to{transform:translateY(-7px) scale(1.08) rotate(-2deg)}}
 .zb-host .zb-bubble{font-size:clamp(19px,4.8vw,30px);padding:8px 18px 10px;box-shadow:0 5px 0 #c89c52,0 10px 16px #04180f40}
 /* 泡泡＝簡潔白泡泡（導演 2026-11-04：雲朵不好看，選 B）：純白圓角、細邊、柔和陰影；注音與聲調同色不用紅 */

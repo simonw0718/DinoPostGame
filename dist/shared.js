@@ -21,14 +21,14 @@ window.Dino = (() => {
   }, { passive: false });
   // Candidate AI pose sheets; not registered as visual masters yet.
   const characters = [
-    { id: 'xiaokong', name: '小空', asset: 'xiaokong-poses-v1.png', frames: 2, ratio: 1 },
-    { id: 'yuanyuan', name: '圓圓', asset: 'yuanyuan-poses-v1.png', frames: 2, ratio: .75 },
-    { id: 'paino', name: '派諾', asset: 'paino-poses-v1.png', frames: 2, ratio: 1 },
-    { id: 'shuoshuo', name: '碩碩', asset: 'shuoshuo-poses-v1.png', frames: 2, ratio: .75 },
-    { id: 'iggy', name: '伊奇', asset: 'iggy-poses-v1.png', frames: 3, ratio: .5 },
-    { id: 'feifei', name: '飛飛', asset: 'feifei-poses-v1.png', frames: 2, ratio: 1 },
-    { id: 'chick-abao', name: '小雞阿暴', asset: 'chick-abao-poses-v1.png', frames: 2, ratio: 1 },
-    { id: 'shanshan', name: '閃閃', asset: 'shanshan-poses-v1.png', frames: 2, ratio: 1 }
+    { id: 'xiaokong', name: '小空', asset: 'xiaokong-poses-v1.webp', frames: 2, ratio: 1 },
+    { id: 'yuanyuan', name: '圓圓', asset: 'yuanyuan-poses-v1.webp', frames: 2, ratio: .75 },
+    { id: 'paino', name: '派諾', asset: 'paino-poses-v1.webp', frames: 2, ratio: 1 },
+    { id: 'shuoshuo', name: '碩碩', asset: 'shuoshuo-poses-v1.webp', frames: 2, ratio: .75 },
+    { id: 'iggy', name: '伊奇', asset: 'iggy-poses-v1.webp', frames: 3, ratio: .5 },
+    { id: 'feifei', name: '飛飛', asset: 'feifei-poses-v1.webp', frames: 2, ratio: 1 },
+    { id: 'chick-abao', name: '小雞阿暴', asset: 'chick-abao-poses-v1.webp', frames: 2, ratio: 1 },
+    { id: 'shanshan', name: '閃閃', asset: 'shanshan-poses-v1.webp', frames: 2, ratio: 1 }
   ];
   // Kid lock for phones: no pinch/double-tap zoom, text selection, long-press menus, image dragging or page bounce.
   // Vertical scrolling stays available as the small-screen fallback; text inputs (word-bank search) stay selectable.

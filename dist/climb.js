@@ -455,7 +455,7 @@
     const ok = String(choice) === String(correct);
     Dino.voice.stop();
     if (ok) {
-      const st = document.createElement('img'); st.src = 'assets/dinopost-workmark-stamp-transparent-v1.png'; st.className = 'qstamp'; st.alt = ''; card.style.position = 'relative'; card.appendChild(st);
+      const st = document.createElement('img'); st.src = 'assets/dinopost-workmark-stamp-transparent-v1.webp'; st.className = 'qstamp'; st.alt = ''; card.style.position = 'relative'; card.appendChild(st);
       st.style.left = '50%'; st.style.top = '34%'; st.style.marginLeft = '-85px';
       Dino.sfx('stamp', .9); Dino.sfx('correct', .6); kid(q, '答對了！給你郵票！'); Dino.voice(voiceUrl('quiz_ok'));
       card.querySelectorAll('.answers button').forEach(b => b.dataset.v === String(correct) && b.classList.add('ok'));
@@ -603,7 +603,7 @@
     camera([posOf(winner)]); await say(winner === you ? 'win_you' : 'win_npc', winner === you ? '太棒了！我們先到山頂！' : '對手先到了，我們也到了！', { min: 1500 });
     camera([], { overview: true }); await sleep(900); hideBubble();
     $('finishRow').innerHTML = `<img src="assets/cast/iggy__cheer.webp" alt=""><img src="assets/cast/${npc.def.img}__${npc.def.cheer}.webp" alt="">`;
-    $('finishStamps').innerHTML = stamps ? `<img src="assets/dinopost-workmark-stamp-transparent-v1.png" alt="郵票">× ${stamps}` : '';
+    $('finishStamps').innerHTML = stamps ? `<img src="assets/dinopost-workmark-stamp-transparent-v1.webp" alt="郵票">× ${stamps}` : '';
     $('finish').hidden = false; running = false; Dino.voice.stop(); Dino.voice(voiceUrl('goal')); setTimeout(() => Dino.bgm.start(), 3500 / FAST);
   }
 

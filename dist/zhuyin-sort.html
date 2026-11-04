@@ -8,7 +8,7 @@
   <title>注音送信・恐龍郵局</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="zhuyin-sort.css?v=15"><link rel="stylesheet" href="dino-mode.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css"><link rel="stylesheet" href="howto.css"><link rel="stylesheet" href="preview.css">
+  <link rel="preload" href="assets/fonts/naikai-subset.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="zhuyin-sort.css?v=15"><link rel="stylesheet" href="dino-mode.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css"><link rel="stylesheet" href="howto.css"><link rel="stylesheet" href="preview.css">
   <script src="vendor/interact.min.js"></script>
   <script src="vendor/motion.js"></script>
   <script src="shared.js" defer></script><script src="progress.js" defer></script><script src="stamps-ui.js" defer></script><script src="zhuyin-sort.js?v=15" defer></script>
@@ -46,7 +46,7 @@
         <span class="back-label"><span id="receiptBrand">恐龍郵局</span> · <span id="receiptConfirm">收件確認</span></span>
         <strong id="receiptZh" class="back-chinese"></strong>
         <span id="receiptEn" class="back-english"></span>
-        <span id="postmark" class="back-postmark" aria-hidden="true"><img src="assets/dinopost-workmark-stamp-transparent-v1.png" alt=""></span>
+        <span id="postmark" class="back-postmark" aria-hidden="true"><img src="assets/dinopost-workmark-stamp-transparent-v1.webp" alt=""></span>
       </div>
     </main>
     </div>
@@ -78,7 +78,7 @@
 
   <div id="finishOverlay" class="finish-overlay" hidden>
     <div class="finish-card">
-      <img src="assets/dinopost-workmark-stamp-transparent-v1.png" alt="" class="finish-mark">
+      <img src="assets/dinopost-workmark-stamp-transparent-v1.webp" alt="" class="finish-mark">
       <p id="finishCopy">信都送到了！</p>
       <h1 id="finishTitle">送信任務完成</h1>
       <strong id="finishScore"></strong>
