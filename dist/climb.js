@@ -46,7 +46,7 @@
   for (let v = 1; v <= 10; v++) { Z(`擲到${CN[v]}！`, `ㄓˋ ㄉㄠˋ ${CNZ[v]}`); Z(`退${CN[v]}格！`, `ㄊㄨㄟˋ ${CNZ[v]} ㄍㄜˊ`); }
   [['擲骰子，數點點，走幾格！', 'ㄓˋ ㄕㄞˇ ㄗ˙ ㄕㄨˇ ㄉㄧㄢˇ ㄉㄧㄢˇ ㄗㄡˇ ㄐㄧˇ ㄍㄜˊ'], ['走三格', 'ㄗㄡˇ ㄙㄢ ㄍㄜˊ'],
    ['我的號碼加骰子，算出走到幾號！', 'ㄨㄛˇ ㄉㄜ˙ ㄏㄠˋ ㄇㄚˇ ㄐㄧㄚ ㄕㄞˇ ㄗ˙ ㄙㄨㄢˋ ㄔㄨ ㄗㄡˇ ㄉㄠˋ ㄐㄧˇ ㄏㄠˋ'],
-   ['我的號碼加兩顆骰子，算出走到幾號！', 'ㄨㄛˇ ㄉㄜ˙ ㄏㄠˋ ㄇㄚˇ ㄐㄧㄚ ㄌㄧㄤˇ ㄎㄜ ㄕㄞˇ ㄗ˙ ㄙㄨㄢˋ ㄔㄨ ㄗㄡˇ ㄉㄠˋ ㄐㄧˇ ㄏㄠˋ'],
+   ['我的號碼加兩顆骰子，有時候要減喔！', 'ㄨㄛˇ ㄉㄜ˙ ㄏㄠˋ ㄇㄚˇ ㄐㄧㄚ ㄌㄧㄤˇ ㄎㄜ ㄕㄞˇ ㄗ˙ ㄧㄡˇ ㄕˊ ㄏㄡˋ ㄧㄠˋ ㄐㄧㄢˇ ㄛ˙'],
    ['算一算，走到幾號？', 'ㄙㄨㄢˋ ㄧ ㄙㄨㄢˋ ㄗㄡˇ ㄉㄠˋ ㄐㄧˇ ㄏㄠˋ'], ['超過山頂了，走到山頂！', 'ㄔㄠ ㄍㄨㄛˋ ㄕㄢ ㄉㄧㄥˇ ㄌㄜ˙ ㄗㄡˇ ㄉㄠˋ ㄕㄢ ㄉㄧㄥˇ'], ['算對了！好棒！', 'ㄙㄨㄢˋ ㄉㄨㄟˋ ㄌㄜ˙ ㄏㄠˇ ㄅㄤˋ'],
    ['走幾格？點石頭！', 'ㄗㄡˇ ㄐㄧˇ ㄍㄜˊ ㄉㄧㄢˇ ㄕˊ ㄊㄡ˙'], ['數一數，走幾格？', 'ㄕㄨˇ ㄧ ㄕㄨˇ ㄗㄡˇ ㄐㄧˇ ㄍㄜˊ'], ['數對了！好棒！', 'ㄕㄨˇ ㄉㄨㄟˋ ㄌㄜ˙ ㄏㄠˇ ㄅㄤˋ'],
    ['我們一起一格一格數！', 'ㄨㄛˇ ㄇㄣ˙ ㄧ ㄑㄧˇ ㄧ ㄍㄜˊ ㄧ ㄍㄜˊ ㄕㄨˇ'], ['數好了，走！', 'ㄕㄨˇ ㄏㄠˇ ㄌㄜ˙ ㄗㄡˇ'], ['往回走幾格？點石頭！', 'ㄨㄤˇ ㄏㄨㄟˊ ㄗㄡˇ ㄐㄧˇ ㄍㄜˊ ㄉㄧㄢˇ ㄕˊ ㄊㄡ˙']].forEach(([t, z]) => Z(t, z));
@@ -57,7 +57,7 @@
     // ③困難＝兩顆寫數字的骰子，算式「自己的號碼＋骰子1＋骰子2＝？」。②③孩子算出答案直接點那顆石頭
     one: { N: 40, dice: 1, dmax: 6, catchOn: false, events: { 6: 'wing', 13: 'mud', 17: 'guide', 23: 'vine', 27: 'sneeze', 34: 'wing' } },
     two: { N: 60, dice: 1, dmax: 10, eq: true, catchOn: true, events: { 6: 'wing', 13: 'mud', 17: 'guide', 23: 'vine', 27: 'sneeze', 34: 'wing', 43: 'guide', 47: 'mud', 54: 'wing' } },
-    hard: { N: 60, dice: 2, dmax: 10, eq: true, catchOn: false, events: { 6: 'wing', 13: 'mud', 17: 'guide', 23: 'vine', 27: 'sneeze', 34: 'wing', 43: 'guide', 47: 'mud', 54: 'wing' } }
+    hard: { N: 60, dice: 2, dmax: 10, eq: true, minus: .25, catchOn: false, events: { 6: 'wing', 13: 'mud', 17: 'guide', 23: 'vine', 27: 'sneeze', 34: 'wing', 43: 'guide', 47: 'mud', 54: 'wing' } }
   };
   const EV = {
     wing:   { text: '翼龍載我們，前進三格！', d: +3, icon: 'i-wing' }, guide: { text: '小空帶路，前進兩格！', d: +2, icon: 'i-guide' },
@@ -236,8 +236,10 @@
     c._cube.querySelectorAll('.face').forEach((f, i) => { f.classList.remove('pts'); f.classList.add('num'); f.innerHTML = `<b>${[1, ...shuf([2, 3, 4, 5, 6, 7, 8, 9, 10]).slice(0, 5)][i]}</b>`; });
     return c;
   }
-  const eqSay = (parts, ans) => {   // 「23加5，等於28！」：登錄注音再念（數字自動留空）
-    const t = parts.join('加') + `，等於${ans}！`; Z(t, [...Array(parts.length - 1)].map(() => 'ㄐㄧㄚ').concat('ㄉㄥˇ ㄩˊ').join(' ')); return t;
+  const eqSay = (parts, ans, ops = []) => {   // 「23加8減3，等於28！」：登錄注音再念（數字自動留空）；ops[i] 是 parts[i+1] 前面的符號
+    const w = parts.slice(1).map((_, i) => ops[i] === '-' ? ['減', 'ㄐㄧㄢˇ'] : ['加', 'ㄐㄧㄚ']);
+    const t = parts[0] + parts.slice(1).map((v, i) => w[i][0] + v).join('') + `，等於${ans}！`;
+    Z(t, w.map(x => x[1]).concat('ㄉㄥˇ ㄩˊ').join(' ')); return t;
   };
   const dieW = () => Math.max(190, Math.min(300, Math.min(view.clientWidth, view.clientHeight) * .4));
   let tiles = [];
@@ -250,6 +252,10 @@
     if (who) { const h = document.createElement('div'); h.className = 'here'; h.innerHTML = `<img src="assets/cast/${who.def.img}__hello.webp" alt=""><span class="rock"></span><b>${who.at}</b>`; wrap.appendChild(h); }
     wrap.appendChild(th);
     const vals = Array.from({ length: count }, () => rnd(1, L.dmax));
+    // 困難（導演 11-04 晚選甲）：約 1/4 回合第二顆骰子變「減」，大的放前面，結果一定還是往前走
+    vals.ops = vals.map(() => '+');
+    if (L.minus && count === 2 && Math.random() < L.minus) { vals.sort((a, b) => b - a); if (vals[0] === vals[1]) vals[0] = Math.min(L.dmax, vals[0] + 1); if (vals[0] > vals[1]) vals.ops[1] = '-'; }
+    vals.total = vals.reduce((a, v, i) => vals.ops[i] === '-' ? a - v : a + v, 0);
     const sx = fromNpc ? -vw * .42 : vw * .4, sy = fromNpc ? -vh * .42 : vh * .4;
     Dino.sfx('swoosh', .7);
     const T = 900 / FAST, signFace = sign === '-' ? 6 : rnd(1, 5);   // 導演 11-04：動畫快一點
@@ -272,7 +278,8 @@
     tiles.forEach((t, i) => { t._set(vals[i]); if (!L.eq) t._label(vals[i]); });
     if (L.eq && who) {   // 算式：自己的號碼＋骰子（＋骰子）＝？，不顯示答案
       const q = document.createElement('div'); q.className = 'eq'; wrap.classList.add('eqmode');
-      q.innerHTML = [who.at, ...vals].map(v => `<b>${v}</b>`).join('<i>＋</i>') + '<i>＝</i><b class="q">?</b>'; th.after(q);
+      q.innerHTML = `<b>${who.at}</b>` + vals.map((v, i) => `<i${vals.ops[i] === '-' ? ' class="minus"' : ''}>${vals.ops[i] === '-' ? '－' : '＋'}</i><b>${v}</b>`).join('') + '<i>＝</i><b class="q">?</b>'; th.after(q);
+      tiles.forEach((t, i) => { if (vals.ops[i] === '-') { t._label('－'); t.classList.add('minus'); } });
     }
     th.getAnimations().forEach(a => a.cancel()); th.style.transform = 'none';
     return vals;
@@ -496,7 +503,7 @@
     hideBubble(); you.mark.hidden = true; rest.hidden = true;
     const sgn = L.sign && you.at > L.dmax && Math.random() < 1 / 6 ? '-' : '+';   // 加減骰：5 面＋、1 面－；離起點不到 10 格不會擲到－
     const vals = await throwDice(L.dice, false, L.sign && sgn, you);
-    const total = sgn === '-' ? vals[0] - vals[1] : vals.reduce((a, b) => a + b, 0);   // 困難：a＋b 或 a－b（可能是負的＝往回）
+    const total = sgn === '-' ? vals[0] - vals[1] : vals.total;   // 困難：號碼＋a＋b 或 號碼＋a－b
     if (L.sign && total === 0) {   // a－b＝0：不動
       tiles.forEach(t => t.classList.add('tappable'));
       await say('', `${vals[0]}減${vals[1]}，等於零，不用動！`, { min: 1600 }); clearDice(); hideBubble(); await afterLanding(you); return;
@@ -532,11 +539,11 @@
     camera([posOf(npc)]); await say(d.turn, d.turnText, { min: 500, who: 'iggy' });
     const sgn = L.sign && npc.at > L.dmax && Math.random() < 1 / 6 ? '-' : '+';
     const vals = await throwDice(L.dice, true, L.sign && sgn, npc);
-    const total = sgn === '-' ? vals[0] - vals[1] : vals.reduce((a, b) => a + b, 0);
+    const total = sgn === '-' ? vals[0] - vals[1] : vals.total;
     hideBubble();
     if (L.eq) {   // 普通／困難：對手示範算式，再走
       const q = $('diceWrap').querySelector('.eq .q'), ans = npc.at + total; await sleep(700); if (q) { q.textContent = ans; q.classList.add('ans'); }
-      await say('', eqSay([npc.at, ...vals], ans), { min: 1600 }); numVoice(ans); parkDice(false);
+      await say('', eqSay([npc.at, ...vals], ans, vals.ops), { min: 1600 }); numVoice(ans); parkDice(false);
       const target = Math.min(N, ans); camera([posOf(npc), P[target]]);
       while (npc.at < target) await stepTo(npc, npc.at + 1, { dur: d.dur });
       clearDice(); hideBubble(); await afterLanding(npc); return;
@@ -608,7 +615,7 @@
   const RULES = {
     one: { text: '擲骰子，數點點，走幾格！', dice: [3], num: false, eq: '' },
     two: { text: '我的號碼加骰子，算出走到幾號！', dice: [3], num: true, eq: [5, 3] },
-    hard: { text: '我的號碼加兩顆骰子，算出走到幾號！', dice: [3, 2], num: true, eq: [5, 3, 2] }
+    hard: { text: '我的號碼加兩顆骰子，有時候要減喔！', dice: [3, 2], num: true, eq: [5, 3, 2], ops: ['+', '-'] }
   };
   function showRule() {
     const r = RULES[levelKey], box = $('rule'); if (!box) return; box.innerHTML = '';
@@ -618,7 +625,7 @@
       if (r.num) c._cube.querySelectorAll('.face').forEach((f, i) => { f.classList.remove('pts'); f.classList.add('num'); f.innerHTML = `<b>${[v, 6, 4, 9, 1, 7][i]}</b>`; });
       c._set(v); c._cube.style.transform = 'rotateX(-22deg) rotateY(-28deg)'; ex.appendChild(c);
     });
-    if (r.eq) { const q = document.createElement('div'); q.className = 'rule-eq'; q.innerHTML = r.eq.map(v => `<b>${v}</b>`).join('<i>＋</i>') + `<i>＝</i><b class="ans">${r.eq.reduce((a, b) => a + b, 0)}</b>`; ex.appendChild(q); }
+    if (r.eq) { const q = document.createElement('div'); q.className = 'rule-eq'; const ops = r.ops || []; q.innerHTML = `<b>${r.eq[0]}</b>` + r.eq.slice(1).map((v, i) => `<i${ops[i] === '-' ? ' class="minus"' : ''}>${ops[i] === '-' ? '－' : '＋'}</i><b>${v}</b>`).join('') + `<i>＝</i><b class="ans">${r.eq.slice(1).reduce((a, v, i) => ops[i] === '-' ? a - v : a + v, r.eq[0])}</b>`; ex.appendChild(q); }
     else { const q = document.createElement('div'); q.className = 'rule-eq'; q.innerHTML = '<b class="ans">3</b>'; kid(q.appendChild(document.createElement('span')), '走三格'); ex.appendChild(q); }
     const p = document.createElement('p'); kid(p, r.text); box.append(ex, p);
   }

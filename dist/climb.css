@@ -218,3 +218,7 @@ body.menu #bubble,body.menu .dice-wrap{visibility:hidden}
 .rule-eq .ans{color:#2f9152}
 .rule-eq span{display:flex;font-size:.75em}
 .cl-view.parked.eqstack #bubble{left:10px;top:var(--parkh,90px);max-width:calc(100% - 20px)}
+/* 困難的「減」：算式減號紅色、骰子上方紅色－（導演 11-04 晚選甲） */
+.eq i.minus,.rule-eq i.minus{color:#d93d2f}
+.d3.minus .dnum{color:#fff0ee;-webkit-text-stroke-color:#a3261b;text-shadow:0 calc(var(--d)*.03) 0 #a3261b}
+.d3.minus .face.f1{box-shadow:inset 0 0 0 calc(var(--d)*.05) #e8574a}
