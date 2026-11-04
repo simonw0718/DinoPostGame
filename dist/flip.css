@@ -107,15 +107,15 @@ html.dino-mode .fs-shell::before{--bg:url('assets/dino-valley.jpg')}
 .finish-actions button{background:linear-gradient(#ffca58,#f6ac34);color:#573e1d;box-shadow:0 5px 0 #b9792b}
 .finish-actions a{background:#e5f2df;color:var(--ink);box-shadow:0 5px 0 #a9c8a2}
 
-@keyframes actorBreath{to{transform:translateY(-4px) rotate(1deg)}}
-@keyframes actorHop{40%{transform:translateY(-16px) rotate(-4deg)}75%{transform:translateY(2px) rotate(3deg)}}
-@keyframes bubblePop{from{transform:scale(.8)}}
+
+
+
 @keyframes speakerPulse{50%{transform:scale(1.12)}}
 @keyframes shake{20%{transform:rotateY(180deg) translateX(-8px) rotate(-3deg)}60%{transform:rotateY(180deg) translateX(8px) rotate(3deg)}100%{transform:rotateY(180deg)}}
 @keyframes slotIn{from{transform:scale(.3) rotate(-20deg)}}
-@keyframes fadeIn{from{opacity:0}}
-@keyframes cardIn{from{opacity:0;transform:translateY(30px) scale(.9)}}
-@keyframes readyBob{to{transform:translateY(-6px) scale(1.04)}}
+
+
+
 @keyframes readyRing{from{transform:scale(1);opacity:.9}to{transform:scale(1.7);opacity:0}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 .finish-actions button,.finish-actions a{flex:none;min-width:max-content}

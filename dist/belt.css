@@ -97,16 +97,16 @@ html.dino-mode .zb-shell::before{--bg:url('assets/dino-valley.jpg')}
 .finish-actions button{background:linear-gradient(#ffca58,#f6ac34);color:#573e1d;box-shadow:0 5px 0 #b9792b}
 .finish-actions a{background:#e5f2df;color:var(--ink);box-shadow:0 5px 0 #a9c8a2}
 
-@keyframes actorBreath{to{transform:translateY(-4px) rotate(1deg)}}
-@keyframes actorHop{40%{transform:translateY(-16px) rotate(-4deg)}75%{transform:translateY(2px) rotate(3deg)}}
-@keyframes bubblePop{from{transform:scale(.8)}}
+
+
+
 @keyframes slotPulse{to{box-shadow:0 0 0 9px #ffd35c22}}
 @keyframes slotIn{from{transform:scale(.4) rotate(-14deg)}}
 @keyframes stampDown{from{opacity:0;transform:scale(2.2) rotate(30deg)}}
 @keyframes wobble{25%{transform:rotate(-12deg)}75%{transform:rotate(10deg)}}
-@keyframes fadeIn{from{opacity:0}}
-@keyframes cardIn{from{opacity:0;transform:translateY(30px) scale(.9)}}
-@keyframes readyBob{to{transform:translateY(-6px) scale(1.04)}}
+
+
+
 @keyframes readyRing{from{transform:scale(1);opacity:.9}to{transform:scale(1.7);opacity:0}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 /* v2：題目區壓暗、聲調放大、泡泡一行 */

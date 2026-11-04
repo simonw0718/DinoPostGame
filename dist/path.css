@@ -37,7 +37,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .hand{font-size:120px;pointer-events:none;filter:drop-shadow(0 4px 3px #0a2a1c88)}
 .mark{fill:#ff8a3d;stroke:#fffdf2;stroke-width:4;opacity:.95}
 @keyframes starPulse{to{transform:scale(1.18)}}
-@keyframes fadeIn{from{opacity:0}}
+
 .ps-right{display:flex;align-items:center;gap:10px}
 .ps-score{position:absolute;left:50%;top:14px;z-index:5;display:grid;justify-items:center;padding:8px 20px;border:4px solid var(--gold);border-radius:20px;background:var(--cream);box-shadow:0 5px 0 #c89c52;transform:translateX(-50%);pointer-events:none;animation:scoreIn .5s cubic-bezier(.2,1.5,.4,1)}
 .ps-score[hidden]{display:none}
@@ -76,13 +76,13 @@ button{font:inherit;color:inherit;cursor:pointer}
 .fstamp{width:44px;height:44px;object-fit:contain;opacity:0;transform:scale(1.8) rotate(-18deg)}
 .card img.fstamp{height:44px}
 .fstamp.is-on{opacity:1;transform:none;animation:fStamp .3s cubic-bezier(.16,1,.3,1)}
-@keyframes fHop{35%{transform:translateY(-22px) rotate(-4deg)}65%{transform:translateY(2px) rotate(2deg)}}
-@keyframes fStamp{from{opacity:0;transform:scale(1.8) rotate(-18deg)}}
+
+
 /* 郵差閒置呼吸：只在沒被拖時（.is-drag 與 .is-dragging 都停），transform-box 用自身底部中心 */
 .courier-breath{transform-box:fill-box;transform-origin:50% 100%;animation:breathe 2.6s ease-in-out infinite alternate}
 .courier.is-drag .courier-breath,.ps-stage.is-dragging .courier-breath{animation:none}
 @keyframes breathe{to{transform:scale(1.03)}}
-@media(prefers-reduced-motion:reduce){.courier-breath{animation:none}.card img.is-hop{animation:none}.fstamp.is-on{animation:fStampR .2s ease-out}@keyframes fStampR{from{opacity:0}}}
+@media(prefers-reduced-motion:reduce){.courier-breath{animation:none}.card img.is-hop{animation:none}.fstamp.is-on{animation:fStampR .2s ease-out}}
 @keyframes pop{from{transform:scale(.8)}}
 @keyframes ring{to{stroke-dashoffset:-48}}
 @keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}

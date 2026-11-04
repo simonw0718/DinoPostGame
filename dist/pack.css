@@ -97,10 +97,10 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
 @keyframes hop{40%{translate:0 -12%}}
 @keyframes shake{25%{rotate:-8deg}75%{rotate:8deg}}
 @keyframes turn{from{rotate:-90deg}}
-@keyframes banner{0%{transform:translate(-50%,-50%) scale(.5);opacity:0}18%{transform:translate(-50%,-50%) scale(1);opacity:1}78%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(-50%,-80%) scale(.9);opacity:0}}
-@keyframes bannerFade{0%{opacity:0}18%,78%{opacity:1}100%{opacity:0}}
+
+
 @media(prefers-reduced-motion:reduce){.banner{animation-name:bannerFade}}
-@keyframes breathe{to{transform:scale(1.06)}}
+
 @media(prefers-reduced-motion:reduce){.go{animation:none}}
 
 /* 注音（同 catch.css）*/

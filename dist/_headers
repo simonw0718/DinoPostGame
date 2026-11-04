@@ -47,6 +47,8 @@
   Cache-Control: no-cache
 /assets/cards/manifest.json
   Cache-Control: no-cache
+/fx.css
+  Cache-Control: no-cache
 /fonts.css
   Cache-Control: no-cache
 /home.css

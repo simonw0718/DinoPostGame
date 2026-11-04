@@ -1,0 +1,18 @@
+/* 共用動畫 keyframes（P09 抽出，內容與各遊戲原本逐字相同；外觀不變）。
+   載入順序：fonts.css 之後、各遊戲 css 之前，遊戲 css 若同名重定義仍會覆蓋（breathe／readyRing 等有差異者留在遊戲內）。
+   開始層：readyBob／fadeIn／cardIn　結束卡：banner／bannerFade／actorHop／actorBreath／bubblePop
+   蓋章：fStamp／fStampR／fHop　　頁面轉場：dinoPageOut／dinoPageIn */
+@keyframes actorBreath{to{transform:translateY(-4px) rotate(1deg)}}
+@keyframes actorHop{40%{transform:translateY(-16px) rotate(-4deg)}75%{transform:translateY(2px) rotate(3deg)}}
+@keyframes bubblePop{from{transform:scale(.8)}}
+@keyframes fadeIn{from{opacity:0}}
+@keyframes cardIn{from{opacity:0;transform:translateY(30px) scale(.9)}}
+@keyframes readyBob{to{transform:translateY(-6px) scale(1.04)}}
+@keyframes banner{0%{transform:translate(-50%,-50%) scale(.5);opacity:0}18%{transform:translate(-50%,-50%) scale(1);opacity:1}78%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(-50%,-80%) scale(.9);opacity:0}}
+@keyframes bannerFade{0%{opacity:0}18%,78%{opacity:1}100%{opacity:0}}
+@keyframes breathe{to{transform:scale(1.06)}}
+@keyframes fHop{35%{transform:translateY(-22px) rotate(-4deg)}65%{transform:translateY(2px) rotate(2deg)}}
+@keyframes fStamp{from{opacity:0;transform:scale(1.8) rotate(-18deg)}}
+@keyframes fStampR{from{opacity:0}}
+@keyframes dinoPageOut{to{opacity:0;transform:translateY(-14px) scale(.985)}}
+@keyframes dinoPageIn{from{opacity:0;transform:translateY(22px) scale(.985)}}
