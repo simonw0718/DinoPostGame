@@ -89,6 +89,8 @@
   const GATE = 4;   // 關卡點間距（取樣點數，×STEP ≈ 20）
 
   const say = text => { const b = $('bubble'); setKidText(b, text); b.classList.remove('is-pop'); void b.offsetWidth; b.classList.add('is-pop'); };
+  // 共用圖示放進 SVG：<use> 指向 icons.svg（size＝方形邊長；color 給 currentColor 的圖示）
+  const useIcon = (name, x, y, size, parent, color) => { const u = el('use', { href: `icons.svg#ic-${name}`, x, y, width: size, height: size }, parent); if (color) u.style.color = color; return u; };
   const el = (tag, attrs = {}, parent) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); parent?.append(n); return n; };
   const dist = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
   const ease = k => k < .5 ? 2 * k * k : 1 - (-2 * k + 2) ** 2 / 2;
@@ -183,7 +185,7 @@
     });
     const [ex, ey] = S.samples.at(-1);
     S.friend = S.friend && S.friend !== S.courier[0] ? S.friend : Dino.shuffle(FRIENDS.filter(id => id !== S.courier[0]))[0];
-    el('text', { x: ex, y: ey, 'font-size': 60, 'text-anchor': 'middle', 'dominant-baseline': 'central' }, svg).textContent = '📮';
+    useIcon('mailbox', ex - 30, ey - 30, 60, svg, '#e0473a');
     // 朋友圖放在終點附近、不蓋到路（也不蓋右上角的字形）：繞終點找離路最遠夠用的空位；路太密就縮小再找
     let fx = ex, fy = ey - 70, fs = 1, best = -1e9;
     // 可放的範圍＝實際看得到的舞台（viewBox 置中後上下或左右多出來的空白也算）
@@ -212,7 +214,7 @@
     S.el.breath = el('g', { class: 'courier-breath' }, g);   // 呼吸／輕跳套在這層；翻面 transform 留在 img，兩者不互蓋
     S.el.img = el('image', { href: `assets/cast/${S.courier[0]}__${S.courier[1]}.webp`, x: -75, y: -150, width: 150, height: 170, preserveAspectRatio: 'xMidYMax meet' }, S.el.breath);
     S.el.courier = g;
-    S.el.hand = el('text', { class: 'hand', 'text-anchor': 'middle', 'dominant-baseline': 'hanging', opacity: 0 }, svg); S.el.hand.textContent = '👆';
+    S.el.hand = el('g', { class: 'hand', opacity: 0 }, svg); useIcon('hand', -60, 0, 120, S.el.hand);
     resetWalk();
     renderLevels();
     requestAnimationFrame(() => g.classList.remove('is-snap'));
@@ -275,10 +277,10 @@
       el('text', { y: 1, 'font-size': 11, 'font-weight': 900, fill: '#7a4b00', 'text-anchor': 'middle', 'dominant-baseline': 'central' }, g).textContent = n + 1;
     });
     const end = road.getPointAtLength(L);
-    el('text', { x: end.x + 4, y: end.y - 4, 'font-size': 24, 'text-anchor': 'middle', 'dominant-baseline': 'central' }, svg).textContent = '📮';
+    useIcon('mailbox', end.x - 8, end.y - 16, 24, svg, '#e0473a');
     const mover = el('g', {}, svg);
     el('image', { href: `assets/cast/${S.courier[0]}__${S.courier[1]}.webp`, x: -17, y: -40, width: 34, height: 40, preserveAspectRatio: 'xMidYMax meet' }, mover);
-    el('text', { x: 6, y: -18, 'font-size': 26, 'dominant-baseline': 'hanging' }, mover).textContent = '👆';
+    useIcon('hand', 6, -18, 26, mover);
     el('animateMotion', { path: d, keyPoints: '0;0;1;1', keyTimes: '0;.15;.85;1', calcMode: 'linear', dur: '3.2s', repeatCount: 'indefinite' }, mover);
   }
   let HW;   // 共用玩法框（Dino.howto），在檔尾建立
@@ -409,7 +411,7 @@
     return Math.max(0, Math.round(on / Math.max(1, walked.length) * 100) - S.offs * 10);
   }
   const starsOf = score => score >= 90 ? 3 : score >= 70 ? 2 : 1;
-  const starHtml = n => [0, 1, 2].map(i => `<span class="${i < n ? '' : 'off'}">★</span>`).join('');
+  const starHtml = n => [0, 1, 2].map(i => `<span class="${i < n ? '' : 'off'}">${Dino.icon('star')}</span>`).join('');
 
   function arrive() {
     S.done = true; S.drag = false; S.cp = 3; place();

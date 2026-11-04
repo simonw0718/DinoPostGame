@@ -104,10 +104,10 @@
     el.setAttribute('aria-label', type === 'sound' ? '聲音信' : '圖片信');
     const inner = document.createElement('span'); inner.className = 'fs-inner';
     const back = document.createElement('span'); back.className = 'fs-face fs-back';
-    const badge = document.createElement('span'); badge.className = 'fs-badge'; badge.textContent = type === 'sound' ? '🔊' : '🖼';
+    const badge = document.createElement('span'); badge.className = 'fs-badge'; badge.innerHTML = Dino.icon(type === 'sound' ? 'sound' : 'picture');
     back.append(badge);
     const front = document.createElement('span'); front.className = 'fs-face fs-front';
-    if (type === 'sound') { const s = document.createElement('span'); s.className = 'fs-speaker'; s.textContent = '♫'; front.append(s); }
+    if (type === 'sound') { const s = document.createElement('span'); s.className = 'fs-speaker'; s.innerHTML = Dino.icon('sound'); front.append(s); }
     else front.append(makeArt(word));
     inner.append(back, front); el.append(inner);
     const card = { el, word, type, matched: false };
@@ -204,7 +204,7 @@
     Dino.sfx('finish', .8); Dino.bgm.start();
     const n = state.round.length, f = state.flips;
     const stars = f <= Math.round(n * 1.6) ? 3 : f <= Math.round(n * 2.4) ? 2 : 1;
-    $('finishStars').innerHTML = '★★★'.split('').map((s, i) => `<span class="${i < stars ? '' : 'off'}">★</span>`).join('');
+    $('finishStars').innerHTML = [0, 1, 2].map(i => `<span class="${i < stars ? '' : 'off'}">${Dino.icon('star')}</span>`).join('');
     $('finishStars').setAttribute('aria-label', `${stars} 顆星`);
     $('finishFlips').textContent = f;
     $('finishActor').src = poseSrc(state.courier, 'cheer');

@@ -30,8 +30,8 @@
         <div class="ms-actor-bob"><img id="actorImg" alt=""></div>
       </div>
       <p id="status" class="ms-bubble" role="status" aria-live="polite"></p>
-      <button id="nextButton" class="ms-next" type="button" hidden><span id="nextLabel">下一封</span><span aria-hidden="true">➜</span></button>
-      <div id="ghost" class="ms-ghost" aria-hidden="true" hidden><i style="left:206px;top:700px"></i><i style="left:188px;top:670px"></i><i style="left:170px;top:640px"></i><i style="left:152px;top:610px"></i><i style="left:134px;top:580px"></i><span class="ms-hand">👆</span></div>
+      <button id="nextButton" class="ms-next" type="button" hidden><span id="nextLabel">下一封</span><span aria-hidden="true"><svg class="di" aria-hidden="true"><use href="icons.svg#ic-next"/></svg></span></button>
+      <div id="ghost" class="ms-ghost" aria-hidden="true" hidden><i style="left:206px;top:700px"></i><i style="left:188px;top:670px"></i><i style="left:170px;top:640px"></i><i style="left:152px;top:610px"></i><i style="left:134px;top:580px"></i><span class="ms-hand"><svg class="di" aria-hidden="true"><use href="icons.svg#ic-hand"/></svg></span></div>
       <div id="letter" class="ms-letter" data-no-press tabindex="0" role="button" aria-label="拿起注音信件">
         <div id="letterFace" class="ms-letter-face">
           <span class="letter-edge" aria-hidden="true"></span>
@@ -40,7 +40,7 @@
           <span id="letterArt" class="letter-art" hidden></span>
         </div>
       </div>
-      <button id="replayButton" class="ms-replay" type="button" aria-label="播放中文發音">♫</button>
+      <button id="replayButton" class="ms-replay" type="button" aria-label="播放中文發音"><svg class="di" aria-hidden="true"><use href="icons.svg#ic-sound"/></svg></button>
       <div id="receipt" class="ms-receipt" hidden>
         <span class="back-fold" aria-hidden="true"></span>
         <span class="back-label"><span id="receiptBrand">恐龍郵局</span> · <span id="receiptConfirm">收件確認</span></span>
@@ -54,20 +54,20 @@
 
   <!-- 手機要先點一下才能出聲（導演 2026-10-21 重新設計）：不用彈窗，遊戲已在背後擺好，整個畫面點哪裡都開始 -->
   <button id="readyOverlay" class="ready-tap" type="button" hidden aria-label="點一下，開始送信">
-    <span class="ready-go" aria-hidden="true"><span class="ready-ring"></span><span class="ready-ring r2"></span><span class="ready-icon">▶</span></span>
+    <span class="ready-go" aria-hidden="true"><span class="ready-ring"></span><span class="ready-ring r2"></span><span class="ready-icon"><svg class="di" aria-hidden="true"><use href="icons.svg#ic-play"/></svg></span></span>
     <span id="readyTitle" class="ready-label">點一下，開始送信！</span>
   </button>
 
   <dialog id="settingsDialog" class="settings-dialog">
-    <div class="dialog-head"><span aria-hidden="true">✉</span><h2>遊戲設定</h2><button id="closeSettings" class="close-button" type="button" aria-label="關閉設定">✕</button></div>
+    <div class="dialog-head"><span aria-hidden="true"><svg class="di" aria-hidden="true"><use href="icons.svg#ic-letter"/></svg></span><h2>遊戲設定</h2><button id="closeSettings" class="close-button" type="button" aria-label="關閉設定"><svg class="di" aria-hidden="true"><use href="icons.svg#ic-close"/></svg></button></div>
     <p class="setting-note">信件內容、發音與封數會在下一回合生效；題庫及作答紀錄與配對遊戲共用。</p>
     <fieldset class="mail-format-picker"><legend>信件內容</legend><div class="mail-format-options"><button class="mail-format-option" type="button" data-mail-format="zhuyin" aria-pressed="true">看注音</button><button class="mail-format-option" type="button" data-mail-format="picture" aria-pressed="false">看圖片</button></div></fieldset>
     <label class="auto-audio-control mail-auto-control"><input id="mailAutoAudio" type="checkbox" checked><span class="switch-track" aria-hidden="true"></span><span class="switch-label">自動發音</span></label>
     <label class="mail-count-label" for="mailCount">每回合封數：<output id="mailCountValue">5</output></label><input id="mailCount" type="range" min="3" max="10" value="5" aria-label="每回合封數">
     <fieldset class="mail-mode-picker"><legend>選任務</legend><div class="mail-mode-options">
-      <button class="mail-mode-option" type="button" data-mail-mode="all" aria-pressed="true">✦ 全部</button>
+      <button class="mail-mode-option" type="button" data-mail-mode="all" aria-pressed="true"><svg class="di" aria-hidden="true"><use href="icons.svg#ic-sparkle"/></svg> 全部</button>
       <button class="mail-mode-option" type="button" data-mail-mode="level" aria-pressed="false">1–3 分難度</button>
-      <button class="mail-mode-option" type="button" data-mail-mode="dinosaur" aria-pressed="false">🦕 恐龍挑戰</button>
+      <button class="mail-mode-option" type="button" data-mail-mode="dinosaur" aria-pressed="false"><svg class="di" aria-hidden="true"><use href="icons.svg#ic-dino"/></svg> 恐龍挑戰</button>
     </div></fieldset>
     <div id="mailLevelControl" class="mail-level-control" hidden><label id="mailLevelText" for="mailLevelSlider">第一級</label><input id="mailLevelSlider" type="range" min="1" max="3" step="1" value="1" aria-label="選擇難度等級"><div class="mail-level-marks" aria-hidden="true"><span>1</span><span>2</span><span>3</span></div></div>
     <p id="mailSelectionSummary" class="mail-selection-summary">下一回合：全部單字</p>

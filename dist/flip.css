@@ -53,7 +53,7 @@ html.dino-mode .fs-shell::before{--bg:url('assets/dino-valley.jpg')}
 
 /* 郵袋：一格一對 */
 .fs-bag{display:flex;align-items:center;justify-content:center;gap:10px;flex:none;min-height:58px;padding:6px 14px;border:3px solid var(--gold);border-radius:18px;background:var(--cream);box-shadow:0 4px 0 #c89c52}
-.fs-bag-icon{font-size:30px;line-height:1}
+.fs-bag-icon{font-size:30px;line-height:1;color:var(--red)}
 .fs-slots{display:flex;gap:8px;margin:0;padding:0;list-style:none}
 .fs-slots li{display:grid;place-items:center;width:44px;height:44px;border:2px dashed #d8c08e;border-radius:10px;background:#fff6dd;overflow:hidden}
 .fs-slots li.is-filled{border:2px solid #7fcf86;background:#ecfae3;animation:slotIn .45s cubic-bezier(.2,1.5,.4,1)}

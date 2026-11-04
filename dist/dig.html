@@ -106,7 +106,7 @@
   <div id="ready" class="overlay">
     <div class="pick" role="group" aria-label="難度"><button type="button" data-lv="novice">新手</button><button type="button" data-lv="easy">簡單</button><button type="button" data-lv="hard">困難</button></div>
     <button id="start" type="button" style="display:flex;flex-direction:column;align-items:center;gap:18px;border:0;background:none">
-      <span class="go" aria-hidden="true">▶</span><span id="startLabel" class="label">點一下，開始挖化石！</span>
+      <span class="go" aria-hidden="true"><svg class="di" aria-hidden="true"><use href="icons.svg#ic-play"/></svg></span><span id="startLabel" class="label">點一下，開始挖化石！</span>
     </button>
   </div>
 
@@ -488,7 +488,7 @@
       Dino.sfx('finish', .8);
       $('finishImg').src = 'assets/cast/xiaokong__cheer.webp';
       const n = wobble <= 2 ? 3 : wobble <= 6 ? 2 : 1;
-      $('finishStars').textContent = '★'.repeat(n) + '☆'.repeat(3 - n);
+      $('finishStars').innerHTML = Dino.icon('star').repeat(n) + Dino.icon('star-o').repeat(3 - n);
       $('haul').innerHTML = SYMBOLS.map(x => `<span>${x.ch}</span>`).join('');
       const sp = $('finishStamps'); sp.replaceChildren();   // 郵票逐顆蓋章：每個挖到的化石一顆（最多 5），間隔 150ms
       SYMBOLS.slice(0, 5).forEach((_, i) => {

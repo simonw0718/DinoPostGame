@@ -151,7 +151,7 @@ function sendParcel() {
   const stamp = document.createElement('span');
   stamp.className = 'parcel-delivery-stamp';
   stamp.setAttribute('aria-hidden', 'true');
-  stamp.textContent = '✓';
+  stamp.innerHTML = Dino.icon('tick');
   parcel.append(stamp);
   board.append(parcel);
   $('englishWord').classList.add('parcel-sent');
@@ -419,7 +419,7 @@ function drawChoices(word) {
     back.append(meaning);
     if (option.zhAudio && option.id === word.id) {
       const cue = document.createElement('span'); cue.className = 'chinese-audio-cue';
-      cue.append(document.createTextNode('♫ '));
+      cue.insertAdjacentHTML('beforeend', Dino.icon('sound') + ' ');
       const text = document.createElement('span'); setKidText(text, '聽中文'); cue.append(text); back.append(cue);
     }
     inner.append(front, back); button.append(inner);
@@ -549,7 +549,7 @@ function nextQuestion() {
     state.completedRounds++;
     const alternate = state.completedRounds % 2 === 0;
     $('resultScreen').classList.toggle('variant-b', alternate);
-    $('resultSymbol').textContent = alternate ? '✉' : '★';
+    $('resultSymbol').innerHTML = Dino.icon(alternate ? 'letter' : 'star');
     setKidText($('resultTitleLine1'), alternate ? '星星郵件' : '今天的郵件');
     setKidText($('resultTitleLine2'), alternate ? '也送達啦！' : '送達啦！');
     setKidText($('resultCopy'), alternate ? '星星郵票送給你！' : '你完成任務了！');
@@ -700,7 +700,7 @@ function renderBank() {
     const english = document.createElement('strong'); english.textContent = word.en;
     const chinese = document.createElement('small'); chinese.textContent = `${word.zh} · ${word.zhuyin.join(' ')}`;
     copy.append(english, chinese); row.append(copy);
-    const sound = document.createElement('button'); sound.type = 'button'; sound.className = 'bank-sound'; sound.textContent = '♫'; sound.setAttribute('aria-label', `播放 ${word.en} 發音`); sound.addEventListener('click', () => previewBankAudio(word)); row.append(sound);
+    const sound = document.createElement('button'); sound.type = 'button'; sound.className = 'bank-sound'; sound.innerHTML = Dino.icon('sound'); sound.setAttribute('aria-label', `播放 ${word.en} 發音`); sound.addEventListener('click', () => previewBankAudio(word)); row.append(sound);
     const toggle = document.createElement('input'); toggle.type = 'checkbox'; toggle.className = 'bank-toggle'; toggle.checked = !state.disabledIds.has(word.id); toggle.setAttribute('aria-label', `${word.en} ${word.zh} 出題`);
     toggle.addEventListener('change', () => {
       const next = new Set(state.disabledIds);

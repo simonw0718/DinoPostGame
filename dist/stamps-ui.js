@@ -103,7 +103,7 @@ window.DinoStampsUI = (() => {
     }
     // Text messages go to the page's feedback line (see message()); the card only gets small marks.
     if (result.stamped) box.classList.add('full');
-    else if (result.capped) { const moon = document.createElement('span'); moon.className = 'dots-moon'; moon.setAttribute('aria-hidden', 'true'); moon.textContent = '☾'; box.append(moon); }
+    else if (result.capped) { const moon = document.createElement('span'); moon.className = 'dots-moon'; moon.setAttribute('aria-hidden', 'true'); moon.innerHTML = Dino.icon('moon'); box.append(moon); }
     box.setAttribute('aria-label', result.stamped ? '拿到郵票了' : `郵票進度 ${count}／${RULES.stampAt}`);
     return box;
   }
@@ -113,7 +113,7 @@ window.DinoStampsUI = (() => {
 
   function albumLink() {
     const link = document.createElement('a'); link.className = 'album-link'; link.href = 'album.html';
-    const icon = document.createElement('span'); icon.className = 'album-icon'; icon.setAttribute('aria-hidden', 'true'); icon.textContent = '📒';
+    const icon = document.createElement('span'); icon.className = 'album-icon'; icon.setAttribute('aria-hidden', 'true'); icon.innerHTML = Dino.icon('album');
     const count = document.createElement('span'); count.className = 'album-count';
     link.append(icon, kid('span', '集郵冊'), count);
     const refresh = () => { count.textContent = String(DinoProgress.stats().stamps); };

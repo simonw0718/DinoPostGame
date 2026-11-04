@@ -1,6 +1,14 @@
 // Shared by index/mail (game-homes.js), match (app.js) and zhuyin-sort (zhuyin-sort.js).
 window.Dino = (() => {
   'use strict';
+  // 共用圖示（導演 2026-11-04：遊戲內禁 emoji，同意思全站同圖示）。sprite＝icons.svg（同源 <use>），顏色跟 CSS color。
+  // 用法：Dino.icon('star') → <svg class="di"><use href="icons.svg#ic-star"/></svg>；第二參數加額外 class。
+  if (!document.getElementById('di-style')) {
+    const st = document.createElement('style'); st.id = 'di-style';
+    st.textContent = '.di{width:1em;height:1em;display:inline-block;vertical-align:-.12em;flex:none;fill:currentColor;pointer-events:none}';
+    document.head.append(st);
+  }
+  const icon = (name, cls = '') => `<svg class="di ${cls}" aria-hidden="true"><use href="icons.svg#ic-${name}"/></svg>`;
   // 測試用靜音：網址加 ?mute=1 後，同一分頁之後的頁面都不出聲（?mute=0 解除）。
   const muteQ = new URLSearchParams(location.search).get('mute');
   try { if (muteQ !== null) sessionStorage.setItem('dinoMute', muteQ); } catch { /* ok */ }
@@ -194,7 +202,7 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
   const audioPath = word => `assets/audio/${word.id}.mp3`;
 
   // Small stamp-and-star burst around an element; skipped when reduced motion is on.
-  const burstShapes = ['★', '✦', '✉', '★', '✦', '●'];
+  const burstShapes = ['star', 'sparkle', 'letter', 'star', 'sparkle', 'dot'];
   const burstColors = ['#f2b945', '#e76855', '#4fb577', '#5aa7d6', '#f6ac34'];
   function burst(element) {
     if (!element || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -204,7 +212,7 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
       const piece = document.createElement('span');
       piece.className = 'dino-burst';
       piece.setAttribute('aria-hidden', 'true');
-      piece.textContent = burstShapes[i % burstShapes.length];
+      piece.innerHTML = icon(burstShapes[i % burstShapes.length]);
       piece.style.cssText = `position:fixed;left:${x}px;top:${y}px;z-index:60;pointer-events:none;font-size:${14 + Math.random() * 12}px;font-weight:900;color:${burstColors[i % burstColors.length]};line-height:1`;
       document.body.append(piece);
       const angle = (i / 14) * Math.PI * 2 + Math.random() * .4;
@@ -311,11 +319,12 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
       else if (document.readyState === 'complete') go();
       else addEventListener('load', go, { once: true });
     }
-    const sync = () => { if (!button) return; const on = musicOn(); button.setAttribute('aria-pressed', String(on)); button.textContent = on ? '♫' : '♫̸'; button.classList.toggle('off', !on); };
+    const sync = () => { if (!button) return; const on = musicOn(); button.setAttribute('aria-pressed', String(on)); button.innerHTML = icon('sound'); button.classList.toggle('off', !on); };
     function ensureButton() {
       if (button) return;
       const style = document.createElement('style');
-      style.textContent = `.dino-music{position:fixed;left:max(12px,env(safe-area-inset-left));bottom:max(12px,env(safe-area-inset-bottom));z-index:40;width:44px;height:44px;border:3px solid #fffdf2;border-radius:50%;background:#1f6b4b;color:#fff;font:900 20px/1 system-ui;box-shadow:0 4px 0 #0f3b2a;cursor:pointer}
+      style.textContent = `.dino-music{position:fixed;left:max(12px,env(safe-area-inset-left));bottom:max(12px,env(safe-area-inset-bottom));z-index:40;width:44px;height:44px;border:3px solid #fffdf2;border-radius:50%;background:#1f6b4b;color:#fff;font:900 22px/1 system-ui;display:grid;place-items:center;padding:0;box-shadow:0 4px 0 #0f3b2a;cursor:pointer}
+.dino-music.off::after{content:"";position:absolute;left:50%;top:50%;width:26px;height:3.5px;margin:-1.75px 0 0 -13px;border-radius:2px;background:#fff;transform:rotate(-45deg);box-shadow:0 0 0 1.5px #9aa79f}
 .dino-music.off{background:#9aa79f;box-shadow:0 4px 0 #6d7a72}.dino-music:active{transform:translateY(3px);box-shadow:0 1px 0 #0f3b2a}`;
       document.head.append(style);
       button = document.createElement('button'); button.type = 'button'; button.className = 'dino-music'; button.setAttribute('aria-label', '背景音樂開關');
@@ -354,13 +363,13 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
   // 玩法預覽小動畫 markup（首頁入口卡＋各遊戲 ? 玩法框共用；樣式 preview.css）。之後新增遊戲只要多一筆
   const pvImg = n => `assets/rebuilt/emoji-6x8-v1/${n}.webp`;
   const previews = {
-    'match.html': `<div class="pv pv-match" aria-hidden="true"><span class="say"><i>▶</i>duck</span><div class="grid"><b class="ok"><img src="${pvImg('animal-duck')}" alt=""></b><b><img src="${pvImg('animal-fish')}" alt=""></b><b><img src="${pvImg('animal-panda')}" alt=""></b><b><img src="${pvImg('animal-bee')}" alt=""></b></div><span class="tap"></span><span class="seal">OK</span></div>`,
+    'match.html': `<div class="pv pv-match" aria-hidden="true"><span class="say"><i>${icon('play')}</i>duck</span><div class="grid"><b class="ok"><img src="${pvImg('animal-duck')}" alt=""></b><b><img src="${pvImg('animal-fish')}" alt=""></b><b><img src="${pvImg('animal-panda')}" alt=""></b><b><img src="${pvImg('animal-bee')}" alt=""></b></div><span class="tap"></span><span class="seal">OK</span></div>`,
     'mail.html': `<div class="pv pv-mail" aria-hidden="true"><div class="letter"><span>ㄩˊ</span></div><div class="boxes"><b class="ok"><img src="${pvImg('animal-fish')}" alt=""></b><b><img src="${pvImg('animal-duck')}" alt=""></b><b><img src="${pvImg('animal-bee')}" alt=""></b></div><span class="tap"></span><span class="seal">OK</span></div>`,
-    'flip.html': `<div class="pv pv-flip" aria-hidden="true"><div class="cards"><b class="snd ok"><i>♫</i></b><b class="pic"></b><b class="snd"></b><b class="pic ok"><i><img src="${pvImg('animal-duck')}" alt=""></i></b></div><span class="tap"></span><span class="seal">OK</span></div>`,
+    'flip.html': `<div class="pv pv-flip" aria-hidden="true"><div class="cards"><b class="snd ok"><i>${icon('sound')}</i></b><b class="pic"></b><b class="snd"></b><b class="pic ok"><i><img src="${pvImg('animal-duck')}" alt=""></i></b></div><span class="tap"></span><span class="seal">OK</span></div>`,
     'belt.html': `<div class="pv pv-belt" aria-hidden="true"><div class="word"><img src="${pvImg('animal-fish')}" alt=""><span class="slot">ㄩ</span><em>ˊ</em></div><div class="belt"><div class="run"><b>ㄧ</b><b class="ok">ㄩ</b><b>ㄨ</b><b>ㄧ</b><b>ㄩ</b><b>ㄨ</b></div></div><span class="tap"></span><span class="seal">OK</span></div>`,
     'path.html': `<div class="pv pv-path" aria-hidden="true"><svg viewBox="0 0 124 96"><path class="road" d="M14 76C42 80 36 28 64 28S90 72 108 42"/><path class="trail" pathLength="100" d="M14 76C42 80 36 28 64 28S90 72 108 42"/><path class="star" d="M48 41l2.6 5.4 5.9.8-4.3 4.1 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.1 5.9-.8z"/><g class="box" transform="translate(108 42)"><rect x="-8" y="-18" width="16" height="14" rx="4"/><rect class="post" x="-2" y="-4" width="4" height="12"/></g><image href="assets/cast/iggy__walk_r.webp" x="-9" y="-24" width="18" height="24"><animateMotion dur="3.2s" repeatCount="indefinite" keyPoints="0;0;1;1" keyTimes="0;.15;.85;1" calcMode="linear" path="M14 76C42 80 36 28 64 28S90 72 108 42"/></image></svg><span class="seal">OK</span></div>`,
     'catch.html': `<div class="pv pv-catch" aria-hidden="true"><i class="env e1"></i><i class="env e2"></i><img class="junk" src="assets/rebuilt/emoji-6x8-v1/kidapp-sock.webp" alt=""><div class="cart"><img class="who" src="assets/cast/iggy__hello.webp" alt=""><img class="car" src="assets/cast/prop_mail_cart_front.webp" alt=""></div><span class="seal">OK</span></div>`,
-    'mole.html': `<div class="pv pv-egg" aria-hidden="true"><i class="nest n1"></i><i class="nest n2"></i><div class="card c1"><img src="assets/rebuilt/emoji-6x8-v1/food-broccoli.webp" alt=""></div><div class="card c2"><img src="assets/rebuilt/emoji-6x8-v1/kidapp-sock.webp" alt=""></div><i class="egg g1"></i><i class="egg g2"></i><i class="rim n1"></i><i class="rim n2"></i><b class="x">✕</b><i class="tap"></i><span class="seal">OK</span></div>`,
+    'mole.html': `<div class="pv pv-egg" aria-hidden="true"><i class="nest n1"></i><i class="nest n2"></i><div class="card c1"><img src="assets/rebuilt/emoji-6x8-v1/food-broccoli.webp" alt=""></div><div class="card c2"><img src="assets/rebuilt/emoji-6x8-v1/kidapp-sock.webp" alt=""></div><i class="egg g1"></i><i class="egg g2"></i><i class="rim n1"></i><i class="rim n2"></i><b class="x">${icon('close')}</b><i class="tap"></i><span class="seal">OK</span></div>`,
     'spell.html': `<div class="pv pv-spell" aria-hidden="true"><div class="pvs-env"><img class="pvs-pic" src="assets/cards-edge/animal-cat.webp" alt=""><span class="pvs-slot s1"></span><span class="pvs-slot s2">a</span><span class="pvs-slot s3">t</span></div><span class="pvs-stamp k">k</span><span class="pvs-stamp c">c</span><span class="pvs-stamp o">o</span><span class="tap"></span></div>`,
     'climb.html': `<div class="pv pv-climb" aria-hidden="true"><svg viewBox="0 0 124 96"><path class="hill" d="M0 96V58Q30 30 62 22Q94 14 124 30V96Z"/><path class="road" d="M16 86H102Q112 86 112 76Q112 66 102 66H26Q16 66 16 56Q16 46 26 46H90Q100 46 100 36Q100 26 90 26H66"/><g class="cells"><circle cx="16" cy="86" r="3"/><circle cx="44" cy="86" r="3"/><circle cx="72" cy="86" r="3"/><circle cx="102" cy="86" r="3"/><circle cx="84" cy="66" r="3"/><circle cx="56" cy="66" r="3"/><circle cx="28" cy="66" r="3"/><circle cx="40" cy="46" r="3"/><circle cx="68" cy="46" r="3"/><circle cx="94" cy="36" r="3"/></g><g class="tree"><rect x="58" y="6" width="6" height="20" rx="2"/><circle cx="61" cy="8" r="9"/></g><path class="flag" d="M70 26V10M70 10H80L76 14L80 18H70"/></svg><img class="runner" src="assets/cast/iggy__walk_r.webp" alt=""><span class="die">3</span></div>`,
     'pack.html': `<div class="pv pv-pack" aria-hidden="true"><div class="lawn"><i></i><i></i><i></i><i></i><i></i><i></i></div><img class="dino" src="assets/cast/iggy__hello.webp" alt=""><i class="pbox b1"><i class="env"></i></i><i class="pbox b2"></i><span class="seal">OK</span></div>`,
@@ -374,7 +383,7 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
     const heard = () => { try { return localStorage.getItem(heardKey) === '1'; } catch { return true; } };
     let speaking = false, closed = null;
     const root = document.createElement('div'); root.className = 'howto'; root.hidden = true;
-    root.innerHTML = '<div class="howto-card" role="dialog" aria-label="玩法"><button class="howto-x" type="button" aria-label="關掉">✕</button><div class="howto-stage"></div><p class="howto-text"></p><button class="howto-ok" type="button">知道了</button></div>';
+    root.innerHTML = '<div class="howto-card" role="dialog" aria-label="玩法"><button class="howto-x" type="button" aria-label="關掉">' + icon('close') + '</button><div class="howto-stage"></div><p class="howto-text"></p><button class="howto-ok" type="button">知道了</button></div>';
     document.body.append(root);
     const stage = root.querySelector('.howto-stage'), say = (el, t) => kid ? kid(el, t) : (el.textContent = t);
     say(root.querySelector('.howto-text'), text); say(root.querySelector('.howto-ok'), '知道了');
@@ -395,7 +404,7 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
     return { el: root, isOpen: () => !root.hidden, hide, show, first };
   }
 
-  return { voice, characters, storageKeys, shuffle, loadQueue, fitActor, parseZhuyin, makeBpmUnit, kidText,
+  return { voice, characters, storageKeys, shuffle, loadQueue, fitActor, parseZhuyin, makeBpmUnit, kidText, icon,
     isDino, isNumber, topicGroup, visualGroup, eligibleWords, loadHistory, saveHistory, selectRound, audioPath, burst, streakThreshold, dinoMode, setDinoMode, taskMode,
     sfx, bgm, menuTaps, goTo, previews, howto, preload, reduced, replay };
 })();

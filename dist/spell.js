@@ -266,7 +266,7 @@
     } catch { /* 沒有儲存空間也照樣能玩 */ }
     Dino.sfx('finish', .8);
     const stars = state.misses <= 1 ? 3 : state.misses <= 4 ? 2 : 1;
-    $('finishStars').innerHTML = [0, 1, 2].map(i => `<span class="${i < stars ? '' : 'off'}">★</span>`).join('');
+    $('finishStars').innerHTML = [0, 1, 2].map(i => `<span class="${i < stars ? '' : 'off'}">${Dino.icon('star')}</span>`).join('');
     $('finishWords').replaceChildren(...state.round.map(it => { const li = document.createElement('li'); li.textContent = it.word.en; return li; }));
     $('finishActor').src = poseSrc(state.courier, 'cheer');
     $('finishOverlay').hidden = false;

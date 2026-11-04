@@ -213,7 +213,7 @@
   }
   function finish() {
     const stars = G.hints === 0 ? 3 : G.hints <= 2 ? 2 : 1;
-    $('finishStars').innerHTML = [0, 1, 2].map(i => `<span class="${i < stars ? '' : 'off'}">★</span>`).join('');
+    $('finishStars').innerHTML = [0, 1, 2].map(i => `<span class="${i < stars ? '' : 'off'}">${Dino.icon('star')}</span>`).join('');
     $('finishActor').src = `assets/cast/${Dino.shuffle(CAST.slice())[0]}__cheer.webp`;
     $('finish').hidden = false; Dino.sfx('finish', .8); Dino.bgm.start();
   }

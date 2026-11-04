@@ -55,12 +55,12 @@
     const zh = document.createElement('div'); zh.className = 'dialog-chinese'; zh.setAttribute('aria-label', word.zh);
     [...word.zh].forEach((char, i) => zh.append(Dino.makeBpmUnit(char, word.zhuyin[i])));
     const sound = document.createElement('button'); sound.type = 'button'; sound.className = 'dialog-sound';
-    sound.append('♫ ', kid('span', '聽英文'));
+    sound.innerHTML = Dino.icon('sound') + ' '; sound.append(kid('span', '聽英文'));
     sound.addEventListener('click', () => play(Dino.audioPath(word)));
     body.append(frame, english, zh, sound);
     if (word.zhAudio) {
       const zhSound = document.createElement('button'); zhSound.type = 'button'; zhSound.className = 'dialog-sound';
-      zhSound.append('♫ ', kid('span', '聽中文'));
+      zhSound.innerHTML = Dino.icon('sound') + ' '; zhSound.append(kid('span', '聽中文'));
       zhSound.addEventListener('click', () => play(word.zhAudio));
       body.append(' ', zhSound);
     }

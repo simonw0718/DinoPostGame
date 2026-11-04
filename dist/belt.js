@@ -280,7 +280,7 @@
     renderProgress(); saveRound();
     Dino.sfx('finish', .8); Dino.bgm.start();
     const stars = state.misses <= 2 ? 3 : state.misses <= 6 ? 2 : 1;
-    $('finishStars').innerHTML = [0, 1, 2].map(i => `<span class="${i < stars ? '' : 'off'}">★</span>`).join('');
+    $('finishStars').innerHTML = [0, 1, 2].map(i => `<span class="${i < stars ? '' : 'off'}">${Dino.icon('star')}</span>`).join('');
     $('finishWords').replaceChildren(...state.round.map(w => { const li = document.createElement('li'); setKidText(li, w.zh, w.zhuyin); return li; }));
     $('finishActor').src = poseSrc(state.courier, 'cheer');
     $('finishOverlay').hidden = false;
