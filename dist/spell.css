@@ -108,13 +108,7 @@
 .zb-host .zb-progress li.is-star::after{content:"";position:absolute;right:-9px;top:-11px;width:26px;height:26px;background:url(assets/dinopost-workmark-stamp-transparent-v1.png) center/contain no-repeat;transform:rotate(14deg);animation:stampDown .4s cubic-bezier(.2,1.4,.4,1)}
 @keyframes letterBob{to{transform:translateY(-7px) scale(1.08) rotate(-2deg)}}
 .zb-host .zb-bubble{font-size:clamp(19px,4.8vw,30px);padding:8px 18px 10px;box-shadow:0 5px 0 #c89c52,0 10px 16px #04180f40}
-/* 泡泡＝漫畫雲朵（導演 2026-11-04 選 C 看看）：白雲＋金色細描邊（drop-shadow 描邊才能跟著雲朵凸起）、兩顆小圓當尾巴；聲調不用紅色 */
-.zb-host .zb-bubble{z-index:0;padding:12px 26px 14px;border:0;border-radius:999px;background:#fff;color:var(--ink);box-shadow:none;
-  filter:drop-shadow(2.5px 0 0 #e3bd70) drop-shadow(-2.5px 0 0 #e3bd70) drop-shadow(0 2.5px 0 #e3bd70) drop-shadow(0 -2.5px 0 #e3bd70) drop-shadow(0 6px 8px #04180f4d)}
-.zb-host .zb-bubble::after{content:"";position:absolute;z-index:-1;inset:-10px 4px -8px;pointer-events:none;
-  background:radial-gradient(circle at 14% 34%,#fff 20px,#0000 21px),radial-gradient(circle at 36% 18%,#fff 24px,#0000 25px),radial-gradient(circle at 62% 20%,#fff 22px,#0000 23px),
-    radial-gradient(circle at 86% 34%,#fff 20px,#0000 21px),radial-gradient(circle at 26% 84%,#fff 18px,#0000 19px),radial-gradient(circle at 52% 88%,#fff 20px,#0000 21px),radial-gradient(circle at 78% 84%,#fff 18px,#0000 19px)}
-.zb-host .zb-bubble::before{left:-16px;bottom:2px;width:13px;height:13px;border:0;border-radius:50%;background:#fff;box-shadow:-11px 9px 0 -3px #fff}
-.zb-host .zb-bubble .bpm-column{color:#3f8a66}
-.zb-host .zb-bubble .bpm-tone,.zb-host .zb-bubble .bpm-tone-dot{color:#3f8a66}
-.zb-host .zb-bubble{margin:4px 0 12px 14px}
+/* 泡泡＝簡潔白泡泡（導演 2026-11-04：雲朵不好看，選 B）：純白圓角、細邊、柔和陰影；注音與聲調同色不用紅 */
+.zb-host .zb-bubble{margin:0 0 6px 12px;padding:10px 20px 12px;border:2px solid #17593f1f;border-radius:22px;background:#fff;color:var(--ink);box-shadow:0 6px 16px #04180f33,0 1px 2px #04180f1f}
+.zb-host .zb-bubble::before{left:-10px;bottom:14px;width:18px;height:18px;border:0;border-left:2px solid #17593f1f;border-bottom:2px solid #17593f1f;border-radius:0 0 0 4px;background:#fff;transform:rotate(45deg)}
+.zb-host .zb-bubble .bpm-column,.zb-host .zb-bubble .bpm-tone,.zb-host .zb-bubble .bpm-tone-dot{color:#4d8f6e}
