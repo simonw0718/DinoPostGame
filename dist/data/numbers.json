@@ -1,0 +1,702 @@
+[
+ {
+  "n": 1,
+  "en": "one",
+  "zh": "一",
+  "enAudio": "assets/audio/num/en/1.mp3",
+  "zhAudio": "assets/audio/num/zh/1.mp3"
+ },
+ {
+  "n": 2,
+  "en": "two",
+  "zh": "二",
+  "enAudio": "assets/audio/num/en/2.mp3",
+  "zhAudio": "assets/audio/num/zh/2.mp3"
+ },
+ {
+  "n": 3,
+  "en": "three",
+  "zh": "三",
+  "enAudio": "assets/audio/num/en/3.mp3",
+  "zhAudio": "assets/audio/num/zh/3.mp3"
+ },
+ {
+  "n": 4,
+  "en": "four",
+  "zh": "四",
+  "enAudio": "assets/audio/num/en/4.mp3",
+  "zhAudio": "assets/audio/num/zh/4.mp3"
+ },
+ {
+  "n": 5,
+  "en": "five",
+  "zh": "五",
+  "enAudio": "assets/audio/num/en/5.mp3",
+  "zhAudio": "assets/audio/num/zh/5.mp3"
+ },
+ {
+  "n": 6,
+  "en": "six",
+  "zh": "六",
+  "enAudio": "assets/audio/num/en/6.mp3",
+  "zhAudio": "assets/audio/num/zh/6.mp3"
+ },
+ {
+  "n": 7,
+  "en": "seven",
+  "zh": "七",
+  "enAudio": "assets/audio/num/en/7.mp3",
+  "zhAudio": "assets/audio/num/zh/7.mp3"
+ },
+ {
+  "n": 8,
+  "en": "eight",
+  "zh": "八",
+  "enAudio": "assets/audio/num/en/8.mp3",
+  "zhAudio": "assets/audio/num/zh/8.mp3"
+ },
+ {
+  "n": 9,
+  "en": "nine",
+  "zh": "九",
+  "enAudio": "assets/audio/num/en/9.mp3",
+  "zhAudio": "assets/audio/num/zh/9.mp3"
+ },
+ {
+  "n": 10,
+  "en": "ten",
+  "zh": "十",
+  "enAudio": "assets/audio/num/en/10.mp3",
+  "zhAudio": "assets/audio/num/zh/10.mp3"
+ },
+ {
+  "n": 11,
+  "en": "eleven",
+  "zh": "十一",
+  "enAudio": "assets/audio/num/en/11.mp3",
+  "zhAudio": "assets/audio/num/zh/11.mp3"
+ },
+ {
+  "n": 12,
+  "en": "twelve",
+  "zh": "十二",
+  "enAudio": "assets/audio/num/en/12.mp3",
+  "zhAudio": "assets/audio/num/zh/12.mp3"
+ },
+ {
+  "n": 13,
+  "en": "thirteen",
+  "zh": "十三",
+  "enAudio": "assets/audio/num/en/13.mp3",
+  "zhAudio": "assets/audio/num/zh/13.mp3"
+ },
+ {
+  "n": 14,
+  "en": "fourteen",
+  "zh": "十四",
+  "enAudio": "assets/audio/num/en/14.mp3",
+  "zhAudio": "assets/audio/num/zh/14.mp3"
+ },
+ {
+  "n": 15,
+  "en": "fifteen",
+  "zh": "十五",
+  "enAudio": "assets/audio/num/en/15.mp3",
+  "zhAudio": "assets/audio/num/zh/15.mp3"
+ },
+ {
+  "n": 16,
+  "en": "sixteen",
+  "zh": "十六",
+  "enAudio": "assets/audio/num/en/16.mp3",
+  "zhAudio": "assets/audio/num/zh/16.mp3"
+ },
+ {
+  "n": 17,
+  "en": "seventeen",
+  "zh": "十七",
+  "enAudio": "assets/audio/num/en/17.mp3",
+  "zhAudio": "assets/audio/num/zh/17.mp3"
+ },
+ {
+  "n": 18,
+  "en": "eighteen",
+  "zh": "十八",
+  "enAudio": "assets/audio/num/en/18.mp3",
+  "zhAudio": "assets/audio/num/zh/18.mp3"
+ },
+ {
+  "n": 19,
+  "en": "nineteen",
+  "zh": "十九",
+  "enAudio": "assets/audio/num/en/19.mp3",
+  "zhAudio": "assets/audio/num/zh/19.mp3"
+ },
+ {
+  "n": 20,
+  "en": "twenty",
+  "zh": "二十",
+  "enAudio": "assets/audio/num/en/20.mp3",
+  "zhAudio": "assets/audio/num/zh/20.mp3"
+ },
+ {
+  "n": 21,
+  "en": "twenty-one",
+  "zh": "二十一",
+  "enAudio": "assets/audio/num/en/21.mp3",
+  "zhAudio": "assets/audio/num/zh/21.mp3"
+ },
+ {
+  "n": 22,
+  "en": "twenty-two",
+  "zh": "二十二",
+  "enAudio": "assets/audio/num/en/22.mp3",
+  "zhAudio": "assets/audio/num/zh/22.mp3"
+ },
+ {
+  "n": 23,
+  "en": "twenty-three",
+  "zh": "二十三",
+  "enAudio": "assets/audio/num/en/23.mp3",
+  "zhAudio": "assets/audio/num/zh/23.mp3"
+ },
+ {
+  "n": 24,
+  "en": "twenty-four",
+  "zh": "二十四",
+  "enAudio": "assets/audio/num/en/24.mp3",
+  "zhAudio": "assets/audio/num/zh/24.mp3"
+ },
+ {
+  "n": 25,
+  "en": "twenty-five",
+  "zh": "二十五",
+  "enAudio": "assets/audio/num/en/25.mp3",
+  "zhAudio": "assets/audio/num/zh/25.mp3"
+ },
+ {
+  "n": 26,
+  "en": "twenty-six",
+  "zh": "二十六",
+  "enAudio": "assets/audio/num/en/26.mp3",
+  "zhAudio": "assets/audio/num/zh/26.mp3"
+ },
+ {
+  "n": 27,
+  "en": "twenty-seven",
+  "zh": "二十七",
+  "enAudio": "assets/audio/num/en/27.mp3",
+  "zhAudio": "assets/audio/num/zh/27.mp3"
+ },
+ {
+  "n": 28,
+  "en": "twenty-eight",
+  "zh": "二十八",
+  "enAudio": "assets/audio/num/en/28.mp3",
+  "zhAudio": "assets/audio/num/zh/28.mp3"
+ },
+ {
+  "n": 29,
+  "en": "twenty-nine",
+  "zh": "二十九",
+  "enAudio": "assets/audio/num/en/29.mp3",
+  "zhAudio": "assets/audio/num/zh/29.mp3"
+ },
+ {
+  "n": 30,
+  "en": "thirty",
+  "zh": "三十",
+  "enAudio": "assets/audio/num/en/30.mp3",
+  "zhAudio": "assets/audio/num/zh/30.mp3"
+ },
+ {
+  "n": 31,
+  "en": "thirty-one",
+  "zh": "三十一",
+  "enAudio": "assets/audio/num/en/31.mp3",
+  "zhAudio": "assets/audio/num/zh/31.mp3"
+ },
+ {
+  "n": 32,
+  "en": "thirty-two",
+  "zh": "三十二",
+  "enAudio": "assets/audio/num/en/32.mp3",
+  "zhAudio": "assets/audio/num/zh/32.mp3"
+ },
+ {
+  "n": 33,
+  "en": "thirty-three",
+  "zh": "三十三",
+  "enAudio": "assets/audio/num/en/33.mp3",
+  "zhAudio": "assets/audio/num/zh/33.mp3"
+ },
+ {
+  "n": 34,
+  "en": "thirty-four",
+  "zh": "三十四",
+  "enAudio": "assets/audio/num/en/34.mp3",
+  "zhAudio": "assets/audio/num/zh/34.mp3"
+ },
+ {
+  "n": 35,
+  "en": "thirty-five",
+  "zh": "三十五",
+  "enAudio": "assets/audio/num/en/35.mp3",
+  "zhAudio": "assets/audio/num/zh/35.mp3"
+ },
+ {
+  "n": 36,
+  "en": "thirty-six",
+  "zh": "三十六",
+  "enAudio": "assets/audio/num/en/36.mp3",
+  "zhAudio": "assets/audio/num/zh/36.mp3"
+ },
+ {
+  "n": 37,
+  "en": "thirty-seven",
+  "zh": "三十七",
+  "enAudio": "assets/audio/num/en/37.mp3",
+  "zhAudio": "assets/audio/num/zh/37.mp3"
+ },
+ {
+  "n": 38,
+  "en": "thirty-eight",
+  "zh": "三十八",
+  "enAudio": "assets/audio/num/en/38.mp3",
+  "zhAudio": "assets/audio/num/zh/38.mp3"
+ },
+ {
+  "n": 39,
+  "en": "thirty-nine",
+  "zh": "三十九",
+  "enAudio": "assets/audio/num/en/39.mp3",
+  "zhAudio": "assets/audio/num/zh/39.mp3"
+ },
+ {
+  "n": 40,
+  "en": "forty",
+  "zh": "四十",
+  "enAudio": "assets/audio/num/en/40.mp3",
+  "zhAudio": "assets/audio/num/zh/40.mp3"
+ },
+ {
+  "n": 41,
+  "en": "forty-one",
+  "zh": "四十一",
+  "enAudio": "assets/audio/num/en/41.mp3",
+  "zhAudio": "assets/audio/num/zh/41.mp3"
+ },
+ {
+  "n": 42,
+  "en": "forty-two",
+  "zh": "四十二",
+  "enAudio": "assets/audio/num/en/42.mp3",
+  "zhAudio": "assets/audio/num/zh/42.mp3"
+ },
+ {
+  "n": 43,
+  "en": "forty-three",
+  "zh": "四十三",
+  "enAudio": "assets/audio/num/en/43.mp3",
+  "zhAudio": "assets/audio/num/zh/43.mp3"
+ },
+ {
+  "n": 44,
+  "en": "forty-four",
+  "zh": "四十四",
+  "enAudio": "assets/audio/num/en/44.mp3",
+  "zhAudio": "assets/audio/num/zh/44.mp3"
+ },
+ {
+  "n": 45,
+  "en": "forty-five",
+  "zh": "四十五",
+  "enAudio": "assets/audio/num/en/45.mp3",
+  "zhAudio": "assets/audio/num/zh/45.mp3"
+ },
+ {
+  "n": 46,
+  "en": "forty-six",
+  "zh": "四十六",
+  "enAudio": "assets/audio/num/en/46.mp3",
+  "zhAudio": "assets/audio/num/zh/46.mp3"
+ },
+ {
+  "n": 47,
+  "en": "forty-seven",
+  "zh": "四十七",
+  "enAudio": "assets/audio/num/en/47.mp3",
+  "zhAudio": "assets/audio/num/zh/47.mp3"
+ },
+ {
+  "n": 48,
+  "en": "forty-eight",
+  "zh": "四十八",
+  "enAudio": "assets/audio/num/en/48.mp3",
+  "zhAudio": "assets/audio/num/zh/48.mp3"
+ },
+ {
+  "n": 49,
+  "en": "forty-nine",
+  "zh": "四十九",
+  "enAudio": "assets/audio/num/en/49.mp3",
+  "zhAudio": "assets/audio/num/zh/49.mp3"
+ },
+ {
+  "n": 50,
+  "en": "fifty",
+  "zh": "五十",
+  "enAudio": "assets/audio/num/en/50.mp3",
+  "zhAudio": "assets/audio/num/zh/50.mp3"
+ },
+ {
+  "n": 51,
+  "en": "fifty-one",
+  "zh": "五十一",
+  "enAudio": "assets/audio/num/en/51.mp3",
+  "zhAudio": "assets/audio/num/zh/51.mp3"
+ },
+ {
+  "n": 52,
+  "en": "fifty-two",
+  "zh": "五十二",
+  "enAudio": "assets/audio/num/en/52.mp3",
+  "zhAudio": "assets/audio/num/zh/52.mp3"
+ },
+ {
+  "n": 53,
+  "en": "fifty-three",
+  "zh": "五十三",
+  "enAudio": "assets/audio/num/en/53.mp3",
+  "zhAudio": "assets/audio/num/zh/53.mp3"
+ },
+ {
+  "n": 54,
+  "en": "fifty-four",
+  "zh": "五十四",
+  "enAudio": "assets/audio/num/en/54.mp3",
+  "zhAudio": "assets/audio/num/zh/54.mp3"
+ },
+ {
+  "n": 55,
+  "en": "fifty-five",
+  "zh": "五十五",
+  "enAudio": "assets/audio/num/en/55.mp3",
+  "zhAudio": "assets/audio/num/zh/55.mp3"
+ },
+ {
+  "n": 56,
+  "en": "fifty-six",
+  "zh": "五十六",
+  "enAudio": "assets/audio/num/en/56.mp3",
+  "zhAudio": "assets/audio/num/zh/56.mp3"
+ },
+ {
+  "n": 57,
+  "en": "fifty-seven",
+  "zh": "五十七",
+  "enAudio": "assets/audio/num/en/57.mp3",
+  "zhAudio": "assets/audio/num/zh/57.mp3"
+ },
+ {
+  "n": 58,
+  "en": "fifty-eight",
+  "zh": "五十八",
+  "enAudio": "assets/audio/num/en/58.mp3",
+  "zhAudio": "assets/audio/num/zh/58.mp3"
+ },
+ {
+  "n": 59,
+  "en": "fifty-nine",
+  "zh": "五十九",
+  "enAudio": "assets/audio/num/en/59.mp3",
+  "zhAudio": "assets/audio/num/zh/59.mp3"
+ },
+ {
+  "n": 60,
+  "en": "sixty",
+  "zh": "六十",
+  "enAudio": "assets/audio/num/en/60.mp3",
+  "zhAudio": "assets/audio/num/zh/60.mp3"
+ },
+ {
+  "n": 61,
+  "en": "sixty-one",
+  "zh": "六十一",
+  "enAudio": "assets/audio/num/en/61.mp3",
+  "zhAudio": "assets/audio/num/zh/61.mp3"
+ },
+ {
+  "n": 62,
+  "en": "sixty-two",
+  "zh": "六十二",
+  "enAudio": "assets/audio/num/en/62.mp3",
+  "zhAudio": "assets/audio/num/zh/62.mp3"
+ },
+ {
+  "n": 63,
+  "en": "sixty-three",
+  "zh": "六十三",
+  "enAudio": "assets/audio/num/en/63.mp3",
+  "zhAudio": "assets/audio/num/zh/63.mp3"
+ },
+ {
+  "n": 64,
+  "en": "sixty-four",
+  "zh": "六十四",
+  "enAudio": "assets/audio/num/en/64.mp3",
+  "zhAudio": "assets/audio/num/zh/64.mp3"
+ },
+ {
+  "n": 65,
+  "en": "sixty-five",
+  "zh": "六十五",
+  "enAudio": "assets/audio/num/en/65.mp3",
+  "zhAudio": "assets/audio/num/zh/65.mp3"
+ },
+ {
+  "n": 66,
+  "en": "sixty-six",
+  "zh": "六十六",
+  "enAudio": "assets/audio/num/en/66.mp3",
+  "zhAudio": "assets/audio/num/zh/66.mp3"
+ },
+ {
+  "n": 67,
+  "en": "sixty-seven",
+  "zh": "六十七",
+  "enAudio": "assets/audio/num/en/67.mp3",
+  "zhAudio": "assets/audio/num/zh/67.mp3"
+ },
+ {
+  "n": 68,
+  "en": "sixty-eight",
+  "zh": "六十八",
+  "enAudio": "assets/audio/num/en/68.mp3",
+  "zhAudio": "assets/audio/num/zh/68.mp3"
+ },
+ {
+  "n": 69,
+  "en": "sixty-nine",
+  "zh": "六十九",
+  "enAudio": "assets/audio/num/en/69.mp3",
+  "zhAudio": "assets/audio/num/zh/69.mp3"
+ },
+ {
+  "n": 70,
+  "en": "seventy",
+  "zh": "七十",
+  "enAudio": "assets/audio/num/en/70.mp3",
+  "zhAudio": "assets/audio/num/zh/70.mp3"
+ },
+ {
+  "n": 71,
+  "en": "seventy-one",
+  "zh": "七十一",
+  "enAudio": "assets/audio/num/en/71.mp3",
+  "zhAudio": "assets/audio/num/zh/71.mp3"
+ },
+ {
+  "n": 72,
+  "en": "seventy-two",
+  "zh": "七十二",
+  "enAudio": "assets/audio/num/en/72.mp3",
+  "zhAudio": "assets/audio/num/zh/72.mp3"
+ },
+ {
+  "n": 73,
+  "en": "seventy-three",
+  "zh": "七十三",
+  "enAudio": "assets/audio/num/en/73.mp3",
+  "zhAudio": "assets/audio/num/zh/73.mp3"
+ },
+ {
+  "n": 74,
+  "en": "seventy-four",
+  "zh": "七十四",
+  "enAudio": "assets/audio/num/en/74.mp3",
+  "zhAudio": "assets/audio/num/zh/74.mp3"
+ },
+ {
+  "n": 75,
+  "en": "seventy-five",
+  "zh": "七十五",
+  "enAudio": "assets/audio/num/en/75.mp3",
+  "zhAudio": "assets/audio/num/zh/75.mp3"
+ },
+ {
+  "n": 76,
+  "en": "seventy-six",
+  "zh": "七十六",
+  "enAudio": "assets/audio/num/en/76.mp3",
+  "zhAudio": "assets/audio/num/zh/76.mp3"
+ },
+ {
+  "n": 77,
+  "en": "seventy-seven",
+  "zh": "七十七",
+  "enAudio": "assets/audio/num/en/77.mp3",
+  "zhAudio": "assets/audio/num/zh/77.mp3"
+ },
+ {
+  "n": 78,
+  "en": "seventy-eight",
+  "zh": "七十八",
+  "enAudio": "assets/audio/num/en/78.mp3",
+  "zhAudio": "assets/audio/num/zh/78.mp3"
+ },
+ {
+  "n": 79,
+  "en": "seventy-nine",
+  "zh": "七十九",
+  "enAudio": "assets/audio/num/en/79.mp3",
+  "zhAudio": "assets/audio/num/zh/79.mp3"
+ },
+ {
+  "n": 80,
+  "en": "eighty",
+  "zh": "八十",
+  "enAudio": "assets/audio/num/en/80.mp3",
+  "zhAudio": "assets/audio/num/zh/80.mp3"
+ },
+ {
+  "n": 81,
+  "en": "eighty-one",
+  "zh": "八十一",
+  "enAudio": "assets/audio/num/en/81.mp3",
+  "zhAudio": "assets/audio/num/zh/81.mp3"
+ },
+ {
+  "n": 82,
+  "en": "eighty-two",
+  "zh": "八十二",
+  "enAudio": "assets/audio/num/en/82.mp3",
+  "zhAudio": "assets/audio/num/zh/82.mp3"
+ },
+ {
+  "n": 83,
+  "en": "eighty-three",
+  "zh": "八十三",
+  "enAudio": "assets/audio/num/en/83.mp3",
+  "zhAudio": "assets/audio/num/zh/83.mp3"
+ },
+ {
+  "n": 84,
+  "en": "eighty-four",
+  "zh": "八十四",
+  "enAudio": "assets/audio/num/en/84.mp3",
+  "zhAudio": "assets/audio/num/zh/84.mp3"
+ },
+ {
+  "n": 85,
+  "en": "eighty-five",
+  "zh": "八十五",
+  "enAudio": "assets/audio/num/en/85.mp3",
+  "zhAudio": "assets/audio/num/zh/85.mp3"
+ },
+ {
+  "n": 86,
+  "en": "eighty-six",
+  "zh": "八十六",
+  "enAudio": "assets/audio/num/en/86.mp3",
+  "zhAudio": "assets/audio/num/zh/86.mp3"
+ },
+ {
+  "n": 87,
+  "en": "eighty-seven",
+  "zh": "八十七",
+  "enAudio": "assets/audio/num/en/87.mp3",
+  "zhAudio": "assets/audio/num/zh/87.mp3"
+ },
+ {
+  "n": 88,
+  "en": "eighty-eight",
+  "zh": "八十八",
+  "enAudio": "assets/audio/num/en/88.mp3",
+  "zhAudio": "assets/audio/num/zh/88.mp3"
+ },
+ {
+  "n": 89,
+  "en": "eighty-nine",
+  "zh": "八十九",
+  "enAudio": "assets/audio/num/en/89.mp3",
+  "zhAudio": "assets/audio/num/zh/89.mp3"
+ },
+ {
+  "n": 90,
+  "en": "ninety",
+  "zh": "九十",
+  "enAudio": "assets/audio/num/en/90.mp3",
+  "zhAudio": "assets/audio/num/zh/90.mp3"
+ },
+ {
+  "n": 91,
+  "en": "ninety-one",
+  "zh": "九十一",
+  "enAudio": "assets/audio/num/en/91.mp3",
+  "zhAudio": "assets/audio/num/zh/91.mp3"
+ },
+ {
+  "n": 92,
+  "en": "ninety-two",
+  "zh": "九十二",
+  "enAudio": "assets/audio/num/en/92.mp3",
+  "zhAudio": "assets/audio/num/zh/92.mp3"
+ },
+ {
+  "n": 93,
+  "en": "ninety-three",
+  "zh": "九十三",
+  "enAudio": "assets/audio/num/en/93.mp3",
+  "zhAudio": "assets/audio/num/zh/93.mp3"
+ },
+ {
+  "n": 94,
+  "en": "ninety-four",
+  "zh": "九十四",
+  "enAudio": "assets/audio/num/en/94.mp3",
+  "zhAudio": "assets/audio/num/zh/94.mp3"
+ },
+ {
+  "n": 95,
+  "en": "ninety-five",
+  "zh": "九十五",
+  "enAudio": "assets/audio/num/en/95.mp3",
+  "zhAudio": "assets/audio/num/zh/95.mp3"
+ },
+ {
+  "n": 96,
+  "en": "ninety-six",
+  "zh": "九十六",
+  "enAudio": "assets/audio/num/en/96.mp3",
+  "zhAudio": "assets/audio/num/zh/96.mp3"
+ },
+ {
+  "n": 97,
+  "en": "ninety-seven",
+  "zh": "九十七",
+  "enAudio": "assets/audio/num/en/97.mp3",
+  "zhAudio": "assets/audio/num/zh/97.mp3"
+ },
+ {
+  "n": 98,
+  "en": "ninety-eight",
+  "zh": "九十八",
+  "enAudio": "assets/audio/num/en/98.mp3",
+  "zhAudio": "assets/audio/num/zh/98.mp3"
+ },
+ {
+  "n": 99,
+  "en": "ninety-nine",
+  "zh": "九十九",
+  "enAudio": "assets/audio/num/en/99.mp3",
+  "zhAudio": "assets/audio/num/zh/99.mp3"
+ },
+ {
+  "n": 100,
+  "en": "one hundred",
+  "zh": "一百",
+  "enAudio": "assets/audio/num/en/100.mp3",
+  "zhAudio": "assets/audio/num/zh/100.mp3"
+ }
+]
