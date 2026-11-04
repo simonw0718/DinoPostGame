@@ -241,7 +241,13 @@ PHONICS_STYLE = ('A friendly phonics teacher showing young children the SOUND ea
 PHONICS_SPOKEN = {'x': ('ks', 'the end of "box"'), 'y': ('yuh', 'the start of "yes"'), 'z': ('zzz', 'a buzzing bee'),
                   'sh': ('shhh', 'the quiet sound, the end of "fish"'), 'ch': ('ch', 'the start of "chip"'),
                   'th': ('th', 'the start of "thin", tongue between teeth, no voice'), 'ng': ('ng', 'the end of "king"'),
-                  'nk': ('nk', 'the end of "pink"')}
+                  'nk': ('nk', 'the end of "pink"'),
+                  # 母音組合（導演 2026-11-04「一起把母音組合考慮起來作」）：長母音念字母名
+                  'long_a': ('ay', 'the long A, as in "cake" and "rain"'), 'long_e': ('ee', 'the long E, as in "tree"'),
+                  'long_i': ('eye', 'the long I, as in "kite"'), 'long_o': ('oh', 'the long O, as in "boat"'),
+                  'oo': ('ooo', 'the long OO in "moon"'), 'oo_short': ('uu', 'the short vowel in "book" and "foot", quick, lips rounded'),
+                  'ow': ('ow', 'the OW in "cow", like saying ouch'), 'oy': ('oy', 'the OY in "boy"'),
+                  'ar': ('ar', 'the AR in "car"'), 'or': ('or', 'the OR in "fork"'), 'er': ('er', 'the ER in "her" and "bird"')}
 PHONICS.update({k: k for k in PHONICS_SPOKEN if k not in PHONICS})
 
 

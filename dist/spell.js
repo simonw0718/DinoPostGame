@@ -1,4 +1,4 @@
-// 字母送信（導演 2026-11-03 拼字教學設計）：3 個字母的短母音字（cat、pig、sun…），開始畫面選模式：
+// 字母送信（導演 2026-11-03 拼字教學設計）：一格一個音的郵票（切字規則與難度 1–5 在 spell-words.js），開始畫面選模式與難度：
 //   A 聽聲音：不出字母，依序點格子聽一個個聲音（拆音），最後才露出字母
 //   B 選字母：看圖聽字，依序點字母郵票；點錯念出那張的聲音，再念這一格要的聲音
 //   C 換字母：上一個字已經拼好（cat），聽新字（hat）先點「變了的那一格」，再選新字母
@@ -31,32 +31,36 @@
     '自動': ['ㄗˋ', 'ㄉㄨㄥˋ'], '聽聲音': ['ㄊㄧㄥ', 'ㄕㄥ', 'ㄧㄣ'], '選字母': ['ㄒㄩㄢˇ', 'ㄗˋ', 'ㄇㄨˇ'],
     '填空': ['ㄊㄧㄢˊ', 'ㄎㄨㄥˋ'], '缺哪一個字母？': ['ㄑㄩㄝ', 'ㄋㄚˇ', 'ㄧˊ', 'ㄍㄜˋ', 'ㄗˋ', 'ㄇㄨˇ'], '聽寫': ['ㄊㄧㄥ', 'ㄒㄧㄝˇ']
   };
+  uiReadings['難度'] = ['ㄋㄢˊ', 'ㄉㄨˋ'];
   const setKidText = Dino.kidText(uiReadings);
   // 導演 2026-11-04：聽聲音（A）、聽寫（D）先拿掉，程式保留之後補回（記在 PRODUCT.md「字母送信」）
   const MODES = ['auto', 'C', 'B'];
   const AUTO_BY_LEVEL = ['C', 'B', 'B', 'B'];   // 填空（開頭→結尾→母音都過）→ 選字母
   const HINT_MS = 6000;
 
-  // 已有聲音檔的字母（x、y、z 尚未生成，含它們的字先不出）
-  const HAVE = new Set('abcdefghijklmnopqrstuvwxyz');
-  const VOWELS = new Set('aeiou');
-  const NOT_SHORT = new Set('rwy');   // 結尾 r／w／y 會改變母音（car、cow），不是短母音
-  // 干擾郵票：母音挑最容易聽混的；子音挑長得像或聽起來像的（不放同音字母，如 c／k）
-  const confusables = { a: 'e', e: 'ia', i: 'e', o: 'u', u: 'oa',
-    b: 'dp', d: 'bt', p: 'bq', g: 'jq', h: 'n', j: 'g', m: 'n', n: 'mh', t: 'df', c: 'g', s: 'f', r: 'l', l: 'r', f: 'v', w: 'v', v: 'f' };
-  const sound = l => `assets/audio/phonics/${l}.mp3`;
+  // 已有聲音檔的音（assets/audio/phonics/<音>.mp3）；切出來的音沒有檔就不出那個字
+  const SOUNDS = new Set([...'abcdefghijklmnopqrstuvwxyz', 'sh', 'ch', 'th', 'ng', 'nk',
+    'long_a', 'long_e', 'long_i', 'long_o', 'oo', 'oo_short', 'ow', 'oy', 'ar', 'or', 'er']);
+  const { analyze, soundOf, confusables, isVowel } = window.SpellWords;
+  const sound = k => `assets/audio/phonics/${k}.mp3`;
+  const playSound = k => k ? play(sound(k)) : Promise.resolve();   // 尾巴不發音的 e 不念
   const wordAudio = w => `assets/audio/${w.id}.mp3`;
   const couriers = ['chick_abao', 'feifei', 'iggy', 'xiaokong', 'pairo'];
   const poseSrc = (id, pose) => `assets/cast/${id}__${pose}.webp`;
   const ROUND = 6;
 
-  const masteryKey = 'dinopost-spell-v1', modeKey = 'dinopost-spell-mode', fillKey = 'dinopost-spell-fill-v1';
+  const masteryKey = 'dinopost-spell-v1', modeKey = 'dinopost-spell-mode', fillKey = 'dinopost-spell-fill-v1', tierKey = 'dinopost-spell-tier';
+  const TIERS = ['1', '2', '3', '4', '5'];   // 導演 2026-11-04：預設 3（還沒有母音組合）
+  let tier = (() => { try { return TIERS.includes(localStorage.getItem(tierKey)) ? localStorage.getItem(tierKey) : '3'; } catch { return '3'; } })();
   const mastery = (() => { try { return JSON.parse(localStorage.getItem(masteryKey) || '{}'); } catch { return {}; } })();
   const saveMastery = () => { try { localStorage.setItem(masteryKey, JSON.stringify(mastery)); } catch { /* 只影響本頁 */ } };
   // 填空挖哪一格（導演 2026-11-04 要依研究）：音素覺識先會開頭音、再結尾音、中間短母音最難（Yopp 1988、Stahl & Murray 1994；
   // Treiman 兒童拼字母音錯最多）。每個字記自己走到哪一階：開頭 → 結尾 → 中間母音，一次答對才往下一階
-  // 4 字再多一階：子音群裡第二個子音最常被漏掉（frog 拼成 fog、hand 拼成 had；Treiman 1991、1993），放最後
-  const fillOrder = en => [...new Set([0, en.length - 1, [...en].findIndex(l => VOWELS.has(l)), ...[...en].keys()])];
+  // 4 格以上再多階：子音群裡第二個子音最常被漏掉（frog 拼成 fog、hand 拼成 had；Treiman 1991、1993）；不發音的 e 放最後
+  const fillOrder = sp => {
+    const keys = [...sp.tiles.keys()].filter(i => i !== sp.silent), last = keys[keys.length - 1];
+    return [...new Set([0, last, sp.vowel, ...keys, ...(sp.silent >= 0 ? [sp.silent] : [])])];
+  };
   const fillStage = (() => { try { return JSON.parse(localStorage.getItem(fillKey) || '{}'); } catch { return {}; } })();
   const saveFill = () => { try { localStorage.setItem(fillKey, JSON.stringify(fillStage)); } catch { /* 只影響本頁 */ } };
   let mode = (() => { try { return MODES.includes(localStorage.getItem(modeKey)) ? localStorage.getItem(modeKey) : 'auto'; } catch { return 'auto'; } })();
@@ -88,28 +92,22 @@
   const currentSlot = () => state.slots[state.target];
 
   // ---------- 出題 ----------
-  // 一個字母念一個音才能拼：3 字 CVC（cat），4 字加子音群 CCVC／CVCC（frog、hand；導演 2026-11-04 加到 4 字）。
-  // 排除兩字母一個音（sh、ck…）、不發音字母（comb）、長母音尾（kind、cold）、r／w／y 跟在母音後（car、cow）
-  const MULTI = /sh|ch|th|ck|ph|wh|ng|nk|qu|wr|kn|mb|(.)\1|(ind|ild|old|olt|ost|alk)$/;
-  const ALLOW = new Set(['wind']);   // 風：短 i
-  function decodable(en) {
-    const v = [...en].map((l, i) => VOWELS.has(l) || (l === 'y' && i > 0) ? i : -1).filter(i => i >= 0);
-    return /^[a-z]{3,4}$/.test(en) && [...en].every(l => HAVE.has(l)) && v.length === 1 && v[0] >= 1 && v[0] <= en.length - 2
-      && !NOT_SHORT.has(en[v[0] + 1]) && (ALLOW.has(en) || !MULTI.test(en));
+  function pool() {
+    return state.words.filter(w => w.image && w.sp && w.sp.tier <= +tier && w.sp.sounds.every(k => !k || SOUNDS.has(k)));
   }
-  function pool() { return state.words.filter(w => w.image && decodable(w.en)); }
   const level = w => mastery[w.id] || 0;
-  const byLevel = words => Dino.shuffle(words).sort((a, b) => level(a) - level(b) || a.en.length - b.en.length);   // 同熟練度先出 3 字
+  const byLevel = words => Dino.shuffle(words).sort((a, b) => level(a) - level(b) || a.sp.tier - b.sp.tier || a.en.length - b.en.length);   // 同熟練度先出簡單的
   function pickRound() {
     const words = pool();
     return byLevel(words).slice(0, ROUND).map(word => ({ word, mode: mode === 'auto' ? AUTO_BY_LEVEL[level(word)] : mode }));
   }
 
   // ---------- 出一題 ----------
-  function makeBox(letter) {
+  const tileClass = (base, letter, i) => `${base}${isVowel(letter, i ?? 1) ? ' is-vowel' : ''}${letter.length > 1 ? ' is-multi' : ''}`;
+  function makeBox(letter, i, sp) {
     const box = document.createElement('button'); box.type = 'button';
-    box.className = `sp-box${VOWELS.has(letter) ? ' is-vowel' : ''}`;
-    const slot = { letter, el: box };
+    box.className = tileClass('sp-box', letter, i) + (i === sp.silent ? ' is-silent' : '');
+    const slot = { letter, sound: sp.sounds[i], el: box };
     box.addEventListener('click', () => tapSlot(slot));
     return slot;
   }
@@ -120,9 +118,9 @@
     pic.parentElement.classList.remove('is-new'); void pic.offsetWidth; pic.parentElement.classList.add('is-new');
     $('doneMark').hidden = true;
     state.wordMisses = 0;
-    state.slots = [...word.en].map(makeBox);
+    state.slots = word.sp.tiles.map((t, i) => makeBox(t, i, word.sp));
     $('slots').replaceChildren(...state.slots.map(s => s.el));
-    $('slots').parentElement.style.setProperty('--n', word.en.length);
+    $('slots').parentElement.style.setProperty('--n', state.slots.length);
     $('tray').replaceChildren(); $('tray').classList.toggle('is-off', m === 'A');
     $('slots').classList.toggle('is-listen', m === 'A');
     if (m === 'A') {   // 字母一開始就露出來，手指指著下一格（導演 2026-11-04：原本空格子難懂）
@@ -132,29 +130,31 @@
     }
     if (m === 'B' || m === 'D') { state.step = 'spell'; state.target = 0; renderTray(word, m === 'D' ? 4 : 2); say(m === 'D' ? '聽一聽，拼出來' : '聽聲音，選字母'); }
     if (m === 'C') {   // 填空：其他字母先放好，只挖一格
-      const gap = fillOrder(word.en)[fillStage[word.id] || 0];
+      const gap = fillOrder(word.sp)[fillStage[word.id] || 0];
       state.step = 'spell'; state.target = gap;
       state.slots.forEach((s, i) => { if (i !== gap) { s.el.textContent = s.letter; s.el.classList.add('is-filled', 'is-given'); } });
-      renderTray(word, 2, [word.en[gap]]);
+      renderTray(word, 2, [gap]);
       say('缺哪一個字母？');
     }
     markTarget(); renderProgress(); armHint();
   }
+  // only：只放這幾格的答案郵票（填空）；干擾郵票挑容易混、但聲音不同的
   function renderTray(word, extras, only) {
-    const letters = only || [...word.en];
-    const pickFrom = s => [...s].filter(l => HAVE.has(l) && !letters.includes(l));
-    const near = Dino.shuffle(letters.flatMap(l => pickFrom(confusables[l] || '')));
-    if (only?.length === 1 && VOWELS.has(only[0])) near.push(...Dino.shuffle(pickFrom('aeiou')));   // 填母音：干擾也放母音
-    const any = Dino.shuffle(pickFrom([...HAVE].join('')));
-    const extra = [...new Set([...near, ...any])].slice(0, extras);
+    const answers = (only || [...word.sp.tiles.keys()]).map(i => ({ letter: word.sp.tiles[i], sound: word.sp.sounds[i] }));
+    const taken = new Set(answers.flatMap(a => [a.letter, a.sound]));
+    const ok = g => SOUNDS.has(soundOf(g)) && !taken.has(g) && !taken.has(soundOf(g));
+    const near = Dino.shuffle(answers.flatMap(a => confusables(a.letter).filter(ok)));
+    if (only?.length === 1 && isVowel(answers[0].letter, 1)) near.push(...Dino.shuffle([...'aeiou'].filter(ok)));   // 填母音：干擾也放母音
+    const any = Dino.shuffle([...'abcdefghijklmnopqrstuvwxyz'].filter(ok));
+    const extra = [...new Set([...near, ...any])].slice(0, extras).map(g => ({ letter: g, sound: soundOf(g) }));
     $('tray').classList.remove('is-off');
-    $('tray').replaceChildren(...Dino.shuffle([...letters, ...extra]).map(letter => {
+    $('tray').replaceChildren(...Dino.shuffle([...answers, ...extra]).map(({ letter, sound: k }) => {
       const el = document.createElement('button'); el.type = 'button';
-      el.className = `sp-tile${VOWELS.has(letter) ? ' is-vowel' : ''}`;
+      el.className = tileClass('sp-tile', letter);
       el.setAttribute('aria-label', `字母 ${letter}`);
       const stamp = document.createElement('span'); stamp.className = 'zb-stamp'; stamp.textContent = letter;
       el.append(stamp);
-      const tile = { el, letter, taken: false };
+      const tile = { el, letter, sound: k, taken: false };
       el.addEventListener('pointerdown', event => { event.preventDefault(); grab(tile); });
       return el;
     }));
@@ -185,12 +185,12 @@
     const i = state.slots.indexOf(slot);
     if (m === 'A') {   // 依序點：每點一格念一個聲音，格子亮起來
       if (i !== state.target) { wobble(currentSlot().el); return; }
-      play(sound(slot.letter)); slot.el.classList.add('is-heard');
+      playSound(slot.sound); slot.el.classList.add('is-heard');
       state.target++; markTarget();
       if (state.target >= state.slots.length) { state.busy = true; await wait(700); await wordDone(); }
       return;
     }
-    if ((m === 'B' || m === 'C') && slot === currentSlot()) play(sound(slot.letter));   // 選字母／填空：卡住時點閃動的格子聽提示（聽寫不給）
+    if ((m === 'B' || m === 'C') && slot === currentSlot()) playSound(slot.sound);   // 選字母／填空：卡住時點閃動的格子聽提示（聽寫不給）
   }
 
   // ---------- 點郵票 ----------
@@ -201,17 +201,17 @@
     if (tile.letter !== slot.letter) {
       state.misses++; state.wordMisses++; state.busy = true;
       wobble(tile.el); Dino.sfx('wrong', .25); say('不是這個喔');
-      await Promise.race([play(sound(tile.letter)), wait(1200)]);
-      if (m !== 'D') { await wait(250); await Promise.race([play(sound(slot.letter)), wait(1200)]); }   // 聽寫不再念答案
+      await Promise.race([playSound(tile.sound), wait(1200)]);
+      if (m !== 'D') { await wait(250); await Promise.race([playSound(slot.sound), wait(1200)]); }   // 聽寫不再念答案
       state.busy = false; armHint();
       return;
     }
     tile.taken = true; state.busy = true; clearTimeout(state.hintTimer);
-    Dino.sfx('pop', .5); play(sound(tile.letter));
+    Dino.sfx('pop', .5); playSound(slot.sound);
     const from = tile.el.getBoundingClientRect(), to = slot.el.getBoundingClientRect();
     tile.el.classList.add('is-taken');
-    const flyer = document.createElement('span'); flyer.className = 'zb-flyer'; flyer.textContent = tile.letter;
-    Object.assign(flyer.style, { left: `${from.left}px`, top: `${from.top}px`, width: `${from.width}px`, height: `${from.height}px`, fontSize: `${from.height * .66}px` });
+    const flyer = document.createElement('span'); flyer.className = 'zb-flyer'; flyer.textContent = tile.letter; if (tile.letter.length > 1) flyer.classList.add('is-multi');
+    Object.assign(flyer.style, { left: `${from.left}px`, top: `${from.top}px`, width: `${from.width}px`, height: `${from.height}px`, fontSize: `${from.height * (tile.letter.length > 1 ? .42 : .66)}px` });
     document.body.append(flyer);
     await settle(flyer.animate([
       { transform: 'translate(0,0) scale(1) rotate(0)' },
@@ -231,7 +231,7 @@
     const stale = () => id !== state.roundId;   // 中途換模式／重開：舊的這一局不要再往下走
     const first = state.wordMisses === 0;
     state.results[state.index] = first;
-    if (m === 'C' && first && (fillStage[word.id] || 0) < word.en.length - 1) {   // 填空還沒挖到母音：只往下一階，熟練度不變
+    if (m === 'C' && first && (fillStage[word.id] || 0) < fillOrder(word.sp).length - 1) {   // 填空還沒挖到母音：只往下一階，熟練度不變
       fillStage[word.id] = (fillStage[word.id] || 0) + 1; saveFill();
     } else mastery[word.id] = m === 'A' ? Math.max(1, level(word)) : Math.max(0, Math.min(3, level(word) + (first ? 1 : -1)));
     saveMastery();
@@ -239,7 +239,7 @@
     await wait(350);
     for (const s of state.slots) {   // 示範拼讀：一格一格念聲音，再念整個字
         s.el.classList.add('is-say');
-      await Promise.race([play(sound(s.letter)), wait(1300)]);
+      await Promise.race([playSound(s.sound), wait(s.sound ? 1300 : 350)]);
       s.el.classList.remove('is-say');
       await wait(160);
       if (stale()) return;
@@ -272,7 +272,7 @@
   function startRound() {
     $('finishOverlay').hidden = true; state.roundId++; Dino.voice.stop();
     state.round = pickRound(); state.index = 0; state.misses = 0; state.results = []; state.busy = false;
-    Dino.preload([...state.round.map(it => wordAudio(it.word)), ...[...HAVE].map(sound)]);
+    Dino.preload([...state.round.map(it => wordAudio(it.word)), ...[...new Set(state.round.flatMap(it => it.word.sp.sounds))].filter(Boolean).map(sound)]);
     state.courier = Dino.shuffle(couriers.filter(id => id !== state.courier))[0];
     $('actorImg').src = poseSrc(state.courier, 'hello');
     renderItem();
@@ -292,12 +292,19 @@
       });
     });
     syncPick();
+    const tierPicks = [...document.querySelectorAll('[data-tier]')];
+    const syncTier = () => tierPicks.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.tier === tier)));
+    tierPicks.forEach(b => b.addEventListener('click', () => {
+      tier = b.dataset.tier; try { localStorage.setItem(tierKey, tier); } catch { /* 只影響本頁 */ }
+      syncTier(); if (state.words.length) startRound();
+    }));
+    syncTier(); setKidText($('tierLabel'), '難度');
     Dino.menuTaps($('readyOverlay')); Dino.menuTaps($('finishOverlay'));
     $('replay').addEventListener('click', () => play(wordAudio(item().word)));
     $('playAgain').addEventListener('click', () => { Dino.sfx('tap', .5); $('finishOverlay').hidden = true; state.started = false; $('readyOverlay').hidden = false; startRound(); });
     document.querySelector('.gh .dino-home').addEventListener('click', e => { e.preventDefault(); Dino.goTo('index.html'); });
     $('menuBtn').addEventListener('click', () => { if (!$('readyOverlay').hidden) return; Dino.sfx('tap', .5); state.started = false; clearTimeout(state.hintTimer); $('readyOverlay').hidden = false; });
-    state.words = await fetch('data.json').then(r => r.json());
+    state.words = (await fetch('data.json').then(r => r.json())).map(w => ({ ...w, sp: analyze(w.en) }));
     startRound();
     $('readyStart').addEventListener('click', () => {
       $('readyOverlay').hidden = true; state.started = true; armHint();

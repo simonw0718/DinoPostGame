@@ -8,7 +8,7 @@
   <title>字母送信・恐龍郵局</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="belt.css"><link rel="stylesheet" href="spell.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css">
-  <script src="shared.js" defer></script><script src="spell.js" defer></script>
+  <script src="shared.js" defer></script><script src="spell-words.js" defer></script><script src="spell.js" defer></script>
 </head>
 <body>
   <div class="zb-shell">
@@ -38,6 +38,7 @@
 
   <div id="readyOverlay" class="ready-tap">
     <div class="ready-pick sp-pick" role="group" aria-label="模式"><button type="button" data-mode="auto">自動</button><button type="button" data-mode="C">填空</button><button type="button" data-mode="B">選字母</button></div>
+    <div class="ready-pick sp-pick sp-tier" role="group" aria-label="難度"><span id="tierLabel" class="sp-tier-label">難度</span><button type="button" data-tier="1">1</button><button type="button" data-tier="2">2</button><button type="button" data-tier="3">3</button><button type="button" data-tier="4">4</button><button type="button" data-tier="5">5</button></div>
     <button id="readyStart" class="ready-start" type="button" aria-label="點一下，開始拼英文">
       <span class="ready-go" aria-hidden="true"><span class="ready-ring"></span><span class="ready-ring r2"></span><span class="ready-icon">▶</span></span>
       <span id="readyTitle" class="ready-label">點一下，開始拼英文！</span>
