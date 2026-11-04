@@ -76,7 +76,7 @@
   const view = $('view'), world = $('world');
   let board = null, P = [], stones = [], L = LEVELS.one, N = 40;
   let levelKey = 'two', npcKey = 'abao';   // 導演 11-04 晚：預設普通
-  try { levelKey = localStorage.getItem('dinopost-climb-level2') || levelKey; npcKey = localStorage.getItem('dinopost-climb-npc') || npcKey; } catch { /* ok */ }
+  try { levelKey = localStorage.getItem('dinopost-climb-level2') || levelKey; } catch { /* ok */ }
   if (!LEVELS[levelKey]) levelKey = 'two'; if (!NPCS[npcKey]) npcKey = 'abao';
   let G = 0, running = false, dirty = true, paused = false, stamps = 0, winner = null, lastCam = null;
   let you, npc, tapHandler = null, wrongClick = null;
@@ -582,6 +582,7 @@
     L = LEVELS[levelKey]; N = L.N; winner = null; stamps = 0; quizIdx = 0; dirty = false; running = true; $('stamps').hidden = true;
     world.querySelectorAll('.tok,.fx').forEach(e => e.remove()); clearDice(); hideBubble(); $('wrong').hidden = true; $('quiz').hidden = true; $('finish').hidden = true;
     layout(); buildStones();
+    npcKey = pick(Object.keys(NPCS));   // 導演 11-04 晚：對手每局隨機，不用選
     you = makeTok({ img: 'iggy', pose: 'walk_r', h: 210, dur: .5, hop: 1 }, true); npc = makeTok(NPCS[npcKey], false);
     place(you); place(npc); setRest(false); rest.hidden = true;
     const g = G;
@@ -634,11 +635,10 @@
     document.querySelectorAll('[data-lv]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lv === levelKey)));
     document.querySelectorAll('[data-npc]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.npc === npcKey)));
   }
-  const save = () => { try { localStorage.setItem('dinopost-climb-level2', levelKey); localStorage.setItem('dinopost-climb-npc', npcKey); } catch { /* ok */ } };
+  const save = () => { try { localStorage.setItem('dinopost-climb-level2', levelKey); } catch { /* ok */ } };
 
   async function init() {
     document.documentElement.classList.toggle('dino-mode', Dino.dinoMode());
-    buildNpcPicker();
     document.title = TITLE + '・恐龍郵局'; kid($('title'), TITLE); kid($('startLabel'), '點一下，開始比賽！');
     [['pickOne', '簡單'], ['pickTwo', '普通'], ['pickHard', '困難'], ['again', '再玩一次'], ['home', '回首頁']].forEach(([id, t]) => kid($(id), t));
     kid($('finishTitle'), '信送到了！'); kid($('finishSub'), '漢默爺爺的樹洞家');
@@ -648,7 +648,6 @@
     Dino.preload([...VOICES.map(voiceUrl), ...Array.from({ length: 60 }, (_, i) => `assets/audio/num/zh/${i + 1}.mp3`)]);
     Dino.bgm.start(); Dino.menuTaps($('ready')); Dino.menuTaps($('finish'));
     document.querySelectorAll('[data-lv]').forEach(b => b.addEventListener('click', () => { levelKey = b.dataset.lv; dirty = true; save(); syncPick(); }));
-    $('pickNpc').addEventListener('click', e => { const b = e.target.closest('[data-npc]'); if (!b) return; npcKey = b.dataset.npc; dirty = true; save(); syncPick(); });
     document.querySelector('.dino-home').addEventListener('click', e => { e.preventDefault(); Dino.goTo('index.html'); });
     $('menuBtn').addEventListener('click', () => { Dino.sfx('tap', .5); paused = true; $('ready').hidden = false; document.body.classList.add('menu'); Dino.bgm.start(); });
     $('start').addEventListener('click', () => {
