@@ -112,3 +112,5 @@
 .zb-host .zb-bubble{margin:0 0 6px 12px;padding:10px 20px 12px;border:2px solid #17593f1f;border-radius:22px;background:#fff;color:var(--ink);box-shadow:0 6px 16px #04180f33,0 1px 2px #04180f1f}
 .zb-host .zb-bubble::before{left:-10px;bottom:14px;width:18px;height:18px;border:0;border-left:2px solid #17593f1f;border-bottom:2px solid #17593f1f;border-radius:0 0 0 4px;background:#fff;transform:rotate(45deg)}
 .zb-host .zb-bubble .bpm-column,.zb-host .zb-bubble .bpm-tone,.zb-host .zb-bubble .bpm-tone-dot{color:#4d8f6e}
+/* 改名「字母郵票貼貼樂」7 個字＋右邊兩顆按鈕：手機上標題字小一點，按鈕才不會被擠出去 */
+@media(max-width:680px){.gh .gh-title{font-size:clamp(14px,4.1vw,24px)}}

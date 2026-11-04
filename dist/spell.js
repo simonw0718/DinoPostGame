@@ -1,4 +1,4 @@
-// 字母送信（導演 2026-11-03 拼字教學設計）：一格一個音的郵票（切字規則與難度 1–5 在 spell-words.js），開始畫面選模式與難度：
+// 字母郵票貼貼樂（原名字母送信，導演 2026-11-04 改名；2026-11-03 拼字教學設計）：一格一個音的郵票（切字規則與難度 1–5 在 spell-words.js），開始畫面選模式與難度：
 //   A 聽聲音：不出字母，依序點格子聽一個個聲音（拆音），最後才露出字母
 //   B 選字母：看圖聽字，依序點字母郵票；點錯念出那張的聲音，再念這一格要的聲音
 //   C 換字母：上一個字已經拼好（cat），聽新字（hat）先點「變了的那一格」，再選新字母
@@ -14,7 +14,7 @@
   const settle = (anim, ms) => Promise.race([anim.finished, wait(ms)]);
 
   const uiReadings = {
-    '字母送信': ['ㄗˋ', 'ㄇㄨˇ', 'ㄙㄨㄥˋ', 'ㄒㄧㄣˋ'],
+    '字母郵票貼貼樂': ['ㄗˋ', 'ㄇㄨˇ', 'ㄧㄡˊ', 'ㄆㄧㄠˋ', 'ㄊㄧㄝ', 'ㄊㄧㄝ', 'ㄌㄜˋ'],
     '點一下，開始拼英文！': ['ㄉㄧㄢˇ', 'ㄧ', 'ㄒㄧㄚˋ', '', 'ㄎㄞ', 'ㄕˇ', 'ㄆㄧㄣ', 'ㄧㄥ', 'ㄨㄣˊ', ''],
     '聽聲音，選字母': ['ㄊㄧㄥ', 'ㄕㄥ', 'ㄧㄣ', '', 'ㄒㄩㄢˇ', 'ㄗˋ', 'ㄇㄨˇ'],
     '點格子，聽聲音': ['ㄉㄧㄢˇ', 'ㄍㄜˊ', 'ㄗ˙', '', 'ㄊㄧㄥ', 'ㄕㄥ', 'ㄧㄣ'],
@@ -38,7 +38,7 @@
     + '<span class="pvs-slot s1"></span><span class="pvs-slot s2">a</span><span class="pvs-slot s3">t</span></div>'
     + '<span class="pvs-stamp k">k</span><span class="pvs-stamp c">c</span><span class="pvs-stamp o">o</span><span class="tap"></span></div>';
   const setKidText = Dino.kidText(uiReadings);
-  // 導演 2026-11-04：聽聲音（A）、聽寫（D）先拿掉，程式保留之後補回（記在 PRODUCT.md「字母送信」）
+  // 導演 2026-11-04：聽聲音（A）、聽寫（D）先拿掉，程式保留之後補回（記在 PRODUCT.md Parked Features）
   const MODES = ['auto', 'C', 'B'];
   const AUTO_BY_LEVEL = ['C', 'B', 'B', 'B'];   // 填空（開頭→結尾→母音都過）→ 選字母
   const HINT_MS = 6000;
@@ -285,7 +285,7 @@
   }
 
   async function init() {
-    setKidText($('title'), '字母送信'); setKidText($('readyTitle'), '點一下，開始拼英文！');
+    setKidText($('title'), '字母郵票貼貼樂'); setKidText($('readyTitle'), '點一下，開始拼英文！');
     setKidText($('finishTitle'), '全部拼好了！'); setKidText($('playAgain'), '再玩一次'); setKidText($('finishHome'), '回首頁');
     const picks = [...document.querySelectorAll('[data-mode]')];
     const syncPick = () => picks.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.mode === mode)));
