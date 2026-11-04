@@ -6,6 +6,7 @@ Usage: python3 tools/gemini_tts_batch.py 1|2|3
        python3 tools/gemini_tts_batch.py apply NAME              after listening: back up old MP3, replace
        python3 tools/gemini_tts_batch.py whack [ID ...]          分類快打出題句 "Let's hit... X!"（全部一次請求再裁切）→ dist/assets/audio/whack/
        python3 tools/gemini_tts_batch.py iggy howto|catch [ID ...] 伊奇（R27）玩法語音／接信題目，台詞在 dist/data/iggy_lines.json → dist/assets/audio/<kind>/
+       python3 tools/gemini_tts_batch.py recast                   全部英文單字改 5 個聲音輪流（每請求 50 字，429 換金鑰）→ audio-pilot/recast-20261104/；聽過再 apply
        python3 tools/gemini_tts_batch.py cast [VOICE ...]          英文配音選角：每個聲音一次請求念 8 個字再裁切 → audio-pilot/voice-casting-20261104/
        python3 tools/gemini_tts_batch.py phonics [LETTER ...]     26 個字母「聲音」（不是名稱），拼字遊戲用（全部一次請求再裁切）→ dist/assets/audio/phonics/
 The key stays in ~/.config/dinopost/gemini-key-DINOZ. Never prints or saves it.
@@ -116,24 +117,24 @@ def request_tts(request_body, folder, wav, message, key_path=None):
         'audio_bytes': len(data), 'audio_blocks': len(blocks)}, indent=2) + '\n')
 
 
-def generate(batch, folder, label):
+def generate(batch, folder, label, voice=None, style='Neutral, natural, clearly articulated at a moderate pace.', mark='.', key_path=None):
     folder.mkdir(parents=True, exist_ok=True)
     wav = folder / 'full.wav'
     manifest = [{'index': i + 1, 'id': w['id'], 'en': w['en'], 'source': w.get('levelSource')}
                 for i, w in enumerate(batch)]
     (folder / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n')
-    transcript = ' <long pause> <long pause> '.join(w['en'].capitalize() + '.' for w in batch)
+    transcript = ' <long pause> <long pause> '.join(w['en'].capitalize() + mark for w in batch)
     request_body = {
         'model': MODEL,
         'input': [{'type': 'user_input', 'content': [{'type': 'text', 'text': transcript,
             'annotations': [{'type': 'speech_metadata',
-                             'style': 'Neutral, natural, clearly articulated at a moderate pace.'}]}]}],
+                             'style': style}]}]}],
         'response_format': {'type': 'audio'},
-        'generation_config': {'speech_config': [{'voice': VOICE}]},
+        'generation_config': {'speech_config': [{'voice': voice or VOICE}]},
     }
     (folder / 'request.json').write_text(json.dumps(request_body, ensure_ascii=False, indent=2) + '\n')
     if not wav.exists():
-        request_tts(request_body, folder, wav, f'{label}: sending ONE TTS request for {len(batch)} words')
+        request_tts(request_body, folder, wav, f'{label}: sending ONE TTS request for {len(batch)} words', key_path)
     else:
         print(f'{label}: using saved WAV; no additional TTS request', flush=True)
     duration, speech, threshold = speech_intervals(wav, len(batch))
@@ -351,7 +352,50 @@ def cast(voices):
         print(f'{voice}: ok ' + ' '.join(f'{w}={b - a:.2f}s' for w, (a, b) in zip(CAST_WORDS, speech)), flush=True)
 
 
+
+# 全部英文單字換聲音（導演 2026-11-04）：0 Erinome、1 Leda、2 Laomedeia、3 Puck、4 Sadachbia 依序輪流平均分配，
+# 一律用 CAST_STYLE；一次請求 50 字再裁切；所有金鑰都可用，額度滿（429）就換下一把。聽過才 apply。
+RECAST_VOICES = ['Erinome', 'Leda', 'Laomedeia', 'Puck', 'Sadachbia']
+RECAST = 'recast-20261104'
+
+
+def recast():
+    words = json.loads((ROOT / 'dist/data.json').read_text())
+    keys = sorted(KEY_PATH.parent.glob('gemini-key-*'))
+    plan = []
+    for v, voice in enumerate(RECAST_VOICES):
+        mine = words[v::len(RECAST_VOICES)]
+        plan += [(voice, n + 1, mine[i:i + 50]) for n, i in enumerate(range(0, len(mine), 50))]
+    (ROOT / 'audio-pilot' / RECAST).mkdir(parents=True, exist_ok=True)
+    (ROOT / 'audio-pilot' / RECAST / 'assign.json').write_text(json.dumps(
+        {w['id']: voice for voice, _, batch in plan for w in batch}, ensure_ascii=False, indent=1) + '\n')
+    for voice, n, batch in plan:
+        name = f'{RECAST}/{voice}-{n}'
+        folder = ROOT / 'audio-pilot' / name
+        if (folder / 'clips-manifest.json').exists():
+            print(f'{name}: already cut, skip', flush=True); continue
+        for key in keys:
+            try:
+                if not (folder / 'full.wav').exists():
+                    time.sleep(21)
+                rows, duration, _ = generate(batch, folder, name, voice.lower(), CAST_STYLE, '!', key)
+                break
+            except RuntimeError as error:
+                if '429' in str(error):
+                    print(f'{name}: {key.name} quota full, next key', flush=True); continue
+                print(f'{name}: FAILED {error}', flush=True); break
+        else:
+            print(f'{name}: all keys out of quota', flush=True); continue
+        if not (folder / 'clips-manifest.json').exists():
+            continue
+        factor, pace = suggested_tempo(name)
+        tempo(name, factor)
+        print(f'{name}: {len(rows)} clips, WAV {duration:.1f}s, pace {pace:.2f}s/syllable -> atempo {factor}; listen {listen_file(name).relative_to(ROOT)}', flush=True)
+
+
 def main():
+    if sys.argv[1] == 'recast':
+        return recast()
     if sys.argv[1] == 'cast':
         return cast(sys.argv[2:])
     if sys.argv[1] == 'phonics':
