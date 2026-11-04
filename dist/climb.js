@@ -4,7 +4,7 @@
   // 旁白＝伊奇語音（assets/audio/climb/<id>.mp3，台詞 data/iggy_lines.json 的 climb）＋彈出泡泡；缺音檔時靠計時照常往下，不會卡住。
   // 測試用：網址加 ?fast=6 把所有等待縮短（只給自動測試）。
   const $ = id => document.getElementById(id);
-  const FAST = (() => { const v = new URLSearchParams(location.search).get('fast'); return v ? (+v || 6) * 1.3 : 1.3; })();   // 導演 11-04：整體動畫再快 30%
+  const FAST = (() => { const v = new URLSearchParams(location.search).get('fast'); return v ? (+v || 6) : 1; })();   // 導演 11-04 晚：快 30% 實玩太快，回正常速度
   const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
   class Abort extends Error {}
   const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
