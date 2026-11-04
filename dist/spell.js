@@ -32,6 +32,11 @@
     '填空': ['ㄊㄧㄢˊ', 'ㄎㄨㄥˋ'], '缺哪一個字母？': ['ㄑㄩㄝ', 'ㄋㄚˇ', 'ㄧˊ', 'ㄍㄜˋ', 'ㄗˋ', 'ㄇㄨˇ'], '聽寫': ['ㄊㄧㄥ', 'ㄒㄧㄝˇ']
   };
   uiReadings['難度'] = ['ㄋㄢˊ', 'ㄉㄨˋ'];
+  uiReadings['聽聲音，貼上對的字母郵票'] = ['ㄊㄧㄥ', 'ㄕㄥ', 'ㄧㄣ', '', 'ㄊㄧㄝ', 'ㄕㄤˋ', 'ㄉㄨㄟˋ', 'ㄉㄜ˙', 'ㄗˋ', 'ㄇㄨˇ', 'ㄧㄡˊ', 'ㄆㄧㄠˋ'];
+  // 玩法框預覽：信封上缺一格，c 郵票飛進去（導演 2026-11-04：開始時要有伊奇說明）
+  const PREVIEW = '<div class="pv pv-spell" aria-hidden="true"><div class="pvs-env"><img class="pvs-pic" src="assets/cards-edge/animal-cat.webp" alt="">'
+    + '<span class="pvs-slot s1"></span><span class="pvs-slot s2">a</span><span class="pvs-slot s3">t</span></div>'
+    + '<span class="pvs-stamp k">k</span><span class="pvs-stamp c">c</span><span class="pvs-stamp o">o</span><span class="tap"></span></div>';
   const setKidText = Dino.kidText(uiReadings);
   // 導演 2026-11-04：聽聲音（A）、聽寫（D）先拿掉，程式保留之後補回（記在 PRODUCT.md「字母送信」）
   const MODES = ['auto', 'C', 'B'];
@@ -306,9 +311,11 @@
     $('menuBtn').addEventListener('click', () => { if (!$('readyOverlay').hidden) return; Dino.sfx('tap', .5); state.started = false; clearTimeout(state.hintTimer); $('readyOverlay').hidden = false; });
     state.words = (await fetch('data.json').then(r => r.json())).map(w => ({ ...w, sp: analyze(w.en) }));
     startRound();
+    const howto = Dino.howto({ preview: PREVIEW, text: '聽聲音，貼上對的字母郵票', kid: setKidText, voice: 'spell' });
+    $('helpButton').addEventListener('click', () => { Dino.sfx('tap', .5); howto.show(); });
     $('readyStart').addEventListener('click', () => {
-      $('readyOverlay').hidden = true; state.started = true; armHint();
-      play(wordAudio(item().word));
+      $('readyOverlay').hidden = true;
+      howto.first().then(() => { state.started = true; armHint(); play(wordAudio(item().word)); });   // 第一次玩先看玩法＋伊奇念
     });
   }
   init();
