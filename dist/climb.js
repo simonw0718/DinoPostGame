@@ -187,10 +187,13 @@
     if (RM) return; const h = -46 * kk(t.y) * mag;
     t.img.animate([{ transform: 'translateY(0)' }, { transform: `translateY(${h}px)`, offset: .45 }, { transform: 'translateY(0)' }], { duration: dur * 1000 / FAST, easing: 'ease-out' });
   }
+  // 導演 11-04 晚：走路改腳步聲（不用點擊聲；素材 SFX_腳步聲-草上 切第一步）；走路再慢 10%，數字念得完整
+  const WALK_SLOW = 1 / .9;
   async function stepTo(t, idx, { count = true, dur = t.def.dur, follow = true } = {}) {
+    dur *= WALK_SLOW;
     t.at = idx; place(t, dur); hop(t, t.def.hop, dur);
     if (follow) camera([posOf(t)]);
-    Dino.sfx('tap', .5); if (count && idx > 0) numVoice(idx);
+    Dino.sfx('step', .6); if (count && idx > 0) numVoice(idx);
     await sleep(dur * 1000 + 90);
   }
   const setPose = (t, pose) => { t.img.src = `assets/cast/${t.def.img}__${pose}.webp`; };
