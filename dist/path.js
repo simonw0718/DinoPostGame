@@ -209,7 +209,8 @@
     el('image', { href: `assets/cast/${S.friend}__hello.webp`, x: fx - 70 * fs, y: fy - 10 - 160 * fs, width: 140 * fs, height: 160 * fs, preserveAspectRatio: 'xMidYMax meet' }, svg);
     const g = el('g', { class: 'courier is-snap' }, svg);
     el('circle', { class: 'courier-ring', r: 70, cx: 0, cy: -10 }, g);
-    S.el.img = el('image', { href: `assets/cast/${S.courier[0]}__${S.courier[1]}.webp`, x: -75, y: -150, width: 150, height: 170, preserveAspectRatio: 'xMidYMax meet' }, g);
+    S.el.breath = el('g', { class: 'courier-breath' }, g);   // 呼吸／輕跳套在這層；翻面 transform 留在 img，兩者不互蓋
+    S.el.img = el('image', { href: `assets/cast/${S.courier[0]}__${S.courier[1]}.webp`, x: -75, y: -150, width: 150, height: 170, preserveAspectRatio: 'xMidYMax meet' }, S.el.breath);
     S.el.courier = g;
     S.el.hand = el('text', { class: 'hand', 'text-anchor': 'middle', 'dominant-baseline': 'hanging', opacity: 0 }, svg); S.el.hand.textContent = '👆';
     resetWalk();
@@ -430,11 +431,32 @@
   function finish() {
     const avg = Math.round(S.results.reduce((a, b) => a + b, 0) / S.results.length);
     $('finishStars').innerHTML = starHtml(starsOf(avg));
+    const sp = $('finishStamps'); sp.replaceChildren();   // 郵票逐顆蓋章：每關一顆，最多 5 顆，間隔 150ms
+    S.results.slice(0, 5).forEach((_, n) => {
+      const im = document.createElement('img'); im.src = 'assets/dinopost-workmark-stamp-transparent-v1.webp'; im.alt = ''; im.className = 'fstamp'; sp.append(im);
+      setTimeout(() => { if ($('finish').hidden) return; im.classList.add('is-on'); Dino.sfx('stamp', .6); }, 500 + n * 150);
+    });
     $('finishScore').textContent = `${avg}%`;
     Dino.saveHistory({ game: 'path', mode, score: S.results.filter(r => starsOf(r) === 3).length, total: S.results.length, avg });
     $('finishActor').src = `assets/cast/${S.courier[0]}__cheer.webp`;
     $('finish').hidden = false; Dino.sfx('finish', .8); Dino.bgm.start();
+    $('finishActor').classList.remove('is-hop'); void $('finishActor').offsetWidth; $('finishActor').classList.add('is-hop');
   }
+
+  // ---------- 郵差閒置：呼吸（CSS，拖曳時停）＋ 3 秒沒操作輕跳一次（之後每 6 秒最多一次） ----------
+  let lastAct = performance.now(), lastHop = -1e9;
+  const touchAct = () => { lastAct = performance.now(); };
+  ['pointerdown', 'pointermove', 'pointerup'].forEach(ev => addEventListener(ev, touchAct, { passive: true }));
+  setInterval(() => {
+    const now = performance.now(), b = S.el.breath;
+    if (!b || !inGame() || S.drag || S.done || S.back || document.hidden) return;
+    if (now - lastAct < 3000 || now - lastHop < 6000) return;
+    lastHop = now;
+    b.animate(Dino.reduced
+      ? [{ scale: '1' }, { scale: '1.08', offset: .4 }, { scale: '1' }]
+      : [{ translate: '0 0' }, { translate: '0 -14px', offset: .4 }, { translate: '0 0', offset: .75 }, { translate: '0 -3px', offset: .88 }, { translate: '0 0' }],
+      { duration: Dino.reduced ? 400 : 520, easing: 'cubic-bezier(.16,1,.3,1)' });
+  }, 500);
 
   function newGame() {
     S.level = 0; S.results = []; S.friend = null; clearTimeout(S.idleT);

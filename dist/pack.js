@@ -199,7 +199,7 @@
 
   function showBanner(text) {
     const b = document.createElement('div'); b.className = 'banner'; setKidText(b, text);
-    yard.append(b); setTimeout(() => b.remove(), 1400);
+    yard.append(b); setTimeout(() => b.remove(), 1000);
   }
   function win() {
     G.busy = true;

@@ -180,7 +180,7 @@
     if (t.x && Math.abs(x - t.x) > 2) t.el.classList.toggle('flip', x < t.x);
     t.x = x; t.y = y;
     t.el.style.setProperty('--mv', dur / FAST + 's');
-    Object.assign(t.el.style, { left: x + 'px', top: y + 'px', height: h + 'px', fontSize: h + 'px', zIndex: Math.round(sy) + 5 });
+    Object.assign(t.el.style, { translate: `${x}px ${y}px`, height: h + 'px', fontSize: h + 'px', zIndex: Math.round(sy) + 5 });   // 位置用 translate（不再動 left/top）
   }
   const posOf = t => [t.x, t.y - 60];
   function hop(t, mag = 1, dur = .5) {

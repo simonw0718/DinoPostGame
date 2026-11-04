@@ -10,9 +10,11 @@ button:focus-visible,a:focus-visible,.ms-letter:focus-visible{outline:4px solid 
   --box-w:calc((min(100vw,560px) - 18px) / 3 - 4px);--win:calc(var(--box-w) - 16px)}
 
 .ms-progress{display:flex;flex:none;align-self:center;justify-content:center;gap:6px;margin:6px 0 0;padding:7px 11px;list-style:none;border-radius:99px;background:#fffdf1e6;box-shadow:0 3px 0 #2c5e4544;justify-self:center}
-.ms-progress li{position:relative;width:26px;height:19px;border:2px solid #c8a96a;border-radius:4px;background:#fff9e8;transition:background .3s,border-color .3s}
-.ms-progress li:after{content:"";position:absolute;inset:0 0 auto;height:55%;clip-path:polygon(0 0,100% 0,50% 100%);background:#ead6a8}
-.ms-progress li.done{background:#f4bb42;border-color:#b67826}.ms-progress li.done:after{background:#d99a2c}
+.ms-progress li{position:relative;width:24px;height:28px;border:2px dashed #c8a96a;border-radius:4px;background:#fff9e8;transition:background .3s,border-color .3s}
+.ms-progress li.done{background:#fff1c6;border:2px solid #b67826}
+.ms-progress li img{position:absolute;inset:1px;width:calc(100% - 2px);height:calc(100% - 2px);object-fit:contain;opacity:.9;transform:rotate(-8deg);pointer-events:none}
+.ms-progress li img.is-stamping{animation:slotStamp .34s .18s cubic-bezier(.18,1.4,.5,1) both}
+@keyframes slotStamp{0%{opacity:0;transform:translateY(-18px) rotate(-22deg) scale(2.2)}64%{opacity:1;transform:translateY(0) rotate(-8deg) scale(.86)}80%{transform:translateY(-2px) rotate(-8deg) scale(1.07)}100%{opacity:.9;transform:translateY(0) rotate(-8deg) scale(1)}}
 .ms-progress li.now{border-color:#2b7954;box-shadow:0 0 0 2px #2b795455}
 
 .ms-stage{position:relative;flex:1;min-height:0}
@@ -28,7 +30,9 @@ button:focus-visible,a:focus-visible,.ms-letter:focus-visible{outline:4px solid 
 
 /* 送信角色：身高＝u × character_scale × pose_factor（cast.json），不鏡像 */
 .ms-actor{position:absolute;z-index:4;left:0;top:0;width:0;height:0;pointer-events:none}
-.ms-actor-bob{position:absolute;left:0;bottom:0;transform-origin:50% 100%}
+.ms-actor-bob{position:absolute;left:0;bottom:0;transform-origin:50% 100%;animation:actorBreathe 2.6s ease-in-out infinite}
+@keyframes actorBreathe{0%,100%{scale:1}50%{scale:1.03}}
+@media(prefers-reduced-motion:reduce){.ms-actor-bob{animation:none}.ms-progress li img.is-stamping{animation:none}}
 .ms-actor img{display:block;height:calc(var(--u,120px) * var(--h,1));width:auto;transform:translateX(-50%);filter:drop-shadow(0 3px 2px #1d3b2655)}
 .ms-actor-shadow{position:absolute;left:0;bottom:-7px;width:calc(var(--u,120px) * .55);height:13px;transform:translateX(-50%);border-radius:50%;background:#1d3b2640}
 
@@ -90,7 +94,7 @@ button:focus-visible,a:focus-visible,.ms-letter:focus-visible{outline:4px solid 
 .ms-card button{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:60px;padding:10px 17px;border:2px solid #b67826;border-radius:16px;background:linear-gradient(#ffcd60,#f3af36);color:#5b3e18;font-size:24px;font-weight:1000;box-shadow:0 6px 0 #b67826}
 
 /* DINO MODE：史前場景、木頭色郵箱、骨頭色窗框 */
-html.dino-mode .ms-progress li.done{background:#e8932f;border-color:#8a4b12}
+html.dino-mode .ms-progress li.done{background:#f2c27a;border-color:#8a4b12}
 html.dino-mode .ms-replay{background:#c9792f;box-shadow:0 4px 0 #7a4a1c,0 6px 10px #7a4a1c55}
 
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
@@ -118,13 +122,13 @@ html.dino-mode .ms-replay{background:#c9792f;box-shadow:0 4px 0 #7a4a1c,0 6px 10
   box-shadow:inset -10px 0 0 #b02c2333,inset 6px 0 0 #ff8a7333,0 3px 0 #7e1813}
 .pb-cap{position:absolute;left:-3px;right:-3px;top:56px;height:15px;border-radius:8px;background:linear-gradient(#c3322a,#9c241d);box-shadow:inset 0 2px 0 #ff8c7766}
 .pb-medal{position:absolute;left:50%;top:9px;width:30px;height:30px;margin-left:-15px;display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe9a0,#f2be3c 60%,#c98d1e);color:#a92820;font:1000 19px/1 "Naikai",system-ui;box-shadow:0 2px 0 #8d1d18}
-.pb-slot{position:absolute;left:50%;top:42px;width:74px;height:9px;margin-left:-37px;border-radius:6px;background:#3a0e0b;box-shadow:inset 0 2px 2px #000,0 1px 0 #ff8c7766;transition:height .2s,top .2s,width .2s,margin .2s}
+.pb-slot{position:absolute;left:50%;top:42px;width:74px;height:9px;margin-left:-37px;border-radius:6px;background:#3a0e0b;box-shadow:inset 0 2px 2px #000,0 1px 0 #ff8c7766;transform-origin:50% 50%;transition:transform .2s cubic-bezier(.16,1,.3,1)}
 .pb-win{position:absolute;left:9px;right:9px;top:80px;height:142px;display:grid;place-items:center;overflow:hidden;border:4px solid #f2c457;border-radius:16px;background:#fffbef;box-shadow:inset 0 3px 8px #7a5a2a30,0 2px 0 #8d1d18}
 .pb-flag{position:absolute;right:-16px;top:60px;width:8px;height:74px;border-radius:3px;background:#6b4a2a;transform-origin:50% 100%;transform:rotate(90deg);opacity:0}
 .pb-flag:before{content:"";position:absolute;left:6px;top:0;width:40px;height:27px;border-radius:2px 7px 7px 2px;background:#f6c33f;box-shadow:inset 0 -3px 0 #c98d1e}
 .pb:nth-child(2) .pb-flag{right:auto;left:-16px;transform:rotate(-90deg)}
 .pb:nth-child(2) .pb-flag:before{left:auto;right:6px;border-radius:7px 2px 2px 7px}
-.pb.mouth .pb-slot{height:26px;top:34px;width:92px;margin-left:-46px;border-radius:14px}
+.pb.mouth .pb-slot{transform:translateY(.5px) scale(1.243,2.89)}   /* 原本 74×9→92×26：改用縮放，中心點不變 */
 .pb.mouth .pb-body{box-shadow:inset -10px 0 0 #b02c2333,inset 6px 0 0 #ff8a7333,0 3px 0 #7e1813,0 0 0 6px #ffe08a,0 0 0 9px #ffffff99}
 .pb.armed-hint:not(.mouth) .pb-body{box-shadow:inset -10px 0 0 #b02c2333,inset 6px 0 0 #ff8a7333,0 3px 0 #7e1813,0 0 0 4px #ffe08a99}
 .pb.dim{filter:saturate(.75) brightness(.96)}
@@ -218,7 +222,7 @@ html.wide .ms-shell{width:100%}
 @keyframes dinoPageOut{to{opacity:0;transform:translateY(-14px) scale(.985)}}
 @keyframes dinoPageIn{from{opacity:0;transform:translateY(22px) scale(.985)}}
 @media(prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}}
-.ms-progress.many{gap:4px;padding:7px 9px}.ms-progress.many li{width:18px;height:14px}
+.ms-progress.many{gap:4px;padding:7px 9px}.ms-progress.many li{width:18px;height:22px}
 .ms-receipt .stamp-dots{position:relative;z-index:1}
 .ready-label.kid-text{display:inline-flex;flex-wrap:nowrap}
 .finish-card h1.kid-text{display:flex;flex-wrap:nowrap}

@@ -124,7 +124,7 @@
     wordLine.replaceChildren(kid('span', '單字'), ' ', Object.assign(document.createElement('strong'), { textContent: stats.stamps }), `／${total}`);
     cardLine.replaceChildren(kid('span', '角色'), ' ', Object.assign(document.createElement('strong'), { textContent: stats.cards }), `／${cardTotal}`);
     const done = stats.cards >= cardTotal;
-    $('nextBar').firstElementChild.style.width = `${done ? 100 : (RULES.cardEvery - stats.toNextCard) / RULES.cardEvery * 100}%`;
+    $('nextBar').firstElementChild.style.transform = `scaleX(${done ? 1 : (RULES.cardEvery - stats.toNextCard) / RULES.cardEvery})`;
     $('nextBar').setAttribute('aria-label', done ? '角色郵票收齊了' : `再 ${stats.toNextCard} 張單字郵票就有新角色郵票`);
     const next = $('nextText'); next.replaceChildren();
     if (done) next.append(kid('span', '角色郵票收齊了！'));

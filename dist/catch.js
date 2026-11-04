@@ -53,6 +53,7 @@
   let speed = 'mid';
   try { const s = localStorage.getItem('dinopost-catch-speed'); if (SPEED[s]) speed = s; } catch { /* ok */ }
 
+  const R = Dino.reduced;   // 減少動態：位移類動畫改短或省略
   const G = { round: 0, got: 0, wrong: 0, wrongs: [], target: null, pool: [], letters: [], bagX: .5, running: false, paused: false, pending: null, started: false, last: 0, spawnIn: 0 };
   const clipUrl = name => name.startsWith('shape-') ? `assets/audio/${name}.mp3` : `assets/audio/kidapp-${name.replace(/^kidapp-/, '')}.mp3`;
   // 題目念法（導演 2026-10-31）：伊奇念整句 "Catch the red ones!"／"Catch the circles!"／"Catch the red circles!"（assets/audio/catch/，台詞 data/iggy_lines.json）
@@ -214,7 +215,7 @@
     const b = document.createElement('div'); b.className = 'banner';
     const t = document.createElement('span'), s = document.createElement('small');
     setKidText(t, name); setKidText(s, '變快了！'); b.append(t, s);
-    sky.append(b); setTimeout(() => b.remove(), 1350);
+    sky.append(b); setTimeout(() => b.remove(), 950);   // 0.9s（catch.css 的 banner 動畫同長）
   }
 
   // 導演 2026-10-22 定版：每關開始，目標在天空中央彈簧放大，停一下再縮回左上題目格
@@ -225,12 +226,24 @@
     document.body.append(big);
     const dx = k.left + k.width / 2 - (c.left + c.width / 2), dy = k.top + k.height * .38 - (c.top + c.height / 2);
     const at = s => `translate(${dx}px,${dy}px) scale(${s})`;
-    big.animate([{ transform: at(0) }, { transform: at(3.9), offset: .45 }, { transform: at(3.05), offset: .7 }, { transform: at(3.45), offset: .88 }, { transform: at(3.3) }],
-      { duration: 650, easing: 'ease-out' });
-    big.animate([{ transform: at(3.3) }, { transform: at(3.6) }, { transform: at(3.3) }], { duration: 500, delay: 700, easing: 'ease-in-out' });
-    const fly = big.animate([{ transform: at(3.3) }, { transform: 'none' }], { duration: 450, delay: 1250, easing: 'cubic-bezier(.5,0,.75,0)', fill: 'forwards' });
-    fly.onfinish = () => { big.remove(); const o = $('order'); o.classList.remove('is-pop'); void o.offsetWidth; o.classList.add('is-pop'); Dino.sfx('tap', .5); };
-    return 1700;
+    // 減少動態：不彈跳放大，直接淡入停一下再回題目格（短）
+    const intro = R
+      ? [big.animate([{ transform: at(3.3), opacity: 0 }, { transform: at(3.3), opacity: 1 }], { duration: 160, fill: 'forwards' })]
+      : [big.animate([{ transform: at(0) }, { transform: at(3.9), offset: .45 }, { transform: at(3.05), offset: .7 }, { transform: at(3.45), offset: .88 }, { transform: at(3.3) }], { duration: 650, easing: 'ease-out' }),
+        big.animate([{ transform: at(3.3) }, { transform: at(3.6) }, { transform: at(3.3) }], { duration: 500, delay: 700, easing: 'ease-in-out' })];
+    const fly = big.animate([{ transform: at(3.3) }, { transform: 'none' }], { duration: R ? 200 : 450, delay: R ? 500 : 1250, easing: 'cubic-bezier(.5,0,.75,0)', fill: 'forwards' });
+    let ended = false;
+    fly.onfinish = () => { ended = true; big.remove(); const o = $('order'); o.classList.remove('is-pop'); void o.offsetWidth; o.classList.add('is-pop'); Dino.sfx('tap', .5); };
+    // 點畫面任一處＝開場直接跳到結束：大信封收回題目格、關卡牌子與掉信提早開始（只觸發一次，onfinish 也只會跑一次）
+    const skip = () => {
+      removeEventListener('pointerdown', skip, true);
+      if (ended) return;
+      intro.forEach(a => a.finish()); fly.finish();
+      G.spawnIn = Math.min(G.spawnIn, 400); clearTimeout(G.bannerT); G.bannerFn?.();
+    };
+    addEventListener('pointerdown', skip, true);
+    setTimeout(() => removeEventListener('pointerdown', skip, true), (R ? 700 : 1700) + 50);
+    return R ? 700 : 1700;
   }
 
   function nextRound() {
@@ -243,8 +256,12 @@
     pose('hello');
     setOrder();
     const name = ROUND_NAMES[G.round], wait = showTarget();
-    if (name) setTimeout(() => { showBanner(name); Dino.sfx('swoosh', .5); }, wait);
-    G.spawnIn = wait + (name ? 1300 : 600);   // 有提示／關卡牌子時，等收掉才開始掉
+    G.bannerFn = null; clearTimeout(G.bannerT);
+    if (name) {
+      G.bannerFn = () => { G.bannerFn = null; showBanner(name); Dino.sfx('swoosh', .5); };
+      G.bannerT = setTimeout(() => G.bannerFn?.(), wait);
+    }
+    G.spawnIn = wait + (name ? 900 : 600);   // 有提示／關卡牌子時，等收掉才開始掉
     G.running = true; requestAnimationFrame(frame);
   }
 

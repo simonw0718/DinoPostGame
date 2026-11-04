@@ -66,6 +66,7 @@
   const setKidText = Dino.kidText(uiReadings);
   const makeKidSpan = value => { const span = document.createElement('span'); setKidText(span, value); return span; };
 
+  new Image().src = 'assets/dinopost-workmark-stamp-transparent-v1.webp';   // 先載好，蓋章時不閃
   const sounds = Object.fromEntries(['correct', 'stamp', 'wrong', 'finish'].map(k => {
     const a = new Audio(`assets/audio/effects/${k}.mp3`); a.preload = 'auto'; a.volume = .9; return [k, a];
   }));
@@ -234,10 +235,17 @@
   function setSelection(change) { Object.assign(state, change); saveSelection(); renderSelectionControls(); }
 
   // ---------- 題目 ----------
-  function renderProgress(done = state.index) {
+  // 進度＝一列小郵票格：答對的那格蓋上郵戳（stampAt＝這次剛蓋的格子，才播蓋章動畫）
+  function renderProgress(done = state.index, stampAt = -1) {
     $('progress').replaceChildren(...state.round.map((_, i) => {
       const li = document.createElement('li');
       li.className = i < done ? 'done' : i === done ? 'now' : '';
+      if (i < done) {
+        const mark = document.createElement('img');
+        mark.src = 'assets/dinopost-workmark-stamp-transparent-v1.webp'; mark.alt = '';
+        if (i === stampAt) mark.className = 'is-stamping';
+        li.append(mark);
+      }
       return li;
     }));
     $('progress').classList.toggle('many', state.round.length > 6);
@@ -332,6 +340,7 @@
   function renderQuestion() {
     const word = state.round[state.index];
     window.__answerId = word.id;   // 截圖驗收腳本用
+    lastTouch = performance.now();
     state.phase = 'question'; state.attempts = 0; state.armed = false; state.dragging = false; state.magnet = -1;
     renderProgress();
     const picture = state.format === 'picture';
@@ -372,11 +381,29 @@
       letterPhys.y.vel += 900; letterPhys.x.vel += clamp((l.left + l.width / 2 - (r.left + r.width / 2)) / K * 4, -700, 700);
       letterPhys.tilt.vel += (Math.random() < .5 ? -1 : 1) * 260;
       vibrate([20, 40, 20]);
-      playSound('wrong'); say('再試一次', 1800);
+      wrongHint();
+      say('再試一次', 1800);
       return;
     }
     deliver(box);
   }
+  // 放錯郵筒的提示（不懲罰）：信輕晃兩次、角色歪頭 600ms 再回正、輕輕的提示音。減少動態時不位移，仍有泡泡與音效。
+  function wrongHint() {
+    Dino.sfx('wrong', .35);
+    if (reduced) return;
+    $('letterFace').animate({ translate: ['0 0', '-6px 0', '6px 0', '-6px 0', '6px 0', '0 0'] }, { duration: 380, easing: 'cubic-bezier(.16,1,.3,1)' });
+    bob.animate({ rotate: ['0deg', '-9deg', '-9deg', '0deg'], offset: [0, .22, .75, 1] }, { duration: 600, easing: 'cubic-bezier(.16,1,.3,1)' });
+  }
+  // 待機提示：3 秒沒操作，角色輕跳一次；之後每 6 秒最多一次（只在等作答、沒在拖信時）
+  let lastTouch = performance.now(), lastHint = 0;
+  ['pointerdown', 'keydown'].forEach(type => addEventListener(type, () => { lastTouch = performance.now(); }, true));
+  setInterval(() => {
+    const now = performance.now();
+    if (state.phase !== 'question' || state.dragging || document.hidden || !$('readyOverlay').hidden || $('settingsDialog').open) return;
+    if (now - lastTouch < 3000 || now - lastHint < 6000) return;
+    lastHint = now;
+    if (!reduced) bob.animate([{ translate: '0 0' }, { translate: '0 -14px' }, { translate: '0 0' }], { duration: 420, easing: 'cubic-bezier(.16,1,.3,1)' });
+  }, 500);
   async function deliver(box) {
     const word = state.round[state.index], index = state.index;
     state.phase = 'posting'; state.armed = false;
@@ -426,7 +453,7 @@
     animate($('receipt'), { transform: ['translateY(0) scale(1)', 'translateY(5px) scale(.965,.94)', 'translateY(-2px) scale(1.01)', 'translateY(0) scale(1)'] }, { duration: dur(.4), ease: 'easeOut' });
     state.phase = 'reveal';
     say(DinoStampsUI.message(state.progressResults.at(-1)) || (state.streak >= Dino.streakThreshold ? '連續送對！' : '送達啦！'), 1800);
-    renderProgress(state.index + 1);
+    renderProgress(state.index + 1, index);
     // 導演 2026-10-21：蓋完章看一眼就自動接下一封，不用按「下一封」
     await wait(650);
     if (state.phase === 'reveal' && state.index === index) next();

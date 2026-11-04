@@ -49,6 +49,19 @@
     .haul { display: flex; gap: 8px; justify-content: center; }
     .haul span { width: 52px; aspect-ratio: 1; display: grid; place-items: center; font-size: 32px; border-radius: 14px; background: linear-gradient(145deg, #fffaf0, #ecdcb8); border: 3px solid var(--bone-line); }
     @media (prefers-reduced-motion: reduce) { .book span.got.pop { animation: none; } }
+    /* 待機呼吸（只在 busy_look 姿勢；用獨立 scale 屬性，不和跳一下的 transform 動畫互蓋） */
+    .actor-idle { animation: digBreath 2.6s ease-in-out infinite alternate; }
+    @keyframes digBreath { to { scale: 1.03; } }
+    /* 開始→遊戲轉場：ready 層淡出 .3s，舞台輕微放大到位 .35s */
+    .overlay.leave { opacity: 0; transition: opacity .3s cubic-bezier(.16, 1, .3, 1); pointer-events: none; }
+    /* 結束卡：角色跳一下、郵票逐顆蓋章（慶祝時刻 ≤800ms） */
+    .card img.is-hop { animation: fHop .8s cubic-bezier(.16, 1, .3, 1) .2s both; }
+    .fstamps { display: flex; justify-content: center; gap: 6px; min-height: 44px; }
+    .card img.fstamp { width: 44px; height: 44px; object-fit: contain; opacity: 0; transform: scale(1.8) rotate(-18deg); }
+    .card img.fstamp.is-on { opacity: 1; transform: none; animation: fStamp .3s cubic-bezier(.16, 1, .3, 1); }
+    @keyframes fHop { 35% { transform: translateY(-22px) rotate(-4deg); } 65% { transform: translateY(2px) rotate(2deg); } }
+    @keyframes fStamp { from { opacity: 0; transform: scale(1.8) rotate(-18deg); } }
+    @media (prefers-reduced-motion: reduce) { .actor-idle { animation: none; } .overlay.leave { transition-duration: .01ms; } .card img.is-hop { animation: none; } .card img.fstamp.is-on { animation: fStampR .2s ease-out; } @keyframes fStampR { from { opacity: 0; } } }
     /* 開始選單／完成卡：同走小路 */
     .overlay { position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; padding: 16px; background: #0e3a28aa; }
     .overlay[hidden] { display: none; }
@@ -100,6 +113,7 @@
   <div id="finish" class="overlay" hidden>
     <div class="card">
       <img id="finishImg" alt="">
+      <div id="finishStamps" class="fstamps" aria-hidden="true"></div>
       <h2 id="finishTitle">化石都挖出來了！</h2>
       <div id="haul" class="haul" aria-label="這回合挖到的化石"></div>
       <p id="finishStars" class="stars"></p>
@@ -228,7 +242,7 @@
     layers.shovel = el('g', { opacity: 0, 'pointer-events': 'none' }, svg);
     layers.shovel.innerHTML = `<g id="shovelBody"><rect x="-3" y="-78" width="6" height="58" rx="3" fill="#b8793e" stroke="#6e4024" stroke-width="2"/><rect x="-11" y="-84" width="22" height="8" rx="4" fill="#b8793e" stroke="#6e4024" stroke-width="2"/><path d="M-13 -22H13L11 -4Q0 8 -11 -4Z" fill="#cfd8de" stroke="#5b6870" stroke-width="2.5"/><path d="M-7 -18H5" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></g>`;
     const A = 100 * S * .42;   // 小恐龍站在土塊右前角旁看
-    layers.actor = el('image', { href: `assets/cast/xiaokong__${pose}.webp`, height: A, width: A, x: ox + w - A * .5, y: oy + h + slabT - A * .92, preserveAspectRatio: 'xMidYMax meet', style: 'transform-box: fill-box; transform-origin: 50% 100%' }, svg);
+    layers.actor = el('image', { class: pose === 'busy_look' ? 'actor-idle' : '', href: `assets/cast/xiaokong__${pose}.webp`, height: A, width: A, x: ox + w - A * .5, y: oy + h + slabT - A * .92, preserveAspectRatio: 'xMidYMax meet', style: 'transform-box: fill-box; transform-origin: 50% 100%' }, svg);
     redraw();
   }
 
@@ -318,7 +332,7 @@
   // 小恐龍陪挖：姿勢＝busy_look 平常、point 指旗子、cheer／leap_r 出土；hop＝跳一下
   let pose = 'busy_look', poseTimer = 0;
   function setPose(name, ms) {
-    clearTimeout(poseTimer); pose = name; layers.actor?.setAttribute('href', `assets/cast/xiaokong__${name}.webp`);
+    clearTimeout(poseTimer); pose = name; layers.actor?.setAttribute('href', `assets/cast/xiaokong__${name}.webp`); layers.actor?.classList.toggle('actor-idle', name === 'busy_look');
     if (ms) poseTimer = setTimeout(() => setPose('busy_look'), ms);
   }
   function hop(h = 18, n = 1) {
@@ -406,7 +420,13 @@
     });
   }
   function screenOf(u, v) { const m = layers.g.getCTM(); return [m.a * u + m.e, m.d * v + m.f]; }
+  // reveal 點一下加速：rv.skipped 之後所有等待立刻結束、動畫 finish 到終點（出土、化石卡、飛進圖鑑），念音不再等
+  let rv = null;
+  const skipReveal = () => { if (!rv || rv.skipped) return; rv.skipped = true; rv.hooks.forEach(h => h()); rv.hooks.clear(); rv.anims.forEach(a => { try { a.finish(); } catch { /* 已結束 */ } }); };
+  const rwait = ms => rv.skipped ? Promise.resolve() : new Promise(r => { const t = setTimeout(() => { rv.hooks.delete(h); r(); }, ms), h = () => { clearTimeout(t); r(); }; rv.hooks.add(h); });
+  const rtrack = a => { rv.anims.push(a); return a; };
   async function reveal() {
+    rv = { skipped: false, hooks: new Set(), anims: [] }; rv.skipP = new Promise(r => rv.hooks.add(r));
     say('咦？土裡有東西……');
     const g = layers.g, xs = sym.strokes.flat(), cu = (Math.min(...xs.map(p => p[0])) + Math.max(...xs.map(p => p[0]))) / 2, cv = (Math.min(...xs.map(p => p[1])) + Math.max(...xs.map(p => p[1]))) / 2;
     bone(layers.fossil); layers.fossil.setAttribute('opacity', 1);
@@ -415,7 +435,7 @@
     const [cx, cy] = screenOf(cu, cv);
     burst(cx, cy, 10, '#c79763');
     setPose('busy_look');
-    await wait(calm ? 200 : 650);
+    await rwait(calm ? 200 : 650);
     // 升上來：地面上一份化石＋影子，從溝底位置往上浮
     const defs = svg.querySelector('defs');
     defs.insertAdjacentHTML('beforeend', `<linearGradient id="gShine" gradientUnits="userSpaceOnUse" x1="-40" y1="0" x2="-10" y2="30"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".95"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>${calm ? '' : '<animate attributeName="x1" values="-40;110" dur=".9s" begin="indefinite" fill="freeze"/><animate attributeName="x2" values="-10;140" dur=".9s" begin="indefinite" fill="freeze"/>'}</linearGradient>`);
@@ -423,33 +443,34 @@
     sym.strokes.forEach(pts => el('path', { d: d(pts), fill: 'none', stroke: '#3a2412', 'stroke-width': W * .7, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, shadow));
     const up = el('g', { transform: `translate(0 ${DEPTH})` }, layers.rise); bone(up, true);
     const steps = calm ? 1 : 24;
-    for (let i = 1; i <= steps; i++) { const e = 1 - Math.pow(1 - i / steps, 3); up.setAttribute('transform', `translate(0 ${DEPTH - e * (DEPTH + 5)})`); shadow.setAttribute('opacity', .35 - e * .12); await wait(16); }
+    for (let i = 1; i <= steps; i++) { const e = 1 - Math.pow(1 - i / steps, 3); up.setAttribute('transform', `translate(0 ${DEPTH - e * (DEPTH + 5)})`); shadow.setAttribute('opacity', .35 - e * .12); await rwait(16); if (rv.skipped) { up.setAttribute('transform', `translate(0 ${-5})`); shadow.setAttribute('opacity', .23); break; } }
     defs.querySelectorAll('#gShine animate').forEach(a => a.beginElement());
     Dino.sfx('correct', .7); hop(30, 2); setPose('leap_r', 900); setTimeout(() => setPose('cheer', 2600), 900);
     sparkle(cu, cv);
-    await wait(calm ? 200 : 700);
+    await rwait(calm ? 200 : 700);
     // 化石卡：在化石上方冒出來、念音，再飛進圖鑑那一格
     const card = $('fossilCard'), r = svg.getBoundingClientRect(), [fx, fy] = screenOf(cu, cv);
     card.textContent = sym.ch;
     const cw = card.offsetWidth, ch = card.offsetHeight;
     const sx = r.left + fx, sy = Math.max(r.top + ch / 2 + 4, r.top + oy - ch * .15);   // 卡片浮在土塊上緣，不擋住出土的化石
     card.style.transform = `translate(${sx - cw / 2}px, ${sy - ch / 2}px)`;
-    card.animate([{ opacity: 0, transform: `translate(${sx - cw / 2}px, ${sy - ch / 2 + 40}px) scale(.3)` }, { opacity: 1, transform: `translate(${sx - cw / 2}px, ${sy - ch / 2}px) scale(1)` }], { duration: calm ? 1 : 420, easing: 'cubic-bezier(.3,1.6,.5,1)', fill: 'forwards' });
+    rtrack(card.animate([{ opacity: 0, transform: `translate(${sx - cw / 2}px, ${sy - ch / 2 + 40}px) scale(.3)` }, { opacity: 1, transform: `translate(${sx - cw / 2}px, ${sy - ch / 2}px) scale(1)` }], { duration: calm ? 1 : 420, easing: 'cubic-bezier(.3,1.6,.5,1)', fill: 'forwards' }));
     say(`挖到「${sym.ch}」的化石了！`);
     // 念「ㄔ、ㄔ、吃飯、ㄔ」（導演 2026-11-04）：注音兩次 → 例詞一次（例詞卡跳一下）→ 注音一次；音訊被鎖或音檔慢到時每段最多等 2–2.5 秒，不讓遊戲卡住
-    const speak = () => Promise.race([Dino.voice(VOICE[sym.ch]), wait(2000)]);
-    await speak(); await wait(200); await speak();
+    const speak = () => Promise.race([Dino.voice(VOICE[sym.ch]), wait(2000), rv.skipP]);
+    await speak(); await rwait(200); await speak();
     if (chant) {
-      await wait(200); chant.btn.classList.remove('chant'); void chant.btn.offsetWidth; chant.btn.classList.add('chant');
-      await Promise.race([Dino.voice(chant.w.zhAudio), wait(2500)]); await wait(200);
+      await rwait(200); chant.btn.classList.remove('chant'); void chant.btn.offsetWidth; chant.btn.classList.add('chant');
+      await Promise.race([Dino.voice(chant.w.zhAudio), wait(2500), rv.skipP]); await rwait(200);
     }
     speak();   // 最後一次念的同時飛進圖鑑（不讓孩子等太久）
     const slot = $('book').children[idx], t = slot.getBoundingClientRect(), k = t.width / cw;
-    const fly = card.animate([{ opacity: 1, transform: `translate(${sx - cw / 2}px, ${sy - ch / 2}px) scale(1)` }, { opacity: 1, transform: `translate(${t.left + t.width / 2 - cw / 2}px, ${t.top + t.height / 2 - ch / 2}px) scale(${k})` }], { duration: calm ? 1 : 650, easing: 'cubic-bezier(.5,0,.3,1)', fill: 'forwards' });
+    const fly = rtrack(card.animate([{ opacity: 1, transform: `translate(${sx - cw / 2}px, ${sy - ch / 2}px) scale(1)` }, { opacity: 1, transform: `translate(${t.left + t.width / 2 - cw / 2}px, ${t.top + t.height / 2 - ch / 2}px) scale(${k})` }], { duration: calm ? 1 : 650, easing: 'cubic-bezier(.5,0,.3,1)', fill: 'forwards' }));
     await Promise.race([fly.finished, wait(950)]);   // 分頁在背景時動畫不走，最多等一下就往下
     card.getAnimations().forEach(a => a.cancel()); card.style.opacity = 0;
     slot.textContent = sym.ch; slot.classList.add('got', 'pop'); Dino.sfx('pop', .6);
-    await wait(700);
+    await rwait(300);
+    rv = null;
     next();
   }
   function sparkle(u, v) {   // 出土星星：化石四周幾顆四角星一閃
@@ -469,7 +490,14 @@
       const n = wobble <= 2 ? 3 : wobble <= 6 ? 2 : 1;
       $('finishStars').textContent = '★'.repeat(n) + '☆'.repeat(3 - n);
       $('haul').innerHTML = SYMBOLS.map(x => `<span>${x.ch}</span>`).join('');
-      $('finish').hidden = false; Dino.bgm.start(); return;
+      const sp = $('finishStamps'); sp.replaceChildren();   // 郵票逐顆蓋章：每個挖到的化石一顆（最多 5），間隔 150ms
+      SYMBOLS.slice(0, 5).forEach((_, i) => {
+        const im = document.createElement('img'); im.src = 'assets/dinopost-workmark-stamp-transparent-v1.webp'; im.alt = ''; im.className = 'fstamp'; sp.append(im);
+        setTimeout(() => { if ($('finish').hidden) return; im.classList.add('is-on'); Dino.sfx('stamp', .6); }, 500 + i * 150);
+      });
+      $('finish').hidden = false; Dino.bgm.start();
+      const fi = $('finishImg'); fi.classList.remove('is-hop'); void fi.offsetWidth; fi.classList.add('is-hop');
+      return;
     }
     load();
   }
@@ -530,7 +558,17 @@
   }));
   syncPick();
   Dino.bgm.start(); Dino.menuTaps($('ready')); Dino.menuTaps($('finish'));
-  $('start').addEventListener('click', () => { $('ready').hidden = true; Dino.bgm.stop(); audio(); if (!howtoSeen) { howtoSeen = true; HW.show(); } });
+  let leaving = false;
+  $('start').addEventListener('click', () => {
+    if (leaving) return;
+    Dino.bgm.stop(); audio();
+    const enter = () => { leaving = false; $('ready').classList.remove('leave'); $('ready').hidden = true; if (!howtoSeen) { howtoSeen = true; HW.show(); } };
+    if (calm) return enter();
+    leaving = true; $('ready').classList.add('leave');   // ready 層淡出 .3s，舞台同時從 .96 放大到位
+    stage.animate([{ transform: 'scale(.96)' }, { transform: 'scale(1)' }], { duration: 350, easing: 'cubic-bezier(.16,1,.3,1)' });
+    setTimeout(enter, 320);
+  });
+  stage.addEventListener('pointerdown', skipReveal);   // 出土儀式中點一下＝加速跳到結果
   $('help').addEventListener('click', () => { Dino.sfx('tap', .5); HW.show(); });
   $('menuBtn').addEventListener('click', () => { pid = null; digging = false; Dino.sfx('tap', .5); $('ready').hidden = false; Dino.bgm.start(); });
   $('again').addEventListener('click', () => { Dino.bgm.stop(); start(); });

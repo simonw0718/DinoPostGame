@@ -36,7 +36,7 @@ button{font:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
 @keyframes nope{25%{transform:translate(-50%,-50%) translateX(-.1em)}75%{transform:translate(-50%,-50%) translateX(.1em)}}
 @keyframes spin{to{transform:rotate(360deg)}}
 /* —— 角色 —— */
-.tok{position:absolute;transform:translate(-50%,-100%);transition:left var(--mv,.5s) cubic-bezier(.4,.1,.3,1),top var(--mv,.5s) cubic-bezier(.4,.1,.3,1);pointer-events:none;filter:drop-shadow(0 .04em .05em rgba(0,0,0,.3))}
+.tok{position:absolute;left:0;top:0;transform:translate(-50%,-100%);translate:0 0;transition:translate var(--mv,.5s) cubic-bezier(.4,.1,.3,1);will-change:translate;pointer-events:none;filter:drop-shadow(0 .04em .05em rgba(0,0,0,.3))}
 .tok img{display:block;height:100%;width:auto}
 .tok.flip img{scale:-1 1}   /* 用 scale 屬性：跳躍動畫改 transform 時不會蓋掉轉向（導演 11-04 先往後看的 bug）*/
 .tok .you{position:absolute;left:50%;top:-.38em;width:.34em;height:.3em;transform:translateX(-50%);animation:bob .6s ease-in-out infinite alternate}
