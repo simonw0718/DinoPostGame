@@ -55,7 +55,11 @@ def source_of(w, manifest):
 
 def load_source(src):
     if 'image' in src:
-        im = Image.open(DIST / src['image'])
+        # 原圖 PNG 2026-11-04 搬出網站到 art-source/edge-src/（網站只放 WebP）；舊路徑找不到就去那裡找
+        p = DIST / src['image']
+        if not p.exists():
+            p = ROOT / 'art-source/edge-src' / src['image'].removeprefix('assets/')
+        im = Image.open(p)
     else:
         sh = Image.open(DIST / f"assets/{src['sheet']}-grid-v1.jpg")
         cw, ch = sh.width // SHEET_COLS, sh.height // SHEET_ROWS
