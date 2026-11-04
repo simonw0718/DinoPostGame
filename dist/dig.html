@@ -33,6 +33,8 @@
     .examples:empty { display: none; }
     .ex { display: flex; align-items: center; gap: 8px; padding: 6px 14px 6px 8px; border: 3px solid var(--gold); border-radius: 18px; background: var(--cream); box-shadow: 0 4px 0 #0000001a; font-size: clamp(28px, 6vw, 40px); font-weight: 1000; color: var(--ink); }
     .ex:active { transform: translateY(2px); box-shadow: 0 2px 0 #0000001a; }
+    .ex.chant { animation: exChant .9s ease-in-out; border-color: #e8574a; }
+    @keyframes exChant { 30% { transform: scale(1.12) rotate(-3deg); } 60% { transform: scale(1.08) rotate(2deg); } }
     .ex-art { width: clamp(44px, 9vw, 60px); height: clamp(44px, 9vw, 60px); display: grid; place-items: center; flex: none; object-fit: contain; font-size: .9em; line-height: 1; }
     .ex-art.sheet { width: auto; aspect-ratio: 1; background-repeat: no-repeat; background-size: 500% 200%; }
     .ex-art.sheet.animals { aspect-ratio: 4/5; }
@@ -142,7 +144,7 @@
     o.connect(g).connect(c.destination); o.start(t); o.stop(t + .22);
   }
   let level = (() => { try { return localStorage.getItem('dinopost-dig-level') || 'novice'; } catch { return 'novice'; } })();
-  let idx = 0, sym, strokeI, dug, wobble, digging = false, done = false, layers = {}, S = 1, ox = 0, oy = 0, slabT = 0;
+  let idx = 0, sym, chant = null, strokeI, dug, wobble, digging = false, done = false, layers = {}, S = 1, ox = 0, oy = 0, slabT = 0;
 
   const el = (tag, attrs = {}, parent) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (parent) parent.appendChild(n); return n; };
   const say = t => { bubble.textContent = t; };
@@ -434,9 +436,14 @@
     card.style.transform = `translate(${sx - cw / 2}px, ${sy - ch / 2}px)`;
     card.animate([{ opacity: 0, transform: `translate(${sx - cw / 2}px, ${sy - ch / 2 + 40}px) scale(.3)` }, { opacity: 1, transform: `translate(${sx - cw / 2}px, ${sy - ch / 2}px) scale(1)` }], { duration: calm ? 1 : 420, easing: 'cubic-bezier(.3,1.6,.5,1)', fill: 'forwards' });
     say(`挖到「${sym.ch}」的化石了！`);
-    // 念兩次；音訊被鎖或音檔慢到時最多等 2 秒，不讓遊戲卡住
+    // 念「ㄔ、ㄔ、吃飯、ㄔ」（導演 2026-11-04）：注音兩次 → 例詞一次（例詞卡跳一下）→ 注音一次；音訊被鎖或音檔慢到時每段最多等 2–2.5 秒，不讓遊戲卡住
     const speak = () => Promise.race([Dino.voice(VOICE[sym.ch]), wait(2000)]);
-    await speak(); await wait(200); speak();   // 第二次念的同時飛進圖鑑（不讓孩子等太久）
+    await speak(); await wait(200); await speak();
+    if (chant) {
+      await wait(200); chant.btn.classList.remove('chant'); void chant.btn.offsetWidth; chant.btn.classList.add('chant');
+      await Promise.race([Dino.voice(chant.w.zhAudio), wait(2500)]); await wait(200);
+    }
+    speak();   // 最後一次念的同時飛進圖鑑（不讓孩子等太久）
     const slot = $('book').children[idx], t = slot.getBoundingClientRect(), k = t.width / cw;
     const fly = card.animate([{ opacity: 1, transform: `translate(${sx - cw / 2}px, ${sy - ch / 2}px) scale(1)` }, { opacity: 1, transform: `translate(${t.left + t.width / 2 - cw / 2}px, ${t.top + t.height / 2 - ch / 2}px) scale(${k})` }], { duration: calm ? 1 : 650, easing: 'cubic-bezier(.5,0,.3,1)', fill: 'forwards' });
     await Promise.race([fly.finished, wait(950)]);   // 分頁在背景時動畫不走，最多等一下就往下
@@ -470,14 +477,17 @@
   function load() {
     sym = SYMBOLS[idx]; strokeI = 0; dug = 0; done = false; lastMound = 0; lastGlint = 0; pose = 'busy_look';
     Dino.preload?.([VOICE[sym.ch]]);
-    showExamples(); build();   // 先放例詞再排土塊：例詞列會改變舞台高度
+    showExamples(); if (chant) Dino.preload?.([chant.w.zhAudio]); build();   // 先放例詞再排土塊：例詞列會改變舞台高度
     say(level === 'hard' ? '從小旗子開始，照筆順挖！' : '從小旗子開始，在字框裡照箭頭挖！');
   }
   // 例詞：題庫裡有圖、注音含這個符號的詞，先挑注音等級低、字少的前 8 個再隨機取 2 個
+  // 第一個字就含這個注音的詞排前面（吃飯之於 ㄔ），挖完一起念時最好聽出來
   function showExamples() {
     const box = $('examples'); box.replaceChildren();
+    const first = w => w.zhuyin[0].includes(sym.ch) ? 0 : 1;
     const pool = WORDS.filter(w => w.pack !== 'dino' && (w.image || w.sheet) && [...w.zh].length === w.zhuyin.length && w.zhuyin.some(z => z.includes(sym.ch)))
-      .sort((a, b) => a.level.zhuyin - b.level.zhuyin || a.zh.length - b.zh.length).slice(0, 8);
+      .sort((a, b) => first(a) - first(b) || a.level.zhuyin - b.level.zhuyin || a.zh.length - b.zh.length).slice(0, 8);
+    chant = null;
     Dino.shuffle(pool).slice(0, 2).forEach(w => {
       const b = document.createElement('button'); b.type = 'button'; b.className = 'ex'; b.setAttribute('aria-label', w.zh);
       let art;
@@ -489,6 +499,7 @@
       b.append(art, word);
       b.addEventListener('pointerdown', e => e.stopPropagation());
       b.addEventListener('click', () => { if (w.zhAudio) Dino.voice(w.zhAudio); });
+      if (w.zhAudio && (!chant || first(w) < first(chant.w))) chant = { w, btn: b };   // 挖完一起念的例詞
       box.append(b);
     });
   }
