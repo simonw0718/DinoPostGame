@@ -237,11 +237,18 @@ PHONICS = {'a': 'æ', 'b': 'b', 'c': 'k', 'd': 'd', 'e': 'ɛ', 'f': 'f', 'g': '�
 PHONICS_STYLE = ('A friendly phonics teacher showing young children the SOUND each letter makes. Every item is an IPA phoneme '
                  'between slashes: pronounce only that one speech sound, short and crisp. Never say the letter name, never say '
                  'the word "slash", and never add an "uh" vowel after a consonant.')
-# x／y／z 用 IPA 兩次漏念（11-03）：導演 11-04 授權重試，改成直接寫念法的文字，單獨一批
-PHONICS_SPOKEN = {'x': 'ks', 'y': 'yuh', 'z': 'zzz'}
-PHONICS_SPOKEN_STYLE = ('A friendly phonics teacher showing young children the SOUND of three letters. Read each item exactly as '
-                        'spelled, short and crisp, as one phonics sound: "ks" is the end of "box", "yuh" is the start of "yes", '
-                        '"zzz" is a buzzing bee. Never say the letter names. Say all three items.')
+# x／y／z 用 IPA 兩次漏念（11-03）：導演 11-04 授權重試，改成直接寫念法的文字，單獨一批；同日加一起念的組合 sh／ch／th／ng／nk
+PHONICS_SPOKEN = {'x': ('ks', 'the end of "box"'), 'y': ('yuh', 'the start of "yes"'), 'z': ('zzz', 'a buzzing bee'),
+                  'sh': ('shhh', 'the quiet sound, the end of "fish"'), 'ch': ('ch', 'the start of "chip"'),
+                  'th': ('th', 'the start of "thin", tongue between teeth, no voice'), 'ng': ('ng', 'the end of "king"'),
+                  'nk': ('nk', 'the end of "pink"')}
+PHONICS.update({k: k for k in PHONICS_SPOKEN if k not in PHONICS})
+
+
+def spoken_style(group):
+    return ('A friendly phonics teacher showing young children letter SOUNDS. Read each item exactly as spelled, short and crisp, '
+            'as one phonics sound: ' + '; '.join(f'"{PHONICS_SPOKEN[l][0]}" is {PHONICS_SPOKEN[l][1]}' for l in group)
+            + f'. Never say the letter names. Say all {len(group)} items.')
 
 
 def phonics(letters):
@@ -250,15 +257,16 @@ def phonics(letters):
     letters = letters or list(PHONICS)
     out = ROOT / 'dist/assets/audio/phonics'
     out.mkdir(parents=True, exist_ok=True)
-    for i in range(0, len(letters), 4):
-        group = letters[i:i + 4]
+    step = len(letters) if set(letters) <= set(PHONICS_SPOKEN) else 4   # 念法文字那批一次送
+    for i in range(0, len(letters), step):
+        group = letters[i:i + step]
         folder = ROOT / 'audio-pilot/phonics-sounds' / ('batch-' + ''.join(group))
         folder.mkdir(parents=True, exist_ok=True)
         wav = folder / 'full.wav'
         body = {'model': MODEL,
                 'input': [{'type': 'user_input', 'content': [{'type': 'text',
-                    'text': ' <long pause> <long pause> <long pause> '.join(PHONICS_SPOKEN.get(l, f'/{PHONICS[l]}/') for l in group),
-                    'annotations': [{'type': 'speech_metadata', 'style': PHONICS_SPOKEN_STYLE if set(group) <= set(PHONICS_SPOKEN) else PHONICS_STYLE}]}]}],
+                    'text': ' <long pause> <long pause> <long pause> '.join(PHONICS_SPOKEN[l][0] if l in PHONICS_SPOKEN else f'/{PHONICS[l]}/' for l in group),
+                    'annotations': [{'type': 'speech_metadata', 'style': spoken_style(group) if set(group) <= set(PHONICS_SPOKEN) else PHONICS_STYLE}]}]}],
                 'response_format': {'type': 'audio'},
                 'generation_config': {'speech_config': [{'voice': VOICE}]}}
         (folder / 'request.json').write_text(json.dumps(body, ensure_ascii=False, indent=2) + '\n')
