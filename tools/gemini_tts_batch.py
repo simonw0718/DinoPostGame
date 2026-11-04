@@ -6,6 +6,7 @@ Usage: python3 tools/gemini_tts_batch.py 1|2|3
        python3 tools/gemini_tts_batch.py apply NAME              after listening: back up old MP3, replace
        python3 tools/gemini_tts_batch.py whack [ID ...]          分類快打出題句 "Let's hit... X!"（全部一次請求再裁切）→ dist/assets/audio/whack/
        python3 tools/gemini_tts_batch.py iggy howto|catch [ID ...] 伊奇（R27）玩法語音／接信題目，台詞在 dist/data/iggy_lines.json → dist/assets/audio/<kind>/
+       python3 tools/gemini_tts_batch.py cast [VOICE ...]          英文配音選角：每個聲音一次請求念 8 個字再裁切 → audio-pilot/voice-casting-20261104/
        python3 tools/gemini_tts_batch.py phonics [LETTER ...]     26 個字母「聲音」（不是名稱），拼字遊戲用（全部一次請求再裁切）→ dist/assets/audio/phonics/
 The key stays in ~/.config/dinopost/gemini-key-DINOZ. Never prints or saves it.
 Already generated batches are never sent again by this script.
@@ -306,7 +307,53 @@ def sound_bursts(wav, count):
     return merged
 
 
+# 英文配音換聲音選角（導演 2026-11-04：現在太死氣沉沉，要適合小孩、有朝氣、控制速度；可多聲音混用）
+CAST_WORDS = ['cat', 'fish', 'frog', 'cake', 'moon', 'banana', 'elephant', 'rainbow']
+CAST_VOICES = ['Puck', 'Zephyr', 'Leda', 'Laomedeia', 'Sadachbia', 'Autonoe', 'Achird', 'Fenrir']
+CAST_STYLE = ("A cheerful, warm children's TV host saying single English words to kids aged 3 to 6. Bright and smiling, "
+              'energetic but never shouting, very clear articulation, a slightly slow and even pace, each word said once.')
+
+
+def cast(voices):
+    """每個聲音一次請求念 CAST_WORDS，本機切開；audio-pilot/voice-casting-20261104/<voice>/，再接成一個試聽檔。"""
+    root = ROOT / 'audio-pilot/voice-casting-20261104'
+    gap = ROOT / 'audio-pilot/phonics-sounds/gap.mp3'
+    for voice in voices or CAST_VOICES:
+        folder = root / voice
+        folder.mkdir(parents=True, exist_ok=True)
+        wav = folder / 'full.wav'
+        body = {'model': MODEL,
+                'input': [{'type': 'user_input', 'content': [{'type': 'text',
+                    'text': ' <long pause> <long pause> '.join(w.capitalize() + '!' for w in CAST_WORDS),
+                    'annotations': [{'type': 'speech_metadata', 'style': CAST_STYLE}]}]}],
+                'response_format': {'type': 'audio'},
+                'generation_config': {'speech_config': [{'voice': voice.lower()}]}}
+        (folder / 'request.json').write_text(json.dumps(body, ensure_ascii=False, indent=2) + '\n')
+        if not wav.exists():
+            time.sleep(21)   # 免費額度每分鐘 3 次
+            try:
+                request_tts(body, folder, wav, f'cast {voice}: sending ONE TTS request for {len(CAST_WORDS)} words')
+            except RuntimeError as error:
+                print(f'{voice}: FAILED {error}', flush=True); continue
+        try:
+            _, speech, _ = speech_intervals(wav, len(CAST_WORDS))
+        except RuntimeError as error:
+            print(f'{voice}: cut FAILED {error}', flush=True); continue
+        parts = []
+        for word, (a, b) in zip(CAST_WORDS, speech):
+            clip = folder / f'{word}.mp3'
+            run(['ffmpeg', '-v', 'error', '-y', '-ss', f'{max(0, a - 0.05):.3f}', '-to', f'{b + 0.12:.3f}', '-i', str(wav),
+                 '-ac', '1', '-ar', '24000', '-codec:a', 'libmp3lame', '-qscale:a', '4', str(clip)])
+            parts += [clip, gap]
+        (folder / 'concat.txt').write_text(''.join(f"file '{p}'\n" for p in parts))
+        run(['ffmpeg', '-v', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', str(folder / 'concat.txt'),
+             '-codec:a', 'libmp3lame', '-qscale:a', '4', str(root / f'{voice}.mp3')])
+        print(f'{voice}: ok ' + ' '.join(f'{w}={b - a:.2f}s' for w, (a, b) in zip(CAST_WORDS, speech)), flush=True)
+
+
 def main():
+    if sys.argv[1] == 'cast':
+        return cast(sys.argv[2:])
     if sys.argv[1] == 'phonics':
         return phonics(sys.argv[2:])
     if sys.argv[1] == 'iggy':
