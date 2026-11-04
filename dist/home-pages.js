@@ -32,7 +32,7 @@
     nav.addEventListener('scroll', () => { clearTimeout(sync.t); sync.t = setTimeout(sync, 60); }, { passive: true });
     addEventListener('resize', () => { nav.style.scrollBehavior = 'auto'; nav.scrollLeft = at() * nav.clientWidth; nav.style.scrollBehavior = ''; });
     sync();
-    // 分類鈕字自動縮放（導演 2026-11-04 回報窄手機字被切）：不靠螢幕寬度猜，實際量每顆鈕放不放得下。
+    // 分類鈕字自動縮放（導演 2026-11-04 回報窄手機字被切）：不靠螢幕寬度推算，實際量每顆鈕放不放得下。
     // 先試圖示＋長字 18→16px，再長字（學英文）18→14px，還放不下就改左右捲軸（導演 11-04：字不可省成「英文」，選捲軸不選 2×2）；鈕寬變了（轉向、改視窗）就重量。
     const fitTabs = () => {
       const fits = () => tabs.every(t => {

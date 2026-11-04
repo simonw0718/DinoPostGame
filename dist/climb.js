@@ -615,7 +615,7 @@
       b.innerHTML = `<img src="assets/cast/${d.img}__hello.webp" alt=""><i class="tick" aria-hidden="true"><svg viewBox="0 0 40 40"><use href="#i-tick"/></svg></i>`; box.appendChild(b);
     });
   }
-  // 選單規則說明（導演 11-04 晚）：選哪一級就顯示那一級怎麼玩＋小範例
+  // 選單規則說明（導演 11-04 晚）：選哪一級就顯示那一級玩法＋小範例
   const RULES = {
     one: { text: '擲骰子，數點點，走幾格！', dice: [3], num: false, eq: '' },
     two: { text: '我的號碼加骰子，算出走到幾號！', dice: [3], num: true, eq: [5, 3] },

@@ -20,7 +20,7 @@
   // 不能接的奇怪物品：沿用題庫圖（米白底，用 multiply 融進天空）
   const JUNK = ['emoji-6x8-v1/kidapp-sock', 'new100/new-broom', 'new100/new-mop', 'new100/new-bucket', 'emoji-6x8-v1/object-fork', 'emoji-6x8-v1/object-spoon',
     'new100/new-kettle', 'emoji-6x8-v1/kidapp-mushroom', 'emoji-6x8-v1/kidapp-hammer', 'new100/new-comb', 'new100/new-bottle', 'emoji-6x8-v1/kidapp-pumpkin',
-    'new100/new-toaster', 'new100/new-lettuce'].map(p => `assets/rebuilt/${p}.png`);
+    'new100/new-toaster', 'new100/new-lettuce'].map(p => `assets/rebuilt/${p}.webp`);
   const table = {
     '接信大郵袋': ['ㄐㄧㄝ', 'ㄒㄧㄣˋ', 'ㄉㄚˋ', 'ㄧㄡˊ', 'ㄉㄞˋ'],
     '點一下，開始接信！': ['ㄉㄧㄢˇ', 'ㄧ', 'ㄒㄧㄚˋ', '', 'ㄎㄞ', 'ㄕˇ', 'ㄐㄧㄝ', 'ㄒㄧㄣˋ', ''],
