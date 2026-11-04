@@ -1,5 +1,5 @@
 {
- "_note": "伊奇語音台詞（導演 2026-10-31 核准）。howto＝各遊戲第一次玩時念的玩法（中文）；catch＝接信大郵袋每局題目（英文）。生成：python3 tools/gemini_tts_batch.py iggy howto|catch",
+ "_note": "伊奇語音台詞（導演 2026-10-31 核准）。howto＝各遊戲第一次玩時念的玩法（中文）；catch＝接信大郵袋每局題目（英文）。生成：python3 tools/gemini_tts_batch.py iggy howto|catch；climb＝上山送信遊戲旁白（導演 2026-11-04 授權 --allow-model，只送台詞文字）",
  "voice": {
   "source": "恐龍郵局 voices/character_voice_routes.json 伊奇 R27",
   "model": "gemini-3.8-flash-tts",
@@ -8,7 +8,8 @@
  },
  "style": {
   "howto": "自然台灣華語，伊奇是好奇、認真的人類新人郵差，正在邀請小朋友一起玩遊戲；語氣親切、帶一點好奇和興奮，中速清楚，每句之間停頓要長。不說教、不裝幼兒、不作主播腔。",
-  "catch": "Iggy, a friendly young mail carrier, cheerfully telling young children which letters to catch in a game; clear, warm and excited, moderate pace, a long pause between phrases."
+  "catch": "Iggy, a friendly young mail carrier, cheerfully telling young children which letters to catch in a game; clear, warm and excited, moderate pace, a long pause between phrases.",
+  "climb": "自然台灣華語，伊奇是好奇、認真的人類新人郵差，正在帶小朋友玩上山送信比賽，當遊戲旁白；語氣親切、帶一點好奇和興奮，中速清楚，每句之間停頓要長。不說教、不裝幼兒、不作主播腔。"
  },
  "howto": [
   {
@@ -200,6 +201,148 @@
   {
    "id": "green-star",
    "text": "Catch the green stars!"
+  }
+ ],
+ "climb": [
+  {
+   "id": "intro",
+   "text": "我們來比賽！看誰先把信送到山頂大樹下，漢默爺爺的樹洞家！"
+  },
+  {
+   "id": "turn_you",
+   "text": "輪到你了！點一下骰子，丟出去！"
+  },
+  {
+   "id": "turn_abao",
+   "text": "輪到小雞阿暴了！"
+  },
+  {
+   "id": "turn_pairo",
+   "text": "輪到派羅了！"
+  },
+  {
+   "id": "turn_feifei",
+   "text": "輪到飛飛了！"
+  },
+  {
+   "id": "roll_1",
+   "text": "擲到一！"
+  },
+  {
+   "id": "roll_2",
+   "text": "擲到二！"
+  },
+  {
+   "id": "roll_3",
+   "text": "擲到三！"
+  },
+  {
+   "id": "roll_4",
+   "text": "擲到四！"
+  },
+  {
+   "id": "roll_5",
+   "text": "擲到五！"
+  },
+  {
+   "id": "roll_6",
+   "text": "擲到六！"
+  },
+  {
+   "id": "step_pick",
+   "text": "一格一格點，我們一起數！"
+  },
+  {
+   "id": "tap_target",
+   "text": "點一點，要停在哪一顆石頭？"
+  },
+  {
+   "id": "arrive_ten",
+   "text": "整十石！郵差小挑戰來囉！"
+  },
+  {
+   "id": "quiz_count",
+   "text": "數數看，有幾個包裹？"
+  },
+  {
+   "id": "quiz_ten",
+   "text": "車上有這些包裹，還差幾個，就湊成十個？"
+  },
+  {
+   "id": "quiz_more",
+   "text": "哪一堆的包裹比較多？"
+  },
+  {
+   "id": "quiz_ok",
+   "text": "答對了！給你一張郵票！"
+  },
+  {
+   "id": "quiz_no",
+   "text": "沒關係，我們一起數，你看！"
+  },
+  {
+   "id": "event_wing",
+   "text": "翼龍順風載我們一程，往前三格！"
+  },
+  {
+   "id": "event_vine",
+   "text": "哎呀，藤蔓纏住腳了，停一回合。"
+  },
+  {
+   "id": "event_mud",
+   "text": "噗滋！踩到泥巴坑，滑回兩格！"
+  },
+  {
+   "id": "event_sneeze",
+   "text": "哈啾！腕龍打噴嚏，大家退一格！"
+  },
+  {
+   "id": "event_guide",
+   "text": "小空從蕨叢跳出來帶路，往前兩格！"
+  },
+  {
+   "id": "catch_prompt",
+   "text": "咦？阿暴數對了嗎？數錯就按，不對！"
+  },
+  {
+   "id": "catch_ok",
+   "text": "抓到了！阿暴多走一格，謝謝你！"
+  },
+  {
+   "id": "win_you",
+   "text": "太棒了！我們先到山頂大樹了！"
+  },
+  {
+   "id": "win_npc",
+   "text": "對手先到了，沒關係，我們也到了！"
+  },
+  {
+   "id": "goal",
+   "text": "到了！信送到漢默爺爺的樹洞家了！"
+  },
+  {
+   "id": "turn_xiaokong",
+   "text": "輪到小空了！"
+  },
+  {
+   "id": "event_guide_feifei",
+   "text": "飛飛從蕨叢飛出來帶路，往前兩格！"
+  },
+  {
+   "id": "count_dice",
+   "text": "數一數，骰子有幾點？我們走幾格？"
+  },
+  {
+   "id": "move_ok",
+   "text": "數對了！好棒！"
+  },
+  {
+   "id": "move_fix",
+   "text": "沒關係，我們一起一格一格數！"
+  },
+  {
+   "id": "tap_back",
+   "text": "往回走！要退到哪一顆石頭？"
   }
  ]
 }
