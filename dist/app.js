@@ -348,6 +348,7 @@ function updateProgress() {
   $('progressDots').replaceChildren(...state.round.map((_, i) => {
     const dot = document.createElement('span'); dot.className = 'dot';
     if (i < state.index) dot.classList.add(state.results[i] ? 'correct' : 'wrong');
+    if (i === state.index - 1) dot.classList.add('just');   // 剛完成的那顆彈一下（進度推進看得見）
     if (i === state.index) dot.classList.add('current');
     return dot;
   }));

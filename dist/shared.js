@@ -6,6 +6,31 @@ window.Dino = (() => {
   try { if (muteQ !== null) sessionStorage.setItem('dinoMute', muteQ); } catch { /* ok */ }
   let muted = false; try { muted = sessionStorage.getItem('dinoMute') === '1'; } catch { /* ok */ }
   if (muted) { const play = HTMLMediaElement.prototype.play; HTMLMediaElement.prototype.play = function () { this.muted = true; return play.call(this); }; }
+  // 動態共用層（動畫盤點 2026-11-04）
+  // reduced：使用者要求減少動態時，所有 .animate() 的無限循環只跑一次（蛋擺動、提示脈動等不再一直動），短回饋照常保留
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced && Element.prototype.animate) {
+    const native = Element.prototype.animate;
+    Element.prototype.animate = function (frames, opts) {
+      if (opts && typeof opts === 'object' && opts.iterations === Infinity) opts = { ...opts, iterations: 1 };
+      return native.call(this, frames, opts);
+    };
+  }
+  // 按下回饋：所有按鈕／連結／可點卡片，手指一碰就微微下沉，放開彈回（用獨立的 scale 屬性，不蓋掉元件自己的 transform）。
+  // 拖曳物件、或自己有按下效果的元件加 data-no-press 排除。
+  const PRESS = 'button, a[href], [role="button"], [data-press]';
+  const pressed = new WeakMap();
+  const release = el => { const a = pressed.get(el); if (!a) return; pressed.delete(el);
+    el.animate([{ scale: '.94' }, { scale: '1.03', offset: .55 }, { scale: '1' }], { duration: reduced ? 1 : 220, easing: 'cubic-bezier(.16,1,.3,1)' }); a.cancel(); };
+  document.addEventListener('pointerdown', e => {
+    const el = e.target.closest?.(PRESS);
+    if (!el || el.closest('[data-no-press]') || el.disabled || el.getAttribute('aria-disabled') === 'true' || pressed.has(el)) return;
+    pressed.set(el, el.animate([{ scale: '1' }, { scale: '.94' }], { duration: reduced ? 1 : 90, easing: 'ease-out', fill: 'forwards' }));
+    const up = () => { release(el); removeEventListener('pointerup', up, true); removeEventListener('pointercancel', up, true); };
+    addEventListener('pointerup', up, true); addEventListener('pointercancel', up, true);
+  }, { passive: true, capture: true });
+  // 重播一個 class 動畫（取代各遊戲手寫的 remove → offsetWidth → add）
+  const replay = (el, cls) => { if (!el) return; el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); };
   // 鎖住 iOS 整頁上下滑動／彈動：只放行真的捲得動的框（題庫清單、設定框）與滑桿。
   document.documentElement.style.overscrollBehavior = 'none';
   const scrollable = el => {
@@ -372,5 +397,5 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
 
   return { voice, characters, storageKeys, shuffle, loadQueue, fitActor, parseZhuyin, makeBpmUnit, kidText,
     isDino, isNumber, topicGroup, visualGroup, eligibleWords, loadHistory, saveHistory, selectRound, audioPath, burst, streakThreshold, dinoMode, setDinoMode, taskMode,
-    sfx, bgm, menuTaps, goTo, previews, howto, preload };
+    sfx, bgm, menuTaps, goTo, previews, howto, preload, reduced, replay };
 })();

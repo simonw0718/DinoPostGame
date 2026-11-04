@@ -166,6 +166,7 @@
   }
   function spawn(x, sym = nextSymbol()) {
     const el = document.createElement('button'); el.type = 'button';
+    el.dataset.noPress = '';   // 拖曳注音章，自己有按下效果
     el.className = `zb-tile${toneMarks.has(sym) ? ' tone' : consonants.has(sym) ? '' : ' vowel'}`;
     el.setAttribute('aria-label', toneMarks.has(sym) ? `聲調 ${sym}` : `注音 ${sym}`);
     const stamp = document.createElement('span'); stamp.className = 'zb-stamp'; stamp.innerHTML = symHtml(sym);

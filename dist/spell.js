@@ -153,7 +153,7 @@
     $('tray').classList.remove('is-off');
     $('tray').replaceChildren(...Dino.shuffle([...answers, ...extra]).map(({ letter, sound: k }) => {
       const el = document.createElement('button'); el.type = 'button';
-      el.className = tileClass('sp-tile', letter);
+      el.className = tileClass('sp-tile', letter); el.dataset.noPress = '';   // 拖曳郵票，自己有按下效果
       el.setAttribute('aria-label', `字母 ${letter}`);
       const stamp = document.createElement('span'); stamp.className = 'zb-stamp'; stamp.textContent = letter;
       el.append(stamp);
