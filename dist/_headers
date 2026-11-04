@@ -99,6 +99,18 @@
   Cache-Control: no-cache
 /pack_levels.json
   Cache-Control: no-cache
+/climb
+  Cache-Control: no-cache
+/climb.html
+  Cache-Control: no-cache
+/climb.js
+  Cache-Control: no-cache
+/climb.css
+  Cache-Control: no-cache
+/climb-sample.html
+  Cache-Control: no-cache
+/assets/climb/board.json
+  Cache-Control: no-cache
 /assets/audio/*
   Cache-Control: no-cache
 /mole

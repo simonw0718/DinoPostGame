@@ -107,3 +107,10 @@ html[data-intro="pending"] .selector-letter,html[data-intro="pending"] .start-st
 /* 分頁鈕平分寬度不超出信紙（2026-10-29 導演回報 iPhone 超框） */
 .pager .tab{flex:1 1 0;min-width:0;justify-content:center}
 @media(max-width:480px){.pager{gap:5px}.pager .tab{gap:2px;padding:3px 4px;font-size:13px;border-width:2px}.pager .tab .tab-icon{display:none}}
+/* 分頁鈕長短字（2026-11-04 加「玩數學」第四頁）：手機只顯示兩字，字放大 */
+.pager .tab .tab-short{display:none}
+@media(max-width:480px){.pager .tab{font-size:15px}.pager .tab .tab-long{display:none}.pager .tab .tab-short{display:inline-flex}}
+/* 第 10 張：樹洞大賽跑（山坡綠） */
+.game-choice.is-climb{position:relative}
+/* 四顆分頁鈕時 iPad 直拿（≤900）圖示會把字擠出框，只留字 */
+@media(max-width:900px){.pager .tab .tab-icon{display:none}}

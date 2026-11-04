@@ -150,3 +150,16 @@
 
 /* 看不到時暫停（home-intro.js 用 IntersectionObserver 加 .pv-off；開場中 .game-selector 尚未 data-intro=done 也暫停） */
 .pv.pv-off,.pv.pv-off *,.game-selector:not([data-intro="done"]) .pv,.game-selector:not([data-intro="done"]) .pv *{animation-play-state:paused!important}
+/* 預覽：之字山路，伊奇照骰子點數一格一格往上走，山頂大樹插旗；3.2s 循環（2026-11-04 樹洞大賽跑） */
+.pv-climb{background:#dff0f6}
+.pv-climb svg{position:absolute;inset:0;width:100%;height:100%}
+.pv-climb .hill{fill:#a8d68a}
+.pv-climb .road{fill:none;stroke:#f3dca6;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
+.pv-climb .cells circle{fill:#fffaf0;stroke:#c9a86a;stroke-width:1}
+.pv-climb .tree rect{fill:#8a5a2c}.pv-climb .tree circle{fill:#3f9a54}
+.pv-climb .flag{fill:#e0473a;stroke:#8a5a2c;stroke-width:1.5;stroke-linejoin:round}
+.pv-climb .runner{position:absolute;left:0;top:0;height:30px;transform:translate(4px,58px);animation:pvClimb 3.2s steps(1) infinite;filter:drop-shadow(0 2px 0 #0003)}
+.pv-climb .die{position:absolute;left:6px;top:6px;display:grid;place-items:center;width:24px;height:24px;border-radius:6px;background:#fff;color:#17593f;font:1000 15px/1 "Naikai",ui-rounded,system-ui,sans-serif;box-shadow:inset 0 -3px 0 #d9d2c0,0 2px 2px #0002;animation:pvDie 3.2s infinite}
+@keyframes pvClimb{0%{transform:translate(4px,58px)}18%{transform:translate(32px,58px)}30%{transform:translate(60px,58px)}42%{transform:translate(90px,58px)}62%{transform:translate(72px,38px)}74%{transform:translate(44px,38px)}86%,100%{transform:translate(16px,38px)}}
+@keyframes pvDie{0%,8%{transform:rotate(-30deg) scale(.7)}14%,100%{transform:none}}
+@media(prefers-reduced-motion:reduce){.pv-climb .runner,.pv-climb .die{animation:none}}
