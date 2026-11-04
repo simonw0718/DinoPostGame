@@ -648,13 +648,14 @@
     syncPick();
     try { board = await (await fetch('assets/climb/board.json')).json(); } catch (e) { console.error('board.json 載入失敗', e); return; }
     L = LEVELS[levelKey]; N = L.N; layout(); buildStones(); camera([], { overview: true, instant: true });
+    requestAnimationFrame(() => $('view').classList.add('laid'));   // 排好位置才顯示背景（避免開場閃原圖）
     Dino.preload([...VOICES.map(voiceUrl), ...Array.from({ length: 60 }, (_, i) => `assets/audio/num/zh/${i + 1}.mp3`)]);
     Dino.bgm.start(); Dino.menuTaps($('ready')); Dino.menuTaps($('finish'));
     document.querySelectorAll('[data-lv]').forEach(b => b.addEventListener('click', () => { levelKey = b.dataset.lv; dirty = true; save(); syncPick(); }));
     document.querySelector('.dino-home').addEventListener('click', e => { e.preventDefault(); Dino.goTo('index.html'); });
     $('menuBtn').addEventListener('click', () => { Dino.sfx('tap', .5); paused = true; $('ready').hidden = false; document.body.classList.add('menu'); Dino.bgm.start(); });
     $('start').addEventListener('click', () => {
-      $('ready').hidden = true; document.body.classList.remove('menu'); Dino.bgm.stop(); paused = false;
+      $('ready').hidden = true; $('ready').classList.remove('first'); document.body.classList.remove('menu'); Dino.bgm.stop(); paused = false;
       if (dirty || !running) newGame();
     });
     $('again').addEventListener('click', () => { $('finish').hidden = true; Dino.bgm.stop(); Dino.voice.stop(); newGame(); });

@@ -222,3 +222,7 @@ body.menu #bubble,body.menu .dice-wrap{visibility:hidden}
 .eq i.minus,.rule-eq i.minus{color:#d93d2f}
 .d3.minus .dnum{color:#fff0ee;-webkit-text-stroke-color:#a3261b;text-shadow:0 calc(var(--d)*.03) 0 #a3261b}
 .d3.minus .face.f1{box-shadow:inset 0 0 0 calc(var(--d)*.05) #e8574a}
+/* 開場不閃（導演 11-04 晚回報『一開始先閃出舊版畫面』）：背景圖在 board.json 排好位置前先藏著；第一次的選單不做淡入 */
+#world{opacity:0;transition:transform .75s cubic-bezier(.3,.7,.2,1),opacity .25s}
+.cl-view.laid #world{opacity:1}
+#ready.first{animation:none}
