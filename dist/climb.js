@@ -44,7 +44,10 @@
   ].forEach(([t, s]) => Z(t, s));
   const CN = ['', '一', '二', '三', '四', '五', '六', '七', '八', '九', '十'], CNZ = ['', 'ㄧ', 'ㄦˋ', 'ㄙㄢ', 'ㄙˋ', 'ㄨˇ', 'ㄌㄧㄡˋ', 'ㄑㄧ', 'ㄅㄚ', 'ㄐㄧㄡˇ', 'ㄕˊ'];
   for (let v = 1; v <= 10; v++) { Z(`擲到${CN[v]}！`, `ㄓˋ ㄉㄠˋ ${CNZ[v]}`); Z(`退${CN[v]}格！`, `ㄊㄨㄟˋ ${CNZ[v]} ㄍㄜˊ`); }
-  [['算一算，走到幾號？', 'ㄙㄨㄢˋ ㄧ ㄙㄨㄢˋ ㄗㄡˇ ㄉㄠˋ ㄐㄧˇ ㄏㄠˋ'], ['超過山頂了，走到山頂！', 'ㄔㄠ ㄍㄨㄛˋ ㄕㄢ ㄉㄧㄥˇ ㄌㄜ˙ ㄗㄡˇ ㄉㄠˋ ㄕㄢ ㄉㄧㄥˇ'], ['算對了！好棒！', 'ㄙㄨㄢˋ ㄉㄨㄟˋ ㄌㄜ˙ ㄏㄠˇ ㄅㄤˋ'],
+  [['擲骰子，數點點，走幾格！', 'ㄓˋ ㄕㄞˇ ㄗ˙ ㄕㄨˇ ㄉㄧㄢˇ ㄉㄧㄢˇ ㄗㄡˇ ㄐㄧˇ ㄍㄜˊ'], ['走三格', 'ㄗㄡˇ ㄙㄢ ㄍㄜˊ'],
+   ['我的號碼加骰子，算出走到幾號！', 'ㄨㄛˇ ㄉㄜ˙ ㄏㄠˋ ㄇㄚˇ ㄐㄧㄚ ㄕㄞˇ ㄗ˙ ㄙㄨㄢˋ ㄔㄨ ㄗㄡˇ ㄉㄠˋ ㄐㄧˇ ㄏㄠˋ'],
+   ['我的號碼加兩顆骰子，算出走到幾號！', 'ㄨㄛˇ ㄉㄜ˙ ㄏㄠˋ ㄇㄚˇ ㄐㄧㄚ ㄌㄧㄤˇ ㄎㄜ ㄕㄞˇ ㄗ˙ ㄙㄨㄢˋ ㄔㄨ ㄗㄡˇ ㄉㄠˋ ㄐㄧˇ ㄏㄠˋ'],
+   ['算一算，走到幾號？', 'ㄙㄨㄢˋ ㄧ ㄙㄨㄢˋ ㄗㄡˇ ㄉㄠˋ ㄐㄧˇ ㄏㄠˋ'], ['超過山頂了，走到山頂！', 'ㄔㄠ ㄍㄨㄛˋ ㄕㄢ ㄉㄧㄥˇ ㄌㄜ˙ ㄗㄡˇ ㄉㄠˋ ㄕㄢ ㄉㄧㄥˇ'], ['算對了！好棒！', 'ㄙㄨㄢˋ ㄉㄨㄟˋ ㄌㄜ˙ ㄏㄠˇ ㄅㄤˋ'],
    ['走幾格？點石頭！', 'ㄗㄡˇ ㄐㄧˇ ㄍㄜˊ ㄉㄧㄢˇ ㄕˊ ㄊㄡ˙'], ['數一數，走幾格？', 'ㄕㄨˇ ㄧ ㄕㄨˇ ㄗㄡˇ ㄐㄧˇ ㄍㄜˊ'], ['數對了！好棒！', 'ㄕㄨˇ ㄉㄨㄟˋ ㄌㄜ˙ ㄏㄠˇ ㄅㄤˋ'],
    ['我們一起一格一格數！', 'ㄨㄛˇ ㄇㄣ˙ ㄧ ㄑㄧˇ ㄧ ㄍㄜˊ ㄧ ㄍㄜˊ ㄕㄨˇ'], ['數好了，走！', 'ㄕㄨˇ ㄏㄠˇ ㄌㄜ˙ ㄗㄡˇ'], ['往回走幾格？點石頭！', 'ㄨㄤˇ ㄏㄨㄟˊ ㄗㄡˇ ㄐㄧˇ ㄍㄜˊ ㄉㄧㄢˇ ㄕˊ ㄊㄡ˙']].forEach(([t, z]) => Z(t, z));
 
@@ -72,9 +75,9 @@
   // ───────── 狀態 ─────────
   const view = $('view'), world = $('world');
   let board = null, P = [], stones = [], L = LEVELS.one, N = 40;
-  let levelKey = 'one', npcKey = 'abao';
-  try { levelKey = localStorage.getItem('dinopost-climb-level') || levelKey; npcKey = localStorage.getItem('dinopost-climb-npc') || npcKey; } catch { /* ok */ }
-  if (!LEVELS[levelKey]) levelKey = 'one'; if (!NPCS[npcKey]) npcKey = 'abao';
+  let levelKey = 'two', npcKey = 'abao';   // 導演 11-04 晚：預設普通
+  try { levelKey = localStorage.getItem('dinopost-climb-level2') || levelKey; npcKey = localStorage.getItem('dinopost-climb-npc') || npcKey; } catch { /* ok */ }
+  if (!LEVELS[levelKey]) levelKey = 'two'; if (!NPCS[npcKey]) npcKey = 'abao';
   let G = 0, running = false, dirty = true, paused = false, stamps = 0, winner = null, lastCam = null;
   let you, npc, tapHandler = null, wrongClick = null;
   const aborters = new Set();
@@ -240,7 +243,7 @@
   let tiles = [];
   async function throwDice(count, fromNpc, sign, who) {   // who＝擲骰的角色：數骰子時顯示他現在站的號碼（導演 11-04：才能用加法決定位置）   // 回傳點數陣列；sign 給 '+'／'-' 就多丟一顆加減骰
     const vw = view.clientWidth, vh = view.clientHeight, w = dieW(), wrap = $('diceWrap');
-    wrap.innerHTML = ''; wrap.classList.remove('parked', 'eqmode'); view.classList.remove('parked');
+    wrap.innerHTML = ''; wrap.classList.remove('parked', 'eqmode'); view.classList.remove('parked', 'eqstack');
     const th = document.createElement('div'); th.className = 'thrower'; th.style.setProperty('--w', w + 'px');
     tiles = Array.from({ length: count }, () => makeDie(w * .62)); tiles.forEach(t => { t._cube.style.transform = rotStr(1); th.appendChild(t); });
     let sc = null; if (sign) { sc = makeCube(w * .45, true); if (tiles[1]) th.insertBefore(sc, tiles[1]); else th.appendChild(sc); }   // 困難：骰子 ± 骰子
@@ -283,7 +286,7 @@
     numVoice(vals[0]); await sleep(800);
     await countTile(tiles[1], vals[0]);
   }
-  const clearDice = () => { $('diceWrap').innerHTML = ''; $('diceWrap').classList.remove('parked', 'eqmode'); view.classList.remove('parked'); tiles = []; };
+  const clearDice = () => { $('diceWrap').innerHTML = ''; $('diceWrap').classList.remove('parked', 'eqmode'); view.classList.remove('parked', 'eqstack'); tiles = []; };
   // 數完後把骰子縮小停到左上角，不擋住要點的石頭（導演 11-04）；孩子點骰子會幫數那一顆
   function parkDice(tappable) {
     const wrap = $('diceWrap'), th = wrap.querySelector('.thrower'); if (!th) return;
@@ -293,7 +296,10 @@
     if (!RM) th.animate([{ transform: `translate(${view.clientWidth * .3}px,${view.clientHeight * .3}px) scale(${1 / k})` }, { transform: 'none' }], { duration: 320 / FAST, easing: 'cubic-bezier(.3,.7,.3,1)' });
     tiles.forEach(t => t.classList.toggle('tappable', !!tappable));
     const ref = wrap.classList.contains('eqmode') ? wrap.querySelector('.eq') : th;
-    view.style.setProperty('--parkw', (ref ? ref.getBoundingClientRect().right - view.getBoundingClientRect().left + 16 : th.getBoundingClientRect().width + 30) + 'px');   // 泡泡讓開骰子
+    view.style.setProperty('--parkw', (ref ? ref.getBoundingClientRect().right - view.getBoundingClientRect().left + 16 : th.getBoundingClientRect().width + 30) + 'px');
+    // 手機：算式右邊剩不到 420px 時，泡泡改放算式下方（導演 11-04 晚：泡泡被擠成一字一行）
+    const vr = view.getBoundingClientRect(), stack = !!ref && ref !== th && vr.right - ref.getBoundingClientRect().right < 420;
+    view.classList.toggle('eqstack', stack); if (stack) view.style.setProperty('--parkh', ref.getBoundingClientRect().bottom - vr.top + 10 + 'px');   // 泡泡讓開骰子
   }
   $('diceWrap').addEventListener('click', async e => {
     const t = e.target.closest('.d3.tappable'); if (!t || t._busy) return;
@@ -598,11 +604,30 @@
       b.innerHTML = `<img src="assets/cast/${d.img}__hello.webp" alt=""><i class="tick" aria-hidden="true"><svg viewBox="0 0 40 40"><use href="#i-tick"/></svg></i>`; box.appendChild(b);
     });
   }
+  // 選單規則說明（導演 11-04 晚）：選哪一級就顯示那一級怎麼玩＋小範例
+  const RULES = {
+    one: { text: '擲骰子，數點點，走幾格！', dice: [3], num: false, eq: '' },
+    two: { text: '我的號碼加骰子，算出走到幾號！', dice: [3], num: true, eq: [5, 3] },
+    hard: { text: '我的號碼加兩顆骰子，算出走到幾號！', dice: [3, 2], num: true, eq: [5, 3, 2] }
+  };
+  function showRule() {
+    const r = RULES[levelKey], box = $('rule'); if (!box) return; box.innerHTML = '';
+    const ex = document.createElement('div'); ex.className = 'rule-ex';
+    r.dice.forEach(v => {
+      const c = makeCube(52); c._num = r.num;
+      if (r.num) c._cube.querySelectorAll('.face').forEach((f, i) => { f.classList.remove('pts'); f.classList.add('num'); f.innerHTML = `<b>${[v, 6, 4, 9, 1, 7][i]}</b>`; });
+      c._set(v); c._cube.style.transform = 'rotateX(-22deg) rotateY(-28deg)'; ex.appendChild(c);
+    });
+    if (r.eq) { const q = document.createElement('div'); q.className = 'rule-eq'; q.innerHTML = r.eq.map(v => `<b>${v}</b>`).join('<i>＋</i>') + `<i>＝</i><b class="ans">${r.eq.reduce((a, b) => a + b, 0)}</b>`; ex.appendChild(q); }
+    else { const q = document.createElement('div'); q.className = 'rule-eq'; q.innerHTML = '<b class="ans">3</b>'; kid(q.appendChild(document.createElement('span')), '走三格'); ex.appendChild(q); }
+    const p = document.createElement('p'); kid(p, r.text); box.append(ex, p);
+  }
   function syncPick() {
+    showRule();
     document.querySelectorAll('[data-lv]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lv === levelKey)));
     document.querySelectorAll('[data-npc]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.npc === npcKey)));
   }
-  const save = () => { try { localStorage.setItem('dinopost-climb-level', levelKey); localStorage.setItem('dinopost-climb-npc', npcKey); } catch { /* ok */ } };
+  const save = () => { try { localStorage.setItem('dinopost-climb-level2', levelKey); localStorage.setItem('dinopost-climb-npc', npcKey); } catch { /* ok */ } };
 
   async function init() {
     document.documentElement.classList.toggle('dino-mode', Dino.dinoMode());

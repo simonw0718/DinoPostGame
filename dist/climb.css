@@ -203,8 +203,18 @@ body.menu #bubble,body.menu .dice-wrap{visibility:hidden}
 #fgImg{filter:brightness(.9) saturate(.9)}
 .stone .rock{filter:brightness(.92)}
 /* 普通／困難：骰面直接寫數字；停靠時只留算式（導演 11-04 晚） */
-.face.num{display:grid;place-items:center;padding:0}
+.face.num{display:grid;grid:none;place-items:center;padding:0}
 .face.num b{font-size:calc(var(--d)*.56);font-weight:1000;line-height:1;color:#5a3500}
 .dice-wrap.parked.eqmode .thrower{display:none}
 .dice-wrap.parked.eqmode .eq{display:flex;justify-self:start;align-self:start;margin:0;padding:4px 16px;font-size:clamp(30px,5.4vw,46px)}
 .eq .q.ans{color:#2f9152;animation:popIn .3s cubic-bezier(.2,1.5,.4,1) both}
+/* 選單規則說明框（導演 11-04 晚） */
+.rule{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:min(560px,92vw);padding:10px 18px 12px;border:4px solid var(--gold);border-radius:24px;background:var(--cream);box-shadow:0 5px 0 #c89c52;color:var(--brown);font-weight:1000}
+.rule p{margin:0;font-size:clamp(20px,4.2vw,26px);display:flex;flex-wrap:wrap;justify-content:center}
+.rule-ex{display:flex;align-items:center;gap:14px;min-height:64px}
+.rule-ex .d3{--d:52px}
+.rule-eq{display:flex;align-items:center;gap:6px;font-size:clamp(28px,5.6vw,38px)}
+.rule-eq i{font-style:normal;color:#e0662c}
+.rule-eq .ans{color:#2f9152}
+.rule-eq span{display:flex;font-size:.75em}
+.cl-view.parked.eqstack #bubble{left:10px;top:var(--parkh,90px);max-width:calc(100% - 20px)}
