@@ -99,3 +99,12 @@
 @keyframes pvsFly{0%,30%{transform:rotate(3deg)}55%,90%{transform:translate(-5px,-53px) scale(.95)}100%{transform:rotate(3deg)}}
 @keyframes pvsSlot{0%,54%{opacity:1}56%,90%{opacity:0}}
 @keyframes pvsTap{0%,15%{opacity:0;transform:scale(1.4)}22%,32%{opacity:1;transform:scale(1)}40%,100%{opacity:0}}
+/* 上方角色區（導演 2026-11-04）：進度＝6 封小信；寄出變航空信封，一次答對蓋郵戳；目前這封亮起來 */
+.zb-host{--flap:linear-gradient(to bottom right,#0000 47%,#d8c49a 49% 53%,#0000 55%) 0 0/50% 62% no-repeat,linear-gradient(to bottom left,#0000 47%,#d8c49a 49% 53%,#0000 55%) 100% 0/50% 62% no-repeat}
+.zb-host .zb-progress{gap:clamp(6px,1.6vw,12px);align-items:flex-end;padding:0 0 6px}
+.zb-host .zb-progress li{position:relative;flex:1;max-width:52px;height:clamp(22px,3.2svh,30px);border:2px dashed #fffdf280;border-radius:5px;background:#fffdf214;transition:transform .3s cubic-bezier(.2,1.4,.4,1)}
+.zb-host .zb-progress li.is-now{border:3px solid #f2b945;background:var(--flap),#fff8e8;box-shadow:0 4px 0 #b9792b,0 8px 12px #04180f59;transform:translateY(-4px) scale(1.08);animation:letterBob 1s ease-in-out infinite alternate}
+.zb-host .zb-progress li.is-done{border:3px solid transparent;background:var(--flap) padding-box,linear-gradient(#fffcf3,#fff8e8) padding-box,repeating-linear-gradient(-45deg,#e0473a 0 5px,#fffdf2 5px 8px,#2f86c4 8px 13px,#fffdf2 13px 16px) border-box;box-shadow:0 3px 6px #04180f59}
+.zb-host .zb-progress li.is-star::after{content:"";position:absolute;right:-9px;top:-11px;width:26px;height:26px;background:url(assets/dinopost-workmark-stamp-transparent-v1.png) center/contain no-repeat;transform:rotate(14deg);animation:stampDown .4s cubic-bezier(.2,1.4,.4,1)}
+@keyframes letterBob{to{transform:translateY(-7px) scale(1.08) rotate(-2deg)}}
+.zb-host .zb-bubble{font-size:clamp(19px,4.8vw,30px);padding:8px 18px 10px;box-shadow:0 5px 0 #c89c52,0 10px 16px #04180f40}
