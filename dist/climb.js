@@ -64,6 +64,23 @@
     mud:    { text: '泥巴坑！滑回兩格！', d: -2, icon: 'i-mud' }, vine: { text: '藤蔓纏住腳，停一回合！', d: 0, icon: 'i-vine' },
     sneeze: { text: '哈啾！大家退一格！', d: -1, icon: 'i-sneeze' }
   };
+  // 導演 11-05：事件石每局隨機（位置＋種類），避開整十石與起點附近，事件之間至少隔 3 格；上面 LEVELS.events 只當開始畫面的預覽
+  const EV_BAG = { 40: ['wing', 'wing', 'guide', 'mud', 'vine', 'sneeze'], 60: ['wing', 'wing', 'wing', 'guide', 'guide', 'mud', 'mud', 'vine', 'sneeze'] };
+  function rollEvents(n) {
+    const bag = (EV_BAG[n] || EV_BAG[60]).slice();
+    if (Math.random() < .5) bag.push(pick(['wing', 'guide', 'mud']));   // 有時多一顆
+    const want = bag.length;
+    for (let tries = 0; tries < 200; tries++) {
+      const free = []; for (let i = 4; i <= n - 3; i++) if (i % 10 && (i + 1) % 10 && (i - 1) % 10) free.push(i);   // 不貼著整十石
+      const pos = []; for (const i of free.sort(() => Math.random() - .5)) { if (pos.every(q => Math.abs(q - i) >= 3)) pos.push(i); if (pos.length === want) break; }
+      if (pos.length < want) continue;
+      pos.sort((a, b) => a - b); const kinds = bag.slice().sort(() => Math.random() - .5), ev = {};
+      pos.forEach((q, k) => { ev[q] = kinds[k]; });
+      if (ev[pos[0]] === 'mud' || ev[pos[0]] === 'sneeze') continue;   // 第一顆事件不要一開始就退後
+      return ev;
+    }
+    return LEVELS[n === 40 ? 'one' : 'two'].events;
+  }
   const NPCS = {
     abao:   { name: '小雞阿暴', img: 'chick_abao', pose: 'walk_r', cheer: 'cheer', h: 150, dur: .38, hop: .5, turn: 'turn_abao', turnText: '輪到小雞阿暴！', hasty: true },
     xiaokong: { name: '小空', img: 'xiaokong', pose: 'run_r', cheer: 'cheer', h: 150, dur: .42, hop: .8, turn: 'turn_xiaokong', turnText: '輪到小空！' },
@@ -455,18 +472,18 @@
     if (spec.t === 'count') {
       const n = rnd(spec.lo, spec.hi), pile = pileEl(n); correct = n; qId = 'quiz_count'; qText = '有幾個包裹？'; card.append(pile);
       choices(n).forEach(c => { const b = document.createElement('button'); b.type = 'button'; b.textContent = c; b.dataset.v = c; answersEl.appendChild(b); });
-      demo = async () => { for (const [i, s] of [...pile.children].entries()) { s.classList.add('cnt'); s.querySelector('b').textContent = i + 1; numVoice(i + 1); await sleep(360); } };
+      demo = async () => { for (const [i, s] of [...pile.children].entries()) { s.classList.add('cnt'); s.querySelector('b').textContent = i + 1; await Promise.all([numDone(numVoice(i + 1)), sleep(360)]); await sleep(100); } };   // 導演 11-05：等數字念完
     } else if (spec.t === 'ten') {
       const have = rnd(spec.lo, spec.hi), need = 10 - have, pile = pileEl(have, { total: 10, cls: 'tf' }); correct = need; qId = 'quiz_ten'; qText = '還差幾個湊成十？'; card.append(pile);
       choices(need).forEach(c => { const b = document.createElement('button'); b.type = 'button'; b.textContent = c; b.dataset.v = c; answersEl.appendChild(b); });
-      demo = async () => { let c = 0; for (const s of [...pile.children]) { if (s.classList.contains('empty')) { s.classList.add('fill'); s.innerHTML = boxHTML + '<b>' + (++c) + '</b>'; numVoice(c); await sleep(420); } } };
+      demo = async () => { let c = 0; for (const s of [...pile.children]) { if (s.classList.contains('empty')) { s.classList.add('fill'); s.innerHTML = boxHTML + '<b>' + (++c) + '</b>'; await Promise.all([numDone(numVoice(c)), sleep(420)]); await sleep(100); } } };
     } else {
       let a = rnd(spec.lo, spec.hi), b = a; while (b === a) b = Math.max(spec.lo - 2, a + rnd(1, spec.gap) * (Math.random() < .5 ? -1 : 1)); b = Math.max(1, b);
       if (a === b) b = a + 1; correct = a > b ? 'a' : 'b'; qId = 'quiz_more'; qText = '哪一堆比較多？';
       const two = document.createElement('div'); two.className = 'two'; const pa = pileEl(a), pb = pileEl(b);
       [pa, pb].forEach((p, i) => { p.dataset.v = i ? 'b' : 'a'; p.style.setProperty('--bx', Math.max(32, quizBox() * .78) + 'px'); p.style.gridTemplateColumns = `repeat(${a + b > 22 ? 4 : 3},var(--bx))`; two.appendChild(p); });
       card.append(two); answersEl = null;
-      demo = async () => { for (const p of [pa, pb]) { for (const [i, s] of [...p.children].entries()) { s.classList.add('cnt'); s.querySelector('b').textContent = i + 1; await sleep(150); } numVoice(p.children.length); await sleep(500); } (a > b ? pa : pb).classList.add('win'); };
+      demo = async () => { for (const p of [pa, pb]) { for (const [i, s] of [...p.children].entries()) { s.classList.add('cnt'); s.querySelector('b').textContent = i + 1; await sleep(150); } await Promise.all([numDone(numVoice(p.children.length)), sleep(500)]); await sleep(150); } (a > b ? pa : pb).classList.add('win'); };
     }
     if (answersEl) card.append(answersEl);
     kid(q, qText); ov.hidden = false; Dino.sfx('pop', .7); Dino.voice.stop(); Dino.voice(voiceUrl(qId));
@@ -607,7 +624,7 @@
   // ───────── 一局 ─────────
   async function newGame() {
     G++; aborters.forEach(f => f()); aborters.clear(); tapHandler = null; wrongClick = null; paused = false;
-    L = LEVELS[levelKey]; N = L.N; winner = null; stamps = 0; quizIdx = 0; dirty = false; running = true; $('stamps').hidden = true;
+    L = { ...LEVELS[levelKey] }; N = L.N; L.events = rollEvents(N); winner = null; stamps = 0; quizIdx = 0; dirty = false; running = true; $('stamps').hidden = true;
     world.querySelectorAll('.tok,.fx').forEach(e => e.remove()); clearDice(); hideBubble(); $('wrong').hidden = true; $('quiz').hidden = true; $('finish').hidden = true;
     layout(); buildStones();
     npcKey = pick(Object.keys(NPCS));   // 導演 11-04 晚：對手每局隨機，不用選
