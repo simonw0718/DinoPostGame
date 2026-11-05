@@ -61,7 +61,7 @@
     .pc.done{transition:left .3s,top .3s,transform .3s;pointer-events:none}
     .pc .ink{position:absolute;left:30%;top:14%;width:44%;aspect-ratio:1;border:5px solid var(--no);border-radius:50%;color:var(--no);display:flex;align-items:center;justify-content:center;font-size:clamp(14px,2.6vw,22px);font-weight:900;transform:rotate(-14deg) scale(2);opacity:0;transition:transform .25s cubic-bezier(.3,1.6,.5,1),opacity .15s;background:rgba(255,253,243,.6)}
     .pc.done .ink{transform:rotate(-14deg) scale(1);opacity:1}
-    .board h2 .kid-text,.board h2.kid-text,.ask.kid-text,.chip.kid-text{flex-wrap:nowrap}
+    .board h2 .kid-text,.board h2.kid-text,.ask.kid-text,.chip.kid-text,.fsay.kid-text,.say.kid-text{flex-wrap:nowrap}
     .ask{position:absolute;z-index:7;left:50%;bottom:2.2%;transform:translateX(-50%);padding:8px 20px;border-radius:99px;background:var(--cream);border:3px solid var(--wood);font-size:clamp(16px,2.9vw,25px);font-weight:900;box-shadow:0 4px 10px rgba(0,0,0,.18);white-space:nowrap}
     .say{position:absolute;z-index:8;right:3%;top:calc(206/1080*100%);max-width:44%;padding:10px 14px;border-radius:20px;background:var(--cream);border:4px solid var(--ink);font-size:clamp(14px,2.5vw,21px);font-weight:900;line-height:1.3;opacity:0;transform:translateY(8px);transition:.25s;pointer-events:none}
     .say.on{opacity:1;transform:none}
@@ -90,7 +90,19 @@
     .cand{z-index:4;cursor:pointer}
     .cand .letter{position:absolute;height:auto}
     .ring{position:absolute;inset:auto 6% -3% 6%;height:7%;border-radius:50%;background:rgba(36,99,74,.2)}
-    .front .ask{bottom:2.2%}
+    .front .ask{left:auto;right:3%;transform:none;bottom:2.2%}
+    /* 交包裹：拖到收件人身上；對的跳起來收下，錯的搖頭 */
+    .fpc{--x:300;--y:906;z-index:7}
+    .fpc .ink{transform:rotate(-14deg) scale(1);opacity:1}
+    .fpc.given{transition:left .35s,top .35s,width .35s,transform .35s;pointer-events:none}
+    .cand>img:first-of-type{transform-origin:50% 100%}
+    .cand.hot>img:first-of-type{filter:drop-shadow(0 0 10px #f2c14e) drop-shadow(0 0 4px #fffdf3)}
+    .cand.no>img:first-of-type{animation:nope .5s}
+    @keyframes nope{0%,100%{rotate:0deg}25%{rotate:-5deg}50%{rotate:5deg}75%{rotate:-3deg}}
+    .cand.yes{animation:hop .6s cubic-bezier(.3,1.5,.5,1)}
+    @keyframes hop{0%,100%{translate:0 0}40%{translate:0 -9%}}
+    .fsay{position:absolute;z-index:8;padding:8px 14px;border-radius:18px;background:var(--cream);border:4px solid var(--ink);font-size:clamp(14px,2.5vw,21px);font-weight:900;white-space:nowrap;transform:translate(-50%,-100%);opacity:0;transition:opacity .2s;pointer-events:none}
+    .fsay.on{opacity:1}
   </style>
 </head>
 <body>
@@ -128,12 +140,14 @@
           <img class="lay" src="assets/orders/front_door_l.webp" alt="">
           <img class="lay" src="assets/orders/front_door_r.webp" alt="">
           <!-- 身高照製作庫 character_scale.json（伊奇 1.0＝340）：阿慢 1.5、奶奶 1.3、小空 0.72；腳底 y=900；櫃台層拿掉空出位置（導演 2026-11-05） -->
-          <div class="sp cand" style="--x:14;--y:390;--w:299"><span class="ring"></span><img src="assets/orders/aman__front__stand.webp" alt="阿慢老師：沒笑、拿著信"><img class="letter" style="left:33%;top:50%;width:34%" src="assets/orders/letter.webp" alt=""></div>
-          <div class="sp cand" style="--x:300;--y:458;--w:297"><span class="ring"></span><img src="assets/orders/grandma__front__smile.webp" alt="奶奶：在笑、沒拿信"></div>
-          <div class="sp cand" style="--x:612;--y:654;--w:192"><span class="ring"></span><img src="assets/orders/xiaokong__front__happy.webp" alt="小空：在笑、拿著信"><img class="letter" style="left:24%;top:55%;width:52%" src="assets/orders/letter.webp" alt=""></div>
+          <div class="sp cand" data-ok="false" style="--x:14;--y:390;--w:299"><span class="ring"></span><img src="assets/orders/aman__front__stand.webp" alt="阿慢老師：沒笑、拿著信"><img class="letter" style="left:33%;top:50%;width:34%" src="assets/orders/letter.webp" alt=""></div>
+          <div class="sp cand" data-ok="false" style="--x:300;--y:458;--w:297"><span class="ring"></span><img src="assets/orders/grandma__front__smile.webp" alt="奶奶：在笑、沒拿信"></div>
+          <div class="sp cand" data-ok="true" style="--x:612;--y:654;--w:192"><span class="ring"></span><img src="assets/orders/xiaokong__front__happy.webp" alt="小空：在笑、拿著信"><img class="letter" style="left:24%;top:55%;width:52%" src="assets/orders/letter.webp" alt=""></div>
         </div>
         <div class="tag"><small data-k="收件人">收件人</small><p data-k="寄給在笑、手上拿著信的恐龍。">寄給在笑、手上拿著信的恐龍。</p></div>
-        <div class="stamps"><i class="done"></i><i class="done"></i><i></i><i></i><i></i><i></i></div>
+        <div class="pc fpc" id="fpc"><img src="assets/orders/parcel_red.webp" alt="蓋好章的包裹"><img class="str" src="assets/orders/string.webp" alt=""><img class="st" style="right:8%" src="assets/orders/stamp.webp" alt=""><img class="st" style="right:29%" src="assets/orders/stamp.webp" alt=""><span class="ink">OK</span></div>
+        <div class="fsay" id="fsay"></div>
+        <div class="stamps" id="fstamps"><i class="done"></i><i></i><i></i><i></i><i></i><i></i></div>
         <div class="ask" data-k="把包裹交給收件人">把包裹交給收件人</div>
       </div>
       <div class="stamps counterView"><i class="done"></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -159,6 +173,8 @@
       '蓋好章了！': ['ㄍㄞˋ','ㄏㄠˇ','ㄓㄤ','ㄌㄜ˙',''],
       '蓋章': ['ㄍㄞˋ','ㄓㄤ'],
       '把可以寄的包裹拉給阿暴': ['ㄅㄚˇ','ㄎㄜˇ','ㄧˇ','ㄐㄧˋ','ㄉㄜ˙','ㄅㄠ','ㄍㄨㄛˇ','ㄌㄚ','ㄍㄟˇ','ㄚ','ㄅㄠˋ'],
+      '不是我喔！': ['ㄅㄨˋ','ㄕˋ','ㄨㄛˇ','ㄛ',''],
+      '謝謝你！': ['ㄒㄧㄝˋ','ㄒㄧㄝ˙','ㄋㄧˇ',''],
       '收件人': ['ㄕㄡ','ㄐㄧㄢˋ','ㄖㄣˊ'],
       '寄給在笑、手上拿著信的恐龍。': ['ㄐㄧˋ','ㄍㄟˇ','ㄗㄞˋ','ㄒㄧㄠˋ','','ㄕㄡˇ','ㄕㄤˋ','ㄋㄚˊ','ㄓㄜ˙','ㄒㄧㄣˋ','ㄉㄜ˙','ㄎㄨㄥˇ','ㄌㄨㄥˊ',''],
       '把包裹交給收件人': ['ㄅㄚˇ','ㄅㄠ','ㄍㄨㄛˇ','ㄐㄧㄠ','ㄍㄟˇ','ㄕㄡ','ㄐㄧㄢˋ','ㄖㄣˊ']
@@ -211,6 +227,32 @@
         } };
       el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
     });
+
+    // 櫃台前：把包裹拖到收件人身上
+    const fpc = document.getElementById('fpc'), fsay = document.getElementById('fsay');
+    const cands = [...document.querySelectorAll('.cand')];
+    const over = (el) => { const r = el.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      return cands.find(c => { const z = c.querySelector('img').getBoundingClientRect(); return cx > z.left && cx < z.right && cy > z.top && cy < z.bottom; }); };
+    let fT; const fspeak = (c, t) => { const st = stage.getBoundingClientRect(), z = c.querySelector('img').getBoundingClientRect();
+      fsay.style.left = ((z.left + z.width / 2 - st.left) / st.width * 100) + '%'; fsay.style.top = ((z.top - st.top) / st.height * 100 + 1) + '%';
+      set(fsay, t); fsay.classList.add('on'); clearTimeout(fT); fT = setTimeout(() => fsay.classList.remove('on'), 1800); };
+    let fx, fy, fon = false;
+    fpc.addEventListener('pointerdown', e => { fon = true; fx = e.clientX; fy = e.clientY; fpc.setPointerCapture(e.pointerId); fpc.classList.remove('back'); fpc.classList.add('drag'); });
+    fpc.addEventListener('pointermove', e => { if (!fon) return; fpc.style.transform = `translate(${e.clientX - fx}px,${e.clientY - fy}px) scale(1.06)`; const h = over(fpc); cands.forEach(c => c.classList.toggle('hot', c === h)); });
+    const fend = () => { if (!fon) return; fon = false; fpc.classList.remove('drag'); const c = over(fpc); cands.forEach(x => x.classList.remove('hot'));
+      if (c && c.dataset.ok === 'true') {
+        const st = stage.getBoundingClientRect(), z = c.querySelector('img').getBoundingClientRect(), r = fpc.getBoundingClientRect();
+        fpc.classList.add('given'); fpc.style.transform = 'none';
+        const w = r.width * .7; fpc.style.width = (w / st.width * 100) + '%';
+        fpc.style.left = ((z.left + z.width / 2 - w / 2 - st.left) / st.width * 100) + '%';
+        fpc.style.top = ((z.top + z.height * .5 - st.top) / st.height * 100) + '%';
+        c.classList.add('yes'); fspeak(c, '謝謝你！');
+        document.querySelector('#fstamps i:not(.done)')?.classList.add('done');
+      } else {
+        fpc.classList.add('back'); fpc.style.transform = '';
+        if (c) { c.classList.remove('no'); void c.offsetWidth; c.classList.add('no'); fspeak(c, '不是我喔！'); }
+      } };
+    fpc.addEventListener('pointerup', fend); fpc.addEventListener('pointercancel', fend);
   </script>
 </body>
 </html>
