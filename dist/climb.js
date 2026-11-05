@@ -49,7 +49,7 @@
    ['我的號碼加兩顆骰子，有時候要減喔！', 'ㄨㄛˇ ㄉㄜ˙ ㄏㄠˋ ㄇㄚˇ ㄐㄧㄚ ㄌㄧㄤˇ ㄎㄜ ㄕㄞˇ ㄗ˙ ㄧㄡˇ ㄕˊ ㄏㄡˋ ㄧㄠˋ ㄐㄧㄢˇ ㄛ˙'],
    ['算一算，走到幾號？', 'ㄙㄨㄢˋ ㄧ ㄙㄨㄢˋ ㄗㄡˇ ㄉㄠˋ ㄐㄧˇ ㄏㄠˋ'], ['超過山頂了，走到山頂！', 'ㄔㄠ ㄍㄨㄛˋ ㄕㄢ ㄉㄧㄥˇ ㄌㄜ˙ ㄗㄡˇ ㄉㄠˋ ㄕㄢ ㄉㄧㄥˇ'], ['算對了！好棒！', 'ㄙㄨㄢˋ ㄉㄨㄟˋ ㄌㄜ˙ ㄏㄠˇ ㄅㄤˋ'],
    ['走幾格？點石頭！', 'ㄗㄡˇ ㄐㄧˇ ㄍㄜˊ ㄉㄧㄢˇ ㄕˊ ㄊㄡ˙'], ['數一數，走幾格？', 'ㄕㄨˇ ㄧ ㄕㄨˇ ㄗㄡˇ ㄐㄧˇ ㄍㄜˊ'], ['數對了！好棒！', 'ㄕㄨˇ ㄉㄨㄟˋ ㄌㄜ˙ ㄏㄠˇ ㄅㄤˋ'],
-   ['我們一起一格一格數！', 'ㄨㄛˇ ㄇㄣ˙ ㄧ ㄑㄧˇ ㄧ ㄍㄜˊ ㄧ ㄍㄜˊ ㄕㄨˇ'], ['數好了，走！', 'ㄕㄨˇ ㄏㄠˇ ㄌㄜ˙ ㄗㄡˇ'], ['往回走幾格？點石頭！', 'ㄨㄤˇ ㄏㄨㄟˊ ㄗㄡˇ ㄐㄧˇ ㄍㄜˊ ㄉㄧㄢˇ ㄕˊ ㄊㄡ˙']].forEach(([t, z]) => Z(t, z));
+   ['我們一起一格一格數！', 'ㄨㄛˇ ㄇㄣ˙ ㄧ ㄑㄧˇ ㄧ ㄍㄜˊ ㄧ ㄍㄜˊ ㄕㄨˇ'], ['一格一格點，我們一起數！', 'ㄧ ㄍㄜˊ ㄧ ㄍㄜˊ ㄉㄧㄢˇ ㄨㄛˇ ㄇㄣ˙ ㄧ ㄑㄧˇ ㄕㄨˇ'], ['數好了，走！', 'ㄕㄨˇ ㄏㄠˇ ㄌㄜ˙ ㄗㄡˇ'], ['往回走幾格？點石頭！', 'ㄨㄤˇ ㄏㄨㄟˊ ㄗㄡˇ ㄐㄧˇ ㄍㄜˊ ㄉㄧㄢˇ ㄕˊ ㄊㄡ˙']].forEach(([t, z]) => Z(t, z));
 
   // ───────── 資料 ─────────
   const LEVELS = {
@@ -132,7 +132,8 @@
     return new Promise((res, rej) => { const fail = () => rej(new Abort()); aborters.add(fail); setup(v => { aborters.delete(fail); res(v); }); });
   }
   const voiceUrl = id => `assets/audio/climb/${id}.mp3`;
-  const numVoice = n => { Dino.voice.stop(); Dino.voice(`assets/audio/num/zh/${n}.mp3`); };
+  const numVoice = n => { Dino.voice.stop(); return Dino.voice(`assets/audio/num/zh/${n}.mp3`); };
+  const numDone = p => Promise.race([p, sleepRaw(1600)]);   // 導演 11-05：等數字念完（二十幾的音檔約 0.9 秒），最多等 1.6 秒
   async function say(id, text, { min = 900, who = 'iggy', hold = false } = {}) {
     showBubble(text, who);
     Dino.voice.stop();
@@ -148,9 +149,16 @@
   const hideBubble = () => { $('bubble').hidden = true; };
 
   // ───────── 鏡頭 ─────────
+  // 導演 11-05：算式放大停左上角，鏡頭把上方這一條讓出來（算式＋泡泡的下緣）
+  function reservedTop() {
+    const w = $('diceWrap'); if (!w.classList.contains('parked') || !w.classList.contains('eqmode')) return 0;
+    const vt = view.getBoundingClientRect().top; let b = 0;
+    [w.querySelector('.eq'), $('bubble')].forEach(e => { if (e && !e.hidden && e.offsetParent) b = Math.max(b, e.getBoundingClientRect().bottom - vt); });
+    return b ? b + 8 : 0;
+  }
   function camera(pts, { instant = false, overview = false, bias = .48 } = {}) {
     lastCam = [pts, { overview, bias }];
-    const vw = view.clientWidth, vh = view.clientHeight; let z, tx, ty;
+    const vw = view.clientWidth, top = overview ? 0 : reservedTop(), vh = view.clientHeight - top; let z, tx, ty;
     if (overview) { z = Math.min(vw / 1536, vh / 2048); tx = (vw - 1536 * z) / 2; ty = (vh - 2048 * z) / 2; }
     else {
       const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]), cx = (Math.min(...xs) + Math.max(...xs)) / 2, cy = (Math.min(...ys) + Math.max(...ys)) / 2;
@@ -158,7 +166,7 @@
       z = Math.min(z, vw / (Math.max(...xs) - Math.min(...xs) + 300), vh / (Math.max(...ys) - Math.min(...ys) + 320));
       z = Math.min(z, vh / 760);   // 橫式／電腦寬版：至少看到 760 世界像素高
       z = Math.max(z, vw / 1536, vh / 2048);
-      tx = Math.min(0, Math.max(vw - 1536 * z, vw / 2 - cx * z)); ty = Math.min(0, Math.max(vh - 2048 * z, vh * bias - cy * z));
+      tx = Math.min(0, Math.max(vw - 1536 * z, vw / 2 - cx * z)); ty = Math.min(0, Math.max(vh - 2048 * z, vh * bias - cy * z)) + top;
     }
     world.classList.toggle('jump', instant || RM);
     world.style.transform = `translate(${tx}px,${ty}px) scale(${z})`;
@@ -189,12 +197,28 @@
   }
   // 導演 11-04 晚：走路改腳步聲（不用點擊聲；素材 SFX_腳步聲-草上 切第一步）；走路再慢 10%，數字念得完整
   const WALK_SLOW = 1 / .9;
+  // 導演 11-05：原本用 CSS 滑過去＋鏡頭每步都跟著晃，看起來一頓一頓像瞬移 → 改成一格一格「跳」過去（拋物線＋落地壓扁），
+  // 鏡頭只在角色快走出畫面時才移；有念數字時等數字念完再跳下一格
+  function followCam(t) {
+    const vr = view.getBoundingClientRect(), s = stones[t.at]; if (!s) return camera([posOf(t)]);
+    const r = s.getBoundingClientRect(), top = reservedTop(), mx = vr.width * .14, my = vr.height * .14;
+    if (r.left < vr.left + mx || r.right > vr.right - mx || r.top < vr.top + top + my || r.bottom > vr.bottom - my) camera([posOf(t)]);
+  }
   async function stepTo(t, idx, { count = true, dur = t.def.dur, follow = true } = {}) {
-    dur *= WALK_SLOW;
-    t.at = idx; place(t, dur); hop(t, t.def.hop, dur);
-    if (follow) camera([posOf(t)]);
-    Dino.sfx('step', .6); if (count && idx > 0) numVoice(idx);
-    await sleep(dur * 1000 + 90);
+    dur = Math.max(.6, dur * WALK_SLOW);
+    const x0 = t.x, y0 = t.y, ms = dur * 1000 / FAST;
+    t.at = idx; place(t, 0);
+    if (!RM && x0) {
+      const h = 90 * kk(t.y) * Math.max(.6, t.def.hop || 1), kf = [];
+      for (let i = 0; i <= 12; i++) { const u = i / 12; kf.push({ translate: `${x0 + (t.x - x0) * u}px ${y0 + (t.y - y0) * u - h * 4 * u * (1 - u)}px` }); }
+      t.el.animate(kf, { duration: ms, easing: 'cubic-bezier(.35,.1,.45,1)' });
+      t.img.animate([{ transform: 'scale(1,1)', transformOrigin: '50% 100%' }, { transform: 'scale(1.1,.86)', transformOrigin: '50% 100%' }, { transform: 'scale(1,1)', transformOrigin: '50% 100%' }], { duration: 220 / FAST, delay: ms * .92, easing: 'ease-out' });
+    }
+    if (follow) followCam(t);
+    const v = count && idx > 0 ? numVoice(idx) : null;
+    setTimeout(() => Dino.sfx('step', .6), ms * .9);
+    await sleep(dur * 1000);
+    if (v) { await numDone(v); await sleep(150); } else await sleep(60);
   }
   const setPose = (t, pose) => { t.img.src = `assets/cast/${t.def.img}__${pose}.webp`; };
 
@@ -289,11 +313,11 @@
   }
   async function countTile(t, from = 0, down = false) {   // 一顆骰子：圓點一顆顆亮起來並念數字（from＝接著數的起點；down＝倒著數）
     const dots = t._dots.slice(0, t._v);
-    for (const [i, d] of dots.entries()) { const n = down ? from - i - 1 : from + i + 1; d.classList.add('lit'); d.textContent = n; numVoice(n); await sleep(420); }   // 導演 11-04：數的時候點上顯示數字
+    for (const [i, d] of dots.entries()) { const n = down ? from - i - 1 : from + i + 1; d.classList.add('lit'); d.textContent = n; await Promise.all([numDone(numVoice(n)), sleep(420)]); await sleep(120); }   // 導演 11-04：數的時候點上顯示數字
   }
   async function countOn(vals) {   // 示範接著數：第一顆整顆亮、念出它的數，第二顆從下一個數接著數
     tiles[0]._dots.slice(0, vals[0]).forEach((d, i) => { d.classList.add('lit'); d.textContent = i + 1; });
-    numVoice(vals[0]); await sleep(800);
+    await Promise.all([numDone(numVoice(vals[0])), sleep(800)]);
     await countTile(tiles[1], vals[0]);
   }
   const clearDice = () => { $('diceWrap').innerHTML = ''; $('diceWrap').classList.remove('parked', 'eqmode'); view.classList.remove('parked', 'eqstack'); tiles = []; };
@@ -477,7 +501,7 @@
     if (t.human && t.at % 10 === 0) { Dino.sfx('pop', .8); await say('arrive_ten', '整十石！郵差小挑戰！', { min: 1200 }); hideBubble(); await runQuiz(); camera([posOf(t)]); await sleep(300); }
     else if (ev) { await runEvent(t, ev); if (checkWin(t)) return; }
   }
-  // 走法（導演 11-04 方案 A，所有難度都一樣）：可以一格一格點，也可以直接點要停的石頭；點對一路數過去＋稱讚，點錯逐格示範
+  // 走法（導演 11-04 方案 A，所有難度都一樣）：可以一格一格點，也可以直接點要停的石頭；點對一路數過去＋稱讚；點錯只提示下一格、讓孩子再點（導演 11-05 取消自動代走）
   async function walkCount(t, to, dur = .42) { const d = to > t.at ? 1 : -1; while (t.at !== to) await stepTo(t, t.at + d, { dur }); }
   async function childMove(target) {
     const dir = target >= you.at ? 1 : -1, reach = L.dice * L.dmax;
@@ -486,15 +510,16 @@
       camera([posOf(you), ...P.slice(lo, hi + 1)]);   // 走得到的石頭全部入鏡
       const n = await waitTap(x => dir > 0 ? x > you.at : x < you.at, { idle: 12000, auto: 45000, onIdle: () => mark(you.at + dir, 'next') });
       clearMarks();
-      if (n === null) { mark(target, 'hint'); await say('', '我們一起一格一格數！', { min: 800 }); await walkCount(you, target); return; }
+      // 導演 11-05：太久沒點或點錯都不再自動幫走，只亮下一格提示，讓孩子自己再點
+      if (n === null) { mark(you.at + dir, 'next'); await say('step_pick', '一格一格點，我們一起數！', { min: 800, hold: true }); continue; }
       if (n === you.at + dir && (n - target) * dir <= 0) {
         hideBubble(); await stepTo(you, n, { dur: .45 });
         if (you.at === target) { Dino.sfx('correct', .7); await say('move_ok', '數對了！好棒！', { min: 900 }); return; }
         continue;
       }
       if (n === target) { hideBubble(); await walkCount(you, target); Dino.sfx('correct', .7); await say('move_ok', '數對了！好棒！', { min: 900 }); return; }
-      stones[n] && stones[n].classList.add('nope');
-      mark(target, 'hint'); await say('move_fix', '我們一起一格一格數！', { min: 900 }); await walkCount(you, target, .55); return;
+      if (stones[n]) { stones[n].classList.remove('nope'); void stones[n].offsetWidth; stones[n].classList.add('nope'); }
+      mark(you.at + dir, 'next'); await say('step_pick', '一格一格點，我們一起數！', { min: 900, hold: true }); continue;
     }
   }
   async function childTurn() {
@@ -512,7 +537,7 @@
       await say('', `${vals[0]}減${vals[1]}，等於零，不用動！`, { min: 1600 }); clearDice(); hideBubble(); await afterLanding(you); return;
     }
     if (L.eq) {   // 普通／困難：看算式自己算，直接點答案那顆石頭
-      await sleep(1200); parkDice(false);
+      await sleep(3000); parkDice(false);
       if (you.at + total > N) showBubble('超過山頂了，走到山頂！'); else showBubble('算一算，走到幾號？');
       Dino.voice.stop();
     } else if (L.dice === 1) {   // 單顆：一起數圓點，再念出點數
