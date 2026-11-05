@@ -226,3 +226,21 @@ body.menu #bubble,body.menu .dice-wrap{visibility:hidden}
 #world{opacity:0;transition:transform .75s cubic-bezier(.3,.7,.2,1),opacity .25s}
 .cl-view.laid #world{opacity:1}
 #ready.first{animation:none}
+
+/* 導演 2026-11-05 新事件：撿散落的信（點信封）、比大小（彈出卡） */
+.fx.lt{pointer-events:auto;cursor:pointer;border:0;background:none;padding:0;z-index:8700;filter:drop-shadow(0 6px 4px rgba(40,30,10,.35))}
+.fx.lt svg{pointer-events:none}
+.fx.lt b{position:absolute;left:50%;top:8%;transform:translate(-50%,-100%);font-size:60%;font-weight:1000;line-height:1;color:#fffdf2;-webkit-text-stroke:.06em #573e1d;paint-order:stroke;opacity:0}
+.fx.lt.got{cursor:default;opacity:.92}
+.fx.lt.got b{opacity:1;animation:popIn .3s cubic-bezier(.2,1.5,.4,1) both}
+.fx.lt.got svg{animation:boxHop .4s}
+.fx.lt.hint svg{animation:ltPulse .6s ease-in-out infinite alternate}
+@keyframes ltPulse{to{scale:1.18}}
+.duel{display:flex;gap:clamp(18px,6vw,48px);justify-content:center;align-items:flex-end}
+.duel .side{display:grid;justify-items:center;gap:30px;padding:10px 14px 16px;border-radius:22px;border:4px solid transparent}
+.duel .side img{height:clamp(80px,16vh,120px);width:auto}
+.duel .side .d3{--d:clamp(84px,14vh,120px)}
+.duel .side.me .d3.tappable{cursor:pointer}
+.duel .side .tap{position:absolute;right:-18px;bottom:-22px;width:52px;height:58px;animation:tapHint 1s ease-in-out infinite alternate;pointer-events:none}
+.duel .side .tap svg{display:block;width:100%;height:100%}
+.duel .side.win{border-color:#4fb577;background:#e3f4dc}

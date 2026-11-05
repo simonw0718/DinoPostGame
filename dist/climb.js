@@ -65,10 +65,10 @@
     sneeze: { text: '哈啾！大家退一格！', d: -1, icon: 'i-sneeze' }
   };
   // 導演 11-05：事件石每局隨機（位置＋種類），避開整十石與起點附近，事件之間至少隔 3 格；上面 LEVELS.events 只當開始畫面的預覽
-  const EV_BAG = { 40: ['wing', 'wing', 'guide', 'mud', 'vine', 'sneeze'], 60: ['wing', 'wing', 'wing', 'guide', 'guide', 'mud', 'mud', 'vine', 'sneeze'] };
+  const EV_BAG = { 40: ['wing', 'guide', 'shroom', 'letters', 'duel', 'mud', 'vine', 'sneeze'], 60: ['wing', 'wing', 'guide', 'shroom', 'shroom', 'letters', 'letters', 'duel', 'duel', 'mud', 'mud', 'vine', 'sneeze'] };
   function rollEvents(n) {
     const bag = (EV_BAG[n] || EV_BAG[60]).slice();
-    if (Math.random() < .5) bag.push(pick(['wing', 'guide', 'mud']));   // 有時多一顆
+    if (Math.random() < .5) bag.push(pick(['wing', 'guide', 'shroom', 'letters', 'duel', 'mud']));   // 有時多一顆
     const want = bag.length;
     for (let tries = 0; tries < 200; tries++) {
       const free = []; for (let i = 4; i <= n - 3; i++) if (i % 10 && (i + 1) % 10 && (i - 1) % 10) free.push(i);   // 不貼著整十石
@@ -81,13 +81,27 @@
     }
     return LEVELS[n === 40 ? 'one' : 'two'].events;
   }
+  Object.assign(EV, {   // 導演 2026-11-05 新增
+    shroom:  { text: '彈跳蘑菇！往前跳兩格！', d: +2, icon: 'i-shroom' },
+    letters: { text: '路上掉了好多信！點一點，撿起來數一數！', d: 0, icon: 'i-letters' },
+    duel:    { text: '比大小！點數大的往前兩格！', d: 0, icon: 'i-duel' }
+  });
+  [['彈跳蘑菇！往前跳兩格！', 'ㄊㄢˊ ㄊㄧㄠˋ ㄇㄛˊ ㄍㄨ ㄨㄤˇ ㄑㄧㄢˊ ㄊㄧㄠˋ ㄌㄧㄤˇ ㄍㄜˊ'],
+   ['路上掉了好多信！點一點，撿起來數一數！', 'ㄌㄨˋ ㄕㄤˋ ㄉㄧㄠˋ ㄌㄜ˙ ㄏㄠˇ ㄉㄨㄛ ㄒㄧㄣˋ ㄉㄧㄢˇ ㄧ ㄉㄧㄢˇ ㄐㄧㄢˇ ㄑㄧˇ ㄌㄞˊ ㄕㄨˇ ㄧ ㄕㄨˇ'],
+   ['撿好了！撿幾封，就走幾格！', 'ㄐㄧㄢˇ ㄏㄠˇ ㄌㄜ˙ ㄐㄧㄢˇ ㄐㄧˇ ㄈㄥ ㄐㄧㄡˋ ㄗㄡˇ ㄐㄧˇ ㄍㄜˊ'],
+   ['對手撿到信了！一起數一數！', 'ㄉㄨㄟˋ ㄕㄡˇ ㄐㄧㄢˇ ㄉㄠˋ ㄒㄧㄣˋ ㄌㄜ˙ ㄧ ㄑㄧˇ ㄕㄨˇ ㄧ ㄕㄨˇ'],
+   ['比大小！點數大的往前兩格！', 'ㄅㄧˇ ㄉㄚˋ ㄒㄧㄠˇ ㄉㄧㄢˇ ㄕㄨˋ ㄉㄚˋ ㄉㄜ˙ ㄨㄤˇ ㄑㄧㄢˊ ㄌㄧㄤˇ ㄍㄜˊ'],
+   ['比大小', 'ㄅㄧˇ ㄉㄚˋ ㄒㄧㄠˇ'], ['點骰子！', 'ㄉㄧㄢˇ ㄕㄞˇ ㄗ˙'],
+   ['你比較大！往前兩格！', 'ㄋㄧˇ ㄅㄧˇ ㄐㄧㄠˋ ㄉㄚˋ ㄨㄤˇ ㄑㄧㄢˊ ㄌㄧㄤˇ ㄍㄜˊ'],
+   ['對手比較大，往前兩格！', 'ㄉㄨㄟˋ ㄕㄡˇ ㄅㄧˇ ㄐㄧㄠˋ ㄉㄚˋ ㄨㄤˇ ㄑㄧㄢˊ ㄌㄧㄤˇ ㄍㄜˊ'],
+   ['一樣大！大家都不動。', 'ㄧ ㄧㄤˋ ㄉㄚˋ ㄉㄚˋ ㄐㄧㄚ ㄉㄡ ㄅㄨˋ ㄉㄨㄥˋ']].forEach(([t, z]) => Z(t, z));
   const NPCS = {
     abao:   { name: '小雞阿暴', img: 'chick_abao', pose: 'walk_r', cheer: 'cheer', h: 150, dur: .38, hop: .5, turn: 'turn_abao', turnText: '輪到小雞阿暴！', hasty: true },
     xiaokong: { name: '小空', img: 'xiaokong', pose: 'run_r', cheer: 'cheer', h: 150, dur: .42, hop: .8, turn: 'turn_xiaokong', turnText: '輪到小空！' },
     feifei: { name: '飛飛', img: 'feifei', pose: 'fly_r', cheer: 'cheer', h: 150, dur: .5, hop: 1.1, turn: 'turn_feifei', turnText: '輪到飛飛！', fly: true }
   };
   const VOICES = ['intro', 'turn_you', 'turn_abao', 'turn_xiaokong', 'turn_feifei', 'roll_1', 'roll_2', 'roll_3', 'roll_4', 'roll_5', 'roll_6', 'step_pick', 'tap_target', 'count_dice', 'move_ok', 'move_fix', 'tap_back', 'arrive_ten',
-    'quiz_count', 'quiz_ten', 'quiz_more', 'quiz_ok', 'quiz_no', 'event_wing', 'event_vine', 'event_mud', 'event_sneeze', 'event_guide', 'event_guide_feifei', 'catch_prompt', 'catch_ok', 'win_you', 'win_npc', 'goal'];
+    'quiz_count', 'quiz_ten', 'quiz_more', 'quiz_ok', 'quiz_no', 'event_wing', 'event_vine', 'event_mud', 'event_sneeze', 'event_guide', 'event_guide_feifei', 'event_shroom', 'event_letters', 'letters_go', 'letters_npc', 'event_duel', 'duel_you', 'duel_npc', 'duel_tie', 'catch_prompt', 'catch_ok', 'win_you', 'win_npc', 'goal'];
 
   // ───────── 狀態 ─────────
   const view = $('view'), world = $('world');
@@ -221,16 +235,18 @@
     const r = s.getBoundingClientRect(), top = reservedTop(), mx = vr.width * .14, my = vr.height * .14;
     if (r.left < vr.left + mx || r.right > vr.right - mx || r.top < vr.top + top + my || r.bottom > vr.bottom - my) camera([posOf(t)]);
   }
+  function jumpArc(t, idx, ms, big = 1) {   // 從現在位置拋物線跳到 idx（big＝跳多高的倍數）
+    const x0 = t.x, y0 = t.y;
+    t.at = idx; place(t, 0);
+    if (RM || !x0) return;
+    const h = 90 * kk(t.y) * Math.max(.6, t.def.hop || 1) * big, kf = [];
+    for (let i = 0; i <= 16; i++) { const u = i / 16; kf.push({ translate: `${x0 + (t.x - x0) * u}px ${y0 + (t.y - y0) * u - h * 4 * u * (1 - u)}px` }); }
+    t.el.animate(kf, { duration: ms, easing: 'cubic-bezier(.35,.1,.45,1)' });
+    t.img.animate([{ transform: 'scale(1,1)', transformOrigin: '50% 100%' }, { transform: 'scale(1.1,.86)', transformOrigin: '50% 100%' }, { transform: 'scale(1,1)', transformOrigin: '50% 100%' }], { duration: 220 / FAST, delay: ms * .92, easing: 'ease-out' });
+  }
   async function stepTo(t, idx, { count = true, dur = t.def.dur, follow = true } = {}) {
     dur = Math.max(.6, dur * WALK_SLOW);
-    const x0 = t.x, y0 = t.y, ms = dur * 1000 / FAST;
-    t.at = idx; place(t, 0);
-    if (!RM && x0) {
-      const h = 90 * kk(t.y) * Math.max(.6, t.def.hop || 1), kf = [];
-      for (let i = 0; i <= 12; i++) { const u = i / 12; kf.push({ translate: `${x0 + (t.x - x0) * u}px ${y0 + (t.y - y0) * u - h * 4 * u * (1 - u)}px` }); }
-      t.el.animate(kf, { duration: ms, easing: 'cubic-bezier(.35,.1,.45,1)' });
-      t.img.animate([{ transform: 'scale(1,1)', transformOrigin: '50% 100%' }, { transform: 'scale(1.1,.86)', transformOrigin: '50% 100%' }, { transform: 'scale(1,1)', transformOrigin: '50% 100%' }], { duration: 220 / FAST, delay: ms * .92, easing: 'ease-out' });
-    }
+    const ms = dur * 1000 / FAST; jumpArc(t, idx, ms);
     if (follow) followCam(t);
     const v = count && idx > 0 ? numVoice(idx) : null;
     setTimeout(() => Dino.sfx('step', .6), ms * .9);
@@ -397,10 +413,22 @@
     }
   }
   async function runEvent(t, kind) {
+    if (kind === 'letters') return runLetters(t);
+    if (kind === 'duel') return runDuel();
     const e = EV[kind], swap = kind === 'guide' && npcKey === 'xiaokong';   // 對手是小空時改由飛飛帶路
     const line = say(swap ? 'event_guide_feifei' : 'event_' + kind, swap ? '飛飛帶路，前進兩格！' : e.text, { min: 1600 });
     const k = kk(t.y); camera([posOf(t)]);
-    if (kind === 'wing') {
+    if (kind === 'shroom') {   // 彈跳蘑菇：蘑菇冒出來、角色被壓扁再一口氣彈到兩格後
+      const to = Math.min(N, t.at + 2), m = fx('i-shroom', t.x, t.y - 30 * k, 150 * k, 150 * k); m.style.zIndex = Math.round(P[t.at][1]) + 3;
+      m.animate([{ transform: 'translate(-50%,-50%) scale(0)' }, { transform: 'translate(-50%,-50%) scale(1.15)' }, { transform: 'translate(-50%,-50%) scale(1)' }], { duration: 450 / FAST });
+      camera([posOf(t), P[to]]); Dino.sfx('pop', .8); await sleep(600);
+      t.img.animate([{ transform: 'scale(1,1)', transformOrigin: '50% 100%' }, { transform: 'scale(1.2,.7)', transformOrigin: '50% 100%' }], { duration: 300 / FAST, fill: 'forwards' });
+      m.animate([{ transform: 'translate(-50%,-50%) scale(1)' }, { transform: 'translate(-50%,-50%) scale(1.15,.75)' }], { duration: 300 / FAST, fill: 'forwards' });
+      await sleep(320); t.img.getAnimations().forEach(a => a.cancel());
+      m.animate([{ transform: 'translate(-50%,-50%) scale(1.15,.75)' }, { transform: 'translate(-50%,-50%) scale(.95,1.15)' }, { transform: 'translate(-50%,-50%) scale(1)' }], { duration: 400 / FAST, fill: 'forwards' });
+      Dino.sfx('swoosh', .7); jumpArc(t, to, 1100 / FAST, 3.2); await sleep(1150); Dino.sfx('step', .6);
+      m.style.transition = 'opacity .4s'; m.style.opacity = 0; setTimeout(() => m.remove(), 500);
+    } else if (kind === 'wing') {
       const to = Math.min(N, t.at + 3), [tx, ty] = P[to];
       camera([posOf(t), [tx, ty]]); await sleep(500);
       const w = fx('i-wing', t.x - 600, t.y - 520, 320 * k, 160 * k); Dino.sfx('swoosh', .8);
@@ -446,6 +474,66 @@
     await line;
     if (e.d > 0 || e.d < 0 && kind !== 'mud' && kind !== 'sneeze') { /* 位置已在動畫中處理 */ }
   }
+
+  // ───────── 新事件（導演 2026-11-05）─────────
+  // 撿散落的信：前方掉了 1–3 封信，孩子一封一封點起來數（不自動幫撿，8 秒沒點只讓信封跳動提示）；對手踩到就示範撿；撿幾封走幾格
+  async function runLetters(t) {
+    const n = rnd(1, 3), k = kk(t.y), human = t.human;
+    await say(human ? 'event_letters' : 'letters_npc', human ? '路上掉了好多信！點一點，撿起來數一數！' : '對手撿到信了！一起數一數！', { min: 1200, hold: true });
+    const els = [], pts = [];
+    for (let i = 0; i < n; i++) {
+      const [ox, oy] = [[1.7, -.5], [-1.7, -.5], [0, -1.55]][n === 1 ? 0 : i], x = t.x + ox * 130 * k, y = t.y + oy * t.def.h * k - (i === 2 ? 70 * k : 0), sz = 120 * k;   // 左、右、頭頂上方（不擋箭頭）
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'fx lt'; b.innerHTML = '<svg viewBox="0 0 64 64"><use href="#i-env"/></svg><b></b>';
+      Object.assign(b.style, { left: x + 'px', top: y + 'px', width: sz + 'px', height: sz + 'px', fontSize: sz + 'px', rotate: rnd(-18, 18) + 'deg' });
+      world.appendChild(b); els.push(b); pts.push([x, y]);
+      if (!RM) b.animate([{ transform: 'translate(-50%,-50%) scale(0)' }, { transform: 'translate(-50%,-50%) scale(1)' }], { duration: 380 / FAST, delay: i * 140 / FAST, fill: 'backwards', easing: 'cubic-bezier(.2,1.5,.4,1)' });
+    }
+    camera([posOf(t), ...pts]); Dino.sfx('pop', .6);
+    let got = 0;
+    const grab = b => { got++; b.disabled = true; b.classList.remove('hint'); b.classList.add('got'); b.querySelector('b').textContent = got; Dino.sfx('pop', .7); return numDone(numVoice(got)); };
+    if (human) {
+      showBubble('路上掉了好多信！點一點，撿起來數一數！');
+      await userWait(done => {
+        let idle; const arm = () => { clearTimeout(idle); idle = setTimeout(() => els.forEach(e => !e.disabled && e.classList.add('hint')), 8000 / FAST); };
+        arm(); aborters.add(() => clearTimeout(idle));
+        els.forEach(b => b.addEventListener('click', async () => { if (b.disabled) return; arm(); await grab(b); if (got === n) { clearTimeout(idle); done(); } }));
+      });
+    } else for (const b of els) { await sleep(450); await grab(b); }
+    await sleep(500); hideBubble();
+    els.forEach(b => { b.style.transition = 'opacity .4s'; b.style.opacity = 0; setTimeout(() => b.remove(), 450); });
+    await say('letters_go', '撿好了！撿幾封，就走幾格！', { min: 900 }); hideBubble();
+    for (let i = 0; i < n && t.at < N; i++) await stepTo(t, t.at + 1);
+  }
+  // 比大小：彈出卡，孩子點自己的骰子擲，對手接著擲；點數大的往前兩格，一樣大都不動
+  async function runDuel() {
+    await say('event_duel', '比大小！點數大的往前兩格！', { min: 1200 }); hideBubble();
+    const card = $('qcard'), ov = $('quiz'); card.innerHTML = ''; card.style.position = '';
+    const h = document.createElement('h3'); h.innerHTML = '<svg width="44" height="44" viewBox="0 0 64 64"><use href="#i-duel"/></svg><span></span>'; kid(h.querySelector('span'), '比大小');
+    const row = document.createElement('div'); row.className = 'duel';
+    const side = (tok, cls) => { const sd = document.createElement('div'); sd.className = 'side ' + cls; sd.style.position = 'relative';
+      const im = document.createElement('img'); im.src = `assets/cast/${tok.def.img}__hello.webp`; im.alt = '';
+      const d = makeDie(0); d._cube.style.transform = rotStr(1); sd.append(im, d); sd._d = d; row.appendChild(sd); return sd; };
+    const me = side(you, 'me'), op = side(npc, 'op');
+    const q = document.createElement('p'); q.className = 'q'; kid(q, '點骰子！');
+    card.append(h, row, q); ov.hidden = false;
+    const roll = async sd => {
+      const v = rnd(1, L.dmax), d = sd._d; d._set(v); Dino.sfx('swoosh', .6);
+      if (!RM) await done(d._cube.animate([{ transform: `rotateX(${rnd(0, 3) * 90}deg) rotateY(${rnd(0, 3) * 90}deg)` }, { transform: rotStr(1, 720, 720) }], { duration: 800 / FAST, easing: 'cubic-bezier(.2,.6,.3,1)' }), 800);
+      Dino.sfx('tap', .5); d._label(v); await numDone(numVoice(v)); return v;
+    };
+    me._d.classList.add('tappable'); const hand = document.createElement('span'); hand.className = 'tap'; hand.innerHTML = '<svg viewBox="0 0 64 72"><use href="#i-hand"/></svg>'; me.appendChild(hand);
+    await userWait(fin => me._d.addEventListener('click', () => { Dino.sfx('tap', .6); fin(); }, { once: true }));
+    me._d.classList.remove('tappable'); hand.remove(); q.innerHTML = '';
+    const a = await roll(me); await sleep(500);
+    const b = await roll(op); await sleep(400);
+    const mover = a > b ? you : a < b ? npc : null;
+    if (mover) { (mover === you ? me : op).classList.add('win'); Dino.sfx('correct', .7); }
+    const [id, txt] = a > b ? ['duel_you', '你比較大！往前兩格！'] : a < b ? ['duel_npc', '對手比較大，往前兩格！'] : ['duel_tie', '一樣大！大家都不動。'];
+    kid(q, txt); Dino.voice.stop(); await Promise.all([Promise.race([Dino.voice(voiceUrl(id)), sleepRaw(4000)]), sleep(1400)]);
+    ov.hidden = true;
+    if (mover) { camera([posOf(mover)]); await sleep(400); for (let i = 0; i < 2 && mover.at < N; i++) await stepTo(mover, mover.at + 1); checkWin(mover); }
+  }
+  const done = (anim, ms) => Promise.race([anim.finished.catch(() => {}), sleepRaw(ms + 150)]);
 
   // ───────── 小關卡：郵差小挑戰 ─────────
   const boxHTML = '<svg viewBox="0 0 64 64"><use href="#box"/></svg>';
