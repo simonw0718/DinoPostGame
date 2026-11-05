@@ -124,6 +124,7 @@
     .cand{z-index:4}
     .cand>img:first-of-type{transform-origin:50% 100%}
     .cand .letter{position:absolute;height:auto}
+    .cand .umb{transform:rotate(10deg);transform-origin:52% 93%}
     .cand.hot>img:first-of-type{filter:drop-shadow(0 0 10px var(--gold)) drop-shadow(0 0 4px #fffdf3)}
     .cand.no>img:first-of-type{animation:nope .5s}
     @keyframes nope{0%,100%{rotate:0deg}25%{rotate:-5deg}50%{rotate:5deg}75%{rotate:-3deg}}
@@ -245,8 +246,8 @@
       '把包裹交給收件人': ['ㄅㄚˇ','ㄅㄠ','ㄍㄨㄛˇ','ㄐㄧㄠ','ㄍㄟˇ','ㄕㄡ','ㄐㄧㄢˋ','ㄖㄣˊ'],
       '要寄給誰呢？': ['ㄧㄠˋ','ㄐㄧˋ','ㄍㄟˇ','ㄕㄟˊ','ㄋㄜ˙',''],
       '寄給': ['ㄐㄧˋ','ㄍㄟˇ'], '的收件人。': ['ㄉㄜ˙','ㄕㄡ','ㄐㄧㄢˋ','ㄖㄣˊ',''], '、': [''],
-      '在笑': ['ㄗㄞˋ','ㄒㄧㄠˋ'], '沒有笑': ['ㄇㄟˊ','ㄧㄡˇ','ㄒㄧㄠˋ'], '拿著信': ['ㄋㄚˊ','ㄓㄜ˙','ㄒㄧㄣˋ'], '沒拿信': ['ㄇㄟˊ','ㄋㄚˊ','ㄒㄧㄣˋ'],
-      '個子高高': ['ㄍㄜˋ','ㄗ˙','ㄍㄠ','ㄍㄠ'], '個子小小': ['ㄍㄜˋ','ㄗ˙','ㄒㄧㄠˇ','ㄒㄧㄠˇ'],
+      '拿著信': ['ㄋㄚˊ','ㄓㄜ˙','ㄒㄧㄣˋ'],
+      '戴著哨子': ['ㄉㄞˋ','ㄓㄜ˙','ㄕㄠˋ','ㄗ˙'], '兩手空空': ['ㄌㄧㄤˇ','ㄕㄡˇ','ㄎㄨㄥ','ㄎㄨㄥ'], '拿著雨傘': ['ㄋㄚˊ','ㄓㄜ˙','ㄩˇ','ㄙㄢˇ'], '個子高高': ['ㄍㄜˋ','ㄗ˙','ㄍㄠ','ㄍㄠ'], '個子小小': ['ㄍㄜˋ','ㄗ˙','ㄒㄧㄠˇ','ㄒㄧㄠˇ'],
       '這個不行喔！': ['ㄓㄜˋ','ㄍㄜ˙','ㄅㄨˋ','ㄒㄧㄥˊ','ㄛ',''],
       '蓋好章了！': ['ㄍㄞˋ','ㄏㄠˇ','ㄓㄤ','ㄌㄜ˙',''],
       '不是我喔！': ['ㄅㄨˋ','ㄕˋ','ㄨㄛˇ','ㄛ',''],
@@ -293,28 +294,32 @@
 
     // ── 收件人：正面卡，身高照製作庫 character_scale（伊奇 1.0＝340 場景 px） ──
     const H = 340;
+    // 每張正面卡的道具位置（卡片百分比）：lt＝拿信、ua＝雨傘握把、wa＝哨子掛脖子（導演 2026-11-05：用道具分辨，不用表情）
     const CAST = [
-      { h: 1.5, v: [{ img: 'aman__front__stand', ar: 375 / 640, smile: false, lt: [50, 50] }] },
-      { h: 1.3, v: [{ img: 'grandma__front__smile', ar: 430 / 640, smile: true, lt: [50, 60] }] },
-      { h: 1.3, v: [{ img: 'pairo__front__smile', ar: 302 / 640, smile: true, lt: [52, 45] }, { img: 'pairo__front__surprised', ar: 345 / 640, smile: false, lt: [50, 48] }] },
-      { h: .72, v: [{ img: 'xiaokong__front__happy', ar: 500 / 640, smile: true, lt: [50, 56] }, { img: 'xiaokong__front__surprised', ar: 520 / 631, smile: false, lt: [50, 54] }] },
-      { h: .8, v: [{ img: 'yuanyuan__front__happy', ar: 363 / 640, smile: true, lt: [42, 45] }] }
+      { h: 1.5, v: [{ img: 'aman__front__stand', ar: 375 / 640, lt: [50, 50], ua: [90, 58], wa: [50, 39] }] },
+      { h: 1.3, v: [{ img: 'grandma__front__smile', ar: 430 / 640, lt: [50, 60], ua: [80, 70], wa: [50, 73] }] },
+      { h: 1.3, v: [{ img: 'pairo__front__smile', ar: 302 / 640, lt: [52, 45], ua: [80, 62], wa: [50, 51] }, { img: 'pairo__front__surprised', ar: 345 / 640, lt: [50, 48], ua: [86, 50], wa: [50, 51] }] },
+      { h: .72, v: [{ img: 'xiaokong__front__happy', ar: 500 / 640, lt: [50, 56], ua: [84, 42], wa: [52, 45] }, { img: 'xiaokong__front__surprised', ar: 520 / 631, lt: [50, 54], ua: [88, 56], wa: [52, 45] }] },
+      { h: .8, v: [{ img: 'yuanyuan__front__happy', ar: 363 / 640, lt: [42, 45], ua: [82, 72], wa: [50, 55] }] }
     ];
+    // 特徵：值相同＝看不出差別；say(值) 給敘述（null＝這個值不拿來描述，避免『沒戴哨子』這種否定句）
     const FEATS = {
-      smile: { yes: '在笑', no: '沒有笑', get: r => r.smile },
-      letter: { yes: '拿著信', no: '沒拿信', get: r => r.letter },
-      tall: { yes: '個子高高', no: '個子小小', get: r => r.h >= 1.2 }
+      hand: { get: r => r.hand || 'none', say: v => ({ letter: '拿著信', umbrella: '拿著雨傘', none: '兩手空空' })[v] },
+      whistle: { get: r => !!r.whistle, say: v => v ? '戴著哨子' : null },
+      tall: { get: r => r.h >= 1.2, say: v => v ? '個子高高' : '個子小小' }
     };
-    const LV_FEATS = { 1: [['smile'], ['letter'], ['tall']], 2: [['smile', 'letter'], ['tall', 'letter'], ['tall', 'smile']], 3: [['tall', 'smile', 'letter']] };
+    const LV_FEATS = { 1: [['hand'], ['whistle']], 2: [['hand', 'whistle'], ['tall', 'hand'], ['tall', 'whistle']], 3: [['tall', 'hand', 'whistle']] };
     function makeRecipients(level) {
-      for (let n = 0; n < 800; n++) {
-        const rs = shuffle(CAST).slice(0, 3).map(c => ({ ...pick(c.v), h: c.h, letter: Math.random() < .5 }));
+      for (let n = 0; n < 2000; n++) {
+        const rs = shuffle(CAST).slice(0, 3).map(c => ({ ...pick(c.v), h: c.h, hand: pick(['letter', 'umbrella', null]), whistle: Math.random() < .5 }));
         const ti = Math.floor(Math.random() * 3), t = rs[ti], others = rs.filter(r => r !== t);
         for (const fs of shuffle(LV_FEATS[level])) {
+          if (fs.some(f => !FEATS[f].say(FEATS[f].get(t)))) continue;
           const same = (o, list) => list.every(f => FEATS[f].get(o) === FEATS[f].get(t));
           const unique = others.every(o => !same(o, fs));
-          const allNeeded = fs.every(f => others.some(o => same(o, fs.filter(g => g !== f))));   // 少一條就分不出來
-          if (unique && (fs.length === 1 || allNeeded)) return { rs, ti, fs };
+          // 少一條就分不出來的特徵要夠多：只有 2 位陪考者，最多只能讓 2 條變成必要（困難 3 條時第 3 條是加料）
+          const needed = fs.filter(f => others.some(o => same(o, fs.filter(g => g !== f)))).length;
+          if (unique && (fs.length === 1 || needed >= Math.min(fs.length, others.length))) return { rs, ti, fs };
         }
       }
     }
@@ -415,7 +420,7 @@
     function goFront() {
       const { rs, ti, fs } = makeRecipients(G.level), t = rs[ti];
       const desc = $('desc'); desc.replaceChildren(span('寄給'));
-      fs.forEach((f, i) => { if (i) desc.append(span('、')); desc.append(span(FEATS[f].get(t) ? FEATS[f].yes : FEATS[f].no, 'k')); });
+      fs.forEach((f, i) => { if (i) desc.append(span('、')); desc.append(span(FEATS[f].say(FEATS[f].get(t)), 'k')); });
       desc.append(span('的收件人。'));
       const box = $('cands'); box.replaceChildren();
       const xs = shuffle([150, 420, 690]);
@@ -424,8 +429,11 @@
         const d = document.createElement('div'); d.className = 'sp cand enter';
         d.style.cssText = `--x:${x};--y:${900 - h};--w:${w};animation-delay:${.15 + i * .1}s;z-index:${4 + Math.round(10 - r.h * 5)}`;
         d.dataset.ok = i === ti;
-        d.innerHTML = `<span class="ring"></span><img src="${S}${r.img}.webp" alt="${[r.smile ? '在笑' : '沒有笑', r.letter ? '拿著信' : '沒拿信', r.h >= 1.2 ? '個子高高' : '個子小小'].join('、')}">`;
-        if (r.letter) { const lw = 102 / w * 100; d.insertAdjacentHTML('beforeend', `<img class="letter" style="left:${r.lt[0] - lw / 2}%;top:${r.lt[1]}%;width:${lw}%" src="${S}letter.webp" alt="">`); }
+        d.innerHTML = `<span class="ring"></span><img src="${S}${r.img}.webp" alt="${Object.values(FEATS).map(F => F.say(F.get(r))).filter(Boolean).join('、')}">`;
+        // 道具固定實際大小（場景 px），不跟角色縮放：信 102、雨傘 180、哨子 64
+        if (r.hand === 'letter') { const lw = 102 / w * 100; d.insertAdjacentHTML('beforeend', `<img class="letter" style="left:${r.lt[0] - lw / 2}%;top:${r.lt[1]}%;width:${lw}%" src="${S}letter.webp" alt="">`); }
+        if (r.hand === 'umbrella') { const uw = 180 / w * 100, uh = 180 * 368 / 360 / h * 100; d.insertAdjacentHTML('beforeend', `<img class="letter umb" style="left:${r.ua[0] - uw * .52}%;top:${r.ua[1] - uh * .93}%;width:${uw}%" src="${S}umbrella.webp" alt="">`); }
+        if (r.whistle) { const ww = 64 / w * 100, wh = 64 * 198 / 180 / h * 100; d.insertAdjacentHTML('beforeend', `<img class="letter" style="left:${r.wa[0] - ww / 2}%;top:${r.wa[1] - wh * .45}%;width:${ww}%" src="${S}whistle.webp" alt="">`); }
         box.append(d);
       });
       const bot = $('frontBot'); bot.replaceChildren();
