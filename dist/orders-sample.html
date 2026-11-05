@@ -237,7 +237,7 @@
       '今天不收': ['ㄐㄧㄣ','ㄊㄧㄢ','ㄅㄨˋ','ㄕㄡ'],
       '的包裹': ['ㄉㄜ˙','ㄅㄠ','ㄍㄨㄛˇ'],
       '的不收': ['ㄉㄜ˙','ㄅㄨˋ','ㄕㄡ'],
-      '或': ['ㄏㄨㄛˋ'], '跟': ['ㄍㄣ'], '喔！': ['ㄛ',''],
+      '或': ['ㄏㄨㄛˋ'], '又': ['ㄧㄡˋ'], '只收': ['ㄓˇ','ㄕㄡ'], '今天只收': ['ㄐㄧㄣ','ㄊㄧㄢ','ㄓˇ','ㄕㄡ'], '喔！': ['ㄛ',''],
       '紅色': ['ㄏㄨㄥˊ','ㄙㄜˋ'], '綠色': ['ㄌㄩˋ','ㄙㄜˋ'], '藍色': ['ㄌㄢˊ','ㄙㄜˋ'], '黃色': ['ㄏㄨㄤˊ','ㄙㄜˋ'],
       '沒有郵票': ['ㄇㄟˊ','ㄧㄡˇ','ㄧㄡˊ','ㄆㄧㄠˋ'], '綁繩子': ['ㄅㄤˇ','ㄕㄥˊ','ㄗ˙'], '貼星星': ['ㄊㄧㄝ','ㄒㄧㄥ','ㄒㄧㄥ'], '貼愛心': ['ㄊㄧㄝ','ㄞˋ','ㄒㄧㄣ'],
       '蓋章': ['ㄍㄞˋ','ㄓㄤ'],
@@ -270,13 +270,13 @@
       { t: '貼星星', hit: p => p.stk === 'star', kind: 'stk' },
       { t: '貼愛心', hit: p => p.stk === 'heart', kind: 'stk' }
     ];
-    // 簡單＝『跟』：條件全中才不收；困難＝『或』：中一條就不收（導演 2026-11-05）
-    const rejected = (p, rule) => rule.and ? rule.every(c => c.hit(p)) : rule.some(c => c.hit(p));
-    const joinWord = rule => rule.and ? '跟' : '或';
+    // 簡單＝『只收 A 又 B』：兩個都有才收；新手／困難＝『不收』，困難用『或』中一條就不收（導演 2026-11-05 選 A）
+    const rejected = (p, rule) => rule.only ? !rule.every(c => c.hit(p)) : rule.some(c => c.hit(p));
+    const joinWord = rule => rule.only ? '又' : '或';
     function makeRule(level) {
       if (level === 1) return [pick(CONDS.filter(c => c.kind === 'color'))];
       const r = ['color', ...shuffle(['stamp', 'str', 'stk']).slice(0, level - 1)].map(k => pick(CONDS.filter(c => c.kind === k)));
-      r.and = level === 2; return r;
+      r.only = level === 2; return r;
     }
     const randParcel = level => ({ c: pick(Object.keys(COLORS)), stamp: pick(level === 1 ? [1, 2] : [0, 1, 2]), str: Math.random() < .45, stk: pick([null, null, 'star', 'heart']) });
     function makeParcels(rule, level) {
@@ -285,7 +285,7 @@
         const bad = ps.filter(p => rejected(p, rule));
         // 一個能寄；不能寄的每個都要被不同條件擋（簡單／困難時才看得出每條規定都有用）
         if (bad.length !== 2 || new Set(ps.map(p => JSON.stringify(p))).size < 3) continue;
-        if (rule.and) { const ok = ps.find(p => !rejected(p, rule)); if (!rule.some(c => c.hit(ok))) continue; }   // 『跟』：能寄的要只中一條，才考得出全中才不收
+        if (rule.only) { if (new Set(bad.map(p => rule.findIndex(c => c.hit(p)))).size !== 2 || bad.some(p => !rule.some(c => c.hit(p)))) continue; }   // 『只收 A 又 B』：不能寄的一個只有 A、一個只有 B，才考得出兩個都要看
         else if (rule.length > 1 && bad.every(p => rule.filter(c => c.hit(p)).length > 1)) continue;
         return ps;
       }
@@ -374,7 +374,9 @@
       const conds = $('conds'); conds.replaceChildren();
       G.rule.forEach((c, i) => { if (i) conds.append(span(joinWord(G.rule), 'or')); conds.append(span(c.t, 'chip')); });
       $('rule').dataset.n = G.rule.length;
-      const parts = G.rule.length === 1 ? ['今天不收', G.rule[0].t, '的包裹', '喔！'] : [...G.rule.flatMap((c, i) => i ? [joinWord(G.rule), c.t] : [c.t]), '的不收', '喔！'];
+      const mid = G.rule.flatMap((c, i) => i ? [joinWord(G.rule), c.t] : [c.t]);
+      kt(document.querySelector('#rule .r1'), G.rule.only ? '今天只收' : '今天不收');
+      const parts = G.rule.only ? ['只收', ...mid, '的包裹', '喔！'] : G.rule.length === 1 ? ['今天不收', G.rule[0].t, '的包裹', '喔！'] : [...mid, '的不收', '喔！'];
       kt($('bubble'), ...join(parts));
       stage.classList.add('s-rule'); G.busy = true; G.ruleAt = performance.now(); Dino.sfx('swoosh', .4);
     }
