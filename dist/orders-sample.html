@@ -117,14 +117,13 @@
     .s-rule .chick{opacity:0}
 
     /* 送信 */
-    .tag{position:absolute;z-index:6;left:5%;right:5%;top:calc(100cqw*1080/840*.09);padding:12px 16px 14px;background:var(--cream);border:4px solid #c9b48a;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,.18);transform:rotate(-1deg);text-align:center}
+    .tag{position:absolute;z-index:12;left:5%;right:5%;top:calc(100cqw*1080/840*.09);padding:12px 16px 14px;background:var(--cream);border:4px solid #c9b48a;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,.18);transform:rotate(-1deg);text-align:center}
     .tag small{display:flex;justify-content:center;font-size:clamp(17px,5cqw,26px);color:var(--wood);font-weight:900}
     .tag p{margin:2px 0 0;display:flex;flex-wrap:wrap;justify-content:center;font-size:clamp(20px,6.2cqw,30px);font-weight:900;line-height:1.3}
     .tag .k{color:var(--key)}
     .cand{z-index:4}
     .cand>img:first-of-type{transform-origin:50% 100%}
     .cand .letter{position:absolute;height:auto}
-    .cand .umb{transform:rotate(10deg);transform-origin:52% 93%}
     .cand.hot>img:first-of-type{filter:drop-shadow(0 0 10px var(--gold)) drop-shadow(0 0 4px #fffdf3)}
     .cand.no>img:first-of-type{animation:nope .5s}
     @keyframes nope{0%,100%{rotate:0deg}25%{rotate:-5deg}50%{rotate:5deg}75%{rotate:-3deg}}
@@ -247,7 +246,7 @@
       '要寄給誰呢？': ['ㄧㄠˋ','ㄐㄧˋ','ㄍㄟˇ','ㄕㄟˊ','ㄋㄜ˙',''],
       '寄給': ['ㄐㄧˋ','ㄍㄟˇ'], '的收件人。': ['ㄉㄜ˙','ㄕㄡ','ㄐㄧㄢˋ','ㄖㄣˊ',''], '、': [''],
       '拿著信': ['ㄋㄚˊ','ㄓㄜ˙','ㄒㄧㄣˋ'],
-      '戴著哨子': ['ㄉㄞˋ','ㄓㄜ˙','ㄕㄠˋ','ㄗ˙'], '兩手空空': ['ㄌㄧㄤˇ','ㄕㄡˇ','ㄎㄨㄥ','ㄎㄨㄥ'], '拿著雨傘': ['ㄋㄚˊ','ㄓㄜ˙','ㄩˇ','ㄙㄢˇ'], '個子高高': ['ㄍㄜˋ','ㄗ˙','ㄍㄠ','ㄍㄠ'], '個子小小': ['ㄍㄜˋ','ㄗ˙','ㄒㄧㄠˇ','ㄒㄧㄠˇ'],
+      '戴著帽子': ['ㄉㄞˋ','ㄓㄜ˙','ㄇㄠˋ','ㄗ˙'], '身上纏著藤蔓': ['ㄕㄣ','ㄕㄤˋ','ㄔㄢˊ','ㄓㄜ˙','ㄊㄥˊ','ㄇㄢˋ'], '腳髒髒的': ['ㄐㄧㄠˇ','ㄗㄤ','ㄗㄤ','ㄉㄜ˙'], '旁邊有玩具車': ['ㄆㄤˊ','ㄅㄧㄢ','ㄧㄡˇ','ㄨㄢˊ','ㄐㄩˋ','ㄔㄜ'], '拿著雨傘': ['ㄋㄚˊ','ㄓㄜ˙','ㄩˇ','ㄙㄢˇ'], '個子高高': ['ㄍㄜˋ','ㄗ˙','ㄍㄠ','ㄍㄠ'], '個子小小': ['ㄍㄜˋ','ㄗ˙','ㄒㄧㄠˇ','ㄒㄧㄠˇ'],
       '這個不行喔！': ['ㄓㄜˋ','ㄍㄜ˙','ㄅㄨˋ','ㄒㄧㄥˊ','ㄛ',''],
       '蓋好章了！': ['ㄍㄞˋ','ㄏㄠˇ','ㄓㄤ','ㄌㄜ˙',''],
       '不是我喔！': ['ㄅㄨˋ','ㄕˋ','ㄨㄛˇ','ㄛ',''],
@@ -294,24 +293,55 @@
 
     // ── 收件人：正面卡，身高照製作庫 character_scale（伊奇 1.0＝340 場景 px） ──
     const H = 340;
-    // 每張正面卡的道具位置（卡片百分比）：lt＝拿信、ua＝雨傘握把、wa＝哨子掛脖子（導演 2026-11-05：用道具分辨，不用表情）
+    // 收件人道具（導演 2026-11-06）：頭＝草帽、手＝信／收起的雨傘、身上＝藤蔓、腳＝泥巴、腳邊＝玩具車；不用表情分辨
+    // 每張正面卡量好的位置（卡片百分比）：face 臉框（道具碰到就不給這張卡）、hat [中心 x, 帽簷底 y, 帽寬%]（null＝不戴）、
+    // side 手邊、leg 纏藤蔓處、feet 兩腳
     const CAST = [
-      { h: 1.5, v: [{ img: 'aman__front__stand', ar: 375 / 640, lt: [50, 50], ua: [90, 58], wa: [50, 39] }] },
-      { h: 1.3, v: [{ img: 'grandma__front__smile', ar: 430 / 640, lt: [50, 60], ua: [80, 70], wa: [50, 73] }] },
-      { h: 1.3, v: [{ img: 'pairo__front__smile', ar: 302 / 640, lt: [52, 45], ua: [80, 62], wa: [50, 51] }, { img: 'pairo__front__surprised', ar: 345 / 640, lt: [50, 48], ua: [86, 50], wa: [50, 51] }] },
-      { h: .72, v: [{ img: 'xiaokong__front__happy', ar: 500 / 640, lt: [50, 56], ua: [84, 42], wa: [52, 45] }, { img: 'xiaokong__front__surprised', ar: 520 / 631, lt: [50, 54], ua: [88, 56], wa: [52, 45] }] },
-      { h: .8, v: [{ img: 'yuanyuan__front__happy', ar: 363 / 640, lt: [42, 45], ua: [82, 72], wa: [50, 55] }] }
+      { h: 1.5, v: [{ img: 'aman__front__stand', ar: 375 / 640, face: [24, 12, 78, 37], hat: [51, 9.5, 62], side: [84, 60], leg: [33, 80], feet: [[28, 96], [70, 96]] }] },
+      { h: 1.3, v: [{ img: 'grandma__front__smile', ar: 430 / 640, face: [30, 40, 72, 62], hat: [45, 20, 42], side: [84, 76], leg: [32, 86], feet: [[34, 97], [66, 97]] }] },
+      { h: 1.3, v: [{ img: 'pairo__front__smile', ar: 302 / 640, face: [33, 14, 74, 40], hat: null, side: [84, 62], leg: [38, 84], feet: [[36, 97], [62, 97]] },
+                    { img: 'pairo__front__surprised', ar: 345 / 640, face: [33, 14, 72, 40], hat: null, side: [86, 50], leg: [38, 84], feet: [[36, 97], [60, 97]] }] },
+      { h: .72, v: [{ img: 'xiaokong__front__happy', ar: 500 / 640, face: [34, 18, 68, 40], hat: [50, 15, 34], side: [82, 66], leg: [42, 78], feet: [[42, 96], [60, 96]] },
+                    { img: 'xiaokong__front__surprised', ar: 520 / 631, face: [36, 14, 68, 36], hat: [53, 12, 32], side: [86, 60], leg: [42, 78], feet: [[42, 95], [62, 95]] }] },
+      { h: .8, v: [{ img: 'yuanyuan__front__happy', ar: 363 / 640, face: [26, 30, 86, 53], hat: [50, 19, 56], side: [84, 77], leg: [38, 84], feet: [[34, 97], [62, 97]] }] }
     ];
-    // 特徵：值相同＝看不出差別；say(值) 給敘述（null＝這個值不拿來描述，避免『沒戴哨子』這種否定句）
+    // 道具圖（寬：場景 px 固定實際大小；帽子例外依頭寬）
+    const PROP = { letter: ['letter', 96, 205 / 300], umbrella: ['umbrella_closed', 48, 357 / 100], vine: ['vine', 90, 184 / 220], mud: ['mud', 50, 87 / 140], car: ['toy_car', 96, 192 / 260], hat: ['hat', 0, 189 / 300] };
+    function propBoxes(r) {   // → [{k, src, box:[x0,y0,x1,y1] 卡片%}]
+      const ch = r.h * H, cw = ch * r.ar, out = [];
+      const add = (k, cx, cy, wpx, ax = .5, ay = .5) => { const [src, , ratio] = PROP[k], wp = wpx / cw * 100, hp = wpx * ratio / ch * 100; out.push({ k, src, box: [cx - wp * ax, cy - hp * ay, cx + wp * (1 - ax), cy + hp * (1 - ay)] }); };
+      if (r.hat) add('hat', r.hat[0], r.hat[1], r.hat[2] / 100 * cw, .5, .9);
+      if (r.hand === 'letter') add('letter', r.side[0], r.side[1], PROP.letter[1]);
+      if (r.hand === 'umbrella') add('umbrella', r.side[0], r.side[1], PROP.umbrella[1], .5, .35);
+      if (r.vine) add('vine', r.leg[0], r.leg[1], PROP.vine[1]);
+      if (r.mud) r.feet.forEach(f => add('mud', f[0], f[1], PROP.mud[1], .5, .7));
+      if (r.car) add('car', -2, 101, PROP.car[1], .5, 1);
+      return out;
+    }
+    const hitsFace = r => propBoxes(r).some(({ box: [a, b, c, d] }) => a < r.face[2] && c > r.face[0] && b < r.face[3] && d > r.face[1]);
+    // 特徵：值相同＝看不出差別；say(值) 給敘述（null＝不拿來描述，不出『沒有…』否定句）
     const FEATS = {
-      hand: { get: r => r.hand || 'none', say: v => ({ letter: '拿著信', umbrella: '拿著雨傘', none: '兩手空空' })[v] },
-      whistle: { get: r => !!r.whistle, say: v => v ? '戴著哨子' : null },
+      hat: { get: r => !!r.hat, say: v => v ? '戴著帽子' : null },
+      hand: { get: r => r.hand || 'none', say: v => ({ letter: '拿著信', umbrella: '拿著雨傘' })[v] || null },
+      vine: { get: r => !!r.vine, say: v => v ? '身上纏著藤蔓' : null },
+      mud: { get: r => !!r.mud, say: v => v ? '腳髒髒的' : null },
+      car: { get: r => !!r.car, say: v => v ? '旁邊有玩具車' : null },
       tall: { get: r => r.h >= 1.2, say: v => v ? '個子高高' : '個子小小' }
     };
-    const LV_FEATS = { 1: [['hand'], ['whistle']], 2: [['hand', 'whistle'], ['tall', 'hand'], ['tall', 'whistle']], 3: [['tall', 'hand', 'whistle']] };
+    const combos = (a, n) => n === 0 ? [[]] : a.flatMap((x, i) => combos(a.slice(i + 1), n - 1).map(c => [x, ...c]));
+    const ITEMS = ['hat', 'hand', 'vine', 'mud', 'car'];
+    const LV_FEATS = { 1: combos(ITEMS, 1), 2: [...combos(ITEMS, 2), ...ITEMS.map(k => ['tall', k])], 3: [...combos(ITEMS, 3), ...combos(ITEMS, 2).map(c => ['tall', ...c])] };
+    function dressUp(c) {   // 隨機穿戴；碰到臉的道具不給
+      const v = pick(c.v), r = { ...v, h: c.h, hat: null, hand: null };
+      if (v.hat && Math.random() < .4) { r.hat = v.hat; if (hitsFace(r)) r.hat = null; }
+      for (const [k, val, p] of [['hand', pick(['letter', 'umbrella']), .55], ['vine', true, .35], ['mud', true, .35], ['car', true, .3]]) {
+        if (Math.random() < p) { r[k] = val; if (hitsFace(r)) r[k] = k === 'hand' ? null : false; }
+      }
+      return r;
+    }
     function makeRecipients(level) {
-      for (let n = 0; n < 2000; n++) {
-        const rs = shuffle(CAST).slice(0, 3).map(c => ({ ...pick(c.v), h: c.h, hand: pick(['letter', 'umbrella', null]), whistle: Math.random() < .5 }));
+      for (let n = 0; n < 3000; n++) {
+        const rs = shuffle(CAST).slice(0, 3).map(dressUp);
         const ti = Math.floor(Math.random() * 3), t = rs[ti], others = rs.filter(r => r !== t);
         for (const fs of shuffle(LV_FEATS[level])) {
           if (fs.some(f => !FEATS[f].say(FEATS[f].get(t)))) continue;
@@ -425,15 +455,12 @@
       const box = $('cands'); box.replaceChildren();
       const xs = shuffle([150, 420, 690]);
       rs.forEach((r, i) => {
-        const h = r.h * H, w = h * r.ar, x = Math.max(4, Math.min(836 - w, xs[i] - w / 2));
+        const h = r.h * H, w = h * r.ar, x = Math.max(4 + (r.car ? 60 : 0), Math.min(836 - w, xs[i] - w / 2));   // 玩具車在卡片左外側，留位置
         const d = document.createElement('div'); d.className = 'sp cand enter';
         d.style.cssText = `--x:${x};--y:${900 - h};--w:${w};animation-delay:${.15 + i * .1}s;z-index:${4 + Math.round(10 - r.h * 5)}`;
         d.dataset.ok = i === ti;
         d.innerHTML = `<span class="ring"></span><img src="${S}${r.img}.webp" alt="${Object.values(FEATS).map(F => F.say(F.get(r))).filter(Boolean).join('、')}">`;
-        // 道具固定實際大小（場景 px），不跟角色縮放：信 102、雨傘 180、哨子 64
-        if (r.hand === 'letter') { const lw = 102 / w * 100; d.insertAdjacentHTML('beforeend', `<img class="letter" style="left:${r.lt[0] - lw / 2}%;top:${r.lt[1]}%;width:${lw}%" src="${S}letter.webp" alt="">`); }
-        if (r.hand === 'umbrella') { const uw = 180 / w * 100, uh = 180 * 368 / 360 / h * 100; d.insertAdjacentHTML('beforeend', `<img class="letter umb" style="left:${r.ua[0] - uw * .52}%;top:${r.ua[1] - uh * .93}%;width:${uw}%" src="${S}umbrella.webp" alt="">`); }
-        if (r.whistle) { const ww = 64 / w * 100, wh = 64 * 198 / 180 / h * 100; d.insertAdjacentHTML('beforeend', `<img class="letter" style="left:${r.wa[0] - ww / 2}%;top:${r.wa[1] - wh * .45}%;width:${ww}%" src="${S}whistle.webp" alt="">`); }
+        propBoxes(r).forEach(({ k, src, box: [x0, y0, x1] }) => d.insertAdjacentHTML(k === 'car' ? 'afterbegin' : 'beforeend', `<img class="letter p-${k}" style="left:${x0}%;top:${y0}%;width:${x1 - x0}%" src="${S}${src}.webp" alt="">`));
         box.append(d);
       });
       const bot = $('frontBot'); bot.replaceChildren();
