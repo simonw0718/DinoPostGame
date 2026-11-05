@@ -9,12 +9,13 @@
   <link rel="preload" href="assets/fonts/naikai-subset.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="fx.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css">
   <script src="shared.js"></script>
   <style>
-    /* 郵局任務單 畫面 sample（導演 2026-11-05）：只看版面，不能玩。?view=counter｜rule｜front */
-    :root{--ink:#24634a;--cream:#fffdf3;--ok:#3d9a5b;--no:#e0533f;--wood:#8a5a2f}
+    /* 郵局任務單 畫面 sample v2（導演 2026-11-05 意見：規定標題加底、規則三行排、小桌包裹往上拉給阿暴蓋章、送信用正面卡）
+       ?view=counter｜rule｜front；?rules=2 看兩個條件的排法。櫃台畫面可以拖拉試玩。 */
+    :root{--ink:#24634a;--cream:#fffdf3;--ok:#3d9a5b;--no:#e0533f;--wood:#8a5a2f;--key:#c4471e}
     html,body{margin:0;height:100%;background:#164d39;font-family:"Naikai",ui-rounded,"Noto Sans TC",sans-serif;color:var(--ink)}
     ::selection{background:#f2c14e;color:#24382c}
     .or-shell{max-width:860px;margin:0 auto;padding:0 12px 14px;min-height:100svh;display:flex;flex-direction:column}
-    .or-stage{position:relative;width:min(100%,calc((100svh - 110px)*840/1080));aspect-ratio:840/1080;margin:0 auto;border-radius:26px;overflow:hidden;border:4px solid #e9dfc6;box-shadow:0 10px 26px rgba(0,0,0,.28);background:#f6efdc}
+    .or-stage{position:relative;width:min(100%,calc((100svh - 110px)*840/1080));aspect-ratio:840/1080;margin:0 auto;border-radius:26px;overflow:hidden;border:4px solid #e9dfc6;box-shadow:0 10px 26px rgba(0,0,0,.28);background:#f6efdc;touch-action:none;user-select:none;-webkit-user-select:none}
     .cam{position:absolute;inset:0;transform-origin:var(--ox,50%) var(--oy,50%);transition:transform .9s cubic-bezier(.16,1,.3,1)}
     .kid-text{display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;column-gap:.01em;row-gap:.03em;vertical-align:middle}
     .bpm-word{display:inline-flex;align-items:center;padding-right:.14em;white-space:nowrap}
@@ -28,51 +29,68 @@
     /* 場景座標 840×1080 → 百分比 */
     .sp{left:calc(var(--x)/840*100%);top:calc(var(--y)/1080*100%);width:calc(var(--w)/840*100%)}
     .sp img{display:block;width:100%;height:auto}
-    .board{--x:186;--y:118;--w:620}
-    .note{position:absolute;left:9%;top:17%;width:82%;transform:rotate(-1.5deg)}
+
+    /* ── 櫃台主畫面 ── */
+    .board{--x:34;--y:84;--w:556;z-index:2}
+    .board h2{position:absolute;left:50%;top:-3.5%;transform:translateX(-50%) rotate(-1deg);margin:0;padding:.18em .9em .24em;border-radius:14px;background:var(--cream);border:4px solid var(--wood);color:var(--ink);font-size:clamp(14px,2.6vw,22px);white-space:nowrap;box-shadow:0 4px 0 rgba(0,0,0,.18)}
+    .note{position:absolute;left:7%;top:15%;width:86%;transform:rotate(-1.2deg)}
     .note img{width:100%}
-    .note p{position:absolute;inset:16% 6% 10%;margin:0;display:flex;align-items:center;justify-content:center;text-align:center;font-size:clamp(17px,3.5vw,30px);font-weight:900;line-height:1.25;color:#2b2a27}
-    .note p .k{color:#c4471e}
-    .board h2{position:absolute;left:0;right:0;top:-1%;margin:0;text-align:center;font-size:clamp(13px,2.4vw,20px);color:#fffdf3;text-shadow:0 2px 0 rgba(0,0,0,.25)}
-    .chick{--x:112;--y:438;--w:156}
-    .counterLay{z-index:3}
-    .parcels{z-index:4}
-    .pc{position:absolute;left:calc(var(--x)/840*100%);top:calc(var(--y)/1080*100%);width:calc(150/840*100%);aspect-ratio:249/201;border-radius:10px;cursor:pointer;transition:transform .25s cubic-bezier(.16,1,.3,1)}
-    .pc>img{position:absolute;inset:0;width:100%;height:100%}
-    .pc .st{position:absolute;top:30%;width:19%;}
-    .pc .str{position:absolute;left:12%;top:-12%;width:80%}
-    .pc .stk{position:absolute;left:8%;top:52%;width:24%}
-    .pc.picked{transform:translateY(-14%) rotate(-3deg);filter:drop-shadow(0 10px 8px rgba(0,0,0,.25))}
-    .pc.picked:after{content:"";position:absolute;inset:-8%;border:4px dashed #fffdf3;border-radius:14px}
-    .stamps{position:absolute;z-index:5;left:3%;top:2.4%;display:flex;gap:5px}
+    .rule{position:absolute;inset:13% 9% 9%;display:flex;flex-direction:column;justify-content:center;gap:.28em;color:#2b2a27;font-size:clamp(19px,4.2vw,38px);font-weight:900;line-height:1.15}
+    .rule .r1{align-self:flex-start}
+    .rule .r2{align-self:center;display:flex;align-items:center;gap:.25em;flex-wrap:wrap;justify-content:center}
+    .rule .r3{align-self:flex-end}
+    .chip{display:inline-flex;padding:.12em .35em .16em;border:.12em solid var(--key);border-radius:.4em;background:#fff6e4;color:var(--key)}
+    .rule .or{font-size:.75em;color:#7a6a55}
+    .rules2 .rule{font-size:clamp(16px,3.5vw,32px)}
+    .chick{--x:600;--y:262;--w:196;z-index:1}
+    .counter{--x:74;--y:448;--w:692;z-index:3}
+    .zone{position:absolute;z-index:4;left:calc(380/840*100%);top:calc(370/1080*100%);width:calc(220/840*100%);height:calc(124/1080*100%);border:4px dashed var(--cream);border-radius:18px;background:rgba(36,99,74,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--cream);font-size:clamp(14px,2.4vw,21px);font-weight:900;transition:transform .2s,background .2s}
+    .zone img{width:24%;filter:drop-shadow(0 2px 2px rgba(0,0,0,.3))}
+    .zone.hot{transform:scale(1.07);background:rgba(242,193,78,.75)}
+    .table{--x:62;--y:798;--w:716;z-index:5}
+    .pc{position:absolute;z-index:6;left:calc(var(--x)/840*100%);top:calc(var(--y)/1080*100%);width:calc(170/840*100%);aspect-ratio:249/201;cursor:grab;touch-action:none}
+    .pc>img{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+    .pc img{pointer-events:none}
+    .pc .st{position:absolute;top:30%;width:19%;height:auto}
+    .pc .str{position:absolute;left:12%;top:-12%;width:80%;height:auto}
+    .pc .stk{position:absolute;left:8%;top:52%;width:24%;height:auto}
+    .pc.drag{cursor:grabbing;z-index:9;filter:drop-shadow(0 14px 10px rgba(0,0,0,.3))}
+    .pc.back{transition:transform .35s cubic-bezier(.16,1,.3,1)}
+    .pc.shake{animation:shake .4s}
+    @keyframes shake{0%,100%{translate:0}20%{translate:-8px}40%{translate:8px}60%{translate:-6px}80%{translate:6px}}
+    .pc.done{transition:left .3s,top .3s,transform .3s;pointer-events:none}
+    .pc .ink{position:absolute;left:30%;top:14%;width:44%;aspect-ratio:1;border:5px solid var(--no);border-radius:50%;color:var(--no);display:flex;align-items:center;justify-content:center;font-size:clamp(14px,2.6vw,22px);font-weight:900;transform:rotate(-14deg) scale(2);opacity:0;transition:transform .25s cubic-bezier(.3,1.6,.5,1),opacity .15s;background:rgba(255,253,243,.6)}
+    .pc.done .ink{transform:rotate(-14deg) scale(1);opacity:1}
+    .board h2 .kid-text,.board h2.kid-text,.ask.kid-text,.chip.kid-text{flex-wrap:nowrap}
+    .ask{position:absolute;z-index:7;left:50%;bottom:2.2%;transform:translateX(-50%);padding:8px 20px;border-radius:99px;background:var(--cream);border:3px solid var(--wood);font-size:clamp(16px,2.9vw,25px);font-weight:900;box-shadow:0 4px 10px rgba(0,0,0,.18);white-space:nowrap}
+    .say{position:absolute;z-index:8;right:3%;top:calc(206/1080*100%);max-width:44%;padding:10px 14px;border-radius:20px;background:var(--cream);border:4px solid var(--ink);font-size:clamp(14px,2.5vw,21px);font-weight:900;line-height:1.3;opacity:0;transform:translateY(8px);transition:.25s;pointer-events:none}
+    .say.on{opacity:1;transform:none}
+    .stamps{position:absolute;z-index:8;left:3%;top:2.4%;display:flex;gap:5px}
     .stamps i{width:clamp(18px,3.2vw,28px);aspect-ratio:5/6;border:3px dashed #c9b48a;border-radius:3px;background:rgba(255,253,243,.7)}
     .stamps i.done{border-style:solid;border-color:#fffdf3;background:#f2c14e}
-    .listen{position:absolute;z-index:5;right:3%;top:2.2%;display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:99px;border:3px dashed #9db89a;background:rgba(255,253,243,.85);color:#7d9a7a;font:900 clamp(13px,2.2vw,18px) "Naikai",sans-serif}
+    .listen{position:absolute;z-index:8;right:3%;top:2.2%;display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:99px;border:3px dashed #9db89a;background:rgba(255,253,243,.85);color:#7d9a7a;font:900 clamp(13px,2.2vw,18px) "Naikai",sans-serif}
     .listen svg{width:1.2em;height:1.2em}
-    .ask{position:absolute;z-index:6;left:50%;bottom:17%;transform:translateX(-50%);padding:6px 18px;border-radius:99px;background:var(--cream);font-size:clamp(16px,3vw,26px);font-weight:900;box-shadow:0 4px 10px rgba(0,0,0,.15);white-space:nowrap}
-    .bins{position:absolute;z-index:6;left:4%;right:4%;bottom:3%;display:flex;gap:4%}
-    .bin{flex:1;display:flex;align-items:center;justify-content:center;gap:10px;min-height:clamp(64px,10vw,92px);border:4px solid #fffdf3;border-radius:22px;color:#fff;font:900 clamp(22px,4vw,34px) "Naikai",sans-serif;box-shadow:0 6px 0 rgba(0,0,0,.18),0 10px 18px rgba(0,0,0,.18)}
-    .bin svg{width:1.1em;height:1.1em}
-    .bin.ok{background:var(--ok)}.bin.no{background:var(--no)}
-    /* 規則放大鏡頭 */
-    .v-rule .cam{--ox:59%;--oy:30%;transform:scale(1.55)}
-    .v-rule .bins,.v-rule .ask,.v-rule .parcels,.v-rule .chick{opacity:0}
-    .bubble{display:none;position:absolute;z-index:7;left:31%;right:4%;bottom:5%;padding:16px 20px;background:var(--cream);border:5px solid var(--ink);border-radius:30px;font-size:clamp(20px,3.8vw,32px);font-weight:900;line-height:1.3;box-shadow:0 8px 18px rgba(0,0,0,.2)}
+
+    /* ── 規則放大鏡頭 ── */
+    .v-rule .cam{--ox:37%;--oy:12%;transform:scale(1.5)}
+    .v-rule .ask,.v-rule .pc,.v-rule .zone,.v-rule .chick{opacity:0}
+    .bubble{display:none;position:absolute;z-index:9;left:31%;right:4%;bottom:5%;padding:16px 20px;background:var(--cream);border:5px solid var(--ink);border-radius:30px;font-size:clamp(20px,3.8vw,32px);font-weight:900;line-height:1.3;box-shadow:0 8px 18px rgba(0,0,0,.2)}
     .bubble:before{content:"";position:absolute;left:-30px;bottom:30px;border:14px solid transparent;border-right:20px solid var(--ink)}
-    .cutin{display:none;position:absolute;z-index:7;left:2%;bottom:0;width:30%}
+    .cutin{display:none;position:absolute;z-index:9;left:2%;bottom:0;width:30%}
     .cutin img{display:block;width:100%}
     .v-rule .bubble,.v-rule .cutin{display:block}
-    /* 櫃台前（送信） */
+
+    /* ── 櫃台前（送信）：正面卡 ── */
     .front{display:none}
     .v-front .counterView{display:none}.v-front .front{display:block}
     .tag{position:absolute;z-index:6;left:5%;right:5%;top:9%;padding:14px 18px 16px;background:var(--cream);border:4px solid #c9b48a;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,.18);transform:rotate(-1deg);text-align:center}
     .tag small{display:block;font-size:clamp(13px,2.2vw,18px);color:var(--wood);font-weight:900}
     .tag p{margin:2px 0 0;font-size:clamp(20px,3.8vw,32px);font-weight:900;line-height:1.3}
-    .tag .k{color:#c4471e}
+    .tag .k{color:var(--key)}
     .cand{z-index:4;cursor:pointer}
-    .cand .letter{position:absolute;width:44%}
-    .hint{position:absolute;z-index:6;left:0;right:0;bottom:2.5%;text-align:center;color:#fffdf3;font-size:clamp(15px,2.6vw,22px);font-weight:900;text-shadow:0 2px 4px rgba(0,0,0,.4)}
-    .ring{position:absolute;inset:auto 8% -4% 8%;height:9%;border-radius:50%;background:rgba(36,99,74,.18)}
+    .cand .letter{position:absolute;height:auto}
+    .ring{position:absolute;inset:auto 6% -3% 6%;height:7%;border-radius:50%;background:rgba(36,99,74,.2)}
+    .front .ask{bottom:2.2%}
   </style>
 </head>
 <body>
@@ -84,66 +102,115 @@
     </header>
 
     <div id="stage" class="or-stage">
-      <!-- 櫃台主畫面：公布欄＋小雞阿暴＋檯面 3 個包裹 -->
+      <!-- 櫃台主畫面：公布欄（規則三行）＋櫃台後小雞阿暴＋蓋章區；櫃台前小桌放 3 個包裹，往上拉給阿暴 -->
       <div class="counterView">
         <div class="cam">
           <img class="lay" src="assets/orders/counter_bg.webp" alt="">
           <div class="sp board"><img src="assets/orders/board.webp" alt=""><h2 data-k="今天的規定">今天的規定</h2>
-            <div class="note"><img src="assets/orders/board_note.webp" alt=""><p data-k="今天不收綠色的包裹">今天不收綠色的包裹</p></div></div>
-          <div class="sp chick"><img src="assets/orders/chick_abao__stand__happy__open.webp" alt="小雞阿暴"></div>
-          <img class="lay counterLay" src="assets/orders/counter_counter.webp" alt="">
-          <div class="parcels">
-            <div class="pc" style="--x:300;--y:524"><img src="assets/orders/parcel_red.webp" alt="紅色包裹"><img class="st" style="right:8%" src="assets/orders/stamp.webp" alt=""><img class="st" style="right:29%" src="assets/orders/stamp.webp" alt=""></div>
-            <div class="pc picked" style="--x:466;--y:524"><img src="assets/orders/parcel_green.webp" alt="綠色包裹"><img class="str" src="assets/orders/string.webp" alt=""><img class="st" style="right:8%" src="assets/orders/stamp.webp" alt=""></div>
-            <div class="pc" style="--x:632;--y:524"><img src="assets/orders/parcel_blue.webp" alt="藍色包裹"><img class="stk" src="assets/orders/sticker_star.webp" alt=""><img class="st" style="right:8%" src="assets/orders/stamp.webp" alt=""></div>
-          </div>
+            <div class="note"><img src="assets/orders/board_note.webp" alt="">
+              <div class="rule" id="rule"><span class="r1" data-k="今天不收">今天不收</span><span class="r2" id="conds"></span><span class="r3" data-k="的包裹">的包裹</span></div></div></div>
+          <div class="sp chick"><img id="chickImg" src="assets/orders/chick_abao__front__stand_happy.webp" alt="小雞阿暴"></div>
+          <div class="sp counter"><img src="assets/orders/counter_desk.webp" alt=""></div>
+          <div class="zone" id="zone"><img src="assets/orders/stamp.webp" alt=""><span data-k="蓋章">蓋章</span></div>
+          <div class="sp table"><img src="assets/orders/table.webp" alt=""></div>
         </div>
-        <div class="ask" data-k="哪個包裹可以寄？">哪個包裹可以寄？</div>
-        <div class="bins"><button class="bin ok" type="button"><svg aria-hidden="true"><use href="icons.svg#ic-tick"/></svg><span data-k="可以寄">可以寄</span></button><button class="bin no" type="button"><svg aria-hidden="true"><use href="icons.svg#ic-close"/></svg><span data-k="退回">退回</span></button></div>
+        <div id="parcels"></div>
+        <div class="say" id="say"></div>
+        <div class="ask" data-k="把可以寄的包裹拉給阿暴">把可以寄的包裹拉給阿暴</div>
         <div class="cutin"><img src="assets/orders/chick_abao__proud__happy__open.webp" alt=""></div>
-        <div class="bubble" data-k="今天不收綠色的包裹喔！">今天不收綠色的包裹喔！</div>
+        <div class="bubble" id="bubble"></div>
       </div>
 
-      <!-- 櫃台前：包裹轉過來露出收件人，3 隻候選恐龍 -->
+      <!-- 櫃台前：收件人敘述＋3 隻候選（正面卡） -->
       <div class="front">
         <div class="cam">
           <img class="lay" src="assets/orders/front_bg.webp" alt="">
           <img class="lay" src="assets/orders/front_door_l.webp" alt="">
           <img class="lay" src="assets/orders/front_door_r.webp" alt="">
           <img class="lay" src="assets/orders/front_counter.webp" alt="">
-          <div class="sp cand" style="--x:14;--y:640;--w:280"><span class="ring"></span><img src="assets/orders/xiaokong__hold__happy__closed.webp" alt="小空：笑、拿著信"><img class="letter" style="left:62%;top:40%" src="assets/orders/letter.webp" alt=""></div>
-          <div class="sp cand" style="--x:290;--y:600;--w:262"><span class="ring"></span><img src="assets/orders/yuanyuan__stand__happy__closed.webp" alt="圓圓：笑、空手"></div>
-          <div class="sp cand" style="--x:530;--y:652;--w:305"><span class="ring"></span><img src="assets/orders/painuo__hold__troubled__closed.webp" alt="派諾：皺眉、拿著信"><img class="letter" style="left:66%;top:50%" src="assets/orders/letter.webp" alt=""></div>
+          <div class="sp cand" style="--x:40;--y:650;--w:196"><span class="ring"></span><img src="assets/orders/aman__front__stand.webp" alt="阿慢老師：沒笑、拿著信"><img class="letter" style="left:22%;top:52%;width:56%" src="assets/orders/letter.webp" alt=""></div>
+          <div class="sp cand" style="--x:296;--y:655;--w:232"><span class="ring"></span><img src="assets/orders/grandma__front__smile.webp" alt="奶奶：在笑、沒拿信"></div>
+          <div class="sp cand" style="--x:560;--y:648;--w:262"><span class="ring"></span><img src="assets/orders/xiaokong__front__happy.webp" alt="小空：在笑、拿著信"><img class="letter" style="left:30%;top:56%;width:40%" src="assets/orders/letter.webp" alt=""></div>
         </div>
         <div class="tag"><small data-k="收件人">收件人</small><p data-k="寄給在笑、手上拿著信的恐龍。">寄給在笑、手上拿著信的恐龍。</p></div>
         <div class="stamps"><i class="done"></i><i class="done"></i><i></i><i></i><i></i><i></i></div>
-        <div class="hint" data-k="把包裹交給收件人">把包裹交給收件人</div>
+        <div class="ask" data-k="把包裹交給收件人">把包裹交給收件人</div>
       </div>
       <div class="stamps counterView"><i class="done"></i><i></i><i></i><i></i><i></i><i></i></div>
       <div class="listen counterView"><svg aria-hidden="true"><use href="icons.svg#ic-sound"/></svg>8</div>
     </div>
   </div>
   <script>
-    const view = new URLSearchParams(location.search).get('view') || 'counter';
-    document.getElementById('stage').classList.add('v-' + view);
+    const q = new URLSearchParams(location.search);
+    const view = q.get('view') || 'counter', two = q.get('rules') === '2';
+    const stage = document.getElementById('stage');
+    stage.classList.add('v-' + view); if (two) stage.classList.add('rules2');
     const set = Dino.kidText({
       '郵局任務單': ['ㄧㄡˊ','ㄐㄩˊ','ㄖㄣˋ','ㄨˋ','ㄉㄢ'],
       '今天的規定': ['ㄐㄧㄣ','ㄊㄧㄢ','ㄉㄜ˙','ㄍㄨㄟ','ㄉㄧㄥˋ'],
-      '今天不收綠色的包裹': ['ㄐㄧㄣ','ㄊㄧㄢ','ㄅㄨˋ','ㄕㄡ','ㄌㄩˋ','ㄙㄜˋ','ㄉㄜ˙','ㄅㄠ','ㄍㄨㄛˇ'],
+      '今天不收': ['ㄐㄧㄣ','ㄊㄧㄢ','ㄅㄨˋ','ㄕㄡ'],
+      '綠色': ['ㄌㄩˋ','ㄙㄜˋ'],
+      '沒有郵票': ['ㄇㄟˊ','ㄧㄡˇ','ㄧㄡˊ','ㄆㄧㄠˋ'],
+      '或': ['ㄏㄨㄛˋ'],
+      '的包裹': ['ㄉㄜ˙','ㄅㄠ','ㄍㄨㄛˇ'],
       '今天不收綠色的包裹喔！': ['ㄐㄧㄣ','ㄊㄧㄢ','ㄅㄨˋ','ㄕㄡ','ㄌㄩˋ','ㄙㄜˋ','ㄉㄜ˙','ㄅㄠ','ㄍㄨㄛˇ','ㄛ',''],
-      '哪個包裹可以寄？': ['ㄋㄚˇ','ㄍㄜ˙','ㄅㄠ','ㄍㄨㄛˇ','ㄎㄜˇ','ㄧˇ','ㄐㄧˋ',''],
-      '可以寄': ['ㄎㄜˇ','ㄧˇ','ㄐㄧˋ'],
-      '退回': ['ㄊㄨㄟˋ','ㄏㄨㄟˊ'],
+      '綠色或沒有郵票的不收喔！': ['ㄌㄩˋ','ㄙㄜˋ','ㄏㄨㄛˋ','ㄇㄟˊ','ㄧㄡˇ','ㄧㄡˊ','ㄆㄧㄠˋ','ㄉㄜ˙','ㄅㄨˋ','ㄕㄡ','ㄛ',''],
+      '這個不行喔！': ['ㄓㄜˋ','ㄍㄜ˙','ㄅㄨˋ','ㄒㄧㄥˊ','ㄛ',''],
+      '蓋好章了！': ['ㄍㄞˋ','ㄏㄠˇ','ㄓㄤ','ㄌㄜ˙',''],
+      '蓋章': ['ㄍㄞˋ','ㄓㄤ'],
+      '把可以寄的包裹拉給阿暴': ['ㄅㄚˇ','ㄎㄜˇ','ㄧˇ','ㄐㄧˋ','ㄉㄜ˙','ㄅㄠ','ㄍㄨㄛˇ','ㄌㄚ','ㄍㄟˇ','ㄚ','ㄅㄠˋ'],
       '收件人': ['ㄕㄡ','ㄐㄧㄢˋ','ㄖㄣˊ'],
       '寄給在笑、手上拿著信的恐龍。': ['ㄐㄧˋ','ㄍㄟˇ','ㄗㄞˋ','ㄒㄧㄠˋ','','ㄕㄡˇ','ㄕㄤˋ','ㄋㄚˊ','ㄓㄜ˙','ㄒㄧㄣˋ','ㄉㄜ˙','ㄎㄨㄥˇ','ㄌㄨㄥˊ',''],
       '把包裹交給收件人': ['ㄅㄚˇ','ㄅㄠ','ㄍㄨㄛˇ','ㄐㄧㄠ','ㄍㄟˇ','ㄕㄡ','ㄐㄧㄢˋ','ㄖㄣˊ']
     });
     set(document.getElementById('title'), '郵局任務單');
+
+    // 規則：第二行放條件小牌（1 條或 2 條）
+    const conds = document.getElementById('conds');
+    const chip = t => { const s = document.createElement('span'); s.className = 'chip'; s.dataset.k = t; s.textContent = t; return s; };
+    if (two) { const o = document.createElement('span'); o.className = 'or'; o.dataset.k = '或'; o.textContent = '或'; conds.append(chip('綠色'), o, chip('沒有郵票')); }
+    else conds.append(chip('綠色'));
+    const ruleSay = two ? '綠色或沒有郵票的不收喔！' : '今天不收綠色的包裹喔！';
+    const bubble = document.getElementById('bubble'); bubble.dataset.k = ruleSay;
     document.querySelectorAll('[data-k]').forEach(el => set(el, el.dataset.k));
-    // 關鍵詞上色（規則的條件字）
-    const mark = (el, idx) => { const u = el.children; idx.forEach(i => u[i] && u[i].classList.add('k')); };
-    document.querySelectorAll('.note p').forEach(p => mark(p, [2,3,4,5]));
-    document.querySelectorAll('.tag p').forEach(p => mark(p, [2,3,6,7,8]));
+    document.querySelectorAll('.tag p').forEach(p => [2,3,6,7,8].forEach(i => p.children[i]?.classList.add('k')));
+
+    // 小桌上 3 個包裹（sample：一個可以寄）
+    const S = 'assets/orders/';
+    const parcels = two
+      ? [{c:'red', stamp:0, ok:false}, {c:'green', stamp:1, ok:false, str:1}, {c:'blue', stamp:2, ok:true, stk:'star'}]
+      : [{c:'green', stamp:1, ok:false}, {c:'red', stamp:2, ok:true, str:1}, {c:'green', stamp:1, ok:false, stk:'heart'}];
+    const xs = [108, 335, 562], y = 700;
+    const box = document.getElementById('parcels');
+    parcels.forEach((p, i) => {
+      const d = document.createElement('div'); d.className = 'pc'; d.style.cssText = `--x:${xs[i]};--y:${y}`; d.dataset.ok = p.ok;
+      d.innerHTML = `<img src="${S}parcel_${p.c}.webp" alt="">` + (p.str ? `<img class="str" src="${S}string.webp" alt="">` : '')
+        + Array.from({length: p.stamp}, (_, k) => `<img class="st" style="right:${8 + k * 21}%" src="${S}stamp.webp" alt="">`).join('')
+        + (p.stk ? `<img class="stk" src="${S}sticker_${p.stk}.webp" alt="">` : '') + `<span class="ink">OK</span>`;
+      box.append(d);
+    });
+
+    // 拖拉：放進蓋章區 → 可寄就蓋章；不行就彈回、阿暴說規則
+    const zone = document.getElementById('zone'), say = document.getElementById('say'), chickImg = document.getElementById('chickImg');
+    const hit = (a, b) => { const r = a.getBoundingClientRect(), z = b.getBoundingClientRect(); const cx = r.left + r.width / 2, cy = r.top + r.height / 2; return cx > z.left - 20 && cx < z.right + 20 && cy > z.top - 30 && cy < z.bottom + 30; };
+    let sayT; const speak = t => { set(say, t); say.classList.add('on'); clearTimeout(sayT); sayT = setTimeout(() => say.classList.remove('on'), 2200); };
+    box.querySelectorAll('.pc').forEach(el => {
+      let sx, sy, on = false;
+      el.addEventListener('pointerdown', e => { on = true; sx = e.clientX; sy = e.clientY; el.setPointerCapture(e.pointerId); el.classList.remove('back', 'shake'); el.classList.add('drag'); });
+      el.addEventListener('pointermove', e => { if (!on) return; el.style.transform = `translate(${e.clientX - sx}px,${e.clientY - sy}px) scale(1.06)`; zone.classList.toggle('hot', hit(el, zone)); });
+      const end = () => { if (!on) return; on = false; el.classList.remove('drag'); zone.classList.remove('hot');
+        if (hit(el, zone) && el.dataset.ok === 'true') {
+          const st = stage.getBoundingClientRect(), z = zone.getBoundingClientRect(), r = el.getBoundingClientRect();
+          el.classList.add('done'); el.style.transform = 'none';
+          el.style.left = ((z.left + z.width / 2 - r.width / 2 - st.left) / st.width * 100) + '%';
+          el.style.top = ((z.top + z.height / 2 - r.height / 2 - st.top) / st.height * 100) + '%';
+          chickImg.src = S + "chick_abao__front__proud.webp"; speak('蓋好章了！');
+        } else {
+          el.classList.add('back'); el.style.transform = '';
+          if (hit(el, zone)) { el.classList.add('shake'); speak(ruleSay); }
+        } };
+      el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
+    });
   </script>
 </body>
 </html>
