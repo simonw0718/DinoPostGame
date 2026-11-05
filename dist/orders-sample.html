@@ -10,7 +10,7 @@
   <script src="shared.js"></script>
   <style>
     /* 郵局任務單 可玩 sample（導演 2026-11-05）
-       一天＝3 輪；一輪＝檢查（小桌 3 包裹，把合規定的拉給阿暴蓋章）→送信（拖包裹給符合敘述的收件人）。
+       一天＝3 輪；一輪＝檢查（小桌 3 包裹，把合規定的交給阿暴蓋章）→送信（拖包裹給符合敘述的收件人）。
        場景座標 840×1080；手機較高時，舞台往下延伸地板，小桌／包裹／提示貼齊底部。 */
     :root{--ink:#24634a;--cream:#fffdf3;--ok:#3d9a5b;--no:#e0533f;--wood:#8a5a2f;--key:#c4471e;--gold:#f2c14e;--ease:cubic-bezier(.16,1,.3,1)}
     html,body{margin:0;height:100%;background:#164d39;font-family:"Naikai",ui-rounded,"Noto Sans TC",sans-serif;color:var(--ink)}
@@ -47,32 +47,32 @@
     .bp img{display:block;width:100%}
 
     /* 公布欄與規則 */
-    .board{--x:34;--y:84;--w:556;z-index:2}
-    .board h2{position:absolute;left:50%;top:-3.5%;transform:translateX(-50%) rotate(-1deg);margin:0;padding:.18em .9em .24em;border-radius:14px;background:var(--cream);border:4px solid var(--wood);color:var(--ink);font-size:clamp(14px,2.7cqw,22px);white-space:nowrap;box-shadow:0 4px 0 rgba(0,0,0,.18)}
+    .board{--x:22;--y:72;--w:624;z-index:2}
+    .board h2{position:absolute;left:50%;top:-3.5%;transform:translateX(-50%) rotate(-1deg);margin:0;padding:.18em .9em .24em;border-radius:14px;background:var(--cream);border:4px solid var(--wood);color:var(--ink);font-size:clamp(16px,3.2cqw,26px);white-space:nowrap;box-shadow:0 4px 0 rgba(0,0,0,.18)}
     .note{position:absolute;left:7%;top:15%;width:86%;transform:rotate(-1.2deg)}
     .note img{width:100%}
-    .rule{position:absolute;inset:13% 9% 9%;display:flex;flex-direction:column;justify-content:center;gap:.24em;color:#2b2a27;font-size:clamp(17px,4.4cqw,38px);font-weight:900;line-height:1.15}
+    .rule{position:absolute;inset:13% 9% 9%;display:flex;flex-direction:column;justify-content:center;gap:.24em;color:#2b2a27;font-size:clamp(20px,5.1cqw,44px);font-weight:900;line-height:1.15}
     .rule .r1{align-self:flex-start}
     .rule .r2{align-self:center;display:flex;align-items:center;gap:.22em;flex-wrap:wrap;justify-content:center}
     .rule .r3{align-self:flex-end}
-    .rule[data-n="2"]{font-size:clamp(15px,3.7cqw,32px)}
-    .rule[data-n="3"]{font-size:clamp(13px,3.1cqw,27px)}
+    .rule[data-n="2"]{font-size:clamp(17px,4.3cqw,37px)}
+    .rule[data-n="3"]{font-size:clamp(15px,3.6cqw,31px)}
     .chip{display:inline-flex;padding:.12em .32em .16em;border:.12em solid var(--key);border-radius:.4em;background:#fff6e4;color:var(--key)}
     .rule .or{font-size:.7em;color:#7a6a55}
-    .chick{--x:600;--y:262;--w:196;z-index:1}
-    .desk{--x:74;--y:448;--w:692;z-index:3}
+    .chick{--x:628;--y:318;--w:196;z-index:1}
+    .desk{--x:74;--y:504;--w:692;z-index:3}
     /* 蓋章區：剪紙收件墊（米色紙＋縫線＋紅色郵戳圈），下緣小箭頭往上提示 */
-    .zone{position:absolute;z-index:4;left:calc(372/840*100%);top:calc(400/1080*100%);width:calc(236/840*100%);height:calc(132/1080*100%);display:flex;align-items:center;justify-content:center;gap:6%;color:#7a4a2a;font-size:clamp(15px,2.8cqw,23px);font-weight:900;rotate:-2deg;transition:transform .25s var(--ease),opacity .3s}
+    .zone{position:absolute;z-index:4;left:calc(372/840*100%);top:calc(456/1080*100%);width:calc(236/840*100%);height:calc(132/1080*100%);display:flex;align-items:center;justify-content:center;gap:6%;color:#7a4a2a;font-size:clamp(15px,2.8cqw,23px);font-weight:900;rotate:-2deg;transition:transform .25s var(--ease),opacity .3s}
     .zone::before{content:"";position:absolute;inset:0;border-radius:10px;background:radial-gradient(rgba(150,110,60,.13) 1px,transparent 1.4px) 0 0/7px 7px,linear-gradient(#fffaf0,#f6ead0);box-shadow:0 5px 0 #b98c55,0 9px 14px rgba(0,0,0,.28);z-index:-1}
     .zone::after{content:"";position:absolute;inset:7px;border:3px dashed #c9a46c;border-radius:7px;pointer-events:none}
-    .zone .pm{width:30%;aspect-ratio:1;border-radius:50%;border:.2em solid #d2453b;display:flex;align-items:center;justify-content:center;color:#d2453b;font-size:1.25em;rotate:-12deg;background:radial-gradient(circle,rgba(210,69,59,.08) 55%,transparent 56%);box-shadow:inset 0 0 0 .12em #fbf3dd,inset 0 0 0 .2em rgba(210,69,59,.5);animation:pm 2.4s ease-in-out infinite}
+    .zone .pm{width:34%;height:auto;rotate:-10deg;opacity:.9;animation:pm 2.4s ease-in-out infinite}
     @keyframes pm{0%,100%{scale:1}50%{scale:1.08}}
     .zone .lab{display:flex;flex-direction:column;align-items:center;line-height:1.1}
     .zone .up{position:absolute;left:50%;bottom:-.9em;translate:-50% 0;font-size:.9em;color:var(--cream);text-shadow:0 2px 3px rgba(0,0,0,.4);animation:upz 1.1s ease-in-out infinite}
     @keyframes upz{50%{translate:-50% -30%}}
     .zone.hot{transform:scale(1.1);rotate:0deg}
     .zone.hot::before{box-shadow:0 5px 0 #b98c55,0 0 0 4px var(--gold),0 0 22px 6px rgba(242,193,78,.85)}
-    .zone.hot .pm{animation:pmhot .5s ease-in-out infinite;background:rgba(210,69,59,.18)}
+    .zone.hot .pm{animation:pmhot .5s ease-in-out infinite;opacity:1}
     @keyframes pmhot{50%{scale:1.2;rotate:-4deg}}
     .table{--x:62;--y:118;--w:716;z-index:1}
 
@@ -97,8 +97,8 @@
     .pc.shake{animation:shake .4s}
     @keyframes shake{0%,100%{translate:0}20%{translate:-8px}40%{translate:8px}60%{translate:-6px}80%{translate:6px}}
     .pc.done,.pc.given{transition:left .3s,top .3s,width .35s,transform .3s;pointer-events:none}
-    .pc .ink{position:absolute;left:30%;top:14%;width:44%;aspect-ratio:1;border:5px solid var(--no);border-radius:50%;color:var(--no);display:flex;align-items:center;justify-content:center;font-size:clamp(13px,2.6cqw,22px);font-weight:900;transform:rotate(-14deg) scale(2);opacity:0;transition:transform .25s cubic-bezier(.3,1.6,.5,1),opacity .15s;background:rgba(255,253,243,.6)}
-    .pc.done .ink,.pc.inked .ink{transform:rotate(-14deg) scale(1);opacity:1}
+    .pc .ink{position:absolute;left:24%;top:4%;width:54%;height:auto;transform:rotate(-14deg) scale(2);opacity:0;transition:transform .25s cubic-bezier(.3,1.6,.5,1),opacity .15s;filter:drop-shadow(0 0 1.5px #fffdf3) drop-shadow(0 0 1.5px #fffdf3)}
+    .pc.done .ink,.pc.inked .ink{transform:rotate(-14deg) scale(1);opacity:.92}
     /* 送信畫面左下的包裹：自然晃動＋微微發光 */
     .pc.hold{animation:sway 2.6s ease-in-out infinite,glow 2.6s ease-in-out infinite}
     @keyframes sway{0%,100%{rotate:-3deg;translate:0 0}50%{rotate:3deg;translate:0 -4%}}
@@ -110,15 +110,17 @@
 
     /* 介面 */
     .hud{position:absolute;inset:0;pointer-events:none;z-index:20}
-    .stamps{position:absolute;left:3%;top:12px;display:flex;gap:5px}
+    .stamps{position:absolute;left:3%;top:12px;display:flex;gap:5px;transition:opacity .3s}
     .stamps i{width:clamp(18px,3.4cqw,28px);aspect-ratio:5/6;border:3px dashed #c9b48a;border-radius:3px;background:rgba(255,253,243,.7);transition:background .3s}
     .stamps i.done{border-style:solid;border-color:#fffdf3;background:var(--gold);animation:pop .4s cubic-bezier(.2,1.5,.4,1)}
-    .ask{position:absolute;z-index:7;left:50%;bottom:max(10px,1.6%);transform:translateX(-50%);padding:8px 20px;border-radius:99px;background:var(--cream);border:3px solid var(--wood);font-size:clamp(16px,3cqw,25px);font-weight:900;box-shadow:0 4px 10px rgba(0,0,0,.18);white-space:nowrap;pointer-events:none;transition:opacity .3s}
-    @container (max-width:520px){.ask{left:calc(50% + 22px)}}
+    .ask{position:absolute;z-index:7;left:50%;bottom:max(10px,1.6%);transform:translateX(-50%);padding:8px 20px;border-radius:99px;background:var(--cream);border:3px solid var(--wood);font-size:clamp(20px,3.9cqw,31px);font-weight:900;box-shadow:0 4px 10px rgba(0,0,0,.18);white-space:nowrap;pointer-events:none;transition:opacity .3s}
+        .ask>span{display:inline-flex}
+    @container (max-width:520px){.ask{left:calc(50% + 24px);display:flex;flex-direction:column;align-items:center;border-radius:26px;padding:6px 18px;line-height:1.15}}
     .say{position:absolute;padding:8px 14px;border-radius:18px;background:var(--cream);border:4px solid var(--ink);font-size:clamp(14px,2.6cqw,21px);font-weight:900;white-space:nowrap;transform:translate(-50%,-100%);opacity:0;transition:opacity .2s}
     .say.on{opacity:1}
     /* 規則放大（每天開始；按 ? 再看一次） */
-    .s-rule .counter .cam{--ox:37%;--oy:12%;transform:scale(1.5)}
+    .s-rule .counter .cam{--ox:11%;--oy:3%;transform:scale(1.35)}
+    .s-rule .stamps{opacity:0}
     .s-rule .counter .pc,.s-rule .zone,.s-rule .ask{opacity:0;pointer-events:none}
     .bubble,.cutin,.tapgo{position:absolute;z-index:9;opacity:0;pointer-events:none;transition:opacity .3s,transform .4s var(--ease)}
     .bubble{left:31%;right:4%;top:calc(100cqw*1080/840*.66);padding:16px 20px;background:var(--cream);border:5px solid var(--ink);border-radius:30px;font-size:clamp(19px,3.9cqw,32px);font-weight:900;line-height:1.3;box-shadow:0 8px 18px rgba(0,0,0,.2);transform:translateY(12px)}
@@ -197,10 +199,10 @@
               <div class="rule" id="rule"><span class="r1" data-k="今天不收">今天不收</span><span class="r2" id="conds"></span><span class="r3" data-k="的包裹">的包裹</span></div></div></div>
           <div class="sp chick"><img id="chickImg" src="assets/orders/chick_abao__front__stand_happy.webp" alt="小雞阿暴"></div>
           <div class="sp desk"><img src="assets/orders/counter_desk.webp" alt=""></div>
-          <div class="zone" id="zone"><span class="pm">郵</span><span class="lab"><span data-k="蓋章">蓋章</span></span><span class="up" aria-hidden="true">▲</span></div>
+          <div class="zone" id="zone"><img class="pm" src="assets/dinopost-workmark-stamp-transparent-v1.webp" alt=""><span class="lab"><span data-k="蓋章">蓋章</span></span><span class="up" aria-hidden="true">▲</span></div>
         </div></div>
         <div class="bot" id="tableBot"><div class="bp table"><img src="assets/orders/table.webp" alt=""></div></div>
-        <div class="ask" data-k="把可以寄的包裹拉給阿暴">把可以寄的包裹拉給阿暴</div>
+        <div class="ask"><span data-k="把可以寄的包裹">把可以寄的包裹</span><span data-k="交給阿暴">交給阿暴</span></div>
         <div class="cutin"><img src="assets/orders/chick_abao__proud__happy__open.webp" alt=""></div>
         <div class="bubble" id="bubble"></div>
         <div class="tapgo" aria-hidden="true">▶</div>
@@ -217,7 +219,7 @@
         </div></div>
         <div class="tag"><small data-k="要寄給誰呢？">要寄給誰呢？</small><p id="desc"></p></div>
         <div class="free" id="frontBot"></div>
-        <div class="ask" data-k="把包裹交給收件人">把包裹交給收件人</div>
+        <div class="ask"><span data-k="把包裹">把包裹</span><span data-k="交給收件人">交給收件人</span></div>
       </section>
 
       <div class="hud"><div class="stamps" id="stamps"></div><div class="say" id="say"></div></div>
@@ -258,8 +260,10 @@
       '紅色': ['ㄏㄨㄥˊ','ㄙㄜˋ'], '綠色': ['ㄌㄩˋ','ㄙㄜˋ'], '藍色': ['ㄌㄢˊ','ㄙㄜˋ'], '黃色': ['ㄏㄨㄤˊ','ㄙㄜˋ'],
       '沒有郵票': ['ㄇㄟˊ','ㄧㄡˇ','ㄧㄡˊ','ㄆㄧㄠˋ'], '綁繩子': ['ㄅㄤˇ','ㄕㄥˊ','ㄗ˙'], '貼星星': ['ㄊㄧㄝ','ㄒㄧㄥ','ㄒㄧㄥ'], '貼愛心': ['ㄊㄧㄝ','ㄞˋ','ㄒㄧㄣ'],
       '蓋章': ['ㄍㄞˋ','ㄓㄤ'],
-      '把可以寄的包裹拉給阿暴': ['ㄅㄚˇ','ㄎㄜˇ','ㄧˇ','ㄐㄧˋ','ㄉㄜ˙','ㄅㄠ','ㄍㄨㄛˇ','ㄌㄚ','ㄍㄟˇ','ㄚ','ㄅㄠˋ'],
-      '把包裹交給收件人': ['ㄅㄚˇ','ㄅㄠ','ㄍㄨㄛˇ','ㄐㄧㄠ','ㄍㄟˇ','ㄕㄡ','ㄐㄧㄢˋ','ㄖㄣˊ'],
+      '把可以寄的包裹': ['ㄅㄚˇ','ㄎㄜˇ','ㄧˇ','ㄐㄧˋ','ㄉㄜ˙','ㄅㄠ','ㄍㄨㄛˇ'],
+      '交給阿暴': ['ㄐㄧㄠ','ㄍㄟˇ','ㄚ','ㄅㄠˋ'],
+      '把包裹': ['ㄅㄚˇ','ㄅㄠ','ㄍㄨㄛˇ'],
+      '交給收件人': ['ㄐㄧㄠ','ㄍㄟˇ','ㄕㄡ','ㄐㄧㄢˋ','ㄖㄣˊ'],
       '要寄給誰呢？': ['ㄧㄠˋ','ㄐㄧˋ','ㄍㄟˇ','ㄕㄟˊ','ㄋㄜ˙',''],
       '寄給': ['ㄐㄧˋ','ㄍㄟˇ'], '的收件人。': ['ㄉㄜ˙','ㄕㄡ','ㄐㄧㄢˋ','ㄖㄣˊ',''], '、': [''],
       '拿著信': ['ㄋㄚˊ','ㄓㄜ˙','ㄒㄧㄣˋ'],
@@ -389,7 +393,7 @@
       const d = document.createElement('div'); d.className = 'pc ' + cls; d.style.cssText = `--x:${x};--y:${y}`;
       d.innerHTML = `<img class="bx" src="${S}parcel_${p.c}.webp" alt="">` + (p.str ? `<img class="str" src="${S}string.webp" alt="">` : '')
         + Array.from({ length: p.stamp }, (_, k) => `<img class="st" style="right:${8 + k * 21}%" src="${S}stamp.webp" alt="">`).join('')
-        + (p.stk ? `<img class="stk" src="${S}sticker_${p.stk}.webp" alt="">` : '') + `<span class="ink">OK</span>`;
+        + (p.stk ? `<img class="stk" src="${S}sticker_${p.stk}.webp" alt="">` : '') + `<img class="ink" src="assets/dinopost-workmark-stamp-transparent-v1.webp" alt="">`;
       d.setAttribute('role', 'img');
       d.setAttribute('aria-label', [COLORS[p.c] + '包裹', p.stamp ? p.stamp + '張郵票' : '沒有郵票', p.str && '綁繩子', p.stk === 'star' && '貼星星', p.stk === 'heart' && '貼愛心'].filter(Boolean).join('，'));
       return d;
@@ -416,7 +420,7 @@
     // 手機（舞台比場景高）：小桌／包裹放大到 1.35 倍，填掉櫃台下方的空地板
     function fit() {
       const W = stage.clientWidth, Hs = stage.clientHeight;
-      const free = Hs - W * 1080 / 840 * 797 / 1080 - 8, need = W * 400 / 840;
+      const free = Hs - W * 1080 / 840 * 853 / 1080 - 8, need = W * 400 / 840;
       stage.style.setProperty('--k', Math.min(1.35, Math.max(1, free / need)).toFixed(3));
     }
     fit(); addEventListener('resize', fit);
