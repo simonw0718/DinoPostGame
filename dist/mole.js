@@ -132,7 +132,13 @@
     play(L.querySelector('.name'), [{ transform: 'scale(.3) rotate(-8deg)', opacity: 0 }, { transform: 'scale(.3)', opacity: 0, offset: .45 }, { transform: 'none', opacity: 1 }], { duration: 900, easing: ease.back });
     pics.forEach((c, i) => play(c, [{ transform: 'translateY(60px) scale(.4)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 460, delay: 1100 + i * 220, easing: ease.back, fill: 'forwards' }));
     play($('introGo'), [{ opacity: 0 }, { opacity: 0, offset: .7 }, { opacity: 1 }], { duration: R ? 180 : 2400 });
-    await new Promise(r => { L.onclick = () => { L.onclick = null; intro.forEach(a => { try { a.finish(); } catch { /* 已結束 */ } }); r(); }; });
+    // 導演 2026-11-05：關卡之間常誤觸直接開始 → 只有按到「開始」鈕才開始；動畫還在跑時點任何地方（含開始鈕）只先播完動畫
+    await new Promise(r => { L.onclick = e => {
+      const busy = intro.some(a => a.playState === 'running');
+      if (busy) { intro.forEach(a => { try { a.finish(); } catch { /* 已結束 */ } }); return; }
+      if (!e.target.closest('#introGo')) return;
+      L.onclick = null; r();
+    }; });
     if (my !== gen) return;
     Dino.sfx('tap', .5);
     Dino.voice.stop();
@@ -268,7 +274,7 @@
     Dino.sfx('tap', .5); syncSec(); showTime();
   }));
   syncSec(); setKidText($('secLabel'), '每輪秒數');
-  $('start').addEventListener('click', e => { if (e.target.closest('.pick')) return; $('start').hidden = true; Dino.bgm.stop(); Dino.sfx('tap', .5); start(); });
+  $('start').addEventListener('click', e => { if (!e.target.closest('.big')) return;   /* 導演 2026-11-05：只有按到開始鈕才開始 */ $('start').hidden = true; Dino.bgm.stop(); Dino.sfx('tap', .5); start(); });
   $('done').querySelector('button').addEventListener('click', () => { $('done').hidden = true; Dino.bgm.stop(); Dino.sfx('tap', .5); start(); });
   let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (!timing) buildField(); }, 300); });
 
