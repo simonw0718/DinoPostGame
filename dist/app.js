@@ -833,12 +833,19 @@ const howto = Dino.howto({ preview: 'match.html', text: '聽英文，選圖片�
 $('helpButton').addEventListener('click', () => { Dino.sfx('tap', .5); howto.show(); });
 setKidText($('gameTitle'), '找圖片');
 $('openWordBank').addEventListener('click', () => showSettingsPage('bank'));
-$('backToSettings').addEventListener('click', () => showSettingsPage('main'));
+// 從首頁／其他遊戲直接連進題庫或作答紀錄（?settings=bank|history）時，返回或關閉要回原頁，不要掉進找圖片的設定（導演 2026-11-05）
+const deepSettings = new URLSearchParams(location.search).has('settings');
+function leaveDeepSettings() {
+  let back = 'index.html';
+  try { const ref = new URL(document.referrer); if (ref.origin === location.origin && !ref.pathname.endsWith('/match.html')) back = ref.href; } catch {}
+  location.replace(back);
+}
+$('backToSettings').addEventListener('click', () => deepSettings ? leaveDeepSettings() : showSettingsPage('main'));
 $('openHistory').addEventListener('click', () => showSettingsPage('history'));
-$('backFromHistory').addEventListener('click', () => showSettingsPage('main'));
+$('backFromHistory').addEventListener('click', () => deepSettings ? leaveDeepSettings() : showSettingsPage('main'));
 $('clearHistory').addEventListener('click', () => { state.history = []; saveHistory(); renderHistory(); prepareRound(); });
-document.querySelectorAll('[data-close-settings]').forEach(button => button.addEventListener('click', () => $('settingsDialog').close()));
-$('settingsDialog').addEventListener('close', () => { $('settingsDialog').classList.remove('bank-open'); if (state.phase === 'start') prepareRound(); });
+document.querySelectorAll('[data-close-settings]').forEach(button => button.addEventListener('click', () => deepSettings ? leaveDeepSettings() : $('settingsDialog').close()));
+$('settingsDialog').addEventListener('close', () => { if (deepSettings) { leaveDeepSettings(); return; } $('settingsDialog').classList.remove('bank-open'); if (state.phase === 'start') prepareRound(); });
 $('bankSearch').addEventListener('input', renderBank);
 $('bankFilter').addEventListener('change', renderBank);
 $('bankTopic').addEventListener('change', renderBank);
