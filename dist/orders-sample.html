@@ -4,108 +4,159 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#164d39">
-  <title>郵局任務單（畫面 sample）・恐龍郵局</title>
+  <title>郵局任務單・恐龍郵局</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preload" href="assets/fonts/naikai-subset.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="fx.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css">
   <script src="shared.js"></script>
   <style>
-    /* 郵局任務單 畫面 sample v2（導演 2026-11-05 意見：規定標題加底、規則三行排、小桌包裹往上拉給阿暴蓋章、送信用正面卡）
-       ?view=counter｜rule｜front；?rules=2 看兩個條件的排法。櫃台畫面可以拖拉試玩。 */
-    :root{--ink:#24634a;--cream:#fffdf3;--ok:#3d9a5b;--no:#e0533f;--wood:#8a5a2f;--key:#c4471e}
+    /* 郵局任務單 可玩 sample（導演 2026-11-05）
+       一天＝3 輪；一輪＝檢查（小桌 3 包裹，把合規定的拉給阿暴蓋章）→送信（拖包裹給符合敘述的收件人）。
+       場景座標 840×1080；手機較高時，舞台往下延伸地板，小桌／包裹／提示貼齊底部。 */
+    :root{--ink:#24634a;--cream:#fffdf3;--ok:#3d9a5b;--no:#e0533f;--wood:#8a5a2f;--key:#c4471e;--gold:#f2c14e;--ease:cubic-bezier(.16,1,.3,1)}
     html,body{margin:0;height:100%;background:#164d39;font-family:"Naikai",ui-rounded,"Noto Sans TC",sans-serif;color:var(--ink)}
-    ::selection{background:#f2c14e;color:#24382c}
-    .or-shell{max-width:860px;margin:0 auto;padding:0 12px 14px;min-height:100svh;display:flex;flex-direction:column}
-    .or-stage{position:relative;width:min(100%,calc((100svh - 110px)*840/1080));aspect-ratio:840/1080;margin:0 auto;border-radius:26px;overflow:hidden;border:4px solid #e9dfc6;box-shadow:0 10px 26px rgba(0,0,0,.28);background:#f6efdc;touch-action:none;user-select:none;-webkit-user-select:none}
-    .cam{position:absolute;inset:0;transform-origin:var(--ox,50%) var(--oy,50%);transition:transform .9s cubic-bezier(.16,1,.3,1)}
-    .kid-text{display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;column-gap:.01em;row-gap:.03em;vertical-align:middle}
+    ::selection{background:var(--gold);color:#24382c}
+    .or-shell{max-width:900px;margin:0 auto;padding:0 12px max(12px,env(safe-area-inset-bottom));height:100svh;box-sizing:border-box;display:flex;flex-direction:column}
+    .or-stage{position:relative;flex:1;min-height:0;width:min(100%,calc((100svh - 96px)*840/1080));margin:0 auto;border-radius:26px;overflow:hidden;border:4px solid #e9dfc6;box-shadow:0 10px 26px rgba(0,0,0,.28);background:#e9d3a0;touch-action:none;user-select:none;-webkit-user-select:none;container-type:inline-size}
+    /* 注音 */
+    .kid-text{display:inline-flex;align-items:center;justify-content:center;flex-wrap:nowrap;column-gap:.01em;vertical-align:middle}
     .bpm-word{display:inline-flex;align-items:center;padding-right:.14em;white-space:nowrap}
     .bpm-main-char{font-size:1em;font-weight:900;line-height:1}
     .bpm-column{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-left:.05em;font-size:.36em;font-weight:800;line-height:1;color:currentColor}
     .bpm-onset,.bpm-rime{display:block;line-height:1.03}
     .bpm-tone{position:absolute;right:-.55em;top:85%;transform:translateY(-50%) scale(1.5,1.8);font-size:1.2em;font-weight:900;color:#d32f2f;line-height:1;height:1em;display:flex;align-items:center}
     .bpm-tone-dot{position:absolute;right:0;top:-.6em;font-size:1.4em;font-weight:900;color:#d32f2f;line-height:1}
+
+    /* 兩個場景：counter／front，各自＝上方 840×1080 場景框＋下方地板延伸＋貼底層 */
+    .view{position:absolute;inset:0;transition:opacity .45s var(--ease),transform .6s var(--ease)}
+    .front{opacity:0;transform:translateX(12%);pointer-events:none}
+    .s-front .front{opacity:1;transform:none;pointer-events:auto}
+    .s-front .counter{opacity:0;transform:translateX(-12%);pointer-events:none}
+    .floor{position:absolute;left:0;right:0;bottom:0;top:calc(100cqw*1080/840 - 2px);background:url(assets/orders/counter_bg_floor.webp) center top/100% auto repeat-y}
+    .front .floor{background-image:url(assets/orders/front_bg_floor.webp)}
+    .scene{position:absolute;left:0;top:0;width:100%;aspect-ratio:840/1080}
+    .cam{position:absolute;inset:0;transform-origin:var(--ox,50%) var(--oy,50%);transition:transform .9s var(--ease)}
     .lay,.sp{position:absolute}
     .lay{inset:0;width:100%;height:100%}
-    /* 場景座標 840×1080 → 百分比 */
     .sp{left:calc(var(--x)/840*100%);top:calc(var(--y)/1080*100%);width:calc(var(--w)/840*100%)}
     .sp img{display:block;width:100%;height:auto}
+    /* 貼底層：840×400 座標（等於場景 y 680–1080） */
+    .bot{position:absolute;left:0;right:0;bottom:0;aspect-ratio:840/400;transform:scale(var(--k,1));transform-origin:50% 100%}
+    .bp{position:absolute;left:calc(var(--x)/840*100%);top:calc(var(--y)/400*100%);width:calc(var(--w)/840*100%)}
+    .bp img{display:block;width:100%}
 
-    /* ── 櫃台主畫面 ── */
+    /* 公布欄與規則 */
     .board{--x:34;--y:84;--w:556;z-index:2}
-    .board h2{position:absolute;left:50%;top:-3.5%;transform:translateX(-50%) rotate(-1deg);margin:0;padding:.18em .9em .24em;border-radius:14px;background:var(--cream);border:4px solid var(--wood);color:var(--ink);font-size:clamp(14px,2.6vw,22px);white-space:nowrap;box-shadow:0 4px 0 rgba(0,0,0,.18)}
+    .board h2{position:absolute;left:50%;top:-3.5%;transform:translateX(-50%) rotate(-1deg);margin:0;padding:.18em .9em .24em;border-radius:14px;background:var(--cream);border:4px solid var(--wood);color:var(--ink);font-size:clamp(14px,2.7cqw,22px);white-space:nowrap;box-shadow:0 4px 0 rgba(0,0,0,.18)}
     .note{position:absolute;left:7%;top:15%;width:86%;transform:rotate(-1.2deg)}
     .note img{width:100%}
-    .rule{position:absolute;inset:13% 9% 9%;display:flex;flex-direction:column;justify-content:center;gap:.28em;color:#2b2a27;font-size:clamp(19px,4.2vw,38px);font-weight:900;line-height:1.15}
+    .rule{position:absolute;inset:13% 9% 9%;display:flex;flex-direction:column;justify-content:center;gap:.24em;color:#2b2a27;font-size:clamp(17px,4.4cqw,38px);font-weight:900;line-height:1.15}
     .rule .r1{align-self:flex-start}
-    .rule .r2{align-self:center;display:flex;align-items:center;gap:.25em;flex-wrap:wrap;justify-content:center}
+    .rule .r2{align-self:center;display:flex;align-items:center;gap:.22em;flex-wrap:wrap;justify-content:center}
     .rule .r3{align-self:flex-end}
-    .chip{display:inline-flex;padding:.12em .35em .16em;border:.12em solid var(--key);border-radius:.4em;background:#fff6e4;color:var(--key)}
-    .rule .or{font-size:.75em;color:#7a6a55}
-    .rules2 .rule{font-size:clamp(16px,3.5vw,32px)}
+    .rule[data-n="2"]{font-size:clamp(15px,3.7cqw,32px)}
+    .rule[data-n="3"]{font-size:clamp(13px,3.1cqw,27px)}
+    .chip{display:inline-flex;padding:.12em .32em .16em;border:.12em solid var(--key);border-radius:.4em;background:#fff6e4;color:var(--key)}
+    .rule .or{font-size:.7em;color:#7a6a55}
     .chick{--x:600;--y:262;--w:196;z-index:1}
-    .counter{--x:74;--y:448;--w:692;z-index:3}
-    .zone{position:absolute;z-index:4;left:calc(380/840*100%);top:calc(370/1080*100%);width:calc(220/840*100%);height:calc(124/1080*100%);border:4px dashed var(--cream);border-radius:18px;background:rgba(36,99,74,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--cream);font-size:clamp(14px,2.4vw,21px);font-weight:900;transition:transform .2s,background .2s}
+    .desk{--x:74;--y:448;--w:692;z-index:3}
+    .zone{position:absolute;z-index:4;left:calc(380/840*100%);top:calc(370/1080*100%);width:calc(220/840*100%);height:calc(124/1080*100%);border:4px dashed var(--cream);border-radius:18px;background:rgba(36,99,74,.55);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--cream);font-size:clamp(14px,2.6cqw,21px);font-weight:900;transition:transform .2s,background .2s,opacity .3s}
     .zone img{width:24%;filter:drop-shadow(0 2px 2px rgba(0,0,0,.3))}
-    .zone.hot{transform:scale(1.07);background:rgba(242,193,78,.75)}
-    .table{--x:62;--y:798;--w:716;z-index:5}
-    .pc{position:absolute;z-index:6;left:calc(var(--x)/840*100%);top:calc(var(--y)/1080*100%);width:calc(170/840*100%);aspect-ratio:249/201;cursor:grab;touch-action:none}
-    .pc>img{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-    .pc img{pointer-events:none}
-    .pc .st{position:absolute;top:30%;width:19%;height:auto}
-    .pc .str{position:absolute;left:12%;top:-12%;width:80%;height:auto}
-    .pc .stk{position:absolute;left:8%;top:52%;width:24%;height:auto}
-    .pc.drag{cursor:grabbing;z-index:9;filter:drop-shadow(0 14px 10px rgba(0,0,0,.3))}
-    .pc.back{transition:transform .35s cubic-bezier(.16,1,.3,1)}
+    .zone.hot{transform:scale(1.07);background:rgba(242,193,78,.8)}
+    .table{--x:62;--y:118;--w:716;z-index:1}
+
+    /* 包裹 */
+    .pc{position:absolute;z-index:6;left:calc(var(--x)/840*100%);top:calc(var(--y)/400*100%);width:calc(170/840*100%);aspect-ratio:249/201;cursor:grab;touch-action:none;-webkit-tap-highlight-color:transparent;transition:opacity .3s}
+    .pc img{position:absolute;pointer-events:none}
+    .pc .bx{inset:0;width:100%;height:100%}
+    .pc .st{top:30%;width:19%}
+    .pc .str{left:12%;top:-12%;width:80%}
+    .pc .stk{left:8%;top:52%;width:24%}
+    .pc.enter{animation:drop .5s var(--ease) both}
+    @keyframes drop{from{translate:0 -40%;opacity:0}}
+    .pc.drag{cursor:grabbing;z-index:20;filter:drop-shadow(0 14px 10px rgba(0,0,0,.3))}
+    .pc.back{transition:transform .35s var(--ease)}
     .pc.shake{animation:shake .4s}
     @keyframes shake{0%,100%{translate:0}20%{translate:-8px}40%{translate:8px}60%{translate:-6px}80%{translate:6px}}
-    .pc.done{transition:left .3s,top .3s,transform .3s;pointer-events:none}
-    .pc .ink{position:absolute;left:30%;top:14%;width:44%;aspect-ratio:1;border:5px solid var(--no);border-radius:50%;color:var(--no);display:flex;align-items:center;justify-content:center;font-size:clamp(14px,2.6vw,22px);font-weight:900;transform:rotate(-14deg) scale(2);opacity:0;transition:transform .25s cubic-bezier(.3,1.6,.5,1),opacity .15s;background:rgba(255,253,243,.6)}
-    .pc.done .ink{transform:rotate(-14deg) scale(1);opacity:1}
-    .board h2 .kid-text,.board h2.kid-text,.ask.kid-text,.chip.kid-text,.fsay.kid-text,.say.kid-text{flex-wrap:nowrap}
-    .ask{position:absolute;z-index:7;left:50%;bottom:2.2%;transform:translateX(-50%);padding:8px 20px;border-radius:99px;background:var(--cream);border:3px solid var(--wood);font-size:clamp(16px,2.9vw,25px);font-weight:900;box-shadow:0 4px 10px rgba(0,0,0,.18);white-space:nowrap}
-    .say{position:absolute;z-index:8;right:3%;top:calc(206/1080*100%);max-width:44%;padding:10px 14px;border-radius:20px;background:var(--cream);border:4px solid var(--ink);font-size:clamp(14px,2.5vw,21px);font-weight:900;line-height:1.3;opacity:0;transform:translateY(8px);transition:.25s;pointer-events:none}
-    .say.on{opacity:1;transform:none}
-    .stamps{position:absolute;z-index:8;left:3%;top:2.4%;display:flex;gap:5px}
-    .stamps i{width:clamp(18px,3.2vw,28px);aspect-ratio:5/6;border:3px dashed #c9b48a;border-radius:3px;background:rgba(255,253,243,.7)}
-    .stamps i.done{border-style:solid;border-color:#fffdf3;background:#f2c14e}
-    .listen{position:absolute;z-index:8;right:3%;top:2.2%;display:flex;align-items:center;gap:6px;padding:7px 14px;border-radius:99px;border:3px dashed #9db89a;background:rgba(255,253,243,.85);color:#7d9a7a;font:900 clamp(13px,2.2vw,18px) "Naikai",sans-serif}
-    .listen svg{width:1.2em;height:1.2em}
-
-    /* ── 規則放大鏡頭 ── */
-    .v-rule .cam{--ox:37%;--oy:12%;transform:scale(1.5)}
-    .v-rule .ask,.v-rule .pc,.v-rule .zone,.v-rule .chick{opacity:0}
-    .bubble{display:none;position:absolute;z-index:9;left:31%;right:4%;bottom:5%;padding:16px 20px;background:var(--cream);border:5px solid var(--ink);border-radius:30px;font-size:clamp(20px,3.8vw,32px);font-weight:900;line-height:1.3;box-shadow:0 8px 18px rgba(0,0,0,.2)}
-    .bubble:before{content:"";position:absolute;left:-30px;bottom:30px;border:14px solid transparent;border-right:20px solid var(--ink)}
-    .cutin{display:none;position:absolute;z-index:9;left:2%;bottom:0;width:30%}
-    .cutin img{display:block;width:100%}
-    .v-rule .bubble,.v-rule .cutin{display:block}
-
-    /* ── 櫃台前（送信）：正面卡 ── */
-    .front{display:none}
-    .v-front .counterView{display:none}.v-front .front{display:block}
-    .tag{position:absolute;z-index:6;left:5%;right:5%;top:9%;padding:14px 18px 16px;background:var(--cream);border:4px solid #c9b48a;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,.18);transform:rotate(-1deg);text-align:center}
-    .tag small{display:flex;justify-content:center;font-size:clamp(17px,3vw,26px);color:var(--wood);font-weight:900}
-    .tag p{margin:2px 0 0;font-size:clamp(19px,3.5vw,30px);font-weight:900;line-height:1.3}
-    .tag .k{color:var(--key)}
-    .cand{z-index:4;cursor:pointer}
-    .cand .letter{position:absolute;height:auto}
-    .ring{position:absolute;inset:auto 6% -3% 6%;height:7%;border-radius:50%;background:rgba(36,99,74,.2)}
-    .front .ask{left:auto;right:3%;transform:none;bottom:2.2%}
-    /* 交包裹：拖到收件人身上；對的跳起來收下，錯的搖頭 */
-    .fpc{--x:34;--y:890;z-index:7;animation:sway 2.6s ease-in-out infinite,glow 2.6s ease-in-out infinite}
+    .pc.done,.pc.given{transition:left .3s,top .3s,width .35s,transform .3s;pointer-events:none}
+    .pc .ink{position:absolute;left:30%;top:14%;width:44%;aspect-ratio:1;border:5px solid var(--no);border-radius:50%;color:var(--no);display:flex;align-items:center;justify-content:center;font-size:clamp(13px,2.6cqw,22px);font-weight:900;transform:rotate(-14deg) scale(2);opacity:0;transition:transform .25s cubic-bezier(.3,1.6,.5,1),opacity .15s;background:rgba(255,253,243,.6)}
+    .pc.done .ink,.pc.inked .ink{transform:rotate(-14deg) scale(1);opacity:1}
+    /* 送信畫面左下的包裹：自然晃動＋微微發光 */
+    .pc.hold{animation:sway 2.6s ease-in-out infinite,glow 2.6s ease-in-out infinite}
     @keyframes sway{0%,100%{rotate:-3deg;translate:0 0}50%{rotate:3deg;translate:0 -4%}}
     @keyframes glow{0%,100%{filter:drop-shadow(0 0 4px rgba(255,230,140,.5)) drop-shadow(0 6px 6px rgba(0,0,0,.2))}50%{filter:drop-shadow(0 0 16px rgba(255,220,110,.95)) drop-shadow(0 6px 6px rgba(0,0,0,.2))}}
-    .fpc.drag,.fpc.given{animation:none}
-    .fpc .ink{transform:rotate(-14deg) scale(1);opacity:1}
-    .fpc.given{transition:left .35s,top .35s,width .35s,transform .35s;pointer-events:none}
+    .pc.hold.drag,.pc.hold.given{animation:none}
+    /* 送信畫面：收件人腳下到提示之間的空地，包裹置中、依空間放大（手機會比較大） */
+    .free{position:absolute;z-index:11;left:0;right:0;top:calc(100cqw*1080/840*.85);bottom:calc(max(10px,1.6%) + 52px);container-type:size}
+    .free .pc{--pw:min(44cqw,92cqh*249/201);width:var(--pw);left:calc(50% - var(--pw)/2);top:calc(50% - var(--pw)*201/498)}
+
+    /* 介面 */
+    .hud{position:absolute;inset:0;pointer-events:none;z-index:20}
+    .stamps{position:absolute;left:3%;top:12px;display:flex;gap:5px}
+    .stamps i{width:clamp(18px,3.4cqw,28px);aspect-ratio:5/6;border:3px dashed #c9b48a;border-radius:3px;background:rgba(255,253,243,.7);transition:background .3s}
+    .stamps i.done{border-style:solid;border-color:#fffdf3;background:var(--gold);animation:pop .4s cubic-bezier(.2,1.5,.4,1)}
+    .ask{position:absolute;z-index:7;left:50%;bottom:max(10px,1.6%);transform:translateX(-50%);padding:8px 20px;border-radius:99px;background:var(--cream);border:3px solid var(--wood);font-size:clamp(16px,3cqw,25px);font-weight:900;box-shadow:0 4px 10px rgba(0,0,0,.18);white-space:nowrap;pointer-events:none;transition:opacity .3s}
+    @container (max-width:520px){.ask{left:calc(50% + 22px)}}
+    .say{position:absolute;padding:8px 14px;border-radius:18px;background:var(--cream);border:4px solid var(--ink);font-size:clamp(14px,2.6cqw,21px);font-weight:900;white-space:nowrap;transform:translate(-50%,-100%);opacity:0;transition:opacity .2s}
+    .say.on{opacity:1}
+    /* 規則放大（每天開始；按 ? 再看一次） */
+    .s-rule .counter .cam{--ox:37%;--oy:12%;transform:scale(1.5)}
+    .s-rule .counter .pc,.s-rule .zone,.s-rule .ask{opacity:0;pointer-events:none}
+    .bubble,.cutin,.tapgo{position:absolute;z-index:9;opacity:0;pointer-events:none;transition:opacity .3s,transform .4s var(--ease)}
+    .bubble{left:31%;right:4%;top:calc(100cqw*1080/840*.66);padding:16px 20px;background:var(--cream);border:5px solid var(--ink);border-radius:30px;font-size:clamp(19px,3.9cqw,32px);font-weight:900;line-height:1.3;box-shadow:0 8px 18px rgba(0,0,0,.2);transform:translateY(12px)}
+    .bubble:before{content:"";position:absolute;left:-30px;top:40%;border:14px solid transparent;border-right:20px solid var(--ink)}
+    .bubble.kid-text{display:flex;flex-wrap:wrap;justify-content:flex-start}
+    .cutin{left:2%;top:calc(100cqw*1080/840*.6);width:30%;transform:translateY(20%)}
+    .cutin img{display:block;width:100%}
+    .tapgo{right:6%;top:calc(100cqw*1080/840*.66 - 34px);color:var(--cream);font-size:clamp(16px,3cqw,24px);font-weight:900;text-shadow:0 2px 3px rgba(0,0,0,.45)}
+    .s-rule .bubble,.s-rule .cutin{opacity:1;transform:none}
+    .s-rule .tapgo{opacity:1;animation:nudge 1.2s ease-in-out infinite}
+    @keyframes nudge{50%{transform:translateX(6px)}}
+    .s-rule .counter{cursor:pointer}
+    .s-rule .chick{opacity:0}
+
+    /* 送信 */
+    .tag{position:absolute;z-index:6;left:5%;right:5%;top:calc(100cqw*1080/840*.09);padding:12px 16px 14px;background:var(--cream);border:4px solid #c9b48a;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,.18);transform:rotate(-1deg);text-align:center}
+    .tag small{display:flex;justify-content:center;font-size:clamp(17px,5cqw,26px);color:var(--wood);font-weight:900}
+    .tag p{margin:2px 0 0;display:flex;flex-wrap:wrap;justify-content:center;font-size:clamp(20px,6.2cqw,30px);font-weight:900;line-height:1.3}
+    .tag .k{color:var(--key)}
+    .cand{z-index:4}
     .cand>img:first-of-type{transform-origin:50% 100%}
-    .cand.hot>img:first-of-type{filter:drop-shadow(0 0 10px #f2c14e) drop-shadow(0 0 4px #fffdf3)}
+    .cand .letter{position:absolute;height:auto}
+    .cand.hot>img:first-of-type{filter:drop-shadow(0 0 10px var(--gold)) drop-shadow(0 0 4px #fffdf3)}
     .cand.no>img:first-of-type{animation:nope .5s}
     @keyframes nope{0%,100%{rotate:0deg}25%{rotate:-5deg}50%{rotate:5deg}75%{rotate:-3deg}}
     .cand.yes{animation:hop .6s cubic-bezier(.3,1.5,.5,1)}
     @keyframes hop{0%,100%{translate:0 0}40%{translate:0 -9%}}
-    .fsay{position:absolute;z-index:8;padding:8px 14px;border-radius:18px;background:var(--cream);border:4px solid var(--ink);font-size:clamp(14px,2.5vw,21px);font-weight:900;white-space:nowrap;transform:translate(-50%,-100%);opacity:0;transition:opacity .2s;pointer-events:none}
-    .fsay.on{opacity:1}
+    .cand.enter{animation:walkin .55s var(--ease) both}
+    @keyframes walkin{from{opacity:0;translate:0 6%}}
+    .ring{position:absolute;inset:auto 6% -3% 6%;height:7%;border-radius:50%;background:rgba(36,99,74,.2)}
+
+    /* 開始／結束（同其他遊戲） */
+    .overlay{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:16px;background:#0e3a28aa}
+    .overlay[hidden]{display:none}
+    .pick{display:flex;align-items:center;gap:8px;padding:8px 14px;border:4px solid var(--gold);border-radius:999px;background:var(--cream);box-shadow:0 5px 0 #c89c52}
+    .pick button{min-width:72px;min-height:56px;padding:4px 12px;border:3px solid #cfe0c8;border-radius:16px;background:#f1f7ea;font:1000 clamp(18px,5vw,24px) "Naikai",sans-serif;color:var(--ink)}
+    .pick button[aria-pressed="true"]{background:linear-gradient(#ffca58,#f6ac34);border-color:#b9792b;color:#573e1d;box-shadow:0 3px 0 #b9792b}
+    .start{display:flex;flex-direction:column;align-items:center;gap:18px;padding:0;border:0;background:none;font:inherit;color:var(--ink)}
+    .go{display:grid;place-items:center;width:128px;height:128px;border:7px solid var(--cream);border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff8a6e,#e0473a 60%,#b8322a);color:var(--cream);box-shadow:0 8px 0 #8e2620,0 14px 24px #0a2a1c55;animation:breathe 1.6s ease-in-out infinite alternate}
+    .go svg{width:56px;height:56px;margin-left:8px}
+    .start:active .go{transform:translateY(5px);box-shadow:0 3px 0 #8e2620}
+    .label{display:flex;white-space:nowrap;padding:10px 20px;border:4px solid var(--gold);border-radius:999px;background:var(--cream);font-size:clamp(18px,5.2vw,28px);font-weight:1000;box-shadow:0 5px 0 #c89c52}
+    .card{display:grid;justify-items:center;gap:10px;width:min(92vw,420px);padding:22px;border:6px solid var(--gold);border-radius:28px;background:var(--cream);text-align:center;box-shadow:0 12px 0 #c89c52;animation:pop .45s cubic-bezier(.2,1.5,.4,1)}
+    .card img{height:140px}
+    .card h2{margin:0;font-size:clamp(22px,6vw,34px);display:flex;justify-content:center}
+    .stars{margin:0;color:#f2b945;font-size:44px;letter-spacing:.08em;text-shadow:0 3px 0 #c98a12}
+    .stars .off{color:#e6dcc4;text-shadow:none}
+    .actions{display:flex;gap:12px;width:100%}
+    .actions button,.actions a{flex:1;min-height:56px;display:flex;align-items:center;justify-content:center;border:0;border-radius:16px;font:1000 clamp(17px,4.8vw,22px) "Naikai",sans-serif;text-decoration:none;color:var(--ink)}
+    .actions button{background:linear-gradient(#ffca58,#f6ac34);box-shadow:0 5px 0 #b9792b}
+    .actions a{background:#e5f2df;box-shadow:0 5px 0 #a9c8a2}
+    @keyframes pop{from{transform:scale(.85)}}
+    @keyframes breathe{to{transform:scale(1.06)}}
+    @media (prefers-reduced-motion:reduce){
+      .pc.hold,.go,.s-rule .tapgo,.cand.enter,.pc.enter,.cand.yes,.cand.no>img{animation:none}
+      .cam,.view{transition-duration:.01s}
+    }
   </style>
 </head>
 <body>
@@ -113,150 +164,311 @@
     <header class="gh">
       <a class="dino-home" href="index.html" aria-label="回選遊戲首頁"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.6 1.6 11.4a1 1 0 0 0 1.3 1.5L4.5 11.6V20a1.5 1.5 0 0 0 1.5 1.5h3.8v-5.8a.7.7 0 0 1 .7-.7h3a.7.7 0 0 1 .7.7v5.8H18a1.5 1.5 0 0 0 1.5-1.5v-8.4l1.6 1.3a1 1 0 0 0 1.3-1.5Z"/></svg></a>
       <h1 id="title" class="gh-title">郵局任務單</h1>
-      <div class="gh-tools"><button class="gh-btn" type="button" aria-label="玩法">?</button><button class="gh-btn" type="button" aria-label="難度選單"><svg aria-hidden="true"><use href="icons.svg#ic-gear"/></svg></button></div>
+      <div class="gh-tools"><button id="help" class="gh-btn" type="button" aria-label="再看一次今天的規定">?</button><button id="menuBtn" class="gh-btn" type="button" aria-label="難度選單"><svg aria-hidden="true"><use href="icons.svg#ic-gear"/></svg></button></div>
     </header>
 
     <div id="stage" class="or-stage">
-      <!-- 櫃台主畫面：公布欄（規則三行）＋櫃台後小雞阿暴＋蓋章區；櫃台前小桌放 3 個包裹，往上拉給阿暴 -->
-      <div class="counterView">
-        <div class="cam">
+      <!-- 櫃台：公布欄＋阿暴＋蓋章區；小桌在貼底層 -->
+      <section class="view counter" id="counter">
+        <div class="floor"></div>
+        <div class="scene"><div class="cam">
           <img class="lay" src="assets/orders/counter_bg.webp" alt="">
           <div class="sp board"><img src="assets/orders/board.webp" alt=""><h2 data-k="今天的規定">今天的規定</h2>
             <div class="note"><img src="assets/orders/board_note.webp" alt="">
               <div class="rule" id="rule"><span class="r1" data-k="今天不收">今天不收</span><span class="r2" id="conds"></span><span class="r3" data-k="的包裹">的包裹</span></div></div></div>
           <div class="sp chick"><img id="chickImg" src="assets/orders/chick_abao__front__stand_happy.webp" alt="小雞阿暴"></div>
-          <div class="sp counter"><img src="assets/orders/counter_desk.webp" alt=""></div>
+          <div class="sp desk"><img src="assets/orders/counter_desk.webp" alt=""></div>
           <div class="zone" id="zone"><img src="assets/orders/stamp.webp" alt=""><span data-k="蓋章">蓋章</span></div>
-          <div class="sp table"><img src="assets/orders/table.webp" alt=""></div>
-        </div>
-        <div id="parcels"></div>
-        <div class="say" id="say"></div>
+        </div></div>
+        <div class="bot" id="tableBot"><div class="bp table"><img src="assets/orders/table.webp" alt=""></div></div>
         <div class="ask" data-k="把可以寄的包裹拉給阿暴">把可以寄的包裹拉給阿暴</div>
         <div class="cutin"><img src="assets/orders/chick_abao__proud__happy__open.webp" alt=""></div>
         <div class="bubble" id="bubble"></div>
-      </div>
+        <div class="tapgo" aria-hidden="true">▶</div>
+      </section>
 
-      <!-- 櫃台前：收件人敘述＋3 隻候選（正面卡） -->
-      <div class="front">
-        <div class="cam">
+      <!-- 送信：收件人敘述＋3 位收件人（身高照製作庫 character_scale）；包裹在左下 -->
+      <section class="view front" id="front">
+        <div class="floor"></div>
+        <div class="scene"><div class="cam">
           <img class="lay" src="assets/orders/front_bg.webp" alt="">
           <img class="lay" src="assets/orders/front_door_l.webp" alt="">
           <img class="lay" src="assets/orders/front_door_r.webp" alt="">
-          <!-- 身高照製作庫 character_scale.json（伊奇 1.0＝340）：阿慢 1.5、奶奶 1.3、小空 0.72；腳底 y=900；櫃台層拿掉空出位置（導演 2026-11-05） -->
-          <div class="sp cand" data-ok="false" style="--x:14;--y:390;--w:299"><span class="ring"></span><img src="assets/orders/aman__front__stand.webp" alt="阿慢老師：沒笑、拿著信"><img class="letter" style="left:33%;top:50%;width:34%" src="assets/orders/letter.webp" alt=""></div>
-          <div class="sp cand" data-ok="false" style="--x:300;--y:458;--w:297"><span class="ring"></span><img src="assets/orders/grandma__front__smile.webp" alt="奶奶：在笑、沒拿信"></div>
-          <div class="sp cand" data-ok="true" style="--x:612;--y:654;--w:192"><span class="ring"></span><img src="assets/orders/xiaokong__front__happy.webp" alt="小空：在笑、拿著信"><img class="letter" style="left:24%;top:55%;width:52%" src="assets/orders/letter.webp" alt=""></div>
-        </div>
-        <div class="tag"><small data-k="要寄給誰呢？">要寄給誰呢？</small><p data-k="寄給在笑、手上拿著信的收件人。">寄給在笑、手上拿著信的收件人。</p></div>
-        <div class="pc fpc" id="fpc"><img src="assets/orders/parcel_red.webp" alt="蓋好章的包裹"><img class="str" src="assets/orders/string.webp" alt=""><img class="st" style="right:8%" src="assets/orders/stamp.webp" alt=""><img class="st" style="right:29%" src="assets/orders/stamp.webp" alt=""><span class="ink">OK</span></div>
-        <div class="fsay" id="fsay"></div>
-        <div class="stamps" id="fstamps"><i class="done"></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div id="cands"></div>
+        </div></div>
+        <div class="tag"><small data-k="要寄給誰呢？">要寄給誰呢？</small><p id="desc"></p></div>
+        <div class="free" id="frontBot"></div>
         <div class="ask" data-k="把包裹交給收件人">把包裹交給收件人</div>
-      </div>
-      <div class="stamps counterView"><i class="done"></i><i></i><i></i><i></i><i></i><i></i></div>
-      <div class="listen counterView"><svg aria-hidden="true"><use href="icons.svg#ic-sound"/></svg>8</div>
+      </section>
+
+      <div class="hud"><div class="stamps" id="stamps"></div><div class="say" id="say"></div></div>
     </div>
   </div>
+
+  <div id="ready" class="overlay">
+    <div class="pick" role="group" aria-label="難度"><button type="button" data-level="1" aria-pressed="true">新手</button><button type="button" data-level="2" aria-pressed="false">簡單</button><button type="button" data-level="3" aria-pressed="false">困難</button></div>
+    <button id="start" class="start" type="button">
+      <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M7 4.6v14.8a1 1 0 0 0 1.5.9l12-7.4a1 1 0 0 0 0-1.8l-12-7.4A1 1 0 0 0 7 4.6z"/></svg></span><span class="label" data-k="點一下，開始上班！">點一下，開始上班！</span>
+    </button>
+  </div>
+  <div id="finish" class="overlay" hidden>
+    <div class="card">
+      <img src="assets/orders/chick_abao__front__proud.webp" alt="小雞阿暴">
+      <h2 data-k="今天的包裹都送到了！">今天的包裹都送到了！</h2>
+      <p id="finishStars" class="stars"></p>
+      <div class="actions"><button id="again" type="button">再玩一天</button><a href="index.html">回首頁</a></div>
+    </div>
+  </div>
+
   <script>
-    const q = new URLSearchParams(location.search);
-    const view = q.get('view') || 'counter', two = q.get('rules') === '2';
-    const stage = document.getElementById('stage');
-    stage.classList.add('v-' + view); if (two) stage.classList.add('rules2');
-    const set = Dino.kidText({
+  (() => {
+    const $ = id => document.getElementById(id);
+    const S = 'assets/orders/';
+    const stage = $('stage');
+    const pick = a => a[Math.floor(Math.random() * a.length)];
+    const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+
+    // 注音字典（片語→每字讀音）；規則句由片語組合，讀音也照組合拼
+    const R = {
       '郵局任務單': ['ㄧㄡˊ','ㄐㄩˊ','ㄖㄣˋ','ㄨˋ','ㄉㄢ'],
       '今天的規定': ['ㄐㄧㄣ','ㄊㄧㄢ','ㄉㄜ˙','ㄍㄨㄟ','ㄉㄧㄥˋ'],
       '今天不收': ['ㄐㄧㄣ','ㄊㄧㄢ','ㄅㄨˋ','ㄕㄡ'],
-      '綠色': ['ㄌㄩˋ','ㄙㄜˋ'],
-      '沒有郵票': ['ㄇㄟˊ','ㄧㄡˇ','ㄧㄡˊ','ㄆㄧㄠˋ'],
-      '或': ['ㄏㄨㄛˋ'],
       '的包裹': ['ㄉㄜ˙','ㄅㄠ','ㄍㄨㄛˇ'],
-      '今天不收綠色的包裹喔！': ['ㄐㄧㄣ','ㄊㄧㄢ','ㄅㄨˋ','ㄕㄡ','ㄌㄩˋ','ㄙㄜˋ','ㄉㄜ˙','ㄅㄠ','ㄍㄨㄛˇ','ㄛ',''],
-      '綠色或沒有郵票的不收喔！': ['ㄌㄩˋ','ㄙㄜˋ','ㄏㄨㄛˋ','ㄇㄟˊ','ㄧㄡˇ','ㄧㄡˊ','ㄆㄧㄠˋ','ㄉㄜ˙','ㄅㄨˋ','ㄕㄡ','ㄛ',''],
-      '這個不行喔！': ['ㄓㄜˋ','ㄍㄜ˙','ㄅㄨˋ','ㄒㄧㄥˊ','ㄛ',''],
-      '蓋好章了！': ['ㄍㄞˋ','ㄏㄠˇ','ㄓㄤ','ㄌㄜ˙',''],
+      '的不收': ['ㄉㄜ˙','ㄅㄨˋ','ㄕㄡ'],
+      '或': ['ㄏㄨㄛˋ'], '喔！': ['ㄛ',''],
+      '紅色': ['ㄏㄨㄥˊ','ㄙㄜˋ'], '綠色': ['ㄌㄩˋ','ㄙㄜˋ'], '藍色': ['ㄌㄢˊ','ㄙㄜˋ'], '黃色': ['ㄏㄨㄤˊ','ㄙㄜˋ'],
+      '沒有郵票': ['ㄇㄟˊ','ㄧㄡˇ','ㄧㄡˊ','ㄆㄧㄠˋ'], '綁繩子': ['ㄅㄤˇ','ㄕㄥˊ','ㄗ˙'], '貼星星': ['ㄊㄧㄝ','ㄒㄧㄥ','ㄒㄧㄥ'], '貼愛心': ['ㄊㄧㄝ','ㄞˋ','ㄒㄧㄣ'],
       '蓋章': ['ㄍㄞˋ','ㄓㄤ'],
       '把可以寄的包裹拉給阿暴': ['ㄅㄚˇ','ㄎㄜˇ','ㄧˇ','ㄐㄧˋ','ㄉㄜ˙','ㄅㄠ','ㄍㄨㄛˇ','ㄌㄚ','ㄍㄟˇ','ㄚ','ㄅㄠˋ'],
+      '把包裹交給收件人': ['ㄅㄚˇ','ㄅㄠ','ㄍㄨㄛˇ','ㄐㄧㄠ','ㄍㄟˇ','ㄕㄡ','ㄐㄧㄢˋ','ㄖㄣˊ'],
+      '要寄給誰呢？': ['ㄧㄠˋ','ㄐㄧˋ','ㄍㄟˇ','ㄕㄟˊ','ㄋㄜ˙',''],
+      '寄給': ['ㄐㄧˋ','ㄍㄟˇ'], '的收件人。': ['ㄉㄜ˙','ㄕㄡ','ㄐㄧㄢˋ','ㄖㄣˊ',''], '、': [''],
+      '在笑': ['ㄗㄞˋ','ㄒㄧㄠˋ'], '沒有笑': ['ㄇㄟˊ','ㄧㄡˇ','ㄒㄧㄠˋ'], '拿著信': ['ㄋㄚˊ','ㄓㄜ˙','ㄒㄧㄣˋ'], '沒拿信': ['ㄇㄟˊ','ㄋㄚˊ','ㄒㄧㄣˋ'],
+      '個子高高': ['ㄍㄜˋ','ㄗ˙','ㄍㄠ','ㄍㄠ'], '個子小小': ['ㄍㄜˋ','ㄗ˙','ㄒㄧㄠˇ','ㄒㄧㄠˇ'],
+      '這個不行喔！': ['ㄓㄜˋ','ㄍㄜ˙','ㄅㄨˋ','ㄒㄧㄥˊ','ㄛ',''],
+      '蓋好章了！': ['ㄍㄞˋ','ㄏㄠˇ','ㄓㄤ','ㄌㄜ˙',''],
       '不是我喔！': ['ㄅㄨˋ','ㄕˋ','ㄨㄛˇ','ㄛ',''],
       '謝謝你！': ['ㄒㄧㄝˋ','ㄒㄧㄝ˙','ㄋㄧˇ',''],
-      '要寄給誰呢？': ['ㄧㄠˋ','ㄐㄧˋ','ㄍㄟˇ','ㄕㄟˊ','ㄋㄜ˙',''],
-      '收件人': ['ㄕㄡ','ㄐㄧㄢˋ','ㄖㄣˊ'],
-      '寄給在笑、手上拿著信的收件人。': ['ㄐㄧˋ','ㄍㄟˇ','ㄗㄞˋ','ㄒㄧㄠˋ','','ㄕㄡˇ','ㄕㄤˋ','ㄋㄚˊ','ㄓㄜ˙','ㄒㄧㄣˋ','ㄉㄜ˙','ㄕㄡ','ㄐㄧㄢˋ','ㄖㄣˊ',''],
-      '把包裹交給收件人': ['ㄅㄚˇ','ㄅㄠ','ㄍㄨㄛˇ','ㄐㄧㄠ','ㄍㄟˇ','ㄕㄡ','ㄐㄧㄢˋ','ㄖㄣˊ']
-    });
-    set(document.getElementById('title'), '郵局任務單');
-
-    // 規則：第二行放條件小牌（1 條或 2 條）
-    const conds = document.getElementById('conds');
-    const chip = t => { const s = document.createElement('span'); s.className = 'chip'; s.dataset.k = t; s.textContent = t; return s; };
-    if (two) { const o = document.createElement('span'); o.className = 'or'; o.dataset.k = '或'; o.textContent = '或'; conds.append(chip('綠色'), o, chip('沒有郵票')); }
-    else conds.append(chip('綠色'));
-    const ruleSay = two ? '綠色或沒有郵票的不收喔！' : '今天不收綠色的包裹喔！';
-    const bubble = document.getElementById('bubble'); bubble.dataset.k = ruleSay;
+      '點一下，開始上班！': ['ㄉㄧㄢˇ','ㄧˊ','ㄒㄧㄚˋ','','ㄎㄞ','ㄕˇ','ㄕㄤˋ','ㄅㄢ',''],
+      '今天的包裹都送到了！': ['ㄐㄧㄣ','ㄊㄧㄢ','ㄉㄜ˙','ㄅㄠ','ㄍㄨㄛˇ','ㄉㄡ','ㄙㄨㄥˋ','ㄉㄠˋ','ㄌㄜ˙','']
+    };
+    const set = Dino.kidText(R);
+    const join = parts => [parts.join(''), parts.flatMap(p => R[p])];   // 片語串成句＋讀音
+    const kt = (el, t, r) => { el.dataset.k = t; set(el, t, r); return el; };
+    const span = (t, cls) => { const s = document.createElement('span'); if (cls) s.className = cls; return kt(s, t); };
+    set($('title'), '郵局任務單');
     document.querySelectorAll('[data-k]').forEach(el => set(el, el.dataset.k));
-    document.querySelectorAll('.tag p').forEach(p => [2,3,6,7,8].forEach(i => p.children[i]?.classList.add('k')));
 
-    // 小桌上 3 個包裹（sample：一個可以寄）
-    const S = 'assets/orders/';
-    const parcels = two
-      ? [{c:'red', stamp:0, ok:false}, {c:'green', stamp:1, ok:false, str:1}, {c:'blue', stamp:2, ok:true, stk:'star'}]
-      : [{c:'green', stamp:1, ok:false}, {c:'red', stamp:2, ok:true, str:1}, {c:'green', stamp:1, ok:false, stk:'heart'}];
-    const xs = [108, 335, 562], y = 700;
-    const box = document.getElementById('parcels');
-    parcels.forEach((p, i) => {
-      const d = document.createElement('div'); d.className = 'pc'; d.style.cssText = `--x:${xs[i]};--y:${y}`; d.dataset.ok = p.ok;
-      d.innerHTML = `<img src="${S}parcel_${p.c}.webp" alt="">` + (p.str ? `<img class="str" src="${S}string.webp" alt="">` : '')
-        + Array.from({length: p.stamp}, (_, k) => `<img class="st" style="right:${8 + k * 21}%" src="${S}stamp.webp" alt="">`).join('')
+    // ── 包裹規則：條件＝不收的特徵（一天固定，難度 1／2／3 條） ──
+    const COLORS = { red: '紅色', green: '綠色', blue: '藍色', yellow: '黃色' };
+    const CONDS = [
+      ...Object.keys(COLORS).map(c => ({ t: COLORS[c], hit: p => p.c === c, kind: 'color' })),
+      { t: '沒有郵票', hit: p => p.stamp === 0, kind: 'stamp' },
+      { t: '綁繩子', hit: p => p.str, kind: 'str' },
+      { t: '貼星星', hit: p => p.stk === 'star', kind: 'stk' },
+      { t: '貼愛心', hit: p => p.stk === 'heart', kind: 'stk' }
+    ];
+    const rejected = (p, rule) => rule.some(c => c.hit(p));
+    function makeRule(level) {
+      if (level === 1) return [pick(CONDS.filter(c => c.kind === 'color'))];
+      return ['color', ...shuffle(['stamp', 'str', 'stk']).slice(0, level - 1)].map(k => pick(CONDS.filter(c => c.kind === k)));
+    }
+    const randParcel = level => ({ c: pick(Object.keys(COLORS)), stamp: pick(level === 1 ? [1, 2] : [0, 1, 2]), str: Math.random() < .45, stk: pick([null, null, 'star', 'heart']) });
+    function makeParcels(rule, level) {
+      for (let n = 0; n < 500; n++) {
+        const ps = [0, 1, 2].map(() => randParcel(level));
+        const bad = ps.filter(p => rejected(p, rule));
+        // 一個能寄；不能寄的每個都要被不同條件擋（簡單／困難時才看得出每條規定都有用）
+        if (bad.length !== 2 || new Set(ps.map(p => JSON.stringify(p))).size < 3) continue;
+        if (rule.length > 1 && bad.every(p => rule.filter(c => c.hit(p)).length > 1)) continue;
+        return ps;
+      }
+    }
+
+    // ── 收件人：正面卡，身高照製作庫 character_scale（伊奇 1.0＝340 場景 px） ──
+    const H = 340;
+    const CAST = [
+      { h: 1.5, v: [{ img: 'aman__front__stand', ar: 375 / 640, smile: false, lt: [50, 50] }] },
+      { h: 1.3, v: [{ img: 'grandma__front__smile', ar: 430 / 640, smile: true, lt: [50, 60] }] },
+      { h: 1.3, v: [{ img: 'pairo__front__smile', ar: 302 / 640, smile: true, lt: [52, 45] }, { img: 'pairo__front__surprised', ar: 345 / 640, smile: false, lt: [50, 48] }] },
+      { h: .72, v: [{ img: 'xiaokong__front__happy', ar: 500 / 640, smile: true, lt: [50, 56] }, { img: 'xiaokong__front__surprised', ar: 520 / 631, smile: false, lt: [50, 54] }] },
+      { h: .8, v: [{ img: 'yuanyuan__front__happy', ar: 363 / 640, smile: true, lt: [42, 45] }] }
+    ];
+    const FEATS = {
+      smile: { yes: '在笑', no: '沒有笑', get: r => r.smile },
+      letter: { yes: '拿著信', no: '沒拿信', get: r => r.letter },
+      tall: { yes: '個子高高', no: '個子小小', get: r => r.h >= 1.2 }
+    };
+    const LV_FEATS = { 1: [['smile'], ['letter'], ['tall']], 2: [['smile', 'letter'], ['tall', 'letter'], ['tall', 'smile']], 3: [['tall', 'smile', 'letter']] };
+    function makeRecipients(level) {
+      for (let n = 0; n < 800; n++) {
+        const rs = shuffle(CAST).slice(0, 3).map(c => ({ ...pick(c.v), h: c.h, letter: Math.random() < .5 }));
+        const ti = Math.floor(Math.random() * 3), t = rs[ti], others = rs.filter(r => r !== t);
+        for (const fs of shuffle(LV_FEATS[level])) {
+          const same = (o, list) => list.every(f => FEATS[f].get(o) === FEATS[f].get(t));
+          const unique = others.every(o => !same(o, fs));
+          const allNeeded = fs.every(f => others.some(o => same(o, fs.filter(g => g !== f))));   // 少一條就分不出來
+          if (unique && (fs.length === 1 || allNeeded)) return { rs, ti, fs };
+        }
+      }
+    }
+
+    // ── 狀態 ──
+    const ROUNDS = 3;
+    const G = { level: 1, rule: null, round: 0, miss: 0, step: 0, busy: true };
+    function drawStamps() { $('stamps').replaceChildren(...Array.from({ length: ROUNDS * 2 }, () => document.createElement('i'))); }
+    function stepDone() { const e = $('stamps').children[G.step++]; if (e) e.className = 'done'; }
+
+    let sayT;
+    function say(target, text) {
+      const st = stage.getBoundingClientRect(), z = target.getBoundingClientRect(), s = $('say');
+      s.style.left = Math.min(Math.max((z.left + z.width / 2 - st.left) / st.width * 100, 18), 82) + '%';
+      s.style.top = Math.max((z.top - st.top) / st.height * 100 + 2, 10) + '%';
+      kt(s, text); s.classList.add('on'); clearTimeout(sayT); sayT = setTimeout(() => s.classList.remove('on'), 1900);
+    }
+
+    function parcelEl(p, x, y, cls = '') {
+      const d = document.createElement('div'); d.className = 'pc ' + cls; d.style.cssText = `--x:${x};--y:${y}`;
+      d.innerHTML = `<img class="bx" src="${S}parcel_${p.c}.webp" alt="">` + (p.str ? `<img class="str" src="${S}string.webp" alt="">` : '')
+        + Array.from({ length: p.stamp }, (_, k) => `<img class="st" style="right:${8 + k * 21}%" src="${S}stamp.webp" alt="">`).join('')
         + (p.stk ? `<img class="stk" src="${S}sticker_${p.stk}.webp" alt="">` : '') + `<span class="ink">OK</span>`;
-      box.append(d);
-    });
+      d.setAttribute('role', 'img');
+      d.setAttribute('aria-label', [COLORS[p.c] + '包裹', p.stamp ? p.stamp + '張郵票' : '沒有郵票', p.str && '綁繩子', p.stk === 'star' && '貼星星', p.stk === 'heart' && '貼愛心'].filter(Boolean).join('，'));
+      return d;
+    }
 
-    // 拖拉：放進蓋章區 → 可寄就蓋章；不行就彈回、阿暴說規則
-    const zone = document.getElementById('zone'), say = document.getElementById('say'), chickImg = document.getElementById('chickImg');
-    const hit = (a, b) => { const r = a.getBoundingClientRect(), z = b.getBoundingClientRect(); const cx = r.left + r.width / 2, cy = r.top + r.height / 2; return cx > z.left - 20 && cx < z.right + 20 && cy > z.top - 30 && cy < z.bottom + 30; };
-    let sayT; const speak = t => { set(say, t); say.classList.add('on'); clearTimeout(sayT); sayT = setTimeout(() => say.classList.remove('on'), 2200); };
-    box.querySelectorAll('.pc').forEach(el => {
-      let sx, sy, on = false;
-      el.addEventListener('pointerdown', e => { on = true; sx = e.clientX; sy = e.clientY; el.setPointerCapture(e.pointerId); el.classList.remove('back', 'shake'); el.classList.add('drag'); });
-      el.addEventListener('pointermove', e => { if (!on) return; el.style.transform = `translate(${e.clientX - sx}px,${e.clientY - sy}px) scale(1.06)`; zone.classList.toggle('hot', hit(el, zone)); });
-      const end = () => { if (!on) return; on = false; el.classList.remove('drag'); zone.classList.remove('hot');
-        if (hit(el, zone) && el.dataset.ok === 'true') {
-          const st = stage.getBoundingClientRect(), z = zone.getBoundingClientRect(), r = el.getBoundingClientRect();
-          el.classList.add('done'); el.style.transform = 'none';
-          el.style.left = ((z.left + z.width / 2 - r.width / 2 - st.left) / st.width * 100) + '%';
-          el.style.top = ((z.top + z.height / 2 - r.height / 2 - st.top) / st.height * 100) + '%';
-          chickImg.src = S + "chick_abao__front__proud.webp"; speak('蓋好章了！');
-        } else {
-          el.classList.add('back'); el.style.transform = '';
-          if (hit(el, zone)) { el.classList.add('shake'); speak(ruleSay); }
-        } };
+    // 拖拉（滑鼠／觸控共用）
+    function draggable(el, { over, drop }) {
+      let sx, sy, k = 1, on = false;   // k：貼底層縮放倍率，拖拉位移要除回去才會跟手指同步
+      el.addEventListener('pointerdown', e => { if (G.busy) return; on = true; sx = e.clientX; sy = e.clientY; k = el.offsetParent.getBoundingClientRect().width / el.offsetParent.offsetWidth || 1; el.setPointerCapture(e.pointerId); el.classList.remove('back', 'shake', 'enter'); el.classList.add('drag'); Dino.sfx('tap', .35); });
+      el.addEventListener('pointermove', e => { if (!on) return; el.style.transform = `translate(${(e.clientX - sx) / k}px,${(e.clientY - sy) / k}px) scale(1.06)`; over(el); });
+      const end = () => { if (!on) return; on = false; el.classList.remove('drag'); drop(el); };
       el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
-    });
+    }
+    const center = el => { const r = el.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
+    const inside = ([x, y], el, pad = 0) => { const z = el.getBoundingClientRect(); return x > z.left - pad && x < z.right + pad && y > z.top - pad * 1.5 && y < z.bottom + pad * 1.5; };
+    const goBack = el => { el.classList.add('back'); el.style.transform = ''; };
+    function moveTo(el, target, frac, scale) {   // 以比例計算，貼底層有縮放也對得上
+      const par = el.offsetParent, st = par.getBoundingClientRect(), z = target.getBoundingClientRect();
+      const wf = el.offsetWidth * scale / par.offsetWidth, hf = el.offsetHeight * scale / par.offsetHeight;
+      el.style.transform = 'none'; el.style.width = (wf * 100) + '%';
+      el.style.left = (((z.left + z.width / 2 - st.left) / st.width - wf / 2) * 100) + '%';
+      el.style.top = (((z.top + z.height * frac - st.top) / st.height - hf / 2) * 100) + '%';
+    }
+    // 手機（舞台比場景高）：小桌／包裹放大到 1.35 倍，填掉櫃台下方的空地板
+    function fit() {
+      const W = stage.clientWidth, Hs = stage.clientHeight;
+      const free = Hs - W * 1080 / 840 * 797 / 1080 - 8, need = W * 400 / 840;
+      stage.style.setProperty('--k', Math.min(1.35, Math.max(1, free / need)).toFixed(3));
+    }
+    fit(); addEventListener('resize', fit);
 
-    // 櫃台前：把包裹拖到收件人身上
-    const fpc = document.getElementById('fpc'), fsay = document.getElementById('fsay');
-    const cands = [...document.querySelectorAll('.cand')];
-    const over = (el) => { const r = el.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-      return cands.find(c => { const z = c.querySelector('img').getBoundingClientRect(); return cx > z.left && cx < z.right && cy > z.top && cy < z.bottom; }); };
-    let fT; const fspeak = (c, t) => { const st = stage.getBoundingClientRect(), z = c.querySelector('img').getBoundingClientRect();
-      fsay.style.left = ((z.left + z.width / 2 - st.left) / st.width * 100) + '%'; fsay.style.top = ((z.top - st.top) / st.height * 100 + 1) + '%';
-      set(fsay, t); fsay.classList.add('on'); clearTimeout(fT); fT = setTimeout(() => fsay.classList.remove('on'), 1800); };
-    let fx, fy, fon = false;
-    fpc.addEventListener('pointerdown', e => { fon = true; fx = e.clientX; fy = e.clientY; fpc.setPointerCapture(e.pointerId); fpc.classList.remove('back'); fpc.classList.add('drag'); });
-    fpc.addEventListener('pointermove', e => { if (!fon) return; fpc.style.transform = `translate(${e.clientX - fx}px,${e.clientY - fy}px) scale(1.06)`; const h = over(fpc); cands.forEach(c => c.classList.toggle('hot', c === h)); });
-    const fend = () => { if (!fon) return; fon = false; fpc.classList.remove('drag'); const c = over(fpc); cands.forEach(x => x.classList.remove('hot'));
-      if (c && c.dataset.ok === 'true') {
-        const st = stage.getBoundingClientRect(), z = c.querySelector('img').getBoundingClientRect(), r = fpc.getBoundingClientRect();
-        fpc.classList.add('given'); fpc.style.transform = 'none';
-        const w = r.width * .7; fpc.style.width = (w / st.width * 100) + '%';
-        fpc.style.left = ((z.left + z.width / 2 - w / 2 - st.left) / st.width * 100) + '%';
-        fpc.style.top = ((z.top + z.height * .5 - st.top) / st.height * 100) + '%';
-        c.classList.add('yes'); fspeak(c, '謝謝你！');
-        document.querySelector('#fstamps i:not(.done)')?.classList.add('done');
-      } else {
-        fpc.classList.add('back'); fpc.style.transform = '';
-        if (c) { c.classList.remove('no'); void c.offsetWidth; c.classList.add('no'); fspeak(c, '不是我喔！'); }
-      } };
-    fpc.addEventListener('pointerup', fend); fpc.addEventListener('pointercancel', fend);
+    // ── 規則放大：每天開始；點一下回櫃台 ──
+    function showRule() {
+      const conds = $('conds'); conds.replaceChildren();
+      G.rule.forEach((c, i) => { if (i) conds.append(span('或', 'or')); conds.append(span(c.t, 'chip')); });
+      $('rule').dataset.n = G.rule.length;
+      const parts = G.rule.length === 1 ? ['今天不收', G.rule[0].t, '的包裹', '喔！'] : [...G.rule.flatMap((c, i) => i ? ['或', c.t] : [c.t]), '的不收', '喔！'];
+      kt($('bubble'), ...join(parts));
+      stage.classList.add('s-rule'); G.busy = true; G.ruleAt = performance.now(); Dino.sfx('swoosh', .4);
+    }
+    function leaveRule() { if (!stage.classList.contains('s-rule') || performance.now() - G.ruleAt < 700) return; stage.classList.remove('s-rule'); Dino.sfx('tap', .4); setTimeout(() => { G.busy = false; }, 450); }
+    $('counter').addEventListener('click', leaveRule);
+
+    // ── 一輪：檢查 ──
+    const zone = $('zone'), chickImg = $('chickImg');
+    function startRound() {
+      stage.classList.remove('s-front');
+      chickImg.src = S + 'chick_abao__front__stand_happy.webp';
+      const ps = makeParcels(G.rule, G.level), bot = $('tableBot');
+      bot.querySelectorAll('.pc').forEach(e => e.remove());
+      G.parcel = ps.find(p => !rejected(p, G.rule));
+      [128, 335, 542].forEach((x, i) => {
+        const el = parcelEl(ps[i], x, 20, 'enter'); el.style.animationDelay = (i * .08) + 's';
+        el.dataset.ok = !rejected(ps[i], G.rule); bot.append(el);
+        draggable(el, {
+          over: e => zone.classList.toggle('hot', inside(center(e), zone, 24)),
+          drop: e => {
+            zone.classList.remove('hot');
+            if (!inside(center(e), zone, 24)) return goBack(e);
+            if (e.dataset.ok === 'true') {
+              G.busy = true; e.classList.add('done'); moveTo(e, zone, .5, .9);
+              Dino.sfx('stamp', .7); chickImg.src = S + 'chick_abao__front__proud.webp'; say(chickImg, '蓋好章了！'); stepDone();
+              setTimeout(goFront, 1300);
+            } else {
+              G.miss++; goBack(e); void e.offsetWidth; e.classList.add('shake'); Dino.sfx('wrong', .45); say(chickImg, '這個不行喔！');
+            }
+          }
+        });
+      });
+    }
+
+    // ── 一輪：送信 ──
+    function goFront() {
+      const { rs, ti, fs } = makeRecipients(G.level), t = rs[ti];
+      const desc = $('desc'); desc.replaceChildren(span('寄給'));
+      fs.forEach((f, i) => { if (i) desc.append(span('、')); desc.append(span(FEATS[f].get(t) ? FEATS[f].yes : FEATS[f].no, 'k')); });
+      desc.append(span('的收件人。'));
+      const box = $('cands'); box.replaceChildren();
+      const xs = shuffle([150, 420, 690]);
+      rs.forEach((r, i) => {
+        const h = r.h * H, w = h * r.ar, x = Math.max(4, Math.min(836 - w, xs[i] - w / 2));
+        const d = document.createElement('div'); d.className = 'sp cand enter';
+        d.style.cssText = `--x:${x};--y:${900 - h};--w:${w};animation-delay:${.15 + i * .1}s;z-index:${4 + Math.round(10 - r.h * 5)}`;
+        d.dataset.ok = i === ti;
+        d.innerHTML = `<span class="ring"></span><img src="${S}${r.img}.webp" alt="${[r.smile ? '在笑' : '沒有笑', r.letter ? '拿著信' : '沒拿信', r.h >= 1.2 ? '個子高高' : '個子小小'].join('、')}">`;
+        if (r.letter) { const lw = 102 / w * 100; d.insertAdjacentHTML('beforeend', `<img class="letter" style="left:${r.lt[0] - lw / 2}%;top:${r.lt[1]}%;width:${lw}%" src="${S}letter.webp" alt="">`); }
+        box.append(d);
+      });
+      const bot = $('frontBot'); bot.replaceChildren();
+      const el = parcelEl(G.parcel, 0, 0, 'hold inked'); bot.append(el);
+      const cands = [...box.children];
+      const under = e => { const c = center(e); return cands.find(k => inside(c, k.querySelector('img'))); };
+      draggable(el, {
+        over: e => { const h = under(e); cands.forEach(k => k.classList.toggle('hot', k === h)); },
+        drop: e => {
+          const k = under(e); cands.forEach(x => x.classList.remove('hot'));
+          if (k && k.dataset.ok === 'true') {
+            G.busy = true; e.classList.add('given'); moveTo(e, k.querySelector('img'), .55, .7);
+            k.classList.remove('enter'); k.classList.add('yes'); Dino.sfx('correct', .7); say(k.querySelector('img'), '謝謝你！'); stepDone();
+            setTimeout(nextRound, 1500);
+          } else {
+            goBack(e);
+            if (k) { G.miss++; k.classList.remove('no', 'enter'); void k.offsetWidth; k.classList.add('no'); Dino.sfx('wrong', .45); say(k.querySelector('img'), '不是我喔！'); }
+          }
+        }
+      });
+      stage.classList.add('s-front'); Dino.sfx('swoosh', .45);
+      setTimeout(() => { G.busy = false; }, 650);
+    }
+
+    function nextRound() {
+      if (++G.round >= ROUNDS) return finish();
+      startRound(); setTimeout(() => { G.busy = false; }, 650);
+    }
+    function finish() {
+      const stars = G.miss <= 1 ? 3 : G.miss <= 4 ? 2 : 1;
+      $('finishStars').innerHTML = '★'.repeat(stars) + `<span class="off">${'★'.repeat(3 - stars)}</span>`;
+      $('finish').hidden = false; Dino.sfx('finish', .8); Dino.bgm.start();
+    }
+    function newDay() {
+      G.rule = makeRule(G.level); G.round = 0; G.miss = 0; G.step = 0;
+      drawStamps(); startRound(); showRule();
+    }
+
+    // ── 選單（同其他遊戲：開始畫面兼難度選單） ──
+    document.querySelectorAll('.pick button').forEach(b => b.addEventListener('click', () => {
+      document.querySelectorAll('.pick button').forEach(x => x.setAttribute('aria-pressed', x === b)); G.level = +b.dataset.level; Dino.sfx('tap', .5);
+    }));
+    $('start').addEventListener('click', () => { $('ready').hidden = true; Dino.bgm.stop(); newDay(); });
+    $('again').addEventListener('click', () => { $('finish').hidden = true; Dino.bgm.stop(); newDay(); });
+    $('menuBtn').addEventListener('click', () => { Dino.sfx('tap', .5); $('ready').hidden = false; Dino.bgm.start(); });
+    $('help').addEventListener('click', () => { if (!G.rule || stage.classList.contains('s-front') || stage.classList.contains('s-rule')) return; Dino.sfx('tap', .5); showRule(); });
+    Dino.menuTaps($('ready')); Dino.menuTaps($('finish'));
+    Dino.bgm.start();
+    drawStamps();
+    ['chick_abao__front__proud', ...CAST.flatMap(c => c.v.map(v => v.img)), 'letter', 'parcel_yellow', 'parcel_blue', 'parcel_green', 'string', 'sticker_star', 'sticker_heart', 'front_bg', 'front_door_l', 'front_door_r', 'front_bg_floor'].forEach(n => { const i = new Image(); i.src = S + n + '.webp'; });
+  })();
   </script>
 </body>
 </html>
