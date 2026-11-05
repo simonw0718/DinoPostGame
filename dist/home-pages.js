@@ -38,7 +38,9 @@
       const fits = () => tabs.every(t => {
         const kids = [...t.children].filter(x => getComputedStyle(x).display !== 'none'); if (!kids.length) return true;
         const rs = kids.map(x => x.getBoundingClientRect()), cs = getComputedStyle(t);
-        const used = Math.max(...rs.map(r => r.right)) - Math.min(...rs.map(r => r.left));
+        // 開場動畫信紙還在 scale(.45) 時量到的是縮小後的寬，要換回原尺寸（導演 2026-11-06 回報字擠出框）
+        const k = t.getBoundingClientRect().width / t.offsetWidth || 1;
+        const used = (Math.max(...rs.map(r => r.right)) - Math.min(...rs.map(r => r.left))) / k;
         return used <= t.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) + .5;
       });
       for (const [mode, sizes] of [['icon', [18, 17, 16]], ['long', [18, 17, 16, 15, 14]]]) {
