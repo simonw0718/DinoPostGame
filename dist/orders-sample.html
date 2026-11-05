@@ -84,15 +84,18 @@
     .front{display:none}
     .v-front .counterView{display:none}.v-front .front{display:block}
     .tag{position:absolute;z-index:6;left:5%;right:5%;top:9%;padding:14px 18px 16px;background:var(--cream);border:4px solid #c9b48a;border-radius:16px;box-shadow:0 8px 16px rgba(0,0,0,.18);transform:rotate(-1deg);text-align:center}
-    .tag small{display:block;font-size:clamp(13px,2.2vw,18px);color:var(--wood);font-weight:900}
-    .tag p{margin:2px 0 0;font-size:clamp(20px,3.8vw,32px);font-weight:900;line-height:1.3}
+    .tag small{display:flex;justify-content:center;font-size:clamp(17px,3vw,26px);color:var(--wood);font-weight:900}
+    .tag p{margin:2px 0 0;font-size:clamp(19px,3.5vw,30px);font-weight:900;line-height:1.3}
     .tag .k{color:var(--key)}
     .cand{z-index:4;cursor:pointer}
     .cand .letter{position:absolute;height:auto}
     .ring{position:absolute;inset:auto 6% -3% 6%;height:7%;border-radius:50%;background:rgba(36,99,74,.2)}
     .front .ask{left:auto;right:3%;transform:none;bottom:2.2%}
     /* 交包裹：拖到收件人身上；對的跳起來收下，錯的搖頭 */
-    .fpc{--x:300;--y:906;z-index:7}
+    .fpc{--x:34;--y:890;z-index:7;animation:sway 2.6s ease-in-out infinite,glow 2.6s ease-in-out infinite}
+    @keyframes sway{0%,100%{rotate:-3deg;translate:0 0}50%{rotate:3deg;translate:0 -4%}}
+    @keyframes glow{0%,100%{filter:drop-shadow(0 0 4px rgba(255,230,140,.5)) drop-shadow(0 6px 6px rgba(0,0,0,.2))}50%{filter:drop-shadow(0 0 16px rgba(255,220,110,.95)) drop-shadow(0 6px 6px rgba(0,0,0,.2))}}
+    .fpc.drag,.fpc.given{animation:none}
     .fpc .ink{transform:rotate(-14deg) scale(1);opacity:1}
     .fpc.given{transition:left .35s,top .35s,width .35s,transform .35s;pointer-events:none}
     .cand>img:first-of-type{transform-origin:50% 100%}
@@ -144,7 +147,7 @@
           <div class="sp cand" data-ok="false" style="--x:300;--y:458;--w:297"><span class="ring"></span><img src="assets/orders/grandma__front__smile.webp" alt="奶奶：在笑、沒拿信"></div>
           <div class="sp cand" data-ok="true" style="--x:612;--y:654;--w:192"><span class="ring"></span><img src="assets/orders/xiaokong__front__happy.webp" alt="小空：在笑、拿著信"><img class="letter" style="left:24%;top:55%;width:52%" src="assets/orders/letter.webp" alt=""></div>
         </div>
-        <div class="tag"><small data-k="收件人">收件人</small><p data-k="寄給在笑、手上拿著信的收件人。">寄給在笑、手上拿著信的收件人。</p></div>
+        <div class="tag"><small data-k="要寄給誰呢？">要寄給誰呢？</small><p data-k="寄給在笑、手上拿著信的收件人。">寄給在笑、手上拿著信的收件人。</p></div>
         <div class="pc fpc" id="fpc"><img src="assets/orders/parcel_red.webp" alt="蓋好章的包裹"><img class="str" src="assets/orders/string.webp" alt=""><img class="st" style="right:8%" src="assets/orders/stamp.webp" alt=""><img class="st" style="right:29%" src="assets/orders/stamp.webp" alt=""><span class="ink">OK</span></div>
         <div class="fsay" id="fsay"></div>
         <div class="stamps" id="fstamps"><i class="done"></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -175,6 +178,7 @@
       '把可以寄的包裹拉給阿暴': ['ㄅㄚˇ','ㄎㄜˇ','ㄧˇ','ㄐㄧˋ','ㄉㄜ˙','ㄅㄠ','ㄍㄨㄛˇ','ㄌㄚ','ㄍㄟˇ','ㄚ','ㄅㄠˋ'],
       '不是我喔！': ['ㄅㄨˋ','ㄕˋ','ㄨㄛˇ','ㄛ',''],
       '謝謝你！': ['ㄒㄧㄝˋ','ㄒㄧㄝ˙','ㄋㄧˇ',''],
+      '要寄給誰呢？': ['ㄧㄠˋ','ㄐㄧˋ','ㄍㄟˇ','ㄕㄟˊ','ㄋㄜ˙',''],
       '收件人': ['ㄕㄡ','ㄐㄧㄢˋ','ㄖㄣˊ'],
       '寄給在笑、手上拿著信的收件人。': ['ㄐㄧˋ','ㄍㄟˇ','ㄗㄞˋ','ㄒㄧㄠˋ','','ㄕㄡˇ','ㄕㄤˋ','ㄋㄚˊ','ㄓㄜ˙','ㄒㄧㄣˋ','ㄉㄜ˙','ㄕㄡ','ㄐㄧㄢˋ','ㄖㄣˊ',''],
       '把包裹交給收件人': ['ㄅㄚˇ','ㄅㄠ','ㄍㄨㄛˇ','ㄐㄧㄠ','ㄍㄟˇ','ㄕㄡ','ㄐㄧㄢˋ','ㄖㄣˊ']
