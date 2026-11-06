@@ -82,7 +82,7 @@
     .table{--x:62;--y:118;--w:716;z-index:1}
 
     /* 包裹 */
-    .pc{position:absolute;z-index:6;left:calc(var(--x)/840*100%);top:calc(var(--y)/400*100%);width:calc(170/840*100%);aspect-ratio:249/201;cursor:grab;touch-action:none;-webkit-tap-highlight-color:transparent;transition:opacity .3s}
+    .pc{position:absolute;z-index:6;left:calc(var(--x)/840*100%);top:calc(var(--y)/400*100%);width:calc(195/840*100%);aspect-ratio:249/201;cursor:grab;touch-action:none;-webkit-tap-highlight-color:transparent;transition:opacity .3s}
     .pc img{position:absolute;pointer-events:none}
     .pc .pw{position:absolute;left:50%;bottom:0;height:100%;max-width:100%;translate:-50% 0}
     .pc .bx{inset:0;width:100%;height:100%}
@@ -413,9 +413,9 @@
 
     // 各形狀的圖與裝飾位置（％＝相對包裹圖；由剪紙零件裁切框換算）：str 綁繩 [left, top, width]、st 郵票 [top, right 起點, 間距, width]、stk 兩個貼紙位 [left, top, width]
     const PSHAPE = {
-      box: { img: c => `parcel_${c}`, ar: 245 / 202, str: ['string', 12, -12, 80], st: k => `top:${16 + k * 25}%;right:7%;width:21%`, stk: [[6, 48, 30], [7, 17, 26]], ink: '' },
-      round: { img: c => `parcel_round_${c}`, ar: 237 / 236, str: ['string_round', 6.3, -11.4, 83.5], st: k => `top:${24 + k * 22}%;right:15%;width:18%`, stk: [[8, 48, 33], [12, 14, 30]], ink: 'top:16%' },
-      tri: { img: c => `parcel_tri_${c}`, ar: 243 / 236, str: ['string_tri', 17.3, -13.1, 60.1], st: k => `top:68%;right:${14 + k * 17}%;width:15%`, stk: [[10, 60, 25], [37, 38, 22]], ink: 'top:36%;left:26%;width:48%' }
+      box: { img: c => `parcel_${c}`, ar: 245 / 202, str: ['string', 12, -12, 80], st: k => `top:${8 + k * 30}%;right:6%;width:23%`, stk: [[4, 47, 36], [5, 11, 32]], ink: '' },
+      round: { img: c => `parcel_round_${c}`, ar: 237 / 236, str: ['string_round', 6.3, -11.4, 83.5], st: k => `top:${18 + k * 23}%;right:16%;width:21%`, stk: [[6, 46, 38], [11, 9, 34]], ink: 'top:16%' },
+      tri: { img: c => `parcel_tri_${c}`, ar: 243 / 236, str: ['string_tri', 17.3, -13.1, 60.1], st: k => `top:72%;right:${22 + k * 19}%;width:18%`, stk: [[26, 47, 25], [41, 22, 21]], ink: 'top:36%;left:26%;width:48%' }
     };
     function parcelEl(p, x, y, cls = '') {
       const L = PSHAPE[p.s], d = document.createElement('div'); d.className = 'pc ' + cls; d.style.cssText = `--x:${x};--y:${y}`;
@@ -490,7 +490,7 @@
       const ps = makeParcels(G.rule), bot = $('tableBot');
       bot.querySelectorAll('.pc').forEach(e => e.remove());
       G.parcel = ps.find(p => !rejected(p, G.rule));
-      [128, 335, 542].forEach((x, i) => {
+      [116, 323, 530].forEach((x, i) => {
         const el = parcelEl(ps[i], x, 20, 'enter'); el.style.animationDelay = (i * .08) + 's'; el.style.setProperty('--i', i);
         el.addEventListener('animationend', ev => { if (ev.animationName === 'drop') { el.classList.remove('enter'); el.style.animationDelay = ''; el.classList.add('idle'); } });
         el.dataset.ok = !rejected(ps[i], G.rule); bot.append(el);
