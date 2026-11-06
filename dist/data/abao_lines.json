@@ -1,0 +1,20 @@
+{
+  "_note": "小雞阿暴語音台詞（導演 2026-11-06：郵局任務單用小雞阿暴聲音說通用提示，不提到題目內容）。生成：python3 tools/gemini_tts_batch.py abao orders [ID ...] → dist/assets/audio/orders/<id>.mp3；只送台詞文字",
+  "voice": {"source": "恐龍郵局 voices/character_voice_routes.json 小雞阿暴 R01", "model": "gemini-3.8-flash-tts", "voice_id": "voice_993bt4q4we7k", "api_key_file": "/Users/simon/.config/dinopost/gemini-key-default"},
+  "style": {
+    "orders": "自然台灣華語，小雞阿暴是郵局櫃台的小雞，做事俐落、認真、有條理，帶一點認真過頭的可愛；正在帶小朋友在郵局櫃台幫忙寄包裹。語氣親切有精神，中速清楚，每句之間停頓要長。不說教、不裝幼兒、不作主播腔。"
+  },
+  "orders": [
+    {"id": "rule", "when": "每天開始、公布欄放大", "text": "今天的規定貼在公布欄上，我們一起看清楚！"},
+    {"id": "rule_go", "when": "點一下回櫃台", "text": "看好了嗎？把可以寄的包裹，交給我蓋章。"},
+    {"id": "wrong_1", "when": "交錯包裹（第一次）", "text": "等一下，先核對。再看一次今天的規定。"},
+    {"id": "wrong_2", "when": "交錯包裹（之後輪流）", "text": "這個不能寄喔，每一條規定都要對。"},
+    {"id": "stamp", "when": "蓋章成功", "text": "蓋好章了！"},
+    {"id": "front", "when": "到櫃台前、出現三位收件人", "text": "要寄給誰呢？看看紙條上寫的。"},
+    {"id": "who_wrong", "when": "交錯收件人", "text": "不是這一位喔，帽子、手上、腳邊，都仔細看一看。"},
+    {"id": "deliver", "when": "送對收件人", "text": "送到了！"},
+    {"id": "idle_check", "when": "櫃台階段十幾秒沒動作", "text": "不確定的話，點上面的問號，再看一次規定。"},
+    {"id": "idle_front", "when": "送信階段十幾秒沒動作", "text": "一個一個比比看，誰跟紙條上寫的一樣？"},
+    {"id": "finish", "when": "完成一天", "text": "今天的包裹都送到了！謝謝你來幫忙！"}
+  ]
+}

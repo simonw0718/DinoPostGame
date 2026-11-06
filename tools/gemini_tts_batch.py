@@ -6,6 +6,7 @@ Usage: python3 tools/gemini_tts_batch.py 1|2|3
        python3 tools/gemini_tts_batch.py apply NAME              after listening: back up old MP3, replace
        python3 tools/gemini_tts_batch.py whack [ID ...]          分類快打出題句 "Let's hit... X!"（全部一次請求再裁切）→ dist/assets/audio/whack/
        python3 tools/gemini_tts_batch.py iggy howto|catch [ID ...] 伊奇（R27）玩法語音／接信題目，台詞在 dist/data/iggy_lines.json → dist/assets/audio/<kind>/
+       python3 tools/gemini_tts_batch.py abao orders [ID ...]      小雞阿暴（R01）郵局任務單通用提示，台詞在 dist/data/abao_lines.json → dist/assets/audio/orders/
        python3 tools/gemini_tts_batch.py recast                   全部英文單字改 5 個聲音輪流（每請求 50 字，429 換金鑰）→ audio-pilot/recast-20261104/；聽過再 apply
        python3 tools/gemini_tts_batch.py cast [VOICE ...]          英文配音選角：每個聲音一次請求念 8 個字再裁切 → audio-pilot/voice-casting-20261104/
        python3 tools/gemini_tts_batch.py phonics [LETTER ...]     26 個字母「聲音」（不是名稱），拼字遊戲用（全部一次請求再裁切）→ dist/assets/audio/phonics/
@@ -200,12 +201,12 @@ def whack(ids):
         print(f"{c['id']:8s} {b - a:.2f}s  {text}", flush=True)
 
 
-def iggy(kind, ids):
-    """伊奇台詞（導演 2026-10-31 核准）：同一種全部一次請求、本機依最長停頓裁切；已存的 full.wav 不重送。
-    聲音照正式專案 voices/character_voice_routes.json 的伊奇（R27）。"""
-    cfg = json.loads((ROOT / 'dist/data/iggy_lines.json').read_text())
+def iggy(kind, ids, who='iggy'):
+    """角色台詞（伊奇：導演 2026-10-31 核准；小雞阿暴：2026-11-06 郵局任務單）：同一種全部一次請求、本機依最長停頓裁切；已存的 full.wav 不重送。
+    聲音照正式專案 voices/character_voice_routes.json（伊奇 R27、小雞阿暴 R01），台詞在 dist/data/<who>_lines.json。"""
+    cfg = json.loads((ROOT / f'dist/data/{who}_lines.json').read_text())
     role, lines = cfg['voice'], [l for l in cfg[kind] if not ids or l['id'] in ids]
-    folder = ROOT / 'audio-pilot/iggy-lines' / (kind + ('-' + '-'.join(ids) if ids else ''))
+    folder = ROOT / f'audio-pilot/{who}-lines' / (kind + ('-' + '-'.join(ids) if ids else ''))
     folder.mkdir(parents=True, exist_ok=True)
     wav = folder / 'full.wav'
     body = {'model': role['model'],
@@ -215,7 +216,7 @@ def iggy(kind, ids):
             'generation_config': {'speech_config': [{'voice': role['voice_id']}]}}
     (folder / 'request.json').write_text(json.dumps(body, ensure_ascii=False, indent=2) + '\n')
     if not wav.exists():
-        request_tts(body, folder, wav, f'iggy {kind}: sending ONE TTS request for {len(lines)} lines', role['api_key_file'])
+        request_tts(body, folder, wav, f'{who} {kind}: sending ONE TTS request for {len(lines)} lines', role['api_key_file'])
     # 句內也有長停頓（「咦？……」），最長停頓不一定是句界；模型也可能漏念整句。
     # 所以先用 whisper 聽過，把核對後的切點寫在 cuts.json {"id": [start, end]}，有它就照它切（只切列出的句子）
     cuts = folder / 'cuts.json'
@@ -400,8 +401,8 @@ def main():
         return cast(sys.argv[2:])
     if sys.argv[1] == 'phonics':
         return phonics(sys.argv[2:])
-    if sys.argv[1] == 'iggy':
-        return iggy(sys.argv[2], sys.argv[3:])
+    if sys.argv[1] in ('iggy', 'abao'):
+        return iggy(sys.argv[2], sys.argv[3:], sys.argv[1])
     if sys.argv[1] == 'whack':
         return whack(sys.argv[2:])
     if sys.argv[1] == 'tempo':
