@@ -69,7 +69,8 @@
     { opacity: 1, transform: 'translateY(0) rotate(1deg)' },
   ], { delay: 2900, duration: 650, easing: ease.out });
   stickers.forEach(s => anim(s, [{ opacity: 0 }, { opacity: 0 }], { duration: 3400 }));
-  unhide();   // 動畫已接手藏住信紙／角色
+  // 等信紙自己滑出來（2.9 秒）才拿掉 pending：iPhone 上動畫第一格晚生效，太早拿掉會先閃出信紙（導演 2026-11-06 錄影）
+  setTimeout(unhide, 2900);
   choices.forEach(c => anim(c, [{ opacity: 0 }, { opacity: 0 }], { duration: 3400 }));
   choices.forEach((c, i) => anim(c, [{ opacity: 0, transform: 'translateY(18px) scale(.92)' }, { opacity: 1, transform: 'none' }], { delay: 3400 + i * 120, duration: 420, easing: ease.back }));
   stickers.forEach((s, i) => anim(s, [{ opacity: 0, transform: 'scale(.6) rotate(-12deg)' }, { opacity: 1, transform: 'none' }], { delay: 3500 + i * 90, duration: 380, easing: ease.back, composite: 'add' }));
