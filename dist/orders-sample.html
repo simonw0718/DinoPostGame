@@ -42,6 +42,10 @@
     /* 貼底層：840×400 座標（等於場景 y 680–1080） */
     .bot{position:absolute;left:0;right:0;bottom:0;aspect-ratio:840/400;transform:scale(var(--k,1));transform-origin:50% 100%}
     /* 拖拉中／已交給阿暴的包裹要蓋在櫃台桌面（z3）之上，平常小桌留在櫃台下面 */
+    /* 小桌在櫃台『前面』：寬螢幕（舞台不夠高）時包裹會跟櫃台正面重疊，要畫在櫃台之上才不會被擋住（導演 11-06 包裹卡住） */
+    .bot{z-index:4;pointer-events:none}
+    .bot .pc{pointer-events:auto}
+    .s-rule .bot{z-index:auto}
     .bot:has(.pc.drag,.pc.done,.pc.back){z-index:5}
     .bp{position:absolute;left:calc(var(--x)/840*100%);top:calc(var(--y)/400*100%);width:calc(var(--w)/840*100%)}
     .bp img{display:block;width:100%}
