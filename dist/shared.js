@@ -43,8 +43,10 @@ window.Dino = (() => {
   document.documentElement.style.overscrollBehavior = 'none';
   const scrollable = el => {
     for (; el && el !== document.body && el !== document.documentElement; el = el.parentElement) {
-      const y = getComputedStyle(el).overflowY;
+      const cs = getComputedStyle(el), y = cs.overflowY, x = cs.overflowX;
       if ((y === 'auto' || y === 'scroll') && el.scrollHeight > el.clientHeight + 1) return true;
+      // 左右捲的框也放行（首頁選遊戲分頁、分類鈕捲軸；導演 2026-11-06 回報手機滑不動）
+      if ((x === 'auto' || x === 'scroll') && el.scrollWidth > el.clientWidth + 1) return true;
     }
     return false;
   };
