@@ -248,7 +248,12 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
       .catch(error => { delete buffers[url]; throw error; });
     return buffers[url];
   }
+  // 同一個音效 0.12 秒內只響一次（導演 2026-11-06：點擊聲太密很吵；tap 改泡泡啵）
+  const sfxLast = {};
   function sfx(name, volume = .8) {
+    const now = performance.now();
+    if (now - (sfxLast[name] || 0) < 120) return;
+    sfxLast[name] = now;
     const c = audioCtx(); if (!c) return;
     if (c.state !== 'running') c.resume().catch(() => {});
     loadBuffer(`assets/audio/effects/${name}.mp3`).then(buffer => {
