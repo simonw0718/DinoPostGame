@@ -404,7 +404,28 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
     return { el: root, isOpen: () => !root.hidden, hide, show, first };
   }
 
-  return { voice, characters, storageKeys, shuffle, loadQueue, fitActor, parseZhuyin, makeBpmUnit, kidText, icon,
+  // 完成框標題自動縮字（導演 2026-11-06：版面修正全遊戲共用）：.overlay 顯示時，.card h2 放不下就逐步縮到 18px，再不行才換行
+  function fitCards() {
+    document.querySelectorAll('.overlay:not([hidden]) .card h2').forEach(h => {
+      if (!h.parentElement.clientWidth) return;   // 還沒排版（分頁隱藏等）就先不量，避免縮成最小
+      h.classList.remove('is-wrap'); h.style.fontSize = '';
+      let size = parseFloat(getComputedStyle(h).fontSize);
+      while (h.scrollWidth > h.clientWidth + 1 && size > 18) { size -= 1; h.style.fontSize = size + 'px'; }
+      if (h.scrollWidth > h.clientWidth + 1) h.classList.add('is-wrap');
+    });
+  }
+  if (typeof MutationObserver !== 'undefined') {
+    const watch = () => {
+      new MutationObserver(list => { if (list.some(m => m.target.classList?.contains('overlay'))) setTimeout(fitCards, 30); })
+        .observe(document.body, { attributes: true, attributeFilter: ['hidden'], subtree: true });
+      // 框從隱藏變顯示、或寬度改變時都會觸發（比只聽 hidden 可靠：分頁在背景時當下量不到寬度）
+      if (typeof ResizeObserver !== 'undefined') { const ro = new ResizeObserver(() => fitCards()); document.querySelectorAll('.overlay .card').forEach(c => ro.observe(c)); }
+      addEventListener('resize', fitCards); document.fonts?.ready.then(fitCards); fitCards();
+    };
+    if (document.body) watch(); else addEventListener('DOMContentLoaded', watch);
+  }
+
+  return { fitCards, voice, characters, storageKeys, shuffle, loadQueue, fitActor, parseZhuyin, makeBpmUnit, kidText, icon,
     isDino, isNumber, topicGroup, visualGroup, eligibleWords, loadHistory, saveHistory, selectRound, audioPath, burst, streakThreshold, dinoMode, setDinoMode, taskMode,
     sfx, bgm, menuTaps, goTo, previews, howto, preload, reduced, replay };
 })();

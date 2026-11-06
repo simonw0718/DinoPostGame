@@ -1,0 +1,14 @@
+/* 共用完成框（導演 2026-11-06：版面修正要全遊戲一起套用，不各自複製）
+   用法：<div id="finish" class="overlay"><div class="card"><img><h2></h2><p class="stars"></p><div class="actions">…</div></div></div>
+   標題太長（含注音）由 shared.js 的 Dino.fitCards 自動縮字，縮到 18px 仍放不下才換行；按鈕永遠在框內 */
+.card{box-sizing:border-box;display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;gap:10px;width:min(92vw,420px);max-width:100%;padding:22px;border:6px solid var(--gold);border-radius:28px;background:var(--cream);text-align:center;box-shadow:0 12px 0 #c89c52;animation:pop .45s cubic-bezier(.2,1.5,.4,1)}
+.card img{height:130px;max-width:100%;object-fit:contain}
+.card h2{box-sizing:border-box;max-width:100%;margin:0;font-size:clamp(24px,6.4vw,38px);white-space:nowrap;display:flex;justify-content:center;align-items:flex-end}
+.card h2.is-wrap{flex-wrap:wrap;white-space:normal}
+.stars{margin:0;color:#f2b945;font-size:44px;letter-spacing:.08em;text-shadow:0 3px 0 #c98a12}
+.stars .off{color:#e6dcc4;text-shadow:none}
+.actions{box-sizing:border-box;display:flex;gap:12px;width:100%;min-width:0}
+.actions button,.actions a{box-sizing:border-box;flex:1 1 0;min-width:0;min-height:54px;display:flex;align-items:center;justify-content:center;padding:4px 8px;border:0;border-radius:16px;font-family:inherit;font-size:clamp(17px,4.8vw,22px);font-weight:1000;text-decoration:none;color:var(--ink);cursor:pointer}
+.actions button{background:linear-gradient(#ffca58,#f6ac34);box-shadow:0 5px 0 #b9792b}
+.actions a{background:#e5f2df;box-shadow:0 5px 0 #a9c8a2}
+@keyframes pop{from{transform:scale(.85)}}
