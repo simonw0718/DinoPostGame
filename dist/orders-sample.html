@@ -55,6 +55,10 @@
     .rule .r1{align-self:flex-start}
     .rule .r2{align-self:center;display:flex;align-items:center;gap:.22em;flex-wrap:wrap;justify-content:center}
     .rule .r3{align-self:flex-end}
+    .rule .r4{align-self:center;display:flex;align-items:center;gap:.22em}
+    .rule .r4:empty{display:none}
+    .rule[data-n="mix"]{font-size:clamp(14px,3.4cqw,29px);gap:.16em}
+    .rule[data-n="mix"] .r3{align-self:center}
     .rule[data-n="2"]{font-size:clamp(17px,4.3cqw,37px)}
     .rule[data-n="3"]{font-size:clamp(15px,3.6cqw,31px)}
     .rule[data-n="4"]{font-size:clamp(13px,3.1cqw,27px)}
@@ -198,7 +202,7 @@
           <img class="lay" src="assets/orders/counter_bg.webp" alt="">
           <div class="sp board"><img src="assets/orders/board.webp" alt=""><h2 data-k="今天的規定">今天的規定</h2>
             <div class="note"><img src="assets/orders/board_note.webp" alt="">
-              <div class="rule" id="rule"><span class="r1" data-k="今天不收">今天不收</span><span class="r2" id="conds"></span><span class="r3" data-k="的包裹">的包裹</span></div></div></div>
+              <div class="rule" id="rule"><span class="r1" data-k="今天不收">今天不收</span><span class="r2" id="conds"></span><span class="r3" data-k="的包裹">的包裹</span><span class="r4" id="notLine"></span></div></div></div>
           <div class="sp chick"><img id="chickImg" src="assets/orders/chick_abao__front__stand_happy.webp" alt="小雞阿暴"></div>
           <div class="sp desk"><img src="assets/orders/counter_desk.webp" alt=""></div>
           <div class="zone" id="zone"><img class="pm" src="assets/dinopost-workmark-stamp-transparent-v1.webp" alt=""><span class="lab"><span data-k="蓋章">蓋章</span></span><span class="up" aria-hidden="true">▲</span></div>
@@ -258,7 +262,7 @@
       '今天不收': ['ㄐㄧㄣ','ㄊㄧㄢ','ㄅㄨˋ','ㄕㄡ'],
       '的包裹': ['ㄉㄜ˙','ㄅㄠ','ㄍㄨㄛˇ'],
       '的不收': ['ㄉㄜ˙','ㄅㄨˋ','ㄕㄡ'],
-      '或': ['ㄏㄨㄛˋ'], '又': ['ㄧㄡˋ'], '只收': ['ㄓˇ','ㄕㄡ'], '今天只收': ['ㄐㄧㄣ','ㄊㄧㄢ','ㄓˇ','ㄕㄡ'], '喔！': ['ㄛ',''],
+      '或': ['ㄏㄨㄛˋ'], '但是': ['ㄉㄢˋ','ㄕˋ'], '，': [''], '的包裹，': ['ㄉㄜ˙','ㄅㄠ','ㄍㄨㄛˇ',''], '貼一張郵票': ['ㄊㄧㄝ','ㄧˋ','ㄓㄤ','ㄧㄡˊ','ㄆㄧㄠˋ'], '貼兩張郵票': ['ㄊㄧㄝ','ㄌㄧㄤˇ','ㄓㄤ','ㄧㄡˊ','ㄆㄧㄠˋ'], '貼三張郵票': ['ㄊㄧㄝ','ㄙㄢ','ㄓㄤ','ㄧㄡˊ','ㄆㄧㄠˋ'], '又': ['ㄧㄡˋ'], '只收': ['ㄓˇ','ㄕㄡ'], '今天只收': ['ㄐㄧㄣ','ㄊㄧㄢ','ㄓˇ','ㄕㄡ'], '喔！': ['ㄛ',''],
       '紅色': ['ㄏㄨㄥˊ','ㄙㄜˋ'], '綠色': ['ㄌㄩˋ','ㄙㄜˋ'], '藍色': ['ㄌㄢˊ','ㄙㄜˋ'], '黃色': ['ㄏㄨㄤˊ','ㄙㄜˋ'],
       '沒有郵票': ['ㄇㄟˊ','ㄧㄡˇ','ㄧㄡˊ','ㄆㄧㄠˋ'], '綁繩子': ['ㄅㄤˇ','ㄕㄥˊ','ㄗ˙'], '貼星星': ['ㄊㄧㄝ','ㄒㄧㄥ','ㄒㄧㄥ'], '貼愛心': ['ㄊㄧㄝ','ㄞˋ','ㄒㄧㄣ'], '正方形': ['ㄓㄥˋ','ㄈㄤ','ㄒㄧㄥˊ'], '圓形': ['ㄩㄢˊ','ㄒㄧㄥˊ'], '三角形': ['ㄙㄢ','ㄐㄧㄠˇ','ㄒㄧㄥˊ'],
       '蓋章': ['ㄍㄞˋ','ㄓㄤ'],
@@ -292,19 +296,27 @@
     const CONDS = [
       ...Object.keys(COLORS).map(c => ({ t: COLORS[c], hit: p => p.c === c, kind: 'color' })),
       ...Object.keys(SHAPES).map(k => ({ t: SHAPES[k], hit: p => p.s === k, kind: 'shape' })),
-      ...Object.keys(DECOS).map(k => ({ t: DECOS[k], hit: p => p.d.includes(k), kind: 'deco' }))
+      ...Object.keys(DECOS).map(k => ({ t: DECOS[k], hit: p => p.d.includes(k), kind: 'deco' })),
+      ...[['貼一張郵票', 1], ['貼兩張郵票', 2], ['貼三張郵票', 3]].map(([t, n]) => ({ t, hit: p => p.stamp === n, kind: 'count' }))
     ];
-    const rejected = (p, rule) => rule.only ? !rule.every(c => c.hit(p)) : rule.some(c => c.hit(p));
+    // 每條條件帶 neg：neg＝『不收』那邊（中了就退），否則＝『只收』那邊（沒中就退）
+    const viol = (c, p) => c.neg ? c.hit(p) : !c.hit(p);
+    const rejected = (p, rule) => rule.some(c => viol(c, p));
     const joinWord = rule => rule.only ? '又' : '或';
     function makeRule(level) {
-      const one = kind => pick(CONDS.filter(c => c.kind === kind));
+      const one = kind => ({ ...pick(CONDS.filter(c => c.kind === kind)) });
+      if (level >= 3) {   // 困難（導演 11-06 A＋B）：一定考數郵票；3 條＝2 條『只收』（又）＋1 條『但是…的不收』，三條種類都不同
+        const r = [one('count'), ...shuffle(['color', 'shape', 'deco']).slice(0, 2).map(one)];
+        const ni = Math.floor(Math.random() * 3); r[ni].neg = true;
+        const ORD = ['color', 'shape', 'deco', 'count'], out = [...r.filter(c => !c.neg).sort((a, b) => ORD.indexOf(a.kind) - ORD.indexOf(b.kind)), r[ni]];   // 念起來：黃色又貼兩張郵票
+        out.mix = true; out.only = true; return out;
+      }
       const r = [one('color')];
       if (level >= 2) r.push(one('shape'));
-      if (level >= 3) r.push(...shuffle(CONDS.filter(c => c.kind === 'deco')).slice(0, pick([1, 2])));
-      r.only = Math.random() < .5; return r;
+      r.only = Math.random() < .5; r.forEach(c => { c.neg = !r.only; }); return r;
     }
     // 形狀只在規則有考時才變（導演 11-06：形狀是條件的一種，不是包裹一起變形）；沒考形狀＝全部正方形
-    const randParcel = rule => ({ c: pick(Object.keys(COLORS)), s: rule.some(c => c.kind === 'shape') ? pick(Object.keys(SHAPES)) : 'box', d: shuffle(Object.keys(DECOS)).slice(0, pick([1, 2])), stamp: pick([1, 2]) });
+    const randParcel = rule => ({ c: pick(Object.keys(COLORS)), s: rule.some(c => c.kind === 'shape') ? pick(Object.keys(SHAPES)) : 'box', d: shuffle(Object.keys(DECOS)).slice(0, pick([1, 2])), stamp: rule.some(c => c.kind === 'count') ? pick([1, 2, 3]) : pick([1, 2]) });
     const pkey = p => [p.c, p.s, [...p.d].sort()].join('|');
     function makeParcels(rule) {
       for (let n = 0; n < 40000; n++) {
@@ -313,8 +325,9 @@
         if (bad.length !== 2 || new Set(ps.map(pkey)).size < 3) continue;
         if (rule.length > 1) {
           // 陷阱要逼小朋友每條都看：只收＝每個陷阱只缺一條、而且缺的不一樣；不收＝每個陷阱只中一條、而且中的不一樣
-          const which = bad.map(p => rule.map((c, i) => (rule.only ? !c.hit(p) : c.hit(p)) ? i : -1).filter(i => i >= 0));
+          const which = bad.map(p => rule.map((c, i) => viol(c, p) ? i : -1).filter(i => i >= 0));
           if (which.some(w => w.length !== 1) || which[0][0] === which[1][0]) continue;
+          if (rule.mix && !which.some(w => rule[w[0]].neg)) continue;   // 『但是…不收』一定要有陷阱考到
         }
         return ps;
       }
@@ -400,16 +413,16 @@
 
     // 各形狀的圖與裝飾位置（％＝相對包裹圖；由剪紙零件裁切框換算）：str 綁繩 [left, top, width]、st 郵票 [top, right 起點, 間距, width]、stk 兩個貼紙位 [left, top, width]
     const PSHAPE = {
-      box: { img: c => `parcel_${c}`, ar: 245 / 202, str: ['string', 12, -12, 80], st: [30, 8, 21, 19], stk: [[6, 48, 30], [7, 17, 26]], ink: '' },
-      round: { img: c => `parcel_round_${c}`, ar: 237 / 236, str: ['string_round', 6.3, -11.4, 83.5], st: [32, 13, 17, 15], stk: [[8, 48, 33], [12, 14, 30]], ink: 'top:16%' },
-      tri: { img: c => `parcel_tri_${c}`, ar: 243 / 236, str: ['string_tri', 17.3, -13.1, 60.1], st: [66, 19, 14, 12], stk: [[14, 56, 27], [37, 38, 22]], ink: 'top:36%;left:26%;width:48%' }
+      box: { img: c => `parcel_${c}`, ar: 245 / 202, str: ['string', 12, -12, 80], st: k => `top:${16 + k * 25}%;right:7%;width:21%`, stk: [[6, 48, 30], [7, 17, 26]], ink: '' },
+      round: { img: c => `parcel_round_${c}`, ar: 237 / 236, str: ['string_round', 6.3, -11.4, 83.5], st: k => `top:${24 + k * 22}%;right:15%;width:18%`, stk: [[8, 48, 33], [12, 14, 30]], ink: 'top:16%' },
+      tri: { img: c => `parcel_tri_${c}`, ar: 243 / 236, str: ['string_tri', 17.3, -13.1, 60.1], st: k => `top:68%;right:${14 + k * 17}%;width:15%`, stk: [[10, 60, 25], [37, 38, 22]], ink: 'top:36%;left:26%;width:48%' }
     };
     function parcelEl(p, x, y, cls = '') {
       const L = PSHAPE[p.s], d = document.createElement('div'); d.className = 'pc ' + cls; d.style.cssText = `--x:${x};--y:${y}`;
       const stk = p.d.filter(k => k !== 'str').sort((a, b) => (a === 'star' ? -1 : 1));
       d.innerHTML = `<div class="pw" style="aspect-ratio:${L.ar}"><img class="bx" src="${S}${L.img(p.c)}.webp" alt="">`
         + (p.d.includes('str') ? `<img class="str" style="left:${L.str[1]}%;top:${L.str[2]}%;width:${L.str[3]}%" src="${S}${L.str[0]}.webp" alt="">` : '')
-        + Array.from({ length: p.stamp }, (_, k) => `<img class="st" style="top:${L.st[0]}%;right:${L.st[1] + k * L.st[2]}%;width:${L.st[3]}%" src="${S}stamp.webp" alt="">`).join('')
+        + Array.from({ length: p.stamp }, (_, k) => `<img class="st" style="${L.st(k)}" src="${S}stamp.webp" alt="">`).join('')
         + stk.map((k, i) => `<img class="stk" style="left:${L.stk[i][0]}%;top:${L.stk[i][1]}%;width:${L.stk[i][2]}%" src="${S}sticker_${k}.webp" alt="">`).join('')
         + `<img class="ink" style="${L.ink}" src="assets/dinopost-workmark-stamp-transparent-v1.webp" alt=""></div>`;
       d.setAttribute('role', 'img');
@@ -446,11 +459,15 @@
     // ── 規則放大：每天開始；點一下回櫃台 ──
     function showRule() {
       const conds = $('conds'); conds.replaceChildren();
-      G.rule.forEach((c, i) => { if (i) conds.append(span(joinWord(G.rule), 'or')); conds.append(span(c.t, 'chip')); });
-      $('rule').dataset.n = G.rule.length;
-      const mid = G.rule.flatMap((c, i) => i ? [joinWord(G.rule), c.t] : [c.t]);
+      const main = G.rule.mix ? G.rule.filter(c => !c.neg) : G.rule, neg = G.rule.mix ? G.rule.find(c => c.neg) : null;
+      main.forEach((c, i) => { if (i) conds.append(span(joinWord(G.rule), 'or')); conds.append(span(c.t, 'chip')); });
+      $('rule').dataset.n = G.rule.mix ? 'mix' : G.rule.length;
+      const notLine = $('notLine'); notLine.replaceChildren();
+      if (neg) notLine.append(span('但是'), span(neg.t, 'chip'), span('的不收'));
+      kt(document.querySelector('#rule .r3'), neg ? '的包裹，' : '的包裹');
+      const mid = main.flatMap((c, i) => i ? [joinWord(G.rule), c.t] : [c.t]);
       kt(document.querySelector('#rule .r1'), G.rule.only ? '今天只收' : '今天不收');
-      const parts = G.rule.only ? ['只收', ...mid, '的包裹', '喔！'] : G.rule.length === 1 ? ['今天不收', G.rule[0].t, '的包裹', '喔！'] : [...mid, '的不收', '喔！'];
+      const parts = neg ? ['只收', ...mid, '的包裹', '，', '但是', neg.t, '的不收', '喔！'] : G.rule.only ? ['只收', ...mid, '的包裹', '喔！'] : G.rule.length === 1 ? ['今天不收', G.rule[0].t, '的包裹', '喔！'] : [...mid, '的不收', '喔！'];
       kt($('bubble'), ...join(parts));
       stage.classList.add('s-rule'); G.busy = true; G.ruleAt = performance.now(); Dino.sfx('swoosh', .4);
     }
