@@ -27,7 +27,8 @@
   // 切換 DINO MODE 時重播（dino-anim.js 發 intro:replay）
   let stop = null;
   document.addEventListener('intro:replay', () => { stop?.(); screen.dataset.intro = 'replay'; play(); });
-  if (seen) { done(); return; }
+  // 開場信封動畫拿掉（導演 2026-11-06：iPhone 會先閃信紙、有點多餘）：一進來直接顯示首頁；DINO MODE 切換時仍會重播
+  done(); return;
 
   // 等字型與開場圖解碼好才開始，避免動畫途中換字型、解圖造成掉格（最多等 1.5 秒）
   function ready() {
