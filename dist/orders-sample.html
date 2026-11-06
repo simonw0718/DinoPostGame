@@ -57,6 +57,7 @@
     .rule .r3{align-self:flex-end}
     .rule[data-n="2"]{font-size:clamp(17px,4.3cqw,37px)}
     .rule[data-n="3"]{font-size:clamp(15px,3.6cqw,31px)}
+    .rule[data-n="4"]{font-size:clamp(13px,3.1cqw,27px)}
     .chip{display:inline-flex;padding:.12em .32em .16em;border:.12em solid var(--key);border-radius:.4em;background:#fff6e4;color:var(--key)}
     .rule .or{font-size:.7em;color:#7a6a55}
     .chick{--x:628;--y:318;--w:196;z-index:1}
@@ -79,6 +80,7 @@
     /* 包裹 */
     .pc{position:absolute;z-index:6;left:calc(var(--x)/840*100%);top:calc(var(--y)/400*100%);width:calc(170/840*100%);aspect-ratio:249/201;cursor:grab;touch-action:none;-webkit-tap-highlight-color:transparent;transition:opacity .3s}
     .pc img{position:absolute;pointer-events:none}
+    .pc .pw{position:absolute;left:50%;bottom:0;height:100%;max-width:100%;translate:-50% 0}
     .pc .bx{inset:0;width:100%;height:100%}
     .pc .st{top:30%;width:19%}
     .pc .str{left:12%;top:-12%;width:80%}
@@ -258,7 +260,7 @@
       '的不收': ['ㄉㄜ˙','ㄅㄨˋ','ㄕㄡ'],
       '或': ['ㄏㄨㄛˋ'], '又': ['ㄧㄡˋ'], '只收': ['ㄓˇ','ㄕㄡ'], '今天只收': ['ㄐㄧㄣ','ㄊㄧㄢ','ㄓˇ','ㄕㄡ'], '喔！': ['ㄛ',''],
       '紅色': ['ㄏㄨㄥˊ','ㄙㄜˋ'], '綠色': ['ㄌㄩˋ','ㄙㄜˋ'], '藍色': ['ㄌㄢˊ','ㄙㄜˋ'], '黃色': ['ㄏㄨㄤˊ','ㄙㄜˋ'],
-      '沒有郵票': ['ㄇㄟˊ','ㄧㄡˇ','ㄧㄡˊ','ㄆㄧㄠˋ'], '綁繩子': ['ㄅㄤˇ','ㄕㄥˊ','ㄗ˙'], '貼星星': ['ㄊㄧㄝ','ㄒㄧㄥ','ㄒㄧㄥ'], '貼愛心': ['ㄊㄧㄝ','ㄞˋ','ㄒㄧㄣ'],
+      '沒有郵票': ['ㄇㄟˊ','ㄧㄡˇ','ㄧㄡˊ','ㄆㄧㄠˋ'], '綁繩子': ['ㄅㄤˇ','ㄕㄥˊ','ㄗ˙'], '貼星星': ['ㄊㄧㄝ','ㄒㄧㄥ','ㄒㄧㄥ'], '貼愛心': ['ㄊㄧㄝ','ㄞˋ','ㄒㄧㄣ'], '正方形': ['ㄓㄥˋ','ㄈㄤ','ㄒㄧㄥˊ'], '圓形': ['ㄩㄢˊ','ㄒㄧㄥˊ'], '三角形': ['ㄙㄢ','ㄐㄧㄠˇ','ㄒㄧㄥˊ'],
       '蓋章': ['ㄍㄞˋ','ㄓㄤ'],
       '把可以寄的包裹': ['ㄅㄚˇ','ㄎㄜˇ','ㄧˇ','ㄐㄧˋ','ㄉㄜ˙','ㄅㄠ','ㄍㄨㄛˇ'],
       '交給阿暴': ['ㄐㄧㄠ','ㄍㄟˇ','ㄚ','ㄅㄠˋ'],
@@ -267,7 +269,7 @@
       '要寄給誰呢？': ['ㄧㄠˋ','ㄐㄧˋ','ㄍㄟˇ','ㄕㄟˊ','ㄋㄜ˙',''],
       '寄給': ['ㄐㄧˋ','ㄍㄟˇ'], '的收件人。': ['ㄉㄜ˙','ㄕㄡ','ㄐㄧㄢˋ','ㄖㄣˊ',''], '、': [''],
       '拿著信': ['ㄋㄚˊ','ㄓㄜ˙','ㄒㄧㄣˋ'],
-      '戴著帽子': ['ㄉㄞˋ','ㄓㄜ˙','ㄇㄠˋ','ㄗ˙'], '身上纏著藤蔓': ['ㄕㄣ','ㄕㄤˋ','ㄔㄢˊ','ㄓㄜ˙','ㄊㄥˊ','ㄇㄢˋ'], '腳髒髒的': ['ㄐㄧㄠˇ','ㄗㄤ','ㄗㄤ','ㄉㄜ˙'], '旁邊有玩具車': ['ㄆㄤˊ','ㄅㄧㄢ','ㄧㄡˇ','ㄨㄢˊ','ㄐㄩˋ','ㄔㄜ'], '拿著雨傘': ['ㄋㄚˊ','ㄓㄜ˙','ㄩˇ','ㄙㄢˇ'], '個子高高': ['ㄍㄜˋ','ㄗ˙','ㄍㄠ','ㄍㄠ'], '個子小小': ['ㄍㄜˋ','ㄗ˙','ㄒㄧㄠˇ','ㄒㄧㄠˇ'],
+      '戴著帽子': ['ㄉㄞˋ','ㄓㄜ˙','ㄇㄠˋ','ㄗ˙'], '身上纏著藤蔓': ['ㄕㄣ','ㄕㄤˋ','ㄔㄢˊ','ㄓㄜ˙','ㄊㄥˊ','ㄇㄢˋ'], '腳髒髒的': ['ㄐㄧㄠˇ','ㄗㄤ','ㄗㄤ','ㄉㄜ˙'], '旁邊有玩具骨頭': ['ㄆㄤˊ','ㄅㄧㄢ','ㄧㄡˇ','ㄨㄢˊ','ㄐㄩˋ','ㄍㄨˇ','ㄊㄡ˙'], '拿著大果子': ['ㄋㄚˊ','ㄓㄜ˙','ㄉㄚˋ','ㄍㄨㄛˇ','ㄗ˙'], '拿著雨傘': ['ㄋㄚˊ','ㄓㄜ˙','ㄩˇ','ㄙㄢˇ'], '個子高高': ['ㄍㄜˋ','ㄗ˙','ㄍㄠ','ㄍㄠ'], '個子小小': ['ㄍㄜˋ','ㄗ˙','ㄒㄧㄠˇ','ㄒㄧㄠˇ'],
       '這個不行喔！': ['ㄓㄜˋ','ㄍㄜ˙','ㄅㄨˋ','ㄒㄧㄥˊ','ㄛ',''],
       '蓋好章了！': ['ㄍㄞˋ','ㄏㄠˇ','ㄓㄤ','ㄌㄜ˙',''],
       '不是我喔！': ['ㄅㄨˋ','ㄕˋ','ㄨㄛˇ','ㄛ',''],
@@ -282,39 +284,44 @@
     set($('title'), '郵局任務單');
     document.querySelectorAll('[data-k]').forEach(el => set(el, el.dataset.k));
 
-    // ── 包裹規則：條件＝不收的特徵（一天固定，難度 1／2／3 條） ──
+    // ── 包裹規則（導演 2026-11-06）：顏色 4 選 1、形狀 3 選 1、裝飾（繩子／愛心／星星）；『只收』『不收』每天隨機
+    //   新手＝顏色；簡單＝顏色＋形狀；困難＝顏色＋形狀＋1～2 個裝飾。只收用『又』（全部都要有），不收用『或』（中一條就不收）
     const COLORS = { red: '紅色', green: '綠色', blue: '藍色', yellow: '黃色' };
+    const SHAPES = { box: '正方形', round: '圓形', tri: '三角形' };
+    const DECOS = { str: '綁繩子', heart: '貼愛心', star: '貼星星' };
     const CONDS = [
       ...Object.keys(COLORS).map(c => ({ t: COLORS[c], hit: p => p.c === c, kind: 'color' })),
-      { t: '沒有郵票', hit: p => p.stamp === 0, kind: 'stamp' },
-      { t: '綁繩子', hit: p => p.str, kind: 'str' },
-      { t: '貼星星', hit: p => p.stk === 'star', kind: 'stk' },
-      { t: '貼愛心', hit: p => p.stk === 'heart', kind: 'stk' }
+      ...Object.keys(SHAPES).map(k => ({ t: SHAPES[k], hit: p => p.s === k, kind: 'shape' })),
+      ...Object.keys(DECOS).map(k => ({ t: DECOS[k], hit: p => p.d.includes(k), kind: 'deco' }))
     ];
-    // 簡單＝『只收 A 又 B』：兩個都有才收；新手／困難＝『不收』，困難用『或』中一條就不收（導演 2026-11-05 選 A）
     const rejected = (p, rule) => rule.only ? !rule.every(c => c.hit(p)) : rule.some(c => c.hit(p));
     const joinWord = rule => rule.only ? '又' : '或';
     function makeRule(level) {
-      if (level === 1) return [pick(CONDS.filter(c => c.kind === 'color'))];
-      const r = ['color', ...shuffle(['stamp', 'str', 'stk']).slice(0, level - 1)].map(k => pick(CONDS.filter(c => c.kind === k)));
-      r.only = level === 2; return r;
+      const one = kind => pick(CONDS.filter(c => c.kind === kind));
+      const r = [one('color')];
+      if (level >= 2) r.push(one('shape'));
+      if (level >= 3) r.push(...shuffle(CONDS.filter(c => c.kind === 'deco')).slice(0, pick([1, 2])));
+      r.only = Math.random() < .5; return r;
     }
-    const randParcel = level => ({ c: pick(Object.keys(COLORS)), stamp: pick(level === 1 ? [1, 2] : [0, 1, 2]), str: Math.random() < .45, stk: pick([null, null, 'star', 'heart']) });
-    function makeParcels(rule, level) {
-      for (let n = 0; n < 500; n++) {
-        const ps = [0, 1, 2].map(() => randParcel(level));
+    const randParcel = () => ({ c: pick(Object.keys(COLORS)), s: pick(Object.keys(SHAPES)), d: shuffle(Object.keys(DECOS)).slice(0, pick([1, 2])), stamp: pick([1, 2]) });
+    const pkey = p => [p.c, p.s, [...p.d].sort()].join('|');
+    function makeParcels(rule) {
+      for (let n = 0; n < 40000; n++) {
+        const ps = [0, 1, 2].map(randParcel);
         const bad = ps.filter(p => rejected(p, rule));
-        // 一個能寄；不能寄的每個都要被不同條件擋（簡單／困難時才看得出每條規定都有用）
-        if (bad.length !== 2 || new Set(ps.map(p => JSON.stringify(p))).size < 3) continue;
-        if (rule.only) { if (new Set(bad.map(p => rule.findIndex(c => c.hit(p)))).size !== 2 || bad.some(p => !rule.some(c => c.hit(p)))) continue; }   // 『只收 A 又 B』：不能寄的一個只有 A、一個只有 B，才考得出兩個都要看
-        else if (rule.length > 1 && bad.every(p => rule.filter(c => c.hit(p)).length > 1)) continue;
+        if (bad.length !== 2 || new Set(ps.map(pkey)).size < 3) continue;
+        if (rule.length > 1) {
+          // 陷阱要逼小朋友每條都看：只收＝每個陷阱只缺一條、而且缺的不一樣；不收＝每個陷阱只中一條、而且中的不一樣
+          const which = bad.map(p => rule.map((c, i) => (rule.only ? !c.hit(p) : c.hit(p)) ? i : -1).filter(i => i >= 0));
+          if (which.some(w => w.length !== 1) || which[0][0] === which[1][0]) continue;
+        }
         return ps;
       }
     }
 
     // ── 收件人：正面卡，身高照製作庫 character_scale（伊奇 1.0＝340 場景 px） ──
     const H = 340;
-    // 收件人道具（導演 2026-11-06）：頭＝草帽、手＝信／收起的雨傘、身上＝藤蔓、腳＝泥巴、腳邊＝玩具車；不用表情分辨
+    // 收件人道具（導演 2026-11-06）：頭＝草帽、手＝信／收起的雨傘、身上＝藤蔓、腳＝泥巴、腳邊＝玩具骨頭（導演 11-06 汽車太現代）；不用表情分辨
     // 每張正面卡量好的位置（卡片百分比）：face 臉框（道具碰到就不給這張卡）、hat [中心 x, 帽簷底 y, 帽寬%]（null＝不戴）、
     // side 手邊、leg 纏藤蔓處、feet 兩腳
     const CAST = [
@@ -327,35 +334,36 @@
       { h: .8, v: [{ img: 'yuanyuan__front__happy', ar: 363 / 640, face: [26, 30, 86, 53], hat: [50, 19, 56], side: [84, 77], leg: [38, 84], feet: [[34, 97], [62, 97]] }] }
     ];
     // 道具圖（寬：場景 px 固定實際大小；帽子例外依頭寬）
-    const PROP = { letter: ['letter', 96, 205 / 300], umbrella: ['umbrella_closed', 48, 357 / 100], vine: ['vine', 90, 184 / 220], mud: ['mud', 50, 87 / 140], car: ['toy_car', 96, 192 / 260], hat: ['hat', 0, 189 / 300] };
+    const PROP = { letter: ['letter', 96, 205 / 300], umbrella: ['umbrella_closed', 48, 357 / 100], vine: ['vine', 90, 184 / 220], mud: ['mud', 50, 87 / 140], bone: ['toy_bone', 112, 125 / 245], fruit: ['big_fruit', 70, 221 / 198], hat: ['hat', 0, 189 / 300] };
     function propBoxes(r) {   // → [{k, src, box:[x0,y0,x1,y1] 卡片%}]
       const ch = r.h * H, cw = ch * r.ar, out = [];
       const add = (k, cx, cy, wpx, ax = .5, ay = .5) => { const [src, , ratio] = PROP[k], wp = wpx / cw * 100, hp = wpx * ratio / ch * 100; out.push({ k, src, box: [cx - wp * ax, cy - hp * ay, cx + wp * (1 - ax), cy + hp * (1 - ay)] }); };
       if (r.hat) add('hat', r.hat[0], r.hat[1], r.hat[2] / 100 * cw, .5, .9);
       if (r.hand === 'letter') add('letter', r.side[0], r.side[1], PROP.letter[1]);
       if (r.hand === 'umbrella') add('umbrella', r.side[0], r.side[1], PROP.umbrella[1], .5, .35);
+      if (r.hand === 'fruit') add('fruit', r.side[0], r.side[1], PROP.fruit[1]);
       if (r.vine) add('vine', r.leg[0], r.leg[1], PROP.vine[1]);
       if (r.mud) r.feet.forEach(f => add('mud', f[0], f[1], PROP.mud[1], .5, .7));
-      if (r.car) add('car', -2, 101, PROP.car[1], .5, 1);
+      if (r.bone) add('bone', -2, 101, PROP.bone[1], .5, 1);
       return out;
     }
     const hitsFace = r => propBoxes(r).some(({ box: [a, b, c, d] }) => a < r.face[2] && c > r.face[0] && b < r.face[3] && d > r.face[1]);
     // 特徵：值相同＝看不出差別；say(值) 給敘述（null＝不拿來描述，不出『沒有…』否定句）
     const FEATS = {
       hat: { get: r => !!r.hat, say: v => v ? '戴著帽子' : null },
-      hand: { get: r => r.hand || 'none', say: v => ({ letter: '拿著信', umbrella: '拿著雨傘' })[v] || null },
+      hand: { get: r => r.hand || 'none', say: v => ({ letter: '拿著信', umbrella: '拿著雨傘', fruit: '拿著大果子' })[v] || null },
       vine: { get: r => !!r.vine, say: v => v ? '身上纏著藤蔓' : null },
       mud: { get: r => !!r.mud, say: v => v ? '腳髒髒的' : null },
-      car: { get: r => !!r.car, say: v => v ? '旁邊有玩具車' : null },
+      bone: { get: r => !!r.bone, say: v => v ? '旁邊有玩具骨頭' : null },
       tall: { get: r => r.h >= 1.2, say: v => v ? '個子高高' : '個子小小' }
     };
     const combos = (a, n) => n === 0 ? [[]] : a.flatMap((x, i) => combos(a.slice(i + 1), n - 1).map(c => [x, ...c]));
-    const ITEMS = ['hat', 'hand', 'vine', 'mud', 'car'];
+    const ITEMS = ['hat', 'hand', 'vine', 'mud', 'bone'];
     const LV_FEATS = { 1: combos(ITEMS, 1), 2: [...combos(ITEMS, 2), ...ITEMS.map(k => ['tall', k])], 3: [...combos(ITEMS, 3), ...combos(ITEMS, 2).map(c => ['tall', ...c])] };
     function dressUp(c) {   // 隨機穿戴；碰到臉的道具不給
       const v = pick(c.v), r = { ...v, h: c.h, hat: null, hand: null };
       if (v.hat && Math.random() < .4) { r.hat = v.hat; if (hitsFace(r)) r.hat = null; }
-      for (const [k, val, p] of [['hand', pick(['letter', 'umbrella']), .55], ['vine', true, .35], ['mud', true, .35], ['car', true, .3]]) {
+      for (const [k, val, p] of [['hand', pick(['letter', 'umbrella', 'fruit']), .55], ['vine', true, .35], ['mud', true, .35], ['bone', true, .3]]) {
         if (Math.random() < p) { r[k] = val; if (hitsFace(r)) r[k] = k === 'hand' ? null : false; }
       }
       return r;
@@ -389,13 +397,22 @@
       kt(s, text); s.classList.add('on'); clearTimeout(sayT); sayT = setTimeout(() => s.classList.remove('on'), 1900);
     }
 
+    // 各形狀的圖與裝飾位置（％＝相對包裹圖；由剪紙零件裁切框換算）：str 綁繩 [left, top, width]、st 郵票 [top, right 起點, 間距, width]、stk 兩個貼紙位 [left, top, width]
+    const PSHAPE = {
+      box: { img: c => `parcel_${c}`, ar: 245 / 202, str: ['string', 12, -12, 80], st: [30, 8, 21, 19], stk: [[8, 52, 22], [8, 20, 19]], ink: '' },
+      round: { img: c => `parcel_round_${c}`, ar: 237 / 236, str: ['string_round', 6.3, -11.4, 83.5], st: [32, 13, 17, 15], stk: [[14, 56, 18], [16, 24, 18]], ink: 'top:16%' },
+      tri: { img: c => `parcel_tri_${c}`, ar: 243 / 236, str: ['string_tri', 17.3, -13.1, 60.1], st: [66, 19, 14, 12], stk: [[20, 64, 14], [32, 40, 13]], ink: 'top:36%;left:26%;width:48%' }
+    };
     function parcelEl(p, x, y, cls = '') {
-      const d = document.createElement('div'); d.className = 'pc ' + cls; d.style.cssText = `--x:${x};--y:${y}`;
-      d.innerHTML = `<img class="bx" src="${S}parcel_${p.c}.webp" alt="">` + (p.str ? `<img class="str" src="${S}string.webp" alt="">` : '')
-        + Array.from({ length: p.stamp }, (_, k) => `<img class="st" style="right:${8 + k * 21}%" src="${S}stamp.webp" alt="">`).join('')
-        + (p.stk ? `<img class="stk" src="${S}sticker_${p.stk}.webp" alt="">` : '') + `<img class="ink" src="assets/dinopost-workmark-stamp-transparent-v1.webp" alt="">`;
+      const L = PSHAPE[p.s], d = document.createElement('div'); d.className = 'pc ' + cls; d.style.cssText = `--x:${x};--y:${y}`;
+      const stk = p.d.filter(k => k !== 'str').sort((a, b) => (a === 'star' ? -1 : 1));
+      d.innerHTML = `<div class="pw" style="aspect-ratio:${L.ar}"><img class="bx" src="${S}${L.img(p.c)}.webp" alt="">`
+        + (p.d.includes('str') ? `<img class="str" style="left:${L.str[1]}%;top:${L.str[2]}%;width:${L.str[3]}%" src="${S}${L.str[0]}.webp" alt="">` : '')
+        + Array.from({ length: p.stamp }, (_, k) => `<img class="st" style="top:${L.st[0]}%;right:${L.st[1] + k * L.st[2]}%;width:${L.st[3]}%" src="${S}stamp.webp" alt="">`).join('')
+        + stk.map((k, i) => `<img class="stk" style="left:${L.stk[i][0]}%;top:${L.stk[i][1]}%;width:${L.stk[i][2]}%" src="${S}sticker_${k}.webp" alt="">`).join('')
+        + `<img class="ink" style="${L.ink}" src="assets/dinopost-workmark-stamp-transparent-v1.webp" alt=""></div>`;
       d.setAttribute('role', 'img');
-      d.setAttribute('aria-label', [COLORS[p.c] + '包裹', p.stamp ? p.stamp + '張郵票' : '沒有郵票', p.str && '綁繩子', p.stk === 'star' && '貼星星', p.stk === 'heart' && '貼愛心'].filter(Boolean).join('，'));
+      d.setAttribute('aria-label', [COLORS[p.c] + SHAPES[p.s] + '包裹', ...p.d.map(k => DECOS[k])].join('，'));
       return d;
     }
 
@@ -452,7 +469,7 @@
     function startRound() {
       stage.classList.remove('s-front');
       chickImg.src = S + 'chick_abao__front__stand_happy.webp';
-      const ps = makeParcels(G.rule, G.level), bot = $('tableBot');
+      const ps = makeParcels(G.rule), bot = $('tableBot');
       bot.querySelectorAll('.pc').forEach(e => e.remove());
       G.parcel = ps.find(p => !rejected(p, G.rule));
       [128, 335, 542].forEach((x, i) => {
@@ -485,12 +502,12 @@
       const box = $('cands'); box.replaceChildren();
       const xs = shuffle([150, 420, 690]);
       rs.forEach((r, i) => {
-        const h = r.h * H, w = h * r.ar, x = Math.max(4 + (r.car ? 60 : 0), Math.min(836 - w, xs[i] - w / 2));   // 玩具車在卡片左外側，留位置
+        const h = r.h * H, w = h * r.ar, x = Math.max(4 + (r.bone ? 60 : 0), Math.min(836 - w, xs[i] - w / 2));   // 玩具車在卡片左外側，留位置
         const d = document.createElement('div'); d.className = 'sp cand enter';
         d.style.cssText = `--x:${x};--y:${900 - h};--w:${w};animation-delay:${.15 + i * .1}s;z-index:${4 + Math.round(10 - r.h * 5)}`;
         d.dataset.ok = i === ti;
         d.innerHTML = `<span class="ring"></span><img src="${S}${r.img}.webp" alt="${Object.values(FEATS).map(F => F.say(F.get(r))).filter(Boolean).join('、')}">`;
-        propBoxes(r).forEach(({ k, src, box: [x0, y0, x1] }) => d.insertAdjacentHTML(k === 'car' ? 'afterbegin' : 'beforeend', `<img class="letter p-${k}" style="left:${x0}%;top:${y0}%;width:${x1 - x0}%" src="${S}${src}.webp" alt="">`));
+        propBoxes(r).forEach(({ k, src, box: [x0, y0, x1] }) => d.insertAdjacentHTML(k === 'bone' ? 'afterbegin' : 'beforeend', `<img class="letter p-${k}" style="left:${x0}%;top:${y0}%;width:${x1 - x0}%" src="${S}${src}.webp" alt="">`));
         box.append(d);
       });
       const bot = $('frontBot'); bot.replaceChildren();
@@ -540,7 +557,7 @@
     Dino.menuTaps($('ready')); Dino.menuTaps($('finish'));
     Dino.bgm.start();
     drawStamps();
-    ['chick_abao__front__proud', ...CAST.flatMap(c => c.v.map(v => v.img)), 'letter', 'parcel_yellow', 'parcel_blue', 'parcel_green', 'string', 'sticker_star', 'sticker_heart', 'front_bg', 'front_door_l', 'front_door_r', 'front_bg_floor'].forEach(n => { const i = new Image(); i.src = S + n + '.webp'; });
+    ['chick_abao__front__proud', ...CAST.flatMap(c => c.v.map(v => v.img)), 'letter', 'parcel_yellow', 'parcel_blue', 'parcel_green', 'string', 'string_round', 'string_tri', ...['red', 'blue', 'green', 'yellow'].flatMap(c => ['parcel_round_' + c, 'parcel_tri_' + c]), 'toy_bone', 'big_fruit', 'sticker_star', 'sticker_heart', 'front_bg', 'front_door_l', 'front_door_r', 'front_bg_floor'].forEach(n => { const i = new Image(); i.src = S + n + '.webp'; });
   })();
   </script>
 </body>
