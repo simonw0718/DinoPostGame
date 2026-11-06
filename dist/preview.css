@@ -177,3 +177,12 @@
 @keyframes pvsFly{0%,30%{transform:rotate(3deg)}55%,90%{transform:translate(-5px,-53px) scale(.95)}100%{transform:rotate(3deg)}}
 @keyframes pvsSlot{0%,54%{opacity:1}56%,90%{opacity:0}}
 @keyframes pvsTap{0%,15%{opacity:0;transform:scale(1.4)}22%,32%{opacity:1;transform:scale(1)}40%,100%{opacity:0}}
+
+/* 預覽：郵局任務單——櫃台上三個包裹，黃色那個被拉到小雞阿暴手邊、蓋上 DINO POST 章；3.2s 循環 */
+.pv-orders{background:linear-gradient(#f3e3c0 0 58%,#b98a52 58% 64%,#e9d2a4 64%)}
+.pv-orders .chick{position:absolute;right:10px;top:4px;height:52px;filter:drop-shadow(0 2px 0 #0002)}
+.pv-orders .o1,.pv-orders .o2,.pv-orders .o3{position:absolute;top:66px;width:28px;filter:drop-shadow(0 2px 1px #0003)}
+.pv-orders .o1{left:8px}.pv-orders .o2{left:44px;animation:pvOrder 3.2s infinite}.pv-orders .o3{left:80px}
+.pv-orders .ink{position:absolute;left:62px;top:32px;width:26px;opacity:0;animation:pvOrderInk 3.2s infinite}
+@keyframes pvOrder{0%,20%{transform:none}24%{transform:translateY(-4px)}50%,92%{transform:translate(20px,-36px)}100%{transform:none}}
+@keyframes pvOrderInk{0%,54%{opacity:0;transform:scale(2) rotate(-25deg)}60%,90%{opacity:.9;transform:rotate(-12deg)}100%{opacity:0}}
