@@ -84,7 +84,7 @@
     .pc .bx{inset:0;width:100%;height:100%}
     .pc .st{top:30%;width:19%}
     .pc .str{left:12%;top:-12%;width:80%}
-    .pc .stk{left:8%;top:52%;width:24%}
+    .pc .stk{left:8%;top:52%;width:24%;filter:drop-shadow(0 0 1.5px #fffdf3) drop-shadow(0 0 1.5px #fffdf3) drop-shadow(0 1px 1px rgba(60,30,10,.35))}
     .pc.enter{animation:drop .5s var(--ease) both}
     @keyframes drop{from{translate:0 -40%;opacity:0}}
     /* 小桌上待選包裹：輪流跳一下招手、微微發光；滑鼠靠近（.near）或按住時抖動＋亮光 */
@@ -335,7 +335,7 @@
       { h: .8, v: [{ img: 'yuanyuan__front__happy', ar: 363 / 640, face: [26, 30, 86, 53], hat: [50, 19, 56], side: [84, 77], leg: [38, 84], feet: [[34, 97], [62, 97]] }] }
     ];
     // 道具圖（寬：場景 px 固定實際大小；帽子例外依頭寬）
-    const PROP = { letter: ['letter', 96, 205 / 300], umbrella: ['umbrella_closed', 48, 357 / 100], vine: ['vine', 90, 184 / 220], mud: ['mud', 50, 87 / 140], bone: ['toy_bone', 112, 125 / 245], fruit: ['big_fruit', 70, 221 / 198], hat: ['hat', 0, 189 / 300] };
+    const PROP = { letter: ['letter', 96, 205 / 300], umbrella: ['umbrella_closed', 48, 357 / 100], vine: ['vine', 90, 184 / 220], mud: ['mud', 50, 87 / 140], bone: ['toy_bone', 112, 125 / 245], fruit: ['big_fruit', 96, 221 / 198], hat: ['hat', 0, 189 / 300] };
     function propBoxes(r) {   // → [{k, src, box:[x0,y0,x1,y1] 卡片%}]
       const ch = r.h * H, cw = ch * r.ar, out = [];
       const add = (k, cx, cy, wpx, ax = .5, ay = .5) => { const [src, , ratio] = PROP[k], wp = wpx / cw * 100, hp = wpx * ratio / ch * 100; out.push({ k, src, box: [cx - wp * ax, cy - hp * ay, cx + wp * (1 - ax), cy + hp * (1 - ay)] }); };
@@ -400,9 +400,9 @@
 
     // 各形狀的圖與裝飾位置（％＝相對包裹圖；由剪紙零件裁切框換算）：str 綁繩 [left, top, width]、st 郵票 [top, right 起點, 間距, width]、stk 兩個貼紙位 [left, top, width]
     const PSHAPE = {
-      box: { img: c => `parcel_${c}`, ar: 245 / 202, str: ['string', 12, -12, 80], st: [30, 8, 21, 19], stk: [[8, 52, 22], [8, 20, 19]], ink: '' },
-      round: { img: c => `parcel_round_${c}`, ar: 237 / 236, str: ['string_round', 6.3, -11.4, 83.5], st: [32, 13, 17, 15], stk: [[14, 56, 18], [16, 24, 18]], ink: 'top:16%' },
-      tri: { img: c => `parcel_tri_${c}`, ar: 243 / 236, str: ['string_tri', 17.3, -13.1, 60.1], st: [66, 19, 14, 12], stk: [[20, 64, 14], [32, 40, 13]], ink: 'top:36%;left:26%;width:48%' }
+      box: { img: c => `parcel_${c}`, ar: 245 / 202, str: ['string', 12, -12, 80], st: [30, 8, 21, 19], stk: [[6, 48, 30], [7, 17, 26]], ink: '' },
+      round: { img: c => `parcel_round_${c}`, ar: 237 / 236, str: ['string_round', 6.3, -11.4, 83.5], st: [32, 13, 17, 15], stk: [[8, 48, 33], [12, 14, 30]], ink: 'top:16%' },
+      tri: { img: c => `parcel_tri_${c}`, ar: 243 / 236, str: ['string_tri', 17.3, -13.1, 60.1], st: [66, 19, 14, 12], stk: [[14, 56, 27], [37, 38, 22]], ink: 'top:36%;left:26%;width:48%' }
     };
     function parcelEl(p, x, y, cls = '') {
       const L = PSHAPE[p.s], d = document.createElement('div'); d.className = 'pc ' + cls; d.style.cssText = `--x:${x};--y:${y}`;
