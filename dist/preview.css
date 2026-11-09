@@ -186,3 +186,15 @@
 .pv-orders .ink{position:absolute;left:62px;top:32px;width:26px;opacity:0;animation:pvOrderInk 3.2s infinite}
 @keyframes pvOrder{0%,20%{transform:none}24%{transform:translateY(-4px)}50%,92%{transform:translate(20px,-36px)}100%{transform:none}}
 @keyframes pvOrderInk{0%,54%{opacity:0;transform:scale(2) rotate(-25deg)}60%,90%{opacity:.9;transform:rotate(-12deg)}100%{opacity:0}}
+
+/* 小空果果店（2026-11-09）：十格盒，紅果 3 顆、紫果 2 顆依序落進格子，小空在角落探頭 */
+.pv-orchard{background:linear-gradient(#8fcdf0 0 30%,#deba84 30%)}
+.pv-orchard .eq{position:absolute;left:0;right:0;top:4px;text-align:center;font:1000 16px/1 "Naikai",ui-rounded,system-ui,sans-serif;color:#17593f}
+.pv-orchard .eq .r{color:#d6402e}.pv-orchard .eq .p{color:#7a4eb2}
+.pv-orchard .tf{position:absolute;left:36px;top:34px;width:82px;height:38px;display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(2,1fr);gap:2px;padding:3px;border-radius:6px;background:#c79a5f;box-shadow:inset 0 2px 0 #0002,0 2px 0 #8e6a3a}
+.pv-orchard .tf i{display:grid;place-items:center;border-radius:4px;background:#ab804c}
+.pv-orchard .tf img{width:100%;opacity:0;animation:pvFruit 3.6s infinite}
+.pv-orchard .f2 img{animation-delay:.25s}.pv-orchard .f3 img{animation-delay:.5s}.pv-orchard .f4 img{animation-delay:.9s}.pv-orchard .f5 img{animation-delay:1.15s}
+.pv-orchard .kong{position:absolute;left:-4px;bottom:-6px;height:56px;filter:drop-shadow(0 2px 0 #0002)}
+@keyframes pvFruit{0%,6%{opacity:0;transform:translateY(-14px) scale(.6)}14%,84%{opacity:1;transform:none}92%,100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.pv-orchard .tf img{animation:none;opacity:1}}

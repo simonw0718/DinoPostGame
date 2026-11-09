@@ -1,0 +1,70 @@
+# 恐龍果園「訂單木箱」遊戲模式規劃 v3（2026-11-08：三級、10 以內；導演已答 open_questions）
+# 讀者：AI；導演版＝art-source/orchard/story_board.jpg（分鏡）＋對話摘要
+# 依據：math_sequence.yaml（M 階段）、math_games_survey.yaml（K 機制、A 反模式）、math_game_proposals.yaml shared_rules
+# 美術：tools/orchard_crate.py（果子／真透視木箱 crate_tilt v7／訂單卡）、tools/orchard_crate_story.py（分鏡）
+meta:
+  status: approved_plan   # 導演 11-08
+  north_star: 數字敏感度（看到數字就知道多少、差多少）；果子是具體物，答案一律用數字（導演 11-08）
+  core_loop: [看訂單, 搖樹掉果, 拖進木箱, 點木箱逐顆亮＋唸數, 和訂單比對, 出貨]
+  shared_rules:
+    - 三級（簡單／普通／困難；導演 11-07 拿掉新手）；連對 3 張升一級、連錯 2 張降一級、錯一次只給提示
+    - 不計時、不扣分、不打叉（A01 A02 A03）；比對不符 → 角色陪著逐顆重數（K10）
+    - 小恐龍只當觀眾：歡呼／驚訝，不計數、不擋果子
+    - 語音：dist/assets/audio/num/<lang>/<n>.mp3；點箱一顆唸一個數
+    - 箱內自由堆疊；箱子 v7＝正面橫長真透視（寬 1：深 0.5）
+  round: {orders: 3, end: 出貨車載走 → 結束畫面數今天裝了幾箱＋一句好話, minutes: 約 3}
+
+fruits: [flame, star, dot, spike, duo]   # 遠古果子，只靠顏色＋形狀分辨
+
+levels:            # 導演 11-07：拿掉新手，只留三級；全部 10 以內
+  easy:
+    name: 簡單
+    stages: [M03, M04, M05, M06]
+    goal: 湊到指定數字（10 以內、單一種）
+    order: {kinds: 1, count: 3-10, layout: 每排 5 格，超過分兩排}
+    tree: 訂單種＋1-2 種干擾（要挑對）
+    crate_start: 0 到 訂單數-1          # 已有幾顆 → 接著數
+    drop_per_shake: 1
+    ask: 點箱數到和訂單一樣
+    events: none
+    frame: story_easy.jpg
+  normal:
+    name: 普通
+    stages: [M05, M06, M07]
+    goal: 兩種合起來（10 以內）；多了要拿出來
+    order: {kinds: 2, total: 4-10}
+    tree: 3 種
+    crate_start: 有時某種多 1 顆（開局或事件造成）
+    drop_per_shake: 1-2
+    ask: 分類各數再合起來（加）；多的拖出箱外（減）
+    events: [EV1, EV2, EV3]
+    frame: story_normal.jpg
+  hard:
+    name: 困難
+    stages: [M08, M09, M10, M11]
+    goal: 先出題 → 選答案 → 再去補果子（10 以內）
+    order: {kinds: 1-2, total: 5-10}
+    crate_start: 2 到 訂單數-1
+    drop_per_shake: 1-3
+    ask: 先選「還差幾顆」數字木牌（3 選 1；用數字不用點點，導演 11-08）→ 照選的數去補；選錯不打叉，補完一起對訂單格看差在哪
+    events: [EV1, EV2, EV3]
+    frame: story_hard.jpg
+
+events:            # 每張訂單最多 1 次；普通、困難都放（含 EV2 大風，導演 11-08）
+  EV1: {name: 飛飛叼走, math: 減 1, show: 飛飛從箱裡叼走 1 顆 → 訂單亮格退回一格 → 再數, frame: story_event_feifei.jpg}
+  EV2: {name: 大風, math: 加 2／可能超過, show: 一陣風一次掉 2 顆（可能讓箱子多出來 → 接普通的拿出來）}
+  EV3: {name: 小恐送 1 顆, math: 加 1, show: 觀眾小恐龍從旁邊丟 1 顆進箱（只在箱外圍，不擋果子）}
+
+modes:             # 跟難度垂直；首頁選
+  order: {name: 照單收, desc: 主模式，3 張訂單一局, default: true}
+  free: {name: 自由搖, desc: 沒有訂單，搖多少裝多少，點箱數＝熱身}
+
+device_layout:
+  phone: {orient: portrait, order_card: 上, tree: 中上, crate: 下方拇指區（寬 900/1080）}
+  tablet: {orient: landscape, tree: 左, order_card: 右上, crate: 右下（寬 860/2048）}
+
+decided_20261108:
+  - 困難答案木牌用數字（已有果子當具體物，再用點點沒意義）
+  - 不做兩人一起模式（modes 只留 order、free）
+  - EV2 大風普通、困難都放
+open_questions: []

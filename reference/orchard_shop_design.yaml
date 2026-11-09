@@ -1,0 +1,79 @@
+# 小空果果店（取代訂單木箱 v1；導演 11-08：v1 機制不清、沒遊戲性 → 客人點單）
+# 讀者：AI；導演版＝art-source/orchard/shop_board.jpg（三種版面草圖，tools/orchard_shop_layouts.py）
+status: concept_draft        # 11-08 導演：不被上一版卡住、獨立設計 → 見 concepts_v2（fshop_board.jpg）
+story: 小空、圓圓玩扮家家酒開果果店；伊奇、飛飛、小雞阿暴、派洛、奶奶等輪流當客人；玩家是幫手
+references: [Moose Math 果汁攤, Endless Numbers, Count Your Chickens, Zingo, 十格框]   # 依據 math_games_survey.yaml
+principles:
+  P1 自動數: 每放一顆就唸一個數＋十格果盤亮一格；不再有「點箱數數」步驟
+  P2 角色在等: 客人泡泡＝大數字＋果子圖；剛好→開心吃／跳舞；太多→撐到打嗝（好笑不扣分）；太少→指著空格等
+  P3 小挑戰: 挑對果子；湊剛好；之後一次拿一串 5 顆（看 5 與 10）
+  P4 結果看得見: 每送走一位客人，店面多一樣裝飾（彩旗→燈→招牌亮）；收店時數今天來了幾位
+  P5 一眼看差: 十格果盤 2×5（kidgame_orchard tray），空格＝還差幾
+  keep: [不計時, 不扣分, 不打叉, 三級難度沿用 orchard_crate_modes.yaml 的數學內容]
+layouts:
+  A 櫃台對面: 客人在桌後點單，果盤在中間，前景三箱果子（拖／點）；最清楚，AI 推薦
+  B 排隊小攤: 側面攤位，客人從右邊排隊走來；看得到「還有幾位」，畫面較擠
+  C 果樹下直接摘: 點樹上果子直接飛進果盤；不用拖、最簡單，保留果樹
+open_questions: [選哪個版面, 小空／圓圓分工（老闆／店員）, 太多時的反應是否 OK]
+concepts_v2:                  # tools/fruit_shop_concepts.py → art-source/orchard/fshop_board.jpg；不用果盤／木箱
+  A 果果串: {verb: 點碗→果子滑上竹籤, math: 橫向數線、第 5／10 格竹節, payoff: 客人咬一口串串, ext: 兩種果子＝前段＋後段}
+  B 果果塔: {verb: 點果子→疊上杯, math: 高度＝數量、身高尺＋客人旗子, tension: 越高越搖（不倒）, payoff: 插旗交給客人}
+  C 彩虹果汁: {verb: 點果子→倒進杯變一層, math: 一層一顆、兩色＝加法 3＋2, payoff: 插吸管喝光, ai_pick: true}
+director_11_09:               # 導演回覆 fshop_board：方向改「果籃裝盒」，下一版依此重畫
+  naming: 不用「串串」（太支那語），用「果籃」
+  mechanic: 不用果樹；櫃台前三個大果籃（三種果子），點果籃→果子裝進客人的小盒子
+  numbers: 最終要到雙位數（起點 1–10，逐級到 11–20 以上）
+  ai_draft_for_next:          # 未經導演核准，下一棒先出版面草圖再問
+    box: 小盒＝十格（2×5）；滿 10 蓋蓋子變「一盒＝10」，雙位數＝幾盒＋幾顆（例 23＝2 盒＋3 顆）
+    levels: [1–10 單種, 1–10 兩種湊（3＋2）, 11–20 一盒＋散顆, 20–50 多盒＋散顆]
+    keep: [每放一顆自動唸數, 客人泡泡＝大數字＋果子圖, 不計時不打叉, 太多可點盒子退回一顆]
+director_11_09_v4:            # 導演核准近景版 fclose_board.jpg（tools/fruit_closeup_layout.py）
+  camera: 近景；客人只露頭肩在後景，表情跟著反應（每顆點頭、剛好開心、太多歪頭）
+  xiaokong: 角落探頭；不畫伸進來的長翅膀，改用滑鼠游標樣式的小翅膀（可用 CF 或 Gemini 製作）或乾脆不用
+  grid: ① 十格不進位 ② 二十格進位（第一盒滿 10 蓋蓋貼 10，剩下進第二盒）③ 蓋好的盒縮小疊旁＋二十格
+  equation: 算式條 [a]+[b]=[?]；紅果、紫果各自編號；進位時多一行黃色提示「8＋2＝10，再＋3＝13」
+  answer: ① 自動填答並唸出 ②③ 放完後三選一
+  layout: 手機二十格上下疊；平板左右並排，盒子放大填滿櫃台上方空白，③ 蓋好的盒疊在那裡
+  next: 可玩 sample（改寫 dist/orchard.html v1）
+sample_11_09:                 # 可玩 sample 已做（未 commit、待導演試玩）；v1 訂單木箱網頁備份 art-source/orchard/v1_web/
+  page: dist/orchard.html／orchard.js／orchard.css（?lv=1 只十格、?lv=2 只進位；預設 3+2 → 8+5 → 9+4）
+  assets: tools/fruit_shop_export.py → dist/assets/fruitshop/（天空、櫃台、派洛 happy/surprised/troubled、小空、三果籃、果子、layout.json）
+  ai_choices:                 # AI 判斷，待導演確認
+    - 先裝紅果、紅果滿才亮紫果籃（讓「8＋2＝10」盒子排列一致）
+    - 粉果籃＝干擾；點錯／太多→果子飛出又飛回籃、派洛歪頭（不打叉）
+    - 導演 11-09：蓋子改俯視蓋上（整片蓋住第一盒，封箱膠帶＋10 圓貼紙；從上方落下、盒子被壓一下）— 取代原「斜放不遮果子」
+    - 導演 11-09：提示紅圈太廉價 → 改共用手指 icon-hand.svg 點果籃＋柔光、籃子同步被按一下
+    - 導演 11-09：進場要快＋流暢 → 果子飛行 0.4 秒（原 0.56）、盒子／積木 0.34–0.36 秒滑入
+    - 選錯：選項變淡搖一搖，蓋子 10 跳一下、第二盒逐顆亮（不唸數字）
+    - 導演 11-09：不用逐一念數字（放果子、陪數都只顯示編號＋音效）
+    - 黃條：滿 10 時先出「8＋2＝10」，放完才補「，再＋3＝13」（照草圖會先看到答案）
+  polish_11_09: 導演 /impeccable polish：材質＋立體＋物理（只改 CSS／JS，不換圖）— 點單紙條、算式卡厚度、紙膠帶黃條、瓦楞紙盒＋紙漿凹槽、蓋片摺線、圓貼紙編號、木頭數字積木（按哪邊沉哪邊）；彈簧：果籃壓扁、果子落格壓扁回彈、紙盒被壓、蓋子壓盒、陪數果子跳、答案蓋章
+  papercut_ui_11_09: 導演「用剪紙風格的素材重新製作元件」→ tools/fruit_shop_ui.py 用剪紙劇場 paper.py（剪刀邊、白邊、紙紋、投影）剪 16 張 → dist/assets/fruitshop/ui/（紙盒、俯視蓋子、圓貼紙、算式卡、黃紙膠帶、積木上下片、點單泡泡）；CSS 只疊圖＋字，積木按下時上片壓到下片
+  next_11_09: 導演選做 1＋4＋5 —①蓋蓋前問「還差幾顆才滿 10」（點空格答，答對啪蓋上）④客人輪換（各自點單習慣／反應：小雞阿暴急、阿慢慢）⑤果子改拖曳進格子（自選格）；不計時、一局 3 客約 3 分；先做短 sample
+  todo: [游標小翅膀（CF 優先）, 客人輪換（目前三題都是派洛）, ③ 疊盒關]
+sample_v5_11_09:              # ①④⑤ 短 sample 已做（未 commit、待導演試玩）；測試參數 ?lv=1|2、?r=0..2
+  ask_10: 紅果放完先問「還差幾顆滿 10？」→ 第一盒空格虛線閃，點一格出現紫色虛線圈＋編號 1、2…；點完黃條「還差 N 顆！」唸 N → 紫果自動飛進補滿、啪蓋上
+  customers: 派洛 3＋2（十格）→ 小雞阿暴 8＋5（急：閒置 3 秒跳腳＋泡泡抖，手指提示 4.5 秒）→ 阿慢 6＋7（慢：點頭慢、閒置 5 秒打瞌睡出 Zzz，放果子就醒，提示 9 秒）
+  drag: 果子從籃子拖進任一空格（放到已有果子的格子／偏一點 → 自動放最近空格；第一盒沒滿就拖到第二盒 → 第一盒抖、果子飛回）；點籃子仍可自動放下一格
+  assets: tools/fruit_shop_export.py 改出 cust_<角色>_<反應>.webp（舊 pairo_*.webp 已刪）
+  no_badge_11_09: 導演「之前有說上面不用編號」→ 盒裡果子不貼編號貼紙（只留問空格時的 1、2…）
+  bubble_11_09: 導演「題目都會擋到臉」→ 點單泡泡依客人臉高（CUST.face）自動放：手機在臉下方、尾巴翻上；平板在頭右邊、尾巴翻左
+  ai_choices_v5:              # 待導演確認
+    - 「點空格答」解讀為：點空格數有幾格（沒有答錯），數完紫果自動補滿再蓋蓋
+    - 第三題由 9＋4 改 6＋7（9＋4 只差 1 格太簡單）
+    - 阿慢矩陣沒有驚訝／困擾表情 → 用 neutral；瞌睡用 sleepy
+    - 保留「點籃子自動放」當拖曳的備案（4 歲拖曳較難）
+sample_v6_11_09:              # 導演 11-09 晚「都按照建議」＋「3 不用字幕直接配音」；未 commit、待導演試玩
+  header: 改用共用 .gh（🏠／標題／？玩法／⚙難度），在版面最上方一條，舞台縮進下方；客人進度點移到舞台右上
+  levels: {easy: 10 以內一盒（3+2、4+5、2+6）, normal: 11–20 滿 10 蓋盒（8+5、7+6、6+7）, hard: 20 以上疊盒（9+12、7+15、6+17）}
+  level_rules: [開始畫面選三級（同樹洞大賽跑）＋範例算式, ⚙ 回選單；沒換難度＝繼續玩、換了＝重開, 一局不自動升降級, localStorage dinopost-orchard-level, ?lv=1|2|3 測試]
+  hard_flow: 第一盒照 ② 問還差幾顆→蓋；第二盒滿 10 自動蓋（10＋10＝20、唸 20）→ 兩盒縮小排到旁邊（手機下方、平板左側）→ 第三盒滑到中間；放完三選一＝差 10 選項（11／21／31）
+  intro: 開始後第一次播：全景 intro_<lay>.webp（tools/fruit_shop_export.py intro()）＋小空配音，2.7 秒或點一下推近（scale 2.6 淡出），推近同時客人進場；？按鈕重看
+  voice: art-source/orchard/voice_xiaokong（short_tts.py 一請求三句；小空 R26＋G02 WORLD 後製）→ dist/assets/audio/orchard/intro.mp3（6.6 秒）、ask10.mp3（問還差幾顆時）、thanks.mp3（結束框）
+  ai_choices_v6: [困難選項用差 10（看懂幾盒＋幾顆）, 疊好的盒子放下方／左側, 小空問「還差幾顆」與結束也配音（同一請求）, 首次預設簡單]
+  known: [手機全景左側露出一小段小空尾巴, 平板黃條字偏小（v5 就如此）]
+talk_11_09:                   # 導演「開場小空有辦法作表情變化跟影片製作流程的嘴巴嗎」→「作」；未 commit
+  method: 照製作專案剪紙影片 Stage.tsx：說話區段內嘴 closed→open→wide→open 每秒 12 格，區段外閉嘴；矩陣 stand 格（ob.char mouth=）
+  timing: dist/assets/audio/orchard/talk.json（silencedetect 量；改配音要重量）— intro 0–1.6 開心、1.6–2.92 得意（smug）、3.0 推近、角落小空講完後半句；ask10／thanks 也動嘴
+  layers: intro_back／intro_kong_<happy|smug>_<嘴>_<版>／intro_front（聯集框裁切換嘴不跳）；角落 xiaokong_<happy|surprised>_<嘴>.webp；預覽 art-source/orchard/intro_talk_frames.jpg
+  blink: 不加（happy／smug 是瞇眼，eyes.json 無眼睛座標，影片流程同樣不眨）

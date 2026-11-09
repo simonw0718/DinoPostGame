@@ -1,0 +1,188 @@
+/* 小空果果店 v4 近景 sample（2026-11-09）：舞台＝設計畫布等比縮放（手機直 1080×2340／平板橫 2048×1536）；
+   元件用畫布座標 --x --y --w --h，乘上 --u（1 畫布 px）換成實際尺寸。 */
+:root{--ink:#17593f;--cream:#fffdf2;--gold:#e3bd70;--red:#d6402e;--purple:#7a4eb2;--kraft:#deba84;--well:#be9460;--lid:#ec7856;--kraft-side:#a87b45;--wood:#f6dfae;--wood-side:#b98a4e;--tape:#ffe27a;
+  /* 材質：紙纖維顆粒（--grain）、木紋（--fiber），都是內嵌 SVG 雜訊，不另存圖檔 */
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .22 0 0 0 0 .12 0 0 0 .32 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");--fiber:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012 .35' numOctaves='2' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .28 0 0 0 0 .1 0 0 0 .7 -.18'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");font-family:"Naikai",ui-rounded,"Noto Sans TC",system-ui,sans-serif;color:var(--ink)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:#d6a668;overflow:hidden;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.fs-shell{display:flex;flex-direction:column;gap:10px;height:100svh;padding:max(10px,env(safe-area-inset-top)) 14px max(10px,env(safe-area-inset-bottom));background:linear-gradient(#7fc4ea,#7fc4ea 30%,#d6a668 30%)}
+@media(max-width:680px){.fs-shell{padding-left:8px;padding-right:8px;gap:6px}}
+.fs-shell>.gh{width:100%;max-width:1400px;margin:0 auto}   /* 頁首同其他遊戲：版面最上方一條（導演 11-09） */
+.fs-main{flex:1;min-height:0;display:grid;place-items:center;container-type:size}
+.fs-stage{--W:1080;--H:2340;position:relative;width:min(100cqw,calc(100cqh * var(--W) / var(--H)));border-radius:18px;aspect-ratio:var(--W)/var(--H);overflow:hidden;container-type:inline-size;touch-action:manipulation;background:#d6a668}
+.fs-stage[data-lay=tablet]{--W:2048;--H:1536}
+.fs-stage>*{position:absolute;--u:calc(100cqw / var(--W))}
+.at{left:calc(var(--x) * var(--u));top:calc(var(--y) * var(--u));width:calc(var(--w) * var(--u))}
+.fs-sky{left:0;top:0;width:100%}
+.fs-counter{left:0;width:100%}
+
+/* 第幾位客人（原在頁首右邊，11-09 頁首統一後移到舞台右上） */
+.fs-rounds{z-index:20;top:calc(28 * var(--u));right:calc(28 * var(--u));display:flex;gap:6px;margin:0;padding:0;list-style:none}
+.fs-rounds li{width:24px;height:24px;border:3px solid #fffdf2;border-radius:50%;background:#ffffff55;box-shadow:inset 0 2px 3px #1d5f8655,0 2px 3px #1d5f8644}
+.fs-rounds li.is-done{background:radial-gradient(circle at 34% 28%,#ff9a82,var(--red) 55%,#a92f22);box-shadow:inset 0 -3px 0 #8e2620,0 2px 3px #1d5f8644;animation:pop .45s cubic-bezier(.2,1.5,.4,1)}
+.fs-rounds li.is-now{background:#fff3c9;animation:breathe 1.4s ease-in-out infinite alternate}
+
+/* 客人與小空（④ 客人輪換：派洛平常、小雞阿暴急、阿慢慢） */
+.fs-cust{transform-origin:50% 70%;pointer-events:none;transition:translate .5s cubic-bezier(.5,0,.3,1),opacity .4s}
+.fs-cust.is-nod{animation:nod .42s ease-in-out}
+.fs-cust.is-nodfast{animation:nod .24s ease-in-out 2}
+.fs-cust.is-nodslow{animation:nod 1s ease-in-out}
+.fs-cust.is-tilt{animation:tilt .9s ease-in-out}
+.fs-cust.is-cheer{animation:hop .5s ease-out 2}
+.fs-cust.is-hurry{animation:hop .22s ease-out 3}
+.fs-cust.is-doze{animation:doze 2.6s ease-in-out infinite}
+.fs-cust.is-wake{animation:hop .4s ease-out}
+.fs-cust.is-enter{animation:custIn .5s cubic-bezier(.16,1,.3,1)}
+.fs-cust.is-leave{translate:-30cqw 0;opacity:0}
+.fs-zzz{z-index:5;color:#fff;font-size:calc(var(--w) * .34 * var(--u));font-weight:1000;-webkit-text-stroke:.5cqw #1d5f86;paint-order:stroke;pointer-events:none}
+.fs-zzz i{font-style:normal;display:inline-block;font-size:.75em;translate:0 -40%;animation:zz 1.8s ease-in-out infinite}
+.fs-zzz i+i{font-size:.6em;translate:0 -90%;animation-delay:.4s}
+.fs-zzz[hidden]{display:none}
+.fs-kong{z-index:6;pointer-events:none;transform-origin:50% 100%}
+.fs-kong.is-cheer{animation:hop .5s ease-out 2}
+.fs-kong.is-look{animation:tilt .6s ease-in-out}
+
+/* 點單泡泡 */
+.fs-bubble{height:calc(var(--h) * var(--u));display:flex;align-items:center;justify-content:space-around;padding:0 calc(20 * var(--u));isolation:isolate;rotate:-1.2deg}
+.fs-bubble::before{content:"";position:absolute;inset:calc(var(--w) * -.16 * var(--u));z-index:-1;background:url(assets/fruitshop/ui/bubble_phone.webp) 0 0/100% 100% no-repeat;pointer-events:none}
+.fs-stage[data-lay=tablet] .fs-bubble::before{background-image:url(assets/fruitshop/ui/bubble_tablet.webp)}
+.fs-bubble::before{transform:scaleY(-1)}                       /* 手機：泡泡在臉下方，尾巴翻到上面 */
+.fs-stage[data-lay=tablet] .fs-bubble::before{transform:scaleX(-1)}   /* 平板：泡泡在頭右邊，尾巴翻到左邊 */
+
+.fs-bubble .want{display:flex;align-items:center;gap:calc(6 * var(--u));font-size:calc(var(--h) * .42 * var(--u));font-weight:1000;line-height:1}
+.fs-bubble .want img{width:calc(var(--h) * .55 * var(--u))}
+.fs-bubble .want.is-dot{color:var(--red)}
+.fs-bubble .want.is-star{color:var(--purple)}
+.fs-bubble .want.is-done{opacity:.45}
+.fs-bubble.is-shake{animation:wobble .16s ease-in-out 3}
+.fs-bubble.is-pop{animation:pop .4s cubic-bezier(.2,1.5,.4,1)}
+.fs-bubble .want.is-pulse{animation:pop .45s cubic-bezier(.2,1.5,.4,1) 2}
+
+/* 算式條 */
+.fs-eq{display:flex;align-items:center;justify-content:space-between;height:calc(var(--h) * var(--u))}
+.eq-box{position:relative;isolation:isolate;display:grid;place-items:center;width:calc(var(--h) * 1.13 * var(--u));height:100%;color:#8a8478;font-size:calc(var(--h) * .72 * var(--u));font-weight:1000;line-height:1}
+.eq-box::before{content:"";position:absolute;inset:calc(var(--h) * -.113 * var(--u));z-index:-1;background:url(assets/fruitshop/ui/tile_c.webp) 0 0/100% 100% no-repeat;pointer-events:none}
+.eq-box.is-a{color:var(--red)}.eq-box.is-a::before{background-image:url(assets/fruitshop/ui/tile_a.webp)}
+.eq-box.is-b{color:var(--purple)}.eq-box.is-b::before{background-image:url(assets/fruitshop/ui/tile_b.webp)}
+.eq-box.is-c.is-filled{color:#2a8a4c}.eq-box.is-c.is-filled::before{background-image:url(assets/fruitshop/ui/tile_ok.webp)}
+.eq-op{color:#fff;font-size:calc(var(--h) * .66 * var(--u));font-weight:1000;-webkit-text-stroke:calc(var(--h) * .03 * var(--u)) var(--ink);paint-order:stroke}
+.fs-carry{height:calc(var(--h) * var(--u));display:flex;align-items:center;justify-content:center;isolation:isolate;rotate:-.8deg;font-size:calc(var(--h) * .62 * var(--u));font-weight:1000;white-space:nowrap;animation:pop .3s cubic-bezier(.16,1,.3,1)}
+.fs-carry::before{content:"";position:absolute;inset:calc(var(--h) * -.208 * var(--u));z-index:-1;background:url(assets/fruitshop/ui/tape.webp) 0 0/100% 100% no-repeat;pointer-events:none}
+.fs-carry[hidden]{display:none}
+/* 十格盒 */
+.fs-boxes{inset:0;pointer-events:none}
+.box{position:absolute;isolation:isolate;left:calc(var(--x) * var(--u));top:calc(var(--y) * var(--u));width:calc(var(--w) * var(--u));aspect-ratio:1/.46;padding:calc(var(--w) * .052 * var(--u));transform-origin:50% 100%;transition:translate .5s cubic-bezier(.5,0,.3,1),scale .5s,opacity .4s}
+.box::before{content:"";position:absolute;inset:calc(var(--w) * -.06 * var(--u));z-index:-1;background:url(assets/fruitshop/ui/box.webp) 0 0/100% 100% no-repeat;pointer-events:none}
+.box .cells{display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(2,1fr);gap:calc(var(--w) * .014 * var(--u));height:100%}
+.cell{position:relative;display:grid;place-items:center;border-radius:calc(16 * var(--u))}
+.cell>img{width:88%;filter:drop-shadow(0 calc(4 * var(--u)) calc(3 * var(--u)) #2a1a0a55)}
+/* ⑤ 拖曳：手上的果子、可放的格子；① 問空格：虛線圈＋點了出現編號 */
+.cell.is-target{background:radial-gradient(ellipse at 50% 55%,#fffbe0f0,#fff3a066 62%,#fff3a000 76%);outline:calc(6 * var(--u)) dashed #fff8;outline-offset:calc(-10 * var(--u))}
+.box.is-asking .cell.is-ask{pointer-events:auto;cursor:pointer;outline:calc(7 * var(--u)) dashed #fffdf2;outline-offset:calc(-12 * var(--u));animation:breathe .9s ease-in-out infinite alternate}
+.cell.is-counted{background:radial-gradient(ellipse at 50% 55%,#e7d6ff,#c9a8f0aa 60%,#c9a8f000 76%)}
+.cell .ghost{display:grid;place-items:center;width:62%;aspect-ratio:1;border:calc(7 * var(--u)) dashed var(--purple);border-radius:50%;color:var(--purple);font-size:calc(var(--w) * .07 * var(--u));font-weight:1000;line-height:1}
+.box.is-wiggle{animation:wobble .3s ease-in-out 2}
+.fs-fly img.is-held{scale:1.15;filter:drop-shadow(0 calc(22 * var(--u)) calc(12 * var(--u)) #2a1a0a66)}
+.cell.is-lit{background:radial-gradient(ellipse at 50% 55%,#fff6b0e6,#ffe36e99 60%,#ffe36e00 75%)}
+.cell .badge{position:absolute;right:-6%;top:-10%;isolation:isolate;display:grid;place-items:center;width:38%;aspect-ratio:1;color:#fff;font-size:calc(var(--w) * .036 * var(--u));font-weight:1000;line-height:1;rotate:8deg;animation:slot .35s cubic-bezier(.2,1.5,.4,1)}
+.cell .badge::before{content:"";position:absolute;inset:-10%;z-index:-1;background:url(assets/fruitshop/ui/sticker_dot.webp) 0 0/100% 100% no-repeat;pointer-events:none}
+.cell .badge.is-star::before{background-image:url(assets/fruitshop/ui/sticker_star.webp)}
+.box .lid{position:absolute;inset:calc(var(--w) * -.06 * var(--u));background:url(assets/fruitshop/ui/lid.webp) 0 0/100% 100% no-repeat;transform:translateY(-14%) scale(1.14);opacity:0;pointer-events:none;transition:transform .3s cubic-bezier(.55,0,.85,.35),opacity .12s}
+.box .lid b{position:absolute;left:50%;top:50%;translate:-50% -50%;isolation:isolate;display:grid;place-items:center;width:calc(var(--w) * .2 * var(--u));aspect-ratio:1;color:var(--red);font-size:calc(var(--w) * .1 * var(--u));font-weight:1000;line-height:1;rotate:-6deg}
+.box .lid b::before{content:"";position:absolute;inset:-10%;z-index:-1;background:url(assets/fruitshop/ui/sticker_red.webp) 0 0/100% 100% no-repeat;pointer-events:none}
+.box.is-closed .lid{transform:none;opacity:1}
+.box.is-pulse .lid b{animation:pop .5s cubic-bezier(.2,1.5,.4,1)}
+.box.is-go{translate:0 -120%;opacity:0}
+/* 困難：蓋好的盒子縮小疊到旁邊（③） */
+.box{transition:translate .5s cubic-bezier(.5,0,.3,1),scale .5s,opacity .4s,left .55s cubic-bezier(.5,0,.2,1),top .55s cubic-bezier(.5,0,.2,1),width .55s cubic-bezier(.5,0,.2,1)}
+.box{animation:boxIn .36s cubic-bezier(.16,1,.3,1) backwards}
+.box+.box{animation-delay:.06s}
+
+/* 果籃 */
+.fs-baskets{inset:0;pointer-events:none;transition:translate .5s cubic-bezier(.5,0,.3,1)}
+.fs-baskets.is-away{translate:0 40%}
+.basket{touch-action:none;position:absolute;left:calc(var(--x) * var(--u));top:calc(var(--y) * var(--u));width:calc(var(--w) * var(--u));padding:0;border:0;background:none;pointer-events:auto;transform-origin:50% 100%}
+.basket img{display:block;width:100%;pointer-events:none;filter:drop-shadow(0 calc(10 * var(--u)) calc(8 * var(--u)) #3a240e55)}
+.basket:active img{filter:drop-shadow(0 calc(4 * var(--u)) calc(4 * var(--u)) #3a240e66)}
+.basket.is-wait{filter:saturate(.45) brightness(.92)}
+.basket.is-no{animation:wobble .45s ease-in-out 2}
+
+/* 三選一（放完後出現在果籃的位置＝拇指區） */
+.fs-choices{display:flex;justify-content:space-between;height:calc(var(--h) * var(--u))}
+.fs-choices[hidden]{display:none}
+.fs-choices{--m:37.2}.fs-stage[data-lay=tablet] .fs-choices{--m:47.2}
+.fs-choices button{--d:calc(var(--h) * .16 * var(--u));--rx:0deg;--ry:0deg;position:relative;isolation:isolate;width:31%;border:0;background:none;color:var(--ink);font-size:calc(var(--h) * .58 * var(--u));font-weight:1000;line-height:1;transform:perspective(calc(900 * var(--u))) rotateX(0deg) rotateY(0deg);transition:transform .45s cubic-bezier(.3,1.9,.45,1),translate .45s cubic-bezier(.3,1.9,.45,1),opacity .3s,filter .3s;animation:drop .34s cubic-bezier(.16,1,.3,1) backwards;touch-action:manipulation}
+.fs-choices button::before{content:"";position:absolute;inset:calc(var(--m) * -1 * var(--u));z-index:-1;background:url(assets/fruitshop/ui/block_phone_base.webp) 0 0/100% 100% no-repeat;pointer-events:none;z-index:-2;transition:translate .45s cubic-bezier(.3,1.9,.45,1)}
+.fs-choices button::after{content:"";position:absolute;inset:calc(var(--m) * -1 * var(--u));z-index:-1;background:url(assets/fruitshop/ui/block_phone_top.webp) 0 0/100% 100% no-repeat;pointer-events:none}
+.fs-stage[data-lay=tablet] .fs-choices button::before{background-image:url(assets/fruitshop/ui/block_tablet_base.webp)}
+.fs-stage[data-lay=tablet] .fs-choices button::after{background-image:url(assets/fruitshop/ui/block_tablet_top.webp)}
+.fs-choices button:active:not(:disabled){translate:0 calc(var(--d) * .85);transform:perspective(calc(900 * var(--u))) rotateX(var(--rx)) rotateY(var(--ry));transition-duration:.07s}
+.fs-choices button:active:not(:disabled)::before{translate:0 calc(var(--d) * -.85);transition-duration:.07s}
+.fs-choices button:focus-visible{outline:calc(8 * var(--u)) solid #2f9a5c;outline-offset:calc(6 * var(--u))}
+.fs-choices button:nth-child(2){animation-delay:.05s}
+.fs-choices button:nth-child(3){animation-delay:.1s}
+.fs-choices button.is-no{animation:wobble .45s ease-in-out 2;opacity:.5;filter:saturate(.4)}
+.fs-choices button.is-yes{color:#1f7a46}.fs-choices button.is-yes::after{filter:hue-rotate(55deg) saturate(1.3)}
+
+/* 飛行中的果子 */
+.fs-fly{inset:0;z-index:8;pointer-events:none}
+.fs-fly img{position:absolute;left:0;top:0;translate:-50% -50%;filter:drop-shadow(0 calc(10 * var(--u)) calc(8 * var(--u)) #2a1a0a55)}
+
+/* 手勢提示 */
+.fs-hint{z-index:9;width:13cqw;aspect-ratio:1;translate:-44% -4%;pointer-events:none;opacity:0;transition:opacity .25s;background:url(icon-hand.svg) center/contain no-repeat;filter:drop-shadow(0 .6cqw .5cqw #3a240e55);transform-origin:44% 6%}
+.fs-hint::before{content:"";position:absolute;left:44%;top:6%;width:120%;aspect-ratio:1;translate:-50% -50%;border-radius:50%;background:radial-gradient(#fff8d6cc,#fff8d600 65%);scale:.4;opacity:0;z-index:-1}
+.fs-stage[data-lay=tablet] .fs-hint{width:7.5cqw}
+.fs-hint.is-on{opacity:1;animation:hintPress 1.3s cubic-bezier(.45,0,.2,1) infinite}
+.fs-hint.is-on::before{animation:hintGlow 1.3s ease-out infinite}
+.basket.is-hinted img{animation:hintBasket 1.3s cubic-bezier(.45,0,.2,1) infinite;transform-origin:50% 100%}
+
+/* 開場全景（導演 11-09）：小空水果攤 → 小空開場白 → 推近到櫃台 */
+.fs-intro{inset:0;overflow:hidden;z-index:30;transform-origin:var(--fx,50%) var(--fy,60%);cursor:pointer}
+.fs-intro[hidden]{display:none}
+.fs-intro img{position:absolute;pointer-events:none}.fs-intro .ib{left:0;top:0;width:100%}   /* 三層：背景／小空（換表情＋嘴）／櫃台果籃 */
+.fs-intro.is-in{animation:introIn .4s ease-out}
+.fs-intro.is-zoom{transform:scale(2.6);opacity:0;transition:transform .9s cubic-bezier(.6,0,.3,1),opacity .45s .45s;pointer-events:none}
+@keyframes introIn{from{opacity:0}}
+
+/* 開始與完成框 */
+.pick{display:flex;align-items:center;gap:8px;padding:8px 14px;border:4px solid var(--gold);border-radius:28px;background:var(--cream);font-size:clamp(22px,5vw,28px);font-weight:1000;box-shadow:0 5px 0 #c89c52}
+.pick button{display:inline-flex;align-items:center;justify-content:center;min-width:92px;min-height:64px;padding:4px 14px;border:3px solid #cfe0c8;border-radius:18px;background:#f1f7ea;font-weight:1000}
+.pick button[aria-pressed="true"]{background:linear-gradient(#ffca58,#f6ac34);border-color:#b9792b;color:#573e1d;box-shadow:0 3px 0 #b9792b}
+@media(max-width:680px){.pick button{min-width:72px}}
+.fs-rule{display:flex;align-items:center;gap:10px;margin:0;padding:10px 18px;border:4px solid var(--gold);border-radius:24px;background:var(--cream);box-shadow:0 5px 0 #c89c52;font-size:clamp(20px,4.6vw,28px);font-weight:1000}
+.fs-rule img{height:1.3em}
+.fs-rule .r,.fs-rule .p{display:inline-flex;align-items:center;gap:2px;font-size:1.25em}.fs-rule .r{color:var(--red)}.fs-rule .p{color:var(--purple)}.fs-rule .t{margin-left:8px}
+.overlay{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:16px;background:#0e3a28aa}
+.overlay[hidden]{display:none}
+.start{display:flex;flex-direction:column;align-items:center;gap:18px;padding:0;border:0;background:none}
+.go{display:grid;place-items:center;width:128px;height:128px;border:7px solid var(--cream);border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff8a6e,#e0473a 60%,#b8322a);color:var(--cream);box-shadow:0 8px 0 #8e2620,0 14px 24px #0a2a1c55;animation:breathe 1.6s ease-in-out infinite alternate}
+.go svg{width:56px;height:56px;margin-left:8px}
+.label{white-space:nowrap;padding:10px 20px;border:4px solid var(--gold);border-radius:999px;background:var(--cream);font-size:clamp(18px,5.2vw,28px);font-weight:1000;box-shadow:0 5px 0 #c89c52}
+.fs-line{margin:0;font-size:clamp(18px,5vw,24px);font-weight:1000}
+
+@keyframes pop{from{transform:scale(.8)}}
+@keyframes slot{from{transform:scale(.3) rotate(-20deg)}}
+@keyframes drop{from{translate:0 -40%;opacity:0}}
+@keyframes nod{40%{rotate:4deg;translate:0 1.2%}}
+@keyframes hop{40%{translate:0 -4cqw}}
+@keyframes tilt{25%{rotate:-7deg}60%{rotate:-7deg}85%{rotate:2deg}}
+@keyframes wobble{25%{rotate:-8deg}75%{rotate:8deg}}
+@keyframes hintPress{0%,100%{transform:translate(1.2cqw,1.6cqw) rotate(-6deg)}38%{transform:translate(0,0) rotate(0) scale(.92)}50%{transform:translate(0,0) scale(.92)}70%{transform:translate(.6cqw,.8cqw) rotate(-3deg)}}
+@keyframes hintGlow{0%,36%{scale:.4;opacity:0}42%{opacity:1}90%,100%{scale:1.1;opacity:0}}
+@keyframes hintBasket{0%,34%,70%,100%{scale:1}42%{scale:1.04 .95}55%{scale:.99 1.01}}
+@keyframes doze{50%{rotate:5deg;translate:0 2%}}
+@keyframes zz{50%{translate:0 -70%;opacity:.6}}
+@keyframes custIn{from{translate:30cqw 0;opacity:0}}
+@keyframes boxIn{from{translate:0 10%;opacity:0}}
+@keyframes breathe{to{scale:1.06}}
+@media(prefers-reduced-motion:reduce){.go,.fs-hint.is-on,.fs-hint.is-on::before,.basket.is-hinted img,.fs-rounds li.is-now,.box,.fs-intro,.fs-cust,.fs-zzz i,.box.is-asking .cell.is-ask{animation:none}.fs-choices button,.fs-choices button:active:not(:disabled){transition:none;transform:none}}
+
+/* 注音（同其他遊戲）*/
+.bpm-word{display:inline-flex;align-items:center;justify-content:center;flex:none;padding-right:.26em;white-space:nowrap}
+.bpm-main-char{display:inline-block;flex:none;font-size:1em;line-height:1.04}
+.bpm-column{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;margin-left:.05em;font-size:.4em;font-weight:850;line-height:1}
+.bpm-onset,.bpm-rime{display:block;line-height:1.03}
+.bpm-tone{position:absolute;right:-.55em;top:85%;transform:translateY(-50%) scale(1.5,1.8);font-size:1.2em;font-weight:900;color:#d32f2f;line-height:1}
+.bpm-tone-dot{position:absolute;right:0;top:-.6em;font-size:1.4em;font-weight:900;color:#d32f2f;line-height:1}

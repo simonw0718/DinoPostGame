@@ -1,0 +1,8 @@
+{
+ "_note": "小空說話時間表（秒）：spans＝嘴巴動的區段（ffmpeg silencedetect n=-35dB d=0.12，停頓 <0.12 秒嘴照動，同影片流程）；expr＝換表情區段（細門檻 -28dB 找詞界）。改配音要重量。來源 art-source/orchard/voice_xiaokong",
+ "fps": 12,
+ "cycle": ["closed", "open", "wide", "open"],
+ "intro": {"spans": [[0.0, 2.92], [3.55, 4.75], [4.9, 6.35]], "expr": [[1.6, 2.92, "smug"]], "zoom": 3.0},
+ "ask10": {"spans": [[0.0, 1.93], [2.05, 3.5]]},
+ "thanks": {"spans": [[0.0, 2.28]]}
+}

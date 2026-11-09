@@ -1,0 +1,30 @@
+{
+ "character": "小空",
+ "voice_id": "voice_l61ydzkp79d1",
+ "model": "gemini-3.8-flash-tts",
+ "request_count": 1,
+ "raw": "小空_all.wav",
+ "raw_sha256": "ebaa62352e499f32a759e1c98e19bd550082d6bff633733a194f7f060c310c57",
+ "payload_sha256": "c7b04350cf403338411579e45dcd62dd3c08ff8482c075a5d7c66e2266825799",
+ "files": {
+  "FS-INTRO_intro.wav": {
+   "sha256": "09c3b3ebc62370121dfc21a4c61a4a3f7e2a509984c5c813e04fc8d1947e56e0",
+   "duration_s": 6.58,
+   "text": "歡迎光臨小空果果店！客人要什麼果子，就幫我裝進盒子裡吧！"
+  },
+  "FS-ASK10_ask10.wav": {
+   "sha256": "51a158288ec96bc0fe4dcb9ce8b3493dc7a9bee734bd31cb7d467c61c9e6d502",
+   "duration_s": 3.71,
+   "text": "還差幾顆，才會滿十個呢？"
+  },
+  "FS-THANKS_thanks.wav": {
+   "sha256": "95608f500ac13bf7f9a7e172f8955d4373dcf97dab8528c9a8b57ece802ed80f",
+   "duration_s": 2.47,
+   "text": "客人都開心了！謝謝你幫忙！"
+  }
+ },
+ "bounds": "auto longest gaps",
+ "shortest_cut_gap_s": 0.7,
+ "next_unused_gap_s": 0.22,
+ "split_confident": true
+}
