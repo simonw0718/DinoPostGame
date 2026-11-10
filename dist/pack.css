@@ -35,7 +35,7 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
 .dino::after{background:var(--noise),linear-gradient(#b39b72,#8f7a57 70%,#6d5c40)}
 .dino .shadow{position:absolute;left:22%;right:22%;bottom:12%;z-index:2;height:16%;border-radius:50%;background:radial-gradient(#2c3a1f88,#0000 70%)}
 .dino img{position:relative;z-index:3;height:128%;max-width:118%;margin-bottom:8%;object-fit:contain;object-position:bottom;filter:drop-shadow(0 3px 2px #0a2a1c55);transform-origin:bottom center;transition:transform .2s}
-.dino .got{position:absolute;right:-8%;top:-12%;z-index:4;width:50%;opacity:0;transform:scale(.3) rotate(-20deg);transition:opacity .2s,transform .35s cubic-bezier(.2,1.5,.4,1);filter:drop-shadow(0 3px 2px #0005)}
+.dino .got{position:absolute;right:-16%;top:42%;z-index:4;width:44%;opacity:0;transform:scale(.3) rotate(-20deg);transition:opacity .2s,transform .35s cubic-bezier(.2,1.5,.4,1);filter:drop-shadow(0 3px 2px #0005)}
 .dino.is-happy img{animation:hop .5s ease-out}
 .dino.is-happy .got{opacity:1;transform:rotate(8deg)}
 .dino.is-sad img{animation:shake .5s ease-in-out}
@@ -101,3 +101,9 @@ button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
 .bpm-onset,.bpm-rime{display:block;line-height:1.03}
 .bpm-tone{position:absolute;right:-.55em;top:85%;transform:translateY(-50%) scale(1.5,1.8);font-size:1.2em;font-weight:900;color:#d32f2f;line-height:1}
 .bpm-tone-dot{position:absolute;right:0;top:-.6em;font-size:1.4em;font-weight:900;color:#d32f2f;line-height:1}
+
+/* 提示鈕（燈泡）：2026-11-10 從標題列移到草地右上，標題列維持全站標準 3 顆（手機上第 4 顆會被切掉） */
+.pk-hint{position:absolute;right:10px;top:8px;z-index:3;display:grid;place-items:center;width:46px;height:46px;padding:0;border:3px solid #fffaf0;border-radius:50%;background:radial-gradient(circle at 35% 28%,#ffe08a,#f2b945 62%,#d6922a);color:#fff;box-shadow:0 4px 0 #a86a1c,0 6px 12px #0a2a1c44;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:transform .12s,box-shadow .12s}
+.pk-hint svg{width:26px;height:26px;filter:drop-shadow(0 2px 0 #a86a1c88)}
+.pk-hint:active{transform:translateY(3px);box-shadow:0 1px 0 #a86a1c}
+.pk-hint:focus-visible{outline:4px solid #2f86c4;outline-offset:3px}

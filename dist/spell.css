@@ -84,7 +84,6 @@
 /* 開始選單：把後面的遊戲壓暗，選單看得清楚 */
 .ready-tap{background:radial-gradient(circle at 50% 58%,#0e3a28a6 0 110px,#082519eb 72%)}
 /* 完成卡也用航空信封邊 */
-.finish-card{border:11px solid transparent;background:linear-gradient(#fffcf3,var(--envelope)) padding-box,var(--air) border-box;box-shadow:0 18px 32px #04180f80}
 .sp-finish-words li{padding:2px 10px;border:2px dashed #e0473a66;border-radius:8px;background:#fff}
 /* 玩法框預覽：航空信封缺一格，c 郵票飛進去 */
 .howto-stage .pv-spell{background:#e6f2dc}
@@ -96,7 +95,7 @@
 .zb-host .zb-progress li.is-done{border:3px solid transparent;background:var(--flap) padding-box,linear-gradient(#fffcf3,#fff8e8) padding-box,repeating-linear-gradient(-45deg,#e0473a 0 5px,#fffdf2 5px 8px,#2f86c4 8px 13px,#fffdf2 13px 16px) border-box;box-shadow:0 3px 6px #04180f59}
 .zb-host .zb-progress li.is-star::after{content:"";position:absolute;right:-9px;top:-11px;width:26px;height:26px;background:url(assets/dinopost-workmark-stamp-transparent-v1.webp) center/contain no-repeat;transform:rotate(14deg);animation:stampDown .4s cubic-bezier(.2,1.4,.4,1)}
 @keyframes letterBob{to{transform:translateY(-7px) scale(1.08) rotate(-2deg)}}
-.zb-host .zb-bubble{font-size:clamp(19px,4.8vw,30px);padding:8px 18px 10px;box-shadow:0 5px 0 #c89c52,0 10px 16px #04180f40}
+.zb-host .zb-bubble{font-size:clamp(14px,4.8vw,30px);padding:8px 18px 10px;box-shadow:0 5px 0 #c89c52,0 10px 16px #04180f40}
 /* 泡泡＝簡潔白泡泡（導演 2026-11-04：雲朵不好看，選 B）：純白圓角、細邊、柔和陰影；注音與聲調同色不用紅 */
 .zb-host .zb-bubble{margin:0 0 6px 12px;padding:10px 20px 12px;border:2px solid #17593f1f;border-radius:22px;background:#fff;color:var(--ink);box-shadow:0 6px 16px #04180f33,0 1px 2px #04180f1f}
 .zb-host .zb-bubble::before{left:-10px;bottom:14px;width:18px;height:18px;border:0;border-left:2px solid #17593f1f;border-bottom:2px solid #17593f1f;border-radius:0 0 0 4px;background:#fff;transform:rotate(45deg)}

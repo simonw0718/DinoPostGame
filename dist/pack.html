@@ -6,20 +6,21 @@
   <meta name="theme-color" content="#164d39">
   <title>包裹拼拼樂・恐龍郵局</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="preload" href="assets/fonts/naikai-subset.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="fx.css"><link rel="stylesheet" href="dino-mode.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css"><link rel="stylesheet" href="finish-card.css"><link rel="stylesheet" href="howto.css">
+  <link rel="preload" href="assets/fonts/naikai-subset.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="fx.css"><link rel="stylesheet" href="dino-mode.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css"><link rel="stylesheet" href="finish-card.css?v=5"><link rel="stylesheet" href="howto.css?v=6">
   <script src="shared.js"></script>
-  <link rel="stylesheet" href="pack.css">
+  <link rel="stylesheet" href="pack.css?v=3">
 </head>
 <body>
   <div class="pk-shell">
     <header class="gh">
       <a class="dino-home" href="index.html" aria-label="回選遊戲首頁"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.6 1.6 11.4a1 1 0 0 0 1.3 1.5L4.5 11.6V20a1.5 1.5 0 0 0 1.5 1.5h3.8v-5.8a.7.7 0 0 1 .7-.7h3a.7.7 0 0 1 .7.7v5.8H18a1.5 1.5 0 0 0 1.5-1.5v-8.4l1.6 1.3a1 1 0 0 0 1.3-1.5Z"/></svg></a>
       <h1 id="title" class="gh-title">包裹拼拼樂</h1>
-      <div class="gh-tools"><button id="hint" class="gh-btn" type="button" aria-label="提示"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.5a7 7 0 0 0-4.2 12.6c.7.5 1.2 1.3 1.2 2.2v.7h6v-.7c0-.9.5-1.7 1.2-2.2A7 7 0 0 0 12 2.5zM9 19.5h6v.8a1.7 1.7 0 0 1-1.7 1.7h-2.6A1.7 1.7 0 0 1 9 20.3z"/></svg></button><button id="help" class="gh-btn" type="button" aria-label="玩法">?</button><button id="menuBtn" class="gh-btn" type="button" aria-label="難度選單"><svg aria-hidden="true"><use href="icons.svg#ic-gear"/></svg></button></div>
+      <div class="gh-tools"><button id="help" class="gh-btn" type="button" aria-label="玩法">?</button><button id="menuBtn" class="gh-btn" type="button" aria-label="難度選單"><svg aria-hidden="true"><use href="icons.svg#ic-gear"/></svg></button></div>
     </header>
     <main id="play" class="pk-play">
       <section id="yard" class="pk-yard">
         <ol id="rounds" class="pk-rounds" aria-label="第幾關"></ol>
+        <button id="hint" class="pk-hint" type="button" aria-label="提示：亮出一個放法"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.5a7 7 0 0 0-4.2 12.6c.7.5 1.2 1.3 1.2 2.2v.7h6v-.7c0-.9.5-1.7 1.2-2.2A7 7 0 0 0 12 2.5zM9 19.5h6v.8a1.7 1.7 0 0 1-1.7 1.7h-2.6A1.7 1.7 0 0 1 9 20.3z"/></svg></button>
         <div id="board" class="pk-board"></div>
       </section>
       <section id="tray" class="pk-tray" aria-label="包裹"></section>
@@ -43,6 +44,6 @@
     </div>
   </div>
 
-<script src="pack.js"></script>
+<script src="pack.js?v=2"></script>
 </body>
 </html>

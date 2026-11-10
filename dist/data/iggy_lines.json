@@ -1,5 +1,5 @@
 {
-  "_note": "伊奇語音台詞（導演 2026-10-31 核准）。howto＝各遊戲第一次玩時念的玩法（中文）；catch＝接信大郵袋每局題目（英文）。生成：python3 tools/gemini_tts_batch.py iggy howto|catch；climb＝上山送信遊戲旁白（導演 2026-11-04 授權 --allow-model，只送台詞文字）",
+  "_note": "伊奇語音台詞（導演 2026-10-31 核准）。howto＝各遊戲第一次玩時念的玩法（中文）；catch＝接信大郵袋每局題目（英文）。生成：python3 tools/gemini_tts_batch.py iggy howto|catch；climb＝上山送信遊戲旁白（導演 2026-11-04 授權 --allow-model，只送台詞文字）；howto 追加 catch/mole/climb/orchard/orders/match-word（導演 2026-11-10 核准台詞並授權生成）",
   "voice": {
     "source": "恐龍郵局 voices/character_voice_routes.json 伊奇 R27",
     "model": "gemini-3.8-flash-tts",
@@ -43,6 +43,30 @@
     {
       "id": "spell",
       "text": "咦？這封信的地址少了字母！先聽聽看是什麼字，再把對的字母郵票貼上去！"
+    },
+    {
+      "id": "catch",
+      "text": "大郵袋準備好了！聽清楚題目，接住對的信；奇怪的東西不要接喔！"
+    },
+    {
+      "id": "mole",
+      "text": "恐龍蛋跳出來了！聽清楚題目，打對的那一顆蛋！"
+    },
+    {
+      "id": "climb",
+      "text": "擲骰子，看看是幾點，就走幾格！誰先走到山頂的樹洞呢？"
+    },
+    {
+      "id": "orchard",
+      "text": "客人要買果子！數一數要幾顆，把果子放進盒子裡吧！"
+    },
+    {
+      "id": "orders",
+      "text": "先看看今天的規定，把可以寄的包裹交給阿暴，再送給對的人！"
+    },
+    {
+      "id": "match-word",
+      "text": "包裹上有一張圖……它的英文是哪一個字呢？點對的那個！"
     }
   ],
   "catch": [

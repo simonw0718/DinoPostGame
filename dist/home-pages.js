@@ -21,12 +21,16 @@
       const tr = tabs[i].getBoundingClientRect(), pr = pager.getBoundingClientRect();
       pager.scrollTo({ left: pager.scrollLeft + (tr.left + tr.width / 2) - (pr.left + pr.width / 2), behavior: 'smooth' });
     };
+    // 分類頁數圓點（導演 2026-11-10）：捲軸模式下顯示共幾類、現在在哪一類；純提示不可點，樣式在 home.css
+    const dots = document.createElement('div'); dots.className = 'pager-dots'; dots.setAttribute('aria-hidden', 'true');
+    dots.append(...tabs.map(() => document.createElement('i'))); pager.after(dots);
     const edge = () => pager.classList.toggle('at-end', pager.scrollLeft + pager.clientWidth >= pager.scrollWidth - 2);
     pager.addEventListener('scroll', edge, { passive: true });
     const sync = () => {
       const i = at(); showTab(i);
       tabs.forEach((t, k) => { t.classList.toggle('on', k === i); t.setAttribute('aria-selected', String(k === i)); });
       tabs[i]?.classList.remove('has-new');
+      [...dots.children].forEach((d, k) => d.classList.toggle('on', k === i));
     };
     tabs.forEach((t, i) => t.addEventListener('click', () => go(i)));
     nav.addEventListener('scroll', () => { clearTimeout(sync.t); sync.t = setTimeout(sync, 60); }, { passive: true });
@@ -43,11 +47,11 @@
         const used = (Math.max(...rs.map(r => r.right)) - Math.min(...rs.map(r => r.left))) / k;
         return used <= t.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) + .5;
       });
-      for (const [mode, sizes] of [['icon', [18, 17, 16]], ['long', [18, 17, 16, 15, 14]]]) {
+      for (const [mode, sizes] of [['icon', [18, 17, 16]], ['long', [17, 16, 15, 14, 13]]]) {
         pager.dataset.fit = mode;
         for (const px of sizes) { pager.style.setProperty('--tab-fs', px + 'px'); if (fits()) return; }
       }
-      pager.dataset.fit = 'scroll'; pager.style.setProperty('--tab-fs', '17px'); showTab(at());
+      pager.dataset.fit = 'scroll'; pager.style.setProperty('--tab-fs', '15px');   // 導演 2026-11-10：分類鈕小一點 showTab(at());
     };
     // 遊戲卡標題同樣量寬縮字（導演 2026-11-04：長標題在手機超出卡片）：
     // 先一行、從 CSS 字級每次縮 1px；縮到原本 80%（最少 13px）還放不下，就改兩行（前半／後半各一行）再量一次。
@@ -63,7 +67,15 @@
       words[Math.ceil(words.length / 2)]?.before(br);
       shrink(10);
     });
-    const fitAll = () => { fitTabs(); fitTitles(); edge(); };
+    // 預覽動畫量寬縮放（導演 2026-11-10：窄螢幕預覽超出卡片框）：預覽內部是固定座標，用 zoom 整塊等比例縮到卡片內寬
+    const fitPreviews = () => nav.querySelectorAll('.game-choice .pv').forEach(pv => {
+      pv.style.zoom = '';
+      const card = pv.closest('.game-choice'), cs = getComputedStyle(card);
+      if (!card.clientWidth || !cs.flexDirection.startsWith('column')) return;
+      const room = card.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight) - 4;
+      if (pv.offsetWidth > room) pv.style.zoom = Math.max(.5, room / pv.offsetWidth).toFixed(3);
+    });
+    const fitAll = () => { fitTabs(); fitTitles(); fitPreviews(); edge(); };
     new ResizeObserver(() => requestAnimationFrame(fitAll)).observe(pager);
     document.fonts?.ready.then(fitAll);
     // 進場後偷看下一頁：往右滑出約 1/4 再彈回，下一個分區鈕跳三下（每次瀏覽一次；動作減量時只跳鈕）

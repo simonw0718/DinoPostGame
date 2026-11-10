@@ -7,9 +7,9 @@
   <meta name="apple-mobile-web-app-title" content="DINO單字任務">
   <title>郵差翻翻樂・恐龍郵局</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="preload" href="assets/fonts/naikai-subset.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="fx.css"><link rel="stylesheet" href="flip.css"><link rel="stylesheet" href="dino-mode.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css"><link rel="stylesheet" href="howto.css"><link rel="stylesheet" href="preview.css">
+  <link rel="preload" href="assets/fonts/naikai-subset.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="fx.css"><link rel="stylesheet" href="finish-card.css?v=5"><link rel="stylesheet" href="flip.css?v=2"><link rel="stylesheet" href="dino-mode.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css"><link rel="stylesheet" href="howto.css?v=6"><link rel="stylesheet" href="preview.css?v=3">
   <script src="vendor/motion.js"></script>
-  <script src="shared.js" defer></script><script src="progress.js" defer></script><script src="flip.js" defer></script>
+  <script src="shared.js" defer></script><script src="progress.js" defer></script><script src="flip.js?v=2" defer></script>
 </head>
 <body>
   <div id="shell" class="fs-shell">
@@ -49,13 +49,13 @@
     </button>
   </div>
 
-  <div id="finishOverlay" class="finish-overlay" hidden>
-    <div class="finish-card">
-      <img id="finishActor" class="finish-actor" alt="">
+  <div id="finishOverlay" class="overlay" hidden>
+    <div class="card">
+      <img id="finishActor" alt="">
       <h2 id="finishTitle">信都配好了！</h2>
-      <p id="finishStars" class="finish-stars" aria-label="星星"></p>
+      <p id="finishStars" class="stars" aria-label="星星"></p>
       <p class="finish-count"><span id="finishFlipsLabel">翻了</span> <strong id="finishFlips"></strong> <span id="finishTimes">次</span></p>
-      <div class="finish-actions"><button id="playAgain" type="button">再玩一次</button><a id="finishHome" href="index.html">回首頁</a></div>
+      <div class="actions"><button id="playAgain" type="button">再玩一次</button><a id="finishHome" href="index.html">回首頁</a></div>
     </div>
   </div>
 </body>

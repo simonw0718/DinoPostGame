@@ -28,6 +28,7 @@
     '慢': ['ㄇㄢˋ'], '中': ['ㄓㄨㄥ'], '快': ['ㄎㄨㄞˋ'],
     '再玩一次': ['ㄗㄞˋ', 'ㄨㄢˊ', 'ㄧ', 'ㄘˋ'], '回首頁': ['ㄏㄨㄟˊ', 'ㄕㄡˇ', 'ㄧㄝˋ'],
     '奇怪東西不要接': ['ㄑㄧˊ', 'ㄍㄨㄞˋ', 'ㄉㄨㄥ', 'ㄒㄧ˙', 'ㄅㄨˊ', 'ㄧㄠˋ', 'ㄐㄧㄝ'],
+    '聽題目，接住對的信': ['ㄊㄧㄥ', 'ㄊㄧˊ', 'ㄇㄨˋ', '', 'ㄐㄧㄝ', 'ㄓㄨˋ', 'ㄉㄨㄟˋ', 'ㄉㄜ˙', 'ㄒㄧㄣˋ'],
     '知道了': ['ㄓ', 'ㄉㄠˋ', 'ㄌㄜ˙'], '變快了！': ['ㄅㄧㄢˋ', 'ㄎㄨㄞˋ', 'ㄌㄜ˙', ''],
     '第二關': ['ㄉㄧˋ', 'ㄦˋ', 'ㄍㄨㄢ'], '第三關': ['ㄉㄧˋ', 'ㄙㄢ', 'ㄍㄨㄢ'], '第四關': ['ㄉㄧˋ', 'ㄙˋ', 'ㄍㄨㄢ'], '最後一關': ['ㄗㄨㄟˋ', 'ㄏㄡˋ', 'ㄧ', 'ㄍㄨㄢ']
   };
@@ -327,18 +328,17 @@
   document.querySelector('.dino-home').addEventListener('click', e => { e.preventDefault(); Dino.goTo('index.html'); });
   $('menuBtn').addEventListener('click', () => { if (!G.started || !$('ready').hidden) return; pause(); Dino.sfx('tap', .5); $('ready').hidden = false; Dino.bgm.start(); });
   $('help').addEventListener('click', () => { Dino.sfx('tap', .5); pause(); HW.show(); });
-  let howtoSeen = false;
   $('start').addEventListener('click', () => {
     $('ready').hidden = true; Dino.bgm.stop();
     if (G.paused) return resume();
-    if (!howtoSeen) { howtoSeen = true; G.waitHowto = true; HW.show(); return; }
+    if (!HW.seen()) { G.waitHowto = true; HW.show(); return; }   // 第一次玩才跳（本機記住）
     newGame();
   });
   $('again').addEventListener('click', () => { $('finish').hidden = true; Dino.bgm.stop(); newGame(); });
   addEventListener('resize', measure);
   measure();
   $('courier').src = 'assets/cast/iggy__hello.webp';
-  const HW = Dino.howto({ preview: buildHowto, text: '奇怪東西不要接', kid: setKidText,
+  const HW = Dino.howto({ preview: buildHowto, text: '聽題目，接住對的信', kid: setKidText, voice: 'catch',
     onClose: () => { if (G.waitHowto) { G.waitHowto = false; newGame(); } else if ($('ready').hidden) resume(); } });
   window.__catch = G;
 })();

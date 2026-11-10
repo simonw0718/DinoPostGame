@@ -484,11 +484,10 @@
   // 導演 2026-10-22：房子永遠回首頁；難度另用右上 ⚙ 打開本遊戲的開始選單
   document.querySelector('.dino-home').addEventListener('click', e => { e.preventDefault(); Dino.goTo('index.html'); });
   $('menuBtn').addEventListener('click', () => { if (!inGame()) return; stopHint(); S.drag = false; Dino.sfx('tap', .5); $('ready').hidden = false; Dino.bgm.start(); });
-  let howtoSeen = false;
   $('start').addEventListener('click', () => {
     $('ready').hidden = true; Dino.bgm.stop();
     if (S.done) return;
-    if (!howtoSeen) { howtoSeen = true; showHowto(); } else startHint();
+    if (!HW.seen()) showHowto(); else startHint();   // 第一次玩才跳（本機記住）
   });
   $('help').addEventListener('click', () => { Dino.sfx('tap', .5); showHowto(); });
   $('again').addEventListener('click', () => { $('finish').hidden = true; Dino.bgm.stop(); newGame(); startHint(); });

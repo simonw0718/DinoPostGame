@@ -80,7 +80,7 @@ html.dino-mode .fs-shell::before{--bg:url('assets/dino-valley.jpg')}
 .bpm-tone-dot{position:absolute;right:0;top:-.6em;font-size:1.4em;font-weight:900;color:#d32f2f;line-height:1}
 
 /* 開始＋完成 */
-.ready-tap{position:fixed;z-index:60;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;width:100%;padding:0;border:0;background:radial-gradient(circle at 50% 50%,#0e3a2810 0 90px,#0e3a2899 72%);animation:fadeIn .35s ease-out both}
+.ready-tap{position:fixed;z-index:60;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;width:100%;padding:0;border:0;background:radial-gradient(circle at 50% 50%,#0e3a2810 0 90px,#0e3a2899 72%)}
 .ready-start{display:flex;flex-direction:column;align-items:center;gap:22px;padding:0;border:0;background:none;cursor:pointer}
 .ready-pick{display:flex;align-items:center;gap:8px;padding:8px 14px;border:4px solid var(--gold);border-radius:999px;background:var(--cream);color:var(--ink);font-size:clamp(18px,5vw,24px);font-weight:1000;box-shadow:0 5px 0 #c89c52}
 .ready-pick button{display:grid;place-items:center;min-width:64px;min-height:52px;padding:4px 12px;border:3px solid #cfe0c8;border-radius:16px;background:#f1f7ea;color:var(--ink);font:inherit;cursor:pointer}
@@ -92,20 +92,8 @@ html.dino-mode .fs-shell::before{--bg:url('assets/dino-valley.jpg')}
 .ready-ring{position:absolute;inset:0;border:5px solid #fff3c4;border-radius:50%;animation:readyRing 1.6s ease-out infinite}
 .ready-ring.r2{animation-delay:.8s}
 .ready-label{padding:10px 22px;border:4px solid var(--gold);border-radius:999px;background:var(--cream);color:var(--ink);font-size:clamp(22px,6vw,28px);font-weight:1000;box-shadow:0 5px 0 #c89c52}
-.finish-overlay{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:16px;background:#0e3a28bb;animation:fadeIn .3s ease-out both}
-.finish-overlay[hidden]{display:none}
-.finish-card{display:grid;justify-items:center;gap:8px;width:min(92vw,400px);padding:22px 22px 24px;border:6px solid var(--gold);border-radius:28px;background:var(--cream);text-align:center;box-shadow:0 12px 0 #c89c52;animation:cardIn .5s cubic-bezier(.2,1.4,.4,1) both}
-.finish-actor{height:130px;filter:drop-shadow(0 6px 4px #0a2a1c44);animation:actorHop 1.2s ease-in-out infinite alternate}
-.finish-card h2{margin:0;font-size:clamp(28px,7.4vw,42px);font-weight:1000;white-space:nowrap}
-.finish-card h2,.finish-actions button,.finish-actions a{display:flex;align-items:center;justify-content:center;flex-wrap:nowrap;white-space:nowrap}
-.finish-stars{margin:0;color:#f2b945;font-size:44px;letter-spacing:.08em;text-shadow:0 3px 0 #b9792b}
-.finish-stars .off{color:#e6dcc4;text-shadow:none}
 .finish-count{margin:0;font-size:22px;font-weight:900}
 .finish-count strong{font-size:32px;color:var(--red)}
-.finish-actions{display:flex;gap:12px;margin-top:6px}
-.finish-actions button,.finish-actions a{min-height:54px;padding:8px 22px;border:0;border-radius:16px;font-size:22px;font-weight:1000;text-decoration:none;display:grid;place-items:center}
-.finish-actions button{background:linear-gradient(#ffca58,#f6ac34);color:#573e1d;box-shadow:0 5px 0 #b9792b}
-.finish-actions a{background:#e5f2df;color:var(--ink);box-shadow:0 5px 0 #a9c8a2}
 
 
 
@@ -118,14 +106,11 @@ html.dino-mode .fs-shell::before{--bg:url('assets/dino-valley.jpg')}
 
 @keyframes readyRing{from{transform:scale(1);opacity:.9}to{transform:scale(1.7);opacity:0}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
-.finish-actions button,.finish-actions a{flex:none;min-width:max-content}
-.finish-actions button,.finish-actions a{display:flex}
 .fs-card.is-dealt{animation:deal .5s cubic-bezier(.2,1.3,.4,1) var(--deal,0ms) both}
 @keyframes deal{from{opacity:0;transform:translateY(-40px) rotate(var(--tilt,0deg))}}
 /* v5（導演 2026-10-21）：完成卡在手機上不可超出畫面；郵袋 6–10 格自動縮小 */
-.finish-card{max-width:calc(100vw - 32px);overflow:hidden}
-.finish-card h2{font-size:clamp(22px,6.4vw,40px)}
-.finish-actions{flex-wrap:wrap;justify-content:center;width:100%}
-.finish-actions button,.finish-actions a{min-width:0;flex:1 1 auto;padding:8px 14px;font-size:clamp(17px,4.8vw,22px)}
 .fs-slots{flex:1;justify-content:center;min-width:0}
 .fs-slots li{flex:0 1 44px;width:auto;height:auto;aspect-ratio:1;min-width:0}
+
+/* 導演 2026-11-10：開場遮罩一開始就蓋好（不淡入），避免先閃過底下遊戲盤；只讓上面的按鈕淡入 */
+.ready-tap>*{animation:fadeIn .35s ease-out both}

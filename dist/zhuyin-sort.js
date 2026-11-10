@@ -1,5 +1,5 @@
 // 注音送信（導演 2026-10-21 核准 mail-sample v10 套用）：紅郵筒之字排＋磁吸拖信＋送信角色輪替；寬螢幕自動切一排版。
-// 出題、難度、題庫開關、作答紀錄與郵票都沿用 shared.js／progress.js／stamps-ui.js。
+// 出題、難度、題庫開關、作答紀錄都沿用 shared.js／progress.js。
 (() => {
   'use strict';
   const $ = id => document.getElementById(id);
@@ -37,6 +37,9 @@
 
   const uiReadings = {
     '點一下，開始送信！': ['ㄉㄧㄢˇ', 'ㄧ', 'ㄒㄧㄚˋ', '', 'ㄎㄞ', 'ㄕˇ', 'ㄙㄨㄥˋ', 'ㄒㄧㄣˋ', ''],
+    '看注音': ['ㄎㄢˋ', 'ㄓㄨˋ', 'ㄧㄣ'],
+    '看圖片': ['ㄎㄢˋ', 'ㄊㄨˊ', 'ㄆㄧㄢˋ'],
+    '全部': ['ㄑㄩㄢˊ', 'ㄅㄨˋ'],
     '開始送信': ['ㄎㄞ', 'ㄕˇ', 'ㄙㄨㄥˋ', 'ㄒㄧㄣˋ'],
     '讀注音，送到郵箱': ['ㄉㄨˊ', 'ㄓㄨˋ', 'ㄧㄣ', '', 'ㄙㄨㄥˋ', 'ㄉㄠˋ', 'ㄧㄡˊ', 'ㄒㄧㄤ'],
     '看圖片，送到郵箱': ['ㄎㄢˋ', 'ㄊㄨˊ', 'ㄆㄧㄢˋ', '', 'ㄙㄨㄥˋ', 'ㄉㄠˋ', 'ㄧㄡˊ', 'ㄒㄧㄤ'],
@@ -229,6 +232,9 @@
     $('mailLevelSlider').value = String(state.nextLevel);
     $('mailLevelText').textContent = ['第一級', '第二級', '第三級'][state.nextLevel - 1];
     document.querySelectorAll('.mail-format-option').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.mailFormat === state.nextFormat)));
+    document.querySelectorAll('#readyOverlay [data-fmt]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.fmt === state.nextFormat)));
+    document.querySelectorAll('#readyOverlay [data-lv]').forEach(button => button.setAttribute('aria-pressed', String(state.nextMode === 'level' ? button.dataset.lv === String(state.nextLevel) : button.dataset.lv === 'all')));
+    $('levelPick').hidden = state.nextMode === 'dinosaur';   // DINO MODE：題目固定恐龍包，不分級
     $('mailAutoAudio').checked = state.nextAutoAudio; $('mailCount').value = String(state.nextCount); $('mailCountValue').value = String(state.nextCount);
     $('mailSelectionSummary').textContent = `下一回合：${modeLabel()} · ${state.nextFormat === 'picture' ? '看圖片' : '看注音'} · ${state.nextCount} 封`;
   }
@@ -335,7 +341,7 @@
   function showTapToStart() {
     const tap = $('readyOverlay');
     if (!tap.hidden) return;
-    tap.hidden = false; tap.focus();
+    tap.classList.add('resume'); tap.hidden = false; $('readyStart').focus();
   }
   function renderQuestion() {
     const word = state.round[state.index];
@@ -351,7 +357,6 @@
     state.choices = choicesFor(word, state.activePool);
     renderMailboxes(state.choices);
     $('receipt').hidden = true; $('postmark').classList.remove('is-stamping');
-    $('receipt').querySelectorAll('.stamp-dots').forEach(el => el.remove());
     $('nextButton').hidden = true; $('replayButton').hidden = false;
     $('ghost').hidden = state.index !== 0;   // 示範手指只在第一封
     const letter = $('letter');
@@ -367,7 +372,8 @@
     animate(actor, { opacity: 1 }, { duration: dur(.3) });   // 每封都由 Motion 淡入（再送一次時才不會停在淡出狀態）
     say(picture ? '看圖片，送到郵箱' : '讀注音，送到郵箱', 3000, false);
     if (state.audio) state.audio.pause();
-    if (state.autoAudio) playPrompt();
+    // 開始浮層還蓋著（剛進頁、或按播放後才開新回合）時不自動播：按播放那一下統一由 readyStart 播，避免同一個音播兩次（導演 2026-11-10）
+    if (state.autoAudio && $('readyOverlay').hidden && !state.holdAudio) playPrompt();
   }
 
   // ---------- 作答 ----------
@@ -443,7 +449,6 @@
     setKidText($('receiptZh'), word.zh, word.zhuyin);
     $('receiptZh').classList.toggle('is-long', word.zh.length > 3);
     $('receiptEn').textContent = word.en;
-    $('receiptEn').after(DinoStampsUI.dots(state.progressResults.at(-1)));
     $('receipt').hidden = false;
     await animate($('receipt'), { opacity: [0, 1], transform: ['translateY(30px) scale(.9)', 'translateY(0) scale(1)'] }, { type: 'spring', stiffness: 320, damping: 22, duration: dur(.3) }).finished;
     $('postmark').classList.add('is-stamping');
@@ -452,7 +457,7 @@
     playSound('stamp');
     animate($('receipt'), { transform: ['translateY(0) scale(1)', 'translateY(5px) scale(.965,.94)', 'translateY(-2px) scale(1.01)', 'translateY(0) scale(1)'] }, { duration: dur(.4), ease: 'easeOut' });
     state.phase = 'reveal';
-    say(DinoStampsUI.message(state.progressResults.at(-1)) || (state.streak >= Dino.streakThreshold ? '連續送對！' : '送達啦！'), 1800);
+    say((state.streak >= Dino.streakThreshold ? '連續送對！' : '送達啦！'), 1800);
     renderProgress(state.index + 1, index);
     // 導演 2026-10-21：蓋完章看一眼就自動接下一封，不用按「下一封」
     await wait(650);
@@ -481,12 +486,15 @@
   }
   function finishRound() {
     state.phase = 'finish';
+    // 星星（導演 2026-11-10）：第一次就送對的比例，全對三顆、七成以上兩顆、其餘一顆
+    const rate = state.count ? state.firstTry / state.count : 0;
+    const stars = rate >= 1 ? 3 : rate >= .7 ? 2 : 1;
+    $('finishStars').innerHTML = [0, 1, 2].map(i => `<span class="${i < stars ? '' : 'off'}">${Dino.icon('star')}</span>`).join('');
     $('finishScore').setAttribute('aria-label', `第一次就送對 ${state.firstTry}／${state.count} 封`);
     $('finishScore').replaceChildren(makeKidSpan('第一次就送對'), document.createTextNode(` ${state.firstTry}／${state.count} `), makeKidSpan('封'));
     $('finishOverlay').hidden = false;
-    animate(document.querySelector('.finish-card'), { opacity: [0, 1], scale: [.8, 1] }, { type: 'spring', stiffness: 190, damping: 16, duration: dur(.6) });
+    animate(document.querySelector('#finishOverlay .card'), { opacity: [0, 1], scale: [.8, 1] }, { type: 'spring', stiffness: 190, damping: 16, duration: dur(.6) });
     saveRound();
-    DinoStampsUI.showRoundStamps($('stampSummary'), state.progressResults, state.words, albumLink);
   }
 
   // ---------- 拖信：往上拉時整封縮小（transform，注音字同比縮）、依速度擺盪；進入郵筒 100px 磁吸，放手就投 ----------
@@ -563,17 +571,16 @@
     return true;
   }
 
-  const albumLink = DinoStampsUI.albumLink();
-  document.querySelector('.finish-actions').append(albumLink);
+  const fitPicksNow = () => { try { Dino.fitPicks?.(); } catch { /* ok */ } };
   async function init() {
     [['readyTitle', '點一下，開始送信！'],
       ['finishCopy', '信都送到了！'], ['finishTitle', '送信任務完成'], ['playAgainButton', '再送一次'], ['finishHome', '回首頁'],
       ['receiptBrand', '恐龍郵局'], ['receiptConfirm', '收件確認'], ['nextLabel', '下一封']]
       .forEach(([id, text]) => setKidText($(id), text));
     state.bg = loadRotation().bg; applyBackground();
-    // 標題列（2026-10-22 統一）：房子回選遊戲首頁；⚙ 回送信選單（mail.html 有同一組選項＋封數＋題庫／紀錄連結，功能不減）；? 玩法框
+    // 標題列（2026-10-22 統一）：房子回選遊戲首頁；⚙ 開完整設定；? 玩法框
     document.querySelector('.gh .dino-home').addEventListener('click', event => { event.preventDefault(); Dino.goTo('index.html'); });
-    $('settingsButton').addEventListener('click', () => { Dino.sfx('tap', .5); Dino.goTo('mail.html'); });
+    $('settingsButton').addEventListener('click', () => { Dino.sfx('tap', .5); $('settingsDialog').showModal(); });
     setKidText($('gameTitle'), '注音送信');
     const howto = Dino.howto({ preview: 'mail.html', text: '讀注音，選郵箱。', kid: setKidText, voice: 'mail' });
     $('helpButton').addEventListener('click', () => { Dino.sfx('tap', .5); howto.show(); });
@@ -590,9 +597,21 @@
     $('nextButton').addEventListener('click', next);
     $('replayButton').addEventListener('click', () => { playPrompt(); animate($('replayButton'), { scale: [1, .82, 1.1, 1] }, { duration: dur(.4) }); });
     $('playAgainButton').addEventListener('click', startRound);
-    $('readyOverlay').addEventListener('click', () => {
-      $('readyOverlay').hidden = true; Dino.sfx('pop', .6);
-      howto.first().then(() => { if (state.phase === 'question') playPrompt(); });   // 第一次玩先看玩法＋伊奇念
+    document.querySelectorAll('#readyOverlay [data-fmt]').forEach(button => { setKidText(button, button.textContent.trim()); button.addEventListener('click', () => { Dino.sfx('tap', .5); setSelection({ nextFormat: button.dataset.fmt === 'picture' ? 'picture' : 'zhuyin' }); fitPicksNow(); }); });
+    document.querySelectorAll('#readyOverlay [data-lv]').forEach(button => { if (button.dataset.lv === 'all') setKidText(button, '全部'); button.addEventListener('click', () => {
+      Dino.sfx('tap', .5);
+      setSelection(button.dataset.lv === 'all' ? { nextMode: Dino.taskMode('all') } : { nextMode: Dino.taskMode('level'), nextLevel: clamp(Number(button.dataset.lv) || 1, 1, 3) });
+    }); });
+    $('readyStart').addEventListener('click', () => {
+      const overlay = $('readyOverlay');
+      overlay.hidden = true; Dino.sfx('pop', .6);
+      if (overlay.classList.contains('resume')) { overlay.classList.remove('resume'); playPrompt(); return; }   // 手機擋下自動播音後補點
+      const changed = state.mode !== state.nextMode || state.level !== state.nextLevel || state.format !== state.nextFormat;
+      state.holdAudio = true;
+      const ok = changed || !state.round.length ? startRound() : true;
+      state.holdAudio = false;
+      if (!ok) { overlay.hidden = false; return; }
+      howto.first().then(() => { if (state.phase === 'question' && state.autoAudio) playPrompt(); });   // 第一次玩先看玩法＋伊奇念；按下播放是使用者點擊，手機不會擋
     });
     initDrag();
     addEventListener('resize', layout);

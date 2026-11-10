@@ -25,15 +25,16 @@
   // 分類名單唯一來源：whack_categories.json（yes＝答案、group＝干擾題排除的大類、avoid＝也不拿來當干擾題）
   let CATS = [];
   const setKidText = Dino.kidText({ '請打': ['ㄑㄧㄥˇ', 'ㄉㄚˇ'], '恐龍蛋快打': ['ㄎㄨㄥˇ', 'ㄌㄨㄥˊ', 'ㄉㄢˋ', 'ㄎㄨㄞˋ', 'ㄉㄚˇ'],
-    '聽題目，打對的蛋': ['ㄊㄧㄥ', 'ㄊㄧˊ', 'ㄇㄨˋ', '', 'ㄉㄚˇ', 'ㄉㄨㄟˋ', 'ㄉㄜ˙', 'ㄉㄢˋ'], '知道了': ['ㄓ', 'ㄉㄠˋ', 'ㄌㄜ˙'], '每輪秒數': ['ㄇㄟˇ', 'ㄌㄨㄣˊ', 'ㄇㄧㄠˇ', 'ㄕㄨˋ'] });
+    '聽題目，打對的蛋': ['ㄊㄧㄥ', 'ㄊㄧˊ', 'ㄇㄨˋ', '', 'ㄉㄚˇ', 'ㄉㄨㄟˋ', 'ㄉㄜ˙', 'ㄉㄢˋ'], '知道了': ['ㄓ', 'ㄉㄠˋ', 'ㄌㄜ˙'], '每輪秒數': ['ㄇㄟˇ', 'ㄌㄨㄣˊ', 'ㄇㄧㄠˇ', 'ㄕㄨˋ'],
+    '點一下，開始打蛋！': ['ㄉㄧㄢˇ', 'ㄧ', 'ㄒㄧㄚˋ', '', 'ㄎㄞ', 'ㄕˇ', 'ㄉㄚˇ', 'ㄉㄢˋ', ''] });
   const group = t => t.split('.')[0];
 
-  let allFound = [], round = 0, results = [], score = 0, t0 = 0, timing = false, all = [], cat = null, lastCat = null, yes = [], no = [], spots = [], found = [], gen = 0, hatching = false, nextHatch = 0, sinceHit = 0;
+  let allFound = [], round = 0, results = [], score = 0, t0 = 0, timing = false, all = [], cat = null, lastCat = null, yes = [], no = [], spots = [], found = [], gen = 0, hatching = false, nextHatch = 0, sinceHit = 0, wrongs = 0;
   const inCat = w => cat.yes.includes(w.id);
   const shown = () => spots.filter(s => s.w && (s.state === 'opening' || s.state === 'open')).map(s => s.w);
   // 單張圖或拼圖表（5×2 格）的常見字都能用
   const art = w => (w.image ? `<img alt="" src="${w.image}">` : `<i class="sheet" style="background-image:url('assets/${w.sheet}-grid-v1.jpg');background-position:${(w.cell % 5) * 25}% ${w.cell < 5 ? 0 : 100}%"></i>`);
-  const card = w => { const c = document.createElement('div'); c.className = 'card'; c.innerHTML = art(w); return c; };
+  const card = w => { const c = document.createElement('div'); c.className = 'wcard'; c.innerHTML = art(w); return c; };
   const en = w => Dino.audioPath(w);   // 導演 2026-10-26：打到念英文
 
   const EGG_ZIG = '0,62 12,54 24,64 36,52 48,63 60,51 72,62 84,52 100,60';
@@ -67,7 +68,7 @@
 
   async function open(o, w, my) {
     o.state = 'opening'; o.w = w; o.el.style.zIndex = 100;
-    o.egg.querySelector('.card')?.remove();
+    o.egg.querySelector('.wcard')?.remove();
     const c = card(w); o.egg.append(c);
     await done(o.egg.animate([{ rotate: '0deg' }, { rotate: '-7deg' }, { rotate: '7deg' }, { rotate: '-9deg' }, { rotate: '9deg' }, { rotate: '0deg' }], { duration: R ? 160 : 520, easing: 'ease-in-out' }), R ? 160 : 520);
     if (my !== gen || o.state !== 'opening') return;
@@ -157,12 +158,13 @@
     const w = o.w;
     if (!inCat(w)) {
       Dino.sfx('wrong', .45);
+      if (timing) wrongs++;
       if (timing && score > 0) { score--; minus(o); $('score').textContent = score; }
       Promise.race([Dino.voice(en(w)), wait(2000)]);
       o.egg.animate([{ rotate: '0deg' }, { rotate: '-9deg' }, { rotate: '8deg' }, { rotate: '-5deg' }, { rotate: '0deg' }], { duration: 360, easing: 'ease-in-out' });
       return close(o, true);
     }
-    const my = gen, c = o.egg.querySelector('.card');
+    const my = gen, c = o.egg.querySelector('.wcard');
     found.push(w); allFound.push(w); o.state = 'hatched';
     Dino.sfx('correct', .8);
     await done(c.animate([{ scale: '1' }, { scale: '1.16', offset: .35 }, { scale: '1.16', offset: .7 }, { scale: '1' }], { duration: 220 }), 220);
@@ -234,6 +236,9 @@
       $('got').append(b);
     });
     $('doneTime').textContent = `共打中 ${total} 個`;
+    // 星星（導演 2026-11-10）：看打錯幾次，0–1 三顆、2–4 兩顆、更多一顆；一個都沒打中一顆
+    const stars = total === 0 ? 1 : wrongs <= 1 ? 3 : wrongs <= 4 ? 2 : 1;
+    $('doneStars').innerHTML = [0, 1, 2].map(i => `<span class="${i < stars ? '' : 'off'}">${Dino.icon('star')}</span>`).join('');
     $('doneRounds').innerHTML = '';
     results.forEach(r => { const li = document.createElement('li'); const n = document.createElement('span'); setKidText(n, r.cat.zh, r.cat.zhuyin); li.append(n); li.insertAdjacentHTML('beforeend', `<b>${r.score}</b>`); $('doneRounds').append(li); });
     let marked = false;
@@ -261,7 +266,7 @@
     no = all.filter(w => group(w.topic) !== cat.group && !cat.avoid.includes(w.id) && !Dino.isDino(w) && !/^(number|color|shape)$/.test(w.topic));
   }
   function start() {
-    gen++; hatching = false; timing = false; round = 0; results = []; score = 0; found = []; allFound = []; sinceHit = 0; lastCat = null; Dino.voice.stop();
+    gen++; hatching = false; timing = false; round = 0; results = []; score = 0; wrongs = 0; found = []; allFound = []; sinceHit = 0; lastCat = null; Dino.voice.stop();
     document.querySelectorAll('.fly').forEach(n => n.remove());
     pickCat(); buildField(); renderBar();
     if (!$('start').hidden) return;
@@ -273,14 +278,14 @@
     roundSec = +b.dataset.sec; try { localStorage.setItem('dinopost-egg-sec', roundSec); } catch { /* ok */ }
     Dino.sfx('tap', .5); syncSec(); showTime();
   }));
-  syncSec(); setKidText($('secLabel'), '每輪秒數');
-  $('start').addEventListener('click', e => { if (!e.target.closest('.big')) return;   /* 導演 2026-11-05：只有按到開始鈕才開始 */ $('start').hidden = true; Dino.bgm.stop(); Dino.sfx('tap', .5); start(); });
-  $('done').querySelector('button').addEventListener('click', () => { $('done').hidden = true; Dino.bgm.stop(); Dino.sfx('tap', .5); start(); });
+  syncSec(); setKidText($('secLabel'), '每輪秒數'); setKidText($('startLabel'), '點一下，開始打蛋！');
+  $('start').addEventListener('click', e => { if (!e.target.closest('.start-go')) return;   /* 導演 2026-11-05：只有按到開始鈕才開始 */ $('start').hidden = true; Dino.bgm.stop(); Dino.sfx('tap', .5); HW.first().then(start); });   // 第一次玩先看玩法（本機記住，導演 2026-11-10 統一）
+  $('doneAgain').addEventListener('click', () => { $('done').hidden = true; Dino.bgm.stop(); Dino.sfx('tap', .5); start(); });
   let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { if (!timing) buildField(); }, 300); });
 
   setKidText($('title'), '恐龍蛋快打');
   // 標題列統一（導演 2026-10-29）：? 玩法框、⚙ 回開始畫面（停掉這回合，按開始重來同一分類）
-  const HW = Dino.howto({ preview: 'mole.html', text: '聽題目，打對的蛋', kid: setKidText });
+  const HW = Dino.howto({ preview: 'mole.html', text: '聽題目，打對的蛋', kid: setKidText, voice: 'mole' });
   $('help').addEventListener('click', () => { Dino.sfx('tap', .5); HW.show(); });
   $('menuBtn').addEventListener('click', () => {
     if (!$('start').hidden) return;

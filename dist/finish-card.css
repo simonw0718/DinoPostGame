@@ -1,14 +1,27 @@
 /* 共用完成框（導演 2026-11-06：版面修正要全遊戲一起套用，不各自複製）
    用法：<div id="finish" class="overlay"><div class="card"><img><h2></h2><p class="stars"></p><div class="actions">…</div></div></div>
-   標題太長（含注音）由 shared.js 的 Dino.fitCards 自動縮字，縮到 18px 仍放不下才換行；按鈕永遠在框內 */
-.card{box-sizing:border-box;display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;gap:10px;width:min(92vw,420px);max-width:100%;padding:22px;border:6px solid var(--gold);border-radius:28px;background:var(--cream);text-align:center;box-shadow:0 12px 0 #c89c52;animation:pop .45s cubic-bezier(.2,1.5,.4,1)}
-.card img{height:130px;max-width:100%;object-fit:contain}
-.card h2{box-sizing:border-box;max-width:100%;margin:0;font-size:clamp(24px,6.4vw,38px);white-space:nowrap;display:flex;justify-content:center;align-items:flex-end}
-.card h2.is-wrap{flex-wrap:wrap;white-space:normal}
-.stars{margin:0;color:#f2b945;font-size:44px;letter-spacing:.08em;text-shadow:0 3px 0 #c98a12}
-.stars .off{color:#e6dcc4;text-shadow:none}
-.actions{box-sizing:border-box;display:flex;gap:12px;width:100%;min-width:0}
-.actions button,.actions a{box-sizing:border-box;flex:1 1 0;min-width:0;min-height:54px;display:flex;align-items:center;justify-content:center;padding:4px 8px;border:0;border-radius:16px;font-family:inherit;font-size:clamp(17px,4.8vw,22px);font-weight:1000;text-decoration:none;color:var(--ink);cursor:pointer}
-.actions button{background:linear-gradient(#ffca58,#f6ac34);box-shadow:0 5px 0 #b9792b}
-.actions a{background:#e5f2df;box-shadow:0 5px 0 #a9c8a2}
+   標題太長（含注音）由 shared.js 的 Dino.fitCards 自動縮字，縮到 18px 仍放不下才換行；按鈕永遠在框內
+   導演 2026-11-10：13 款結尾框造型統一，只換主題文字與角色圖。選擇器一律以 .overlay 起頭，避免撞到遊戲自己的 .card（如打蛋快打的字卡）。
+   角色圖跳一下：JS 對 img 加 is-hop（見 path.js finish）；底色／外框變數 --gold／--cream／--ink 由各頁 :root 提供 */
+.overlay{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:16px;background:#0e3a28aa}
+.overlay[hidden]{display:none}
+.overlay .card{box-sizing:border-box;display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;gap:10px;width:min(92vw,420px);max-width:100%;padding:22px;border:6px solid var(--gold);border-radius:28px;background:var(--cream);text-align:center;box-shadow:0 12px 0 #c89c52;animation:pop .45s cubic-bezier(.2,1.5,.4,1)}
+.overlay .card>img,.overlay .card .row img{height:130px;max-width:100%;object-fit:contain}
+.overlay .card h2{box-sizing:border-box;max-width:100%;margin:0;font-size:clamp(24px,6.4vw,38px);white-space:nowrap;display:flex;justify-content:center;align-items:flex-end}
+.overlay .card h2.is-wrap{flex-wrap:wrap;white-space:normal}
+.overlay .stars{margin:0;color:#f2b945;font-size:44px;letter-spacing:.08em;text-shadow:0 3px 0 #c98a12}
+/* 導演 2026-11-10：不顯示灰星，只畫拿到的星星 */
+.overlay .stars .off{display:none}
+.overlay .actions{box-sizing:border-box;display:flex;gap:12px;width:100%;min-width:0}
+.overlay .actions button,.overlay .actions a{box-sizing:border-box;flex:1 1 0;min-width:0;min-height:54px;display:flex;align-items:center;justify-content:center;padding:4px 8px;border:0;border-radius:16px;font-family:inherit;font-size:clamp(17px,4.8vw,22px);font-weight:1000;text-decoration:none;color:var(--ink);cursor:pointer}
+.overlay .actions button{background:linear-gradient(#ffca58,#f6ac34);box-shadow:0 5px 0 #b9792b}
+.overlay .actions a{background:#e5f2df;box-shadow:0 5px 0 #a9c8a2}
 @keyframes pop{from{transform:scale(.85)}}
+.overlay .card img.is-hop{animation:fHop .8s cubic-bezier(.16,1,.3,1) .2s both}
+@media(prefers-reduced-motion:reduce){.overlay .card img.is-hop{animation:none}}
+.overlay .card p{margin:0}
+/* 結尾卡郵票逐顆蓋章（走小路、挖化石共用；JS 對 .fstamp 加 is-on） */
+.overlay .fstamps{display:flex;justify-content:center;gap:6px;width:100%;min-height:44px}
+.overlay .card img.fstamp{flex:0 1 44px;min-width:0;width:44px;height:44px;object-fit:contain;opacity:0;transform:scale(1.8) rotate(-18deg)}
+.overlay .card img.fstamp.is-on{opacity:1;transform:none;animation:fStamp .3s cubic-bezier(.16,1,.3,1)}
+@media(prefers-reduced-motion:reduce){.overlay .card img.fstamp.is-on{animation:fStampR .2s ease-out}}

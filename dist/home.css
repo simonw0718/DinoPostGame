@@ -126,3 +126,17 @@ html[data-intro="pending"] .selector-letter,html[data-intro="pending"] .start-st
 /* 遊戲卡標題放不下時改兩行（home-pages.js 插 .title-br） */
 body[data-page="select"] .game-choice-copy strong.kid-text.two-line{flex-wrap:wrap;justify-content:center;row-gap:2px}
 .game-choice-copy strong .title-br{flex-basis:100%;height:0}
+
+/* 導演 2026-11-10：分類鈕小一點（高度、內距縮小；捲軸模式一次可看到更多顆） */
+.pager .tab{min-height:40px;border-radius:14px}
+.pager[data-fit="scroll"] .tab{padding:3px 10px}
+
+/* 分類頁數圓點（導演 2026-11-10）：分類鈕要左右滑時，顯示共幾類與目前位置 */
+.pager-dots{display:none;justify-content:center;align-items:center;gap:7px;height:10px;margin-top:1px}
+.pager[data-fit="scroll"]+.pager-dots{display:flex}
+.pager-dots i{width:8px;height:8px;border-radius:50%;background:#bbd6b8;transition:width .25s cubic-bezier(.2,.8,.2,1),background-color .25s}
+.pager-dots i.on{width:20px;border-radius:5px;background:#2f9d5a}
+/* 平板：入口卡片的玩法預覽放大（導演 2026-11-10：平板首頁卡片偏小）。預覽內部是固定 px，用 zoom 整塊放大 */
+@media(min-width:681px) and (orientation:portrait){body[data-page="select"] .selector-letter{width:min(650px,88%);right:6%}.pv{zoom:1.45}}
+@media(min-width:681px) and (orientation:landscape) and (min-height:700px){.pv{zoom:1.3}}
+@media(min-width:681px) and (orientation:landscape) and (min-height:700px) and (max-height:840px){.game-choice-copy small{display:none}body[data-page="select"] .start-description{display:none}}

@@ -4,10 +4,10 @@
 /* 找圖片：聽 duck → 4 張圖 → 點中 → 蓋章（3.2s 循環） */
 .pv-match .say{position:absolute;left:50%;top:50%;margin:-11px 0 0 -30px;z-index:2;display:flex;align-items:center;gap:3px;padding:2px 7px 2px 4px;border-radius:99px;background:#2b7751;color:#fff;font:900 12px/1.4 "Naikai",ui-rounded,system-ui,sans-serif;transform-origin:0 50%;animation:pvSay 3.2s infinite}
 .pv-match .say i{display:grid;place-items:center;width:14px;height:14px;border-radius:50%;background:#fff;color:#2b7751;font-style:normal;font-size:8px}
-.pv-match .grid{position:absolute;inset:6px;display:grid;grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(2,1fr);gap:4px}
-.pv-match .grid b{position:relative;display:grid;place-items:center;border-radius:8px;background:#fff;box-shadow:0 2px 0 #d7c79d;animation:pvTile 3.2s infinite}
+.pv-match .grid{position:absolute;inset:6px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:4px}
+.pv-match .grid b{position:relative;display:grid;place-items:center;min-width:0;min-height:0;border-radius:8px;background:#fff;box-shadow:0 2px 0 #d7c79d;animation:pvTile 3.2s infinite}
 .pv-match .grid b:nth-child(2){animation-delay:.05s}.pv-match .grid b:nth-child(3){animation-delay:.1s}.pv-match .grid b:nth-child(4){animation-delay:.15s}
-.pv-match .grid img{height:88%;width:auto;max-width:90%}
+.pv-match .grid img{height:88%;width:auto;max-width:90%;max-height:36px;object-fit:contain}
 .pv-match .grid b.ok{animation:pvTile 3.2s infinite,pvOk 3.2s infinite}
 .pv-match .grid b.ok::after{content:"";position:absolute;inset:-3px;border:3px solid #4fb577;border-radius:10px;opacity:0;animation:pvRing 3.2s infinite}
 .pv .tap{position:absolute;width:20px;height:20px;margin:-10px 0 0 -10px;border-radius:50%;background:rgba(255,255,255,.9);box-shadow:0 0 0 3px rgba(43,119,81,.55),0 3px 6px rgba(0,0,0,.25);opacity:0;pointer-events:none}
@@ -166,15 +166,16 @@
 
 /* 郵票貼字母：航空信封缺一格，c 郵票飛進去（3.2s 循環；2026-11-04 從 spell.css 搬來，首頁入口卡共用） */
 .pv-spell{background:#e6f2dc}
-.pv-spell .pvs-env{position:absolute;left:8px;top:6px;width:108px;height:58px;border:4px solid transparent;border-radius:7px;background:linear-gradient(#fffcf3,#fff8e8) padding-box,repeating-linear-gradient(-45deg,#e0473a 0 5px,#fffdf2 5px 8px,#2f86c4 8px 13px,#fffdf2 13px 16px) border-box}
-.pv-spell .pvs-pic{position:absolute;left:5px;top:6px;width:34px;height:34px;padding:2px;background:#fff;box-shadow:inset 0 0 0 1.5px #e0473a;transform:rotate(-4deg);object-fit:contain}
-.pv-spell .pvs-slot{position:absolute;top:13px;width:18px;height:20px;display:grid;place-items:center;border:1.5px solid #e3bd70;border-radius:4px;background:#fff;color:#17593f;font:1000 13px/1 "Naikai",ui-rounded,system-ui,sans-serif}
-.pv-spell .s1{left:45px;border:1.5px dashed #17593f66;background:#fff3c4;animation:pvsSlot 3.2s infinite}
-.pv-spell .s2{left:66px;color:#2f86c4}.pv-spell .s3{left:87px}
-.pv-spell .pvs-stamp{position:absolute;top:72px;width:20px;height:20px;display:grid;place-items:center;background:#fffdf2;box-shadow:inset 0 0 0 2px #e0473a;color:#17593f;font:1000 13px/1 "Naikai",ui-rounded,system-ui,sans-serif}
+.pv-spell .pvs-env{position:absolute;left:6px;top:6px;width:112px;box-sizing:border-box;height:58px;border:4px solid transparent;border-radius:7px;background:linear-gradient(#fffcf3,#fff8e8) padding-box,repeating-linear-gradient(-45deg,#e0473a 0 5px,#fffdf2 5px 8px,#2f86c4 8px 13px,#fffdf2 13px 16px) border-box}
+.pv-spell .pvs-pic{position:absolute;left:4px;top:6px;width:34px;height:34px;box-sizing:border-box;padding:2px;background:#fff;box-shadow:inset 0 0 0 1.5px #e0473a;transform:rotate(-4deg);object-fit:contain}
+.pv-spell .pvs-slot{position:absolute;box-sizing:border-box;top:13px;width:18px;height:20px;display:grid;place-items:center;border:1.5px solid #e3bd70;border-radius:4px;background:#fff;color:#17593f;font:1000 13px/1 "Naikai",ui-rounded,system-ui,sans-serif}
+.pv-spell .s1{left:44px;border:1.5px dashed #17593f66;background:#fff3c4;animation:pvsSlot 3.2s infinite}
+.pv-spell .s2{left:64px;color:#2f86c4}.pv-spell .s3{left:84px}
+.pv-spell .pvs-stamp{position:absolute;box-sizing:border-box;top:72px;width:20px;height:20px;display:grid;place-items:center;background:#fffdf2;box-shadow:inset 0 0 0 2px #e0473a;color:#17593f;font:1000 13px/1 "Naikai",ui-rounded,system-ui,sans-serif}
 .pv-spell .k{left:30px;transform:rotate(-5deg)}.pv-spell .c{left:52px;animation:pvsFly 3.2s infinite}.pv-spell .o{left:74px;transform:rotate(4deg);box-shadow:inset 0 0 0 2px #2f86c4}
 .pv-spell .tap{left:62px;top:82px;animation:pvsTap 3.2s infinite}
-@keyframes pvsFly{0%,30%{transform:rotate(3deg)}55%,90%{transform:translate(-5px,-53px) scale(.95)}100%{transform:rotate(3deg)}}
+/* 導演 2026-11-10 破圖：c 郵票落點偏左蓋到貓圖、t 格壓到信封邊——信封加寬、全部 border-box、落點對準第一格 */
+@keyframes pvsFly{0%,30%{transform:rotate(3deg)}55%,90%{transform:translate(1px,-49px) scale(.95)}100%{transform:rotate(3deg)}}
 @keyframes pvsSlot{0%,54%{opacity:1}56%,90%{opacity:0}}
 @keyframes pvsTap{0%,15%{opacity:0;transform:scale(1.4)}22%,32%{opacity:1;transform:scale(1)}40%,100%{opacity:0}}
 

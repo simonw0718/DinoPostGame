@@ -209,6 +209,7 @@
     $('finishFlips').textContent = f;
     $('finishActor').src = poseSrc(state.courier, 'cheer');
     $('finishOverlay').hidden = false;
+    { const a = $('finishActor'); a.classList.remove('is-hop'); void a.offsetWidth; a.classList.add('is-hop'); }   // 共用角色跳一下（同走小路）
   }
 
   function startRound() {

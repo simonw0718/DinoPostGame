@@ -8,10 +8,10 @@
   <title>注音送信・恐龍郵局</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="preload" href="assets/fonts/naikai-subset.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="fx.css"><link rel="stylesheet" href="zhuyin-sort.css?v=16"><link rel="stylesheet" href="dino-mode.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css"><link rel="stylesheet" href="howto.css"><link rel="stylesheet" href="preview.css">
+  <link rel="preload" href="assets/fonts/naikai-subset.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="fx.css"><link rel="stylesheet" href="finish-card.css?v=5"><link rel="stylesheet" href="zhuyin-sort.css?v=20"><link rel="stylesheet" href="dino-mode.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css"><link rel="stylesheet" href="howto.css?v=6"><link rel="stylesheet" href="preview.css?v=3">
   <script src="vendor/interact.min.js"></script>
   <script src="vendor/motion.js"></script>
-  <script src="shared.js" defer></script><script src="progress.js" defer></script><script src="stamps-ui.js" defer></script><script src="zhuyin-sort.js?v=16" defer></script>
+  <script src="shared.js" defer></script><script src="progress.js" defer></script><script src="zhuyin-sort.js?v=20" defer></script>
 </head>
 <body>
   <!-- 導演 2026-10-21 核准 mail-sample v10 後套用：紅郵筒之字排（手機 375×812 舞台）／寬螢幕一排版（900×562） -->
@@ -19,7 +19,7 @@
     <header class="gh">
       <a class="dino-home" href="index.html" aria-label="回選遊戲首頁"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.6 1.6 11.4a1 1 0 0 0 1.3 1.5L4.5 11.6V20a1.5 1.5 0 0 0 1.5 1.5h3.8v-5.8a.7.7 0 0 1 .7-.7h3a.7.7 0 0 1 .7.7v5.8H18a1.5 1.5 0 0 0 1.5-1.5v-8.4l1.6 1.3a1 1 0 0 0 1.3-1.5Z"/></svg></a>
       <h1 id="gameTitle" class="gh-title">注音送信</h1>
-      <div class="gh-tools"><button id="helpButton" class="gh-btn" type="button" aria-label="玩法">?</button><button id="settingsButton" class="gh-btn" type="button" aria-label="回送信選單"><svg aria-hidden="true"><use href="icons.svg#ic-gear"/></svg></button></div>
+      <div class="gh-tools"><button id="helpButton" class="gh-btn" type="button" aria-label="玩法">?</button><button id="settingsButton" class="gh-btn" type="button" aria-label="設定"><svg aria-hidden="true"><use href="icons.svg#ic-gear"/></svg></button></div>
     </header>
     <ol id="progress" class="ms-progress" aria-label="送信進度"></ol>
     <div id="play" class="ms-play">
@@ -52,11 +52,15 @@
     </div>
   </div>
 
-  <!-- 手機要先點一下才能出聲（導演 2026-10-21 重新設計）：不用彈窗，遊戲已在背後擺好，整個畫面點哪裡都開始 -->
-  <button id="readyOverlay" class="ready-tap" type="button" hidden aria-label="點一下，開始送信">
-    <span class="ready-go" aria-hidden="true"><span class="ready-ring"></span><span class="ready-ring r2"></span><span class="ready-icon"><svg class="di" aria-hidden="true"><use href="icons.svg#ic-play"/></svg></span></span>
-    <span id="readyTitle" class="ready-label">點一下，開始送信！</span>
-  </button>
+  <!-- B 流程（導演 2026-11-10）：進頁就是遊戲畫面＋開始浮層（選項＋紅色播放鈕）；按播放才開始第一題並播音 -->
+  <div id="readyOverlay" class="ready-tap">
+    <div class="ready-pick" role="group" aria-label="信件內容"><button type="button" data-fmt="zhuyin" aria-pressed="true">看注音</button><button type="button" data-fmt="picture" aria-pressed="false">看圖片</button></div>
+    <div id="levelPick" class="ready-pick" role="group" aria-label="難度"><button type="button" data-lv="all" aria-pressed="true">全部</button><button type="button" data-lv="1" aria-pressed="false">1</button><button type="button" data-lv="2" aria-pressed="false">2</button><button type="button" data-lv="3" aria-pressed="false">3</button></div>
+    <button id="readyStart" class="ready-start" type="button" aria-label="點一下，開始送信">
+      <span class="ready-go" aria-hidden="true"><span class="ready-ring"></span><span class="ready-ring r2"></span><span class="ready-icon"><svg class="di" aria-hidden="true"><use href="icons.svg#ic-play"/></svg></span></span>
+      <span id="readyTitle" class="ready-label">點一下，開始送信！</span>
+    </button>
+  </div>
 
   <dialog id="settingsDialog" class="settings-dialog">
     <div class="dialog-head"><span aria-hidden="true"><svg class="di" aria-hidden="true"><use href="icons.svg#ic-letter"/></svg></span><h2>遊戲設定</h2><button id="closeSettings" class="close-button" type="button" aria-label="關閉設定"><svg class="di" aria-hidden="true"><use href="icons.svg#ic-close"/></svg></button></div>
@@ -76,14 +80,14 @@
     <a class="settings-link" href="match.html?settings=history"><span><strong>作答紀錄</strong><small>查看最近 10 回合</small></span><span aria-hidden="true">›</span></a>
   </dialog>
 
-  <div id="finishOverlay" class="finish-overlay" hidden>
-    <div class="finish-card">
+  <div id="finishOverlay" class="overlay" hidden>
+    <div class="card">
       <img src="assets/dinopost-workmark-stamp-transparent-v1.webp" alt="" class="finish-mark">
+      <h2 id="finishTitle">送信任務完成</h2>
       <p id="finishCopy">信都送到了！</p>
-      <h1 id="finishTitle">送信任務完成</h1>
-      <strong id="finishScore"></strong>
-      <div id="stampSummary" class="stamp-summary" hidden></div>
-      <div class="finish-actions"><button id="playAgainButton" type="button">再送一次</button><a id="finishHome" href="mail.html">回首頁</a></div>
+      <p id="finishStars" class="stars"></p>
+      <p id="finishScore" class="finish-score"></p>
+      <div class="actions"><button id="playAgainButton" type="button">再送一次</button><a id="finishHome" href="index.html">回首頁</a></div>
     </div>
   </div>
 </body>

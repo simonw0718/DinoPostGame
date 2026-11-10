@@ -55,6 +55,7 @@
     '客人都開心了！': ['ㄎㄜˋ', 'ㄖㄣˊ', 'ㄉㄡ', 'ㄎㄞ', 'ㄒㄧㄣ', 'ㄌㄜ˙', ''],
     '還差幾顆滿 10？': ['ㄏㄞˊ', 'ㄔㄚ', 'ㄐㄧˇ', 'ㄎㄜ', 'ㄇㄢˇ', '', '', '', ''],
     '再玩一次': ['ㄗㄞˋ', 'ㄨㄢˊ', 'ㄧ', 'ㄘˋ'], '回首頁': ['ㄏㄨㄟˊ', 'ㄕㄡˇ', 'ㄧㄝˋ'],
+    '數好果子，裝進盒子': ['ㄕㄨˇ', 'ㄏㄠˇ', 'ㄍㄨㄛˇ', 'ㄗ˙', '', 'ㄓㄨㄤ', 'ㄐㄧㄣˋ', 'ㄏㄜˊ', 'ㄗ˙'],
     '簡單': ['ㄐㄧㄢˇ', 'ㄉㄢ'], '普通': ['ㄆㄨˇ', 'ㄊㄨㄥ'], '困難': ['ㄎㄨㄣˋ', 'ㄋㄢˊ'],
     '一盒就夠': ['ㄧ', 'ㄏㄜˊ', 'ㄐㄧㄡˋ', 'ㄍㄡˋ'], '滿 10 個蓋起來': ['ㄇㄢˇ', '', '', '', '', 'ㄍㄜˋ', 'ㄍㄞˋ', 'ㄑㄧˇ', 'ㄌㄞˊ'], '疊好幾盒': ['ㄉㄧㄝˊ', 'ㄏㄠˇ', 'ㄐㄧˇ', 'ㄏㄜˊ']
   };
@@ -518,13 +519,15 @@
     introSeen = true; G.busy = true; G.cid = ROUNDS[G.round].c; placeCust(); $('cust').classList.add('is-leave');
     playIntro(() => newRound());
   }
+  // 玩法框（導演 2026-11-10 統一 B）：第一次按開始先看玩法；? 隨時再看
+  const HW = Dino.howto({ preview: 'orchard.html', text: '數好果子，裝進盒子', kid, voice: 'orchard', onClose: () => { if (G.playing && $('ready').hidden) nudge(); } });
   $('start').addEventListener('click', () => {
     if (G.playing && level === playingLevel) { $('ready').hidden = true; nudge(); mood(); return; }   // 沒換難度：繼續玩
-    begin();
+    $('ready').hidden = true; HW.first().then(begin);
   });
   $('again').addEventListener('click', begin);
   $('menuBtn').addEventListener('click', () => { Dino.sfx('tap', .5); clearTimeout(nudgeT); clearTimeout(moodT); hideHint(); showRule(); $('ready').hidden = false; });
-  $('help').addEventListener('click', () => { Dino.sfx('tap', .5); if (!$('ready').hidden || !$('intro').hidden) return; playIntro().then(() => { if (G.playing) nudge(); }); });
+  $('help').addEventListener('click', () => { Dino.sfx('tap', .5); if (!$('intro').hidden) return; clearTimeout(nudgeT); hideHint(); HW.show(); });
   Dino.menuTaps($('ready')); Dino.menuTaps($('finish'));
   { const k = innerWidth > innerHeight ? 'tablet' : 'phone';                    // 開場與說話用圖先載好，換嘴不閃
     [`intro_back_${k}`, `intro_front_${k}`, ...['happy', 'smug'].flatMap(e => ['closed', 'open', 'wide'].map(m => `intro_kong_${e}_${m}_${k}`)),

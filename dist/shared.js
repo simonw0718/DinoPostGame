@@ -332,7 +332,7 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
       const style = document.createElement('style');
       style.textContent = `.dino-music{position:fixed;left:max(12px,env(safe-area-inset-left));bottom:max(12px,env(safe-area-inset-bottom));z-index:40;width:44px;height:44px;border:3px solid #fffdf2;border-radius:50%;background:#1f6b4b;color:#fff;font:900 22px/1 system-ui;display:grid;place-items:center;padding:0;box-shadow:0 4px 0 #0f3b2a;cursor:pointer}
 .dino-music.off::after{content:"";position:absolute;left:50%;top:50%;width:26px;height:3.5px;margin:-1.75px 0 0 -13px;border-radius:2px;background:#fff;transform:rotate(-45deg);box-shadow:0 0 0 1.5px #9aa79f}
-.dino-music.off{background:#9aa79f;box-shadow:0 4px 0 #6d7a72}.dino-music:active{transform:translateY(3px);box-shadow:0 1px 0 #0f3b2a}`;
+.dino-music[hidden]{display:none}.dino-music.off{background:#9aa79f;box-shadow:0 4px 0 #6d7a72}.dino-music:active{transform:translateY(3px);box-shadow:0 1px 0 #0f3b2a}`;
       document.head.append(style);
       button = document.createElement('button'); button.type = 'button'; button.className = 'dino-music'; button.setAttribute('aria-label', '背景音樂開關');
       button.addEventListener('click', event => {
@@ -379,23 +379,29 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
     'mole.html': `<div class="pv pv-egg" aria-hidden="true"><i class="nest n1"></i><i class="nest n2"></i><div class="card c1"><img src="assets/rebuilt/emoji-6x8-v1/food-broccoli.webp" alt=""></div><div class="card c2"><img src="assets/rebuilt/emoji-6x8-v1/kidapp-sock.webp" alt=""></div><i class="egg g1"></i><i class="egg g2"></i><i class="rim n1"></i><i class="rim n2"></i><b class="x">${icon('close')}</b><i class="tap"></i><span class="seal">OK</span></div>`,
     'spell.html': `<div class="pv pv-spell" aria-hidden="true"><div class="pvs-env"><img class="pvs-pic" src="assets/cards-edge/animal-cat.webp" alt=""><span class="pvs-slot s1"></span><span class="pvs-slot s2">a</span><span class="pvs-slot s3">t</span></div><span class="pvs-stamp k">k</span><span class="pvs-stamp c">c</span><span class="pvs-stamp o">o</span><span class="tap"></span></div>`,
     'climb.html': `<div class="pv pv-climb" aria-hidden="true"><svg viewBox="0 0 124 96"><path class="hill" d="M0 96V58Q30 30 62 22Q94 14 124 30V96Z"/><path class="road" d="M16 86H102Q112 86 112 76Q112 66 102 66H26Q16 66 16 56Q16 46 26 46H90Q100 46 100 36Q100 26 90 26H66"/><g class="cells"><circle cx="16" cy="86" r="3"/><circle cx="44" cy="86" r="3"/><circle cx="72" cy="86" r="3"/><circle cx="102" cy="86" r="3"/><circle cx="84" cy="66" r="3"/><circle cx="56" cy="66" r="3"/><circle cx="28" cy="66" r="3"/><circle cx="40" cy="46" r="3"/><circle cx="68" cy="46" r="3"/><circle cx="94" cy="36" r="3"/></g><g class="tree"><rect x="58" y="6" width="6" height="20" rx="2"/><circle cx="61" cy="8" r="9"/></g><path class="flag" d="M70 26V10M70 10H80L76 14L80 18H70"/></svg><img class="runner" src="assets/cast/iggy__walk_r.webp" alt=""><span class="die">3</span></div>`,
-    'pack.html': `<div class="pv pv-pack" aria-hidden="true"><div class="lawn"><i></i><i></i><i></i><i></i><i></i><i></i></div><img class="dino" src="assets/cast/iggy__hello.webp" alt=""><i class="pbox b1"><i class="env"></i></i><i class="pbox b2"></i><span class="seal">OK</span></div>`,
+    'pack.html': `<div class="pv pv-pack" aria-hidden="true"><div class="lawn"><i></i><i></i><i></i><i></i><i></i><i></i></div><img class="dino" src="assets/cast/xiaokong__hello.webp" alt=""><i class="pbox b1"><i class="env"></i></i><i class="pbox b2"></i><span class="seal">OK</span></div>`,
     'orders.html': `<div class="pv pv-orders" aria-hidden="true"><img class="chick" src="assets/orders/chick_abao__front__stand_happy.webp" alt=""><img class="o1" src="assets/orders/parcel_red.webp" alt=""><img class="o2" src="assets/orders/parcel_yellow.webp" alt=""><img class="o3" src="assets/orders/parcel_blue.webp" alt=""><img class="ink" src="assets/dinopost-workmark-stamp-transparent-v1.webp" alt=""></div>`,
     'orchard.html': `<div class="pv pv-orchard" aria-hidden="true"><img class="kong" src="assets/fruitshop/xiaokong_happy.webp" alt=""><div class="tf"><i class="f1"><img src="assets/fruitshop/fruit_dot.webp" alt=""></i><i class="f2"><img src="assets/fruitshop/fruit_dot.webp" alt=""></i><i class="f3"><img src="assets/fruitshop/fruit_dot.webp" alt=""></i><i class="f4"><img src="assets/fruitshop/fruit_star.webp" alt=""></i><i class="f5"><img src="assets/fruitshop/fruit_star.webp" alt=""></i><i></i><i></i><i></i><i></i><i></i></div><span class="eq"><b class="r">3</b>＋<b class="p">2</b></span></div>`,
     'dig.html': `<div class="pv pv-dig" aria-hidden="true"><svg viewBox="0 0 124 96"><rect class="soil" x="6" y="30" width="80" height="62" rx="10"/><rect class="grass" x="6" y="28" width="80" height="8" rx="4"/><g class="groove"><path d="M30 44L30 80"/><path d="M30 44H66V78L60 82"/></g><g class="groove-in"><path d="M30 44L30 80"/><path d="M30 44H66V78L60 82"/></g><path class="dug d1" pathLength="100" d="M30 44L30 80"/><path class="dug d2" pathLength="100" d="M30 44H66V78L60 82"/><g class="bone"><path class="bo" d="M30 44L30 80"/><path class="bo" d="M30 44H66V78L60 82"/><path class="bi" d="M30 44L30 80"/><path class="bi" d="M30 44H66V78L60 82"/></g><g class="flag"><path d="M30 44V34"/><path class="cloth" d="M30 34l8 3-8 3z"/></g><circle class="tap" r="7"/><image class="kong" href="assets/cast/xiaokong__cheer.webp" x="86" y="50" width="36" height="44"/><g class="fcard"><rect x="-13" y="-14" width="26" height="28" rx="6"/><text y="7">ㄇ</text></g></svg></div>`,
   };
 
+  previews['zhuyin-sort.html'] = previews['mail.html'];   // 首頁入口已改連 zhuyin-sort.html（mail.html 只轉址），預覽沿用
   // 玩法小框框（樣式 howto.css）：preview＝previews 的 key／html 字串／(stage)=>void 自畫；text 用 kid（頁面的 setKidText）加注音。點哪裡都關
   // voice：伊奇念玩法（assets/audio/howto/<voice>.mp3，導演 2026-10-31）——只在這款遊戲「第一次」打開玩法框時念；first()＝第一次玩才跳出（關掉後 resolve）
-  function howto({ preview, text, kid, onClose, voice: voiceId } = {}) {
-    const heardKey = `dino-howto-heard-${voiceId}`;
-    const heard = () => { try { return localStorage.getItem(heardKey) === '1'; } catch { return true; } };
+  function howto({ preview, text, kid, onClose, voice: voiceId, id } = {}) {
+    const seenId = voiceId || id;   // id＝沒有語音的遊戲也能「第一次才跳」（導演 2026-11-10 統一 B 流程）
+    const heardKey = `dino-howto-heard-${seenId}`;
+    const heard = () => { try { return sessionStorage.getItem(heardKey) === '1'; } catch { return true; } };   // 導演 2026-11-10：「第一次」＝每次打開 App（sessionStorage，關掉 App 就重算）
     let speaking = false, closed = null;
     const root = document.createElement('div'); root.className = 'howto'; root.hidden = true;
     root.innerHTML = '<div class="howto-card" role="dialog" aria-label="玩法"><button class="howto-x" type="button" aria-label="關掉">' + icon('close') + '</button><div class="howto-stage"></div><p class="howto-text"></p><button class="howto-ok" type="button">知道了</button></div>';
     document.body.append(root);
     const stage = root.querySelector('.howto-stage'), say = (el, t) => kid ? kid(el, t) : (el.textContent = t);
     say(root.querySelector('.howto-text'), text); say(root.querySelector('.howto-ok'), '知道了');
+    // 玩法句放不下一行時，在逗號後換行，不把詞切一半（導演 2026-11-10 盤點）
+    { const t = root.querySelector('.howto-text'), nodes = [...t.childNodes]; let group = document.createElement('span'); const groups = [group];
+      nodes.forEach(n => { group.append(n); if (/^[，、]/.test(n.textContent.trim())) { group = document.createElement('span'); groups.push(group); } });
+      if (groups.length > 1) { groups.forEach(g => { g.className = 'howto-phrase'; }); t.replaceChildren(...groups.filter(g => g.childNodes.length)); } else t.replaceChildren(...nodes); }
     if (typeof preview === 'function') { stage.classList.add('is-free'); preview(stage); }
     else { stage.innerHTML = previews[preview] || preview || ''; }
     const fit = () => { const pv = stage.querySelector('.pv'); if (pv && stage.clientWidth) pv.style.transform = `scale(${stage.clientWidth / pv.offsetWidth})`; };
@@ -404,13 +410,13 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
     addEventListener('resize', fit);
     function show() {
       root.hidden = false; fit();
-      if (voiceId && !heard()) {
-        try { localStorage.setItem(heardKey, '1'); } catch { /* ok */ }
-        speaking = true; voice(`assets/audio/howto/${voiceId}.mp3`).then(() => { speaking = false; });
+      if (seenId && !heard()) {
+        try { sessionStorage.setItem(heardKey, '1'); } catch { /* ok */ }
+        if (voiceId) { speaking = true; voice(`assets/audio/howto/${voiceId}.mp3`).then(() => { speaking = false; }); }
       }
     }
-    const first = () => voiceId && !heard() ? new Promise(r => { closed = r; show(); }) : Promise.resolve();
-    return { el: root, isOpen: () => !root.hidden, hide, show, first };
+    const first = () => seenId && !heard() ? new Promise(r => { closed = r; show(); }) : Promise.resolve();
+    return { el: root, isOpen: () => !root.hidden, hide, show, first, seen: () => !seenId || heard() };   // seen()：這台裝置看過玩法沒
   }
 
   // 完成框標題自動縮字（導演 2026-11-06：版面修正全遊戲共用）：.overlay 顯示時，.card h2 放不下就逐步縮到 18px，再不行才換行
@@ -423,18 +429,39 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
       if (h.scrollWidth > h.clientWidth + 1) h.classList.add('is-wrap');
     });
   }
+  // 開始選單一行顯示（導演 2026-11-10）：.pick／.ready-pick 不換行，放不下就整排等比例縮小（zoom，最小 0.6）
+  function fitPicks() {
+    document.querySelectorAll('.pick, .ready-pick').forEach(el => {
+      const par = el.parentElement;
+      if (!par || !el.offsetParent || !par.clientWidth) return;   // 隱藏中先不量
+      el.style.zoom = ''; el.style.flexWrap = 'nowrap'; el.style.maxWidth = 'none';
+      const ps = getComputedStyle(par);
+      const avail = Math.min(innerWidth - 20, par.clientWidth - parseFloat(ps.paddingLeft) - parseFloat(ps.paddingRight));
+      const need = Math.max(el.scrollWidth, el.offsetWidth);
+      if (need > avail + 1) el.style.zoom = Math.max(.6, avail / need).toFixed(3);
+    });
+    // 開始鈕下的說明條（.ready-label／.start .label 等）：只看螢幕寬，放不下就縮
+    document.querySelectorAll('.ready-label, .start .label, .start-go .label').forEach(el => {
+      if (!el.offsetParent) return;
+      el.style.zoom = '';
+      const avail = innerWidth - 20, need = el.offsetWidth;
+      if (need > avail + 1) el.style.zoom = Math.max(.6, avail / need).toFixed(3);
+    });
+  }
+  const fitAll = () => { fitCards(); fitPicks(); };
   if (typeof MutationObserver !== 'undefined') {
     const watch = () => {
-      new MutationObserver(list => { if (list.some(m => m.target.classList?.contains('overlay'))) setTimeout(fitCards, 30); })
+      new MutationObserver(list => { if (list.some(m => m.target.matches?.('.overlay, .ready-tap, .layer') || m.target.querySelector?.('.pick, .ready-pick'))) setTimeout(fitAll, 30); })
         .observe(document.body, { attributes: true, attributeFilter: ['hidden'], subtree: true });
       // 框從隱藏變顯示、或寬度改變時都會觸發（比只聽 hidden 可靠：分頁在背景時當下量不到寬度）
       if (typeof ResizeObserver !== 'undefined') { const ro = new ResizeObserver(() => fitCards()); document.querySelectorAll('.overlay .card').forEach(c => ro.observe(c)); }
-      addEventListener('resize', fitCards); document.fonts?.ready.then(fitCards); fitCards();
+      if (typeof ResizeObserver !== 'undefined') { const rp = new ResizeObserver(() => fitPicks()); document.querySelectorAll('.pick, .ready-pick').forEach(c => rp.observe(c.parentElement || c)); }
+      addEventListener('resize', fitAll); document.fonts?.ready.then(fitAll); fitAll(); setTimeout(fitAll, 600);   // 600ms：注音（kidText）排好後再量一次
     };
     if (document.body) watch(); else addEventListener('DOMContentLoaded', watch);
   }
 
-  return { fitCards, voice, characters, storageKeys, shuffle, loadQueue, fitActor, parseZhuyin, makeBpmUnit, kidText, icon,
+  return { fitCards, fitPicks, voice, characters, storageKeys, shuffle, loadQueue, fitActor, parseZhuyin, makeBpmUnit, kidText, icon,
     isDino, isNumber, topicGroup, visualGroup, eligibleWords, loadHistory, saveHistory, selectRound, audioPath, burst, streakThreshold, dinoMode, setDinoMode, taskMode,
     sfx, bgm, menuTaps, goTo, previews, howto, preload, reduced, replay };
 })();

@@ -1,5 +1,5 @@
 const $ = (id) => document.getElementById(id);
-const screens = ['startScreen', 'playScreen', 'resultScreen'];
+const screens = ['playScreen'];   // 開始選單改成蓋在遊戲畫面上的浮層 #readyOverlay（B 流程，導演 2026-11-10）
 const state = { words: [], disabledIds: new Set(), roundChoices: [], count: 5, mode: 'all', level: 1, answerFormat: 'image', autoAudio: true, round: [], pendingRound: [], index: 0, firstTryScore: 0, streak: 0, progressResults: [], attempts: 0, results: [], phase: 'start', audio: null, chineseAudio: null, previewAudio: null, loadedWordId: null, completedRounds: 0, screenCasts: { start: [], play: [], result: [] }, characterQueue: [], history: [] };
 const bankStorageKey = Dino.storageKeys.disabled;
 const characterStorageKey = 'dinopost-character-queue-v2';
@@ -51,7 +51,6 @@ function advanceCast(screen) {
 
 function showScreen(id) {
   screens.forEach(name => $(name).classList.toggle('hidden', name !== id));
-  id === 'startScreen' ? Dino.bgm.start() : Dino.bgm.stop();   // BGM 只在選單
   requestAnimationFrame(fitVisibleActors);
 }
 const actorObserver = new ResizeObserver(() => requestAnimationFrame(fitVisibleActors));
@@ -205,6 +204,8 @@ function playEffect(kind) {
 const uiReadings = {
   '聽單字，': ['ㄊㄧㄥ', 'ㄉㄢ', 'ㄗˋ', ''],
   '聽英文，': ['ㄊㄧㄥ', 'ㄧㄥ', 'ㄨㄣˊ', ''],
+  '點一下，開始找圖片！': ['ㄉㄧㄢˇ', 'ㄧ', 'ㄒㄧㄚˋ', '', 'ㄎㄞ', 'ㄕˇ', 'ㄓㄠˇ', 'ㄊㄨˊ', 'ㄆㄧㄢˋ', ''],
+  '點一下，開始找單字！': ['ㄉㄧㄢˇ', 'ㄧ', 'ㄒㄧㄚˋ', '', 'ㄎㄞ', 'ㄕˇ', 'ㄓㄠˇ', 'ㄉㄢ', 'ㄗˋ', ''],
   '找單字！': ['ㄓㄠˇ', 'ㄉㄢ', 'ㄗˋ', ''],
   '找單字': ['ㄓㄠˇ', 'ㄉㄢ', 'ㄗˋ'],
   '看包裹圖片，選英文單字。': ['ㄎㄢˋ','ㄅㄠ','ㄍㄨㄛˇ','ㄊㄨˊ','ㄆㄧㄢˋ','','ㄒㄩㄢˇ','ㄧㄥ','ㄨㄣˊ','ㄉㄢ','ㄗˋ',''],
@@ -224,6 +225,8 @@ const uiReadings = {
   '選英文': ['ㄒㄩㄢˇ', 'ㄧㄥ', 'ㄨㄣˊ'],
   '找圖片！': ['ㄓㄠˇ', 'ㄊㄨˊ', 'ㄆㄧㄢˋ', ''],
   '聽英文，選圖片。': ['ㄊㄧㄥ', 'ㄧㄥ', 'ㄨㄣˊ', '', 'ㄒㄩㄢˇ', 'ㄊㄨˊ', 'ㄆㄧㄢˋ', ''],
+  '看圖片，選單字。': ['ㄎㄢˋ', 'ㄊㄨˊ', 'ㄆㄧㄢˋ', '', 'ㄒㄩㄢˇ', 'ㄉㄢ', 'ㄗˋ', ''],
+  '難度': ['ㄋㄢˊ', 'ㄉㄨˋ'],
   '選任務': ['ㄒㄩㄢˇ', 'ㄖㄣˋ', 'ㄨˋ'],
   '全部': ['ㄑㄩㄢˊ', 'ㄅㄨˋ'],
   '分難度': ['ㄈㄣ', 'ㄋㄢˊ', 'ㄉㄨˋ'],
@@ -266,27 +269,20 @@ const uiReadings = {
 const setKidText = Dino.kidText(uiReadings);
 function annotateStaticUI() {
   const pairs = [
-    ['startTitleLine1', '聽單字，'], ['startTitleLine2', '找圖片！'],
-    ['startDescription', '聽英文，選圖片。'], ['modeLegend', '選任務'], ['answerLegend', '答題方式'],
+    ['readyTitle', '點一下，開始找圖片！'],
     ['questionTag', '聽單字'], ['resultScoreLabel', '第一次就答對'],
     ['resultCountUnit', '題'],
   ];
   pairs.forEach(([id, label]) => setKidText($(id), label));
-  document.querySelectorAll('.mode-option').forEach(button => {
-    const label = button.querySelector('.mode-label');
-    setKidText(label, label.textContent.trim());
-  });
-  document.querySelectorAll('.answer-option').forEach(button => setKidText(button, button.textContent.trim()));
+  document.querySelectorAll('#readyOverlay [data-answer]').forEach(button => setKidText(button, button.textContent.trim()));
+  setKidText(document.querySelector('#readyOverlay [data-lv="all"]'), '全部');
   setKidText(document.querySelector('#autoAudioControl .switch-label'), '自動發音');
   document.querySelectorAll('.home-label').forEach(label => setKidText(label, '回首頁'));
-  setKidText(document.querySelector('.start-label'), '開始任務');
   setKidText(document.querySelector('.replay-label'), '再聽');
   setKidText(document.querySelector('.again-label'), '再玩一次');
   setKidText($('instruction'), '選圖片');
   setKidText($('resultTitleLine1'), '今天的郵件');
   setKidText($('resultTitleLine2'), '送達啦！');
-  setKidText($('resultCopy'), '你完成任務了！');
-  setKidText($('levelText'), '第一級');
 }
 function primeWordAudio(word) {
   if (!word) return;
@@ -325,7 +321,21 @@ function selectRound(pool) { return Dino.selectRound(pool, state.history, state.
 function prepareRound() {
   if (!state.words.length) return;
   state.pendingRound = selectRound(eligibleWords());
-  if (state.pendingRound.length) primeWordAudio(state.pendingRound[0]);
+  if (state.pendingRound.length && state.phase !== 'question' && state.phase !== 'reveal') primeWordAudio(state.pendingRound[0]);   // 遊戲中改設定不能換掉正在用的音檔
+  if (state.phase === 'start') previewRound();
+}
+// 開始浮層蓋住的遊戲畫面：先把第一題擺好（不播音、不計分），按播放時 startRound 會沿用同一題
+function previewRound() {
+  if (!state.pendingRound.length) return;
+  state.round = state.pendingRound; state.index = 0; state.firstTryScore = 0; state.streak = 0; state.results = []; state.progressResults = [];
+  state.roundChoices = state.words.filter(word => !state.disabledIds.has(word.id));
+  showScreen('playScreen'); renderQuestion(false);
+  state.phase = 'start';   // renderQuestion 會改成 question；浮層還在時維持 start
+  $('choices').querySelectorAll('button').forEach(b => { b.disabled = true; });
+}
+function showReadyOverlay() {
+  $('readyOverlay').hidden = false; Dino.bgm.start();
+  requestAnimationFrame(() => Dino.fitPicks?.());
 }
 function updateScoreText() {
   const label = document.createElement('span');
@@ -490,7 +500,7 @@ function choose(button, id) {
     void $('scoreText').offsetWidth;
     $('scoreText').classList.add('is-stamped');
   }
-  setKidText($('feedback'), DinoStampsUI.message(state.progressResults.at(-1)) || (state.streak >= Dino.streakThreshold ? '連續答對！' : '答對了！'));
+  setKidText($('feedback'), (state.streak >= Dino.streakThreshold ? '連續答對！' : '答對了！'));
   $('instruction').textContent = '';
   for (const slot of ['A', 'B', 'C']) {
     setActorPose($(`playActor${slot}`), 'celebrate');
@@ -511,7 +521,6 @@ function choose(button, id) {
     choice.querySelector('.choice-back').removeAttribute('aria-hidden');
     choice.setAttribute('aria-label', option.id === currentWord().id && option.zhAudio ? `${option.zh}，點一下聽中文` : option.zh);
   });
-  $('choices').querySelector(`.choice[data-word-id="${currentWord().id}"] .choice-back`)?.append(DinoStampsUI.dots(state.progressResults.at(-1)));
   $('nextButton').classList.remove('hidden');
   $('trayBottom').classList.add('has-next');
 }
@@ -548,35 +557,36 @@ function nextQuestion() {
     $('finalScore').textContent = `${state.firstTryScore}／${state.round.length}`;
     state.completedRounds++;
     const alternate = state.completedRounds % 2 === 0;
-    $('resultScreen').classList.toggle('variant-b', alternate);
-    $('resultSymbol').innerHTML = Dino.icon(alternate ? 'letter' : 'star');
     setKidText($('resultTitleLine1'), alternate ? '星星郵件' : '今天的郵件');
     setKidText($('resultTitleLine2'), alternate ? '也送達啦！' : '送達啦！');
-    setKidText($('resultCopy'), alternate ? '星星郵票送給你！' : '你完成任務了！');
-    advanceCast('result');
-    showScreen('resultScreen');
+    // 星星（導演 2026-11-10，同注音送信）：第一次就答對全對三顆、七成以上兩顆、其餘一顆
+    const rate = state.round.length ? state.firstTryScore / state.round.length : 0;
+    const stars = rate >= 1 ? 3 : rate >= .7 ? 2 : 1;
+    $('finishStars').innerHTML = [0, 1, 2].map(i => `<span class="${i < stars ? '' : 'off'}">${Dino.icon('star')}</span>`).join('');
+    const actor = $('finishActor');
+    actor.src = `assets/cast/${shuffle(['iggy', 'feifei', 'xiaokong', 'pairo', 'chick_abao'])[0]}__cheer.webp`;
+    actor.classList.remove('is-hop'); void actor.offsetWidth; actor.classList.add('is-hop');
+    $('finish').hidden = false;
+    if (Dino.fitCards) Dino.fitCards();
     playEffect('finish');
     if (Dino.dinoMode()) setTimeout(() => Dino.sfx('dino-roar', .8), 900);   // 恐龍模式完成回合：恐龍吼一聲
-    DinoStampsUI.showRoundStamps($('stampSummary'), state.progressResults, state.words, albumLink);
     prepareRound();
     return;
   }
   renderQuestion();
 }
 function goHome() {
-  if (state.phase !== 'start') advanceCast('start');
   if (state.audio) { state.audio.pause(); state.audio.currentTime = 0; }
   stopEffect();
   clearParcelDelivery();
   state.phase = 'start';
-  showScreen('startScreen');
+  showReadyOverlay();
   prepareRound();
 }
 function setCount(value) {
   state.count = Math.max(3, Math.min(10, Number(value)));
   $('questionCount').value = String(state.count);
   $('countOutput').value = String(state.count);
-  $('startCount').textContent = String(state.count);
   prepareRound();
 }
 function bankIssue(disabledIds) {
@@ -733,11 +743,9 @@ function saveAnswerSettings() {
 function setAnswerFormat(format) {
   if (!['image', 'english'].includes(format)) return;
   state.answerFormat = format;
-  document.querySelectorAll('.answer-option').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.answer === format)));
-  $('autoAudioControl').classList.remove('hidden');
-  setKidText($('startTitleLine1'), format === 'english' ? '聽英文，' : '聽單字，');
-  setKidText($('startTitleLine2'), format === 'english' ? '找單字！' : '找圖片！');
-  setKidText($('startDescription'), format === 'english' ? '看包裹圖片，選英文單字。' : '聽英文，選圖片。');
+  document.querySelectorAll('#readyOverlay [data-answer]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.answer === format)));
+  setKidText($('readyTitle'), format === 'english' ? '點一下，開始找單字！' : '點一下，開始找圖片！');
+  $('readyStart').setAttribute('aria-label', format === 'english' ? '點一下，開始找單字' : '點一下，開始找圖片');
   saveAnswerSettings();
   prepareRound();
 }
@@ -745,16 +753,25 @@ function setMode(mode) {
   if (!['all', 'level', 'dinosaur'].includes(mode)) return;
   mode = Dino.taskMode(mode);
   state.mode = mode;
-  document.querySelectorAll('.mode-option').forEach(button => {
-    button.setAttribute('aria-pressed', String(button.dataset.mode === mode));
-  });
-  $('levelControl').classList.toggle('hidden', mode !== 'level');
+  renderTaskChips();
   prepareRound();
+}
+// 開始浮層第二排：全部／1／2／3（全部＝mode all；1–3＝mode level＋level）；DINO MODE 題目固定恐龍包，不顯示這排
+function renderTaskChips() {
+  document.querySelectorAll('#readyOverlay [data-lv]').forEach(button => button.setAttribute('aria-pressed', String(state.mode === 'level' ? button.dataset.lv === String(state.level) : button.dataset.lv === 'all')));
+  $('levelPick').hidden = state.mode === 'dinosaur';
+  // ⚙ 設定面板也能換級數（導演 2026-11-10：玩到一半想換不必回首頁）
+  document.querySelectorAll('#settingsDialog [data-set-lv]').forEach(button => button.setAttribute('aria-pressed', String(state.mode === 'level' ? button.dataset.setLv === String(state.level) : button.dataset.setLv === 'all')));
+  $('settingsLevel').hidden = state.mode === 'dinosaur';
+}
+function setTask(value) {
+  if (value === 'all') { setMode('all'); return; }
+  state.level = Math.max(1, Math.min(3, Number(value)));
+  setMode('level');
 }
 function setLevel(value) {
   state.level = Math.max(1, Math.min(3, Number(value)));
-  $('levelSlider').value = String(state.level);
-  setKidText($('levelText'), ['第一級', '第二級', '第三級'][state.level - 1]);
+  renderTaskChips();
   prepareRound();
 }
 function validateWords(words) {
@@ -778,7 +795,6 @@ function validateWords(words) {
 }
 async function init() {
   state.characterQueue = loadCharacterQueue();
-  advanceCast('start');
   annotateStaticUI();
   try { const saved = JSON.parse(localStorage.getItem(answerStorageKey) || 'null');
     if (typeof saved?.autoAudio === 'boolean') state.autoAudio = saved.autoAudio;
@@ -787,7 +803,8 @@ async function init() {
   $('autoAudioToggle').checked = state.autoAudio;
   setAnswerFormat(state.answerFormat);
   setMode(state.mode);
-  $('startButton').disabled = true; document.querySelector('.start-label').textContent = '準備題目中…';
+  $('readyStart').disabled = true; $('levelPick').hidden = false;
+  if (!new URLSearchParams(location.search).has('settings')) showReadyOverlay(); else $('readyOverlay').hidden = true;
   try {
     const response = await fetch('data.json');
     if (!response.ok) throw Error(`HTTP ${response.status}`);
@@ -804,32 +821,35 @@ async function init() {
     loadBankTopics();
     renderBank();
     prepareRound();
-    $('startButton').disabled = false; setKidText(document.querySelector('.start-label'), '開始任務');
+    $('readyStart').disabled = false;
     const settingsPage = new URLSearchParams(location.search).get('settings');
     if (settingsPage === 'bank' || settingsPage === 'history') {
       showSettingsPage(settingsPage);
       $('settingsDialog').showModal();
     }
   } catch (error) {
-    document.querySelector('.start-label').textContent = '題目載入失敗';
+    $('readyTitle').textContent = '題目載入失敗';
     console.error(error);
   }
 }
-const albumLink = DinoStampsUI.albumLink();
-$('resultScreen').querySelector('.result-actions').append(albumLink);
-$('startButton').addEventListener('click', () => howto.first().then(startRound));   // 第一次玩先看玩法＋伊奇念
-$('againButton').addEventListener('click', startRound);
+$('readyStart').addEventListener('click', () => {
+  $('readyOverlay').hidden = true; Dino.bgm.stop(); Dino.sfx('pop', .6);
+  howto.first().then(startRound);   // 第一次玩先看玩法＋伊奇念
+});
+$('againButton').addEventListener('click', () => { $('finish').hidden = true; startRound(); });
 $('audioButton').addEventListener('click', () => playWord());
 $('nextButton').addEventListener('click', nextQuestion);
-$('resultHomeButton').addEventListener('click', goHome);
 // 標題列（2026-10-22 統一）：房子＝回選遊戲首頁；⚙＝遊戲中回開始選單，已在選單則開原本的設定面板（題數／題庫／紀錄）；?＝玩法框
 document.querySelector('.gh .dino-home').addEventListener('click', event => { event.preventDefault(); Dino.goTo('index.html'); });
+let selAtOpen = '';
 $('settingsButton').addEventListener('click', () => {
-  Dino.sfx('tap', .5);
-  if ($('startScreen').classList.contains('hidden')) { goHome(); return; }
+  Dino.sfx('tap', .5); selAtOpen = `${state.mode}:${state.level}`;
   showSettingsPage('main'); $('settingsDialog').showModal();
 });
-const howto = Dino.howto({ preview: 'match.html', text: '聽英文，選圖片。', kid: setKidText, voice: 'match' });
+// 玩法框跟著答題方式換字（導演 2026-11-10）：找圖片＝伊奇念「聽英文，選圖片」；找單字＝伊奇念「包裹上有一張圖……」
+const howtoImage = Dino.howto({ preview: 'match.html', text: '聽英文，選圖片。', kid: setKidText, voice: 'match' });
+const howtoWord = Dino.howto({ preview: 'match.html', text: '看圖片，選單字。', kid: setKidText, voice: 'match-word' });
+const howto = { first: () => (state.answerFormat === 'english' ? howtoWord : howtoImage).first(), show: () => (state.answerFormat === 'english' ? howtoWord : howtoImage).show() };
 $('helpButton').addEventListener('click', () => { Dino.sfx('tap', .5); howto.show(); });
 setKidText($('gameTitle'), '找圖片');
 $('openWordBank').addEventListener('click', () => showSettingsPage('bank'));
@@ -845,7 +865,7 @@ $('openHistory').addEventListener('click', () => showSettingsPage('history'));
 $('backFromHistory').addEventListener('click', () => deepSettings ? leaveDeepSettings() : showSettingsPage('main'));
 $('clearHistory').addEventListener('click', () => { state.history = []; saveHistory(); renderHistory(); prepareRound(); });
 document.querySelectorAll('[data-close-settings]').forEach(button => button.addEventListener('click', () => deepSettings ? leaveDeepSettings() : $('settingsDialog').close()));
-$('settingsDialog').addEventListener('close', () => { if (deepSettings) { leaveDeepSettings(); return; } $('settingsDialog').classList.remove('bank-open'); if (state.phase === 'start') prepareRound(); });
+$('settingsDialog').addEventListener('close', () => { if (deepSettings) { leaveDeepSettings(); return; } $('settingsDialog').classList.remove('bank-open'); if (state.phase === 'start') prepareRound(); else if ((state.phase === 'question' || state.phase === 'reveal') && selAtOpen && selAtOpen !== `${state.mode}:${state.level}`) startRound(); selAtOpen = ''; });   // 遊戲中換了級數：關面板就用新級數重開一回合
 $('bankSearch').addEventListener('input', renderBank);
 $('bankFilter').addEventListener('change', renderBank);
 $('bankTopic').addEventListener('change', renderBank);
@@ -855,11 +875,11 @@ $('resetWordBank').addEventListener('click', () => {
 $('minusButton').addEventListener('click', () => setCount(state.count - 1));
 $('plusButton').addEventListener('click', () => setCount(state.count + 1));
 $('questionCount').addEventListener('input', event => setCount(event.target.value));
-document.querySelectorAll('.mode-option').forEach(button => button.addEventListener('click', () => setMode(button.dataset.mode)));
-document.querySelectorAll('.answer-option').forEach(button => button.addEventListener('click', () => setAnswerFormat(button.dataset.answer)));
+document.querySelectorAll('#readyOverlay [data-lv]').forEach(button => button.addEventListener('click', () => { Dino.sfx('tap', .5); setTask(button.dataset.lv); }));
+document.querySelectorAll('#settingsDialog [data-set-lv]').forEach(button => { setKidText(button, button.textContent.trim()); button.addEventListener('click', () => { Dino.sfx('tap', .5); setTask(button.dataset.setLv); }); });
+setKidText($('settingsLevel').querySelector('legend'), '難度');
+document.querySelectorAll('#readyOverlay [data-answer]').forEach(button => button.addEventListener('click', () => { Dino.sfx('tap', .5); setAnswerFormat(button.dataset.answer); }));
 $('autoAudioToggle').addEventListener('change', event => { state.autoAudio = event.target.checked; saveAnswerSettings(); });
-$('levelSlider').addEventListener('input', event => setLevel(event.target.value));
 window.addEventListener('resize', fitVisibleActors);
 init();
-Dino.menuTaps($('startScreen'));
-if (!$('startScreen').classList.contains('hidden')) Dino.bgm.start();   // 一進頁就是選單
+Dino.menuTaps($('readyOverlay'));

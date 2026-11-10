@@ -6,9 +6,9 @@
 <meta name="theme-color" content="#164d39">
 <title>恐龍蛋快打・恐龍郵局</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="preload" href="assets/fonts/naikai-subset.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="dino-mode.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css">
+<link rel="preload" href="assets/fonts/naikai-subset.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="fx.css"><link rel="stylesheet" href="finish-card.css?v=5"><link rel="stylesheet" href="dino-mode.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css">
 <script src="shared.js"></script>
-<link rel="stylesheet" href="howto.css"><link rel="stylesheet" href="preview.css"><link rel="stylesheet" href="mole.css">
+<link rel="stylesheet" href="howto.css?v=6"><link rel="stylesheet" href="preview.css?v=3"><link rel="stylesheet" href="mole.css?v=2">
 </head>
 <body>
 <div class="shell">
@@ -16,9 +16,9 @@
   <div class="bar"><img class="buddy" id="buddy" alt="" src="assets/cast/iggy__hello.webp"><button class="ask" id="ask" type="button"><span class="q" id="askQ"></span><span class="cat" id="askCat"></span></button><div class="eg" id="eg"></div><div class="clock" id="clockBox"><span id="time">15</span><small>秒</small></div><div class="score" id="scoreBox"><span aria-hidden="true"><svg class="di" aria-hidden="true"><use href="icons.svg#ic-star"/></svg></span><b id="score">0</b></div><div class="dots" id="dots" aria-label="第幾輪"></div></div>
   <main class="stage" id="stage"></main>
 </div>
-<div class="layer" id="start"><div class="pick" id="secPick"><span id="secLabel">每輪秒數</span><button type="button" data-sec="10">10</button><button type="button" data-sec="15">15</button><button type="button" data-sec="20">20</button><button type="button" data-sec="30">30</button></div><button class="big" type="button">點一下開始</button></div>
-<div class="layer intro" id="intro" hidden><div class="lets" id="lets">Let's hit…</div><div class="name"><span class="e" id="introEn"></span><span class="z" id="introZh"></span></div><div class="pics" id="introPics"></div><button class="go" type="button" id="introGo">開始</button></div>
-<div class="layer" id="done" hidden><img class="cheer" alt="" src="assets/cast/iggy__cheer.webp"><div class="newrec" id="doneNew" hidden>新紀錄！</div><div class="big time" id="doneTime"></div><ul class="rounds" id="doneRounds"></ul><ol class="rec" id="doneRec"></ol><div class="got" id="got"></div><button class="big" type="button">再玩一次</button></div>
-<script src="mole.js"></script>
+<div class="layer" id="start"><div class="pick" id="secPick"><span id="secLabel">每輪秒數</span><button type="button" data-sec="10">10</button><button type="button" data-sec="15">15</button><button type="button" data-sec="20">20</button><button type="button" data-sec="30">30</button></div><button class="start-go" type="button"><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M7 4.6v14.8a1 1 0 0 0 1.5.9l12-7.4a1 1 0 0 0 0-1.8l-12-7.4A1 1 0 0 0 7 4.6z"/></svg></span><span class="label" id="startLabel">點一下，開始打蛋！</span></button></div>
+<div class="layer intro" id="intro" hidden><div class="lets" id="lets">Let's hit…</div><div class="name"><span class="e" id="introEn"></span><span class="z" id="introZh"></span></div><div class="pics" id="introPics"></div><button class="go" type="button" id="introGo" aria-label="開始"><svg class="di" aria-hidden="true"><use href="icons.svg#ic-play"/></svg></button></div>
+<div class="overlay" id="done" hidden><div class="card"><img class="cheer" alt="" src="assets/cast/iggy__cheer.webp"><h2 id="doneTime"></h2><p class="stars" id="doneStars"></p><div class="newrec" id="doneNew" hidden>新紀錄！</div><ul class="rounds" id="doneRounds"></ul><ol class="rec" id="doneRec"></ol><div class="got" id="got"></div><div class="actions"><button id="doneAgain" type="button">再玩一次</button><a id="doneHome" href="index.html">回首頁</a></div></div></div>
+<script src="mole.js?v=4"></script>
 </body>
 </html>

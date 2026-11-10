@@ -5,6 +5,7 @@
   // 每回合 5 關，難度＝題庫 tier（tools/gen_pack_levels.py）
   const PLAN = { easy: [1, 1, 1, 2, 2], mid: [1, 2, 2, 3, 3], hard: [2, 3, 3, 4, 4] };
   const CAST = ['iggy', 'feifei', 'xiaokong', 'pairo', 'chick_abao'];
+  const DINOS = ['feifei', 'xiaokong', 'pairo'];
   // 紙箱顏色：底色 c、外框 e
   const BOXES = [['#eaa75f', '#a8662a'], ['#73b9e6', '#2f78ad'], ['#f0908a', '#b8483f'], ['#a5d77c', '#5b9a3c'], ['#c7a4ee', '#7c55b0'], ['#f5cf55', '#b48a17']];
   // 信封：有紙的明暗、信封蓋陰影、鋸齒郵票（每次用不同 id，避免同頁漸層衝突）
@@ -89,7 +90,7 @@
     board.style.setProperty('--rows', lv.rows); board.style.setProperty('--cols', lv.cols);
     board.innerHTML = lv.board.filter(([r, c]) => !G.dinoAt.has(key(r, c)))
       .map(([r, c]) => `<span class="tile v${(r * 7 + c * 3) % 4}" data-k="${key(r, c)}" style="left:calc(${c} * var(--cs));top:calc(${r} * var(--cs))"></span>`).join('');
-    const who = Dino.shuffle(CAST.slice());
+    const who = Dino.shuffle(DINOS.slice());   // 棋盤上只放恐龍（伊奇是人類郵差、小雞阿暴是小雞；導演 2026-11-10）
     G.dinos = lv.dinos.map(([r, c], i) => {
       const el = document.createElement('div'); el.className = 'dino';
       el.style.left = `calc(${c} * var(--cs))`; el.style.top = `calc(${r} * var(--cs))`;
@@ -232,15 +233,14 @@
   Dino.bgm.start(); Dino.menuTaps($('ready')); Dino.menuTaps($('finish'));
 
   const HW = Dino.howto({
-    preview: `<div class="pv pv-pack" aria-hidden="true"><div class="g"><i></i><i></i><i style="visibility:hidden"></i><i></i><i></i><i></i></div><img class="d" src="assets/cast/iggy__hello.webp" alt=""><div class="p">${envSvg('env')}</div><span class="seal">OK</span></div>`,
+    preview: `<div class="pv pv-pack" aria-hidden="true"><div class="g"><i></i><i></i><i style="visibility:hidden"></i><i></i><i></i><i></i></div><img class="d" src="assets/cast/xiaokong__hello.webp" alt=""><div class="p">${envSvg('env')}</div><span class="seal">OK</span></div>`,
     text: '塞滿空地，恐龍旁邊要有信', kid: setKidText, voice: 'pack'
   });
-  let howtoSeen = false;
   $('start').addEventListener('click', () => {
     $('ready').hidden = true; Dino.bgm.stop();
     const fresh = !G.started; G.started = true;
     if (fresh || $('ready').dataset.changed) newGame();
-    if (!howtoSeen) { howtoSeen = true; HW.show(); }
+    if (!HW.seen()) HW.show();   // 第一次玩才跳（本機記住，導演 2026-11-10）
   });
   picks.forEach(b => b.addEventListener('click', () => { $('ready').dataset.changed = '1'; }));
   $('menuBtn').addEventListener('click', () => { if (!G.started) return; Dino.sfx('tap', .5); delete $('ready').dataset.changed; $('ready').hidden = false; Dino.bgm.start(); });

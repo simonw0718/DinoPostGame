@@ -733,6 +733,7 @@
     camera([posOf(winner)]); await say(winner === you ? 'win_you' : 'win_npc', winner === you ? '太棒了！我們先到山頂！' : '對手先到了，我們也到了！', { min: 1500 });
     camera([], { overview: true }); await sleep(900); hideBubble();
     $('finishRow').innerHTML = `<img src="assets/cast/iggy__cheer.webp" alt=""><img src="assets/cast/${npc.def.img}__${npc.def.cheer}.webp" alt="">`;
+    document.querySelectorAll('#finishRow img').forEach((im, i) => { im.classList.remove('is-hop'); void im.offsetWidth; im.style.animationDelay = `${.2 + i * .15}s`; im.classList.add('is-hop'); });   // 共用慶祝：角色跳一下（同走小路）
     $('finishStamps').innerHTML = stamps ? `<img src="assets/dinopost-workmark-stamp-transparent-v1.webp" alt="郵票">× ${stamps}` : '';
     $('finish').hidden = false; running = false; Dino.voice.stop(); Dino.voice(voiceUrl('goal')); setTimeout(() => Dino.bgm.start(), 3500 / FAST);
   }
@@ -786,7 +787,7 @@
     $('menuBtn').addEventListener('click', () => { Dino.sfx('tap', .5); paused = true; $('ready').hidden = false; document.body.classList.add('menu'); Dino.bgm.start(); });
     $('start').addEventListener('click', () => {
       $('ready').hidden = true; $('ready').classList.remove('first'); document.body.classList.remove('menu'); Dino.bgm.stop(); paused = false;
-      if (dirty || !running) newGame();
+      HW.first().then(() => { if (dirty || !running) newGame(); });   // 第一次玩先看玩法（導演 2026-11-10 統一 B）
     });
     $('again').addEventListener('click', () => { $('finish').hidden = true; Dino.bgm.stop(); Dino.voice.stop(); newGame(); });
     const HW = Dino.howto({ preview: stage => {
@@ -795,7 +796,7 @@
       stage.append(c, Object.assign(document.createElement('span'), { innerHTML: '<svg viewBox="0 0 40 40" width="48" height="48"><use href="#i-next"/></svg>' }),
         Object.assign(document.createElement('img'), { src: 'assets/cast/iggy__walk_r.webp', style: 'height:100px' }),
         Object.assign(document.createElement('span'), { innerHTML: '<svg viewBox="0 0 40 64" width="40" height="64"><use href="#i-flag"/></svg>' }));
-    }, text: '擲骰子，走到山頂！', kid, onClose: () => { if (!$('ready').hidden) return; paused = false; } });
+    }, text: '擲骰子，走到山頂！', kid, voice: 'climb', onClose: () => { if (!$('ready').hidden) return; paused = false; } });
     $('help').addEventListener('click', () => { Dino.sfx('tap', .5); paused = true; HW.show(); });
   }
   init();

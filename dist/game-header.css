@@ -13,9 +13,9 @@
 .gh-btn:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
 .gh-btn[hidden]{display:none}
 @media(max-width:680px){.gh{gap:6px}.gh-btn{width:48px;height:48px;border-width:3px;border-radius:16px}.gh-btn svg{width:26px;height:26px}}
-/* 套在 style.css 的 .shell 頁面（找圖片／送信選單／集郵冊）：高度同舊 topbar；亮底頁面用 .gh-light 把標題改深綠 */
+/* 套在 style.css 的 .shell 頁面（找圖片／送信選單／集郵冊）：高度同舊 topbar；亮底頁面用 .gh-light 加深綠帶 */
 .shell>.gh{min-height:84px}
 @media(max-width:680px){.shell>.gh{min-height:56px}}
 @media(max-width:680px) and (max-height:610px){.shell>.gh{min-height:49px}}
-.gh-light .gh-title{color:#18583e;text-shadow:0 2px 0 #fff}
-.gh-light .gh-title .bpm-column{color:#2c7a56}
+/* 導演 2026-11-10：標題列全站統一深色——亮底頁（找圖片／挖化石／集郵冊）加一條撐滿螢幕的深綠帶，字改奶白 */
+.gh-light{background:#164d39;box-shadow:0 0 0 100vmax #164d39;clip-path:inset(0 -100vmax);padding:5px 0;margin-bottom:8px}

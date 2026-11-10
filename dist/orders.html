@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#164d39">
   <title>郵局任務單・恐龍郵局</title>
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="preload" href="assets/fonts/naikai-subset.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="fx.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css"><link rel="stylesheet" href="finish-card.css">
+  <link rel="preload" href="assets/fonts/naikai-subset.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="fx.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="howto.css?v=6"><link rel="stylesheet" href="preview.css?v=3"><link rel="stylesheet" href="game-header.css"><link rel="stylesheet" href="finish-card.css?v=5">
   <script src="shared.js"></script>
   <style>
     /* 郵局任務單 可玩 sample（導演 2026-11-05）
@@ -254,6 +254,7 @@
     const R = {
       '郵局任務單': ['ㄧㄡˊ','ㄐㄩˊ','ㄖㄣˋ','ㄨˋ','ㄉㄢ'],
       '今天的規定': ['ㄐㄧㄣ','ㄊㄧㄢ','ㄉㄜ˙','ㄍㄨㄟ','ㄉㄧㄥˋ'],
+      '看規定，把包裹送給對的人': ['ㄎㄢˋ','ㄍㄨㄟ','ㄉㄧㄥˋ','','ㄅㄚˇ','ㄅㄠ','ㄍㄨㄛˇ','ㄙㄨㄥˋ','ㄍㄟˇ','ㄉㄨㄟˋ','ㄉㄜ˙','ㄖㄣˊ'],
       '今天不收': ['ㄐㄧㄣ','ㄊㄧㄢ','ㄅㄨˋ','ㄕㄡ'],
       '的包裹': ['ㄉㄜ˙','ㄅㄠ','ㄍㄨㄛˇ'],
       '的不收': ['ㄉㄜ˙','ㄅㄨˋ','ㄕㄡ'],
@@ -577,10 +578,14 @@
     document.querySelectorAll('.pick button').forEach(b => b.addEventListener('click', () => {
       document.querySelectorAll('.pick button').forEach(x => x.setAttribute('aria-pressed', x === b)); G.level = +b.dataset.level; Dino.sfx('tap', .5);
     }));
-    $('start').addEventListener('click', () => { $('ready').hidden = true; Dino.bgm.stop(); newDay(); });
+    // 玩法框（導演 2026-11-10 統一 B）：第一次按開始先看玩法；? 先看玩法，關掉再看今天的規定
+    const HW = Dino.howto({ preview: 'orders.html', text: '看規定，把包裹送給對的人', kid: set, voice: 'orders',
+      onClose: () => { if (helpRule && G.rule && $('ready').hidden) showRule(); helpRule = false; } });
+    let helpRule = false;
+    $('start').addEventListener('click', () => { $('ready').hidden = true; Dino.bgm.stop(); HW.first().then(newDay); });
     $('again').addEventListener('click', () => { $('finish').hidden = true; Dino.bgm.stop(); newDay(); });
     $('menuBtn').addEventListener('click', () => { Dino.sfx('tap', .5); Dino.voice.stop(); clearTimeout(idleT); $('ready').hidden = false; Dino.bgm.start(); });
-    $('help').addEventListener('click', () => { if (!G.rule || stage.classList.contains('s-front') || stage.classList.contains('s-rule')) return; Dino.sfx('tap', .5); showRule(); });
+    $('help').addEventListener('click', () => { if (stage.classList.contains('s-front') || stage.classList.contains('s-rule')) return; Dino.sfx('tap', .5); helpRule = true; HW.show(); });
     Dino.menuTaps($('ready')); Dino.menuTaps($('finish'));
     Dino.bgm.start();
     drawStamps();
