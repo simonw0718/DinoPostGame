@@ -68,8 +68,8 @@
       return { ...L, pts, cross: L.cross && tf(L.cross), src: L };
     });
   }
-  const COURIERS = [['chick_abao', 'walk_r'], ['feifei', 'walk_r'], ['iggy', 'walk_r'], ['pairo', 'walk_r'], ['xiaokong', 'run_r']];
-  const FRIENDS = ['chick_abao', 'feifei', 'iggy', 'pairo', 'xiaokong'];
+  const COURIERS = [['chick_abao', 'walk_r'], ['feifei', 'walk_r'], ['iggy', 'walk_r'], ['xiaokong', 'run_r'], ['yuanyuan', 'walk_r'], ['painuo', 'walk_r'], ['shanshan', 'walk_r'], ['shuoshuo', 'walk_r'], ['xiaokai', 'walk_r'], ['tailuo', 'walk_r']];
+  const FRIENDS = ['chick_abao', 'feifei', 'iggy', 'xiaokong', 'yuanyuan', 'painuo', 'shanshan', 'shuoshuo', 'xiaokai', 'tailuo'];
   // 難度（導演 2026-10-22）：路寬＋可走出路外多遠（grace）＋出去後手指最多再走多遠（travel）；困難＝一出去就退回
   // 新手（導演 2026-10-22，不預設）：路更寬、郵差被框在路裡，不扣分不退回；停 3 秒自動再示範
   const MODES = {

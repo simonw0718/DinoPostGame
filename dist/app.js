@@ -564,7 +564,7 @@ function nextQuestion() {
     const stars = rate >= 1 ? 3 : rate >= .7 ? 2 : 1;
     $('finishStars').innerHTML = [0, 1, 2].map(i => `<span class="${i < stars ? '' : 'off'}">${Dino.icon('star')}</span>`).join('');
     const actor = $('finishActor');
-    actor.src = `assets/cast/${shuffle(['iggy', 'feifei', 'xiaokong', 'pairo', 'chick_abao'])[0]}__cheer.webp`;
+    actor.src = `assets/cast/${shuffle(['iggy', 'feifei', 'xiaokong', 'chick_abao', 'yuanyuan', 'painuo', 'shanshan', 'shuoshuo', 'xiaokai', 'tailuo'])[0]}__cheer.webp`;
     actor.classList.remove('is-hop'); void actor.offsetWidth; actor.classList.add('is-hop');
     $('finish').hidden = false;
     if (Dino.fitCards) Dino.fitCards();

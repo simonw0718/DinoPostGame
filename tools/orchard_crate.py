@@ -30,7 +30,7 @@ FRUITS = {
     'flame':  dict(name='火焰果', body=(52, 118, 214), hi=(160, 214, 255)),
     'star':   dict(name='星點果', body=(122, 78, 178), hi=(255, 226, 96)),
     'dot':    dict(name='斑點果', body=(218, 58, 48), hi=(255, 226, 206)),
-    'spike':  dict(name='尖刺果', body=(232, 82, 140), hi=(255, 196, 214)),
+    'spike':  dict(name='尖刺果', body=(246, 190, 38), hi=(255, 240, 176)),   # 導演 2026-11-10：粉紅改黃（跟紅、紫分得開）
     'duo':    dict(name='雙色果', body=(84, 168, 84), hi=(255, 206, 70)),
 }
 
@@ -81,7 +81,7 @@ def make_fruit(kind, size=140, seed=0):
     elif kind == 'dot':            # 淺色斑點（大小不一）
         for ax, ay, rr in ((-.5, -.3, .17), (.15, -.5, .13), (.55, -.15, .16), (-.15, .15, .2), (.45, .45, .13), (-.6, .4, .12), (.05, .62, .1)):
             q.ellipse((c + ax * r - rr * r, c + ay * r - rr * r, c + ax * r + rr * r, c + ay * r + rr * r), fill=hi + (255,))
-    elif kind == 'spike':          # 粉色淡心＋小點
+    elif kind == 'spike':          # 淡心＋小點
         q.ellipse((c - r * .5, c - r * .5, c + r * .5, c + r * .5), fill=hi + (255,))
         for a in range(6):
             q.ellipse((c + r * .27 * math.cos(a) - r * .07, c + r * .27 * math.sin(a) - r * .07, c + r * .27 * math.cos(a) + r * .07, c + r * .27 * math.sin(a) + r * .07), fill=body + (255,))

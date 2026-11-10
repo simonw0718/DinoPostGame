@@ -29,7 +29,12 @@
     { id: 'iggy', idle: 'hello', walk: 'walk_r', cheer: 'cheer' },
     { id: 'chick_abao', idle: 'busy_letter', walk: 'walk_r', cheer: 'cheer' },
     { id: 'xiaokong', idle: 'hello', walk: 'run_r', cheer: 'cheer' },
-    { id: 'pairo', idle: 'hello', walk: 'walk_r', cheer: 'cheer' }
+    { id: 'yuanyuan', idle: 'hello', walk: 'walk_r', cheer: 'cheer' },
+    { id: 'painuo', idle: 'hello', walk: 'walk_r', cheer: 'cheer' },
+    { id: 'shanshan', idle: 'hello', walk: 'walk_r', cheer: 'cheer' },
+    { id: 'shuoshuo', idle: 'hello', walk: 'walk_r', cheer: 'cheer' },
+    { id: 'xiaokai', idle: 'hello', walk: 'walk_r', cheer: 'cheer' },
+    { id: 'tailuo', idle: 'hello', walk: 'walk_r', cheer: 'cheer' }
   ];
   const disabledStorageKey = Dino.storageKeys.disabled;
   const selectionStorageKey = 'dinopost-mail-selection-v1';

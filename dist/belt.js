@@ -43,7 +43,7 @@
     : sym;
   const consonants = new Set([...'ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ']);
   const speeds = [{ name: '慢', k: .55 }, { name: '中', k: .9 }, { name: '快', k: 1.3 }];   // 每秒走幾張郵票寬
-  const couriers = ['chick_abao', 'feifei', 'iggy', 'xiaokong', 'pairo'];
+  const couriers = ['chick_abao', 'feifei', 'iggy', 'xiaokong', 'yuanyuan', 'painuo', 'shanshan', 'shuoshuo', 'xiaokai', 'tailuo'];
   const poseSrc = (id, pose) => `assets/cast/${id}__${pose}.webp`;
   const ROUND = 5;
 

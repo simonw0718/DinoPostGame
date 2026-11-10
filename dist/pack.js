@@ -4,8 +4,8 @@
   const DIRS = [[1, 0], [-1, 0], [0, 1], [0, -1]];
   // 每回合 5 關，難度＝題庫 tier（tools/gen_pack_levels.py）
   const PLAN = { easy: [1, 1, 1, 2, 2], mid: [1, 2, 2, 3, 3], hard: [2, 3, 3, 4, 4] };
-  const CAST = ['iggy', 'feifei', 'xiaokong', 'pairo', 'chick_abao'];
-  const DINOS = ['feifei', 'xiaokong', 'pairo'];
+  const CAST = ['iggy', 'feifei', 'xiaokong', 'chick_abao', 'yuanyuan', 'painuo', 'shanshan', 'shuoshuo', 'xiaokai', 'tailuo'];
+  const DINOS = ['feifei', 'xiaokong', 'yuanyuan', 'painuo', 'shanshan', 'shuoshuo', 'xiaokai', 'tailuo'];
   // 紙箱顏色：底色 c、外框 e
   const BOXES = [['#eaa75f', '#a8662a'], ['#73b9e6', '#2f78ad'], ['#f0908a', '#b8483f'], ['#a5d77c', '#5b9a3c'], ['#c7a4ee', '#7c55b0'], ['#f5cf55', '#b48a17']];
   // 信封：有紙的明暗、信封蓋陰影、鋸齒郵票（每次用不同 id，避免同頁漸層衝突）

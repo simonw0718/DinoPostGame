@@ -6,7 +6,7 @@
   counter_phone.webp／counter_tablet.webp 櫃台（蓋住客人身體；layout.json 記 top）
   cust_<角色>_<反應>.webp                 客人近景（派洛／小雞阿暴／阿慢；happy／surprised／troubled／idle），layout.json cust 記頭部錨點
   xiaokong_<表情>.webp                    小空角落探頭（happy／surprised）
-  basket_<種類>.webp、fruit_<種類>.webp   三個大果籃（dot 紅、star 紫、spike 粉）與單顆果子
+  basket_<種類>.webp、fruit_<種類>.webp   三個大果籃（dot 紅、star 紫、spike 黃）與單顆果子
   intro_back／intro_kong_<表情>_<嘴>／intro_front_<版>.webp  開場全景三層（導演 11-09：全景 → 小空開場白（表情＋說話嘴）→ 推近）
   xiaokong_<表情>_<嘴>.webp              角落小空說話用三種嘴
 盒子、算式條、編號由網頁 CSS 畫（才能逐格動）。來源唯讀；輸出到 dist/assets/fruitshop/。

@@ -53,6 +53,7 @@ button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:tra
 
 .fs-bubble .want{display:flex;align-items:center;gap:calc(6 * var(--u));font-size:calc(var(--h) * .42 * var(--u));font-weight:1000;line-height:1}
 .fs-bubble .want img{width:calc(var(--h) * .55 * var(--u))}
+.fs-bubble.is-three{gap:calc(4 * var(--u))}.fs-bubble.is-three .want{gap:calc(2 * var(--u));font-size:calc(var(--h) * .32 * var(--u))}.fs-bubble.is-three .want img{width:calc(var(--h) * .4 * var(--u))}   /* 困難：三種果子擠進同一個泡泡 */
 .fs-bubble .want.is-dot{color:var(--red)}
 .fs-bubble .want.is-star{color:var(--purple)}
 .fs-bubble .want.is-done{opacity:.45}
@@ -121,6 +122,7 @@ button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:tra
 .fs-choices button:active:not(:disabled){translate:0 calc(var(--d) * .85);transform:perspective(calc(900 * var(--u))) rotateX(var(--rx)) rotateY(var(--ry));transition-duration:.07s}
 .fs-choices button:active:not(:disabled)::before{translate:0 calc(var(--d) * -.85);transition-duration:.07s}
 .fs-choices button:focus-visible{outline:calc(8 * var(--u)) solid #2f9a5c;outline-offset:calc(6 * var(--u))}
+.fs-choices.is-four button{width:23.5%;font-size:calc(var(--h) * .5 * var(--u))}
 .fs-choices button:nth-child(2){animation-delay:.05s}
 .fs-choices button:nth-child(3){animation-delay:.1s}
 .fs-choices button.is-no{animation:wobble .45s ease-in-out 2;opacity:.5;filter:saturate(.4)}

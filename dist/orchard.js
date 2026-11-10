@@ -4,6 +4,7 @@
    玩法：客人點「紅果×a、紫果×b」→ 從果籃把果子「拖」進十格盒的任一格（點一下果籃也行，會自動飛進下一格）。
      果子上不貼編號、不逐一唸數（導演 11-09）。
      ① 十格（a＋b≤10）：放完自動填答並唸出。
+     2026-11-10 導演：三級都不直接給總和（放完自己選數字）；粉果改黃果、三種果子輪流出場；困難改三種果子連加、沒有湊 10 提示、四選一。
      ② 二十格進位：紅果放完先問「還差幾顆滿 10？」→ 點空格數（每點一格出現 1、2…），數完紫果自動補滿、啪一聲蓋蓋；
         剩下的紫果拖進第二盒；放完三選一。
    ④ 客人輪換：派洛（平常）→ 小雞阿暴（急：等太久會跳腳、泡泡抖）→ 阿慢（慢：點頭慢，等太久會打瞌睡，放果子就醒）。
@@ -26,7 +27,8 @@
     for (let i = 0; i <= 24; i++) { const t = i / 24; kf.push({ transform: frame(Math.exp(-4.6 * t) * Math.cos(t * Math.PI * bounce)) }); }
     el.animate(kf, { duration: ms, easing: 'linear' });
   }
-  const KIND_NAME = { dot: '紅果', star: '紫果', spike: '粉果' };
+  const KIND_NAME = { dot: '紅果', star: '紫果', spike: '黃果' };
+  const KCOL = { dot: 'var(--red)', star: 'var(--purple)', spike: '#b07a00' };
 
   // ---------- 客人（④）：size 身高倍率、dx／dy 頭頂右移／下移、face 臉下緣離頭頂多遠（頭高單位；點單泡泡放臉下方不擋臉）、hintMs 閒置多久給手指、moodMs 閒置多久耍個性 ----------
   const CUST = {
@@ -36,11 +38,12 @@
   };
   // 三級難度（導演 11-09 照建議）：開始畫面選，⚙ 可以回來換；一局之內不自動升降級
   const SETS = {
-    easy:   [{ c: 'pairo', a: 3, b: 2 }, { c: 'chick_abao', a: 4, b: 5 }, { c: 'aman', a: 2, b: 6 }],     // 10 以內：一盒
-    normal: [{ c: 'pairo', a: 8, b: 5 }, { c: 'chick_abao', a: 7, b: 6 }, { c: 'aman', a: 6, b: 7 }],     // 11–20：滿 10 蓋盒
-    hard:   [{ c: 'pairo', a: 9, b: 12 }, { c: 'chick_abao', a: 7, b: 15 }, { c: 'aman', a: 6, b: 17 }]    // 20 以上：疊盒
+    easy:   [{ c: 'pairo', n: [3, 2] }, { c: 'chick_abao', n: [4, 5] }, { c: 'aman', n: [2, 6] }],     // 10 以內：一盒
+    normal: [{ c: 'pairo', n: [8, 5] }, { c: 'chick_abao', n: [7, 6] }, { c: 'aman', n: [6, 7] }],     // 11–20：滿 10 蓋盒
+    hard:   [{ c: 'pairo', n: [8, 7, 9] }, { c: 'chick_abao', n: [6, 9, 8] }, { c: 'aman', n: [9, 9, 7] }]    // 20 以上：三種果子連加、沒有湊 10 提示、四選一
   };
-  const RULE = { easy: [3, 2, '一盒就夠'], normal: [8, 5, '滿 10 個蓋起來'], hard: [9, 12, '疊好幾盒'] };
+  const RULE = { easy: [[3, 2], '一盒就夠'], normal: [[8, 5], '滿 10 個蓋起來'], hard: [[8, 7, 9], '疊好幾盒'] };
+  const sum = a => a.reduce((x, y) => x + y, 0);
   const QS = new URLSearchParams(location.search), lvParam = QS.get('lv');
   const LV_KEY = 'dinopost-orchard-level';
   let level = { 1: 'easy', 2: 'normal', 3: 'hard' }[lvParam] || (() => { try { return localStorage.getItem(LV_KEY); } catch { return null; } })() || 'easy';
@@ -54,6 +57,7 @@
     '果子都裝好了！': ['ㄍㄨㄛˇ', 'ㄗ˙', 'ㄉㄡ', 'ㄓㄨㄤ', 'ㄏㄠˇ', 'ㄌㄜ˙', ''],
     '客人都開心了！': ['ㄎㄜˋ', 'ㄖㄣˊ', 'ㄉㄡ', 'ㄎㄞ', 'ㄒㄧㄣ', 'ㄌㄜ˙', ''],
     '還差幾顆滿 10？': ['ㄏㄞˊ', 'ㄔㄚ', 'ㄐㄧˇ', 'ㄎㄜ', 'ㄇㄢˇ', '', '', '', ''],
+    '一共幾顆？': ['ㄧ', 'ㄍㄨㄥˋ', 'ㄐㄧˇ', 'ㄎㄜ', ''],
     '再玩一次': ['ㄗㄞˋ', 'ㄨㄢˊ', 'ㄧ', 'ㄘˋ'], '回首頁': ['ㄏㄨㄟˊ', 'ㄕㄡˇ', 'ㄧㄝˋ'],
     '數好果子，裝進盒子': ['ㄕㄨˇ', 'ㄏㄠˇ', 'ㄍㄨㄛˇ', 'ㄗ˙', '', 'ㄓㄨㄤ', 'ㄐㄧㄣˋ', 'ㄏㄜˊ', 'ㄗ˙'],
     '簡單': ['ㄐㄧㄢˇ', 'ㄉㄢ'], '普通': ['ㄆㄨˇ', 'ㄊㄨㄥ'], '困難': ['ㄎㄨㄣˋ', 'ㄋㄢˊ'],
@@ -83,7 +87,7 @@
   const set = (el, o) => { el.classList.add('at'); for (const k in o) el.style.setProperty('--' + k, o[k]); };
   const anchored = (el, off, x, y, s) => set(el, { x: x + off[0] * s, y: y + off[1] * s, w: off[2] * s });
 
-  const G = { round: 0, r: null, cid: 'pairo', count: {}, busy: true, phase: 'idle', boxes: [], dozing: false, stacked: false, playing: false, kongEmo: 'happy', kongMouth: 'open' };
+  const G = { round: 0, r: null, cid: 'pairo', kinds: ['dot', 'star'], pairs: [], count: { dot: 0, star: 0, spike: 0 }, busy: true, phase: 'idle', boxes: [], dozing: false, stacked: false, playing: false, kongEmo: 'happy', kongMouth: 'open' };
 
   function layout() {
     lay = innerWidth > innerHeight ? 'tablet' : 'phone'; P = LAY[lay];
@@ -92,7 +96,7 @@
     $('sky').src = `${A}sky_${lay}.webp`; $('counter').src = `${A}counter_${lay}.webp`;
     $('counter').style.top = `calc(${S.counter[1]} * var(--u))`;
     placeCust();
-    const [ex, ey, eh] = P.eq, ew = eh * (1.13 * 3 + .6 * 2); set($('eq'), { x: ex - ew / 2, y: ey, w: ew, h: eh });
+    placeEq();
     const [cx, cy, chh] = P.carry; set($('carry'), { x: cx - chh * 5.2, y: cy, w: chh * 10.4, h: chh });
     const [kx, ky, ks] = P.kong; anchored($('kong'), L.xiaokong.happy, kx, ky, ks);
     [...$('baskets').children].forEach((b, i) => {
@@ -102,6 +106,9 @@
     const [qx, qy, qw, qh] = P.choices; set($('choices'), { x: qx, y: qy, w: qw, h: qh });
     placeBoxes();
     if (!$('intro').hidden) setIntro();
+  }
+  function placeEq() {                                   // 算式條寬度跟著加數個數（困難三個加數）
+    const n = (G.r ? G.r.n.length : 2) + 1, [ex, ey, eh] = P.eq, ew = eh * (1.13 * n + .6 * (n - 1)); set($('eq'), { x: ex - ew / 2, y: ey, w: ew, h: eh });
   }
   function placeCust() {
     const c = CUST[G.cid], [px, py, ph] = P.cust, h = ph * c.size;
@@ -115,7 +122,7 @@
   }
   function placeBoxes() {
     const put = (b, [x, y, w]) => { b.style.setProperty('--x', x); b.style.setProperty('--y', y); b.style.setProperty('--w', w); };
-    if (G.stacked) return G.boxes.forEach((b, i) => put(b, i < 2 ? P.stack[i] : P.box1[0]));   // 困難：兩盒疊旁邊，第三盒在中間
+    if (G.stacked) { let j = 0; return G.boxes.forEach(b => put(b, b.classList.contains('is-closed') && j < 2 ? P.stack[j++] : P.box1[0])); }   // 困難：蓋好的盒子疊旁邊，正在裝的在中間
     const spots = G.boxes.length > 1 ? P.box2 : P.box1;
     G.boxes.forEach((b, i) => put(b, spots[i]));
   }
@@ -182,9 +189,13 @@
   }));
   const basketEl = k => $('baskets').querySelector(`[data-kind="${k}"]`);
   function refreshBaskets() {
-    const r = G.r; if (!r) return;
-    basketEl('star').classList.toggle('is-wait', G.count.dot < r.a);      // 先裝紅果，紅果裝滿才換紫果
+    if (!G.r) return;
+    const ci = G.kinds.indexOf(curKind());
+    KINDS.forEach(k => basketEl(k).classList.toggle('is-wait', G.kinds.indexOf(k) > ci && ci >= 0));      // 照點單順序裝：前一種裝滿才換下一種
   }
+  const needOf = k => { const i = G.kinds.indexOf(k); return i < 0 ? 0 : G.r.n[i]; };
+  const curKind = () => G.kinds.find(k => G.count[k] < needOf(k));
+  const total = () => sum(G.r.n);
   const stageXY = e => { const s = stage.getBoundingClientRect(); return [e.clientX - s.left, e.clientY - s.top]; };
   function grab(e, kind) {
     if (G.busy || G.phase !== 'fill') return;
@@ -253,24 +264,24 @@
   const filledIn = box => box.querySelectorAll('.cell[data-kind]').length;
   const activeBox = () => G.boxes.find(b => filledIn(b) < 10);
   const firstEmpty = () => activeBox()?.querySelector('.cell:not([data-kind])');
-  const placedN = () => G.count.dot + G.count.star;
+  const placedN = () => G.count.dot + G.count.star + G.count.spike;
 
   // 放一顆：cell＝拖到的格子（null＝點籃子，自動放下一格）；held＝手上拖著的果子
   async function drop(kind, cell, held) {
     if (G.busy || G.phase !== 'fill') { held?.img.remove(); return; }
     hideHint(); wake();
-    const r = G.r, need = { dot: r.a, star: r.b }[kind];
+    const r = G.r, need = needOf(kind), cur = curKind();
     const [fx, fy, fw] = center(basketEl(kind)), home = [fx, fy - fw * .25];
     G.busy = true;
-    // 不要的果子、紅果還沒裝完就拿紫果、或已經夠了 → 果子飛出去又飛回籃子，客人歪頭（不打叉）
-    if (!need || G.count[kind] >= need || (kind === 'star' && G.count.dot < r.a)) {
+    // 不要的果子、前一種還沒裝完就拿下一種、或已經夠了 → 果子飛出去又飛回籃子，客人歪頭（不打叉）
+    if (!need || kind !== cur) {
       let img = held?.img, at = held?.at;
       if (!held) { const t = center(firstEmpty() || G.boxes.at(-1)); img = await fly(kind, home, [t[0], t[1]], t[2] * .8 || fw * .5); at = [t[0], t[1]]; }
       cust('troubled', 'is-tilt', 1100); kong('surprised', 'is-look', 900); Dino.sfx('pop', .5);
-      const pulse = $('bubble').querySelector(`.want.is-${G.count.dot < r.a ? 'dot' : 'star'}`);
+      const pulse = $('bubble').querySelector(`.want.is-${cur}`);
       if (pulse) Dino.replay(pulse, 'is-pulse');
       await fly(kind, at, home, held?.size || fw * .5, { back: true, img }).then(el => el.remove());
-      if (kind === 'star' && G.count.dot < r.a) Dino.replay(basketEl('star'), 'is-no');
+      if (need && G.count[kind] < need) Dino.replay(basketEl(kind), 'is-no');
       G.busy = false; nudge(); return;
     }
     // 拖到不能放的地方（盒外、已有果子、第一盒還沒滿就放第二盒）→ 安靜飛回籃子
@@ -292,10 +303,10 @@
     refreshBaskets();
     await wait(160);
     G.busy = false;
-    if (kind === 'dot' && done && r.a + r.b > 10) return ask();                 // ① 紅果放完 → 問還差幾顆滿 10
+    if (level === 'normal' && kind === G.kinds[0] && done && total() > 10) return ask();                 // ① 普通：第一種放完 → 問還差幾顆滿 10
     const box = cell.closest('.box');
     if (filledIn(box) === 10 && !box.classList.contains('is-closed')) { G.busy = true; await boxFull(box); G.busy = false; }   // ③ 第二盒也滿了
-    if (placedN() === r.a + r.b) return allIn();
+    if (placedN() === total()) return allIn();
     nudge();
   }
   function fillCell(cell, kind) {
@@ -324,7 +335,7 @@
     cell.innerHTML = `<span class="ghost">${G.asked}</span>`;
     Dino.sfx('tap', .5); nod();
     spring(cell.firstElementChild, v => `scale(${1 + .35 * v})`, 480);
-    const need = 10 - G.r.a;
+    const need = 10 - G.r.n[0], k2 = G.kinds[1];
     if (G.asked < need) return nudge();
     G.busy = true; G.boxes[0].classList.remove('is-asking');
     await wait(300);
@@ -333,19 +344,19 @@
     await wait(700);
     $('baskets').classList.remove('is-away');
     await wait(350);
-    const [fx, fy, fw] = center(basketEl('star')), home = [fx, fy - fw * .25];
+    const [fx, fy, fw] = center(basketEl(k2)), home = [fx, fy - fw * .25];
     const cells = [...G.boxes[0].querySelectorAll('.cell.is-counted')];
     for (const c of cells) {                                              // 紫果一顆接一顆飛進去補滿
-      G.count.star++; c.dataset.kind = 'star';
+      G.count[k2]++; c.dataset.kind = k2;
       const [cx, cy, cw] = center(c);
-      fly('star', home, [cx, cy], cw * .88, { ms: 340 }).then(img => { img.remove(); fillCell(c, 'star'); });
+      fly(k2, home, [cx, cy], cw * .88, { ms: 340 }).then(img => { img.remove(); fillCell(c, k2); });
       await wait(160);
     }
     await wait(420);
-    if (G.count.star === G.r.b) $('bubble').querySelector('.want.is-star').classList.add('is-done');
-    await closeLid(G.boxes[0], `${G.r.a}＋${10 - G.r.a}＝10`);
-    G.phase = 'fill'; G.busy = false;
-    if (placedN() === G.r.a + G.r.b) return allIn();
+    if (G.count[k2] === G.r.n[1]) $('bubble').querySelector(`.want.is-${k2}`).classList.add('is-done');
+    await closeLid(G.boxes[0], `${G.r.n[0]}＋${need}＝10`);
+    G.phase = 'fill'; G.busy = false; refreshBaskets();
+    if (placedN() === total()) return allIn();
     nudge();
   }
 
@@ -362,23 +373,24 @@
   // ③ 困難：第二盒滿了 → 蓋上（10＋10＝20），兩盒縮小疊到旁邊，第三盒滑進中間
   async function boxFull(box) {
     const n = G.boxes.indexOf(box) + 1;
-    await closeLid(box, `${Array(n).fill(10).join('＋')}＝${n * 10}`, n * 10);
-    if (placedN() === G.r.a + G.r.b) return;
+    await closeLid(box, n === 1 ? '滿 10 顆，蓋起來！' : `${Array(n).fill(10).join('＋')}＝${n * 10}`, n * 10);
+    if (placedN() === total()) return;
     G.stacked = true; G.boxes.push(makeBox()); placeBoxes(); Dino.sfx('swoosh', .5);
     await wait(560);
   }
 
   // ---------- 放完 ----------
   async function allIn() {
-    const r = G.r, total = r.a + r.b;
+    const t = total();
     G.phase = 'answer'; hideHint(); clearTimeout(nudgeT); clearTimeout(moodT);
     await wait(500);
-    if (total <= 10) return correct();                       // ① 十格：自動填答並唸出
-    const tens = Math.floor(total / 10) * 10, rest = total - tens;
-    $('carry').textContent = (tens === 10 ? `${r.a}＋${10 - r.a}＝10` : `${Array(tens / 10).fill(10).join('＋')}＝${tens}`) + `，再＋${rest}＝${total}`;
-    Dino.replay($('carry'), 'is-pop');
+    // 導演 11-10：三級都不直接給總和，由小朋友自己算再選數字
+    const tens = Math.floor(t / 10), rest = t - tens * 10, carry = $('carry'); carry.hidden = false;
+    if (t <= 10) kid(carry, '一共幾顆？');
+    else { carry.textContent = [...Array(tens).fill(10), ...(rest ? [rest] : [])].join('＋') + '＝？'; carry.setAttribute('aria-label', '一共幾顆'); }
+    Dino.replay(carry, 'is-pop');
     $('baskets').classList.add('is-away');
-    const opts = Dino.shuffle(total > 20 ? [total - 10, total, total + 10] : [total - 1, total, total + 1]);   // 困難：差 10 的選項，看懂「幾盒＋幾顆」
+    const opts = Dino.shuffle(level === 'hard' ? [t - 10, t - 1, t, t + 1] : [t - 1, t, t + 1]);   // 困難：四選一，差 1 和差 10 都有
     $('choices').replaceChildren(...opts.map(n => {
       const b = document.createElement('button'); b.type = 'button'; b.textContent = n; b.dataset.noPress = '';
       b.addEventListener('pointerdown', e => {                              // 按哪邊就往哪邊沉（立體積木）
@@ -388,13 +400,12 @@
       });
       b.addEventListener('click', () => choose(b, n)); return b;
     }));
-    $('choices').hidden = false;
+    $('choices').classList.toggle('is-four', opts.length > 3); $('choices').hidden = false;
   }
   async function choose(btn, n) {
     if (G.busy || G.phase !== 'answer') return;
-    const total = G.r.a + G.r.b;
     Dino.voice(num(n));
-    if (n === total) { btn.classList.add('is-yes'); return correct(); }
+    if (n === total()) { btn.classList.add('is-yes'); return correct(); }
     G.busy = true; btn.classList.add('is-no'); btn.disabled = true;     // 選錯：不打叉，蓋好的盒子 10、20 跳一下，再陪著接著數（不唸）
     cust('troubled', 'is-tilt', 1600);
     await wait(900);
@@ -409,8 +420,8 @@
     G.busy = false;
   }
   async function correct() {
-    const total = G.r.a + G.r.b;
-    G.busy = true;
+    const total = sum(G.r.n);
+    G.busy = true; $('choices').hidden = true;
     const c = $('eqC'); c.textContent = total; c.classList.add('is-filled');
     spring(c, v => `scale(${1 + .3 * v}) rotate(${-8 * v}deg)`, 620);                                     // 答案像蓋章一樣壓上去
     await wait(150); Dino.voice(num(total));
@@ -432,13 +443,15 @@
     const el = $('cust'); el.classList.remove('is-leave'); el.src = `${A}cust_${G.cid}_happy.webp`; el.alt = CUST[G.cid].name;
     placeCust(); Dino.replay(el, 'is-enter');
     G.count = { dot: 0, star: 0, spike: 0 }; G.phase = 'fill'; G.stacked = false;
-    $('boxes').replaceChildren(); G.boxes = [makeBox()]; if (r.a + r.b > 10) G.boxes.push(makeBox());
+    G.kinds = r.n.length > 2 ? Dino.shuffle(KINDS.slice()) : G.pairs[G.round % 3];   // 三種果子輪流出場（導演 11-10）
+    $('boxes').replaceChildren(); G.boxes = [makeBox()]; if (level === 'normal' && sum(r.n) > 10) G.boxes.push(makeBox());
     placeBoxes();
-    $('eqA').textContent = r.a; $('eqB').textContent = r.b;
-    const c = $('eqC'); c.textContent = '?'; c.classList.remove('is-filled');
+    $('eq').innerHTML = r.n.map((n, i) => `<span class="eq-box" style="color:${KCOL[G.kinds[i]]}">${n}</span>`).join('<span class="eq-op">+</span>') + '<span class="eq-op">=</span><span id="eqC" class="eq-box is-c">?</span>';
+    placeEq();
     $('carry').hidden = true; $('choices').hidden = true; $('baskets').classList.remove('is-away');
-    $('bubble').innerHTML = [['dot', r.a], ['star', r.b]].map(([k, n]) => `<span class="want is-${k}"><img src="${A}fruit_${k}.webp" alt="${KIND_NAME[k]}">×${n}</span>`).join('');
-    $('bubble').setAttribute('aria-label', `${CUST[G.cid].name}要：紅果 ${r.a} 顆、紫果 ${r.b} 顆`);
+    $('bubble').innerHTML = G.kinds.slice(0, r.n.length).map((k, i) => `<span class="want is-${k}" style="color:${KCOL[k]}"><img src="${A}fruit_${k}.webp" alt="${KIND_NAME[k]}">×${r.n[i]}</span>`).join('');
+    $('bubble').classList.toggle('is-three', r.n.length > 2);
+    $('bubble').setAttribute('aria-label', `${CUST[G.cid].name}要：` + r.n.map((n, i) => `${KIND_NAME[G.kinds[i]]} ${n} 顆`).join('、'));
     Dino.replay($('bubble'), 'is-pop');
     [...$('rounds').children].forEach((li, i) => { if (i === G.round) li.className = 'is-now'; });
     refreshBaskets();
@@ -460,7 +473,7 @@
     nudgeT = setTimeout(() => {
       if (G.phase !== 'fill' && G.phase !== 'ask') return;
       if (G.busy) return nudge();
-      const t = G.phase === 'ask' ? G.boxes[0].querySelector('.cell.is-ask') : basketEl(G.count.dot < G.r.a ? 'dot' : 'star');
+      const t = G.phase === 'ask' ? G.boxes[0].querySelector('.cell.is-ask') : basketEl(curKind() || G.kinds[0]);
       if (!t) return;
       const s = stage.getBoundingClientRect(), b = t.getBoundingClientRect();
       hint.style.left = `${(b.left - s.left + b.width / 2) / s.width * 100}%`; hint.style.top = `${(b.top - s.top + b.height * .3) / s.height * 100}%`;
@@ -500,8 +513,8 @@
 
   // ---------- 開始／難度選單／再玩 ----------
   function showRule() {
-    const [a, b, label] = RULE[level], rule = $('rule');
-    rule.innerHTML = `<span class="r"><img src="${A}fruit_dot.webp" alt="紅果">${a}</span>＋<span class="p"><img src="${A}fruit_star.webp" alt="紫果">${b}</span><span class="t"></span>`;
+    const [ns, label] = RULE[level], rule = $('rule');
+    rule.innerHTML = ns.map((n, i) => `<span style="color:${KCOL[KINDS[i]]}"><img src="${A}fruit_${KINDS[i]}.webp" alt="${KIND_NAME[KINDS[i]]}">${n}</span>`).join('＋') + '<span class="t"></span>';
     kid(rule.querySelector('.t'), label);
     document.querySelectorAll('.pick button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lv === level)));
   }
@@ -510,6 +523,7 @@
   function begin() {
     $('ready').hidden = true; $('finish').hidden = true;
     ROUNDS = SETS[level]; playingLevel = level; G.playing = true;
+    G.pairs = Dino.shuffle([[0, 1], [1, 2], [2, 0]]).map(p => Dino.shuffle(p).map(i => KINDS[i]));   // 每局三位客人：三種果子各出現兩次、先後順序隨機
     try { localStorage.setItem(LV_KEY, level); } catch { /* ok */ }
     G.round = Math.min(+QS.get('r') || 0, ROUNDS.length - 1);   // ?r=2 直接從第 3 位客人開始（測試用）
     $('rounds').replaceChildren(...ROUNDS.map(() => document.createElement('li')));

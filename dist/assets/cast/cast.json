@@ -257,50 +257,201 @@
    }
   }
  },
- "pairo": {
-  "height": 1.3,
+ "yuanyuan": {
+  "height": 0.8,
   "poses": {
+   "stand": {
+    "src": "assets/cast/yuanyuan__stand.webp",
+    "ratio": 0.8479,
+    "pose_factor": 1.0418,
+    "card": "matrix:yuanyuan/stand/happy/closed",
+    "sha256": "ff1611102aeb49e509bda74b83657e3667f4f5cbd9eb097b58e9de9d740710bd"
+   },
    "walk_r": {
-    "src": "assets/cast/pairo__walk_r.webp",
-    "ratio": 0.6771,
-    "pose_factor": 1.0,
-    "card": "card:pairo/pairo__right__walk__g02",
-    "sha256": "2c343e08dd4d49a0e3e54e359faa046b63f8496bec0e1e4fbb555fc6a217348c"
-   },
-   "busy_parcel": {
-    "src": "assets/cast/pairo__busy_parcel.webp",
-    "ratio": 0.7417,
-    "pose_factor": 1.0,
-    "card": "card:pairo/pairo__left_3q__hold_parcel__n1",
-    "sha256": "f213b5261840dc016f71ba7a656c3a92cf9e66a5e68c7801ed3a6eb5114a4b98"
-   },
-   "busy_chin": {
-    "src": "assets/cast/pairo__busy_chin.webp",
-    "ratio": 0.6,
-    "pose_factor": 1.0,
-    "card": "card:pairo/pairo__right_3q__hand_chin__g01",
-    "sha256": "3447fb246543441ba7a22c6b100f162c39aa41b66d257b293a4875dbbed97dbf"
-   },
-   "busy_crest": {
-    "src": "assets/cast/pairo__busy_crest.webp",
-    "ratio": 0.5437,
-    "pose_factor": 1.0,
-    "card": "card:pairo/pairo__left_3q__touch_crest__p1",
-    "sha256": "04105c8d771e4fe02ed657c6d4b4ea9ec1560d6795c55325dd92c16f5cefc95a"
+    "src": "assets/cast/yuanyuan__walk_r.webp",
+    "ratio": 0.8479,
+    "pose_factor": 1.0418,
+    "card": "matrix:yuanyuan/walk_a/happy/closed",
+    "sha256": "a8b36aecb29ab425c519b87e73aa38cff406a8e0c1e02f79cd99370f2f888411"
    },
    "hello": {
-    "src": "assets/cast/pairo__hello.webp",
-    "ratio": 0.5542,
-    "pose_factor": 1.0,
-    "card": "card:pairo/pairo__right_3q__wave__g01",
-    "sha256": "397ccdb311b0a607a38fb1968cf7126219064a22a83f7d03dbf6594ee9a48034"
+    "src": "assets/cast/yuanyuan__hello.webp",
+    "ratio": 0.8479,
+    "pose_factor": 1.0418,
+    "card": "matrix:yuanyuan/wave/happy/open",
+    "sha256": "d4c19ffc76f2fd3649774f9ef182ece534f17871fe3007ffd1e10bf88c68b5a5"
    },
    "cheer": {
-    "src": "assets/cast/pairo__cheer.webp",
-    "ratio": 0.6354,
-    "pose_factor": 1.0,
-    "card": "card:pairo/pairo__right_3q__talk_happy__cf1",
-    "sha256": "fca95ab96e3742f8ededef1f05c32ffa141247bf0ef5531b82dd351110e84890"
+    "src": "assets/cast/yuanyuan__cheer.webp",
+    "ratio": 0.8479,
+    "pose_factor": 1.0418,
+    "card": "matrix:yuanyuan/cheer/happy/open",
+    "sha256": "7c3c2b7ff821444929b00da76df5b5678a1c070655addeb06f068f68adc35779"
+   }
+  }
+ },
+ "painuo": {
+  "height": 0.9,
+  "poses": {
+   "stand": {
+    "src": "assets/cast/painuo__stand.webp",
+    "ratio": 1.0854,
+    "pose_factor": 1.0392,
+    "card": "matrix:painuo/stand/happy/closed",
+    "sha256": "d7e393d73afc38f45e38db1bdbb0cbdff761149143d2193fdd8cdac8dc81cc0a"
+   },
+   "walk_r": {
+    "src": "assets/cast/painuo__walk_r.webp",
+    "ratio": 1.0854,
+    "pose_factor": 1.0392,
+    "card": "matrix:painuo/walk_a/happy/closed",
+    "sha256": "ae3f45710c19e4db8d2036f8c69a99034ed38026b4e59ed1bd5059ffacc86945"
+   },
+   "hello": {
+    "src": "assets/cast/painuo__hello.webp",
+    "ratio": 1.0854,
+    "pose_factor": 1.0392,
+    "card": "matrix:painuo/wave/happy/open",
+    "sha256": "6530320def860e3af0eaebcb363d882be83d8bb74a2a0469450e5bed901c604e"
+   },
+   "cheer": {
+    "src": "assets/cast/painuo__cheer.webp",
+    "ratio": 1.0854,
+    "pose_factor": 1.0392,
+    "card": "matrix:painuo/cheer/happy/open",
+    "sha256": "d1ed461201582e8476f2fc25897877d673a5c8b891285ccfe5727d9d341a4e91"
+   }
+  }
+ },
+ "shanshan": {
+  "height": 0.85,
+  "poses": {
+   "stand": {
+    "src": "assets/cast/shanshan__stand.webp",
+    "ratio": 1.4333,
+    "pose_factor": 1.0419,
+    "card": "matrix:shanshan/stand/happy/closed",
+    "sha256": "d45041267d2ac19853e6a3e56fc22991e176f61c6fd1a8bd28cb59e419cb0781"
+   },
+   "walk_r": {
+    "src": "assets/cast/shanshan__walk_r.webp",
+    "ratio": 1.4333,
+    "pose_factor": 1.0419,
+    "card": "matrix:shanshan/walk_a/happy/closed",
+    "sha256": "36781af56772e7947847ba2e1d244f5191e214ffbd6823c5370523cd2300503d"
+   },
+   "hello": {
+    "src": "assets/cast/shanshan__hello.webp",
+    "ratio": 1.4333,
+    "pose_factor": 1.0419,
+    "card": "matrix:shanshan/wave/happy/open",
+    "sha256": "fea7421409db0e31b45cac0e0b89282ac6d1d1f5d1093b2e5c12b013a27dc690"
+   },
+   "cheer": {
+    "src": "assets/cast/shanshan__cheer.webp",
+    "ratio": 1.4333,
+    "pose_factor": 1.0419,
+    "card": "matrix:shanshan/cheer/happy/open",
+    "sha256": "c4220cf0c2d6e059c2e845a7c8e2d434167b14e11405770473e88d627f826e6d"
+   }
+  }
+ },
+ "shuoshuo": {
+  "height": 0.9,
+  "poses": {
+   "stand": {
+    "src": "assets/cast/shuoshuo__stand.webp",
+    "ratio": 1.2312,
+    "pose_factor": 1.0443,
+    "card": "matrix:shuoshuo/stand/happy/closed",
+    "sha256": "bcdd88572b5747d8cad3602ae58fe85e2de23ca98c75815cbac33402b13f9230"
+   },
+   "walk_r": {
+    "src": "assets/cast/shuoshuo__walk_r.webp",
+    "ratio": 1.2312,
+    "pose_factor": 1.0443,
+    "card": "matrix:shuoshuo/walk_a/happy/closed",
+    "sha256": "882daf2326b5b1eb330032cde59f743395f40d5c79a3d1fb87e4924779d4b208"
+   },
+   "hello": {
+    "src": "assets/cast/shuoshuo__hello.webp",
+    "ratio": 1.2312,
+    "pose_factor": 1.0443,
+    "card": "matrix:shuoshuo/wave/happy/open",
+    "sha256": "42d5349cacdad6a5e2c7167296e0c72e833acf6eb0aeaae8efa974cc62ff2ca7"
+   },
+   "cheer": {
+    "src": "assets/cast/shuoshuo__cheer.webp",
+    "ratio": 1.2312,
+    "pose_factor": 1.0443,
+    "card": "matrix:shuoshuo/cheer/happy/open",
+    "sha256": "d7aef832f0fe14e40658ba77f981a414843b42199c4a4081e832f060f1872fee"
+   }
+  }
+ },
+ "xiaokai": {
+  "height": 0.6,
+  "poses": {
+   "stand": {
+    "src": "assets/cast/xiaokai__stand.webp",
+    "ratio": 1.6,
+    "pose_factor": 1.1888,
+    "card": "matrix:xiaokai/stand/happy/closed",
+    "sha256": "39c9edfc93c8fb17149e376d3154c35e9db2b641ba28477d5367e116c3cf64c4"
+   },
+   "walk_r": {
+    "src": "assets/cast/xiaokai__walk_r.webp",
+    "ratio": 1.6,
+    "pose_factor": 1.1888,
+    "card": "matrix:xiaokai/walk_a/happy/closed",
+    "sha256": "41fe030543e497df171ee6ab5111ea3ef3b8120389149aeb3928062ae365419d"
+   },
+   "hello": {
+    "src": "assets/cast/xiaokai__hello.webp",
+    "ratio": 1.6,
+    "pose_factor": 1.1888,
+    "card": "matrix:xiaokai/wave/happy/open",
+    "sha256": "994c551a578441ad63765c8dada1c55430f46e899e188096770b581a0ae1d0ff"
+   },
+   "cheer": {
+    "src": "assets/cast/xiaokai__cheer.webp",
+    "ratio": 1.6,
+    "pose_factor": 1.1888,
+    "card": "matrix:xiaokai/cheer/happy/open",
+    "sha256": "cb29e537d0cb508a3f8d5a7e86d3583e2602c2bdbd42d1ba4c7ae4cd96aec65a"
+   }
+  }
+ },
+ "tailuo": {
+  "height": 1.0,
+  "poses": {
+   "stand": {
+    "src": "assets/cast/tailuo__stand.webp",
+    "ratio": 0.9229,
+    "pose_factor": 1.0662,
+    "card": "matrix:tailuo/stand/happy/closed",
+    "sha256": "4dfdd510c453f63f7096760bd198447fa1bf974b52152184f5d977308cd82015"
+   },
+   "walk_r": {
+    "src": "assets/cast/tailuo__walk_r.webp",
+    "ratio": 0.9229,
+    "pose_factor": 1.0662,
+    "card": "matrix:tailuo/walk_a/happy/closed",
+    "sha256": "8eb3f4ff6b5b9985f1ce54e76835fb149275c63236bd5d247bad4380f0fef386"
+   },
+   "hello": {
+    "src": "assets/cast/tailuo__hello.webp",
+    "ratio": 0.9229,
+    "pose_factor": 1.0662,
+    "card": "matrix:tailuo/wave/happy/open",
+    "sha256": "6201c595913854198fff3d83a7d6ad493154126e74a139d5363b4d00395d984a"
+   },
+   "cheer": {
+    "src": "assets/cast/tailuo__cheer.webp",
+    "ratio": 0.9229,
+    "pose_factor": 1.0662,
+    "card": "matrix:tailuo/cheer/happy/open",
+    "sha256": "969fec1ecd723458d9d392350c2d4b24dc7f7c505618be2dfbe23f9d418a514c"
    }
   }
  }

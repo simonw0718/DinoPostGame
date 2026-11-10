@@ -48,7 +48,7 @@
   const sound = k => `assets/audio/phonics/${k}.mp3`;
   const playSound = k => k ? play(sound(k)) : Promise.resolve();   // 尾巴不發音的 e 不念
   const wordAudio = w => `assets/audio/${w.id}.mp3`;
-  const couriers = ['chick_abao', 'feifei', 'iggy', 'xiaokong', 'pairo'];
+  const couriers = ['chick_abao', 'feifei', 'iggy', 'xiaokong', 'yuanyuan', 'painuo', 'shanshan', 'shuoshuo', 'xiaokai', 'tailuo'];
   const poseSrc = (id, pose) => `assets/cast/${id}__${pose}.webp`;
   const ROUND = 6;
 

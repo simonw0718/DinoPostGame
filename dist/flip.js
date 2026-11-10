@@ -27,7 +27,7 @@
   };
   const setKidText = Dino.kidText(uiReadings);
 
-  const couriers = ['chick_abao', 'feifei', 'iggy', 'xiaokong', 'pairo'];
+  const couriers = ['chick_abao', 'feifei', 'iggy', 'xiaokong', 'yuanyuan', 'painuo', 'shanshan', 'shuoshuo', 'xiaokai', 'tailuo'];
   const poseSrc = (id, pose) => `assets/cast/${id}__${pose}.webp`;
   const prefsKey = 'dinopost-flip-v1';   // 導演 2026-10-21：預設 8 對（可選 6／10）、只混在一起、角色每回合隨機
   const prefs = (() => {
