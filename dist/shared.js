@@ -461,6 +461,28 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
     if (document.body) watch(); else addEventListener('DOMContentLoaded', watch);
   }
 
+  // 手機端快取（sw.js，導演 2026-11-10 切頁卡頓）：本機開發不啟用（?sw=1 可強制試）；?fresh=1 清掉快取重開
+  (() => {
+    if (!('serviceWorker' in navigator)) return;
+    const q = new URLSearchParams(location.search), local = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+    if (q.has('fresh')) {
+      Promise.all([caches.keys().then(ks => Promise.all(ks.map(k => caches.delete(k)))), navigator.serviceWorker.getRegistrations().then(rs => Promise.all(rs.map(r => r.update().catch(() => {}))))])
+        .catch(() => {}).then(() => { q.delete('fresh'); location.replace(location.pathname + (q.size ? '?' + q : '')); });
+      return;
+    }
+    if (local && !q.has('sw') && !sessionStorage.getItem('dinopost-sw')) return;
+    if (local) sessionStorage.setItem('dinopost-sw', '1');
+    addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+      // 首頁（有遊戲入口連結的頁）：閒下來時請 sw 把各遊戲頁先抓好
+      const warm = () => {
+        const pages = [...new Set([...document.querySelectorAll('a[href]')].map(a => a.href.split(/[?#]/)[0]).filter(h => h.startsWith(location.origin) && /\.html$/.test(h)))];
+        if (pages.length > 3) navigator.serviceWorker.ready.then(reg => reg.active?.postMessage({ type: 'warm', pages: [...pages, ...['data.json', 'assets/cast/cast.json', 'icons.svg'].map(f => new URL(f, location.href).href)] })).catch(() => {});
+      };
+      setTimeout(warm, 2500);
+    });
+  })();
+
   return { fitCards, fitPicks, voice, characters, storageKeys, shuffle, loadQueue, fitActor, parseZhuyin, makeBpmUnit, kidText, icon,
     isDino, isNumber, topicGroup, visualGroup, eligibleWords, loadHistory, saveHistory, selectRound, audioPath, burst, streakThreshold, dinoMode, setDinoMode, taskMode,
     sfx, bgm, menuTaps, goTo, previews, howto, preload, reduced, replay };
