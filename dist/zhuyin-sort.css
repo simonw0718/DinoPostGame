@@ -215,13 +215,9 @@ html.wide .ms-shell{width:100%}
 .mail-auto-control input:checked+.switch-track:after{transform:translateX(22px)}
 .mail-auto-control input:focus-visible+.switch-track{outline:4px solid #eaa52a;outline-offset:3px}
 .mail-count-label{display:block;margin:10px 0 3px;color:#315d43;font-weight:900}.mail-count-label+input{width:100%;accent-color:#277b54}
-/* U1 page transitions: same-origin page changes cross-fade and slide; browsers without support switch instantly. */
-@view-transition{navigation:auto}
-::view-transition-old(root){animation:dinoPageOut .28s ease-in both}
-::view-transition-new(root){animation:dinoPageIn .38s cubic-bezier(.2,.8,.25,1) both}
+/* 換頁不做淡入淡出（導演 2026-11-10：新頁還沒排好時會看到兩頁半透明疊在一起）；瀏覽器會留著舊頁直到新頁畫好再直接換 */
 
 
-@media(prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}}
 .ms-progress.many{gap:4px;padding:7px 9px}.ms-progress.many li{width:18px;height:22px}
 .ready-label.kid-text{display:inline-flex;flex-wrap:nowrap}
 .mail-format-picker{border:0;padding:0;margin:8px 0 10px}.mail-format-picker legend{margin-bottom:7px;color:#315d43;font-weight:900}

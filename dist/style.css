@@ -306,13 +306,9 @@ button,.choice,.mode-option,.settings-link{touch-action:manipulation}
   .play-screen .tray-bottom{min-height:45px}
 }
 
-/* U1 page transitions: same-origin page changes cross-fade and slide; browsers without support switch instantly. */
-@view-transition{navigation:auto}
-::view-transition-old(root){animation:dinoPageOut .28s ease-in both}
-::view-transition-new(root){animation:dinoPageIn .38s cubic-bezier(.2,.8,.25,1) both}
+/* 換頁不做淡入淡出（導演 2026-11-10：新頁還沒排好時會看到兩頁半透明疊在一起）；瀏覽器會留著舊頁直到新頁畫好再直接換 */
 
 
-@media(prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}}
 
 /* 看圖片選單字（導演 2026-10-21）：題目圖要完整看見。圖放進大張郵票框，膠帶只貼在框外角落，單字卡改矮。 */
 .is-picture-prompt .question-card{min-height:0;padding:12px 14px 16px}
