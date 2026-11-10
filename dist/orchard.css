@@ -113,7 +113,7 @@ button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:tra
 .basket{touch-action:none;position:absolute;left:calc(var(--x) * var(--u));top:calc(var(--y) * var(--u));width:calc(var(--w) * var(--u));padding:0;border:0;background:none;pointer-events:auto;transform-origin:50% 100%}
 .basket img{display:block;width:100%;pointer-events:none;filter:drop-shadow(0 calc(10 * var(--u)) calc(8 * var(--u)) #3a240e55)}
 .basket:active img{filter:drop-shadow(0 calc(4 * var(--u)) calc(4 * var(--u)) #3a240e66)}
-.basket.is-wait{filter:saturate(.45) brightness(.92)}
+/* 等待中的籃子不變色（導演 2026-11-11：看起來像果子變深色）；is-wait 只留作狀態標記 */
 .basket.is-no{animation:wobble .45s ease-in-out 2}
 
 /* 三選一（放完後出現在果籃的位置＝拇指區） */
