@@ -7,10 +7,16 @@
 html,body{height:100%;margin:0}
 body{background:#d6a668;overflow:hidden;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.fs-shell{display:flex;flex-direction:column;gap:10px;height:100svh;padding:max(10px,env(safe-area-inset-top)) 14px max(10px,env(safe-area-inset-bottom));background:linear-gradient(#7fc4ea,#7fc4ea 30%,#d6a668 30%)}
+.fs-shell{display:flex;flex-direction:column;gap:10px;height:100svh;padding:max(10px,env(safe-area-inset-top)) 14px max(10px,env(safe-area-inset-bottom));background:#7fc4ea}
 @media(max-width:680px){.fs-shell{padding-left:8px;padding-right:8px;gap:6px}}
 .fs-shell>.gh{width:100%;max-width:1400px;margin:0 auto}   /* 頁首同其他遊戲：版面最上方一條（導演 11-09） */
 .fs-main{flex:1;min-height:0;display:grid;place-items:center;container-type:size}
+/* 螢幕比例跟舞台不合時（視窗、摺疊機、橫向手機）兩側留白：鋪一層同一張場景的模糊放大版，不再出現天空／沙地對不上的色塊邊框（導演 2026-11-10） */
+.fs-main{position:relative}
+.fs-main::before{content:"";position:absolute;inset:0 -14px -40px;z-index:0;background:url(assets/fruitshop/intro_back_phone.webp) center/cover;filter:blur(18px) saturate(.9) brightness(.94);transform:scale(1.08)}
+.fs-main:has(.fs-stage[data-lay=tablet])::before{background-image:url(assets/fruitshop/intro_back_tablet.webp)}
+.fs-stage{z-index:1;box-shadow:0 6px 24px #3a240e40}
+.fs-shell{overflow:hidden}
 .fs-stage{--W:1080;--H:2340;position:relative;width:min(100cqw,calc(100cqh * var(--W) / var(--H)));border-radius:18px;aspect-ratio:var(--W)/var(--H);overflow:hidden;container-type:inline-size;touch-action:manipulation;background:#d6a668}
 .fs-stage[data-lay=tablet]{--W:2048;--H:1536}
 .fs-stage>*{position:absolute;--u:calc(100cqw / var(--W))}
