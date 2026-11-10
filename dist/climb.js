@@ -791,11 +791,12 @@
     });
     $('again').addEventListener('click', () => { $('finish').hidden = true; Dino.bgm.stop(); Dino.voice.stop(); newGame(); });
     const HW = Dino.howto({ preview: stage => {
-      stage.style.cssText = 'display:flex;align-items:center;justify-content:center;gap:10px;padding:16px;background:#e6f2dc;aspect-ratio:auto';
-      const c = makeD10(110); c._set(4); c._cube.style.transform = 'rotateX(-20deg) rotateY(-28deg)';
-      stage.append(c, Object.assign(document.createElement('span'), { innerHTML: '<svg viewBox="0 0 40 40" width="48" height="48"><use href="#i-next"/></svg>' }),
-        Object.assign(document.createElement('img'), { src: 'assets/cast/iggy__walk_r.webp', style: 'height:100px' }),
-        Object.assign(document.createElement('span'), { innerHTML: '<svg viewBox="0 0 40 64" width="40" height="64"><use href="#i-flag"/></svg>' }));
+      stage.style.cssText = 'display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 12px;background:#e6f2dc;aspect-ratio:auto';
+      const c = makeD10(76); c.style.flex = 'none'; c._set(4);   // 不可被擠扁：寬被壓縮但深度照 --d 算，骰面會散開（導演 2026-11-11 截圖）
+      c._cube.style.transform = 'rotateX(-20deg) rotateY(-28deg)';
+      stage.append(c, Object.assign(document.createElement('span'), { innerHTML: '<svg viewBox="0 0 40 40" width="34" height="34" style="flex:none"><use href="#i-next"/></svg>' }),
+        Object.assign(document.createElement('img'), { src: 'assets/cast/iggy__walk_r.webp', style: 'height:96px;flex:none' }),
+        Object.assign(document.createElement('span'), { innerHTML: '<svg viewBox="0 0 40 64" width="34" height="54" style="flex:none"><use href="#i-flag"/></svg>' }));
     }, text: '擲骰子，走到山頂！', kid, voice: 'climb', onClose: () => { if (!$('ready').hidden) return; paused = false; } });
     $('help').addEventListener('click', () => { Dino.sfx('tap', .5); paused = true; HW.show(); });
   }
