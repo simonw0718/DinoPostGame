@@ -194,3 +194,10 @@ button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:tra
 .bpm-onset,.bpm-rime{display:block;line-height:1.03}
 .bpm-tone{position:absolute;right:-.55em;top:85%;transform:translateY(-50%) scale(1.5,1.8);font-size:1.2em;font-weight:900;color:#d32f2f;line-height:1}
 .bpm-tone-dot{position:absolute;right:0;top:-.6em;font-size:1.4em;font-weight:900;color:#d32f2f;line-height:1}
+
+/* 2026-11-12 導演：邊放邊數的跳數字；「一共幾顆」時盒子與果子可以點著數 */
+.cell .pop-n{position:absolute;left:50%;top:-22%;z-index:3;display:grid;place-items:center;width:52%;aspect-ratio:1;translate:-50% 0;border-radius:50%;background:#fffdf2;box-shadow:0 calc(5 * var(--u)) 0 #3a240e33;font-size:calc(var(--w) * .07 * var(--u));font-weight:1000;line-height:1;pointer-events:none;animation:popN .95s ease-out both}
+@keyframes popN{0%{scale:.3;opacity:0}16%{scale:1.2;opacity:1}28%{scale:1}72%{opacity:1;translate:-50% -12%}100%{opacity:0;translate:-50% -50%}}
+.fs-boxes.is-counting .box.is-closed,.fs-boxes.is-counting .box:not(.is-closed) .cell[data-kind]{pointer-events:auto;cursor:pointer}
+.box.is-hinted .lid b{animation:pop .65s cubic-bezier(.2,1.5,.4,1) infinite alternate}
+@media(prefers-reduced-motion:reduce){.cell .pop-n,.box.is-hinted .lid b{animation:none}}
