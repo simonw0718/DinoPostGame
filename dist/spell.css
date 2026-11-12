@@ -101,4 +101,4 @@
 .zb-host .zb-bubble::before{left:-10px;bottom:14px;width:18px;height:18px;border:0;border-left:2px solid #17593f1f;border-bottom:2px solid #17593f1f;border-radius:0 0 0 4px;background:#fff;transform:rotate(45deg)}
 .zb-host .zb-bubble .bpm-column,.zb-host .zb-bubble .bpm-tone,.zb-host .zb-bubble .bpm-tone-dot{color:#4d8f6e}
 /* 長標題（原「字母郵票貼貼樂」7 字，11-04 改「郵票貼字母」5 字）＋右邊兩顆按鈕：手機上標題字小一點，按鈕才不會被擠出去 */
-@media(max-width:680px){.gh .gh-title{font-size:clamp(14px,4.1vw,24px)}}
+/* 標題字級統一由 game-header.css 決定（導演 2026-11-12） */

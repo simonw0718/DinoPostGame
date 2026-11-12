@@ -8,7 +8,7 @@ body{background:#164d39;overflow:hidden}
 ::selection{background:#ffe08a;color:var(--ink)}
 button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
 button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
-.cs-shell{position:relative;display:flex;flex-direction:column;height:100svh;max-width:1200px;margin:0 auto;padding:max(10px,env(safe-area-inset-top)) 14px max(10px,env(safe-area-inset-bottom));gap:10px;isolation:isolate}
+.cs-shell{position:relative;display:flex;flex-direction:column;height:100svh;max-width:1200px;margin:0 auto;padding:max(10px,env(safe-area-inset-top)) 14px max(10px,env(safe-area-inset-bottom));gap:10px}   /* 不用 isolation：標題列要疊在開始畫面遮罩之上（同 flip，2026-11-12） */
 .cs-shell::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(#0f3d2c22,#0f3d2caa 80%),url('assets/mail-bg/grass-slope-wide-village-view.jpg') center/cover no-repeat}
 
 /* 訂單：要接什麼顏色＋接到幾封 */

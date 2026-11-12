@@ -18,4 +18,14 @@
 @media(max-width:680px){.shell>.gh{min-height:56px}}
 @media(max-width:680px) and (max-height:610px){.shell>.gh{min-height:49px}}
 /* 導演 2026-11-10：標題列全站統一深色——亮底頁（找圖片／挖化石／集郵冊）加一條撐滿螢幕的深綠帶，字改奶白 */
-.gh-light{background:#164d39;box-shadow:0 0 0 100vmax #164d39;clip-path:inset(0 -100vmax);padding:5px 0;margin-bottom:8px}
+/* 導演 2026-11-12：「統一就好」——深綠帶改成全部遊戲都有（原本只有亮底頁），白字在任何背景上都看得清楚；帶子往上延伸蓋住頁面頂端留白 */
+.gh{background:#164d39;box-shadow:0 0 0 100vmax #164d39;clip-path:inset(-100vmax -100vmax 0);padding-top:5px;padding-bottom:5px}
+.gh-light{margin-bottom:8px}
+/* 按鈕動作全站一樣：房子不再歪頭，三顆按鈕同一種「往上浮、按下去沉」，平順收尾不回彈 */
+/* 寬螢幕按鈕位置全站一樣：頁首寬度不跟各遊戲外框走，一律以螢幕置中、最寬 1400（兩側留 14px） */
+.gh{box-sizing:border-box;width:min(calc(100vw - 28px),1400px);max-width:none;margin-left:calc(50% - min(calc(50vw - 14px),700px));margin-right:0}
+.gh.gh{padding-left:0;padding-right:0}
+.gh,.gh *{box-sizing:border-box}   /* 任務單頁沒有全域 border-box，房子會大一圈 */   /* 蓋過各頁舊的左右內距（注音送信等），按鈕才會對齊 */
+.gh .dino-home,.gh .gh-btn{transition:transform .16s cubic-bezier(.25,.8,.3,1),box-shadow .16s cubic-bezier(.25,.8,.3,1)}
+.gh .dino-home:hover,.gh .gh-btn:hover{transform:translateY(-2px)}
+.gh .dino-home:active,.gh .gh-btn:active{transform:translateY(4px)}

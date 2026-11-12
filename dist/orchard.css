@@ -9,7 +9,7 @@ body{background:#d6a668;overflow:hidden;-webkit-user-select:none;user-select:non
 button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .fs-shell{display:flex;flex-direction:column;gap:10px;height:100svh;padding:max(10px,env(safe-area-inset-top)) 14px max(10px,env(safe-area-inset-bottom));background:#7fc4ea}
 @media(max-width:680px){.fs-shell{padding-left:8px;padding-right:8px;gap:6px}}
-.fs-shell>.gh{width:100%;max-width:1400px;margin:0 auto}   /* 頁首同其他遊戲：版面最上方一條（導演 11-09） */
+/* 頁首寬度與位置統一由 game-header.css 決定（導演 2026-11-12） */
 .fs-main{flex:1;min-height:0;display:grid;place-items:center;container-type:size}
 /* 螢幕比例跟舞台不合時（視窗、摺疊機、橫向手機）兩側留白：鋪一層同一張場景的模糊放大版，不再出現天空／沙地對不上的色塊邊框（導演 2026-11-10） */
 .fs-main{position:relative}
