@@ -89,8 +89,11 @@
 
   const G = { round: 0, r: null, cid: 'pairo', kinds: ['dot', 'star'], pairs: [], count: { dot: 0, star: 0, spike: 0 }, busy: true, phase: 'idle', boxes: [], dozing: false, stacked: false, playing: false, kongEmo: 'happy', kongMouth: 'open' };
 
+  // 直式／橫式版面：看遊戲區實際比例，哪個畫布（手機 1080×2340、橫式 2048×1536）比例比較接近就用哪個（導演 2026-11-12：
+  // 寬一點的視窗原本仍用手機直式，兩旁空一大塊）。分界＝兩者比例的幾何平均 ≈ 0.78
+  const pickLay = () => { const m = document.querySelector('.fs-main')?.getBoundingClientRect(); const w = m?.width || innerWidth, h = m?.height || innerHeight; return w / h >= Math.sqrt(1080 / 2340 * 2048 / 1536) ? 'tablet' : 'phone'; };
   function layout() {
-    lay = innerWidth > innerHeight ? 'tablet' : 'phone'; P = LAY[lay];
+    lay = pickLay(); P = LAY[lay];
     stage.dataset.lay = lay;
     const S = L[lay];
     $('sky').src = `${A}sky_${lay}.webp`; $('counter').src = `${A}counter_${lay}.webp`;
@@ -561,7 +564,7 @@
   $('menuBtn').addEventListener('click', () => { Dino.sfx('tap', .5); clearTimeout(nudgeT); clearTimeout(moodT); hideHint(); showRule(); $('ready').hidden = false; });
   $('help').addEventListener('click', () => { Dino.sfx('tap', .5); if (!$('intro').hidden) return; clearTimeout(nudgeT); hideHint(); HW.show(); });
   Dino.menuTaps($('ready')); Dino.menuTaps($('finish'));
-  { const k = innerWidth > innerHeight ? 'tablet' : 'phone';                    // 開場與說話用圖先載好，換嘴不閃
+  { const k = pickLay();                    // 開場與說話用圖先載好，換嘴不閃
     [`intro_back_${k}`, `intro_front_${k}`, ...['happy', 'smug'].flatMap(e => ['closed', 'open', 'wide'].map(m => `intro_kong_${e}_${m}_${k}`)),
      ...['happy', 'surprised'].flatMap(e => ['closed', 'open', 'wide'].map(m => `xiaokong_${e}_${m}`))].forEach(n => { new Image().src = `${A}${n}.webp`; }); }
   Dino.preload(['assets/audio/orchard/intro.mp3', 'assets/audio/orchard/ask10.mp3', 'assets/audio/orchard/count.mp3', 'assets/audio/orchard/thanks.mp3']);
