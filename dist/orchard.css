@@ -200,3 +200,9 @@ button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:tra
 /* 2026-11-12 導演：答案選項移到「一共幾顆？」正下方（原本在最底下太遠）；盒子往下讓位（--shift 由 orchard.js 給） */
 .fs-boxes.is-counting .box{translate:0 calc(var(--shift,0) * var(--u))}
 [data-lay="tablet"] .fs-boxes.is-counting.is-stacked .box.is-closed{translate:none}
+/* 橫式畫布寬度隨螢幕伸縮（導演 2026-11-12）：天空與櫃台圖蓋滿、不露底；手勢大小改跟畫布單位走 */
+.fs-stage[data-lay=tablet] .fs-sky{height:calc(700 * var(--u));object-fit:cover;object-position:50% 100%}
+.fs-stage[data-lay=tablet] .fs-counter{height:calc(1020 * var(--u));object-fit:cover;object-position:50% 0}
+.fs-stage[data-lay=tablet] .fs-hint{width:calc(150 * var(--u))}
+.fs-stage[data-lay=tablet] .fs-intro .ib{height:100%}
+.fs-stage[data-wide="1"] .fs-baskets.is-away{translate:calc(520 * var(--u)) 0}

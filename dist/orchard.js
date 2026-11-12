@@ -75,13 +75,29 @@
       baskets: [[500, 2330], [725, 2330], [950, 2330]], bw: 200, choices: [240, 1205, 600, 150], kong: [150, 2460, 400],
       stack: [[110, 1830, 400], [570, 1830, 400]]                                // 困難：蓋好的盒子縮小排在下面
     },
-    tablet: {
-      cust: [600, 90, 330], bubble: [860, 160, 470, 150, 60], eq: [1024, 590, 120], carry: [1024, 726, 54],
-      box1: [[380, 860, 900]], box2: [[150, 890, 830], [1068, 890, 830]],
-      baskets: [[1280, 1526], [1550, 1526], [1820, 1526]], bw: 230, choices: [644, 815, 760, 140], kong: [190, 1656, 420],
-      stack: [[40, 880, 300], [40, 1060, 300]]                                   // 困難：蓋好的盒子縮小疊在左邊
-    }
+    tablet: null                                                                 // 橫式：依螢幕寬度算（landLay）
   };
+  // 橫式（導演 2026-11-12）：畫布高固定 1536、寬度跟著螢幕比例伸縮（1200–3400），整個遊戲區填滿、不留空白；
+  // 元件比舊版平板放大約 2 成。寬螢幕＝左小空／中間工作區／右邊果籃直排；窄一點＝果籃排在右下（同舊平板）
+  const LH = 1536;
+  function landLay(W) {
+    const wide = W >= 2150;
+    const Kz = wide ? 400 : 0, Bz = wide ? 420 : 0, cx = wide ? (Kz + W - Bz) / 2 : W / 2, Ww = W - Kz - Bz;
+    const px = wide ? cx - 280 : W * .3, ph = wide ? 450 : 370;
+    const wb1 = Math.round(Math.min(wide ? 940 : 900, Ww - 120)), wb2 = Math.round(Math.min(wide ? 940 : 820, (Ww - 140) / 2)), by = wide ? 900 : 860;
+    const s1 = wide ? Kz + 40 : 360, wbs = Math.round(Math.min(wb1, W - s1 - 40));        // 困難：蓋好的盒子疊左邊時，正在裝的盒子讓到右邊
+    return {
+      cust: [px, wide ? 40 : 60, ph], bubble: [px + 220, 140, wide ? 600 : 520, wide ? 185 : 160, 60],
+      eq: [cx, 580, wide ? 170 : 140], carry: [cx, wide ? 775 : 750, wide ? 72 : 60],
+      choices: [cx - (wide ? 450 : 400), wide ? 875 : 840, wide ? 900 : 800, wide ? 160 : 145],
+      box1: [[cx - wb1 / 2, by, wb1]], box2: [[cx - wb2 - 30, by + 20, wb2], [cx + 30, by + 20, wb2]],
+      box1s: [[wide ? cx - wb1 / 2 : s1, by, wide ? wb1 : wbs]],
+      stack: wide ? [[40, 600, 330], [40, 790, 330]] : [[30, 860, 300], [30, 1020, 300]],
+      baskets: wide ? [[W - 215, 875], [W - 215, 1185], [W - 215, 1495]] : [[W - 700, 1526], [W - 430, 1526], [W - 160, 1526]],
+      bw: wide ? 255 : 225, kong: [wide ? 200 : 190, wide ? 1640 : 1656, wide ? 440 : 420]
+    };
+  }
+  const landW = () => { const m = document.querySelector('.fs-main').getBoundingClientRect(); return Math.round(Math.min(3400, Math.max(1200, LH * m.width / (m.height || 1)))); };
   const stage = $('stage');
   let lay = 'phone', P = LAY.phone;
   const set = (el, o) => { el.classList.add('at'); for (const k in o) el.style.setProperty('--' + k, o[k]); };
@@ -93,8 +109,11 @@
   // 寬一點的視窗原本仍用手機直式，兩旁空一大塊）。分界＝兩者比例的幾何平均 ≈ 0.78
   const pickLay = () => { const m = document.querySelector('.fs-main')?.getBoundingClientRect(); const w = m?.width || innerWidth, h = m?.height || innerHeight; return w / h >= Math.sqrt(1080 / 2340 * 2048 / 1536) ? 'tablet' : 'phone'; };
   function layout() {
-    lay = pickLay(); P = LAY[lay];
+    lay = pickLay();
+    if (lay === 'tablet') { const W = landW(); stage.style.setProperty('--W', W); LAY.tablet = landLay(W); } else stage.style.removeProperty('--W');
+    P = LAY[lay];
     stage.dataset.lay = lay;
+    stage.dataset.wide = lay === 'tablet' && +stage.style.getPropertyValue('--W') >= 2150 ? '1' : '';   // 寬螢幕：果籃在右邊直排
     const S = L[lay];
     $('sky').src = `${A}sky_${lay}.webp`; $('counter').src = `${A}counter_${lay}.webp`;
     $('counter').style.top = `calc(${S.counter[1]} * var(--u))`;
@@ -125,7 +144,7 @@
   }
   function placeBoxes() {
     const put = (b, [x, y, w]) => { b.style.setProperty('--x', x); b.style.setProperty('--y', y); b.style.setProperty('--w', w); };
-    if (G.stacked) { let j = 0; return G.boxes.forEach(b => put(b, b.classList.contains('is-closed') && j < 2 ? P.stack[j++] : P.box1[0])); }   // 困難：蓋好的盒子疊旁邊，正在裝的在中間
+    if (G.stacked) { let j = 0; return G.boxes.forEach(b => put(b, b.classList.contains('is-closed') && j < 2 ? P.stack[j++] : (P.box1s || P.box1)[0])); }   // 困難：蓋好的盒子疊旁邊，正在裝的在中間
     const spots = G.boxes.length > 1 ? P.box2 : P.box1;
     G.boxes.forEach((b, i) => put(b, spots[i]));
   }
@@ -424,7 +443,8 @@
     }));
     $('choices').classList.toggle('is-four', opts.length > 3); $('choices').hidden = false;
     // 答案選項在題目字正下方（導演 2026-11-12），盒子往下讓位：手機上下兩盒要讓多一點；平板疊在左邊的盒子不用動（CSS）
-    $('boxes').style.setProperty('--shift', lay === 'tablet' ? 200 : G.boxes.length > 1 && !G.stacked ? 235 : 90);
+    const top = G.stacked ? (P.box1s || P.box1)[0][1] : Math.min(...(G.boxes.length > 1 ? P.box2 : P.box1).map(b => b[1]));
+    $('boxes').style.setProperty('--shift', Math.max(0, P.choices[1] + P.choices[3] + (lay === 'phone' ? 90 : 40) - top));
     $('boxes').classList.toggle('is-stacked', G.stacked); $('boxes').classList.add('is-counting');
     say('count', (t, m) => kongTalk(m)); kong('happy', 'is-look', 900);          // 小空：「現在數數看，總共有幾顆果子了呢？」
     await wait(900); wave();
@@ -505,6 +525,12 @@
   // ---------- 開場全景（導演 11-09）：小空水果攤 → 小空開場白（配音）→ 推近到櫃台；點一下可跳過。？按鈕重看 ----------
   function setIntro() {
     const I = L[lay].intro, el = $('intro'), [fx, fy] = I.focus;
+    // 橫式畫布寬度會變：開場全景照原本 2048×1536 設計，等比放大蓋滿舞台（裁上下或左右），推近的焦點不變
+    if (lay === 'tablet') {
+      const W = +stage.style.getPropertyValue('--W') || 2048, k = Math.max(W / 2048, 1), iw = 2048 * k, ih = LH * k;
+      Object.assign(el.style, { inset: 'auto', left: `calc(${(W - iw) / 2 / k} * var(--u))`, top: `calc(${(LH - ih) * fy / k} * var(--u))`, width: 'calc(2048 * var(--u))', height: `calc(${LH} * var(--u))` });
+      el.style.setProperty('--u', `calc(100cqw / var(--W) * ${k})`);
+    } else { ['inset', 'left', 'top', 'width', 'height', '--u'].forEach(k => el.style.removeProperty(k)); }
     el.querySelector('.ib').src = `${A}intro_back_${lay}.webp`; $('introFront').src = `${A}intro_front_${lay}.webp`;
     set($('introKong'), { x: I.kong[0], y: I.kong[1], w: I.kong[2] }); set($('introFront'), { x: I.front[0], y: I.front[1], w: I.front[2] });
     introKong('happy', 'closed');
