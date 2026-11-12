@@ -72,13 +72,13 @@
     phone: {
       cust: [640, 150, 420], bubble: [30, 250, 440, 150, 370], eq: [540, 940, 150], carry: [540, 1110, 66],
       box1: [[110, 1360, 860]], box2: [[110, 1225, 860], [110, 1640, 860]],      // 導演 11-09：盒子稍往上
-      baskets: [[500, 2330], [725, 2330], [950, 2330]], bw: 200, choices: [440, 2150, 600, 150], kong: [150, 2460, 400],
+      baskets: [[500, 2330], [725, 2330], [950, 2330]], bw: 200, choices: [240, 1205, 600, 150], kong: [150, 2460, 400],
       stack: [[110, 1830, 400], [570, 1830, 400]]                                // 困難：蓋好的盒子縮小排在下面
     },
     tablet: {
       cust: [600, 90, 330], bubble: [860, 160, 470, 150, 60], eq: [1024, 590, 120], carry: [1024, 726, 54],
       box1: [[380, 860, 900]], box2: [[150, 890, 830], [1068, 890, 830]],
-      baskets: [[1280, 1526], [1550, 1526], [1820, 1526]], bw: 230, choices: [1220, 1330, 760, 140], kong: [190, 1656, 420],
+      baskets: [[1280, 1526], [1550, 1526], [1820, 1526]], bw: 230, choices: [644, 815, 760, 140], kong: [190, 1656, 420],
       stack: [[40, 880, 300], [40, 1060, 300]]                                   // 困難：蓋好的盒子縮小疊在左邊
     }
   };
@@ -420,7 +420,9 @@
       b.addEventListener('click', () => choose(b, n)); return b;
     }));
     $('choices').classList.toggle('is-four', opts.length > 3); $('choices').hidden = false;
-    $('boxes').classList.add('is-counting');
+    // 答案選項在題目字正下方（導演 2026-11-12），盒子往下讓位：手機上下兩盒要讓多一點；平板疊在左邊的盒子不用動（CSS）
+    $('boxes').style.setProperty('--shift', lay === 'tablet' ? 200 : G.boxes.length > 1 && !G.stacked ? 235 : 90);
+    $('boxes').classList.toggle('is-stacked', G.stacked); $('boxes').classList.add('is-counting');
     say('count', (t, m) => kongTalk(m)); kong('happy', 'is-look', 900);          // 小空：「現在數數看，總共有幾顆果子了呢？」
     await wait(900); wave();
   }
@@ -437,7 +439,7 @@
   }
   async function correct() {
     const total = sum(G.r.n);
-    G.busy = true; $('choices').hidden = true; waveId++; clearLit();
+    G.busy = true; $('choices').hidden = true; waveId++; clearLit(); $('boxes').classList.remove('is-counting');
     const c = $('eqC'); c.textContent = total; c.classList.add('is-filled');
     spring(c, v => `scale(${1 + .3 * v}) rotate(${-8 * v}deg)`, 620);                                     // 答案像蓋章一樣壓上去
     await wait(150); Dino.voice(num(total));

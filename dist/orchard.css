@@ -197,3 +197,6 @@ button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:tra
 
 /* 2026-11-12 導演：「一共幾顆」時盒子與果子可以點（亮起來跳一下，不出數字） */
 .fs-boxes.is-counting .box.is-closed,.fs-boxes.is-counting .box:not(.is-closed) .cell[data-kind]{pointer-events:auto;cursor:pointer}
+/* 2026-11-12 導演：答案選項移到「一共幾顆？」正下方（原本在最底下太遠）；盒子往下讓位（--shift 由 orchard.js 給） */
+.fs-boxes.is-counting .box{translate:0 calc(var(--shift,0) * var(--u))}
+[data-lay="tablet"] .fs-boxes.is-counting.is-stacked .box.is-closed{translate:none}
