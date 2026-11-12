@@ -2,13 +2,13 @@
    v5 sample（2026-11-09）
    決定：reference/orchard_shop_design.yaml director_11_09_v4＋next_11_09（導演選做 ①④⑤）
    玩法：客人點「紅果×a、紫果×b」→ 從果籃把果子「拖」進十格盒的任一格（點一下果籃也行，會自動飛進下一格）。
-     果子上不貼編號、不逐一唸數（導演 11-09）。→ 2026-11-12 導演改：放的順序不限；邊放邊唸這種果子第幾顆；「一共幾顆」時點盒子／果子一個一個數（唸出＋貼數字）。
+     果子上不貼編號、不逐一唸數（導演 11-09）。（維持）2026-11-12 導演：放的順序不限；「一共幾顆」時小空說「現在數數看，總共有幾顆果子了呢？」＋果子輪流跳一下。
      ① 十格（a＋b≤10）：放完自動填答並唸出。
      2026-11-10 導演：三級都不直接給總和（放完自己選數字）；粉果改黃果、三種果子輪流出場；困難改三種果子連加、沒有湊 10 提示、四選一。
      ② 二十格進位：紅果放完先問「還差幾顆滿 10？」→ 點空格數（每點一格出現 1、2…），數完紫果自動補滿、啪一聲蓋蓋；
         剩下的紫果拖進第二盒；放完三選一。
    ④ 客人輪換：派洛（平常）→ 小雞阿暴（急：等太久會跳腳、泡泡抖）→ 阿慢（慢：點頭慢，等太久會打瞌睡，放果子就醒）。
-   規則：不計時、不扣分、不打叉。點錯籃／太多 → 果子飛回籃子、客人歪頭；選錯 → 陪著從頭數一次（唸出來）。
+   規則：不計時、不扣分、不打叉。點錯籃／太多 → 果子飛回籃子、客人歪頭；選錯 → 陪著從 10 接著數（不唸）。
    ③ 困難（20 以上）：第二盒也滿了就蓋上，兩盒縮小疊到旁邊，第三盒放剩下的；放完三選一（差 10 的選項：13／23／33）。
    網址 ?lv=1|2|3 直接指定難度、?r=2 從第 3 位客人開始（測試用）。素材 tools/fruit_shop_export.py。 */
 (async () => {
@@ -16,7 +16,7 @@
   const $ = id => document.getElementById(id);
   const A = 'assets/fruitshop/';
   const L = await fetch(A + 'layout.json').then(r => r.json());
-  const TALK = await fetch('assets/audio/orchard/talk.json').then(r => r.json());   // 小空說話時間表（嘴型輪替＋換表情）
+  const TALK = await fetch('assets/audio/orchard/talk.json?v=6').then(r => r.json());   // 小空說話時間表（嘴型輪替＋換表情）
   const R = Dino.reduced;
   const wait = ms => new Promise(r => setTimeout(r, R ? Math.min(ms, 120) : ms));
   const num = n => `assets/audio/num/zh/${n}.mp3`;
@@ -298,7 +298,6 @@
     img.remove();
     fillCell(cell, kind);
     nod();
-    popNum(cell, G.count[kind], kind);                                                // 邊放邊數：唸出這種果子放了第幾顆，數字跳一下就消失（導演 2026-11-12）
     const done = G.count[kind] === need;
     if (done) { $('bubble').querySelector(`.want.is-${kind}`).classList.add('is-done'); setTimeout(() => cust('happy', 'is-cheer'), 380); }
     refreshBaskets();
@@ -310,11 +309,6 @@
     if (filledIn(box) === 10 && !box.classList.contains('is-closed')) { G.busy = true; await boxFull(box); G.busy = false; }   // ③ 第二盒也滿了
     if (placedN() === total()) return allIn();
     nudge();
-  }
-  function popNum(cell, n, kind) {
-    Dino.voice.stop(); Dino.voice(num(n));
-    const el = document.createElement('span'); el.className = 'pop-n'; el.textContent = n; el.style.color = KCOL[kind]; el.setAttribute('aria-hidden', 'true');
-    cell.append(el); setTimeout(() => el.remove(), R ? 600 : 950);
   }
   function fillCell(cell, kind) {
     cell.dataset.kind = kind; cell.classList.remove('is-ask', 'is-counted', 'is-target');
@@ -386,31 +380,23 @@
     await wait(560);
   }
 
-  // ---------- 一共幾顆：點著數（導演 2026-11-12 引導小朋友算果子）----------
-  // 蓋好的盒子點一下＝10（第二盒 20），果子點一顆多 1；唸出數到幾、貼上數字。手勢會指下一個該數的。不直接給總和，是小朋友自己點出來的
-  const nextCount = () => G.boxes.find(b => b.classList.contains('is-closed') && !b.classList.contains('is-tallied')) || $('boxes').querySelector('.cell[data-kind]:not(.is-tallied)');
-  function tally(el) {
-    if (!el || el.classList.contains('is-tallied')) return false;
-    const isBox = el.classList.contains('box');
-    G.tally += isBox ? 10 : 1; el.classList.add('is-tallied');
-    Dino.voice.stop(); Dino.voice(num(G.tally)); Dino.sfx('tap', .4);
-    if (isBox) { el.querySelector('.lid b').textContent = G.tally; Dino.replay(el, 'is-pulse'); spring(el, v => `scale(${1 + .03 * v},${1 - .05 * v})`, 520); }
-    else {
-      el.classList.add('is-lit'); el.insertAdjacentHTML('beforeend', `<span class="badge" aria-hidden="true">${G.tally}</span>`);
-      spring(el.firstElementChild, v => `translateY(${-14 * v}%)`, 420, 2.4);
-    }
-    return true;
-  }
-  function clearTally() {
-    G.tally = 0;
-    $('boxes').querySelectorAll('.is-tallied').forEach(el => { el.classList.remove('is-tallied', 'is-lit'); el.querySelector('.badge')?.remove(); });
-    G.boxes.forEach(b => { b.querySelector('.lid b').textContent = 10; });
+  // ---------- 一共幾顆：小空說「現在數數看，總共有幾顆果子了呢？」＋果子輪流跳一下（導演 2026-11-12）----------
+  // 不唸數字、不貼編號、不給總和（11-09／11-10 決定維持）。小朋友點果子／盒子只會亮起來跳一下，方便自己點著數
+  const countables = () => [...G.boxes.filter(b => b.classList.contains('is-closed')), ...$('boxes').querySelectorAll('.box:not(.is-closed) .cell[data-kind]')];
+  const bump = el => {
+    if (el.classList.contains('box')) { Dino.replay(el, 'is-pulse'); spring(el, v => `scale(${1 + .03 * v},${1 - .05 * v})`, 520); }
+    else spring(el.firstElementChild, v => `translateY(${-16 * v}%) scale(${1 + .08 * v})`, 460, 2.4);
+  };
+  let waveId = 0;
+  async function wave() {                                   // 一個接一個跳：帶著眼睛從頭看到尾
+    const id = ++waveId;
+    for (const el of countables()) { if (id !== waveId || G.phase !== 'answer') return; bump(el); await wait(el.classList.contains('box') ? 520 : 260); }
   }
   function tapCount(el) {
     if (G.busy || G.phase !== 'answer' || !el) return;
-    hideHint(); if (!tally(el)) return;
-    if (G.tally === total()) { clearTimeout(nudgeT); cust('happy', 'is-cheer'); kong('happy', 'is-cheer'); } else nudge();
+    waveId++; el.classList.add('is-lit'); bump(el); Dino.sfx('tap', .4);
   }
+  const clearLit = () => $('boxes').querySelectorAll('.is-lit').forEach(el => el.classList.remove('is-lit'));
 
   // ---------- 放完 ----------
   async function allIn() {
@@ -434,22 +420,24 @@
       b.addEventListener('click', () => choose(b, n)); return b;
     }));
     $('choices').classList.toggle('is-four', opts.length > 3); $('choices').hidden = false;
-    clearTally(); $('boxes').classList.add('is-counting'); nudge();
+    $('boxes').classList.add('is-counting');
+    say('count', (t, m) => kongTalk(m)); kong('happy', 'is-look', 900);          // 小空：「現在數數看，總共有幾顆果子了呢？」
+    await wait(900); wave();
   }
   async function choose(btn, n) {
     if (G.busy || G.phase !== 'answer') return;
     Dino.voice(num(n));
     if (n === total()) { btn.classList.add('is-yes'); return correct(); }
-    G.busy = true; btn.classList.add('is-no'); btn.disabled = true;     // 選錯：不打叉，陪著從頭數一次（盒子 10、20，再一顆一顆接著數，唸出來）
-    hideHint(); clearTimeout(nudgeT); cust('troubled', 'is-tilt', 1600);
+    G.busy = true; btn.classList.add('is-no'); btn.disabled = true;     // 選錯：不打叉，蓋好的盒子 10、20 跳一下，再陪著一顆一顆亮過去（不唸）
+    waveId++; clearLit(); cust('troubled', 'is-tilt', 1600);
     await wait(900);
-    clearTally();
-    for (let el; (el = nextCount());) { const big = el.classList.contains('box'); tally(el); await wait(big ? 950 : 620); }
+    for (const el of countables()) { if (!el.classList.contains('box')) { el.classList.add('is-lit'); Dino.sfx('tap', .4); } bump(el); await wait(el.classList.contains('box') ? 800 : 450); }
+    await wait(300); clearLit();
     G.busy = false;
   }
   async function correct() {
     const total = sum(G.r.n);
-    G.busy = true; $('choices').hidden = true; hideHint(); clearTimeout(nudgeT);
+    G.busy = true; $('choices').hidden = true; waveId++; clearLit();
     const c = $('eqC'); c.textContent = total; c.classList.add('is-filled');
     spring(c, v => `scale(${1 + .3 * v}) rotate(${-8 * v}deg)`, 620);                                     // 答案像蓋章一樣壓上去
     await wait(150); Dino.voice(num(total));
@@ -470,7 +458,7 @@
     G.cid = r.c; G.dozing = false; $('zzz').hidden = true;
     const el = $('cust'); el.classList.remove('is-leave'); el.src = `${A}cust_${G.cid}_happy.webp`; el.alt = CUST[G.cid].name;
     placeCust(); Dino.replay(el, 'is-enter');
-    G.count = { dot: 0, star: 0, spike: 0 }; G.phase = 'fill'; G.stacked = false; G.tally = 0; $('boxes').classList.remove('is-counting');
+    G.count = { dot: 0, star: 0, spike: 0 }; G.phase = 'fill'; G.stacked = false; $('boxes').classList.remove('is-counting');
     G.kinds = r.n.length > 2 ? Dino.shuffle(KINDS.slice()) : G.pairs[G.round % 3];   // 三種果子輪流出場（導演 11-10）
     $('boxes').replaceChildren(); G.boxes = [makeBox()]; if (level === 'normal' && sum(r.n) > 10) G.boxes.push(makeBox());
     placeBoxes();
@@ -497,16 +485,16 @@
   function hideHint() { hint.className = 'fs-hint'; document.querySelectorAll('.is-hinted').forEach(b => b.classList.remove('is-hinted')); }
   function nudge() {
     clearTimeout(nudgeT);
-    const early = (G.round === 0 && placedN() < 2) || (G.phase === 'ask' && G.asked === 0) || (G.phase === 'answer' && !G.tally);
+    const early = (G.round === 0 && placedN() < 2) || (G.phase === 'ask' && G.asked === 0) ;
     nudgeT = setTimeout(() => {
-      if (G.phase !== 'fill' && G.phase !== 'ask' && G.phase !== 'answer') return;
+      if (G.phase !== 'fill' && G.phase !== 'ask') return;
       if (G.busy) return nudge();
-      const t = G.phase === 'answer' ? nextCount() : G.phase === 'ask' ? G.boxes[0].querySelector('.cell.is-ask') : basketEl(curKind() || G.kinds[0]);
+      const t = G.phase === 'ask' ? G.boxes[0].querySelector('.cell.is-ask') : basketEl(curKind() || G.kinds[0]);
       if (!t) return;
       const s = stage.getBoundingClientRect(), b = t.getBoundingClientRect();
       hint.style.left = `${(b.left - s.left + b.width / 2) / s.width * 100}%`; hint.style.top = `${(b.top - s.top + b.height * .3) / s.height * 100}%`;
       hint.className = 'fs-hint is-on'; t.classList.add('is-hinted');
-    }, early ? 1500 : G.phase === 'answer' ? 3500 : CUST[G.cid].hintMs);
+    }, early ? 1500 : CUST[G.cid].hintMs);
   }
 
   // ---------- 開場全景（導演 11-09）：小空水果攤 → 小空開場白（配音）→ 推近到櫃台；點一下可跳過。？按鈕重看 ----------
@@ -574,7 +562,7 @@
   { const k = innerWidth > innerHeight ? 'tablet' : 'phone';                    // 開場與說話用圖先載好，換嘴不閃
     [`intro_back_${k}`, `intro_front_${k}`, ...['happy', 'smug'].flatMap(e => ['closed', 'open', 'wide'].map(m => `intro_kong_${e}_${m}_${k}`)),
      ...['happy', 'surprised'].flatMap(e => ['closed', 'open', 'wide'].map(m => `xiaokong_${e}_${m}`))].forEach(n => { new Image().src = `${A}${n}.webp`; }); }
-  Dino.preload(['assets/audio/orchard/intro.mp3', 'assets/audio/orchard/ask10.mp3', 'assets/audio/orchard/thanks.mp3']);
+  Dino.preload(['assets/audio/orchard/intro.mp3', 'assets/audio/orchard/ask10.mp3', 'assets/audio/orchard/count.mp3', 'assets/audio/orchard/thanks.mp3']);
   showRule();
   G.cid = ROUNDS[Math.min(+QS.get('r') || 0, ROUNDS.length - 1)].c;
   layout();

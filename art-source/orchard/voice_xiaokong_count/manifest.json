@@ -1,0 +1,20 @@
+{
+ "character": "小空",
+ "voice_id": "voice_l61ydzkp79d1",
+ "model": "gemini-3.8-flash-tts",
+ "request_count": 1,
+ "raw": "小空_all.wav",
+ "raw_sha256": "083221daa5167f24f4d9df7d9445c5aa5246273c6bfc7e03111e41d84bcf87e1",
+ "payload_sha256": "d0e46090cfd306c9f3e6df33d84196c2cf7bfc7fd37f3a12fe7aadffb85dd911",
+ "files": {
+  "FS-COUNT_count.wav": {
+   "sha256": "3ea4571e88b61136b6a53788114aa21b56b4e6909cb0de2b75e4242aeaab16c5",
+   "duration_s": 3.82,
+   "text": "現在數數看，總共有幾顆果子了呢？"
+  }
+ },
+ "bounds": "auto longest gaps",
+ "shortest_cut_gap_s": 0.0,
+ "next_unused_gap_s": 0.38,
+ "split_confident": false
+}
