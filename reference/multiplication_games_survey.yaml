@@ -1,0 +1,154 @@
+meta:
+  created: 2026-11-12
+  purpose: "調查乘法遊戲／教具／研究的機制類型，供大班（5–6 歲）從零開始的乘法新遊戲設計。階段對應 math_sequence.yaml M15；通用機制另見 math_games_survey.yaml。"
+  method: "WebSearch 2026-11-12；evidence 只寫搜尋結果看得到的；查不到標 verified: false。"
+  director_request: "2026-11-12：不沿用既有遊戲，要創造新遊戲模式；先 survey 再規劃。"
+  caveat: "多為廠商／部落格／二手整理；Clements & Sarama 軌跡的年齡未查到原文。"
+
+trajectory:   # 乘除學習軌跡（來源 X09，無年齡）
+  - {id: T1, name: 具體操作等組, can: "做出等組全部數一遍；除法用一個一個發"}
+  - {id: T2, name: 等組的部分與整體, can: "把等組看成『n 倍』；分越多份每份越少"}
+  - {id: T3, name: 跳數, can: "重複加、翻倍、跳數"}
+  - {id: T4, name: 推導事實, can: "用已知推未知（9＝10−1）"}
+  - {id: T5, name: 陣列／靈活解題, can: "用已知組合解各類乘除題"}
+  - {id: T6, name: 倍數比較, can: "幾倍的比較"}
+trajectory_note: "大班目標＝T1–T3；T4 以後留小一小二。"
+
+mechanics:
+  - id: X01
+    family: 做等組（畫圈放星）
+    examples: ["Circles and Stars（Marilyn Burns）", "CGI 直接建模"]
+    how: "骰一次決定幾組、再骰決定每組幾個，做出來數總數。"
+    age_fit: 高
+    borrow: "『幾組』『每組幾個』分兩步決定；孩子自己造出來。"
+    evidence: "幼兒園孩子能用直接建模解簡單乘除文字題（Carpenter 等，二手引用，來源 X10）；Circles and Stars 規則未查到 verified: false。"
+  - id: X02
+    family: 平分／發牌
+    examples: ["一個一個發（dealing）"]
+    how: "把一堆東西輪流發給幾個對象，發完每份一樣多。"
+    age_fit: 高
+    borrow: "4–5 歲已會一對一輪流分（來源 X10）；是除法也是乘法的入口。"
+    avoid: "孩子常忽略『幾個對象』，畫面要讓對象數很明顯。"
+  - id: X03
+    family: 跳數鏈／數線跳
+    examples: ["Montessori 短珠鏈", "SplashLearn 跳數找路"]
+    how: "每 n 顆一段的珠鏈，數到每段尾巴放箭頭標籤；或數線上一次跳 n 格。"
+    age_fit: 高（2、5、10）；中（3、4）
+    borrow: "一段＝一個單位、顏色區分；跳 5 次到 10＝2×5（來源 X05）。Montessori 短鏈 4.5–5 歲。"
+  - id: X04
+    family: 陣列／長方形
+    examples: ["Numberblocks 長方形（How Rectangly!、Rectangle Racers、Fun Times Fair）", "Montessori 乘法珠板", "youcubed How Close to 100"]
+    how: "排成幾排×每排幾個；同一個數可以排出不同長方形；骰兩數畫陣列填滿百格。"
+    age_fit: 中高（到 5×5）
+    borrow: "角色自己變形成長方形（Numberblocks）；珠板 5–8 歲、大班後段可（來源 X06）；百格填陣列＝空間策略＋乘法（來源 X07）。"
+    avoid: "要先會數到 100、有跳數經驗才上珠板。"
+  - id: X05
+    family: 視覺閃卡＋間隔重複
+    examples: ["Multiplication by Heart（Math for Love／Amplify）"]
+    how: "三種圖：圈裡的點（到 5×5）、陣列（到 10×10）、質因數圈；答對往後盒、答錯回 A 盒，每天約 5 分鐘。"
+    age_fit: 低（要讀數字）；圖像可借
+    borrow: "熟的少出、不熟的多出；每張卡都有『看得懂的圖』。"
+  - id: X06
+    family: 計時競速答題
+    examples: ["Times Tables Rock Stars"]
+    how: "限時答題，平均秒數決定搖滾等級。"
+    age_fit: 不適合
+    avoid: "沒有正式成效研究（2024 學術評論，來源 X08）；計時壓力會擋住工作記憶、三分之一以上學生對計時測驗極度緊張（Boaler 引用，來源 X03）。"
+  - id: X07
+    family: 小遊戲集合
+    examples: ["Kahoot! Multiplication by DragonBox（20 個小遊戲）"]
+    how: "多個小遊戲＋單一乘法表訓練模式，自動調整難度。"
+    age_fit: 低（標示 7+／9+）
+    avoid: "家長評論：其實像數位閃卡、沒先教概念就考（來源 X04）。"
+  - id: X08
+    family: 顏色因數棋盤
+    examples: ["Prime Climb"]
+    how: "每個質數一個顏色（2 橘、3 綠、5 藍、7 紫），數字的顏色組合＝因數。"
+    age_fit: 低（8+）
+    borrow: "顏色＝『幾個一組』的身分，可用在印章／腳印顏色。"
+  - id: X09
+    family: 口訣／節奏
+    examples: ["九九乘法口訣", "跳數歌"]
+    how: "用唸、唱、拍記住。"
+    age_fit: 中（會唸不等於懂）
+    evidence: "本次未查，verified: false；Boaler 不反對練習，反對沒理解的死背（來源 X03）。"
+
+principles:
+  - "先懂『每份一樣多』再給算式；符號 × 最後才出現。"
+  - "順序：2、5、10 → 3、4 → 6–9 用翻倍／已知推未知。"
+  - "不計時、不排名；進度用『收集』呈現。"
+  - "線性、越右越大的排列有最強證據（math_games_survey G01）。"
+
+sources:
+  X03: "https://ed.stanford.edu/news/learning-math-without-fear ; https://hechingerreport.org/should-we-stop-making-kids-memorize-times-tables/"
+  X04: "https://apps.apple.com/us/app/id1588092224 ; https://kahoot.com/press/2022/02/17/kahoot-multiplication-by-dragonbox/"
+  X05: "https://www.nienhuis.com/us/product/short-bead-chains-individual-beads-glass/500_0080G0 ; https://www.montessorialbum.com/montessori/index.php/Short_Chains"
+  X06: "https://montessorimom.com/lesson-day-78-multiplication-bead-board/"
+  X07: "https://www.youcubed.org/task/how-to-close-100/"
+  X08: "https://blog.soton.ac.uk/edpsych/?p=1410"
+  X09: "https://sites.google.com/view/bridgingmathstrength/lt/multiplicative-reasoning-lt"
+  X10: "https://link.springer.com/10.1007/s13394-022-00413-1 ; https://merga.net.au/wp-content/uploads/DOCS/common/Uploaded%20files/Annual%20Conference%20Proceedings/2008%20Annual%20Conference%20Proceedings/Downton%20RP172008.pdf"
+  X11: "https://mathforlove.com/prime-climb/ ; https://mathforlove.com/wp-content/uploads/2021/12/MBH-Instructions-final-10.26.21.pdf"
+
+proposals:   # AI 起稿 2026-11-12，待導演選
+  - id: MP1
+    name: 郵票工坊
+    status: superseded_20261112
+    core: "印章頭決定『一蓋幾枚』，蓋幾下＝幾組；蓋出來的整版郵票就是陣列；集郵冊 9×9 格＝乘法表，玩過的格子貼上郵票。"
+    covers: [T1, T2, T3, T5]
+    borrow: [X01, X04, X05, X08]
+  - id: MP2
+    name: 腳印送信
+    status: superseded_20261112
+    core: "每隻小恐龍一步跨的格數不同（2、5、10…），在一條信箱路上送信；孩子先猜牠會踩到哪些信箱，再看牠跳。"
+    covers: [T3]
+    borrow: [X03]
+  - id: MP3
+    name: 飛飛幾趟
+    status: superseded_20261112
+    core: "飛飛一趟只能叼固定幾封；孩子幫忙分堆，看要飛幾趟、或幾趟一共送幾封。"
+    covers: [T1, T2]
+    borrow: [X01, X02]
+
+village_proposals:   # 導演 2026-11-12：以白堊百花村為出發點，不一定跟郵局有關；AI 起稿待選
+  world_refs: "../dino-story/canon/world：SO03 慈母龍家族青草坡、PL07 百花湖、BD02 河邊大石頭、BD03 奶奶家小花圃、BD01 門口花圃小路、SO01 銀杏種子、EV14 莓果汁"
+  cast_rule: "kidgame_cast 11-10：伊奇、飛飛、小雞阿暴＋小恐龍；大人不出場"
+  items:
+    - id: MV1
+      name: 百花花圃
+      status: sample_v2_20261112_order_play  # dist/garden.html，未掛首頁、未提交
+      place: 村裡花圃
+      core: "小恐龍一人種一排、每排一樣多朵；澆水後一排一排開花跟著數。花圃可轉 90 度。大花田 9×9 格＝乘法表，種過的格子開出那一種花，慢慢開滿百花。"
+      covers: [T1, T2, T3, T5]
+      borrow: [X01, X04, X05]
+    - id: MV2
+      name: 青草坡蛋窩
+      status: proposed
+      place: 青草坡（慈母龍家族）
+      core: "幾個窩、每窩一樣多顆蛋；蛋一窩一窩孵出來跟著數；再把莓果平分給寶寶。"
+      covers: [T1, T2]
+      borrow: [X01, X02]
+    - id: MV3
+      name: 跳石過溪
+      status: proposed
+      place: 河邊／百花湖
+      core: "每隻小恐龍一步跳的石頭數不同（2、5、10…），孩子先猜牠會踩到哪幾顆，再看牠跳；踩到的石頭亮起來留下痕跡。"
+      covers: [T3]
+      borrow: [X03]
+    - id: MV4
+      name: 百花村一日遊（組合）
+      status: proposed
+      core: "村子地圖三站＝三步：青草坡蛋窩（等組）→ 跳石過溪（跳數）→ 百花花圃（長方形＋集滿花田）。"
+      covers: [T1, T2, T3, T5]
+
+dice_field:   # 2026-11-12 導演：v2 訂單版「還是不太行」→ 問知名遊戲做法 →「骰子版作看看」
+  id: MV5
+  name: 骰子花田
+  status: sample_v1_20261112
+  files: [dist/field.html, dist/field.js, dist/field.css]
+  based_on: [X04, X01]
+  fun_source: "運氣（骰子）＋擺哪裡的空間選擇＋和奶奶輪流合作種滿；沒有對錯。"
+  multiplication_exposure: "骰子→花毯一條條疊出來時算式跟著跳（3×1=3…3×4=12）；轉方向算式變 4×3=12；種下去時花毯上再閃一次。"
+  lesson_from_v2: "訂單版只有照做、答案唯一，導演判定沒有遊戲性；知名遊戲的好玩來源都在乘法之外（運氣、空間、對手、收集）。"
+  unverified: "大班孩子是否覺得『擺哪裡』有趣，未實測。"
+

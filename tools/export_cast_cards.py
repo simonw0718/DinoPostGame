@@ -41,6 +41,9 @@ CAST = {
 _KID = {'stand': ('stand', 'happy', 'closed'), 'walk_r': ('walk_a', 'happy', 'closed'),
         'hello': ('wave', 'happy', 'open'), 'cheer': ('cheer', 'happy', 'open')}
 MATRIX_CAST = {c: dict(_KID) for c in ('yuanyuan', 'painuo', 'shanshan', 'shuoshuo', 'xiaokai', 'tailuo')}
+# 2026-11-12 導演：百花花圃（乘法）主角加入三角龍奶奶；矩陣只有站姿，用表情當用途
+MATRIX_CAST['grandma'] = {'stand': ('stand', 'happy', 'closed'), 'talk': ('stand', 'happy', 'open'),
+                          'wow': ('stand', 'surprised', 'open'), 'think': ('stand', 'neutral', 'closed')}
 REMOVED = ('pairo',)                                  # 舊匯出檔一併刪除
 
 def resolve(char, key):

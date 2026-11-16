@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#164d39">
+  <title>骰子花田・恐龍郵局</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/naikai-subset.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="fx.css"><link rel="stylesheet" href="dino-mode.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css"><link rel="stylesheet" href="finish-card.css?v=5">
+  <script src="shared.js"></script>
+  <link rel="stylesheet" href="garden.css?v=3"><link rel="stylesheet" href="field.css?v=16">
+</head>
+<body>
+  <!-- 骰子花田 v2 sample（2026-11-12 導演「骰子版作看看」→「甲 124」：奶奶先示範、手指提示、擲完先選花毯、轉方向鈕畫出轉完的樣子）：仿 How Close to 100。擲兩顆骰子得到一塊花毯，自己決定擺哪裡，和奶奶輪流把花田種滿。
+       規劃：reference/multiplication_games_survey.yaml village_proposals MV5。共用 garden.css。未掛首頁。 -->
+  <div class="gd-shell">
+    <header class="gh">
+      <a class="dino-home" href="index.html" aria-label="回選遊戲首頁"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.6 1.6 11.4a1 1 0 0 0 1.3 1.5L4.5 11.6V20a1.5 1.5 0 0 0 1.5 1.5h3.8v-5.8a.7.7 0 0 1 .7-.7h3a.7.7 0 0 1 .7.7v5.8H18a1.5 1.5 0 0 0 1.5-1.5v-8.4l1.6 1.3a1 1 0 0 0 1.3-1.5Z"/></svg></a>
+      <h1 id="title" class="gh-title">骰子花田</h1>
+      <div class="gh-tools"><button id="menuBtn" class="gh-btn" type="button" aria-label="難度選單"><svg aria-hidden="true"><use href="icons.svg#ic-gear"/></svg></button></div>
+    </header>
+    <main class="gd-main">
+      <div id="stage" class="gd-stage ff-stage">
+        <div class="gd-top">
+          <button id="dice" class="gd-order ff-dice" type="button" aria-label="擲骰子"><span class="ff-dw"><span id="dA" class="ff-die"></span><em class="ff-key ff-key-a" aria-hidden="true"></em></span><i>×</i><span class="ff-dw"><span id="dB" class="ff-die"></span><em class="ff-key ff-key-b" aria-hidden="true"></em></span></button>
+          <div class="gd-people"><img id="grandma" class="gd-grandma" src="assets/cast/grandma__stand.webp" alt="三角龍奶奶"></div>
+        </div>
+        <p id="tip" class="ff-tip" aria-live="polite"></p>
+        <div id="bedWrap" class="gd-bedwrap"><div id="grid" class="ff-grid"></div></div>
+        <div id="score" class="ff-score" role="img" aria-label="誰的花多"><span class="ff-me" aria-hidden="true"><svg viewBox="0 0 48 56"><path d="M19 4c3 0 5 2 5 5v14l11 2c5 1 8 5 7 10l-2 11c-1 5-5 8-10 8H21c-4 0-7-2-9-5L4 36c-2-3 1-7 5-5l5 3V9c0-3 2-5 5-5Z" fill="#fff" stroke="#3b2a1a" stroke-width="3" stroke-linejoin="round"/></svg></span><b class="ff-n ff-nk">0</b><span class="ff-bar"><i class="ff-bk"></i><i class="ff-bg"></i><u></u></span><b class="ff-n ff-ng">0</b><img class="ff-gmi" src="assets/cast/grandma__stand.webp" alt=""></div>
+        <div id="tray" class="gd-tray ff-tray">
+          <div class="ff-hold"><div id="piece" class="ff-piece"></div></div>
+          <div class="ff-info"><span id="chip" class="ff-chip" aria-live="polite"></span>
+            <div class="ff-btns"><button id="rot" class="ff-rot" type="button" aria-label="轉方向"></button><button id="ok" class="gd-deliver" type="button" aria-label="種下去"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.6 4.6L19 7.6" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div>
+        </div>
+        <div id="quiz" class="ff-quiz" hidden><div class="fq-card"><p id="quizAsk" class="fq-ask"></p><div id="quizRug" class="fq-rug"></div><p id="quizSum" class="fq-sum" aria-hidden="true"></p><p id="quizEq" class="fq-eq"></p><div id="quizOpts" class="fq-opts" role="group" aria-label="選答案"></div></div></div>
+        <div id="hand" class="ff-hand" aria-hidden="true" hidden><svg viewBox="0 0 48 56"><path d="M19 4c3 0 5 2 5 5v14l11 2c5 1 8 5 7 10l-2 11c-1 5-5 8-10 8H21c-4 0-7-2-9-5L4 36c-2-3 1-7 5-5l5 3V9c0-3 2-5 5-5Z" fill="#fff" stroke="#3b2a1a" stroke-width="3" stroke-linejoin="round"/></svg></div>
+      </div>
+    </main>
+  </div>
+
+  <div id="ready" class="overlay">
+    <div class="pick" role="group" aria-label="難度"><button type="button" data-lv="easy">簡單</button><button type="button" data-lv="normal">普通</button><button type="button" data-lv="hard">困難</button></div>
+    <p id="rule" class="gd-rule"></p>
+    <button id="start" class="start" type="button">
+      <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M7 4.6v14.8a1 1 0 0 0 1.5.9l12-7.4a1 1 0 0 0 0-1.8l-12-7.4A1 1 0 0 0 7 4.6z"/></svg></span><span id="startLabel" class="label">點一下，開始種花！</span>
+    </button>
+  </div>
+
+  <div id="finish" class="overlay" hidden>
+    <div class="card">
+      <img id="finishActor" src="assets/cast/grandma__talk.webp" alt="">
+      <h2 id="finishTitle">花田種滿了！</h2>
+      <div id="finishScore" class="ff-score is-fin" role="img" aria-label="誰的花多"><span class="ff-me" aria-hidden="true"><svg viewBox="0 0 48 56"><path d="M19 4c3 0 5 2 5 5v14l11 2c5 1 8 5 7 10l-2 11c-1 5-5 8-10 8H21c-4 0-7-2-9-5L4 36c-2-3 1-7 5-5l5 3V9c0-3 2-5 5-5Z" fill="#fff" stroke="#3b2a1a" stroke-width="3" stroke-linejoin="round"/></svg></span><b class="ff-n ff-nk">0</b><span class="ff-bar"><i class="ff-bk"></i><i class="ff-bg"></i><u></u></span><b class="ff-n ff-ng">0</b><img class="ff-gmi" src="assets/cast/grandma__stand.webp" alt=""></div>
+      <div id="mini" class="ff-mini" role="img" aria-label="我們種的花田"></div>
+      <div class="actions"><button id="again" type="button">再玩一次</button><a id="home" href="index.html">回首頁</a></div>
+    </div>
+  </div>
+
+<script src="field.js?v=16"></script>
+</body>
+</html>

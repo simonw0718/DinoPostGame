@@ -1,0 +1,227 @@
+/* 骰子花田 v2 sample（2026-11-12）：疊在 garden.css 上。花田 N×N 格（--n）、格子 --c 由 field.js 算。 */
+.ff-stage{grid-template:"top" minmax(0,25fr) "tip" auto "bed" minmax(0,56fr) "score" auto "tray" auto/minmax(0,1fr)}
+@container (min-aspect-ratio:1.15){.ff-stage{grid-template:"top bed" minmax(0,1fr) "tip bed" auto "score bed" auto "tray bed" auto/minmax(0,36fr) minmax(0,64fr)}}
+/* 指引文字＋奶奶放大 */
+.ff-tip{grid-area:tip;justify-self:center;margin:0;min-height:2.3em;display:flex;align-items:center;padding:.1em .9em;border:3px solid var(--gold);border-radius:999px;background:var(--cream);box-shadow:0 4px 0 #c89c52;font-size:clamp(19px,4.6cqw,30px);font-weight:900;line-height:1.5;white-space:nowrap}
+.ff-tip:empty{visibility:hidden}
+.ff-tip.is-pop{animation:pop .3s cubic-bezier(.2,1.5,.4,1)}
+.ff-stage .gd-grandma{max-height:38cqh;max-width:none}
+.ff-stage .gd-people{flex:1 1 0;justify-content:flex-start}
+
+/* 比誰的花多：拔河條 */
+.ff-score{grid-area:score;display:flex;align-items:center;gap:.35em;width:min(100%,560px);justify-self:center;font-size:clamp(18px,4.2cqw,28px);font-weight:1000}
+.ff-score.is-fin{grid-area:auto;margin:.2em auto .5em;font-size:clamp(18px,5vw,26px)}
+.ff-me{flex:none;width:1.3em;rotate:-12deg}.ff-me svg{display:block;width:100%}
+.ff-gmi{flex:none;width:1.9em;height:1.9em;object-fit:contain}
+.ff-n{flex:none;min-width:1.3em;text-align:center;line-height:1}
+.ff-nk{color:#b9792b}.ff-ng{color:#7b5c95}
+.ff-n.is-pop{animation:look .5s ease-in-out}
+.ff-bar{position:relative;flex:1;height:.95em;border:3px solid var(--soil-d);border-radius:999px;background:#fff8e6;overflow:hidden}
+.ff-bar i{position:absolute;top:0;bottom:0;transition:width .6s cubic-bezier(.2,1.2,.4,1)}
+.ff-bk{left:0;background:#f2b945}.ff-bg{right:0;background:#b98cf0}
+.ff-bar u{position:absolute;left:50%;top:0;bottom:0;width:3px;translate:-50%;background:var(--soil-d);opacity:.55}
+.ff-score[data-win=kid] .ff-me,.ff-score[data-win=gm] .ff-gmi{animation:breathe .6s ease-in-out infinite alternate}
+/* 骰子牌：每顆骰子下面一個小圖——左＝一條裡幾朵、右＝疊幾條 */
+.ff-stage{position:relative}
+.ff-dw{display:grid;justify-items:center;gap:.1em}
+.ff-key{display:flex;flex-direction:column;justify-content:flex-start;align-items:center;gap:calc(.06em*var(--ks,1));width:1.3em;height:.86em;font-style:normal}
+.ff-key-a span{display:flex;justify-content:center;gap:.045em;font-size:calc(1em*var(--ks,1));padding:.06em .08em;border-radius:.13em;background:var(--soil-l);box-shadow:inset 0 0 0 2px var(--soil-d)}
+.ff-key-a b{width:.19em;height:.19em;border-radius:50%;background:#c7446f}
+.ff-key-b s{display:block;width:1.15em;height:calc(.115em*var(--ks,1));border-radius:.05em;background:var(--soil-l);box-shadow:inset 0 0 0 1px var(--soil-d)}
+.ff-die.is-look{animation:look .55s ease-in-out infinite}
+.ff-die.is-look1{animation:look .55s ease-in-out 2}
+/* 手指提示 */
+.ff-hand{position:absolute;z-index:6;width:clamp(44px,9cqw,70px);pointer-events:none;rotate:-18deg;filter:drop-shadow(0 4px 3px #0005);animation:handTap .9s ease-in-out infinite}
+.ff-hand[hidden]{display:none}
+.ff-hand svg{display:block;width:100%}
+/* 擲完彈出題目框：花毯＋連加＋a×b=?＋三個答案 */
+.ff-quiz{position:absolute;inset:0;z-index:5;display:grid;place-items:center;border-radius:18px;background:#2a4a1f66}
+.ff-quiz[hidden]{display:none}
+.fq-card{--q:40px;display:grid;justify-items:center;gap:clamp(5px,1.5cqh,14px);max-width:96%;padding:clamp(8px,2.2cqh,22px) clamp(14px,3cqw,30px);border:5px solid var(--gold);border-radius:26px;background:var(--cream);box-shadow:0 7px 0 #c89c52,0 14px 26px #0004;animation:pop .3s cubic-bezier(.2,1.5,.4,1)}
+.fq-ask{margin:0;font-size:clamp(17px,3.4cqh,28px);font-weight:900;line-height:1.5;white-space:nowrap}
+.fq-rug{display:grid;grid-auto-rows:var(--q)}
+.fq-rug.is-count{padding:0 calc(var(--q)*1.5)}
+.fq-rug[hidden],.fq-sum[hidden]{display:none}
+.fq-rug .ff-strip{position:relative;display:flex;height:var(--q);border-radius:calc(var(--q)*.26);background:var(--soil-l);box-shadow:inset 0 0 0 2px var(--soil-d);animation:rowIn .25s cubic-bezier(.2,1.4,.4,1)}
+.fq-rug .ff-strip span{display:grid;place-items:center;width:var(--q);height:var(--q)}
+.fq-rug svg{width:86%;height:86%}
+.fq-rug em{position:absolute;left:100%;top:50%;translate:.3em -50%;font-style:normal;font-weight:1000;font-size:max(13px,calc(var(--q)*.62));line-height:1;color:#c7446f;animation:pop .3s cubic-bezier(.2,1.5,.4,1)}
+.fq-sum,.fq-eq{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.14em;margin:0;font-weight:1000;line-height:1.1}
+.fq-sum{min-height:1.1em;font-size:clamp(20px,5cqh,42px)}
+.fq-eq{min-height:1.1em;font-size:clamp(28px,6.6cqh,56px)}
+.fq-eq.is-pop{animation:pop .3s cubic-bezier(.2,1.5,.4,1)}
+.fq-sum i,.fq-eq i{font-style:normal;font-size:.82em;color:#b9792b}
+.fq-eq b{color:#c7446f}
+.fq-opts{display:flex;justify-content:center;gap:clamp(10px,3cqw,26px);min-height:clamp(50px,11cqh,86px)}
+.fq-opt{min-width:2em;padding:.1em .42em;border:4px solid var(--gold);border-radius:.42em;background:#fff;box-shadow:0 5px 0 #c89c52;font:inherit;font-size:clamp(26px,6.2cqh,48px);font-weight:1000;line-height:1.25;color:var(--ink);cursor:pointer;transition:transform .12s,opacity .3s,scale .3s;animation:pop .3s cubic-bezier(.2,1.5,.4,1)}
+.fq-opt:active{transform:translateY(4px)}
+.fq-opt.is-out{opacity:.25;scale:.85;pointer-events:none}
+.fq-opt.is-right{border-color:#58b866;box-shadow:0 5px 0 #3f9950,0 0 0 6px #a9e59a88;scale:1.08}
+.ff-rot.is-off{visibility:hidden}
+.ff-rot svg{width:74%!important;height:74%!important}
+.ff-piece{cursor:pointer}
+@keyframes handTap{50%{translate:-10% -14%;scale:.92}}
+
+/* 骰子牌 */
+.ff-dice{flex-direction:row;gap:.22em;padding:.22em .4em;font-size:clamp(40px,10cqw,70px);cursor:pointer}
+.ff-dice.is-ask{animation:breathe .8s ease-in-out infinite alternate}
+.ff-dice:disabled{opacity:1}
+.ff-die{display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);width:1.15em;height:1.15em;padding:.13em;border:3px solid #c9b78a;border-radius:.24em;background:#fff;box-shadow:0 .07em 0 #c9b78a}
+.ff-die u{place-self:center;width:.2em;height:.2em;border-radius:50%;background:var(--ink)}
+.ff-die.is-roll{animation:roll .14s linear infinite}
+.ff-dice.is-gm .ff-die{border-color:#b98cf0;box-shadow:0 .07em 0 #b98cf0}
+
+/* 花田 */
+.ff-grid{--c:60px;--n:8;position:relative;box-sizing:content-box;display:grid;grid-template-columns:repeat(var(--n),var(--c));grid-auto-rows:var(--c);padding:calc(var(--c)*.1);border:calc(var(--c)*.08) solid var(--soil-d);border-radius:calc(var(--c)*.3);background:var(--soil);box-shadow:0 calc(var(--c)*.1) 0 #5f3e22,0 calc(var(--c)*.22) calc(var(--c)*.28) #2a4a1f55}
+.ff-cell{position:relative;padding:0;border:0;background:none}
+.ff-cell::before{content:"";position:absolute;left:24%;right:24%;top:38%;height:24%;border-radius:50%;background:var(--soil-d)}
+.ff-cell.is-on::before{display:none}
+.ff-cell.is-end{display:grid;place-items:center}
+.ff-cell.is-end svg{width:74%;height:74%;animation:bloom .4s cubic-bezier(.2,1.6,.4,1)}
+.ff-block{position:absolute;left:calc(var(--c)*.1 + var(--x)*var(--c));top:calc(var(--c)*.1 + var(--y)*var(--c));display:grid;grid-auto-rows:var(--c);pointer-events:none}
+.ff-block .ff-strip{display:flex;height:var(--c);border-radius:calc(var(--c)*.24);background:var(--soil-l);box-shadow:inset 0 0 0 calc(var(--c)*.05) var(--soil-d)}
+.ff-block.is-gm .ff-strip{background:#b79bc9;box-shadow:inset 0 0 0 calc(var(--c)*.05) #7b5c95}
+.ff-block .ff-strip span{display:grid;place-items:center;width:var(--c);height:var(--c)}
+.ff-block svg{width:82%;height:82%;filter:drop-shadow(0 2px 1px #3b250f66)}
+.ff-block.is-in{animation:plantIn .4s cubic-bezier(.2,1.5,.4,1)}
+.ff-block.is-ghost{pointer-events:auto;cursor:pointer;opacity:.82;outline:calc(var(--c)*.07) dashed #fff;outline-offset:calc(var(--c)*-.03);border-radius:calc(var(--c)*.24);animation:ghostPulse .7s ease-in-out infinite alternate;z-index:2}
+.ff-block.is-bad{opacity:.5;outline-color:#ffd23f;animation:wobble .4s}
+.ff-tag{position:absolute;left:50%;top:50%;translate:-50% -50%;padding:.2em .5em;border:3px solid var(--gold);border-radius:.6em;background:var(--cream);font-size:calc(var(--c)*.4);font-weight:1000;line-height:1;white-space:nowrap;box-shadow:0 3px 0 #c89c52;animation:tag 1.6s ease-in-out forwards;z-index:3}
+
+/* 托盤：手上的花毯＋算式＋轉方向／種下去 */
+.ff-tray{--m:clamp(20px,3.6cqh,34px);min-height:calc(var(--m)*5 + 24px);gap:clamp(12px,4cqw,34px)}
+.ff-hold{display:grid;place-items:center;width:calc(var(--m)*5 + 12px);height:calc(var(--m)*5 + 12px)}
+.ff-piece{--pm:calc(var(--m)*var(--ps,1));display:grid;grid-auto-rows:var(--pm);transition:opacity .2s}
+.ff-piece .ff-strip{display:flex;height:var(--pm);border-radius:calc(var(--pm)*.26);background:var(--soil-l);box-shadow:inset 0 0 0 2px var(--soil-d);animation:rowIn .25s cubic-bezier(.2,1.4,.4,1)}
+.ff-piece.is-gm .ff-strip{background:#b79bc9;box-shadow:inset 0 0 0 2px #7b5c95}
+.ff-piece .ff-strip span{display:grid;place-items:center;width:var(--pm);height:var(--pm)}
+.ff-piece svg{width:86%;height:86%}
+.ff-piece.is-turn{animation:turn .35s ease-in-out}
+.ff-info{display:grid;gap:10px;justify-items:center}
+.ff-chip{display:flex;align-items:center;gap:.1em;min-width:5.2em;min-height:1.7em;justify-content:center;padding:.15em .5em;border:4px solid var(--gold);border-radius:.6em;background:var(--cream);font-size:clamp(24px,4.4cqh,40px);font-weight:1000;line-height:1;white-space:nowrap;box-shadow:0 4px 0 #c89c52}
+.ff-chip:empty{visibility:hidden}
+.ff-chip i{font-style:normal;color:#b9792b;font-size:.82em}
+.ff-chip b{color:#c7446f}
+.ff-btns{display:flex;gap:14px;align-items:center}
+.ff-rot{display:grid;place-items:center;width:clamp(60px,9cqh,80px);aspect-ratio:1;padding:0;border:5px solid var(--cream);border-radius:50%;background:radial-gradient(circle at 35% 28%,#9fd4f7,#4fa3df 65%,#2f7fc0);color:#fff;box-shadow:0 6px 0 #235f93,0 9px 12px #2a4a1f44;transition:transform .12s,box-shadow .12s}
+.ff-rot svg{width:58%;height:58%}
+.ff-rot:active{transform:translateY(4px);box-shadow:0 2px 0 #235f93}
+.ff-rot.is-ask{animation:breathe .7s ease-in-out infinite alternate}
+.ff-tray .gd-deliver{width:clamp(60px,9cqh,80px)}
+.ff-tray.is-idle .ff-btns{visibility:hidden}
+@container (min-aspect-ratio:1.15){.ff-dice{font-size:clamp(40px,6cqw,76px)}.ff-tray{--m:clamp(20px,2.6cqw,34px)}.ff-chip{font-size:clamp(22px,2.8cqw,38px)}}
+
+@keyframes roll{to{rotate:360deg}}
+@keyframes plantIn{from{scale:1.25;opacity:.4}}
+@keyframes ghostPulse{to{opacity:1;scale:1.03}}
+@keyframes tag{0%{scale:.6;opacity:0}15%,75%{scale:1;opacity:1}100%{scale:.9;opacity:0}}
+@keyframes turn{from{rotate:-90deg}}
+@media(prefers-reduced-motion:reduce){.ff-dice.is-ask,.ff-block.is-ghost,.ff-rot.is-ask,.ff-piece.is-turn,.ff-block.is-in{animation:none}}
+
+/* 完成框的花田縮圖 */
+.ff-mini{display:grid;place-items:center;margin:.2em 0 .7em}
+.ff-mini .ff-grid{pointer-events:none}
+.ff-mini .ff-block,.ff-mini .ff-cell svg{animation:none!important}
+/* 手機橫放（矮畫面）：骰子卡和奶奶並排、各列縮小，左欄才塞得下 */
+@container (min-aspect-ratio:1.15) and (max-height:430px){
+.ff-stage{gap:1.2cqh 2cqw}
+.ff-stage .gd-top{flex-direction:row;align-items:center;justify-content:center;gap:2cqw;padding-top:0;min-height:0}
+.ff-dice{font-size:clamp(26px,12cqh,46px)}
+.ff-stage .gd-people{flex:0 1 auto;width:auto;height:100%}
+.ff-stage .gd-grandma{max-height:100%;height:100%}
+.ff-tip{font-size:clamp(14px,5.6cqh,22px);min-height:1.9em;border-width:2px}
+.ff-score{font-size:clamp(14px,5.2cqh,20px)}
+.ff-tray{--m:clamp(12px,4.4cqh,22px);min-height:calc(var(--m)*5 + 12px);padding-bottom:0}
+.ff-chip{font-size:clamp(16px,6cqh,24px)}
+.ff-tray .gd-deliver,.ff-tray .ff-rot{width:clamp(44px,15cqh,60px)}
+.ff-tray .ff-rot{border-width:3px}
+}
+/* v8：整排加分的亮框、金色花、加分字 */
+.ff-line{position:absolute;left:calc(var(--c)*.1 + var(--x)*var(--c));top:calc(var(--c)*.1 + var(--y)*var(--c));width:calc(var(--w)*var(--c));height:calc(var(--h)*var(--c));border-radius:calc(var(--c)*.24);pointer-events:none;z-index:3}
+.ff-line.is-pre{background:#ffd23f44;box-shadow:inset 0 0 0 calc(var(--c)*.08) #ffd23f;animation:linePre .6s ease-in-out infinite alternate}
+.ff-line.is-done{background:#ffe27acc;box-shadow:inset 0 0 0 calc(var(--c)*.08) #ffb300;opacity:0;animation:lineFlash 1.8s ease-out forwards}
+.ff-line .ff-tag{font-size:calc(var(--c)*.5);color:#c7446f}
+.ff-block span.is-gold{position:relative}
+.ff-block span.is-gold svg{filter:drop-shadow(0 0 calc(var(--c)*.07) #ffc400) drop-shadow(0 0 calc(var(--c)*.07) #ffc400)}
+.ff-block span.is-gold::after{content:"★";position:absolute;right:0;top:-4%;font-size:calc(var(--c)*.44);line-height:1;color:#ffc400;-webkit-text-stroke:1px #a86a00}
+.ff-tag u,.fq-eq u{margin-left:.25em;text-decoration:none;color:#e0a100}
+.ff-n{text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 5px #fff}
+@keyframes linePre{to{background:#ffd23f77}}
+@keyframes lineFlash{0%{opacity:0}12%,70%{opacity:1}100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.ff-line.is-pre{animation:none}}
+/* v9：題目框花毯輪流亮（一次一條＋連加裡對應的數字） */
+.fq-rug .ff-strip{transition:scale .18s,background .18s,box-shadow .18s}
+.fq-rug .ff-strip.is-lit{z-index:1;scale:1.07;background:#ffe27a;box-shadow:inset 0 0 0 3px #ffb300,0 0 0 4px #ffd23f88}
+.fq-sum b{padding:0 .14em;border-radius:.3em;transition:scale .18s,background .18s,color .18s}
+.fq-sum b.is-lit{scale:1.25;background:#ffe27a;color:#c7446f}
+/* v10：彈簧緩動＋2.5D 花圃 */
+:root{--spring:cubic-bezier(.34,1.56,.64,1)}
+@supports (animation-timing-function:linear(0,1)){:root{--spring:linear(0,.009,.035 2.1%,.141 4.4%,.723 12.9%,.938 16.7%,1.017,1.077,1.121,1.149 24.3%,1.159,1.163,1.161,1.154 29.9%,1.129 32.8%,1.051 39.6%,1.017 43.1%,.991,.977 51%,.974 53.8%,.975 57.1%,.997 69.8%,1.003 76.9%,1.004 83.8%,1)}}
+.fq-card{animation:cardIn .6s var(--spring)}
+.fq-opt{animation:optIn .55s var(--spring) backwards}.fq-opt:nth-child(2){animation-delay:.07s}.fq-opt:nth-child(3){animation-delay:.14s}
+.fq-opt.is-right{transition:scale .45s var(--spring)}
+.fq-rug .ff-strip{animation:stripIn .55s var(--spring);transition:scale .4s var(--spring),background .18s,box-shadow .18s}
+.fq-sum b{transition:scale .4s var(--spring),background .18s,color .18s}
+.fq-eq.is-pop,.ff-tip.is-pop,.ff-n.is-pop,.fq-rug em{animation:popS .5s var(--spring)}
+.ff-die.is-land{animation:land .6s var(--spring)}
+.ff-piece.is-turn{animation:turn .55s var(--spring)}
+.ff-piece .ff-strip{animation:stripIn .45s var(--spring)}
+@keyframes cardIn{from{scale:.55;opacity:0;translate:0 14%}}
+@keyframes optIn{from{scale:.3;opacity:0}}
+@keyframes stripIn{from{translate:0 -55%;scale:.7;opacity:0}}
+@keyframes popS{from{scale:.55}}
+@keyframes land{from{scale:1.3 .72;translate:0 -32%}}
+/* 花圃：花床有厚度、洞有深度 */
+.ff-grid{background-image:radial-gradient(120% 90% at 50% 0,#fff2,#0000 60%),linear-gradient(#0000 70%,#0002)}
+.ff-cell::before{box-shadow:inset 0 calc(var(--c)*.07) 0 #0005,0 calc(var(--c)*.03) 0 #fff2}
+.ff-block{z-index:calc(var(--y) + 1)}
+.ff-block.is-ghost{z-index:40}.ff-line{z-index:50}
+.ff-block .ff-strip,.ff-block.is-gm .ff-strip{background-image:linear-gradient(#fff4,#fff0 34%,#0000 62%,#0003)}
+.ff-block .ff-strip{box-shadow:inset 0 0 0 calc(var(--c)*.05) var(--soil-d),0 calc(var(--c)*.07) 0 #3b250f88}
+.ff-block.is-gm .ff-strip{box-shadow:inset 0 0 0 calc(var(--c)*.05) #7b5c95,0 calc(var(--c)*.07) 0 #3b250f88}
+/* 花：比格子高，往上蓋住後一排；種下去一朵朵彈出來，平常輕輕搖 */
+.ff-block .ff-strip span{place-items:end center}
+.ff-block svg{width:98%;height:124%;margin-bottom:5%;overflow:visible;filter:none;transform-origin:50% 94%}
+.ff-block.is-in{animation:none}
+.ff-block.is-in .ff-strip{animation:bedIn .5s var(--spring) backwards}
+.ff-block.is-in svg{animation:sprout .6s var(--spring) calc(.12s + var(--i,0)*.05s) backwards}
+.ff-block.is-in span:nth-child(odd) svg{animation:sprout .6s var(--spring) calc(.12s + var(--i,0)*.05s) backwards,sway 2.8s ease-in-out calc(.9s + var(--i,0)*.23s) infinite alternate}
+.ff-cell.is-end svg{overflow:visible;transform-origin:50% 94%;animation:sprout .55s var(--spring)}
+.ff-block span.is-boing svg,.ff-cell svg.is-boing{animation:boing .7s var(--spring)!important}
+@keyframes bedIn{from{scale:.6 .3;opacity:0}}
+@keyframes sprout{from{scale:.1 0;opacity:0}}
+@keyframes sway{from{rotate:-5deg}to{rotate:5deg}}
+@keyframes boing{from{scale:1.35 .6;rotate:-10deg}}
+.ff-mini svg,.ff-mini .ff-strip{animation:none!important}
+@media(prefers-reduced-motion:reduce){.ff-block.is-in svg,.ff-block.is-in span:nth-child(odd) svg,.ff-block.is-in .ff-strip{animation:none}}
+/* v11（導演 11-16「再強一點」）：彈跳更大、花圃真的往後傾 */
+@supports (animation-timing-function:linear(0,1)){:root{--spring:linear(0,.5 8%,1.25 18%,1.33 24%,1.2 30%,.9 42%,.85 48%,.94 58%,1.06 68%,1.03 76%,.985 86%,1)}}
+@keyframes cardIn{from{scale:.25;opacity:0;translate:0 30%;rotate:-6deg}}
+@keyframes optIn{from{scale:.1;opacity:0;translate:0 60%}}
+@keyframes stripIn{from{translate:0 -130%;scale:.6 1.3;opacity:0}}
+@keyframes popS{from{scale:.3}}
+@keyframes land{from{scale:1.5 .5;translate:0 -70%;rotate:-25deg}}
+@keyframes boing{from{scale:1.7 .35;rotate:-20deg}}
+@keyframes sprout{from{scale:.3 0;opacity:0;rotate:-25deg}}
+@keyframes sway{from{rotate:-9deg}to{rotate:9deg}}
+@keyframes bedIn{from{scale:.4 .1;opacity:0;translate:0 -40%}}
+@keyframes ghostIn{from{scale:.6;opacity:0}}
+@keyframes thump{from{translate:0 2.5%;scale:1.03 .96}}
+.fq-rug .ff-strip.is-lit{scale:1.14}.fq-sum b.is-lit{scale:1.45}
+.fq-opt.is-right{scale:1.18}
+.ff-block.is-ghost{animation:ghostIn .5s var(--spring),ghostPulse .7s ease-in-out .5s infinite alternate}
+.ff-grid{transform:perspective(900px) rotateX(16deg);transform-origin:50% 100%;box-shadow:0 calc(var(--c)*.28) 0 #5f3e22,0 calc(var(--c)*.5) calc(var(--c)*.5) #2a4a1f66}
+.ff-grid.is-thump{animation:thump .5s var(--spring)}
+.ff-mini .ff-grid{transform:none;box-shadow:0 calc(var(--c)*.1) 0 #5f3e22}
+.ff-block svg{height:150%;margin-bottom:8%}
+.ff-cell.is-end svg{width:86%;height:120%;align-self:end}
+.ff-block .ff-strip{box-shadow:inset 0 0 0 calc(var(--c)*.05) var(--soil-d),0 calc(var(--c)*.13) 0 #3b250faa}
+.ff-block.is-gm .ff-strip{box-shadow:inset 0 0 0 calc(var(--c)*.05) #7b5c95,0 calc(var(--c)*.13) 0 #3b250faa}
+.ff-block.is-in span svg{animation:sprout .7s var(--spring) calc(.12s + var(--i,0)*.06s) backwards,sway 2.4s ease-in-out calc(1s + var(--i,0)*.23s) infinite alternate}
+.ff-block.is-in span:nth-child(even) svg{animation:sprout .7s var(--spring) calc(.12s + var(--i,0)*.06s) backwards}   /* 只有一半的花在搖（導演 11-16） */
+@media(prefers-reduced-motion:reduce){.ff-block.is-in span svg,.ff-block.is-in span:nth-child(even) svg,.ff-block.is-ghost,.ff-grid.is-thump{animation:none}}
+/* 手機橫放：題目框左右排——花毯在左用整個高度，題目、連加、算式、答案在右（導演 11-16「A」） */
+@container (min-aspect-ratio:1.15) and (max-height:430px){
+.fq-card{grid-template-columns:auto auto;grid-template-areas:"rug ask" "rug sum" "rug eq" "rug opts";column-gap:3cqw;align-items:center;padding:6px 14px}
+.fq-rug{grid-area:rug}.fq-ask{grid-area:ask}.fq-sum{grid-area:sum;max-width:40cqw}.fq-eq{grid-area:eq}.fq-opts{grid-area:opts}
+}

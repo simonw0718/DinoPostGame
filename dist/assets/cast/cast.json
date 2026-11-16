@@ -454,5 +454,38 @@
     "sha256": "969fec1ecd723458d9d392350c2d4b24dc7f7c505618be2dfbe23f9d418a514c"
    }
   }
+ },
+ "grandma": {
+  "height": 1.3,
+  "poses": {
+   "stand": {
+    "src": "assets/cast/grandma__stand.webp",
+    "ratio": 0.9,
+    "pose_factor": 1.0284,
+    "card": "matrix:grandma/stand/happy/closed",
+    "sha256": "5c1bb75d6284c5f8666764b39b32cbf9105bbbb6b6761037245d128168064af2"
+   },
+   "talk": {
+    "src": "assets/cast/grandma__talk.webp",
+    "ratio": 0.9,
+    "pose_factor": 1.0284,
+    "card": "matrix:grandma/stand/happy/open",
+    "sha256": "c0235cee03dd028eec9b646278658a0e15069b0c36a7ddb879bfb0f57797d2ce"
+   },
+   "wow": {
+    "src": "assets/cast/grandma__wow.webp",
+    "ratio": 0.9,
+    "pose_factor": 1.0284,
+    "card": "matrix:grandma/stand/surprised/open",
+    "sha256": "3fc85a1ed3325a0239dc68c2ff9ff7cc3e51a2d9d69209f87e46b91d239afe80"
+   },
+   "think": {
+    "src": "assets/cast/grandma__think.webp",
+    "ratio": 0.9,
+    "pose_factor": 1.0284,
+    "card": "matrix:grandma/stand/neutral/closed",
+    "sha256": "c1f512c2a73a8d31ad9fb41f985f0007fbd01509c35b0cee849fdeed4f655ec3"
+   }
+  }
  }
 }

@@ -1,0 +1,124 @@
+/* 百花花圃 v2 sample（2026-11-12）：三角龍奶奶的花店，村民拿訂單（3×4＝3 朵一條放 4 條）來。
+   版面：直式＝訂單與角色在上、花圃＋算式欄在中、托盤在下；橫式＝左邊訂單／角色／托盤，右邊花圃。格子大小 --c 由 garden.js 依畫面算。 */
+:root{--ink:#17593f;--cream:#fffdf2;--gold:#e3bd70;--soil:#9b6a3c;--soil-d:#7c5230;--soil-l:#b98452}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:#8fd0f4;overflow:hidden;font-family:"Naikai",ui-rounded,system-ui,sans-serif;color:var(--ink);-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.gd-shell{display:flex;flex-direction:column;gap:8px;height:100svh;padding:max(10px,env(safe-area-inset-top)) 14px max(10px,env(safe-area-inset-bottom));overflow:hidden;background:url(assets/mail-bg/near-village.jpg) center top/cover #9ad27a}
+@media(max-width:680px){.gd-shell{padding-left:8px;padding-right:8px;gap:6px}}
+.gd-main{flex:1;min-height:0;container-type:size}
+.gd-stage{display:grid;grid-template:"top" minmax(0,22fr) "bed" minmax(0,58fr) "tray" auto/minmax(0,1fr);gap:1.4cqh;height:100%;max-width:900px;margin:0 auto}
+@container (min-aspect-ratio:1.15){.gd-stage{grid-template:"top bed" minmax(0,1fr) "tray bed" auto/minmax(0,38fr) minmax(0,62fr);max-width:1400px;gap:2cqh 2cqw}}
+
+/* 上方：訂單牌＋村民＋奶奶 */
+.gd-top{grid-area:top;position:relative;display:flex;align-items:flex-end;justify-content:center;gap:3cqw;min-height:0}
+.gd-people{display:flex;align-items:flex-end;justify-content:center;gap:1cqw;height:100%;min-width:0}
+.gd-grandma{height:100%;max-height:30cqh;max-width:60%;object-fit:contain;object-position:bottom;filter:drop-shadow(0 6px 4px #2a4a1f44);transform-origin:50% 100%}
+.gd-cust{height:62%;max-height:19cqh;max-width:38%;object-fit:contain;object-position:bottom;filter:drop-shadow(0 4px 3px #2a4a1f44);transform-origin:50% 100%}
+.is-nod{animation:gNod .6s ease-in-out}
+.is-hop{animation:gHop .6s cubic-bezier(.16,1,.3,1)}
+.is-no{animation:wobble .4s}
+.is-pop{animation:pop .4s cubic-bezier(.2,1.5,.4,1)}
+.gd-order{flex:none;display:flex;flex-direction:column;align-items:center;gap:.18em;align-self:center;padding:.28em .5em;border:4px solid var(--gold);border-radius:22px;background:var(--cream);box-shadow:0 5px 0 #c89c52;font-size:clamp(34px,9cqw,60px);font-weight:1000;line-height:1}
+.gd-order i{font-style:normal;color:#b9792b;font-size:.8em}
+.oc-num{display:flex;align-items:center;gap:.14em}
+.oc-num b{display:inline-grid;place-items:center;min-width:1.15em;height:1.25em;border-radius:.28em}
+.oc-pic{display:none;align-items:center;gap:.25em;font-size:.42em}
+.gd-order.has-pic .oc-pic{display:flex}
+.gd-order.pic-big .oc-pic{font-size:.56em;order:-1}
+.gd-order.pic-big .oc-num{font-size:.6em}
+.oc-strip{display:flex;padding:.1em;border-radius:.3em;background:var(--soil-l);box-shadow:inset 0 0 0 2px var(--soil-d)}
+.oc-strip svg{width:1em;height:1em}
+.oc-dots{display:flex;gap:.16em;padding:.12em;border-radius:.4em}
+.oc-dots u{width:.5em;height:.5em;border:2px solid var(--soil-d);border-radius:50%;background:#fff}
+.oc-dots u.is-on{background:#58b866}
+.is-look{animation:look .5s ease-in-out 2}
+.gd-rounds{position:absolute;left:0;top:0;display:flex;gap:6px;margin:0;padding:0;list-style:none}
+.gd-rounds li{width:24px;height:24px;border:3px solid var(--cream);border-radius:50%;background:#ffffff66;box-shadow:0 2px 3px #1d5f3344}
+.gd-rounds li.is-done{background:radial-gradient(circle at 34% 28%,#ffc0d4,#f06a94 60%,#c7446f);animation:pop .45s cubic-bezier(.2,1.5,.4,1)}
+.gd-rounds li.is-now{background:#fff3c9;animation:breathe 1.2s ease-in-out infinite alternate}
+
+/* 花圃（固定 5 格寬、6 條高）｜右邊一欄算式 */
+.gd-bedwrap{grid-area:bed;display:grid;place-items:center;min-height:0;min-width:0}
+.gd-bed{--c:64px;display:flex;align-items:flex-start;justify-content:center;gap:calc(var(--c)*.22)}
+.gd-plot{position:relative;box-sizing:content-box;display:grid;grid-auto-rows:var(--c);align-content:start;justify-items:start;width:calc(var(--c)*5);height:calc(var(--c)*6);padding:calc(var(--c)*.1);border:calc(var(--c)*.07) solid var(--soil-d);border-radius:calc(var(--c)*.3);background:repeating-linear-gradient(#0000 0 calc(var(--c) - 2px),#7c523066 0 var(--c)) content-box,var(--soil);box-shadow:0 calc(var(--c)*.09) 0 #5f3e22,0 calc(var(--c)*.2) calc(var(--c)*.25) #2a4a1f55}
+.gd-plot.is-full{animation:wobble .35s}
+.gd-row{display:flex;height:var(--c);border-radius:calc(var(--c)*.24);background:var(--soil-l);box-shadow:inset 0 0 0 calc(var(--c)*.05) var(--soil-d);animation:rowIn .28s cubic-bezier(.2,1.4,.4,1)}
+.gd-cell{display:grid;place-items:center;width:var(--c);height:var(--c);transform-origin:50% 90%;animation:bloom .42s cubic-bezier(.2,1.6,.4,1) backwards}
+.gd-cell svg{width:84%;height:84%;filter:drop-shadow(0 2px 1px #3b250f66)}
+.gd-cell.is-nod{animation:nodF .5s ease-in-out}
+.gd-ghost{position:absolute;left:calc(var(--c)*.1);top:calc(var(--c)*.1);display:grid;grid-auto-rows:var(--c);pointer-events:none}
+.gd-ghost[hidden]{display:none}
+.gd-ghost i{width:var(--c);height:var(--c);border:3px dashed #fff;border-radius:calc(var(--c)*.2);background:#ffffff40}
+.gd-ghost.is-show{animation:ghost 1.5s ease-in-out}
+.gd-lines{display:grid;grid-auto-rows:var(--c);align-content:start;min-width:calc(var(--c)*2.55);margin:0;padding:calc(var(--c)*.17) 0;list-style:none}
+.gd-lines li{display:flex;align-items:center;align-self:center;justify-self:start;gap:.08em;height:calc(var(--c)*.72);padding:0 calc(var(--c)*.16);border:calc(var(--c)*.05) solid var(--gold);border-radius:calc(var(--c)*.26);background:var(--cream);font-size:calc(var(--c)*.42);font-weight:1000;line-height:1;white-space:nowrap;box-shadow:0 calc(var(--c)*.06) 0 #c89c52;animation:pop .35s cubic-bezier(.2,1.5,.4,1)}
+.gd-lines li i{font-style:normal;color:#b9792b;font-size:.82em}
+.gd-lines li b{color:#c7446f}
+.gd-lines li.is-last{background:#ffe27a;border-color:#d9a21a}
+
+/* 下方托盤：花條＋交貨｜種子袋｜訂單牌 */
+.gd-tray{grid-area:tray;display:flex;align-items:center;justify-content:center;gap:clamp(14px,5cqw,40px);min-height:clamp(132px,21cqh,200px);padding-bottom:4px}
+.gd-tray[hidden]{display:none}
+.gd-strips{display:grid;gap:8px;justify-items:start}
+.gd-strip{--s:clamp(26px,5cqh,54px);display:flex;padding:3px;border:3px solid var(--cream);border-radius:14px;background:var(--soil-l);box-shadow:0 5px 0 #5f3e22,0 8px 10px #2a4a1f44;transition:transform .12s,box-shadow .12s,opacity .2s}
+.gd-strip svg{width:var(--s);height:var(--s);pointer-events:none}
+.gd-strip:active:not(:disabled){transform:translateY(4px);box-shadow:0 1px 0 #5f3e22}
+.gd-strip:disabled{opacity:.3}
+.gd-strip.is-ask{animation:breathe 1s ease-in-out infinite alternate}
+.gd-side{display:grid;gap:10px;justify-items:center}
+.gd-deliver{display:grid;place-items:center;width:clamp(72px,11cqh,96px);aspect-ratio:1;padding:0;border:5px solid var(--cream);border-radius:50%;background:radial-gradient(circle at 35% 28%,#a9e59a,#58b866 65%,#3f9950);color:#fff;box-shadow:0 7px 0 #2f7a3f,0 10px 14px #2a4a1f44;transition:transform .12s,box-shadow .12s}
+.gd-deliver svg{width:58%;height:58%}
+.gd-deliver:active{transform:translateY(5px);box-shadow:0 2px 0 #2f7a3f}
+.gd-deliver.is-ask{animation:breathe .8s ease-in-out infinite alternate}
+.gd-bag,.gd-bagbtn{position:relative;display:grid;place-items:center;border:4px solid #8a6535;border-radius:38% 38% 46% 46%/26% 26% 60% 60%;background:radial-gradient(circle at 35% 30%,#e8c992,#c9a36b 70%);color:#573e1d;font-weight:1000;line-height:1}
+.gd-bag::before,.gd-bagbtn::before{content:"";position:absolute;left:28%;right:28%;top:-14%;height:22%;border:4px solid #8a6535;border-radius:40% 40% 10% 10%;background:#d8b57e}
+.gd-bag{min-width:clamp(56px,8cqh,76px);height:clamp(50px,7.4cqh,68px);padding:6px 6px 0;font-size:clamp(22px,3.6cqh,32px)}
+.gd-bag.is-over{color:#c7446f}
+.gd-bag.is-exact{border-color:#d9a21a;background:radial-gradient(circle at 35% 30%,#fff3a8,#ffd23f 70%)}
+.gd-bagbtn{min-width:clamp(84px,24cqw,150px);min-height:clamp(84px,14cqh,130px);padding:10px 0 0;font-size:clamp(32px,6cqh,52px);box-shadow:0 7px 0 #6b4d27,0 10px 14px #2a4a1f44;transition:transform .12s,box-shadow .12s;animation:pop .4s cubic-bezier(.2,1.5,.4,1)}
+.gd-bagbtn:active{transform:translateY(5px);box-shadow:0 2px 0 #6b4d27}
+.gd-card{min-width:clamp(88px,26cqw,160px);min-height:clamp(70px,11cqh,104px);padding:0 .3em;border:4px solid var(--gold);border-radius:20px;background:var(--cream);font-size:clamp(30px,6cqh,50px);font-weight:1000;line-height:1;box-shadow:0 7px 0 #c89c52,0 10px 14px #2a4a1f44;transition:transform .12s,box-shadow .12s;animation:pop .4s cubic-bezier(.2,1.5,.4,1)}
+.gd-card i{font-style:normal;color:#b9792b;font-size:.8em;margin:0 .1em}
+.gd-card:active:not(:disabled){transform:translateY(5px);box-shadow:0 2px 0 #c89c52}
+.gd-card:disabled{opacity:.38;box-shadow:0 3px 0 #c89c52}
+.gd-card.is-right{background:#ffe27a;border-color:#d9a21a}
+
+/* 開始選單（同果果店寫法） */
+.pick{display:flex;align-items:center;gap:8px;padding:8px 14px;border:4px solid var(--gold);border-radius:28px;background:var(--cream);font-size:clamp(22px,5vw,28px);font-weight:1000;box-shadow:0 5px 0 #c89c52}
+.pick button{display:inline-flex;align-items:center;justify-content:center;min-width:92px;min-height:64px;padding:4px 14px;border:3px solid #cfe0c8;border-radius:18px;background:#f1f7ea;font-weight:1000}
+.pick button[aria-pressed="true"]{background:linear-gradient(#ffca58,#f6ac34);border-color:#b9792b;color:#573e1d;box-shadow:0 3px 0 #b9792b}
+@media(max-width:680px){.pick button{min-width:72px}}
+.gd-rule{margin:0;padding:10px 18px;border:4px solid var(--gold);border-radius:24px;background:var(--cream);box-shadow:0 5px 0 #c89c52;font-size:clamp(20px,4.6vw,28px);font-weight:1000}
+.start{display:flex;flex-direction:column;align-items:center;gap:18px;padding:0;border:0;background:none}
+.go{display:grid;place-items:center;width:128px;height:128px;border:7px solid var(--cream);border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff8a6e,#e0473a 60%,#b8322a);color:var(--cream);box-shadow:0 8px 0 #8e2620,0 14px 24px #0a2a1c55;animation:breathe 1.6s ease-in-out infinite alternate}
+.go svg{width:56px;height:56px;margin-left:8px}
+.label{white-space:nowrap;padding:10px 20px;border:4px solid var(--gold);border-radius:999px;background:var(--cream);font-size:clamp(18px,5.2vw,28px);font-weight:1000;box-shadow:0 5px 0 #c89c52}
+
+/* 完成框裡的百花田（9×9＝乘法表；種過的格子開花） */
+.gd-field{display:grid;grid-template-columns:repeat(9,1fr);gap:3px;width:min(100%,300px);padding:8px;border-radius:16px;background:var(--soil);box-shadow:inset 0 0 0 4px var(--soil-d)}
+.gd-field i{display:grid;place-items:center;aspect-ratio:1;border-radius:5px;background:var(--soil-l)}
+.gd-field i svg{width:100%;height:100%;scale:var(--z,1)}
+.gd-field i.is-new svg{animation:bloom .5s cubic-bezier(.2,1.6,.4,1) both}
+
+@keyframes pop{from{transform:scale(.8)}}
+@keyframes rowIn{from{transform:translateY(-30%) scale(.9);opacity:0}}
+@keyframes look{50%{scale:1.35;background:#ffe27a}}
+@keyframes ghost{0%,100%{opacity:0}15%,85%{opacity:1}}
+@keyframes bloom{from{transform:scale(.1) rotate(-30deg)}}
+@keyframes breathe{to{scale:1.07}}
+@keyframes gNod{40%{rotate:3deg;translate:0 1.5%}}
+@keyframes gHop{40%{translate:0 -12%}}
+@keyframes dWave{from{rotate:-5deg}to{rotate:5deg}}
+@keyframes wobble{25%{rotate:-8deg}75%{rotate:8deg}}
+@keyframes nodF{50%{rotate:12deg;scale:1.12}}
+@media(prefers-reduced-motion:reduce){.go,.gd-strip.is-ask,.gd-deliver.is-ask,.gd-rounds li.is-now,.gd-cell,.gd-row,.gd-grandma,.gd-cust{animation:none}}
+.bpm-word{display:inline-flex;align-items:center;justify-content:center;flex:none;padding-right:.26em;white-space:nowrap}
+.bpm-main-char{display:inline-block;flex:none;font-size:1em;line-height:1.04}
+.bpm-column{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;margin-left:.05em;font-size:.4em;font-weight:850;line-height:1}
+.bpm-onset,.bpm-rime{display:block;line-height:1.03}
+.bpm-tone{position:absolute;right:-.55em;top:85%;transform:translateY(-50%) scale(1.5,1.8);font-size:1.2em;font-weight:900;color:#d32f2f;line-height:1}
+.bpm-tone-dot{position:absolute;right:0;top:-.6em;font-size:1.4em;font-weight:900;color:#d32f2f;line-height:1}
+/* 橫式：訂單牌在上、村民與奶奶在下 */
+@container (min-aspect-ratio:1.15){.gd-top{flex-direction:column;align-items:center;justify-content:flex-end;gap:2cqh;padding-top:34px}.gd-order{font-size:clamp(34px,5.4cqw,64px)}.gd-people{flex:1 1 0;min-height:0;height:auto;width:100%}.gd-grandma{max-height:none}.gd-cust{max-height:none}.gd-strip{--s:clamp(26px,3.6cqw,50px)}.gd-card{min-width:clamp(80px,10.5cqw,140px);font-size:clamp(26px,3.6cqw,46px)}.gd-bagbtn{min-width:clamp(80px,10cqw,130px)}.gd-tray{gap:clamp(10px,1.4cqw,22px)}}
