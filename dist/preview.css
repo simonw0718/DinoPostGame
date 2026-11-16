@@ -199,3 +199,14 @@
 .pv-orchard .kong{position:absolute;left:-4px;bottom:-6px;height:56px;filter:drop-shadow(0 2px 0 #0002)}
 @keyframes pvFruit{0%,6%{opacity:0;transform:translateY(-14px) scale(.6)}14%,84%{opacity:1;transform:none}92%,100%{opacity:0}}
 @media(prefers-reduced-motion:reduce){.pv-orchard .tf img{animation:none;opacity:1}}
+
+/* 骰子花田 */
+.pv-field{background:linear-gradient(#bfe4f5 0 36%,#a8d68a 36%)}
+.pv-field .eq{position:absolute;left:0;right:0;top:5px;text-align:center;font:1000 16px/1 "Naikai",ui-rounded,system-ui,sans-serif;color:#17593f}
+.pv-field .eq b{margin:0 3px;color:#b9792b}
+.pv-field .gm{position:absolute;left:-4px;bottom:-4px;height:58px;filter:drop-shadow(0 2px 0 #0002)}
+.pv-field .bed{position:absolute;right:7px;bottom:9px;display:grid;grid-template-columns:repeat(3,19px);grid-auto-rows:19px;gap:2px;padding:4px;border-radius:8px;background:#9b6a3c;box-shadow:0 4px 0 #5f3e22;transform:perspective(160px) rotateX(18deg);transform-origin:50% 100%}
+.pv-field .bed i{border-radius:50%;background:radial-gradient(circle,#ffd76a 0 26%,#ff7b6b 28% 62%,#0000 64%);scale:0;animation:pvFlower 3.6s cubic-bezier(.34,1.56,.64,1) infinite}
+.pv-field .bed i:nth-child(2){animation-delay:.15s}.pv-field .bed i:nth-child(3){animation-delay:.3s}.pv-field .bed i:nth-child(4){animation-delay:.6s}.pv-field .bed i:nth-child(5){animation-delay:.75s}.pv-field .bed i:nth-child(6){animation-delay:.9s}
+@keyframes pvFlower{0%,8%{scale:0}22%,86%{scale:1}100%{scale:0}}
+@media(prefers-reduced-motion:reduce){.pv-field .bed i{animation:none;scale:1}}
