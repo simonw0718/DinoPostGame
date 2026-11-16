@@ -1,5 +1,5 @@
 {
-  "_note": "伊奇語音台詞（導演 2026-10-31 核准）。howto＝各遊戲第一次玩時念的玩法（中文）；catch＝接信大郵袋每局題目（英文）。生成：python3 tools/gemini_tts_batch.py iggy howto|catch；climb＝上山送信遊戲旁白（導演 2026-11-04 授權 --allow-model，只送台詞文字）；howto 追加 catch/mole/climb/orchard/orders/match-word（導演 2026-11-10 核准台詞並授權生成）",
+  "_note": "伊奇語音台詞（導演 2026-10-31 核准）。howto＝各遊戲第一次玩時念的玩法（中文）；catch＝接信大郵袋每局題目（英文）。生成：python3 tools/gemini_tts_batch.py iggy howto|catch；climb＝上山送信遊戲旁白（導演 2026-11-04 授權 --allow-model，只送台詞文字）；howto 追加 catch/mole/climb/orchard/orders/match-word（導演 2026-11-10 核准台詞並授權生成）；howto 追加 field 骰子花田（導演 2026-11-16 授權 Gemini 生成，台詞 AI 起稿）",
   "voice": {
     "source": "恐龍郵局 voices/character_voice_routes.json 伊奇 R27",
     "model": "gemini-3.8-flash-tts",
@@ -67,6 +67,10 @@
     {
       "id": "match-word",
       "text": "包裹上有一張圖……它的英文是哪一個字呢？點對的那個！"
+    },
+    {
+      "id": "field",
+      "text": "擲骰子，變出一塊花毯！算算看一共幾朵花，再把它種進花田，跟奶奶比比看，誰的花多！"
     }
   ],
   "catch": [

@@ -47,6 +47,7 @@
     '放不下，轉一轉': ['ㄈㄤˋ', 'ㄅㄨˋ', 'ㄒㄧㄚˋ', '', 'ㄓㄨㄢˇ', 'ㄧ', 'ㄓㄨㄢˇ'],
     '比比看，誰的花多？': ['ㄅㄧˇ', 'ㄅㄧˇ', 'ㄎㄢˋ', '', 'ㄕㄟˊ', 'ㄉㄜ˙', 'ㄏㄨㄚ', 'ㄉㄨㄛ', ''],
     '你的花最多！': ['ㄋㄧˇ', 'ㄉㄜ˙', 'ㄏㄨㄚ', 'ㄗㄨㄟˋ', 'ㄉㄨㄛ', ''], '奶奶的花多一點': ['ㄋㄞˇ', 'ㄋㄞ˙', 'ㄉㄜ˙', 'ㄏㄨㄚ', 'ㄉㄨㄛ', 'ㄧ', 'ㄉㄧㄢˇ'], '一樣多！': ['ㄧ', 'ㄧㄤˋ', 'ㄉㄨㄛ', ''],
+    '擲骰子，把花毯種進花田': ['ㄓˊ', 'ㄊㄡˊ', 'ㄗ˙', '', 'ㄅㄚˇ', 'ㄏㄨㄚ', 'ㄊㄢˇ', 'ㄓㄨㄥˋ', 'ㄐㄧㄣˋ', 'ㄏㄨㄚ', 'ㄊㄧㄢˊ'], '知道了': ['ㄓ', 'ㄉㄠˋ', 'ㄌㄜ˙'],
     '簡單': ['ㄐㄧㄢˇ', 'ㄉㄢ'], '普通': ['ㄆㄨˇ', 'ㄊㄨㄥ'], '困難': ['ㄎㄨㄣˋ', 'ㄋㄢˊ']
   };
   const kid = Dino.kidText(table);
@@ -111,12 +112,27 @@
     const tot = Math.max(N * N, sc.kid + sc.gm); e.querySelector('.ff-bk').style.width = (sc.kid / tot * 100) + '%'; e.querySelector('.ff-bg').style.width = (sc.gm / tot * 100) + '%';
     e.querySelector('.ff-nk').textContent = sc.kid; e.querySelector('.ff-ng').textContent = sc.gm; } }
   let tipNow = '';
-  function tip(t) { if (t === tipNow) return; tipNow = t; const e = $('tip'); if (!t) { e.textContent = ''; return; } kid(e, t); Dino.replay(e, 'is-pop'); }   // 每一步的指引文字
+  // 奶奶說步驟提示（導演 2026-11-16「補」）：台詞 data/grandma_lines.json；不念數字，每句每局說完整一次就不再說；跟著指引文字出現
+  const SAY = { '奶奶先種': 'demo', '點骰子': 'roll', '一共幾朵花？': 'ask', '點花田，放哪裡？': 'place', '按勾勾，種下去': 'ok', '放不下，轉一轉': 'rotate', '一整排滿了！': 'row' };
+  let said = new Set();
+  let sayNo = 0;   // 被打斷的句子不算說過（導演 2026-11-16「修」）：完整說完才記進 said，否則下次到同一步再說
+  function hush() { sayNo++; Dino.voice.stop(); }
+  function say(t) { const id = SAY[t]; if (!id || said.has(id)) return; hush(); const my = sayNo; Dino.voice(`assets/audio/field/${id}.mp3`).then(() => { if (my === sayNo) said.add(id); }); }
+  function tip(t) { if (t === tipNow) return; tipNow = t; const e = $('tip'); if (!t) { e.textContent = ''; return; } kid(e, t); Dino.replay(e, 'is-pop'); say(t); }   // 每一步的指引文字
   function guidePlace() {   // 擺花毯這一步：文字＋（每局第一次）手指
-    if (!P) return; const here = spots(P.w, P.h);
+    clearHint(); if (!P) return; const here = spots(P.w, P.h);
     if (!here.length) { tip('放不下，轉一轉'); if (firstKid) point($('rot')); return; }
     if (P.x != null) { tip('按勾勾，種下去'); if (firstKid) point($('ok')); return; }
-    tip('點花田，放哪裡？'); if (firstKid) { const [x, y] = here[Math.floor(here.length / 2)]; point(grid.children[(y + Math.floor((P.h - 1) / 2)) * N + x + Math.floor((P.w - 1) / 2)]); }
+    tip('點花田，放哪裡？'); if (firstKid) { const [x, y] = here[Math.floor(here.length / 2)]; point(grid.children[(y + Math.floor((P.h - 1) / 2)) * N + x + Math.floor((P.w - 1) / 2)]); showHint(x, y); }
+  }
+  // 每局第一次擺花毯的示意（導演 2026-11-16「補」）：一塊半透明花毯從下方托盤飄到手指指的位置、停一下、再來一次；只是示範，點別處也可以。點了花田就消失
+  let hint = null;
+  function clearHint() { if (hint) hint.remove(); hint = null; }
+  function showHint(x, y) {
+    hint = block(x, y, 'is-hint'); if (Dino.reduced) return;
+    const a = pieceEl.getBoundingClientRect(), b = hint.getBoundingClientRect(); if (!a.width || !b.width) return;
+    const from = `translate(${(a.left - b.left).toFixed(1)}px,${(a.top - b.top).toFixed(1)}px) scale(${(a.width / b.width).toFixed(3)})`;
+    hint.animate([{ transform: from, opacity: 0, offset: 0 }, { transform: from, opacity: .85, offset: .12 }, { transform: 'none', opacity: .8, offset: .5, easing: 'ease-out' }, { transform: 'none', opacity: .8, offset: .86 }, { transform: 'none', opacity: 0, offset: 1 }], { duration: 2600, iterations: Infinity, easing: 'cubic-bezier(.3,.1,.3,1)' });
   }
   function clearGhost() { clearPre(); if (ghost) ghost.remove(); ghost = null; P && (P.x = P.y = null); }
   function hintRot() { $('rot').classList.toggle('is-ask', !!P && turn === 'kid' && !spots(P.w, P.h).length); }
@@ -181,7 +197,7 @@
     const st = $('stage'), short = st.clientHeight < 430 && st.clientWidth > st.clientHeight * 1.15;   // 手機橫放：題目框左右排（花毯在左，用整個高度）
     qz.querySelector('.fq-card').style.setProperty('--q', (short ? Math.max(10, Math.min(46, st.clientWidth * .48 / (a + 3), st.clientHeight * .74 / b)) : Math.max(10, Math.min(54, ((st.clientWidth || innerWidth) * .86 - 70) / (a + 2.6), (st.clientHeight || innerHeight * .8) * .36 / b))).toFixed(1) + 'px');
     qz.dataset.a = a; qz.dataset.b = b; qRug.innerHTML = ''; qSum.innerHTML = ''; qEq.innerHTML = ''; qOpts.innerHTML = ''; qRug.classList.remove('is-count');
-    kid($('quizAsk'), '一共幾朵花？'); qz.hidden = false;
+    kid($('quizAsk'), '一共幾朵花？'); qz.hidden = false; say('一共幾朵花？');
     if (lv === 'easy') { if (!await addUp(a, b, my)) return; await wait(350); if (my !== token) return; }
     else if (lv === 'normal') { qRug.hidden = false; qRug.innerHTML = strips(a, a, b); qSum.hidden = false; qSum.innerHTML = sumHtml(a, b); }
     else { qRug.hidden = true; qSum.hidden = true; }
@@ -270,13 +286,14 @@
     // 完成框放這一局種好的花田縮圖
     const m = grid.cloneNode(true); m.removeAttribute('id'); m.querySelectorAll('.ff-tag,.is-ghost,.ff-line').forEach(e => e.remove()); m.querySelectorAll('button').forEach(b => { b.disabled = true; b.tabIndex = -1; });
     m.style.setProperty('--c', (Math.min(300, innerWidth * .62, innerHeight * .34) / (N + .4)).toFixed(1) + 'px'); $('mini').replaceChildren(m);
-    $('finish').hidden = false;   // 完成框不再放 9×9 百花田（導演 11-13：沒意義） Dino.sfx('finish', .6); Dino.replay($('finishActor'), 'is-hop'); Dino.bgm.start();
+    // 完成框不再放 9×9 百花田（導演 11-13：沒意義）
+    $('finish').hidden = false; Dino.sfx('finish', .6); Dino.replay($('finishActor'), 'is-hop'); Dino.bgm.start();   // 11-16 修：這三個動作原本被上面那句註解吃掉，結尾沒聲音
   }
 
   function start() {
     Dino.bgm.stop(); $('ready').hidden = true; $('finish').hidden = true; ++token;
     try { localStorage.setItem('dinopost-field-lv', lv); } catch { /* ok */ }
-    ({ n: N, max: MAX } = SETS[lv]); LONG = SETS[lv].long || 0; redo = null; lastKid = ''; rowDone = []; colDone = []; occ = new Array(N * N).fill(0); P = null; ghost = null; bloomedNow = []; sc = { kid: 0, gm: 0 }; drawScore(); firstKid = true; point(null); tip('');
+    ({ n: N, max: MAX } = SETS[lv]); LONG = SETS[lv].long || 0; redo = null; lastKid = ''; rowDone = []; colDone = []; occ = new Array(N * N).fill(0); P = null; ghost = null; bloomedNow = []; sc = { kid: 0, gm: 0 }; drawScore(); firstKid = true; point(null); tip(''); said = new Set(); hint = null; hush(); Dino.preload(Object.values(SAY).map(id => `assets/audio/field/${id}.mp3`));
     qz.hidden = true; quizId++; stopCue(); ['dA', 'dB'].forEach(d => $(d).classList.remove('is-look', 'is-roll'));
     grid.style.setProperty('--n', N);
     let cells = ''; for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) cells += `<button class="ff-cell" type="button" data-x="${x}" data-y="${y}" data-no-press aria-label="第 ${y + 1} 排第 ${x + 1} 格"></button>`;
@@ -306,10 +323,14 @@
   qOpts.addEventListener('click', e => { const b = e.target.closest('.fq-opt'); if (b) answered(b); });
   function showLv() { document.querySelectorAll('.pick button').forEach(b => b.setAttribute('aria-pressed', b.dataset.lv === lv)); }
   document.querySelector('.pick').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; lv = b.dataset.lv; Dino.sfx('pop', .6); showLv(); });
-  $('start').addEventListener('click', () => { Dino.sfx('tap', .6); start(); });
+  // 玩法框（導演 2026-11-16：跟其他遊戲一樣補開頭語音引導＋動畫）：第一次按開始先看玩法、伊奇念；? 隨時再看
+  const HW = Dino.howto({ preview: 'field.html', text: '擲骰子，把花毯種進花田', kid, voice: 'field' });
+  $('help').addEventListener('click', () => { Dino.sfx('tap', .5); if (!$('ready').hidden || !$('finish').hidden) return; hush(); HW.show(); });
+  $('start').addEventListener('click', () => { Dino.sfx('tap', .6); $('ready').hidden = true; Dino.bgm.stop(); HW.first().then(start); });
   $('again').addEventListener('click', () => { Dino.sfx('tap', .6); start(); });
-  $('menuBtn').addEventListener('click', () => { Dino.sfx('tap', .5); token++; phase = 'idle'; point(null); qz.hidden = true; quizId++; stopCue(); showLv(); $('finish').hidden = true; $('ready').hidden = false; Dino.bgm.start(); });
+  $('menuBtn').addEventListener('click', () => { Dino.sfx('tap', .5); hush(); token++; phase = 'idle'; point(null); qz.hidden = true; quizId++; stopCue(); showLv(); $('finish').hidden = true; $('ready').hidden = false; Dino.bgm.start(); });
   $('home').addEventListener('click', e => { e.preventDefault(); Dino.goTo('index.html'); });
+  document.querySelector('.dino-home').addEventListener('click', e => { e.preventDefault(); Dino.goTo('index.html'); });   // 頁首房子也先「咻」再換頁（同 path／catch／climb）
 
   showLv(); Dino.bgm.start();
   if (q.get('lv')) start();

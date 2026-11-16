@@ -225,3 +225,6 @@
 .fq-card{grid-template-columns:auto auto;grid-template-areas:"rug ask" "rug sum" "rug eq" "rug opts";column-gap:3cqw;align-items:center;padding:6px 14px}
 .fq-rug{grid-area:rug}.fq-ask{grid-area:ask}.fq-sum{grid-area:sum;max-width:40cqw}.fq-eq{grid-area:eq}.fq-opts{grid-area:opts}
 }
+/* 每局第一次擺花毯的示意影子（11-16）：半透明、白虛線框；飄移動畫由 field.js showHint 用 Web Animations 做 */
+.ff-block.is-hint{z-index:39;opacity:.55;transform-origin:0 0;outline:calc(var(--c)*.07) dashed #fff;outline-offset:calc(var(--c)*-.03);border-radius:calc(var(--c)*.24)}
+.ff-block.is-hint svg{animation:none!important}

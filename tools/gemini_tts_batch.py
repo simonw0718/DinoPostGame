@@ -7,6 +7,7 @@ Usage: python3 tools/gemini_tts_batch.py 1|2|3
        python3 tools/gemini_tts_batch.py whack [ID ...]          分類快打出題句 "Let's hit... X!"（全部一次請求再裁切）→ dist/assets/audio/whack/
        python3 tools/gemini_tts_batch.py iggy howto|catch [ID ...] 伊奇（R27）玩法語音／接信題目，台詞在 dist/data/iggy_lines.json → dist/assets/audio/<kind>/
        python3 tools/gemini_tts_batch.py abao orders [ID ...]      小雞阿暴（R01）郵局任務單通用提示，台詞在 dist/data/abao_lines.json → dist/assets/audio/orders/
+       python3 tools/gemini_tts_batch.py grandma field [ID ...]    三角龍奶奶（R11）骰子花田步驟提示，台詞在 dist/data/grandma_lines.json → dist/assets/audio/field/
        python3 tools/gemini_tts_batch.py recast                   全部英文單字改 5 個聲音輪流（每請求 50 字，429 換金鑰）→ audio-pilot/recast-20261104/；聽過再 apply
        python3 tools/gemini_tts_batch.py cast [VOICE ...]          英文配音選角：每個聲音一次請求念 8 個字再裁切 → audio-pilot/voice-casting-20261104/
        python3 tools/gemini_tts_batch.py phonics [LETTER ...]     26 個字母「聲音」（不是名稱），拼字遊戲用（全部一次請求再裁切）→ dist/assets/audio/phonics/
@@ -227,8 +228,15 @@ def iggy(kind, ids, who='iggy'):
         spans, _ = split_by_longest_gaps(wav, len(lines))
     out = ROOT / 'dist/assets/audio' / kind
     out.mkdir(parents=True, exist_ok=True)
+    # 台詞檔有 target_lufs 時：量整段 full.wav 的響度，全部句子套同一個增減量（各批生成音量會差幾 dB；2026-11-16）
+    gain = []
+    if cfg.get('target_lufs') is not None:
+        err = subprocess.run(['ffmpeg', '-hide_banner', '-nostats', '-i', str(wav), '-af', 'ebur128', '-f', 'null', '-'], capture_output=True, text=True).stderr
+        measured = float(re.findall(r'I:\s+(-?[\d.]+) LUFS', err)[-1])
+        gain = ['-af', f"volume={cfg['target_lufs'] - measured:.1f}dB"]
+        print(f"loudness {measured:.1f} LUFS -> {cfg['target_lufs']} LUFS", flush=True)
     for l, (a, b) in zip(lines, spans):
-        run(['ffmpeg', '-v', 'error', '-y', '-ss', f'{max(0, a - 0.05):.3f}', '-to', f'{b + 0.12:.3f}', '-i', str(wav),
+        run(['ffmpeg', '-v', 'error', '-y', '-ss', f'{max(0, a - 0.05):.3f}', '-to', f'{b + 0.12:.3f}', '-i', str(wav), *gain,
              '-ac', '1', '-ar', '24000', '-codec:a', 'libmp3lame', '-qscale:a', '4', str(out / f"{l['id']}.mp3")])
         print(f"{l['id']:16s} {b - a:5.2f}s  {l['text']}", flush=True)
 
@@ -401,7 +409,7 @@ def main():
         return cast(sys.argv[2:])
     if sys.argv[1] == 'phonics':
         return phonics(sys.argv[2:])
-    if sys.argv[1] in ('iggy', 'abao'):
+    if sys.argv[1] in ('iggy', 'abao', 'grandma'):
         return iggy(sys.argv[2], sys.argv[3:], sys.argv[1])
     if sys.argv[1] == 'whack':
         return whack(sys.argv[2:])

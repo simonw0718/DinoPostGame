@@ -1,0 +1,17 @@
+{
+  "_note": "三角龍奶奶語音台詞（導演 2026-11-16「補」：骰子花田過程中由奶奶說步驟提示，不念數字與算式，每句每局只說第一次）。台詞 AI 起稿，照 dino-story canon/character_speech_traits.json grandma。生成：python3 tools/gemini_tts_batch.py grandma field [ID ...] → dist/assets/audio/field/<id>.mp3；只送台詞文字",
+  "voice": {"source": "恐龍郵局 voices/character_voice_routes.json 三角龍奶奶 R11", "model": "gemini-3.8-flash-tts", "voice_id": "voice_g6qcsz034afj", "api_key_file": "/Users/simon/.config/dinopost/gemini-key-DINOC"},
+  "target_lufs": -20.5,
+  "style": {
+    "field": "自然台灣華語，三角龍奶奶是溫和、慈祥的恐龍奶奶，正陪小朋友在花田裡一起種花、輪流玩遊戲；語氣溫暖、偏慢、帶笑意，像在鼓勵孫子，清楚好懂，每句之間停頓要長。不虛弱、不說教、不裝幼兒、不作主播腔。"
+  },
+  "field": [
+    {"id": "demo", "when": "奶奶示範回合開始（提示：奶奶先種）", "text": "奶奶先種給你看喔！"},
+    {"id": "roll", "when": "輪到小朋友（提示：點骰子）", "text": "換你啦，點點骰子！"},
+    {"id": "ask", "when": "題目框出現（一共幾朵花？）", "text": "數數看，一共幾朵花呀？"},
+    {"id": "place", "when": "要擺花毯（提示：點花田，放哪裡？）", "text": "點點花田，要種在哪裡呢？"},
+    {"id": "ok", "when": "花毯放好位置（提示：按勾勾，種下去）", "text": "按勾勾，種下去！"},
+    {"id": "rotate", "when": "花毯放不下（提示：放不下，轉一轉）", "text": "放不下呀？轉一轉試試看！"},
+    {"id": "row", "when": "一整排種滿（提示：一整排滿了！）", "text": "哎呀，一整排都開花啦！"}
+  ]
+}
