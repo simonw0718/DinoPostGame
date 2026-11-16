@@ -1,0 +1,16 @@
+{
+  "name": "恐龍郵局小遊戲",
+  "short_name": "恐龍郵局",
+  "description": "恐龍郵局的英文、注音、數學小遊戲",
+  "lang": "zh-Hant",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fdfbed",
+  "theme_color": "#164d39",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

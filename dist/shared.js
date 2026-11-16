@@ -462,6 +462,9 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
     if (document.body) watch(); else addEventListener('DOMContentLoaded', watch);
   }
 
+  // Android「安裝成 App」設定檔（2026-11-16）：每頁都掛上 manifest，從任何遊戲頁都能安裝；首頁另有寫死一份
+  if (!document.querySelector('link[rel="manifest"]')) document.head.appendChild(Object.assign(document.createElement('link'), { rel: 'manifest', href: 'manifest.webmanifest' }));
+
   // 手機端快取（sw.js，導演 2026-11-10 切頁卡頓）：本機開發不啟用（?sw=1 可強制試）；?fresh=1 清掉快取重開
   (() => {
     if (!('serviceWorker' in navigator)) return;

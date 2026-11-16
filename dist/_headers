@@ -17,6 +17,8 @@
   Cache-Control: no-cache
 /sw.js
   Cache-Control: no-cache
+/manifest.webmanifest
+  Cache-Control: no-cache
 /shared.js
   Cache-Control: no-cache
 /progress.js
