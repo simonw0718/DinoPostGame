@@ -1,7 +1,7 @@
 /* DINO MODE (director 2026-10-21): home switch + dinosaur theme for every game. State lives in shared.js. */
 
 /* Off: the dinosaur bank is not a task option. On: dinosaurs are the whole bank, so task/level pickers go away. */
-html:not(.dino-mode) [data-mode="dinosaur"], html:not(.dino-mode) [data-mail-mode="dinosaur"] { display: none !important; }
+/* 2026-11-18：DINO MODE 開關收掉，「恐龍挑戰」任務一直顯示；下面 html.dino-mode 的主題樣式已不會啟用（留著備查）。 */
 html.dino-mode .mode-picker, html.dino-mode .mail-mode-picker,
 html.dino-mode #levelControl, html.dino-mode #mailLevelControl { display: none !important; }
 

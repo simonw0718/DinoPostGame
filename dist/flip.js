@@ -63,7 +63,7 @@
 
   // ---------- 出題：同一種畫風，避免一回合混雜 ----------
   function pickRound() {
-    const pool = state.words.filter(w => !state.disabledIds.has(w.id) && (prefs.dino ? Dino.isDino(w) : !Dino.isDino(w) && !Dino.isNumber(w)) && (w.image || w.sheet));
+    const pool = state.words.filter(w => !state.disabledIds.has(w.id) && !Dino.isNumber(w) && (w.image || w.sheet));
     const groups = new Map();
     pool.forEach(w => { const g = Dino.visualGroup(w); groups.set(g, [...(groups.get(g) || []), w]); });
     const usable = [...groups.values()].filter(list => list.length >= prefs.pairs);

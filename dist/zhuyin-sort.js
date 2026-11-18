@@ -238,8 +238,7 @@
     $('mailLevelText').textContent = ['第一級', '第二級', '第三級'][state.nextLevel - 1];
     document.querySelectorAll('.mail-format-option').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.mailFormat === state.nextFormat)));
     document.querySelectorAll('#readyOverlay [data-fmt]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.fmt === state.nextFormat)));
-    document.querySelectorAll('#readyOverlay [data-lv]').forEach(button => button.setAttribute('aria-pressed', String(state.nextMode === 'level' ? button.dataset.lv === String(state.nextLevel) : button.dataset.lv === 'all')));
-    $('levelPick').hidden = state.nextMode === 'dinosaur';   // DINO MODE：題目固定恐龍包，不分級
+    document.querySelectorAll('#readyOverlay [data-lv]').forEach(button => button.setAttribute('aria-pressed', String(state.nextMode === 'dinosaur' ? button.dataset.lv === 'dino' : state.nextMode === 'level' ? button.dataset.lv === String(state.nextLevel) : button.dataset.lv === 'all')));   // 2026-11-18：恐龍是這排的第五顆（DINO MODE 開關已收掉）
     $('mailAutoAudio').checked = state.nextAutoAudio; $('mailCount').value = String(state.nextCount); $('mailCountValue').value = String(state.nextCount);
     $('mailSelectionSummary').textContent = `下一回合：${modeLabel()} · ${state.nextFormat === 'picture' ? '看圖片' : '看注音'} · ${state.nextCount} 封`;
   }
@@ -605,7 +604,7 @@
     document.querySelectorAll('#readyOverlay [data-fmt]').forEach(button => { setKidText(button, button.textContent.trim()); button.addEventListener('click', () => { Dino.sfx('tap', .5); setSelection({ nextFormat: button.dataset.fmt === 'picture' ? 'picture' : 'zhuyin' }); fitPicksNow(); }); });
     document.querySelectorAll('#readyOverlay [data-lv]').forEach(button => { if (button.dataset.lv === 'all') setKidText(button, '全部'); button.addEventListener('click', () => {
       Dino.sfx('tap', .5);
-      setSelection(button.dataset.lv === 'all' ? { nextMode: Dino.taskMode('all') } : { nextMode: Dino.taskMode('level'), nextLevel: clamp(Number(button.dataset.lv) || 1, 1, 3) });
+      setSelection(button.dataset.lv === 'dino' ? { nextMode: 'dinosaur' } : button.dataset.lv === 'all' ? { nextMode: Dino.taskMode('all') } : { nextMode: Dino.taskMode('level'), nextLevel: clamp(Number(button.dataset.lv) || 1, 1, 3) });
     }); });
     $('readyStart').addEventListener('click', () => {
       const overlay = $('readyOverlay');

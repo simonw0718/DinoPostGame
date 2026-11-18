@@ -390,3 +390,7 @@ html.deep .ready-tap{display:none}   /* match.html?settings=bank|history 直接�
 .lv-options{grid-template-columns:repeat(4,minmax(0,1fr))}#settingsLevel[hidden]{display:none}
 /* 導演 2026-11-10 盤點：深綠底上的紅色聲調記號對比只有 2:1，改淺珊瑚色 */
 .sort-tray .bpm-tone,.sort-tray .bpm-tone-dot{color:#ffb4a2}
+
+/* 2026-11-18：難度排多一顆「恐龍」，窄螢幕五顆要排得下 */
+.ready-pick .di{width:1.35em;height:1.35em}
+@media(max-width:430px){.ready-pick{gap:5px;padding:8px 10px}.ready-pick button{min-width:50px;padding:4px 8px}}

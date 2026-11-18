@@ -82,22 +82,12 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
     document.addEventListener('dragstart', event => { if (event.target.tagName === 'IMG') event.preventDefault(); });
   })();
   const storageKeys = { disabled: 'dinopost-disabled-words-v1', history: 'dinopost-round-history-v1' };
-  // DINO MODE (director 2026-10-21): one switch on the home page turns every game into dinosaur-only.
-  // Off: dinosaurs never enter the normal bank. On: games use the dinosaur bank and the page gets html.dino-mode.
-  const dinoModeKey = 'dinopost-dino-mode-v1';
-  function dinoMode() { try { return localStorage.getItem(dinoModeKey) === '1'; } catch { return false; } }
-  function setDinoMode(on) {
-    try { localStorage.setItem(dinoModeKey, on ? '1' : '0'); } catch { /* Stays on for this page only. */ }
-    document.documentElement.classList.toggle('dino-mode', Boolean(on));
-    bgm.refresh();   // 選單 BGM 跟著換恐龍版
-  }
-  // A game's task mode ('all' | 'level' | 'dinosaur') resolved against the switch.
-  const taskMode = mode => (dinoMode() ? 'dinosaur' : mode === 'dinosaur' ? 'all' : mode);
-  document.documentElement.classList.toggle('dino-mode', dinoMode());
-  // Back/forward cache can show a page from before the switch changed.
-  window.addEventListener('pageshow', event => {
-    if (event.persisted && document.documentElement.classList.contains('dino-mode') !== dinoMode()) location.reload();
-  });
+  // DINO MODE 收掉（導演 2026-11-18「A 讓恐龍題目融合進去遊戲內」）：首頁不再有總開關。
+  // 恐龍題目改成遊戲裡的選項：找圖片／注音送信／注音排序的「恐龍挑戰」任務一直都在；翻牌、輸送帶直接混進題目。
+  // dinoMode／setDinoMode／taskMode 留著給舊程式呼叫，永遠是「沒開」。
+  const dinoMode = () => false;
+  const setDinoMode = () => {};
+  const taskMode = mode => mode;
 
   function shuffle(source) {
     const items = [...source];
@@ -285,7 +275,7 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
   const musicOn = () => { try { return localStorage.getItem(musicKey) !== '0'; } catch { return true; } };
   const bgm = (() => {
     let wanted = false, button = null, playing = null;   // playing = { track, src, gain, startedAt, offset, duration }
-    const track = () => (dinoMode() ? 'menu-dino' : 'menu');
+    const track = () => 'menu';
     const position = () => playing ? (playing.offset + ctx.currentTime - playing.startedAt) % playing.duration : 0;
     function save() {
       if (!playing) return;

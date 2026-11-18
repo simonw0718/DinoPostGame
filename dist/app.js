@@ -485,7 +485,7 @@ function choose(button, id) {
     return;
   }
   playEffect('correct');
-  if (Dino.dinoMode()) setTimeout(() => Dino.sfx('dino-chirp', .7), 450);   // 恐龍模式：答對多一聲小恐龍叫
+  if (state.mode === 'dinosaur') setTimeout(() => Dino.sfx('dino-chirp', .7), 450);   // 恐龍模式：答對多一聲小恐龍叫
   button.classList.add('correct');
   state.phase = 'reveal';
   const firstTry = state.attempts === 1;
@@ -533,7 +533,7 @@ function startRound() {
   state.index = 0; state.firstTryScore = 0; state.streak = 0; state.results = []; state.progressResults = [];
   // The first play call stays inside the Start button's user gesture on iOS.
   if (state.autoAudio) playWord(state.round[0]);
-  else if (Dino.dinoMode()) Dino.sfx('dino-chirp', .7);
+  else if (state.mode === 'dinosaur') Dino.sfx('dino-chirp', .7);
   advanceCast('play');
   state.roundChoices = state.words.filter(word => !state.disabledIds.has(word.id));
   const title = state.mode === 'dinosaur' ? '恐龍挑戰' : state.mode === 'level'
@@ -569,7 +569,7 @@ function nextQuestion() {
     $('finish').hidden = false;
     if (Dino.fitCards) Dino.fitCards();
     playEffect('finish');
-    if (Dino.dinoMode()) setTimeout(() => Dino.sfx('dino-roar', .8), 900);   // 恐龍模式完成回合：恐龍吼一聲
+    if (state.mode === 'dinosaur') setTimeout(() => Dino.sfx('dino-roar', .8), 900);   // 恐龍模式完成回合：恐龍吼一聲
     prepareRound();
     return;
   }
@@ -756,16 +756,15 @@ function setMode(mode) {
   renderTaskChips();
   prepareRound();
 }
-// 開始浮層第二排：全部／1／2／3（全部＝mode all；1–3＝mode level＋level）；DINO MODE 題目固定恐龍包，不顯示這排
+// 開始浮層第二排：全部／1／2／3／恐龍（全部＝mode all；1–3＝mode level＋level；恐龍＝mode dinosaur。2026-11-18 DINO MODE 開關收掉，恐龍改成這排的一顆）
 function renderTaskChips() {
-  document.querySelectorAll('#readyOverlay [data-lv]').forEach(button => button.setAttribute('aria-pressed', String(state.mode === 'level' ? button.dataset.lv === String(state.level) : button.dataset.lv === 'all')));
-  $('levelPick').hidden = state.mode === 'dinosaur';
+  document.querySelectorAll('#readyOverlay [data-lv]').forEach(button => button.setAttribute('aria-pressed', String(state.mode === 'dinosaur' ? button.dataset.lv === 'dino' : state.mode === 'level' ? button.dataset.lv === String(state.level) : button.dataset.lv === 'all')));
   // ⚙ 設定面板也能換級數（導演 2026-11-10：玩到一半想換不必回首頁）
-  document.querySelectorAll('#settingsDialog [data-set-lv]').forEach(button => button.setAttribute('aria-pressed', String(state.mode === 'level' ? button.dataset.setLv === String(state.level) : button.dataset.setLv === 'all')));
-  $('settingsLevel').hidden = state.mode === 'dinosaur';
+  document.querySelectorAll('#settingsDialog [data-set-lv]').forEach(button => button.setAttribute('aria-pressed', String(state.mode === 'dinosaur' ? button.dataset.setLv === 'dino' : state.mode === 'level' ? button.dataset.setLv === String(state.level) : button.dataset.setLv === 'all')));
 }
 function setTask(value) {
   if (value === 'all') { setMode('all'); return; }
+  if (value === 'dino') { setMode('dinosaur'); return; }
   state.level = Math.max(1, Math.min(3, Number(value)));
   setMode('level');
 }

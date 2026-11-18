@@ -241,3 +241,7 @@ html.wide .ms-shell{width:100%}
 #finishScore{display:flex;align-items:center;justify-content:center;gap:5px;flex-wrap:wrap;font-size:23px;font-weight:900}
 #finishScore .kid-text{font-size:clamp(18px,4.5vw,23px)}
 #finishOverlay{--ink:#17593f;--cream:#fffdf2;--gold:#e3bd70}
+
+/* 2026-11-18：難度排多一顆「恐龍」，窄螢幕五顆要排得下 */
+.ready-pick .di{width:1.35em;height:1.35em}
+@media(max-width:430px){.ready-pick{gap:5px;padding:8px 10px}.ready-pick button{min-width:50px;padding:4px 8px}}

@@ -94,7 +94,7 @@
   // ---------- 出題 ----------
   function pickRound() {
     const pool = state.words.filter(w => !state.disabledIds.has(w.id) && [...w.zh].length === w.zhuyin.length && (w.image || w.sheet || Dino.isNumber(w))
-      && (prefs.dino ? Dino.isDino(w) && w.zhuyin.length <= 3 : !Dino.isDino(w) && w.zhuyin.length <= 2 && w.level.zhuyin <= 2));
+      && w.zhuyin.length <= 2 && (Dino.isDino(w) || w.level.zhuyin <= 2));
     return Dino.selectRound(pool, Dino.loadHistory(), ROUND);
   }
 
