@@ -1,5 +1,5 @@
 {
-  "_note": "伊奇語音台詞（導演 2026-10-31 核准）。howto＝各遊戲第一次玩時念的玩法（中文）；catch＝接信大郵袋每局題目（英文）。生成：python3 tools/gemini_tts_batch.py iggy howto|catch；climb＝上山送信遊戲旁白（導演 2026-11-04 授權 --allow-model，只送台詞文字）；howto 追加 catch/mole/climb/orchard/orders/match-word（導演 2026-11-10 核准台詞並授權生成）；howto 追加 field 骰子花田（導演 2026-11-16 授權 Gemini 生成，台詞 AI 起稿）",
+  "_note": "伊奇語音台詞（導演 2026-10-31 核准）。howto＝各遊戲第一次玩時念的玩法（中文）；catch＝接信大郵袋每局題目（英文）。生成：python3 tools/gemini_tts_batch.py iggy howto|catch；climb＝上山送信遊戲旁白（導演 2026-11-04 授權 --allow-model，只送台詞文字）；howto 追加 catch/mole/climb/orchard/orders/match-word（導演 2026-11-10 核准台詞並授權生成）；howto 追加 field 骰子花田（導演 2026-11-16 授權 Gemini 生成，台詞 AI 起稿）；howto 追加 sign 伊奇看路牌（導演 2026-11-18「加入語音說明」，台詞 AI 起稿）；howto 追加 sign-code 伊奇看路牌指令模式（導演 2026-11-18，台詞 AI 起稿）",
   "voice": {
     "source": "恐龍郵局 voices/character_voice_routes.json 伊奇 R27",
     "model": "gemini-3.8-flash-tts",
@@ -71,6 +71,14 @@
     {
       "id": "field",
       "text": "擲骰子，變出一塊花毯！算算看一共幾朵花，再把它種進花田，跟奶奶比比看，誰的花多！"
+    },
+    {
+      "id": "sign",
+      "text": "Iggy 要去送信囉～把路牌放在草地上，我踩到就會轉彎！幫我拿到信、繞過石頭跟障礙，再送給小恐龍喔！"
+    },
+    {
+      "id": "sign-code",
+      "text": "Iggy 要去送信囉～這次換你排指令！一張箭頭走一步，幫我拿到信、繞過石頭跟障礙，排好了按 Go，我就照著走喔！"
     }
   ],
   "catch": [

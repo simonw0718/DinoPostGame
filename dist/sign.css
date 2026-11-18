@@ -1,0 +1,198 @@
+/* 伊奇看路牌（sample v1，2026-11-18）：把路牌放到地上，伊奇一直往前走、踩到路牌就轉彎，把信送給小恐龍。
+   關卡 sign_levels.json（tools/check_sign_levels.py）。導演 2026-11-18：要互動感、非線性彈跳動畫，不照舊「排指令列」做法 */
+:root{--ink:#17593f;--cream:#fffdf2;--gold:#e3bd70;--cs:80px;--spring:cubic-bezier(.2,1.6,.4,1);--noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E")}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:#164d39;overflow:hidden;font-family:"Naikai",ui-rounded,system-ui,sans-serif;color:var(--ink)}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:focus-visible{outline:4px solid #eaa52a;outline-offset:3px}
+.sg-shell{position:relative;display:flex;flex-direction:column;height:100svh;max-width:1200px;margin:0 auto;padding:max(10px,env(safe-area-inset-top)) 14px max(10px,env(safe-area-inset-bottom));gap:10px}
+.sg-play{flex:1;min-height:0;display:flex;flex-direction:column;gap:10px}
+@media(min-aspect-ratio:11/10){.sg-play{flex-direction:row}.sg-dock{flex:0 0 210px;flex-direction:column}.sg-tray{flex:1;align-content:center}.sg-btns{flex-direction:column-reverse}}
+
+/* 湖面：水波慢慢流、荷葉漂 */
+.sg-lake{position:relative;isolation:isolate;flex:1;min-height:0;display:grid;place-items:center;overflow:hidden;border:5px solid var(--cream);border-radius:26px;touch-action:none;
+  background:var(--noise),repeating-radial-gradient(ellipse at 30% 120%,#ffffff14 0 3px,#0000 3px 46px),linear-gradient(#8fd6e8,#58b4d6 55%,#3c93bd);background-size:auto,140% 140%,auto;box-shadow:inset 0 0 60px #1d5f8066,0 10px 26px #0a2a1c66;animation:water 9s ease-in-out infinite alternate}
+@keyframes water{to{background-position:0 0,-60px -30px,0 0}}
+.lily{position:absolute;width:9%;aspect-ratio:1;border-radius:50%;background:conic-gradient(from 20deg,#0000 0 36deg,#6fbf62 36deg);box-shadow:inset 0 -3px 0 #4a9a4a;opacity:.85;animation:drift 7s ease-in-out infinite alternate}
+.l1{left:4%;top:14%}.l2{right:5%;bottom:10%;width:7%;animation-duration:9s;animation-delay:-3s}.l3{left:9%;bottom:6%;width:5%;animation-duration:6s;animation-delay:-1s}
+@keyframes drift{to{transform:translate(14px,-8px) rotate(24deg)}}
+
+.sg-rounds{position:absolute;left:12px;top:12px;z-index:30;display:flex;gap:6px;margin:0;padding:6px 9px;list-style:none;border-radius:99px;background:#fffdf2cc;box-shadow:0 3px 0 #0a2a1c22}
+.sg-rounds li{width:12px;height:12px;border-radius:50%;background:#d6e4cf;transition:background .3s,transform .4s var(--spring)}
+.sg-rounds li.is-done{background:#4fb46a}.sg-rounds li.is-now{background:#f2b945;transform:scale(1.35)}
+.sg-mail{position:absolute;right:12px;top:10px;z-index:30;display:flex;gap:5px;padding:6px 10px;border-radius:99px;background:#fffdf2cc;box-shadow:0 3px 0 #0a2a1c22}
+.sg-mail:empty{display:none}
+.sg-mail svg{width:30px;height:22px;opacity:.28;filter:grayscale(1);transition:opacity .2s,filter .2s}
+.sg-mail svg.on{opacity:1;filter:none;animation:pop .5s var(--spring)}
+
+/* 小島：每格一塊草皮方塊（上面草、側面土）；後排先畫 */
+.sg-board{position:relative;width:calc(var(--cols)*var(--cs));height:calc(var(--rows)*var(--cs));margin-top:calc(var(--cs)*.35)}
+.tile,.thing,.ig,.sign{position:absolute;left:calc(var(--c)*var(--cs));top:calc(var(--r)*var(--cs));width:var(--cs);height:var(--cs);z-index:calc(var(--r)*4)}
+.tile{animation:rise .55s var(--spring) both;animation-delay:calc((var(--r) + var(--c))*45ms)}
+@keyframes rise{from{opacity:0;transform:translateY(40%) scale(.6)}}
+.tile::before{content:"";position:absolute;inset:3%;z-index:1;border-radius:16%;background:var(--noise),radial-gradient(circle at 28% 22%,#d2f5ab,#0000 55%),linear-gradient(160deg,#a9e27f,#7cc35b 60%,#64ad48);box-shadow:inset 0 calc(var(--cs)*.04) 0 #ffffff55,inset 0 calc(var(--cs)*-.04) 0 #3f8a3155;transition:transform .12s}
+.tile::after{content:"";position:absolute;left:3%;right:3%;top:40%;bottom:-13%;z-index:0;border-radius:0 0 16% 16%/0 0 22% 22%;background:var(--noise),linear-gradient(#5d9a3f 0 10%,#a9774a 10%,#8c5d35 70%,#6e4526);box-shadow:0 calc(var(--cs)*.1) calc(var(--cs)*.12) #0a2a1c55}
+.tile.alt::before{filter:brightness(.94)}
+.tile.is-ok::before{box-shadow:inset 0 0 0 calc(var(--cs)*.05) #fffbe6aa,inset 0 calc(var(--cs)*.04) 0 #ffffff55}
+.tile.is-hot::before{background:var(--noise),radial-gradient(circle at 50% 45%,#fff8c8,#ffe27a 70%,#f5c64a);box-shadow:inset 0 0 0 calc(var(--cs)*.05) #fffbe6,0 0 calc(var(--cs)*.2) #ffe27a}
+.tile.is-press{animation:press .42s var(--spring)}
+@keyframes press{30%{transform:translateY(9%) scaleY(.94)}}
+.tile.puddle::before{background:var(--noise),radial-gradient(ellipse at 50% 55%,#bfeaff 0 30%,#6cc3ea 31% 46%,#0000 47%),linear-gradient(160deg,#a9e27f,#7cc35b 60%,#64ad48)}
+.tile.puddle i{position:absolute;left:28%;top:36%;z-index:2;width:44%;height:36%;border:2px solid #fff9;border-radius:50%;animation:ripple 2.2s ease-out infinite}
+@keyframes ripple{from{transform:scale(.3);opacity:1}to{transform:scale(1.15);opacity:0}}
+
+.thing{z-index:calc(var(--r)*4 + 2);display:grid;place-items:end center;pointer-events:none}
+.rock>*,.pal>img{pointer-events:auto;cursor:pointer}
+.rock svg{width:86%;margin-bottom:10%;filter:drop-shadow(0 4px 2px #0a2a1c55);transform-origin:bottom center}
+.rock.is-bonk svg{animation:wob .5s var(--spring)}
+@keyframes wob{25%{transform:rotate(-9deg) scale(1.08,.9)}60%{transform:rotate(6deg)}}
+.letter svg{width:52%;margin-bottom:26%;filter:drop-shadow(0 4px 2px #0a2a1c55);animation:float 1.5s ease-in-out infinite alternate}
+@keyframes float{to{transform:translateY(-16%) rotate(6deg)}}
+.letter.is-got svg{animation:got .5s cubic-bezier(.5,-.4,.8,.4) forwards}
+@keyframes got{to{transform:translateY(-160%) scale(.2) rotate(40deg);opacity:0}}
+.pal img{position:absolute;left:50%;bottom:10%;height:calc(var(--cs)*1.1);width:calc(var(--cs)*1.2);object-fit:contain;object-position:bottom;translate:-50% 0;filter:drop-shadow(0 3px 2px #0a2a1c55);transform-origin:bottom center;animation:idle 1.4s ease-in-out infinite alternate}
+.pal .box{position:absolute;right:-6%;bottom:10%;width:38%}
+.pal .q{position:absolute;top:-62%;left:50%;translate:-50% 0;display:grid;place-items:center;width:46%;aspect-ratio:1;border:3px solid var(--gold);border-radius:50%;background:var(--cream);animation:float 1.2s ease-in-out infinite alternate}
+.pal .q svg{width:68%}
+.pal.is-hop img{animation:hop .6s var(--spring)}
+.pal.is-happy .q{display:none}
+@keyframes idle{to{transform:scale(1.03,.97)}}
+@keyframes hop{30%{transform:translateY(-26%) scale(.94,1.08)}60%{transform:translateY(0) scale(1.1,.9)}}
+@keyframes pop{from{transform:scale(.2)}}
+
+/* 路牌 */
+.sign{z-index:calc(var(--r)*4 + 1);display:grid;place-items:center;touch-action:none;cursor:grab}
+.sign b{display:grid;place-items:center;width:62%;aspect-ratio:1;border:calc(var(--cs)*.045) solid #fffdf2;border-radius:24%;background:linear-gradient(#ffb23e,#f08a1c);box-shadow:0 calc(var(--cs)*.06) 0 #a85a10,0 calc(var(--cs)*.1) calc(var(--cs)*.1) #0a2a1c55;animation:pop .4s var(--spring)}
+.sign svg{width:66%;transform:rotate(var(--rot,0deg));transition:transform .35s var(--spring);color:#fff;filter:drop-shadow(0 2px 0 #a85a10)}
+.sign[data-d="U"] b{background:linear-gradient(#6fc4f2,#2f8fd0);box-shadow:0 calc(var(--cs)*.06) 0 #1b5f93,0 calc(var(--cs)*.1) calc(var(--cs)*.1) #0a2a1c55}.sign[data-d="U"] svg{filter:drop-shadow(0 2px 0 #1b5f93)}
+.sign[data-d="D"] b{background:linear-gradient(#c59bf0,#8a5fd0);box-shadow:0 calc(var(--cs)*.06) 0 #5b3a96,0 calc(var(--cs)*.1) calc(var(--cs)*.1) #0a2a1c55}.sign[data-d="D"] svg{filter:drop-shadow(0 2px 0 #5b3a96)}
+.sign[data-d="L"] b{background:linear-gradient(#ff9a8a,#e55a4c);box-shadow:0 calc(var(--cs)*.06) 0 #a8322a,0 calc(var(--cs)*.1) calc(var(--cs)*.1) #0a2a1c55}.sign[data-d="L"] svg{filter:drop-shadow(0 2px 0 #a8322a)}
+.sign.is-hit b{animation:hit .45s var(--spring)}
+@keyframes hit{35%{transform:scale(1.3) rotate(-8deg)}}
+.sg-tray .sign{position:relative;left:auto;top:auto;width:var(--ts);height:var(--ts);--cs:var(--ts);z-index:1}
+.sg-tray .sign b{width:82%}
+.sg-drag{position:fixed;left:0;top:0;z-index:80;pointer-events:none}
+.sg-drag .sign{left:0;top:0;margin:calc(var(--cs)*-.5) 0 0 calc(var(--cs)*-.5)}
+.sg-drag .sign b{transform:scale(1.2) rotate(-6deg)}
+
+/* 伊奇 */
+.ig{z-index:calc(var(--r)*4 + 3);display:grid;place-items:end center;pointer-events:none;transition:none}
+.ig .sh{position:absolute;left:22%;right:22%;bottom:8%;height:16%;border-radius:50%;background:radial-gradient(#2c3a1f88,#0000 70%)}
+.ig img{position:absolute;left:50%;bottom:8%;height:calc(var(--cs)*1.3);width:auto;max-width:none;translate:-50% 0;filter:drop-shadow(0 3px 2px #0a2a1c55);transform-origin:bottom center;pointer-events:auto;cursor:pointer}
+.ig.is-idle img{animation:idle .9s ease-in-out infinite alternate;pointer-events:none}
+.ig .aim{position:absolute;left:50%;top:50%;width:34%;height:34%;margin:-17% 0 0 -17%;transform:rotate(var(--rot)) translateX(150%);color:#fffdf2;filter:drop-shadow(0 2px 0 #0a2a1c88);animation:aim .7s ease-in-out infinite alternate}
+@keyframes aim{to{transform:rotate(var(--rot)) translateX(185%)}}
+.ig:not(.is-idle) .aim{display:none}
+.ig .dizzy{position:absolute;top:-58%;left:50%;width:60%;translate:-50% 0;display:none;color:#f2b945;animation:spin .7s linear infinite}
+.ig.is-dizzy .dizzy{display:block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.splash{position:absolute;z-index:99;width:var(--cs);height:var(--cs);left:calc(var(--c)*var(--cs));top:calc(var(--r)*var(--cs));pointer-events:none}
+.splash i{position:absolute;left:50%;top:60%;width:14%;aspect-ratio:1;border-radius:50%;background:#dff5ff;animation:drop .6s cubic-bezier(.2,.8,.4,1) forwards}
+@keyframes drop{to{transform:translate(var(--dx),var(--dy)) scale(.3);opacity:0}}
+
+/* 底部：路牌架＋按鈕 */
+.sg-dock{flex:none;display:flex;gap:10px;align-items:stretch;--ts:clamp(58px,15vw,84px)}
+.sg-tray{flex:1;min-width:0;min-height:calc(var(--ts) + 24px);display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;padding:10px;border:5px solid #8a5a2e;border-radius:22px;touch-action:none;
+  background:var(--noise),repeating-linear-gradient(0deg,#c8915a 0 9px,#d6a36b 9px 17px,#c48a52 17px 21px,#d09a62 21px 34px);box-shadow:inset 0 3px 0 #f2c48b,inset 0 -6px 0 #9c6a39,0 6px 0 #5e3a1a}
+.sg-btns{display:flex;align-items:center;justify-content:center;gap:10px}
+.sg-go{display:grid;place-items:center;width:clamp(76px,20vw,104px);aspect-ratio:1;border:6px solid var(--cream);border-radius:50%;background:radial-gradient(circle at 35% 30%,#8be08a,#3fae55 60%,#2b8a42);color:var(--cream);box-shadow:0 7px 0 #1e6a31,0 12px 20px #0a2a1c55;transition:transform .2s var(--spring),box-shadow .2s}
+.sg-go svg{width:48%}.sg-go .i-play{margin-left:8%}.sg-go .i-stop{display:none}
+.sg-go.is-on{background:radial-gradient(circle at 35% 30%,#ffc46e,#f08a1c 60%,#c96a10);box-shadow:0 7px 0 #a85a10,0 12px 20px #0a2a1c55}
+.sg-go.is-on .i-play{display:none}.sg-go.is-on .i-stop{display:block}
+.sg-go.is-nudge{animation:nudge 1s var(--spring) infinite}
+@keyframes nudge{50%{transform:scale(1.12)}}
+.sg-go:active{transform:translateY(5px);box-shadow:0 2px 0 #1e6a31}
+.sg-back{display:grid;place-items:center;width:56px;aspect-ratio:1;border:4px solid var(--cream);border-radius:18px;background:radial-gradient(circle at 35% 28%,#7cc0ea,#2f86c4 62%,#246a9e);color:#fff;box-shadow:0 5px 0 #1b5079}
+.sg-back svg{width:62%}.sg-back.is-off{opacity:.45}.sg-back:active{transform:translateY(4px);box-shadow:0 1px 0 #1b5079}
+
+.banner{position:absolute;left:50%;top:42%;z-index:120;display:grid;justify-items:center;padding:12px 26px;border:5px solid var(--gold);border-radius:24px;background:var(--cream);box-shadow:0 7px 0 #c89c52,0 14px 26px #0a2a1c55;font-size:clamp(28px,8vw,42px);font-weight:1000;pointer-events:none;transform:translate(-50%,-50%);animation:banner .9s cubic-bezier(.2,1.4,.4,1) forwards}
+@keyframes banner{from{opacity:0;transform:translate(-50%,-50%) scale(.5)}25%,75%{opacity:1;transform:translate(-50%,-50%)}to{opacity:0;transform:translate(-50%,-90%)}}
+.overlay{position:fixed;inset:0;z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:16px;background:#0e3a28aa}
+.overlay[hidden]{display:none}
+.start{display:flex;flex-direction:column;align-items:center;gap:18px;padding:0;border:0;background:none}
+.go{display:grid;place-items:center;width:128px;height:128px;border:7px solid var(--cream);border-radius:50%;background:radial-gradient(circle at 35% 30%,#ff8a6e,#e0473a 60%,#b8322a);color:var(--cream);box-shadow:0 8px 0 #8e2620,0 14px 24px #0a2a1c55;animation:nudge 1.6s ease-in-out infinite}
+.go svg{width:56px;height:56px;margin-left:8px}
+.label{white-space:nowrap;padding:10px 20px;border:4px solid var(--gold);border-radius:999px;background:var(--cream);font-size:clamp(18px,5.2vw,28px);font-weight:1000;box-shadow:0 5px 0 #c89c52}
+/* 玩法框小動畫：一頁講完，5 秒一輪（點草地→路牌落下→伊奇拿信→踩路牌轉彎→小恐龍開心） */
+.pv-sign{position:relative;width:200px;height:120px}
+.howto:has(.pv-sign) .howto-stage{aspect-ratio:200/120}
+.pv-sign .t{position:absolute;width:44px;height:44px;border-radius:9px;background:#8fd070;box-shadow:0 6px 0 #8c5d35}
+.pv-sign .s{position:absolute;left:130px;top:74px;width:32px;height:32px;display:grid;place-items:center;border:3px solid #fff;border-radius:9px;background:#2f8fd0;color:#fff;animation:pvs 5s infinite}
+.pv-sign .s svg{width:70%;transform:rotate(-90deg)}
+.pv-sign .tp{position:absolute;left:131px;top:75px;width:30px;height:30px;border:4px solid #fffdf2;border-radius:50%;animation:pvtap 5s infinite}
+.pv-sign .e{position:absolute;left:86px;top:60px;width:26px;animation:pve 5s infinite}
+.pv-sign .e svg{display:block;width:100%}
+.pv-sign .pal{position:absolute;left:140px;top:2px;height:50px;transform-origin:bottom center;animation:pvh 5s infinite}
+.pv-sign .who{position:absolute;left:30px;top:46px;height:56px;animation:pvi 5s infinite}
+@keyframes pvtap{0%,5%{transform:scale(.4);opacity:0}11%{transform:none;opacity:1}19%,100%{transform:scale(1.7);opacity:0}}
+@keyframes pvs{0%,16%{transform:translateY(-60px) scale(.4);opacity:0}26%,100%{transform:none;opacity:1}}
+@keyframes pvi{0%,32%{transform:none}46%{transform:translateX(47px)}60%{transform:translateX(94px)}76%,100%{transform:translate(88px,-30px)}}
+@keyframes pve{0%,44%{transform:none;opacity:1}52%,100%{transform:translateY(-24px) scale(.4);opacity:0}}
+@keyframes pvh{0%,77%,93%,100%{transform:none}85%{transform:translateY(-11px) scale(.95,1.06)}}
+/* 玩法框（指令模式）：上面三張指令照順序亮起來，伊奇照著走 */
+.pv-code .row{position:absolute;left:8px;top:6px;display:flex;gap:4px;padding:4px;border-radius:9px;background:#c8915a}
+.pv-code .s{position:static;width:24px;height:24px;border-width:2px;border-radius:7px;background:#f08a1c;animation:none}
+.pv-code .s svg{transform:none}.pv-code .s.up{background:#2f8fd0}.pv-code .s.up svg{transform:rotate(-90deg)}
+.pv-code .c1{animation:pvc1 5s infinite}.pv-code .c2{animation:pvc2 5s infinite}.pv-code .c3{animation:pvc3 5s infinite}
+@keyframes pvc1{0%,30%,47%,100%{transform:none;box-shadow:none}33%,45%{transform:scale(1.25);box-shadow:0 0 0 3px #fff8c8}}
+@keyframes pvc2{0%,45%,61%,100%{transform:none;box-shadow:none}47%,59%{transform:scale(1.25);box-shadow:0 0 0 3px #fff8c8}}
+@keyframes pvc3{0%,59%,77%,100%{transform:none;box-shadow:none}61%,75%{transform:scale(1.25);box-shadow:0 0 0 3px #fff8c8}}
+@media(prefers-reduced-motion:reduce){.sg-lake,.lily,.tile,.letter svg,.pal img,.ig.is-idle img{animation:none}}
+.bpm-word{display:inline-flex;align-items:center;justify-content:center;flex:none;padding-right:.26em;white-space:nowrap}
+.bpm-main-char{display:inline-block;flex:none;font-size:1em;line-height:1.04}
+.bpm-column{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:none;margin-left:.05em;font-size:.4em;font-weight:850;line-height:1}
+.bpm-onset,.bpm-rime{display:block;line-height:1.03}
+.bpm-tone{position:absolute;right:-.55em;top:85%;transform:translateY(-50%) scale(1.5,1.8);font-size:1.2em;font-weight:900;color:#d32f2f;line-height:1}
+.bpm-tone-dot{position:absolute;right:0;top:-.6em;font-size:1.4em;font-weight:900;color:#d32f2f;line-height:1}
+
+/* v2（導演 2026-11-18）：預覽虛線、手指示範、架子空了／搖一下 */
+.route{position:absolute;inset:0;z-index:90;width:100%;height:100%;overflow:visible;pointer-events:none;transition:opacity .2s}
+.route.is-off{opacity:0}
+.route .rt{fill:none;stroke:#fffdf2;stroke-width:.09;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:.01 .2;filter:drop-shadow(0 .02px .02px #0a2a1c88);animation:march .7s linear infinite}
+@keyframes march{to{stroke-dashoffset:-.21}}
+.route .re{fill:none;stroke-width:.07;opacity:0}
+.route[data-end="fall"] .re{opacity:1;stroke:#e0473a;animation:ripple 1s ease-out infinite;transform-box:fill-box;transform-origin:center}
+.route[data-end="goal"] .rt{stroke:#ffe27a}
+.sg-tray.is-shake{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}60%{transform:translateX(5px)}}
+.sg-tray.is-empty{opacity:.6}
+.sg-hand{position:fixed;z-index:55;width:64px;height:64px;margin:6px 0 0 -8px;color:#fffdf2;pointer-events:none;filter:drop-shadow(0 4px 3px #0a2a1c88);transition:left .5s var(--spring),top .5s var(--spring);animation:handtap .9s ease-in-out infinite}
+.sg-hand[hidden]{display:none}
+.sg-hand svg{width:100%;height:100%}
+@keyframes handtap{50%{transform:translateY(-14px) scale(1.12)}}
+@media(prefers-reduced-motion:reduce){.route .rt,.sg-hand{animation:none}}
+
+/* v3：架上選中的那塊浮起來 */
+.sg-tray .sign.is-sel b{outline:5px solid #fff8c8;outline-offset:3px;transform:translateY(-14%) scale(1.1);transition:transform .25s var(--spring)}
+
+/* v4（導演 2026-11-18）：跳路牌、星星信、問號、滑倒／信沒拿的預覽終點 */
+.sign[data-d="J"] b{background:linear-gradient(#8fe08a,#3fae55);box-shadow:0 calc(var(--cs)*.06) 0 #1e6a31,0 calc(var(--cs)*.1) calc(var(--cs)*.1) #0a2a1c55}.sign[data-d="J"] svg{width:78%;filter:drop-shadow(0 2px 0 #1e6a31)}
+.letter.is-call svg{animation:call .9s var(--spring)}
+@keyframes call{20%,60%{transform:translateY(-40%) scale(1.5)}40%,80%{transform:translateY(-10%) scale(1.2)}}
+.ig .ask{position:absolute;left:50%;top:-78%;translate:-50% 0;display:none;place-items:center;width:44%;aspect-ratio:1;border:3px solid var(--gold);border-radius:50%;background:var(--cream);font-size:calc(var(--cs)*.3);font-weight:1000;color:#e0473a;animation:pop .4s var(--spring)}
+.ig.is-ask .ask{display:grid}
+.pal.is-ask img{animation:tilt 1.2s ease-in-out}
+.pal.is-ask .q{animation:shake .4s 3}
+@keyframes tilt{20%,80%{transform:rotate(-12deg)}50%{transform:rotate(-16deg) scale(1.04)}}
+.route[data-end="slip"] .re{opacity:1;stroke:#2f8fd0;animation:ripple 1s ease-out infinite;transform-box:fill-box;transform-origin:center}
+.letter.bonus svg{width:46%;margin-bottom:28%}
+.sg-mail svg.bonus{width:24px}
+
+/* v6（導演 2026-11-18）：Go! 鈕、開始選單選模式、指令模式（上排＝排好的指令、下排＝可以用的指令） */
+.sg-go .i-play{margin:0;font-size:clamp(24px,6.4vw,34px);font-weight:1000;letter-spacing:.02em;text-shadow:0 3px 0 #1e6a31}
+.pick{display:flex;align-items:center;gap:8px;padding:8px 14px;border:4px solid var(--gold);border-radius:999px;background:var(--cream);font-size:clamp(18px,5vw,24px);font-weight:1000;box-shadow:0 5px 0 #c89c52}
+.pick button{display:inline-flex;justify-content:center;align-items:center;min-width:78px;min-height:52px;padding:4px 12px;border:3px solid #cfe0c8;border-radius:16px;background:#f1f7ea}
+.pick button[aria-pressed="true"]{background:linear-gradient(#ffca58,#f6ac34);border-color:#b9792b;color:#573e1d;box-shadow:0 3px 0 #b9792b}
+button.sign{padding:0;border:0;background:none;cursor:pointer;touch-action:manipulation}
+.sg-tray.is-code{flex-direction:column;flex-wrap:nowrap;align-items:stretch;justify-content:center;gap:8px;--ts:clamp(44px,11vw,60px)}
+.prog{display:flex;flex-wrap:wrap;align-content:flex-start;gap:3px;min-height:calc(var(--ts)*.66 + 14px);padding:7px;border-radius:14px;background:#5e3a1a4d;box-shadow:inset 0 3px 5px #3a220c66;--ps:calc(var(--ts)*.66)}
+.sg-tray .prog .sign{width:var(--ps);height:var(--ps);--cs:var(--ps)}
+.prog .sign b{animation:none;transition:transform .2s var(--spring)}
+.prog .sign.is-new b{animation:pop .4s var(--spring)}
+.prog .sign.is-now b{outline:4px solid #fff8c8;outline-offset:1px;transform:scale(1.18)}
+.prog .sign.is-done{opacity:.5}
+.cmds{display:flex;flex-wrap:wrap;justify-content:center;gap:5px}
+.cmds .sign b{animation:none}.cmds .sign:active b{transform:scale(.9)}
+.route[data-end="more"] .re{opacity:1;stroke:#fffdf2}
+@media(max-width:430px){.pick{gap:5px;padding:6px 8px;font-size:18px}.pick button{min-width:0;padding:4px 8px}}

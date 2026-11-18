@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#164d39">
+  <title>伊奇看路牌・恐龍郵局</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/naikai-subset.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="fx.css"><link rel="stylesheet" href="home-button.css"><link rel="stylesheet" href="game-header.css"><link rel="stylesheet" href="finish-card.css?v=5"><link rel="stylesheet" href="howto.css?v=6">
+  <script src="shared.js"></script>
+  <link rel="stylesheet" href="sign.css?v=12">
+</head>
+<body>
+  <div class="sg-shell">
+    <header class="gh">
+      <a class="dino-home" href="index.html" aria-label="回選遊戲首頁"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.6 1.6 11.4a1 1 0 0 0 1.3 1.5L4.5 11.6V20a1.5 1.5 0 0 0 1.5 1.5h3.8v-5.8a.7.7 0 0 1 .7-.7h3a.7.7 0 0 1 .7.7v5.8H18a1.5 1.5 0 0 0 1.5-1.5v-8.4l1.6 1.3a1 1 0 0 0 1.3-1.5Z"/></svg></a>
+      <h1 id="title" class="gh-title">伊奇看路牌</h1>
+      <div class="gh-tools"><button id="help" class="gh-btn" type="button" aria-label="玩法">?</button><button id="menuBtn" class="gh-btn" type="button" aria-label="玩法選單"><svg aria-hidden="true"><use href="icons.svg#ic-gear"/></svg></button></div>
+    </header>
+    <main class="sg-play">
+      <section id="lake" class="sg-lake">
+        <i class="lily l1"></i><i class="lily l2"></i><i class="lily l3"></i>
+        <ol id="rounds" class="sg-rounds" aria-label="第幾關"></ol>
+        <div id="mail" class="sg-mail" aria-label="撿到的信"></div>
+        <div id="board" class="sg-board"></div>
+      </section>
+      <section class="sg-dock">
+        <div id="tray" class="sg-tray" aria-label="路牌"></div>
+        <div class="sg-btns">
+          <button id="back" class="sg-back" type="button" aria-label="回起點"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M8 5.5 3.5 10 8 14.5M4 10h10.5a5.5 5.5 0 0 1 0 11H9"/></svg></button>
+          <button id="go" class="sg-go" type="button" aria-label="出發"><span class="i-play" aria-hidden="true">Go!</span><svg class="i-stop" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="4" width="5" height="16" rx="1.5" fill="currentColor"/><rect x="14" y="4" width="5" height="16" rx="1.5" fill="currentColor"/></svg></button>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div id="drag" class="sg-drag"></div>
+
+  <div id="ready" class="overlay">
+    <div id="pick" class="pick" role="group" aria-label="玩法"><button type="button" data-mode="sign" id="pickSign">放路牌</button><button type="button" data-mode="code" id="pickCode">排指令</button><button type="button" data-mode="hard" id="pickHard">困難</button></div>
+    <button id="start" class="start" type="button">
+      <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M7 4.6v14.8a1 1 0 0 0 1.5.9l12-7.4a1 1 0 0 0 0-1.8l-12-7.4A1 1 0 0 0 7 4.6z"/></svg></span><span id="startLabel" class="label">點一下，開始送信！</span>
+    </button>
+  </div>
+
+  <div id="finish" class="overlay" hidden>
+    <div class="card">
+      <img id="finishActor" alt="">
+      <h2 id="finishTitle">信都送到了！</h2>
+      <p id="finishStars" class="stars"></p>
+      <div class="actions"><button id="again" type="button">再玩一次</button><a id="home" href="index.html">回首頁</a></div>
+    </div>
+  </div>
+
+<script src="sign.js?v=16"></script>
+</body>
+</html>

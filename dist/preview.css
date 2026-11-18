@@ -210,3 +210,22 @@
 .pv-field .bed i:nth-child(2){animation-delay:.15s}.pv-field .bed i:nth-child(3){animation-delay:.3s}.pv-field .bed i:nth-child(4){animation-delay:.6s}.pv-field .bed i:nth-child(5){animation-delay:.75s}.pv-field .bed i:nth-child(6){animation-delay:.9s}
 @keyframes pvFlower{0%,8%{scale:0}22%,86%{scale:1}100%{scale:0}}
 @media(prefers-reduced-motion:reduce){.pv-field .bed i{animation:none;scale:1}}
+
+/* 伊奇看路牌：首頁入口預覽＝玩法框那組畫面（200×120，來源 sign.css）縮小放進 124×96；手機 104×84 */
+.pv-signhome{background:#bfe6f2}
+.pv-signhome .pv-sign{position:absolute;left:0;top:11px;transform:scale(.62);transform-origin:0 0}
+@media(max-width:680px){.pv-signhome .pv-sign{transform:scale(.52)}}
+.pv-sign{position:relative;width:200px;height:120px}
+.pv-sign .t{position:absolute;width:44px;height:44px;border-radius:9px;background:#8fd070;box-shadow:0 6px 0 #8c5d35}
+.pv-sign .s{position:absolute;left:130px;top:74px;width:32px;height:32px;display:grid;place-items:center;border:3px solid #fff;border-radius:9px;background:#2f8fd0;color:#fff;animation:pvs 5s infinite}
+.pv-sign .s svg{width:70%;transform:rotate(-90deg)}
+.pv-sign .tp{position:absolute;left:131px;top:75px;width:30px;height:30px;border:4px solid #fffdf2;border-radius:50%;animation:pvtap 5s infinite}
+.pv-sign .e{position:absolute;left:86px;top:60px;width:26px;animation:pve 5s infinite}
+.pv-sign .e svg{display:block;width:100%}
+.pv-sign .pal{position:absolute;left:140px;top:2px;height:50px;transform-origin:bottom center;animation:pvh 5s infinite}
+.pv-sign .who{position:absolute;left:30px;top:46px;height:56px;animation:pvi 5s infinite}
+@keyframes pvtap{0%,5%{transform:scale(.4);opacity:0}11%{transform:none;opacity:1}19%,100%{transform:scale(1.7);opacity:0}}
+@keyframes pvs{0%,16%{transform:translateY(-60px) scale(.4);opacity:0}26%,100%{transform:none;opacity:1}}
+@keyframes pvi{0%,32%{transform:none}46%{transform:translateX(47px)}60%{transform:translateX(94px)}76%,100%{transform:translate(88px,-30px)}}
+@keyframes pve{0%,44%{transform:none;opacity:1}52%,100%{transform:translateY(-24px) scale(.4);opacity:0}}
+@keyframes pvh{0%,77%,93%,100%{transform:none}85%{transform:translateY(-11px) scale(.95,1.06)}}

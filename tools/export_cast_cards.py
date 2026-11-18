@@ -44,6 +44,12 @@ MATRIX_CAST = {c: dict(_KID) for c in ('yuanyuan', 'painuo', 'shanshan', 'shuosh
 # 2026-11-12 導演：百花花圃（乘法）主角加入三角龍奶奶；矩陣只有站姿，用表情當用途
 MATRIX_CAST['grandma'] = {'stand': ('stand', 'happy', 'closed'), 'talk': ('stand', 'happy', 'open'),
                           'wow': ('stand', 'surprised', 'open'), 'think': ('stand', 'neutral', 'closed')}
+# 2026-11-18 導演：伊奇看路牌（sign）用四個方向走路圖；矩陣格 dir_*，帽子 P 貼紙（matrix/badges.json）匯出時疊上。
+# dir_left 是真的朝左那格，不鏡像。各圖緊貼外框裁切、同一倍率縮小（最高那張＝MAX_H）。
+MATRIX_DIRS = {'iggy': {f'dir_{d}': (f'dir_{d}', 'happy', 'closed') for d in ('front', 'back', 'left', 'right')}}
+# 2026-11-18 導演：看路牌收信的小恐龍改正面（側面像在看遠方）；矩陣 front 格，等信＝閉嘴笑、收到＝大笑
+for _c in ('xiaokong', 'yuanyuan', 'painuo', 'shanshan', 'shuoshuo', 'xiaokai', 'tailuo'):
+    MATRIX_DIRS[_c] = {'front': ('front', 'happy', 'closed'), 'front_cheer': ('front', 'happy', 'wide')}
 REMOVED = ('pairo',)                                  # 舊匯出檔一併刪除
 
 def resolve(char, key):
@@ -97,6 +103,29 @@ def export_matrix(char, uses, height, missing):
     return poses
 
 
+def export_dirs(char, uses, missing):
+    sys.path.insert(0, str(STUDIO / 'tools/card_stage'))
+    import char_matrix as cm
+    stand, err = matrix_cell(char, 'stand', 'happy', 'closed')
+    if not stand: missing.append(f'{char}/stand: {err}'); return {}
+    sb = Image.open(STUDIO / stand['path']).getchannel('A').getbbox(); stand_h = sb[3] - sb[1]
+    cuts = {}
+    for use, (pose, emo, mouth) in uses.items():
+        rec, err = matrix_cell(char, pose, emo, mouth)
+        if not rec: missing.append(f'{char}/{pose}__{emo}__{mouth}: {err}'); continue
+        im = cm.paste_badges(Image.open(STUDIO / rec['path']).convert('RGBA'), cm.badge_data(char, pose) or [])
+        cuts[use] = (rec, im.crop(im.getchannel('A').getbbox()))
+    if not cuts: return {}
+    k = MAX_H / max(c.height for _, c in cuts.values()); poses = {}
+    for use, (rec, cut) in cuts.items():
+        dst = OUT / f'{char}__{use}.webp'
+        out = cut.resize((round(cut.width * k), round(cut.height * k)), Image.LANCZOS)
+        out.save(dst, 'WEBP', quality=84, method=6)
+        poses[use] = {'src': f'assets/cast/{dst.name}', 'ratio': round(out.width / out.height, 4),
+                      'pose_factor': round(cut.height / stand_h, 4), 'card': rec['id'], 'sha256': rec.get('sha256')}
+    return poses
+
+
 def main():
     scale = json.load(open(STUDIO / 'media_library/visual/cards/character_scale.json'))['characters']
     meta = json.load(open(STUDIO / 'media_library/visual/cards/card_meta.json'))
@@ -123,6 +152,8 @@ def main():
                                    'card': rec['id'], 'sha256': rec.get('use_sha256') or rec.get('sha256')}
     for char, uses in MATRIX_CAST.items():
         manifest[char] = {'height': scale[char]['height'], 'poses': export_matrix(char, uses, scale[char]['height'], missing)}
+    for char, uses in MATRIX_DIRS.items():
+        manifest[char]['poses'].update(export_dirs(char, uses, missing))
     for char in REMOVED:
         for old in OUT.glob(f'{char}__*.webp'): old.unlink()
     (OUT / 'cast.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=1))

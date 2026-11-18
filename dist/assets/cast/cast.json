@@ -71,6 +71,34 @@
     "pose_factor": 1.0,
     "card": "card:iggy/iggy__right_3q__point__g01",
     "sha256": "3b46cf0fea1b2128edafe5fbb24dc6574b042c1abb34b0e8b32c0f099f16b33f"
+   },
+   "dir_front": {
+    "src": "assets/cast/iggy__dir_front.webp",
+    "ratio": 0.4667,
+    "pose_factor": 1.0243,
+    "card": "matrix:iggy/dir_front/happy/closed",
+    "sha256": "87631b76efe7ba5d80eb326c87231e9a259e472b24161e66226c0ab03be16d22"
+   },
+   "dir_back": {
+    "src": "assets/cast/iggy__dir_back.webp",
+    "ratio": 0.4706,
+    "pose_factor": 1.0162,
+    "card": "matrix:iggy/dir_back/happy/closed",
+    "sha256": "0a9acb1a19d8d1c35d3061a45154acb6621784e2fe1628ca7c107b670c73e221"
+   },
+   "dir_left": {
+    "src": "assets/cast/iggy__dir_left.webp",
+    "ratio": 0.4788,
+    "pose_factor": 1.0072,
+    "card": "matrix:iggy/dir_left/happy/closed",
+    "sha256": "64174e956d66114716e0a157ec952031c1d2e2e79b69462f3a27359e7c12dfea"
+   },
+   "dir_right": {
+    "src": "assets/cast/iggy__dir_right.webp",
+    "ratio": 0.4788,
+    "pose_factor": 1.0072,
+    "card": "matrix:iggy/dir_right/happy/closed",
+    "sha256": "666861247f38ebc567b0b5eac7c032ccf881fac9e4c72337d59f82d56ed026d2"
    }
   }
  },
@@ -254,6 +282,20 @@
     "pose_factor": 1.0,
     "card": "card:xiaokong/xiaokong__right_3q__point__mirror01",
     "sha256": "c92b50cef50f7d707f08b79049bd89e719a5f15b54dd7ba55c7534abf17bb6d6"
+   },
+   "front": {
+    "src": "assets/cast/xiaokong__front.webp",
+    "ratio": 0.8604,
+    "pose_factor": 1.0097,
+    "card": "matrix:xiaokong/front/happy/closed",
+    "sha256": "cf2b68d6951b2e35b32452f085aefdb57daea720e61d374239881a37b9ff4b73"
+   },
+   "front_cheer": {
+    "src": "assets/cast/xiaokong__front_cheer.webp",
+    "ratio": 0.8604,
+    "pose_factor": 1.0097,
+    "card": "matrix:xiaokong/front/happy/wide",
+    "sha256": "b2bd10e7f0e1ccbcd2a45e159c56725320e0184d70d475807419eeb594e5382b"
    }
   }
  },
@@ -287,6 +329,20 @@
     "pose_factor": 1.0418,
     "card": "matrix:yuanyuan/cheer/happy/open",
     "sha256": "7c3c2b7ff821444929b00da76df5b5678a1c070655addeb06f068f68adc35779"
+   },
+   "front": {
+    "src": "assets/cast/yuanyuan__front.webp",
+    "ratio": 0.5875,
+    "pose_factor": 0.9822,
+    "card": "matrix:yuanyuan/front/happy/closed",
+    "sha256": "e47ffe09a5b23efbb07b288d7d204490370b979402785dff3d29ac7fa573df8e"
+   },
+   "front_cheer": {
+    "src": "assets/cast/yuanyuan__front_cheer.webp",
+    "ratio": 0.5875,
+    "pose_factor": 0.9822,
+    "card": "matrix:yuanyuan/front/happy/wide",
+    "sha256": "86d4173912dd72077ec936cac1d0de431cb0f46360c7873f0bb3c008593b411b"
    }
   }
  },
@@ -320,6 +376,20 @@
     "pose_factor": 1.0392,
     "card": "matrix:painuo/cheer/happy/open",
     "sha256": "d1ed461201582e8476f2fc25897877d673a5c8b891285ccfe5727d9d341a4e91"
+   },
+   "front": {
+    "src": "assets/cast/painuo__front.webp",
+    "ratio": 0.6979,
+    "pose_factor": 1.0325,
+    "card": "matrix:painuo/front/happy/closed",
+    "sha256": "65e9600eacaf40ee8f49b9c22b885caaa21e51d40121e71471658edbba67aa91"
+   },
+   "front_cheer": {
+    "src": "assets/cast/painuo__front_cheer.webp",
+    "ratio": 0.6979,
+    "pose_factor": 1.0325,
+    "card": "matrix:painuo/front/happy/wide",
+    "sha256": "428a13019ee6bfd73768d9b19ec5e359c83349c6f08879023279a8e6ddc7f5b2"
    }
   }
  },
@@ -353,6 +423,20 @@
     "pose_factor": 1.0419,
     "card": "matrix:shanshan/cheer/happy/open",
     "sha256": "c4220cf0c2d6e059c2e845a7c8e2d434167b14e11405770473e88d627f826e6d"
+   },
+   "front": {
+    "src": "assets/cast/shanshan__front.webp",
+    "ratio": 0.6146,
+    "pose_factor": 0.9617,
+    "card": "matrix:shanshan/front/happy/closed",
+    "sha256": "24e14db0b9d20566390283df65066f9a43358b67fc9c731e5a369e8060dd9c19"
+   },
+   "front_cheer": {
+    "src": "assets/cast/shanshan__front_cheer.webp",
+    "ratio": 0.6146,
+    "pose_factor": 0.9617,
+    "card": "matrix:shanshan/front/happy/wide",
+    "sha256": "431f9c4d791a18d13e45c178fdc11478db704196adee44650c2954beecd78a1c"
    }
   }
  },
@@ -386,6 +470,20 @@
     "pose_factor": 1.0443,
     "card": "matrix:shuoshuo/cheer/happy/open",
     "sha256": "d7aef832f0fe14e40658ba77f981a414843b42199c4a4081e832f060f1872fee"
+   },
+   "front": {
+    "src": "assets/cast/shuoshuo__front.webp",
+    "ratio": 0.4271,
+    "pose_factor": 1.0888,
+    "card": "matrix:shuoshuo/front/happy/closed",
+    "sha256": "5a9ea1a824aeb1d1fdb861b513172d29bb34c5fa64b8836d924827a3bc037b2f"
+   },
+   "front_cheer": {
+    "src": "assets/cast/shuoshuo__front_cheer.webp",
+    "ratio": 0.4271,
+    "pose_factor": 1.0888,
+    "card": "matrix:shuoshuo/front/happy/wide",
+    "sha256": "c754a6f015ff2a4c82a2bbb89b4f327c4c0c059062d2ab5966c55d697770f6b7"
    }
   }
  },
@@ -419,6 +517,20 @@
     "pose_factor": 1.1888,
     "card": "matrix:xiaokai/cheer/happy/open",
     "sha256": "cb29e537d0cb508a3f8d5a7e86d3583e2602c2bdbd42d1ba4c7ae4cd96aec65a"
+   },
+   "front": {
+    "src": "assets/cast/xiaokai__front.webp",
+    "ratio": 0.6958,
+    "pose_factor": 1.057,
+    "card": "matrix:xiaokai/front/happy/closed",
+    "sha256": "b72c677071ad9bd6ee9c6db9c63f6fe77e1fcdc3f132719692db07eddb47864e"
+   },
+   "front_cheer": {
+    "src": "assets/cast/xiaokai__front_cheer.webp",
+    "ratio": 0.6958,
+    "pose_factor": 1.057,
+    "card": "matrix:xiaokai/front/happy/wide",
+    "sha256": "92bf60a6d8efabac19dea1beb5a368199e06aa133e94aafc59b7c1ce0c73986b"
    }
   }
  },
@@ -452,6 +564,20 @@
     "pose_factor": 1.0662,
     "card": "matrix:tailuo/cheer/happy/open",
     "sha256": "969fec1ecd723458d9d392350c2d4b24dc7f7c505618be2dfbe23f9d418a514c"
+   },
+   "front": {
+    "src": "assets/cast/tailuo__front.webp",
+    "ratio": 0.4042,
+    "pose_factor": 0.9848,
+    "card": "matrix:tailuo/front/happy/closed",
+    "sha256": "174cc52dae4760b0c7f98e433e9f19a5f08f843994e91044b5dd0f4619925351"
+   },
+   "front_cheer": {
+    "src": "assets/cast/tailuo__front_cheer.webp",
+    "ratio": 0.4042,
+    "pose_factor": 0.9848,
+    "card": "matrix:tailuo/front/happy/wide",
+    "sha256": "6255e648f3365c3618ccd19afdb5e0d169d820a2ce2afcfd565d6660076d10a8"
    }
   }
  },

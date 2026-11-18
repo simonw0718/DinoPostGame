@@ -101,6 +101,16 @@
   Cache-Control: no-cache
 /pack_levels.json
   Cache-Control: no-cache
+/sign
+  Cache-Control: no-cache
+/sign.html
+  Cache-Control: no-cache
+/sign.js
+  Cache-Control: no-cache
+/sign.css
+  Cache-Control: no-cache
+/sign_levels.json
+  Cache-Control: no-cache
 /climb
   Cache-Control: no-cache
 /climb.html
