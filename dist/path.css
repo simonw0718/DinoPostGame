@@ -14,7 +14,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .ps-levels li.is-now{border-color:#ffd56a;background:#ffca58;color:#573e1d;transform:scale(1.15)}
 .ps-levels li.is-done{border-color:#9be39f;background:#4fb577}
 .ps-stage{position:relative;flex:1;min-height:0;border:4px solid #fffdf244;border-radius:26px;background:#2b6b3f55;overflow:hidden;touch-action:none}
-.ps-stage svg{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+.ps-stage>svg{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
 .road-edge{fill:none;stroke:#7a5a2c;stroke-linecap:round;stroke-linejoin:round}
 .road{fill:none;stroke:#f3dca6;stroke-linecap:round;stroke-linejoin:round}
 .road-mid{fill:none;stroke:#d4b679;stroke-width:5;stroke-dasharray:18 22;stroke-linecap:round}
@@ -43,7 +43,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .ps-score[hidden]{display:none}
 .ps-score b{color:#f2b945;font-size:40px;letter-spacing:.06em;line-height:1}
 .ps-score b .off{color:#e6dcc4}
-.ps-score span{font-size:24px;font-weight:1000}
+.ps-score b{display:flex;gap:.06em}.ps-score b span{display:grid;font-size:inherit}.ps-score b svg{width:1em;height:1em;fill:currentColor}   /* 11-18 修：星星原本被 .ps-stage svg 拉成滿版疊在 100% 上 */
+.ps-score>span{font-size:24px;font-weight:1000}
 .finish-score{margin:0;font-size:22px;font-weight:1000}
 @keyframes scoreIn{from{transform:translateX(-50%) scale(.4)}}
 .ps-stage.is-off{animation:shake .38s}
