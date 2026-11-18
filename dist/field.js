@@ -224,14 +224,15 @@
     drawPiece(); Dino.replay(pieceEl, 'is-turn'); phase = 'place'; tray.classList.remove('is-idle'); hintRot(); guidePlace();
   }
 
-  function place(cx, cy) {   // 點花田：找「包含這一格」又放得下的位置，最接近以這格為中心的優先
+  function place(cx, cy, q) {   // 點花田：找「包含這一格」又放得下的位置，最接近以這格為中心的優先（q＝拖曳中：不閃紅框、不重跑指引）
     if (phase !== 'place' || turn !== 'kid') return;
     const { w, h } = P, ix = cx - Math.floor((w - 1) / 2), iy = cy - Math.floor((h - 1) / 2);
     let best = null, bd = 1e9;
     for (let y = cy - h + 1; y <= cy; y++) for (let x = cx - w + 1; x <= cx; x++) if (free(x, y, w, h)) { const d = Math.abs(x - ix) + Math.abs(y - iy); if (d < bd) { bd = d; best = [x, y]; } }
     clearPre(); if (ghost) ghost.remove(); ghost = null;
+    if (!best && q) { P.x = P.y = null; $('ok').classList.remove('is-ask'); return; }
     if (!best) { P.x = P.y = null; const gx = Math.max(0, Math.min(N - w, ix)), gy = Math.max(0, Math.min(N - h, iy)); if (w <= N && h <= N) { const g = block(gx, gy, 'is-ghost is-bad'); setTimeout(() => g.remove(), 450); } Dino.sfx('tap', .3); hintRot(); guidePlace(); return; }
-    [P.x, P.y] = best; ghost = block(P.x, P.y, 'is-ghost'); linesIf(P.x, P.y, w, h).forEach(([r, k]) => lineFx(r, k, 'is-pre')); Dino.sfx('tap', .5); $('ok').classList.add('is-ask'); guidePlace();
+    [P.x, P.y] = best; ghost = block(P.x, P.y, 'is-ghost'); linesIf(P.x, P.y, w, h).forEach(([r, k]) => lineFx(r, k, 'is-pre')); Dino.sfx('tap', q ? .22 : .5); $('ok').classList.add('is-ask'); if (!q) guidePlace();
   }
 
   async function plant() {
@@ -320,6 +321,31 @@
     clearGhost(); $('ok').classList.remove('is-ask'); [P.w, P.h] = [P.h, P.w]; drawPiece(); Dino.replay(pieceEl, 'is-turn'); Dino.replay(chip, 'is-pop'); Dino.sfx('swoosh', .4); hintRot(); guidePlace();
   };
   $('rot').addEventListener('click', rotate); pieceEl.addEventListener('click', rotate);
+  // 用手拉（導演 2026-11-18：小朋友會直覺把花毯拉過去）：從托盤或花田上按住拖，影子跟著手指走，放開就種下去；沒拖動就維持原本的點一下
+  let drag = null, skipUntil = 0;
+  const dragStart = e => { if (phase === 'place' && turn === 'kid' && P && !drag) drag = { id: e.pointerId, x0: e.clientX, y0: e.clientY, on: false, cell: null, fl: null }; };
+  const dragEnd = (e, drop) => {
+    if (!drag || (e && e.pointerId !== drag.id)) return; const d = drag; drag = null; if (d.fl) d.fl.remove(); if (!d.on) return;
+    skipUntil = performance.now() + 400;
+    if (phase !== 'place' || turn !== 'kid' || !P) return;
+    if (drop && P.x != null) return plant();
+    clearGhost(); $('ok').classList.remove('is-ask'); if (drop && d.cell) { Dino.replay(grid, 'is-full'); Dino.sfx('tap', .3); } hintRot(); guidePlace();
+  };
+  pieceEl.addEventListener('pointerdown', dragStart); grid.addEventListener('pointerdown', dragStart);
+  addEventListener('pointermove', e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    if (phase !== 'place' || turn !== 'kid' || !P) return dragEnd(null, false);
+    if (!drag.on) {
+      if (Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) < 10) return;
+      drag.on = true; point(null); stopCue();
+      const c = grid.querySelector('.ff-cell').getBoundingClientRect().width, f = pieceEl.cloneNode(true); f.removeAttribute('id'); f.className = 'ff-piece ff-float'; f.style.setProperty('--pm', c.toFixed(1) + 'px'); document.body.append(f); drag.fl = f;
+    }
+    const c = document.elementsFromPoint(e.clientX, e.clientY).find(n => n.classList && n.classList.contains('ff-cell')) || null;
+    if (c !== drag.cell) { drag.cell = c; if (c) place(+c.dataset.x, +c.dataset.y, true); else { clearGhost(); $('ok').classList.remove('is-ask'); } }
+    drag.fl.style.transform = `translate(${e.clientX}px,${e.clientY}px) translate(-50%,-50%)`; drag.fl.classList.toggle('is-snap', P.x != null);
+  });
+  addEventListener('pointerup', e => dragEnd(e, true)); addEventListener('pointercancel', e => dragEnd(e, false));
+  addEventListener('click', e => { if (performance.now() < skipUntil) { e.stopPropagation(); e.preventDefault(); } }, true);   // 拖完放開不再當成一次點擊（不然會轉方向或重擺）
   qOpts.addEventListener('click', e => { const b = e.target.closest('.fq-opt'); if (b) answered(b); });
   function showLv() { document.querySelectorAll('.pick button').forEach(b => b.setAttribute('aria-pressed', b.dataset.lv === lv)); }
   document.querySelector('.pick').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; lv = b.dataset.lv; Dino.sfx('pop', .6); showLv(); });

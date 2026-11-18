@@ -228,3 +228,9 @@
 /* 每局第一次擺花毯的示意影子（11-16）：半透明、白虛線框；飄移動畫由 field.js showHint 用 Web Animations 做 */
 .ff-block.is-hint{z-index:39;opacity:.55;transform-origin:0 0;outline:calc(var(--c)*.07) dashed #fff;outline-offset:calc(var(--c)*-.03);border-radius:calc(var(--c)*.24)}
 .ff-block.is-hint svg{animation:none!important}
+
+/* 用手拉花毯（2026-11-18）：拖曳時跟著手指的花毯；吸到花田上放得下的位置就淡掉，讓影子當主角 */
+.ff-piece,.ff-grid{touch-action:none}
+.ff-float{position:fixed;left:0;top:0;z-index:999;pointer-events:none;opacity:.85;filter:drop-shadow(0 8px 10px rgba(40,25,10,.35));transition:opacity .12s}
+.ff-float .ff-strip{animation:none}
+.ff-float.is-snap{opacity:.18}
