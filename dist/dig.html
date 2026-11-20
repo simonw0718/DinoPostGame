@@ -442,13 +442,15 @@
     rtrack(card.animate([{ opacity: 0, transform: `translate(${sx - cw / 2}px, ${sy - ch / 2 + 40}px) scale(.3)` }, { opacity: 1, transform: `translate(${sx - cw / 2}px, ${sy - ch / 2}px) scale(1)` }], { duration: calm ? 1 : 420, easing: 'cubic-bezier(.3,1.6,.5,1)', fill: 'forwards' }));
     say(`挖到「${sym.ch}」的化石了！`);
     // 念「ㄔ、ㄔ、吃飯、ㄔ」（導演 2026-11-04）：注音兩次 → 例詞一次（例詞卡跳一下）→ 注音一次；音訊被鎖或音檔慢到時每段最多等 2–2.5 秒，不讓遊戲卡住
-    const speak = () => Promise.race([Dino.voice(VOICE[sym.ch]), wait(2000), rv.skipP]);
+    // 每段只念一個：等不到（下載慢）就取消這段再往下，避免慢到的舊音檔晚點才響，疊在後面的字上（導演 2026-11-20 回報：注音跟著例詞一起念、瞬間念完）
+    const say1 = (url, ms) => Promise.race([Dino.voice(url), wait(ms), rv.skipP]).then(() => Dino.voice.stop());
+    const speak = () => say1(VOICE[sym.ch], 3500);
     await speak(); await rwait(200); await speak();
     if (chant) {
       await rwait(200); chant.btn.classList.remove('chant'); void chant.btn.offsetWidth; chant.btn.classList.add('chant');
-      await Promise.race([Dino.voice(chant.w.zhAudio), wait(2500), rv.skipP]); await rwait(200);
+      await say1(chant.w.zhAudio, 4000); await rwait(200);
     }
-    speak();   // 最後一次念的同時飛進圖鑑（不讓孩子等太久）
+    Dino.voice(VOICE[sym.ch]);   // 最後一次念的同時飛進圖鑑（不讓孩子等太久）
     const slot = $('book').children[idx], t = slot.getBoundingClientRect(), k = t.width / cw;
     const fly = rtrack(card.animate([{ opacity: 1, transform: `translate(${sx - cw / 2}px, ${sy - ch / 2}px) scale(1)` }, { opacity: 1, transform: `translate(${t.left + t.width / 2 - cw / 2}px, ${t.top + t.height / 2 - ch / 2}px) scale(${k})` }], { duration: calm ? 1 : 650, easing: 'cubic-bezier(.5,0,.3,1)', fill: 'forwards' }));
     await Promise.race([fly.finished, wait(950)]);   // 分頁在背景時動畫不走，最多等一下就往下
@@ -490,7 +492,7 @@
   function load() {
     sym = SYMBOLS[idx]; strokeI = 0; dug = 0; done = false; lastMound = 0; lastGlint = 0; pose = 'busy_look';
     Dino.preload?.([VOICE[sym.ch]]);
-    showExamples(); if (chant) Dino.preload?.([chant.w.zhAudio]); build();   // 先放例詞再排土塊：例詞列會改變舞台高度
+    showExamples(); Dino.preload?.([VOICE[sym.ch], chant && chant.w.zhAudio]); build();   // 先放例詞再排土塊：例詞列會改變舞台高度
     say(level === 'hard' ? '從小旗子開始，照筆順挖！' : '從小旗子開始，在字框裡照箭頭挖！');
   }
   // 例詞：題庫裡有圖、注音含這個符號的詞，先挑注音等級低、字少的前 8 個再隨機取 2 個
