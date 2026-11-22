@@ -37,6 +37,25 @@ window.Dino = (() => {
     const up = () => { release(el); removeEventListener('pointerup', up, true); removeEventListener('pointercancel', up, true); };
     addEventListener('pointerup', up, true); addEventListener('pointercancel', up, true);
   }, { passive: true, capture: true });
+  // 觸控復原（導演 2026-11-22：iPad 小朋友玩到卡住）：iOS 偶爾吃掉 pointerup／pointercancel（系統手勢、手指滑出螢幕、切 App），
+  // 各遊戲的「拖曳中」旗標（pid／drag／pressed）就卡住，之後怎麼點都沒反應。
+  // 這裡記下還沒結束的手指，只要「所有手指都離開了」（touchend／touchcancel）、或頁面失焦／隱藏，
+  // 還掛著的就補發一個 pointercancel，讓各遊戲和按下動畫走自己原本的收尾路徑。
+  const livePointers = new Map();
+  const settlePointers = () => {
+    livePointers.forEach((info, id) => {
+      livePointers.delete(id);
+      const target = info.target?.isConnected ? info.target : window;
+      try { target.dispatchEvent(new PointerEvent('pointercancel', { pointerId: id, pointerType: 'touch', isPrimary: info.primary, bubbles: true, cancelable: false })); } catch { /* ok */ }
+    });
+  };
+  document.addEventListener('pointerdown', e => { if (e.pointerType === 'touch') livePointers.set(e.pointerId, { target: e.target, primary: e.isPrimary }); }, { passive: true, capture: true });
+  ['pointerup', 'pointercancel'].forEach(type => addEventListener(type, e => livePointers.delete(e.pointerId), { passive: true, capture: true }));
+  ['touchend', 'touchcancel'].forEach(type => document.addEventListener(type, e => {
+    if (e.touches.length === 0 && livePointers.size) setTimeout(settlePointers, 80);
+  }, { passive: true, capture: true }));
+  document.addEventListener('visibilitychange', () => { if (document.hidden) settlePointers(); });
+  addEventListener('blur', settlePointers); addEventListener('pagehide', settlePointers);
   // 重播一個 class 動畫（取代各遊戲手寫的 remove → offsetWidth → add）
   const replay = (el, cls) => { if (!el) return; el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); };
   // 鎖住 iOS 整頁上下滑動／彈動：只放行真的捲得動的框（題庫清單、設定框）與滑桿。
@@ -256,17 +275,26 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
   // 回傳的 Promise 在念完時 resolve，可以串接（例：顏色念完再念形狀）。
   // voice.stop() 也取消「還在下載」的字：下載完不念（2026-10-25 修：第一輪沒快取時，慢到的舊字接在新字後面念，聽起來配錯）
   let voiceEpoch = 0, stopPlaying = () => {};
+  // 逾時保護（2026-11-22）：iPad 切 App／鎖屏／來電後 AudioContext 被暫停，onended 可能永遠不來，遊戲就停在等語音。
+  // 下載超過 8 秒、或播放超過「音檔長度＋1.5 秒」就當念完，並把還沒播的音停掉（免得之後突然冒出來疊在別句上）。
   function voice(url, volume = 1) {
     const c = audioCtx(); if (!c) return Promise.resolve();
     if (c.state !== 'running') c.resume().catch(() => {});
     const epoch = voiceEpoch;
-    return loadBuffer(url).then(buffer => new Promise(done => {
-      if (epoch !== voiceEpoch) return done();
-      const src = c.createBufferSource(), gain = c.createGain();
-      src.buffer = buffer; gain.gain.value = volume; src.onended = done;
-      src.connect(gain).connect(c.destination); src.start();
-      stopPlaying = () => { src.onended = null; try { src.stop(); } catch { /* ok */ } done(); };
-    })).catch(() => {});
+    return new Promise(resolve => {
+      let over = false, timer = 0, src = null;
+      const fin = () => { if (over) return; over = true; clearTimeout(timer); if (src) { src.onended = null; try { src.stop(); } catch { /* ok */ } } resolve(); };
+      timer = setTimeout(fin, 8000);
+      loadBuffer(url).then(buffer => {
+        if (over || epoch !== voiceEpoch) return fin();
+        clearTimeout(timer);
+        const gain = c.createGain();
+        src = c.createBufferSource(); src.buffer = buffer; gain.gain.value = volume; src.onended = fin;
+        src.connect(gain).connect(c.destination); src.start();
+        timer = setTimeout(fin, buffer.duration * 1000 + 1500);
+        stopPlaying = fin;
+      }).catch(fin);
+    });
   }
   voice.stop = () => { voiceEpoch++; stopPlaying(); stopPlaying = () => {}; };
   // 開局先在背景把這回合的音檔下載解碼好，第一次點也馬上出聲（2026-10-25）
@@ -335,7 +363,7 @@ input,textarea{-webkit-user-select:text;user-select:text}`;
     // 第一下觸控／點擊才能開聲音（iOS）；每次點擊都補一次，被系統暫停也會接回來
     ['touchend', 'click', 'keydown'].forEach(type => document.addEventListener(type, tryPlay, { capture: true, passive: true }));
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden) { save(); ctx?.suspend().catch(() => {}); } else if (wanted) tryPlay();
+      if (document.hidden) { save(); ctx?.suspend().catch(() => {}); } else { if (ctx && ctx.state !== 'running') ctx.resume().catch(() => {}); if (wanted) tryPlay(); }
     });
     addEventListener('pagehide', save);
     // 從上一頁「返回」時（bfcache）頁面不重載，要重新接上
